@@ -41,8 +41,8 @@ const nationSchema = mongoose.Schema(
             ref: "Work",
           },
           points: Number,
-        }
-      ]
+        },
+      ],
     },
   },
   {
@@ -77,7 +77,7 @@ nationSchema.methods.comparePassword = function (candidatePassword, cb) {
   });
 };
 
-nationSchema.methods.comparePassword = function (candidatePassword, cb) {
+nationSchema.methods.compare = function (candidatePassword, cb) {
   bcrypt.compare(candidatePassword, this.recovery, (err, isMatch) => {
     if (err) return cb(err);
     cb(null, isMatch);

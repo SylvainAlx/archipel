@@ -24,3 +24,26 @@ export const getOne = async (req, res) => {
     });
   }
 };
+
+export const deleteSelf = async (req, res) => {
+  try {
+    const nationId = req.params.id;
+    const id = req.nationId;
+    if (nationId == id) {
+      Nation.findByIdAndDelete(id).then((resp) => {
+        res.status(200).json({
+          message: `Votre compte a été supprimé`,
+        });
+      });
+    } else {
+      res.status(403).json({
+        message: "suppression interdite",
+      });
+    }
+  } catch (error) {
+    res.status(400).json({
+      message: "impossible de supprimer la nation",
+      erreur: error.message,
+    });
+  }
+};
