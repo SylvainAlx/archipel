@@ -9,14 +9,14 @@ export const register = async (req, res) => {
     const random = new LoremIpsum({
       sentencesPerParagraph: {
         max: 8,
-        min: 4
+        min: 4,
       },
       wordsPerSentence: {
         max: 16,
-        min: 4
-      }
+        min: 4,
+      },
     });
-    const recovery = random.generateWords(15)
+    const recovery = random.generateWords(15);
 
     const nation = new Nation({
       name,
@@ -25,9 +25,9 @@ export const register = async (req, res) => {
       role: name === process.env.ADMIN ? "admin" : "standard",
       data: {
         general: {
-          points: 100
-        }
-      }
+          points: 100,
+        },
+      },
     });
     nation
       .save()
@@ -86,5 +86,37 @@ export const verify = async (req, res) => {
     res.status(200).json(nation);
   } catch (error) {
     res.status(401).json({ message: "JWT erroné" });
+  }
+};
+
+export const forgetPassword = async (req, res) => {
+  try {
+    const { name, recovery, newPassword } = req.body;
+    const nation = await Nation.findOne({ name })
+      .then((nation) => {
+        nation.compare(recovery, async (error, isMatch) => {
+          if (isMatch) {
+            nation.password = newPassword;
+            nation.save();
+            res.status(200).json({
+              message: "nouveau mot de passe pris en compte",
+            });
+          } else {
+            res.status(400).json({
+              message: "clé de récupération erronée",
+            });
+          }
+        });
+      })
+      .catch((e) => {
+        res.status(400).json({
+          message: "nation inconnue",
+        });
+      });
+  } catch (error) {
+    res.status(400).json({
+      message: "impossible de récupérer la nation",
+      erreur: error.message,
+    });
   }
 };

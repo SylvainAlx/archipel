@@ -25,21 +25,43 @@ export const getOne = async (req, res) => {
   }
 };
 
+export const getSelf = async (req, res) => {
+  try {
+    const id = req.nationId;
+    const nation = await Nation.findOne({ _id: id });
+    res.status(200).json({ nation });
+  } catch (error) {
+    res.status(400).json({
+      message: "nation impossible à récupérer",
+      erreur: error.message,
+    });
+  }
+};
+
 export const deleteSelf = async (req, res) => {
   try {
-    const nationId = req.params.id;
     const id = req.nationId;
-    if (nationId == id) {
-      Nation.findByIdAndDelete(id).then((resp) => {
-        res.status(200).json({
-          message: `Votre compte a été supprimé`,
-        });
+    Nation.findByIdAndDelete(id).then((resp) => {
+      res.status(200).json({
+        message: `Votre nation a été supprimée`,
       });
-    } else {
-      res.status(403).json({
-        message: "suppression interdite",
+    });
+  } catch (error) {
+    res.status(400).json({
+      message: "impossible de supprimer la nation",
+      erreur: error.message,
+    });
+  }
+};
+
+export const deleteOne = async (req, res) => {
+  try {
+    const nationId = req.params.id;
+    Nation.findByIdAndDelete(nationId).then((resp) => {
+      res.status(200).json({
+        message: `nation supprimée`,
       });
-    }
+    });
   } catch (error) {
     res.status(400).json({
       message: "impossible de supprimer la nation",

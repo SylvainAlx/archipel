@@ -19,7 +19,7 @@ export const verifyJwt = (req, res, next) => {
 };
 
 export const isAdmin = (req, res, next) => {
-  if (req.decoded.isAdmin) {
+  if (req.decoded.role === "admin") {
     next();
   } else {
     res.status(400).json({
