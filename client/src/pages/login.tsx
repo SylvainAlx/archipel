@@ -1,20 +1,35 @@
 import { ChangeEvent, FormEvent, useState } from "react";
+// import { useNavigate } from "react-router-dom";
+import { loginFetch } from "../utils/fetch";
 
 export default function Login() {
-  const [nationName, setNationName] = useState("");
-  const [key, setKey] = useState("");
+  const [name, setName] = useState("");
+  const [password, setPassword] = useState("");
+  // const navigate = useNavigate();
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.type == "text") {
-      setNationName(e.target.value);
+      setName(e.target.value);
     } else {
-      setKey(e.target.value);
+      setPassword(e.target.value);
     }
   };
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    console.log(nationName, key);
+    loginFetch({ name, password })
+      .then((data) => {
+        if (data.nation) {
+          //mettre à jour le state global
+          localStorage.setItem("jwt", data.jwt);
+          console.log(data.nation);
+
+          // navigate("/dashboard");
+        } else {
+          console.log(data.message);
+        }
+      })
+      .catch((error) => console.log(error.message));
   };
 
   return (
@@ -39,7 +54,7 @@ export default function Login() {
             type="text"
             className="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
             placeholder="Nom de la nation"
-            value={nationName}
+            value={name}
           />
         </div>
         <div className="relative">
@@ -48,7 +63,7 @@ export default function Login() {
             type="password"
             className="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
             placeholder="Clé"
-            value={key}
+            value={password}
           />
         </div>
 

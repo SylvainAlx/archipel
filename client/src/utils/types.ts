@@ -6,3 +6,8 @@ export type ArchipelRoute = {
   path: string,
   page: React.JSX.Element
 }
+
+export type AuthPayload = {
+  name: string;
+  password: string;
+}

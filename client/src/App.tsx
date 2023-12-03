@@ -2,7 +2,7 @@
 import "./App.css";
 import { Routes, Route } from "react-router-dom";
 import { publicRoutes } from "./router/routes";
-import { ArchipelRoute } from "./types/global";
+import { ArchipelRoute } from "./utils/types";
 import Header from "./layouts/header";
 import Footer from "./layouts/footer";
 
