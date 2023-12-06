@@ -1,13 +1,21 @@
+import { ButtonHTMLAttributes } from "react";
+
 /* eslint-disable @typescript-eslint/no-explicit-any */
-export type Props = {
+export interface Props {
   children: JSX.Element
 }
-export type ArchipelRoute = {
+
+export interface ArchipelRoute {
   path: string,
   page: React.JSX.Element
 }
 
-export type AuthPayload = {
+export interface AuthPayload {
   name: string;
   password: string;
+}
+
+export interface ButtonProps {
+  path: string;
+  text: string;
 }
