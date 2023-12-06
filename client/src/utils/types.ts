@@ -1,5 +1,3 @@
-import { ButtonHTMLAttributes } from "react";
-
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export interface Props {
   children: JSX.Element
