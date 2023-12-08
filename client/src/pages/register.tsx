@@ -9,7 +9,7 @@ export default function Register() {
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
-  const [nation, setNation] = useAtom(nationAtom);
+  const [, setNation] = useAtom(nationAtom);
   const navigate = useNavigate();
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {

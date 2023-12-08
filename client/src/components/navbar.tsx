@@ -3,7 +3,7 @@ import Button from "./button";
 import { nationAtom } from "../utils/store";
 
 export default function NavBar(){
-    const [nation, setNation] = useAtom(nationAtom)
+    const [nation, ] = useAtom(nationAtom)
     return (
         <nav className="flex justify-center items-center gap-2">
             {nation.name === "" ? (
