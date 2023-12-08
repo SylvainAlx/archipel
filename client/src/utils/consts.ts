@@ -1,4 +1,5 @@
-export const SERVER_URL = "https://archipel-server.onrender.com" 
+export const SERVER_URL = "https://archipel-server.onrender.com"; 
+export const TITLE = "Archipel";
 
 
 

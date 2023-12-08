@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Routes, Route, BrowserRouter } from "react-router-dom";
-import { privateRoutes, publicRoutes } from "./router/routes";
+import { authRoutes, privateRoutes, publicRoutes } from "./router/routes";
 import { ArchipelRoute } from "./utils/types";
 import Header from "./layouts/header";
 import Footer from "./layouts/footer";
@@ -9,13 +9,14 @@ import { useAtom } from 'jotai';
 import { nationAtom } from "./utils/store";
 import { useEffect } from "react";
 import { authGet } from "./utils/fetch";
+import { GET_JWT } from "./utils/functions";
 
 export default function App() {
 
   const [nation, setNation] = useAtom(nationAtom);
 
   useEffect(() =>{
-    const jwt = localStorage.getItem("jwt");
+    const jwt = GET_JWT();
     if (jwt){
       authGet(jwt)
       .then((data)=>{
@@ -42,12 +43,18 @@ export default function App() {
             <Header />
             <main className="flex flex-col flex-grow justify-center items-center gap-4">
               <Routes>
-                  {privateRoutes.map((route: ArchipelRoute, i: number) => (
+                {publicRoutes.map((route: ArchipelRoute, i: number) => (
                     <Route path={route.path} element={route.page} key={i} />
                   ))}
-                  {publicRoutes.map((route: ArchipelRoute, i: number) => (
+                {nation.name != "" ? (
+                  privateRoutes.map((route: ArchipelRoute, i: number) => (
                     <Route path={route.path} element={route.page} key={i} />
-                  ))}
+                  ))
+                ):(
+                  authRoutes.map((route: ArchipelRoute, i: number) => (
+                    <Route path={route.path} element={route.page} key={i} />
+                  ))
+                )}
               </Routes>
             </main>
             <Footer />

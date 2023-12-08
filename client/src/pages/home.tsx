@@ -1,7 +1,10 @@
+import H1 from "../components/titles/h1";
+import { TITLE } from "../utils/consts";
+
 export default function Home() {
   return (
     <>
-    <h1>Bienvenue sur Archipel</h1>
+    <H1 text={"bienvenue sur " + TITLE} />
     </>
   );
 }

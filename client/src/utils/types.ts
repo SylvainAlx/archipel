@@ -13,8 +13,18 @@ export interface AuthPayload {
   password: string;
 }
 
+export interface RecoveryPayload {
+  name: string;
+  recovery: string;
+  newPassword: string;
+}
+
 export interface ButtonProps {
   path: string;
+  text: string;
+}
+
+export interface StringProps {
   text: string;
 }
 

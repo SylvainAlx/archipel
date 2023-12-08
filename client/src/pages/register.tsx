@@ -4,6 +4,7 @@ import { registerFetch } from "../utils/fetch";
 import LoadingText from "../components/loadingText";
 import { useAtom } from 'jotai';
 import { nationAtom } from "../utils/store";
+import H1 from "../components/titles/h1";
 
 export default function Register() {
   const [name, setName] = useState("");
@@ -27,12 +28,13 @@ export default function Register() {
       .then((data) => {
         setLoading(false)
         if (data.nation) {
-          //mettre à jour le state global
           localStorage.setItem("jwt", data.jwt);
           setNation({
             name: data.nation.name,
             data: data.nation.data
-          })
+          });
+          alert("Merci de conserver précieusement votre phrase de récupération. ELLE NE VOUS SERA PLUS COMMUNIQUÉE PAR LA SUITE ! ");
+          alert(data.recovery);
           navigate("/");
         } else {
           console.log(data);
@@ -42,9 +44,10 @@ export default function Register() {
   };
   return (
     <>
-      <h3 className="text-2xl">Créer sa nation</h3>
+      <H1 text="Nouvelle nation" />
       <form onSubmit={handleSubmit} className="flex flex-col gap-2 min-w-[300px] items-center">
           <input
+            required
             onChange={handleChange}
             type="text"
             className="w-full rounded-lg p-4 pe-12 text-sm shadow-sm"
@@ -52,6 +55,7 @@ export default function Register() {
             value={name}
           />
           <input
+            required
             onChange={handleChange}
             type="password"
             className="w-full rounded-lg p-4 pe-12 text-sm shadow-sm"
@@ -60,7 +64,7 @@ export default function Register() {
           />
           <div className="flex justify-center text-sm gap-2">
             <span>Déjà une nation ?</span>
-            <a className="underline" href="/login">Se connecter</a>
+            <span className="underline cursor-pointer" onClick={()=>navigate("/login")}>Se connecter</span>
           </div>
           {loading ? (<LoadingText label="CONNEXION AU SERVEUR" />):(
           <button

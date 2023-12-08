@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import NavBar from "../components/navbar";
+import { TITLE } from "../utils/consts";
 
 export default function Header() {
   const navigate = useNavigate();
@@ -7,8 +8,8 @@ export default function Header() {
     navigate("/")
   }
   return (
-    <header className="p-2 flex justify-around items-center gap-6">
-      <div onClick={handleClick} className="bold text-3xl cursor-pointer">Archipel</div>
+    <header className="p-2 flex justify-around flex-wrap items-center gap-6">
+      <div onClick={handleClick} className="bold text-3xl cursor-pointer">{TITLE}</div>
       <NavBar/>
     </header>
   );

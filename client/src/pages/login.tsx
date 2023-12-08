@@ -4,6 +4,7 @@ import { loginFetch } from "../utils/fetch";
 import LoadingText from "../components/loadingText";
 import { useAtom } from 'jotai';
 import { nationAtom } from "../utils/store";
+import H1 from "../components/titles/h1";
 
 export default function Login() {
   const [name, setName] = useState("");
@@ -27,15 +28,14 @@ export default function Login() {
       .then((data) => {
         setLoading(false)
         if (data.nation) {
-          //mettre à jour le state global
           localStorage.setItem("jwt", data.jwt);
           setNation({
             name: data.nation.name,
             data: data.nation.data
           })
-          navigate("/");
+          navigate("/dashboard");
         } else {
-          console.log(data);
+          alert(data.message);
         }
       })
       .catch((error) => alert(error.message));
@@ -43,9 +43,10 @@ export default function Login() {
 
   return (
     <>
-      <h3 className="text-2xl">Se connecter à sa nation</h3>
+      <H1 text="Se connecter à sa nation"/>
       <form onSubmit={handleSubmit} className="flex flex-col gap-2 min-w-[300px] items-center">
           <input
+            required
             onChange={handleChange}
             type="text"
             className="w-full rounded-lg p-4 pe-12 text-sm shadow-sm"
@@ -53,6 +54,7 @@ export default function Login() {
             value={name}
           />
           <input
+            required
             onChange={handleChange}
             type="password"
             className="w-full rounded-lg p-4 pe-12 text-sm shadow-sm"
@@ -60,8 +62,11 @@ export default function Login() {
             value={password}
           />
           <div className="flex justify-center text-sm gap-2">
+            <span className="underline cursor-pointer" onClick={()=>navigate("/recovery")}>Mot de passe oublié ?</span>
+          </div>
+          <div className="flex justify-center text-sm gap-2">
             <span>Pas de compte ?</span>
-            <a className="underline" href="/register">Créer une nation</a>
+            <span className="underline cursor-pointer" onClick={()=>navigate("/register")}>Créer une nation</span>
           </div> 
           {loading ? (<LoadingText label="CONNEXION AU SERVEUR" />):(
             <button
