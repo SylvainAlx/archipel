@@ -89,7 +89,7 @@ nationSchema.methods.createJWT = function () {
   return jwt.sign(
     {
       id: this._id,
-      role: this.role,
+      name: this.name,
     },
     process.env.JWT_SECRET,
     { expiresIn: "24h" }
