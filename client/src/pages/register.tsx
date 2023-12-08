@@ -2,11 +2,14 @@ import { ChangeEvent, FormEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { registerFetch } from "../utils/fetch";
 import LoadingText from "../components/loadingText";
+import { useAtom } from 'jotai';
+import { nationAtom } from "../utils/store";
 
 export default function Register() {
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [nation, setNation] = useAtom(nationAtom);
   const navigate = useNavigate();
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -26,15 +29,16 @@ export default function Register() {
         if (data.nation) {
           //mettre à jour le state global
           localStorage.setItem("jwt", data.jwt);
-          console.log(data.nation);
-
+          setNation({
+            name: data.nation.name,
+            data: data.nation.data
+          })
           navigate("/");
         } else {
-          alert(data.message);
-          console.log(data.message);
+          console.log(data);
         }
       })
-      .catch((error) => console.log(error.message));
+      .catch((error) => alert(error.message));
   };
   return (
     <>

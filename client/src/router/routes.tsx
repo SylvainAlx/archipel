@@ -9,3 +9,5 @@ export const publicRoutes: ArchipelRoute[] = [
   { path: "/login", page: <Login /> },
   { path: "/register", page: <Register /> },
 ];
+export const privateRoutes : ArchipelRoute[] = [
+]

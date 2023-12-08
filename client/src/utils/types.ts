@@ -17,3 +17,27 @@ export interface ButtonProps {
   path: string;
   text: string;
 }
+
+export interface Nation {
+  name: string,
+  data: {
+    url: {
+      flagUrl: String,
+      bannerUrl: String,
+      websiteUrl: String,
+    },
+    general: {
+      motto: String,
+      nationalDay: Date,
+      regime: Number,
+      points: Number,
+      politicalSide: Number,
+    },
+    distribution: [
+      {
+        workId: Number,
+        points: Number,
+      },
+    ],
+  }
+}

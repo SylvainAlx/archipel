@@ -5,7 +5,14 @@ export default function Button({ path, text }: ButtonProps) {
     const navigate = useNavigate();
   
     const handleClick = () => {
-      navigate(path);
+      if(path === "logout"){
+        if (window.confirm(`Souhaitez-vous vous déconnecter ?`)) {
+          localStorage.removeItem("jwt");
+          window.location.reload();
+        }
+      } else {
+        navigate(path);
+      }
     };
   
     return (

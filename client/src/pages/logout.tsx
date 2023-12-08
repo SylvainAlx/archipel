@@ -1,11 +1,10 @@
 import { useAtom } from "jotai";
-import { nationAtom } from "./store";
+import { useEffect } from "react"
+import { nationAtom } from "../utils/store";
 
-export const GET_JWT = () => localStorage.getItem("jwt");
-
-export const logout = () => {
+export default function Logout(){
     const [nation, setNation] = useAtom(nationAtom);
-    if (window.confirm(`Souhaitez-vous vous déconnecter ?`)) {
+    useEffect(()=>{
         localStorage.removeItem("jwt");
         setNation({
             name: "",
@@ -30,5 +29,9 @@ export const logout = () => {
                 ],
             }
         });    
-    }
+    },[])
+
+    return (
+        <h1>Vous avez été déconnecté</h1>
+    )
 }
