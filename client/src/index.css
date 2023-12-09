@@ -9,30 +9,28 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  color: #ffffff;
+  background-color: #081825;
 }
+
+button[type="submit"] {
+  color: black !important;
+  background-color: white !important;
+  width: 100%;
+}
+
 
 @media (prefers-color-scheme: light) {
   :root {
-    color: #081825;
-    background-color: #ffffff;
+
   }
 
-  button[type="submit"] {
-    color: white !important;
-    background-color: black !important;
-  }
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    color: #ffffff;
-    background-color: #081825;
-  
+
   }
 
-  button[type="submit"] {
-    color: black !important;
-    background-color: white !important;
-    width: 100%;
-  }
 }
