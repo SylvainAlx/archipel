@@ -9,10 +9,14 @@ export default function Header() {
   };
   return (
     <header className="p-2 flex justify-around flex-wrap items-center gap-6">
-      <div onClick={handleClick} className="flex gap-4 h-50">
-        <img src="../../public/logo.png" className="h-[50px]"></img>
+      <div className="flex gap-4 h-50">
+        <img
+          onClick={handleClick}
+          src="../../public/logo.png"
+          className="cursor-pointer h-[50px]"
+        ></img>
         <div>
-          <h2 className="bold text-3xl cursor-pointer">{TITLE}</h2>
+          <h2 className="bold text-3xl">{TITLE}</h2>
           <h4 className="text-xs">{SUBTITLE}</h4>
         </div>
       </div>

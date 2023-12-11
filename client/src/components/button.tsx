@@ -1,23 +1,25 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useNavigate } from "react-router-dom";
 import { ButtonProps } from "../utils/types";
 import { DeleteSelfFetch } from "../utils/fetch";
+import { confirmBox } from "../utils/store";
+import { useAtom } from "jotai";
+import { useEffect } from "react";
 
 export default function Button({ path, text }: ButtonProps) {
+  const [confirm, setConfirm] = useAtom(confirmBox);
   const navigate = useNavigate();
 
-  const handleClick = () => {
+  useEffect(() => {
     if (path === "logout") {
-      if (window.confirm(`Souhaitez-vous vous déconnecter ?`)) {
+      if (confirm.result === "OK") {
         localStorage.removeItem("jwt");
         navigate("/");
         window.location.reload();
       }
-    } else if (path === "delete") {
-      if (
-        window.confirm(
-          `Confirmez-vous la suppression définitive de votre nation ?`
-        )
-      ) {
+    }
+    if (path === "delete") {
+      if (confirm.result === "OK") {
         DeleteSelfFetch()
           .then((resp) => {
             alert(resp.message);
@@ -29,6 +31,17 @@ export default function Button({ path, text }: ButtonProps) {
             console.log(error);
           });
       }
+    }
+  }, [confirm]);
+
+  const handleClick = () => {
+    if (path === "logout") {
+      setConfirm({ text: "Souhaitez-vous vous déconnecter ?", result: "" });
+    } else if (path === "delete") {
+      setConfirm({
+        text: "Confirmez-vous la suppression définitive de votre nation ?",
+        result: "",
+      });
     } else {
       navigate(path);
     }

@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { registerFetch } from "../utils/fetch";
 import LoadingText from "../components/loadingText";
 import { useAtom } from "jotai";
-import { nationAtom } from "../utils/store";
+import { nationAtom, recoveryKey } from "../utils/store";
 import H1 from "../components/titles/h1";
 
 export default function Register() {
@@ -11,6 +11,8 @@ export default function Register() {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [, setNation] = useAtom(nationAtom);
+  const [, setRecovery] = useAtom(recoveryKey);
+
   const navigate = useNavigate();
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -33,11 +35,8 @@ export default function Register() {
             name: data.nation.name,
             data: data.nation.data,
           });
-          alert(
-            "Merci de conserver précieusement votre phrase de récupération. ELLE NE VOUS SERA PLUS COMMUNIQUÉE PAR LA SUITE ! "
-          );
-          alert(data.recovery);
-          navigate("/dashboard");
+          setRecovery(data.recovery);
+          navigate("/");
         } else {
           console.log(data);
         }

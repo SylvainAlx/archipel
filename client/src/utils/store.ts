@@ -25,3 +25,6 @@ const nation : Nation = {
     }
 }
 export const nationAtom = atom(nation)
+const atomString: string = "";
+export const recoveryKey = atom(atomString);
+export const confirmBox = atom({text:"", result:""});

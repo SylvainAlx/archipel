@@ -1,6 +1,12 @@
+import { ReactNode } from "react";
+
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export interface Props {
   children: JSX.Element
+}
+
+export interface Children {
+  children: ReactNode;
 }
 
 export interface ArchipelRoute {
@@ -28,25 +34,30 @@ export interface StringProps {
   text: string;
 }
 
+export interface ConfirmModalProps {
+  text: string,
+  result: string;
+}
+
 export interface Nation {
   name: string,
   data: {
     url: {
-      flagUrl: String,
-      bannerUrl: String,
-      websiteUrl: String,
+      flagUrl: string,
+      bannerUrl: string,
+      websiteUrl: string,
     },
     general: {
-      motto: String,
+      motto: string,
       nationalDay: Date,
-      regime: Number,
-      points: Number,
-      politicalSide: Number,
+      regime: number,
+      points: number,
+      politicalSide: number,
     },
     distribution: [
       {
-        workId: Number,
-        points: Number,
+        workId: number,
+        points: number,
       },
     ],
   }
