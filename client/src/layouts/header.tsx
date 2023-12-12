@@ -12,7 +12,7 @@ export default function Header() {
       <div className="flex gap-4 h-50">
         <img
           onClick={handleClick}
-          src="../../public/logo.png"
+          src="/logo.png"
           className="cursor-pointer h-[50px]"
         ></img>
         <div>
