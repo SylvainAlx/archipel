@@ -19,3 +19,6 @@ export const publicRoutes: ArchipelRoute[] = [
 export const privateRoutes : ArchipelRoute[] = [
   { path: "/dashboard", page: <Dashboard /> },
 ]
+export const adminRoutes : ArchipelRoute[] = [
+  { path: "/admin", page: <Dashboard /> },
+]

@@ -30,6 +30,10 @@ export interface ButtonProps {
   text: string;
 }
 
+export interface BooleanProps {
+  isOk: boolean;
+}
+
 export interface StringProps {
   text: string;
 }
@@ -41,6 +45,7 @@ export interface ConfirmModalProps {
 
 export interface Nation {
   name: string,
+  role: string,
   data: {
     url: {
       flagUrl: string,

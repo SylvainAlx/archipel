@@ -34,6 +34,7 @@ export default function Register() {
           localStorage.setItem("jwt", data.jwt);
           setNation({
             name: data.nation.name,
+            role: data.nation.role,
             data: data.nation.data,
           });
           setRecovery(data.recovery);

@@ -3,6 +3,7 @@ import { Nation } from './types'
 
 export const EmptyNation : Nation = {
     name: "",
+    role:"",
     data: {
     url: {
         flagUrl: "",
