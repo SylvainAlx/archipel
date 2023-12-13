@@ -23,6 +23,7 @@ export default function App() {
           if (data.name != undefined) {
             setNation({
               name: data.name,
+              role: data.role,
               data: data.data,
             });
           } else {

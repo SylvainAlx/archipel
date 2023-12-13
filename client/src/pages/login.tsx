@@ -32,6 +32,7 @@ export default function Login() {
           localStorage.setItem("jwt", data.jwt);
           setNation({
             name: data.nation.name,
+            role: data.nation.role,
             data: data.nation.data,
           });
           navigate("/dashboard");
@@ -85,10 +86,7 @@ export default function Login() {
         {loading ? (
           <LoadingText label="CONNEXION AU SERVEUR" />
         ) : (
-          <button
-            type="submit"
-            className="button"
-          >
+          <button type="submit" className="button">
             SE CONNECTER
           </button>
         )}
