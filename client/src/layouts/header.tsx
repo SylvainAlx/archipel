@@ -8,7 +8,7 @@ export default function Header() {
     navigate("/");
   };
   return (
-    <header className="p-2 flex justify-around flex-wrap items-center gap-6">
+    <header className="animate-in fade-in duration-1000 p-2 flex justify-around flex-wrap items-center gap-6">
       <div className="flex gap-4 h-50">
         <img
           onClick={handleClick}

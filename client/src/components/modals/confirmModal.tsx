@@ -1,21 +1,56 @@
 import { useAtom } from "jotai";
-import { confirmBox } from "../../utils/store";
+import { EmptyNation, confirmBox, infoModal, nationAtom } from "../../utils/store";
+import { useNavigate } from "react-router-dom";
+import { DeleteSelfFetch } from "../../utils/fetch";
 
 export default function ConfirmModal() {
   const [confirm, setConfirm] = useAtom(confirmBox);
+  const [, setInfo] = useAtom(infoModal);
+  const [, setNation] = useAtom(nationAtom)
+  const navigate = useNavigate();
 
   return (
-    <div className="absolute z-20 w-[45%] min-w-fit bg-slate-800 rounded-md p-8">
+    <>
       <h2 className="text-2xl text-center p-4">DEMANDE DE CONFIRMATION</h2>
       <p className="text-center">{confirm.text}</p>
       <div className="flex gap-4 justify-center my-4">
-        <button onClick={() => setConfirm({ text: "", result: "OK" })}>
+        <button
+          className="button"
+          onClick={() => {
+            setConfirm({ action: confirm.action, text: "", result: "OK" });
+            if (confirm.action === "logout") {
+              setInfo("déconnexion effectuée");
+              setNation(EmptyNation);
+              localStorage.removeItem("jwt");
+              navigate("/");
+              // window.location.reload();
+            }
+            if (confirm.action === "delete") {
+              DeleteSelfFetch()
+                .then((resp) => {
+                  setInfo(resp.message);
+                  setNation(EmptyNation);
+                  localStorage.removeItem("jwt");
+                  navigate("/");
+                  // window.location.reload();
+                })
+                .catch((error) => {
+                  console.log(error);
+                });
+            }
+          }}
+        >
           VALIDER
         </button>
-        <button onClick={() => setConfirm({ text: "", result: "KO" })}>
+        <button
+          className="button"
+          onClick={() =>
+            setConfirm({ action: confirm.action, text: "", result: "KO" })
+          }
+        >
           ANNULER
         </button>
       </div>
-    </div>
+    </>
   );
 }

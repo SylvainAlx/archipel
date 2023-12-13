@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { registerFetch } from "../utils/fetch";
 import LoadingText from "../components/loadingText";
 import { useAtom } from "jotai";
-import { nationAtom, recoveryKey } from "../utils/store";
+import { infoModal, nationAtom, recoveryKey } from "../utils/store";
 import H1 from "../components/titles/h1";
 
 export default function Register() {
@@ -12,6 +12,7 @@ export default function Register() {
   const [loading, setLoading] = useState(false);
   const [, setNation] = useAtom(nationAtom);
   const [, setRecovery] = useAtom(recoveryKey);
+  const [, setInfo] = useAtom(infoModal);
 
   const navigate = useNavigate();
 
@@ -41,7 +42,7 @@ export default function Register() {
           console.log(data);
         }
       })
-      .catch((error) => alert(error.message));
+      .catch((error) => setInfo(error.message));
   };
   return (
     <>
@@ -80,7 +81,7 @@ export default function Register() {
         ) : (
           <button
             type="submit"
-            className="inline-block rounded-lg px-3 py-2 text-xs font-medium"
+            className="button"
           >
             CRÉER SA NATION
           </button>

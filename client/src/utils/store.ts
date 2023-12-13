@@ -1,7 +1,7 @@
 import { atom } from 'jotai'
 import { Nation } from './types'
 
-const nation : Nation = {
+export const EmptyNation : Nation = {
     name: "",
     data: {
     url: {
@@ -24,7 +24,8 @@ const nation : Nation = {
     ],
     }
 }
-export const nationAtom = atom(nation)
+export const nationAtom = atom(EmptyNation)
 const atomString: string = "";
 export const recoveryKey = atom(atomString);
-export const confirmBox = atom({text:"", result:""});
+export const confirmBox = atom({action:"", text:"", result:""});
+export const infoModal = atom("");

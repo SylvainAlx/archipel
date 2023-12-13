@@ -8,6 +8,11 @@ export default function Dashboard(){
     return (
         <>
             <H1 text={nation.name} />
+            <fieldset>
+                <legend>Informations générales</legend>
+            Points : {nation.data.general.points}
+
+            </fieldset>
             <Button path="delete" text="SUPPRIMER SA NATION" />
         </>
     )

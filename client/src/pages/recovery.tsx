@@ -3,6 +3,8 @@ import H1 from "../components/titles/h1";
 import LoadingText from "../components/loadingText";
 import { RecoveryFetch } from "../utils/fetch";
 import { useNavigate } from "react-router-dom";
+import { infoModal } from "../utils/store";
+import { useAtom } from "jotai";
 
 export default function Recovery(){
     const [name, setName] = useState("");
@@ -11,6 +13,7 @@ export default function Recovery(){
     const [confirmPassword, setConfirmPassword] = useState("");
     const [passwordsMatch, setPasswordsMatch] = useState(true);
     const [loading, setLoading] = useState(false);
+    const [, setInfo] = useAtom(infoModal);
 
     const navigate = useNavigate()
     
@@ -35,7 +38,7 @@ export default function Recovery(){
         RecoveryFetch(dataToSend)
         .then((data) => {
             setLoading(false)
-            alert(data.message)
+            setInfo(data.message)
             if(data.message ==="nouveau mot de passe pris en compte"){
                 navigate("/login")
             }  
@@ -84,7 +87,7 @@ export default function Recovery(){
                 <button
                     disabled={!passwordsMatch}
                     type="submit"
-                    className={`inline-block rounded-lg px-3 py-2 text-xs font-medium ${!passwordsMatch && 'cursor-not-allowed'}`}
+                    className={`button ${!passwordsMatch && 'cursor-not-allowed'}`}
                 >
                     CHANGER DE MOT DE PASSE
                 </button> 

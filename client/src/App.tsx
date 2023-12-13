@@ -6,7 +6,7 @@ import Header from "./layouts/header";
 import Footer from "./layouts/footer";
 import "./App.css";
 import { useAtom } from "jotai";
-import { nationAtom } from "./utils/store";
+import { EmptyNation, nationAtom } from "./utils/store";
 import { useEffect } from "react";
 import { authGet } from "./utils/fetch";
 import { GET_JWT } from "./utils/functions";
@@ -20,16 +20,19 @@ export default function App() {
     if (jwt) {
       authGet(jwt)
         .then((data) => {
-          if (data.name != "") {
+          if (data.name != undefined) {
             setNation({
               name: data.name,
               data: data.data,
             });
           } else {
+            setNation(EmptyNation);
             localStorage.removeItem("jwt");
           }
         })
         .catch((error) => alert(error.message));
+    } else {
+      setNation(EmptyNation);
     }
   }, []);
 
@@ -40,7 +43,7 @@ export default function App() {
   return (
     <BrowserRouter>
       <Header />
-      <main className="flex flex-col flex-grow justify-center items-center gap-4">
+      <main className="animate-in fade-in duration-1000 flex flex-col flex-grow justify-center items-center gap-4">
         <Routes>
           {publicRoutes.map((route: ArchipelRoute, i: number) => (
             <Route path={route.path} element={route.page} key={i} />

@@ -1,6 +1,67 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
 #root {
+    --color-main: #081825;
+    --color-light: #ffffff;
+    --color-secondary: #00818a;
+
+    --main-font: 'Montserrat', sans-serif;
+
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+
+
     min-height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    font-family: var(--main-font);
+    color: var(--color-light);
+    background-color: var(--color-main);
+}
+
+.button {
+    display: inline-block;
+    border-radius: 5px;
+    padding: 4px 10px;
+    font-size: small;
+    background-color: var(--color-secondary);
+    color: var(--color-light);
+    transition: all 0.3s;
+}
+.button:hover {
+    color: var(--color-main);
+    background-color: var(--color-light);
+}
+
+fieldset {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 80%;
+    min-width: min-content;
+    max-width: 720px;
+    min-height: 200px;
+    border: 2px solid var(--color-secondary);
+    border-radius: 20px;
+}
+
+legend {
+    text-align: center;
+    color: var(--color-secondary);
+    padding: 0 5px;
+}
+
+button[type="submit"] {
+    width: 100%;
+  }
+  
+input {
+color: var(--color-main);
 }

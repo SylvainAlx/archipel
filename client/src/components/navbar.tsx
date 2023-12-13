@@ -6,7 +6,7 @@ export default function NavBar(){
     const [nation, ] = useAtom(nationAtom)
     return (
         <nav className="flex justify-center flex-wrap items-center gap-2">
-            {nation.name === "" ? (
+            {nation.name === "" || nation.name === undefined ? (
             <>
                 <Button path="login" text="SE CONNECTER" /> 
                 <Button path="register" text="S'ENREGISTRER" />

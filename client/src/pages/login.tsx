@@ -3,13 +3,14 @@ import { useNavigate } from "react-router-dom";
 import { loginFetch } from "../utils/fetch";
 import LoadingText from "../components/loadingText";
 import { useAtom } from "jotai";
-import { nationAtom } from "../utils/store";
+import { infoModal, nationAtom } from "../utils/store";
 import H1 from "../components/titles/h1";
 
 export default function Login() {
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [, setInfo] = useAtom(infoModal);
   const [, setNation] = useAtom(nationAtom);
   const navigate = useNavigate();
 
@@ -35,10 +36,10 @@ export default function Login() {
           });
           navigate("/dashboard");
         } else {
-          alert(data.message);
+          setInfo(data.message);
         }
       })
-      .catch((error) => alert(error.message));
+      .catch((error) => setInfo(error.message));
   };
 
   return (
@@ -73,7 +74,7 @@ export default function Login() {
           </span>
         </div>
         <div className="flex justify-center text-sm gap-2">
-          <span>Pas de compte ?</span>
+          <span>Première visite ?</span>
           <span
             className="underline cursor-pointer"
             onClick={() => navigate("/register")}
@@ -86,7 +87,7 @@ export default function Login() {
         ) : (
           <button
             type="submit"
-            className="inline-block rounded-lg px-3 py-2 text-xs font-medium"
+            className="button"
           >
             SE CONNECTER
           </button>
