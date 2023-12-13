@@ -39,7 +39,7 @@ export default function Register() {
           setRecovery(data.recovery);
           navigate("/");
         } else {
-          console.log(data);
+          setInfo("création impossible : " + data.message);
         }
       })
       .catch((error) => setInfo(error.message));
