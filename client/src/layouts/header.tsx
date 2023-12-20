@@ -1,6 +1,5 @@
 import { useNavigate } from "react-router-dom";
 import NavBar from "../components/navbar";
-import { SUBTITLE, TITLE } from "../utils/consts";
 
 export default function Header() {
   const navigate = useNavigate();
