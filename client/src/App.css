@@ -45,12 +45,12 @@ fieldset {
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 80%;
+    width: 90%;
     min-width: min-content;
     max-width: 720px;
     min-height: 200px;
     border: 2px solid var(--color-secondary);
-    border-radius: 20px;
+    border-radius: 5px;
 }
 
 legend {
