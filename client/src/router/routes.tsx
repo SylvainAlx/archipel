@@ -4,7 +4,8 @@ import Home from "../pages/home";
 import Login from "../pages/login";
 import Recovery from "../pages/recovery";
 import Register from "../pages/register";
-import { ArchipelRoute } from "../utils/types";
+import { ArchipelRoute } from "../types/typReact";
+
 
 export const authRoutes: ArchipelRoute[] = [
   { path: "/login", page: <Login /> },

@@ -1,5 +1,5 @@
 import { atom } from 'jotai'
-import { Nation } from './types'
+import { Nation } from '../types/typNation'
 
 export const EmptyNation : Nation = {
     name: "",
@@ -30,3 +30,8 @@ const atomString: string = "";
 export const recoveryKey = atom(atomString);
 export const confirmBox = atom({action:"", text:"", result:""});
 export const infoModal = atom("");
+const loadingAtom = {
+    show: false,
+    text: "",
+}
+export const loadingSpinner = atom(loadingAtom);

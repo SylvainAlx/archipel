@@ -8,7 +8,7 @@ export default function FooterNav() {
 
   return (
     <nav
-      className={`sm:hidden w-full py-2 flex justify-evenly items-center bg-secondary`}
+      className={`fixed bottom-0 sm:hidden w-full h-[100px] py-2 flex justify-evenly items-center bg-secondary`}
     >
       {nation.name === "" || nation.name === undefined ? (
         <>

@@ -1,17 +1,17 @@
 import { ChangeEvent, FormEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { loginFetch } from "../utils/fetch";
-import LoadingText from "../components/loadingText";
 import { useAtom } from "jotai";
-import { infoModal, nationAtom } from "../utils/store";
+import { infoModal, loadingSpinner, nationAtom } from "../utils/store";
 import H1 from "../components/titles/h1";
+import Input from "../components/form/input";
 
 export default function Login() {
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
-  const [loading, setLoading] = useState(false);
   const [, setInfo] = useAtom(infoModal);
   const [, setNation] = useAtom(nationAtom);
+  const [, setLoading] = useAtom(loadingSpinner);
   const navigate = useNavigate();
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -24,10 +24,10 @@ export default function Login() {
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    setLoading(true);
+    setLoading({show: true, text:"Connexion au serveur"})
     loginFetch({ name, password })
       .then((data) => {
-        setLoading(false);
+        setLoading({show: false, text:"Connexion au serveur"});
         if (data.nation) {
           localStorage.setItem("jwt", data.jwt);
           setNation({
@@ -50,22 +50,8 @@ export default function Login() {
         onSubmit={handleSubmit}
         className="flex flex-col gap-2 min-w-[300px] items-center"
       >
-        <input
-          required
-          onChange={handleChange}
-          type="text"
-          className="w-full rounded-lg p-4 pe-12 text-sm shadow-sm"
-          placeholder="Nom de la nation"
-          value={name}
-        />
-        <input
-          required
-          onChange={handleChange}
-          type="password"
-          className="w-full rounded-lg p-4 pe-12 text-sm shadow-sm"
-          placeholder="Mot de passe"
-          value={password}
-        />
+        <Input required={true} onChange={handleChange} type="text" placeholder="Nom de la nation" value={name} />
+        <Input required={true} onChange={handleChange} type="password" placeholder="Mot de passe" value={password} />
         <div className="flex justify-center text-sm gap-2">
           <span
             className="underline cursor-pointer"
@@ -83,13 +69,9 @@ export default function Login() {
             Créer une nation
           </span>
         </div>
-        {loading ? (
-          <LoadingText label="CONNEXION AU SERVEUR" />
-        ) : (
-          <button type="submit" className="button">
-            SE CONNECTER
-          </button>
-        )}
+        <button type="submit" className="button">
+          SE CONNECTER
+        </button>
       </form>
     </>
   );

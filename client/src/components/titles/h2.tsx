@@ -1,4 +1,4 @@
-import { StringProps } from "../../utils/types";
+import { StringProps } from "../../types/typNation";
 
 export default function H2({text}: StringProps){
     return (

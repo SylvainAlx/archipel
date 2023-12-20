@@ -3,14 +3,22 @@ import { nationAtom } from "../utils/store";
 import H1 from "../components/titles/h1";
 import Button from "../components/button";
 import Avatar from "../components/avatar";
+import { GiBlackFlag } from "react-icons/gi";
 
 export default function Dashboard() {
   const [nation] = useAtom(nationAtom);
   return (
     <>
-      <Avatar
-        text={nation.data.url.flagUrl ? nation.data.url.flagUrl : "/logo.png"}
+      {nation.data.url.flagUrl ? (
+        <Avatar
+        text={nation.data.url.flagUrl}
       />
+      ):(
+       <div className="text-[50px]">
+         <GiBlackFlag />
+       </div>
+      )}
+      
       <H1 text={nation.name} />
       <em className="text-xl">
         {nation.data.general.motto

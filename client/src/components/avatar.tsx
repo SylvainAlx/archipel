@@ -1,4 +1,5 @@
-import { StringProps } from "../utils/types";
+import { StringProps } from "../types/typProp";
+
 
 export default function Avatar({ text }: StringProps) {
   return (

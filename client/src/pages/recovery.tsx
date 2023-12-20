@@ -1,10 +1,10 @@
 import { ChangeEvent, FormEvent, useState } from "react";
 import H1 from "../components/titles/h1";
-import LoadingText from "../components/loadingText";
 import { RecoveryFetch } from "../utils/fetch";
 import { useNavigate } from "react-router-dom";
-import { infoModal } from "../utils/store";
+import { infoModal, loadingSpinner } from "../utils/store";
 import { useAtom } from "jotai";
+import Input from "../components/form/input";
 
 export default function Recovery(){
     const [name, setName] = useState("");
@@ -12,7 +12,7 @@ export default function Recovery(){
     const [recovery, setRecovery] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
     const [passwordsMatch, setPasswordsMatch] = useState(true);
-    const [loading, setLoading] = useState(false);
+    const [, setLoading] = useAtom(loadingSpinner);
     const [, setInfo] = useAtom(infoModal);
 
     const navigate = useNavigate()
@@ -29,7 +29,7 @@ export default function Recovery(){
 
     const handleSubmit = (e: FormEvent) => {
         e.preventDefault();
-        setLoading(true);
+        setLoading({show: true, text:"Connexion au serveur"})
         const dataToSend = {
             name,
             recovery,
@@ -37,7 +37,7 @@ export default function Recovery(){
         }
         RecoveryFetch(dataToSend)
         .then((data) => {
-            setLoading(false)
+            setLoading({show: false, text:"Connexion au serveur"})
             setInfo(data.message)
             if(data.message ==="nouveau mot de passe pris en compte"){
                 navigate("/login")
@@ -50,48 +50,25 @@ export default function Recovery(){
         <>
             <H1 text="Réinitialisation du mot de passe"/>
             <form onSubmit={handleSubmit} className="flex flex-col gap-2 min-w-[300px] items-center">
-                <input
-                    required
-                    onChange={handleChange}
-                    type="text"
-                    className="w-full rounded-lg p-4 pe-12 text-sm shadow-sm"
-                    placeholder="Nom de la nation"
-                    value={name}
-                />
+                <Input required={true} onChange={handleChange} type="text" placeholder="Nom de la nation" value={name} />
                 <textarea 
                     required
                     onChange={handleChange}
-                    className="w-full rounded-lg p-4 pe-12 text-sm shadow-sm"
+                    className="w-full rounded-lg p-4 pe-12 text-sm shadow-sm text-primary"
                     placeholder="Phrase de récupération"
                     value={recovery}/>
-                <input
-                    required
-                    onChange={handleChange}
-                    type="password"
-                    className="w-full rounded-lg p-4 pe-12 text-sm shadow-sm"
-                    placeholder="Nouveau mot de passe"
-                    value={password}
-                />
-                <input
-                    required
-                    onChange={(e)=> {
+                <Input required={true} onChange={handleChange} type="password" placeholder="Nouveau mot de passe" value={password} />
+                <Input required={true} onChange={(e)=> {
                         setConfirmPassword(e.target.value);
                         setPasswordsMatch(password === e.target.value)
-                    }}
-                    type="password"
-                    className="w-full rounded-lg p-4 pe-12 text-sm shadow-sm"
-                    placeholder="Confirmer le mot de passe"
-                    value={confirmPassword}
-                />
-                {loading ? (<LoadingText label="CONNEXION AU SERVEUR" />):(
+                    }} type="password" placeholder="Confirmer le mot de passe" value={confirmPassword} />
                 <button
                     disabled={!passwordsMatch}
                     type="submit"
                     className={`button ${!passwordsMatch && 'cursor-not-allowed'}`}
                 >
                     CHANGER DE MOT DE PASSE
-                </button> 
-                )}      
+                </button>   
             </form>
         </>
         

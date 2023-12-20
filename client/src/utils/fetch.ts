@@ -1,6 +1,7 @@
+import { AuthPayload, RecoveryPayload } from "../types/typPayload";
 import { SERVER_URL } from "./consts";
 import { GET_JWT } from "./functions";
-import { AuthPayload, RecoveryPayload } from "./types";
+
 
 export const registerFetch = async (payload: AuthPayload) => {
   const resp = await fetch(`${SERVER_URL}/auth/register`, {

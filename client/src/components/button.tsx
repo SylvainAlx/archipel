@@ -1,8 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useNavigate } from "react-router-dom";
-import { ButtonProps } from "../utils/types";
 import { confirmBox, infoModal } from "../utils/store";
 import { useAtom } from "jotai";
+import { ButtonProps } from "../types/typProp";
 
 export default function Button({ path, text }: ButtonProps) {
   const [, setConfirm] = useAtom(confirmBox);

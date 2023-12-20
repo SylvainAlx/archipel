@@ -1,15 +1,15 @@
 import { ChangeEvent, FormEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { registerFetch } from "../utils/fetch";
-import LoadingText from "../components/loadingText";
 import { useAtom } from "jotai";
-import { infoModal, nationAtom, recoveryKey } from "../utils/store";
+import { infoModal, loadingSpinner, nationAtom, recoveryKey } from "../utils/store";
 import H1 from "../components/titles/h1";
+import Input from "../components/form/input";
 
 export default function Register() {
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [, setLoading] = useAtom(loadingSpinner);
   const [, setNation] = useAtom(nationAtom);
   const [, setRecovery] = useAtom(recoveryKey);
   const [, setInfo] = useAtom(infoModal);
@@ -26,10 +26,10 @@ export default function Register() {
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    setLoading(true);
+    setLoading({show: true, text:"Connexion au serveur"});
     registerFetch({ name, password })
       .then((data) => {
-        setLoading(false);
+        setLoading({show: false, text:"Connexion au serveur"});
         if (data.nation) {
           localStorage.setItem("jwt", data.jwt);
           setNation({
@@ -52,22 +52,8 @@ export default function Register() {
         onSubmit={handleSubmit}
         className="flex flex-col gap-2 min-w-[300px] items-center"
       >
-        <input
-          required
-          onChange={handleChange}
-          type="text"
-          className="w-full rounded-lg p-4 pe-12 text-sm shadow-sm"
-          placeholder="Nom de la nation"
-          value={name}
-        />
-        <input
-          required
-          onChange={handleChange}
-          type="password"
-          className="w-full rounded-lg p-4 pe-12 text-sm shadow-sm"
-          placeholder="Mot de passe"
-          value={password}
-        />
+        <Input required={true} onChange={handleChange} type="text" placeholder="Nom de la nation" value={name} />
+        <Input required={true} onChange={handleChange} type="password" placeholder="Mot de passe" value={password} />
         <div className="flex justify-center text-sm gap-2">
           <span>Déjà une nation ?</span>
           <span
@@ -77,16 +63,12 @@ export default function Register() {
             Se connecter
           </span>
         </div>
-        {loading ? (
-          <LoadingText label="CONNEXION AU SERVEUR" />
-        ) : (
-          <button
-            type="submit"
-            className="button"
-          >
-            CRÉER SA NATION
-          </button>
-        )}
+        <button
+          type="submit"
+          className="button"
+        >
+          CRÉER SA NATION
+        </button>
       </form>
     </>
   );

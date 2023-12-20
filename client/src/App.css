@@ -17,10 +17,11 @@
     -moz-osx-font-smoothing: grayscale;
 
 
-    min-height: 100vh;
+    /* min-height: 100vh; */
+    height: 100vh;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    /* justify-content: space-between; */
     font-synthesis: none;
     text-rendering: optimizeLegibility;
     font-family: var(--main-font);

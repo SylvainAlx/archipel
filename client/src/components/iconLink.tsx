@@ -1,8 +1,8 @@
 import { useNavigate } from "react-router-dom";
 import { IoMdLogIn, IoMdAddCircleOutline, IoIosPie, IoMdSettings, IoMdLogOut } from "react-icons/io";
-import { ButtonProps } from "../utils/types";
 import { confirmBox } from "../utils/store";
 import { useAtom } from "jotai";
+import { ButtonProps } from "../types/typProp";
 
 export default function IconLink({ path, text }: ButtonProps){
 
