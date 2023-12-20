@@ -4,9 +4,10 @@ export default {
   theme: {
     extend: {
       colors: {
-          primary: "#ffffff", // Définissez ici la couleur de texte pour le mode sombre
-          secondary: '#000000',
-          info: "#f00"
+          primary: "var(--color-main)", // Définissez ici la couleur de texte pour le mode sombre
+          secondary: 'var(--color-secondary)',
+          info: "var(--color-info)",
+          black_alpha:"var(--color-black-alpha)"
         
       }
     },

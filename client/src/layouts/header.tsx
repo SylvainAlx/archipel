@@ -1,39 +1,30 @@
 import { useNavigate } from "react-router-dom";
 import NavBar from "../components/navbar";
 import { SUBTITLE, TITLE } from "../utils/consts";
-import { useState } from "react";
-import { IoMenu } from "react-icons/io5";
 
 export default function Header() {
-  const [showNav, setShowNav] = useState(false);
   const navigate = useNavigate();
   const handleClick = () => {
     navigate("/");
   };
   return (
-    <header className="animate-in fade-in duration-1000 p-2 flex flex-col sm:flex-row justify-around flex-wrap items-center gap-6">
-      <div className="flex justify-between w-full sm:w-min">
-        <div className="flex gap-4 h-50">
-          <img
-            onClick={handleClick}
-            src="/logo.png"
-            className="cursor-pointer h-[50px]"
-          ></img>
-          <div>
-            <h2 className="bold text-3xl">{TITLE}</h2>
-            <h4 className="text-xs">{SUBTITLE}</h4>
-          </div>
-        </div>
-        <div
+    <header className="animate-in fade-in duration-1000 p-2 mx-auto sm:m-0 sm:flex sm:justify-around flex-wrap items-center gap-6">
+      <div onClick={handleClick} className="flex gap-2 h-50 w-full sm:w-min items-center">
+        <img
+          src="/logo.png"
+          className="cursor-pointer h-[50px]"
+        ></img>
+        <h4 className="text-md"><b>NA</b>TIONS<br /><b>VIR</b>TUELLES</h4>
+      </div>
+        {/* <div
           className={`${
-            showNav && "scale-110"
-          } sm:hidden text-5xl transition-all duration-300`}
+            showNav && "rotate-[90deg]"
+          } sm:hidden text-5xl transition-all duration-100`}
           onClick={() => setShowNav(!showNav)}
         >
           <IoMenu />
-        </div>
-      </div>
-      <NavBar isOk={showNav} />
+        </div> */}
+      <NavBar />
     </header>
   );
 }

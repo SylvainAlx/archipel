@@ -44,7 +44,7 @@ export default function App() {
   return (
     <BrowserRouter>
       <Header />
-      <main className="animate-in fade-in duration-1000 pt-10 sm:pt-20 flex flex-col flex-grow items-center gap-4">
+      <main className="animate-in fade-in duration-1000 flex flex-grow flex-col items-center gap-4 self-center pt-10 sm:pt-20 px-4 w-full max-w-[1280px]">
         <Routes>
           {publicRoutes.map((route: ArchipelRoute, i: number) => (
             <Route path={route.path} element={route.page} key={i} />

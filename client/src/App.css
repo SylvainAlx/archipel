@@ -8,6 +8,8 @@
     --color-main: #081825;
     --color-light: #ffffff;
     --color-secondary: #00818a;
+    --color-black-alpha: rgb(0 0 0 / 0.2);
+    --color-info: rgba(255, 0, 0, 0.678);
 
     --main-font: 'Montserrat', sans-serif;
 
@@ -30,7 +32,6 @@
     display: inline-block;
     border-radius: 5px;
     padding: 4px 10px;
-    min-width: 150px;
     font-size: small;
     background-color: var(--color-secondary);
     color: var(--color-light);
@@ -39,6 +40,10 @@
 .button:hover {
     color: var(--color-main);
     background-color: var(--color-light);
+}
+
+b {
+    color: var(--color-secondary);
 }
 
 fieldset {

@@ -4,7 +4,7 @@ const server = {
   dev : "http://localhost:3000"
 }
 
-export const SERVER_URL = server.dev;
+export const SERVER_URL = server.prod;
 export const TITLE = "NAVIR";
 export const  SUBTITLE = "NATIONS VIRTUELLES";
 

@@ -32,6 +32,7 @@ export interface ButtonProps {
 
 export interface BooleanProps {
   isOk: boolean;
+  setOk: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export interface StringProps {
