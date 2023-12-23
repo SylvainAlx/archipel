@@ -3,7 +3,7 @@ import H1 from "../components/titles/h1";
 export default function Home() {
   return (
     <>
-      <H1 text="bienvenue" />
+      <H1 text="Bienvenue" />
       <p className="text-xl">
         Découvrez le monde fascinant des Nations Virtuelles avec Navir, l'appli
         qui donne vie à votre propre nation numérique. Suivez son évolution,

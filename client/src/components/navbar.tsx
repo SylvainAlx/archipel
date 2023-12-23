@@ -7,8 +7,9 @@ export default function NavBar() {
 
   return (
     <nav
-      className={`hidden transition-all duration-100 sm:flex justify-center flex-wrap items-end gap-2`}
+      className={`hidden transition-all duration-100 md:flex justify-center flex-wrap items-end gap-2`}
     >
+      <Button path="nations" text="EXPLORER" />
       {nation.name === "" || nation.name === undefined ? (
         <>
           <Button path="login" text="SE CONNECTER" />
@@ -16,7 +17,7 @@ export default function NavBar() {
         </>
       ) : (
         <>
-          <Button path="dashboard" text={nation.name} />
+          <Button path="dashboard" text="MA NATION" />
           {nation.role === "admin" && (
             <Button path="admin" text="ADMINISTRATION" />
           )}

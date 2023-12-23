@@ -1,5 +1,5 @@
 import { AuthPayload, RecoveryPayload } from "../types/typPayload";
-import { SERVER_URL } from "./consts";
+import { SERVER_URL } from "../settings/consts";
 import { GET_JWT } from "./functions";
 
 

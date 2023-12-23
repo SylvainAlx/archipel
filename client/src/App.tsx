@@ -1,6 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Routes, Route, BrowserRouter } from "react-router-dom";
-import { authRoutes, privateRoutes, publicRoutes } from "./router/routes";
+import {
+  adminRoutes,
+  authRoutes,
+  privateRoutes,
+  publicRoutes,
+} from "./router/routes";
 
 import Header from "./layouts/header";
 import Footer from "./layouts/footer";
@@ -20,10 +25,10 @@ export default function App() {
   useEffect(() => {
     const jwt = GET_JWT();
     if (jwt) {
-      setLoading({show: true, text:"Connexion au serveur"})
+      setLoading({ show: true, text: "Connexion au serveur" });
       authGet(jwt)
         .then((data) => {
-          setLoading({show: false, text:"Connexion au serveur"});
+          setLoading({ show: false, text: "Connexion au serveur" });
           if (data.name != undefined) {
             setNation({
               name: data.name,
@@ -60,6 +65,10 @@ export default function App() {
             : authRoutes.map((route: ArchipelRoute, i: number) => (
                 <Route path={route.path} element={route.page} key={i} />
               ))}
+          {nation.role === "admin" &&
+            adminRoutes.map((route: ArchipelRoute, i: number) => (
+              <Route path={route.path} element={route.page} key={i} />
+            ))}
         </Routes>
         <ModalsRouter />
       </main>
