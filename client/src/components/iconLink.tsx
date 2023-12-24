@@ -29,7 +29,7 @@ export default function IconLink({ path, text }: ButtonProps) {
 
   return (
     <div
-      className="flex flex-col gap-2 items-center text-5xl"
+      className="flex flex-col gap-2 items-center text-5xl hover:text-secondary transition-all cursor-pointer"
       onClick={handleClick}
     >
       {path === "/nations" && <IoMdGlobe />}

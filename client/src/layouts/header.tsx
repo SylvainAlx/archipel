@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import NavBar from "../components/navbar";
+import HeaderNav from "../components/headerNav";
 
 export default function Header() {
   const navigate = useNavigate();
@@ -19,7 +19,7 @@ export default function Header() {
           <b>VIR</b>TUELLES
         </h4>
       </div>
-      <NavBar />
+      <HeaderNav />
     </header>
   );
 }

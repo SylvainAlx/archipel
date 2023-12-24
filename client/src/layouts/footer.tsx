@@ -1,5 +1,5 @@
 import FooterNav from "../components/footerNav";
-import { TITLE } from "../settings/consts";
+import { TITLE } from "../utils/consts";
 
 export default function Footer() {
   return (
