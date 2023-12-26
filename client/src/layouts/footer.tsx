@@ -5,7 +5,7 @@ export default function Footer() {
   return (
     <footer className="flex flex-col items-center pt-4">
       <FooterNav />
-      <div className="hidden sm:block sm:text-md">{TITLE} - 2023</div>
+      <div className="hidden md:block md:text-md">{TITLE} - 2023</div>
     </footer>
   );
 }

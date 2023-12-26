@@ -2,17 +2,19 @@ import { useNavigate } from "react-router-dom";
 import {
   IoMdLogIn,
   IoMdAddCircleOutline,
-  IoIosPie,
   IoMdSettings,
   IoMdLogOut,
   IoMdGlobe,
 } from "react-icons/io";
-import { confirmBox } from "../utils/store";
+import { GiBlackFlag } from "react-icons/gi";
+import { confirmBox, nationAtom } from "../utils/store";
 import { useAtom } from "jotai";
 import { ButtonProps } from "../types/typProp";
+import Avatar from "./avatar";
 
 export default function IconLink({ path, text }: ButtonProps) {
   const [, setConfirm] = useAtom(confirmBox);
+  const [nation] = useAtom(nationAtom);
   const navigate = useNavigate();
 
   const handleClick = () => {
@@ -35,7 +37,12 @@ export default function IconLink({ path, text }: ButtonProps) {
       {path === "/nations" && <IoMdGlobe />}
       {path === "/login" && <IoMdLogIn />}
       {path === "/register" && <IoMdAddCircleOutline />}
-      {path === "/dashboard" && <IoIosPie />}
+      {path === "/dashboard" &&
+        (nation.data.url.flagUrl ? (
+          <Avatar text={nation.data.url.flagUrl} />
+        ) : (
+          <GiBlackFlag />
+        ))}
       {path === "/admin" && <IoMdSettings />}
       {path === "/logout" && <IoMdLogOut />}
       <h2 className="text-[10px]">{text}</h2>
