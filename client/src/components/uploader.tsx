@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import * as LR from "@uploadcare/blocks";
 import blocksStyles from "@uploadcare/blocks/web/lr-file-uploader-regular.min.css?url";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 
 LR.registerBlocks(LR);
 
@@ -16,20 +16,20 @@ export default function Uploader() {
     setFiles(data);
   }, []);
 
-  useEffect(() => {
-    const el = dataOutputRef.current;
+  // useEffect(() => {
+  //   const el = dataOutputRef.current;
 
-    el?.addEventListener(
-      "lr-data-output",
-      handleUploaderEvent as EventListenerOrEventListenerObject
-    );
-    return () => {
-      el?.removeEventListener(
-        "lr-data-output",
-        handleUploaderEvent as EventListenerOrEventListenerObject
-      );
-    };
-  }, [handleUploaderEvent]);
+  //   el?.addEventListener(
+  //     "lr-data-output",
+  //     handleUploaderEvent as EventListenerOrEventListenerObject
+  //   );
+  //   return () => {
+  //     el?.removeEventListener(
+  //       "lr-data-output",
+  //       handleUploaderEvent as EventListenerOrEventListenerObject
+  //     );
+  //   };
+  // }, [handleUploaderEvent]);
 
   return (
     <div>
