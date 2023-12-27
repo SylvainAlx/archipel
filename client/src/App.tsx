@@ -11,7 +11,7 @@ import Header from "./layouts/header";
 import Footer from "./layouts/footer";
 import "./App.css";
 import { useAtom } from "jotai";
-import { EmptyNation, loadingSpinner, nationAtom } from "./utils/store";
+import { EmptyNation, loadingSpinner, nationAtom } from "./settings/store";
 import { useEffect } from "react";
 import { authGet } from "./utils/fetch";
 import { GET_JWT } from "./utils/functions";

@@ -1,6 +1,6 @@
 import { useAtom } from "jotai";
 import IconLink from "./iconLink";
-import { nationAtom } from "../utils/store";
+import { nationAtom } from "../settings/store";
 
 export default function Nav() {
   const [nation] = useAtom(nationAtom);

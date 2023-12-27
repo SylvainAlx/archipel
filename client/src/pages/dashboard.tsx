@@ -1,5 +1,5 @@
 import { useAtom } from "jotai";
-import { nationAtom } from "../utils/store";
+import { nationAtom } from "../settings/store";
 import H1 from "../components/titles/h1";
 import Button from "../components/button";
 import Avatar from "../components/avatar";

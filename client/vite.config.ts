@@ -40,8 +40,8 @@ export default defineConfig({
             purpose:'any maskable',
           }
         ],
-        theme_color:'#171717',
-        background_color:'#f0e7db',
+        theme_color:'#fff',
+        background_color: '#081825',
         display:"standalone",
         scope:'/',
         start_url:"/",

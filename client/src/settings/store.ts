@@ -25,7 +25,7 @@ export const EmptyNation : Nation = {
     ],
     }
 }
-export const nationAtom = atom(EmptyNation)
+export const nationAtom = atom(EmptyNation);
 const atomString: string = "";
 export const recoveryKey = atom(atomString);
 export const confirmBox = atom({action:"", text:"", result:""});

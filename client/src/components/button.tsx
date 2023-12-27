@@ -1,20 +1,20 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useNavigate } from "react-router-dom";
-import { confirmBox, infoModal } from "../utils/store";
+import { confirmBox, infoModal } from "../settings/store";
 import { useAtom } from "jotai";
 import { ButtonProps } from "../types/typProp";
 
-export default function Button({ path, text }: ButtonProps) {
+export default function Button({ type, path, text, disabled }: ButtonProps) {
   const [, setConfirm] = useAtom(confirmBox);
-  const [, setInfo] = useAtom(infoModal)
+  const [, setInfo] = useAtom(infoModal);
   const navigate = useNavigate();
 
   const handleClick = () => {
     if (path === "logout") {
       setConfirm({
-        action:"logout", 
-        text: "Souhaitez-vous vous déconnecter ?", 
-        result: "" 
+        action: "logout",
+        text: "Souhaitez-vous vous déconnecter ?",
+        result: "",
       });
     } else if (path === "delete") {
       setConfirm({
@@ -25,13 +25,17 @@ export default function Button({ path, text }: ButtonProps) {
     } else if (path === "info") {
       setInfo("");
     } else {
-      navigate(path);
+      if (path !== "") {
+        navigate(path);
+      }
     }
   };
 
   return (
     <button
-      className="button"
+      disabled={disabled != undefined && disabled}
+      type={type != undefined ? type : "button"}
+      className="inline-block rounded-full py-2 px-4 bg-secondary transition-all hover:text-primary hover:bg-light"
       onClick={handleClick}
     >
       {text}

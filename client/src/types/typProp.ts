@@ -1,5 +1,5 @@
 import { ChangeEvent } from "react";
-import { ReactNode } from "react";
+import { ReactNode  } from "react";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
@@ -13,8 +13,10 @@ export interface InputProps {
 }
 
 export interface ButtonProps {
+    type?: 'button' | 'submit';
     path: string;
     text: string;
+    disabled?: boolean;
   }
   
   export interface BooleanProps {

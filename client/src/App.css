@@ -30,20 +30,6 @@
     background-color: var(--color-main);
 }
 
-.button {
-    display: inline-block;
-    border-radius: 5px;
-    padding: 4px 10px;
-    font-size: small;
-    background-color: var(--color-secondary);
-    color: var(--color-light);
-    transition: all 0.3s;
-}
-.button:hover {
-    color: var(--color-main);
-    background-color: var(--color-light);
-}
-
 b {
     color: var(--color-secondary);
 }

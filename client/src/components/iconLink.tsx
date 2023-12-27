@@ -7,7 +7,7 @@ import {
   IoMdGlobe,
 } from "react-icons/io";
 import { GiBlackFlag } from "react-icons/gi";
-import { confirmBox, nationAtom } from "../utils/store";
+import { confirmBox, nationAtom } from "../settings/store";
 import { useAtom } from "jotai";
 import { ButtonProps } from "../types/typProp";
 import Avatar from "./avatar";

@@ -2,9 +2,15 @@ import { ChangeEvent, FormEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { registerFetch } from "../utils/fetch";
 import { useAtom } from "jotai";
-import { infoModal, loadingSpinner, nationAtom, recoveryKey } from "../utils/store";
+import {
+  infoModal,
+  loadingSpinner,
+  nationAtom,
+  recoveryKey,
+} from "../settings/store";
 import H1 from "../components/titles/h1";
 import Input from "../components/form/input";
+import Button from "../components/button";
 
 export default function Register() {
   const [name, setName] = useState("");
@@ -26,10 +32,10 @@ export default function Register() {
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    setLoading({show: true, text:"Connexion au serveur"});
+    setLoading({ show: true, text: "Connexion au serveur" });
     registerFetch({ name, password })
       .then((data) => {
-        setLoading({show: false, text:"Connexion au serveur"});
+        setLoading({ show: false, text: "Connexion au serveur" });
         if (data.nation) {
           localStorage.setItem("jwt", data.jwt);
           setNation({
@@ -52,8 +58,20 @@ export default function Register() {
         onSubmit={handleSubmit}
         className="flex flex-col gap-2 min-w-[300px] items-center"
       >
-        <Input required={true} onChange={handleChange} type="text" placeholder="Nom de la nation" value={name} />
-        <Input required={true} onChange={handleChange} type="password" placeholder="Mot de passe" value={password} />
+        <Input
+          required={true}
+          onChange={handleChange}
+          type="text"
+          placeholder="Nom de la nation"
+          value={name}
+        />
+        <Input
+          required={true}
+          onChange={handleChange}
+          type="password"
+          placeholder="Mot de passe"
+          value={password}
+        />
         <div className="flex justify-center text-sm gap-2">
           <span>Déjà une nation ?</span>
           <span
@@ -63,12 +81,7 @@ export default function Register() {
             Se connecter
           </span>
         </div>
-        <button
-          type="submit"
-          className="button"
-        >
-          CRÉER SA NATION
-        </button>
+        <Button path="" text="CRÉER SA NATION" type="submit" />
       </form>
     </>
   );

@@ -1,12 +1,17 @@
 import { useAtom } from "jotai";
-import { EmptyNation, confirmBox, infoModal, nationAtom } from "../../utils/store";
+import {
+  EmptyNation,
+  confirmBox,
+  infoModal,
+  nationAtom,
+} from "../../settings/store";
 import { useNavigate } from "react-router-dom";
 import { DeleteSelfFetch } from "../../utils/fetch";
 
 export default function ConfirmModal() {
   const [confirm, setConfirm] = useAtom(confirmBox);
   const [, setInfo] = useAtom(infoModal);
-  const [, setNation] = useAtom(nationAtom)
+  const [, setNation] = useAtom(nationAtom);
   const navigate = useNavigate();
 
   return (

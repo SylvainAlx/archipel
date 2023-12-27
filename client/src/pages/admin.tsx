@@ -1,5 +1,5 @@
 import H1 from "../components/titles/h1";
-import { TITLE } from "../utils/consts";
+import { TITLE } from "../settings/consts";
 
 export default function Admin() {
   return (
