@@ -35,7 +35,7 @@ export default function Button({ type, path, text, disabled }: ButtonProps) {
     <button
       disabled={disabled != undefined && disabled}
       type={type != undefined ? type : "button"}
-      className="inline-block rounded-full py-2 px-4 bg-secondary transition-all hover:text-primary hover:bg-light"
+      className="inline-block rounded-full py-2 px-4 bg-secondary transition-all duration-300 hover:text-primary hover:bg-light"
       onClick={handleClick}
     >
       {text}

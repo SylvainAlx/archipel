@@ -40,3 +40,10 @@ export interface ButtonProps {
   export interface Children {
     children: ReactNode;
   }
+
+  export interface NationProps {
+    _id: string,
+    name: string,
+    data: [],
+    createdAt: string
+  }
