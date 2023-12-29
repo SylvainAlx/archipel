@@ -1,8 +1,9 @@
 import { useAtom } from "jotai";
 import { loadingSpinner } from "../../settings/store";
+import Button from "../button";
 
 export default function LoadingSpinner() {
-  const [loading] = useAtom(loadingSpinner);
+  const [loading, setLoading] = useAtom(loadingSpinner);
   return (
     <>
       <h2 className="text-2xl text-center p-4">PATIENTEZ</h2>
@@ -24,6 +25,9 @@ export default function LoadingSpinner() {
             fill="currentFill"
           />
         </svg>
+      </div>
+      <div onClick={() => setLoading({ ...loading, show: false })}>
+        <Button path="/" text="ANNULER" />
       </div>
     </>
   );
