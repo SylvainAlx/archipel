@@ -39,9 +39,11 @@ export default function Register() {
         if (data.nation) {
           localStorage.setItem("jwt", data.jwt);
           setNation({
+            _id: data.nation._id,
             name: data.nation.name,
             role: data.nation.role,
             data: data.nation.data,
+            createdAt: data.nation.createdAt,
           });
           setRecovery(data.recovery);
           navigate("/");
