@@ -2,16 +2,18 @@
 import { useEffect, useState } from "react";
 import H1 from "../components/titles/h1";
 import { getTop100 } from "../utils/fetch";
-import { loadingSpinner } from "../settings/store";
+import { loadingSpinner, selectedNation } from "../settings/store";
 import { useAtom } from "jotai";
 import PublicNationTile from "../components/nations/publicNationTile";
-import { NationProps } from "../types/typProp";
+import { useNavigate } from "react-router-dom";
+import { EmptyNation, Nation } from "../types/typNation";
 
 export default function Nations() {
-  const [nationsList, setNationsList] = useState<NationProps[]>([
-    { _id: "", name: "", data: [], createdAt: "" },
-  ]);
+  const [nationsList, setNationsList] = useState<Nation[]>([EmptyNation]);
   const [, setLoading] = useAtom(loadingSpinner);
+  const [, setNation] = useAtom(selectedNation);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     setLoading({ show: true, text: "Connexion au serveur" });
@@ -32,10 +34,17 @@ export default function Nations() {
         {nationsList != undefined &&
           nationsList.map((nation, i) => {
             return (
-              <div key={i}>
+              <div
+                key={i}
+                onClick={() => {
+                  setNation(nation);
+                  navigate("/dashboard");
+                }}
+              >
                 <PublicNationTile
                   name={nation.name}
                   _id={nation._id}
+                  role={nation.role}
                   data={nation.data}
                   createdAt={nation.createdAt}
                 />

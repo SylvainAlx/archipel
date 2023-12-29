@@ -1,12 +1,8 @@
 import { useAtom } from "jotai";
-import {
-  EmptyNation,
-  confirmBox,
-  infoModal,
-  nationAtom,
-} from "../../settings/store";
+import { confirmBox, infoModal, nationAtom } from "../../settings/store";
 import { useNavigate } from "react-router-dom";
 import { DeleteSelfFetch } from "../../utils/fetch";
+import { EmptyNation } from "../../types/typNation";
 
 export default function ConfirmModal() {
   const [confirm, setConfirm] = useAtom(confirmBox);

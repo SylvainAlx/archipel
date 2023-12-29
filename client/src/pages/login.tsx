@@ -32,9 +32,11 @@ export default function Login() {
         if (data.nation) {
           localStorage.setItem("jwt", data.jwt);
           setNation({
+            _id: data.nation._id,
             name: data.nation.name,
             role: data.nation.role,
             data: data.nation.data,
+            createdAt: data.nation.createdAt,
           });
           navigate("/dashboard");
         } else {

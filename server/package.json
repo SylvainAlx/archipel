@@ -14,7 +14,7 @@
     "mongoose": "^7.0.1",
     "nodemon": "^3.0.1"
   },
-  "name": "archipel-server",
+  "name": "server-navir",
   "version": "1.0.0",
   "main": "index.js",
   "author": "",

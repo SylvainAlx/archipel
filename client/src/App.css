@@ -8,8 +8,8 @@
     --color-main: #081825;
     --color-light: #ffffff;
     --color-secondary: #00818a;
-    --color-complementary: #f7de00;
-    --color-black-alpha: rgb(0 0 0 / 0.2);
+    --color-complementary: #222222;
+    --color-black-alpha: rgba(0, 0, 0, 0.445);
     --color-info: rgba(255, 0, 0, 0.678);
 
     --main-font: 'Montserrat', sans-serif;

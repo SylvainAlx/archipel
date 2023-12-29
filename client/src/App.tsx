@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Routes, Route, BrowserRouter } from "react-router-dom";
 import {
@@ -11,12 +12,13 @@ import Header from "./layouts/header";
 import Footer from "./layouts/footer";
 import "./App.css";
 import { useAtom } from "jotai";
-import { EmptyNation, loadingSpinner, nationAtom } from "./settings/store";
+import { loadingSpinner, nationAtom } from "./settings/store";
 import { useEffect } from "react";
 import { authGet } from "./utils/fetch";
 import { GET_JWT } from "./utils/functions";
 import ModalsRouter from "./router/modalsRouter";
 import { ArchipelRoute } from "./types/typReact";
+import { EmptyNation } from "./types/typNation";
 
 export default function App() {
   const [nation, setNation] = useAtom(nationAtom);
@@ -31,9 +33,11 @@ export default function App() {
           setLoading({ show: false, text: "Connexion au serveur" });
           if (data.name != undefined) {
             setNation({
+              _id: data._id,
               name: data.name,
               role: data.role,
               data: data.data,
+              createdAt: data.createdAt,
             });
           } else {
             setNation(EmptyNation);

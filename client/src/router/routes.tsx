@@ -17,11 +17,10 @@ export const publicRoutes: ArchipelRoute[] = [
   { path: "/", page: <Home /> },
   { path: "/recovery", page: <Recovery /> },
   { path: "/nations", page: <Nations /> },
-];
-
-export const privateRoutes: ArchipelRoute[] = [
   { path: "/dashboard", page: <Dashboard /> },
 ];
+
+export const privateRoutes: ArchipelRoute[] = [];
 export const adminRoutes: ArchipelRoute[] = [
   { path: "/admin", page: <Admin /> },
 ];
