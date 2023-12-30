@@ -1,9 +1,11 @@
 import { atom } from 'jotai'
-import { EmptyNation } from '../types/typNation'
+import { EmptyNation, Nation } from '../types/typNation'
 
 
-export const nationAtom = atom(EmptyNation);
-export const selectedNation = atom(EmptyNation);
+export const nationAtom = atom<Nation>(EmptyNation);
+export const selectedNationAtom = atom<Nation>(EmptyNation);
+export const nationsListAtom = atom<Nation[]>([EmptyNation]);
+
 const atomString: string = "";
 export const recoveryKey = atom(atomString);
 export const confirmBox = atom({action:"", text:"", result:""});

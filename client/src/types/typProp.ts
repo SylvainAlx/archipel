@@ -27,6 +27,10 @@ export interface ButtonProps {
   export interface StringProps {
     text: string;
   }
+
+  export interface NumberProps {
+    text: number;
+  }
   
   export interface ConfirmModalProps {
     text: string,

@@ -1,12 +1,12 @@
 export interface Nation {
-  _id: string,
+  _id?: string,
   name: string,
   role: string,
   data: {
     url: {
       flagUrl: string,
-      bannerUrl: string,
-      websiteUrl: string,
+      bannerUrl?: string,
+      websiteUrl?: string,
     },
     general: {
       motto: string,
@@ -15,14 +15,14 @@ export interface Nation {
       points: number,
       politicalSide: number,
     },
-    distribution: [
+    distribution?: [
       {
         workId: number,
         points: number,
       },
     ],
   },
-  createdAt: string
+  createdAt?: string
 }
 
 export const EmptyNation : Nation = {

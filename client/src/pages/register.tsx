@@ -6,11 +6,13 @@ import {
   infoModal,
   loadingSpinner,
   nationAtom,
+  nationsListAtom,
   recoveryKey,
 } from "../settings/store";
 import H1 from "../components/titles/h1";
 import Input from "../components/form/input";
 import Button from "../components/button";
+import { EmptyNation } from "../types/typNation";
 
 export default function Register() {
   const [name, setName] = useState("");
@@ -19,6 +21,7 @@ export default function Register() {
   const [, setNation] = useAtom(nationAtom);
   const [, setRecovery] = useAtom(recoveryKey);
   const [, setInfo] = useAtom(infoModal);
+  const [, setNationsList] = useAtom(nationsListAtom);
 
   const navigate = useNavigate();
 
@@ -47,6 +50,7 @@ export default function Register() {
           });
           setRecovery(data.recovery);
           navigate("/");
+          setNationsList([EmptyNation]);
         } else {
           setInfo("création impossible : " + data.message);
         }

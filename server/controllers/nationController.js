@@ -11,7 +11,7 @@ export const getAll = async (req, res) => {
 
 export const getTop100 = async (req, res) => {
   try {
-    const nations = await Nation.find({}, "_id name data createdAt").limit(100);
+    const nations = await Nation.find({}, "name role data").limit(100);
     res.status(200).json(nations);
   } catch (error) {
     res.status(400).json({ message: "Aucune nation trouvée" });
