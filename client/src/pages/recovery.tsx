@@ -46,7 +46,10 @@ export default function Recovery() {
           navigate("/login");
         }
       })
-      .catch((error) => alert(error.message));
+      .catch((error) => {
+        setLoading({ show: false, text: "Connexion au serveur" });
+        alert(error.message);
+      });
   };
 
   return (

@@ -1,12 +1,19 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useNavigate } from "react-router-dom";
-import { confirmBox, infoModal } from "../settings/store";
+import {
+  confirmBox,
+  infoModal,
+  nationAtom,
+  selectedNationAtom,
+} from "../settings/store";
 import { useAtom } from "jotai";
 import { ButtonProps } from "../types/typProp";
 
 export default function Button({ type, path, text, disabled }: ButtonProps) {
   const [, setConfirm] = useAtom(confirmBox);
   const [, setInfo] = useAtom(infoModal);
+  const [, setSelectedNation] = useAtom(selectedNationAtom);
+  const [nation] = useAtom(nationAtom);
   const navigate = useNavigate();
 
   const handleClick = () => {
@@ -22,6 +29,9 @@ export default function Button({ type, path, text, disabled }: ButtonProps) {
         text: "Confirmez-vous la suppression définitive de votre nation ?",
         result: "",
       });
+    } else if (path === "dashboard") {
+      setSelectedNation(nation);
+      navigate(path);
     } else if (path === "info") {
       setInfo("");
     } else {

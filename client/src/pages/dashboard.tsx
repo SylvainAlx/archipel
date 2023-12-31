@@ -22,7 +22,7 @@ export default function Dashboard() {
       setNation(selectedNation);
       setOwner(false);
     }
-  }, []);
+  }, [selectedNation]);
 
   return (
     <>

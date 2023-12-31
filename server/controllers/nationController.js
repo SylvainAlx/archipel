@@ -2,7 +2,11 @@ import Nation from "../models/nationSchema.js";
 
 export const getAll = async (req, res) => {
   try {
-    const nations = await Nation.find({}, "name data");
+    const searchText = req.query.texteRecherche;
+    const nations = await Nation.find(
+      { name: { $regex: searchText, $options: "i" } },
+      "name role data"
+    );
     res.status(200).json(nations);
   } catch (error) {
     res.status(400).json({ message: "aucune nations" });

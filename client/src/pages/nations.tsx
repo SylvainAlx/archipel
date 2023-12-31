@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect } from "react";
+import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import H1 from "../components/titles/h1";
-import { getTop100 } from "../utils/fetch";
+import { getAll, getTop100 } from "../utils/fetch";
 import {
   loadingSpinner,
   nationsListAtom,
@@ -10,11 +10,14 @@ import {
 import { useAtom } from "jotai";
 import PublicNationTile from "../components/nations/publicNationTile";
 import { useNavigate } from "react-router-dom";
+import Input from "../components/form/input";
+import Button from "../components/button";
 
 export default function Nations() {
   const [nationsList, setNationsList] = useAtom(nationsListAtom);
   const [, setLoading] = useAtom(loadingSpinner);
   const [, setNation] = useAtom(selectedNationAtom);
+  const [searchName, setSearchName] = useState("");
 
   const navigate = useNavigate();
 
@@ -32,14 +35,49 @@ export default function Nations() {
     }
   }, []);
 
+  const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
+    setSearchName(e.target.value);
+  };
+
+  const handleSubmit = (e: FormEvent) => {
+    e.preventDefault();
+    setLoading({ show: true, text: "Connexion au serveur" });
+    getAll(searchName)
+      .then((data) => {
+        setLoading({ show: false, text: "Connexion au serveur" });
+        setNationsList(data);
+      })
+      .catch((error) => {
+        setLoading({ show: false, text: "Connexion au serveur" });
+        alert(error.message);
+      });
+  };
+
   return (
     <>
       <H1 text="Liste des nations" />
-      <section className="w-full px-4 flex gap-4 flex-wrap items-center flex-col md:flex-row md:justify-between">
+      <fieldset className="mb-8 py-2 border-complementary border-2 border-solid min-w-[300px] px-4 rounded text-center">
+        <legend>RECHERCHE</legend>
+        <form
+          className="flex flex-col md:flex-row items-center justify-around gap-4"
+          onSubmit={handleSubmit}
+        >
+          <Input
+            required={false}
+            onChange={handleSearch}
+            type="text"
+            placeholder="nom de la nation"
+            value={searchName}
+          />
+          <Button type="submit" disabled={false} text="RECHERCHER" path="" />
+        </form>
+      </fieldset>
+      <section className="w-full px-4 flex gap-8 flex-wrap items-center flex-col md:flex-row md:justify-between">
         {nationsList != undefined &&
           nationsList.map((nation, i) => {
             return (
               <div
+                className="relative hover:scale-105 cursor-pointer transition-all duration-300"
                 key={i}
                 onClick={() => {
                   setNation(nation);
@@ -51,6 +89,9 @@ export default function Nations() {
                   role={nation.role}
                   data={nation.data}
                 />
+                <b className="absolute bottom-[-10px] left-[-10px] pt-[2px] text-[9px] text-center bg-complementary rounded-full w-[20px] h-[20px] border-solid border-[1px] border-secondary">
+                  {i + 1}
+                </b>
               </div>
             );
           })}

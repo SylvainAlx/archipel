@@ -62,3 +62,9 @@ export const getTop100 = async () => {
   const result = await resp.json();
   return result;
 };
+
+export const getAll = async (searchText: string) => {
+  const resp = await fetch(`${SERVER_URL}/nation/getall?texteRecherche=${encodeURIComponent(searchText)}`);
+  const result = await resp.json();
+  return result;
+};

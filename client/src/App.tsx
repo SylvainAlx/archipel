@@ -41,10 +41,14 @@ export default function App() {
             });
           } else {
             setNation(EmptyNation);
+            setLoading({ show: false, text: "Connexion au serveur" });
             localStorage.removeItem("jwt");
           }
         })
-        .catch((error) => alert(error.message));
+        .catch((error) => {
+          setLoading({ show: false, text: "Connexion au serveur" });
+          alert(error.message);
+        });
     } else {
       setNation(EmptyNation);
     }

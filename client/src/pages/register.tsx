@@ -52,10 +52,14 @@ export default function Register() {
           navigate("/");
           setNationsList([EmptyNation]);
         } else {
+          setLoading({ show: false, text: "Connexion au serveur" });
           setInfo("création impossible : " + data.message);
         }
       })
-      .catch((error) => setInfo(error.message));
+      .catch((error) => {
+        setLoading({ show: false, text: "Connexion au serveur" });
+        setInfo(error.message);
+      });
   };
   return (
     <>

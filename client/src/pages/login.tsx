@@ -2,10 +2,16 @@ import { ChangeEvent, FormEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { loginFetch } from "../utils/fetch";
 import { useAtom } from "jotai";
-import { infoModal, loadingSpinner, nationAtom } from "../settings/store";
+import {
+  infoModal,
+  loadingSpinner,
+  nationAtom,
+  nationsListAtom,
+} from "../settings/store";
 import H1 from "../components/titles/h1";
 import Input from "../components/form/input";
 import Button from "../components/button";
+import { EmptyNation } from "../types/typNation";
 
 export default function Login() {
   const [name, setName] = useState("");
@@ -13,6 +19,7 @@ export default function Login() {
   const [, setInfo] = useAtom(infoModal);
   const [, setNation] = useAtom(nationAtom);
   const [, setLoading] = useAtom(loadingSpinner);
+  const [, setNationsList] = useAtom(nationsListAtom);
   const navigate = useNavigate();
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -38,12 +45,17 @@ export default function Login() {
             data: data.nation.data,
             createdAt: data.nation.createdAt,
           });
+          setNationsList([EmptyNation]);
           navigate("/dashboard");
         } else {
+          setLoading({ show: false, text: "Connexion au serveur" });
           setInfo(data.message);
         }
       })
-      .catch((error) => setInfo(error.message));
+      .catch((error) => {
+        setLoading({ show: false, text: "Connexion au serveur" });
+        setInfo(error.message);
+      });
   };
 
   return (

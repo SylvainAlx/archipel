@@ -7,13 +7,14 @@ import {
   IoMdGlobe,
 } from "react-icons/io";
 import { GiBlackFlag } from "react-icons/gi";
-import { confirmBox, nationAtom } from "../settings/store";
+import { confirmBox, nationAtom, selectedNationAtom } from "../settings/store";
 import { useAtom } from "jotai";
 import { ButtonProps } from "../types/typProp";
 import Avatar from "./avatar";
 
 export default function IconLink({ path, text }: ButtonProps) {
   const [, setConfirm] = useAtom(confirmBox);
+  const [, setSelectedNation] = useAtom(selectedNationAtom);
   const [nation] = useAtom(nationAtom);
   const navigate = useNavigate();
 
@@ -24,6 +25,9 @@ export default function IconLink({ path, text }: ButtonProps) {
         text: "Souhaitez-vous vous déconnecter ?",
         result: "",
       });
+    } else if (path === "/dashboard") {
+      setSelectedNation(nation);
+      navigate(path);
     } else {
       navigate(path);
     }
