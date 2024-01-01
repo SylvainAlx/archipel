@@ -9,7 +9,13 @@ import {
 import { useAtom } from "jotai";
 import { ButtonProps } from "../types/typProp";
 
-export default function Button({ type, path, text, disabled }: ButtonProps) {
+export default function Button({
+  type,
+  path,
+  text,
+  disabled,
+  click,
+}: ButtonProps) {
   const [, setConfirm] = useAtom(confirmBox);
   const [, setInfo] = useAtom(infoModal);
   const [, setSelectedNation] = useAtom(selectedNationAtom);
@@ -46,7 +52,7 @@ export default function Button({ type, path, text, disabled }: ButtonProps) {
       disabled={disabled != undefined && disabled}
       type={type != undefined ? type : "button"}
       className="inline-block rounded-full py-2 px-4 bg-secondary transition-all duration-300 hover:text-primary hover:bg-light"
-      onClick={handleClick}
+      onClick={click ? click : handleClick}
     >
       {text}
     </button>

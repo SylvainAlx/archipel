@@ -9,11 +9,11 @@ export interface Nation {
       websiteUrl?: string,
     },
     general: {
-      motto: string,
-      nationalDay: Date,
+      motto?: string,
+      nationalDay?: Date,
       regime: number,
       points: number,
-      politicalSide: number,
+      politicalSide?: number,
     },
     distribution?: [
       {

@@ -1,4 +1,4 @@
-import { ChangeEvent } from "react";
+import { ChangeEvent, MouseEventHandler } from "react";
 import { ReactNode  } from "react";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -17,6 +17,7 @@ export interface ButtonProps {
     path: string;
     text: string;
     disabled?: boolean;
+    click?: MouseEventHandler<HTMLButtonElement>;
   }
   
   export interface BooleanProps {

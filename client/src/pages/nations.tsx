@@ -39,6 +39,19 @@ export default function Nations() {
     setSearchName(e.target.value);
   };
 
+  const handleClick = () => {
+    setSearchName("");
+    setLoading({ show: true, text: "Connexion au serveur" });
+    getTop100()
+      .then((data) => {
+        setLoading({ show: false, text: "Connexion au serveur" });
+        if (data != undefined) {
+          setNationsList(data);
+        }
+      })
+      .catch((error) => alert(error.message));
+  };
+
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     setLoading({ show: true, text: "Connexion au serveur" });
@@ -56,20 +69,27 @@ export default function Nations() {
   return (
     <>
       <H1 text="Liste des nations" />
-      <fieldset className="mb-8 py-2 border-complementary border-2 border-solid min-w-[300px] px-4 rounded text-center">
+      <fieldset className="mb-8 py-2 border-complementary border-2 border-solid min-w-[300px] md:w-full px-4 rounded text-center">
         <legend>RECHERCHE</legend>
         <form
           className="flex flex-col md:flex-row items-center justify-around gap-4"
           onSubmit={handleSubmit}
         >
           <Input
-            required={false}
+            required={true}
             onChange={handleSearch}
             type="text"
             placeholder="nom de la nation"
             value={searchName}
           />
           <Button type="submit" disabled={false} text="RECHERCHER" path="" />
+          <Button
+            type="button"
+            disabled={false}
+            text="RESET"
+            path=""
+            click={handleClick}
+          />
         </form>
       </fieldset>
       <section className="w-full px-4 flex gap-8 flex-wrap items-center flex-col md:flex-row md:justify-between">
