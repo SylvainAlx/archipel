@@ -12,6 +12,14 @@ export interface InputProps {
     value: string;
 }
 
+export interface SelectProps {
+  required?: boolean;
+  options: Array<{id:number, label:string}>;
+  onChange: (event: ChangeEvent<HTMLSelectElement>) => void;
+  value: string;
+
+}
+
 export interface ButtonProps {
     type?: 'button' | 'submit';
     path: string;

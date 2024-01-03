@@ -20,3 +20,10 @@ export const color_secondary = "var(--color-secondary)";
 export const color_complementary = "var(--color-complementary)";
 export const color_light = "var(--color-light)";
 export const color_black_alpha = "var(--color-black-alpha)";
+
+// listes
+
+export const sortOptions = [
+  {id: 0, label: "Date croissante"},
+  {id: 1, label: "Date décroissante"}
+]

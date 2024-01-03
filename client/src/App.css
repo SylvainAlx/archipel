@@ -9,7 +9,7 @@
     --color-light: #ffffff;
     --color-secondary: #00818a;
     --color-complementary: #222222;
-    --color-black-alpha: rgba(0, 0, 0, 0.445);
+    --color-black-alpha: rgba(0, 0, 0, 0.63);
     --color-info: rgba(255, 0, 0, 0.678);
 
     --main-font: 'Montserrat', sans-serif;
@@ -34,9 +34,9 @@ b {
     color: var(--color-secondary);
 }
 
-button[type="submit"] {
+/* button[type="submit"] {
     width: 100%;
-  }
+  } */
   
 input {
 color: var(--color-main);
