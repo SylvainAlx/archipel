@@ -22,7 +22,7 @@ export interface Nation {
       },
     ],
   },
-  createdAt: number
+  createdAt: Date
 }
 
 export const EmptyNation : Nation = {
@@ -49,5 +49,5 @@ export const EmptyNation : Nation = {
         },
     ],
   },
-  createdAt: 0
+  createdAt: new Date(0)
 }

@@ -24,6 +24,8 @@ export const color_black_alpha = "var(--color-black-alpha)";
 // listes
 
 export const sortOptions = [
-  {id: 0, label: "Date croissante"},
-  {id: 1, label: "Date décroissante"}
+  {id: 0, label: "Alphabetique croissant"},
+  {id: 1, label: "Alphabetique décroissant"},
+  {id: 2, label: "Point croissant"},
+  {id: 3, label: "Point décroissant"}
 ]

@@ -39,24 +39,31 @@ export default function Nations() {
   }, []);
 
   useEffect(()=>{
-    console.log(selectOption);
-    
+    let tempList = [...nationsList]
+    if(selectOption === '0') {
+      setNationsList(tempList.sort(function(a, b) {
+        return a.name.localeCompare(b.name);
+      }))
+    } else if(selectOption === '1') {
+      setNationsList(tempList.sort(function(a, b) {
+        return b.name.localeCompare(a.name);
+      }))
+    } else if(selectOption === '2') {
+      setNationsList(tempList.sort(function(a, b) {
+        return a.data.general.points - b.data.general.points
+      }))
+    } else if(selectOption === '3') {
+      setNationsList(tempList.sort(function(a, b) {
+        return b.data.general.points - a.data.general.points
+      }))
+    }
   },[selectOption])
 
   const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchName(e.target.value);
   };
 
-  const sortSelect = (e: ChangeEvent<HTMLSelectElement>) => {
-    setSelectOption(e.target.value);
-    // nationsList.sort(function(a, b) {
-    //   if(reverse){
-    //     return b.createdAt - a.createdAt;
-    //   } else {
-    //     return b.createdAt - a.createdAt;
-    //   }
-    // });
-  }
+
 
   const handleClick = () => {
     setSearchName("");
@@ -110,7 +117,7 @@ export default function Nations() {
             path=""
             click={handleClick}
           />
-          <Select onChange={(e: ChangeEvent<HTMLSelectElement>) => sortSelect(e)} options={sortOptions} value={selectOption}  />
+          <Select onChange={(e: ChangeEvent<HTMLSelectElement>) => setSelectOption(e.target.value)} options={sortOptions}  />
         </form>
       </fieldset>
       <section className="w-full flex gap-8 flex-wrap items-center flex-col ">

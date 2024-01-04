@@ -7,6 +7,7 @@ export default function Nav() {
   return (
     <>
       <IconLink path="/nations" text="EXPLORER" />
+      <IconLink path="/contact" text="CONTACT" />
       {nation.name === "" || nation.name === undefined ? (
         <>
           <IconLink path="/login" text="SE CONNECTER" />
