@@ -5,7 +5,6 @@ import {
   IoMdSettings,
   IoMdLogOut,
   IoMdGlobe,
-  IoIosChatbubbles 
 } from "react-icons/io";
 import { GiBlackFlag } from "react-icons/gi";
 import { confirmBox, nationAtom, selectedNationAtom } from "../settings/store";
@@ -40,7 +39,6 @@ export default function IconLink({ path, text }: ButtonProps) {
       onClick={handleClick}
     >
       {path === "/nations" && <IoMdGlobe />}
-      {path === "/contact" && <IoIosChatbubbles />}
       {path === "/login" && <IoMdLogIn />}
       {path === "/register" && <IoMdAddCircleOutline />}
       {path === "/dashboard" &&

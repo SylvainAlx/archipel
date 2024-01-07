@@ -23,9 +23,17 @@ export const color_black_alpha = "var(--color-black-alpha)";
 
 // listes
 
-export const sortOptions = [
+export const nationSortOptions = [
   {id: 0, label: "Alphabetique croissant"},
   {id: 1, label: "Alphabetique décroissant"},
   {id: 2, label: "Point croissant"},
   {id: 3, label: "Point décroissant"}
+]
+
+// onglets
+
+export const nationTabs = [
+  {id: 0, label: "LISTE DES NATIONS"},
+  {id: 1, label: "STATISTIQUES"},
+  {id: 2, label: "COMMUNICATIONS"},
 ]

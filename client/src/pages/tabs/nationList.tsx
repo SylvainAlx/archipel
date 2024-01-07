@@ -1,22 +1,27 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useAtom } from "jotai";
 import Button from "../../components/button";
 import Input from "../../components/form/input";
-import { loadingSpinner, nationsListAtom, selectedNationAtom } from "../../settings/store";
+import {
+  loadingSpinner,
+  nationsListAtom,
+  selectedNationAtom,
+} from "../../settings/store";
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { sortOptions } from "../../settings/consts";
+import { nationSortOptions } from "../../settings/consts";
 import { getAll, getTop100 } from "../../utils/fetch";
 import H1 from "../../components/titles/h1";
 import PublicNationTile from "../../components/nations/publicNationTile";
 import Select from "../../components/form/select";
+import { StringProps } from "../../types/typProp";
 
-export default function NationList(){
-
-    const [nationsList, setNationsList] = useAtom(nationsListAtom);
+export default function NationList({ text }: StringProps) {
+  const [nationsList, setNationsList] = useAtom(nationsListAtom);
   const [, setLoading] = useAtom(loadingSpinner);
   const [, setNation] = useAtom(selectedNationAtom);
   const [searchName, setSearchName] = useState("");
-  const [selectOption, setSelectOption] = useState(sortOptions[0].label);
+  const [selectOption, setSelectOption] = useState(nationSortOptions[0].label);
 
   const navigate = useNavigate();
 
@@ -32,36 +37,43 @@ export default function NationList(){
         })
         .catch((error) => {
           setLoading({ show: false, text: "Connexion au serveur" });
-          alert(error.message)});
+          alert(error.message);
+        });
     }
   }, []);
 
-  useEffect(()=>{
-    let tempList = [...nationsList]
-    if(selectOption === '0') {
-      setNationsList(tempList.sort(function(a, b) {
-        return a.name.localeCompare(b.name);
-      }))
-    } else if(selectOption === '1') {
-      setNationsList(tempList.sort(function(a, b) {
-        return b.name.localeCompare(a.name);
-      }))
-    } else if(selectOption === '2') {
-      setNationsList(tempList.sort(function(a, b) {
-        return a.data.general.points - b.data.general.points
-      }))
-    } else if(selectOption === '3') {
-      setNationsList(tempList.sort(function(a, b) {
-        return b.data.general.points - a.data.general.points
-      }))
+  useEffect(() => {
+    const tempList = [...nationsList];
+    if (selectOption === "0") {
+      setNationsList(
+        tempList.sort(function (a, b) {
+          return a.name.localeCompare(b.name);
+        })
+      );
+    } else if (selectOption === "1") {
+      setNationsList(
+        tempList.sort(function (a, b) {
+          return b.name.localeCompare(a.name);
+        })
+      );
+    } else if (selectOption === "2") {
+      setNationsList(
+        tempList.sort(function (a, b) {
+          return a.data.general.points - b.data.general.points;
+        })
+      );
+    } else if (selectOption === "3") {
+      setNationsList(
+        tempList.sort(function (a, b) {
+          return b.data.general.points - a.data.general.points;
+        })
+      );
     }
-  },[selectOption])
+  }, [selectOption]);
 
   const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchName(e.target.value);
   };
-
-
 
   const handleClick = () => {
     setSearchName("");
@@ -75,7 +87,8 @@ export default function NationList(){
       })
       .catch((error) => {
         setLoading({ show: false, text: "Connexion au serveur" });
-        alert(error.message)});
+        alert(error.message);
+      });
   };
 
   const handleSubmit = (e: FormEvent) => {
@@ -91,10 +104,10 @@ export default function NationList(){
         alert(error.message);
       });
   };
-  
-    return (
-        <>
-        <H1 text="Liste des nations" />
+
+  return (
+    <>
+      <H1 text={text} />
       <fieldset className="mb-8 py-2 border-complementary border-2 border-solid min-w-[300px] md:w-full px-4 rounded text-center">
         <legend>RECHERCHE</legend>
         <form
@@ -108,15 +121,22 @@ export default function NationList(){
             placeholder="nom de la nation"
             value={searchName}
           />
-          <Button type="submit" disabled={false} text="RECHERCHER" path="" />
-          <Button
-            type="button"
-            disabled={false}
-            text="RÉINITIALISER"
-            path=""
-            click={handleClick}
+          <Select
+            onChange={(e: ChangeEvent<HTMLSelectElement>) =>
+              setSelectOption(e.target.value)
+            }
+            options={nationSortOptions}
           />
-          <Select onChange={(e: ChangeEvent<HTMLSelectElement>) => setSelectOption(e.target.value)} options={sortOptions}  />
+          <div className="flex flex-col md:flex-row gap-2">
+            <Button type="submit" disabled={false} text="RECHERCHER" path="" />
+            <Button
+              type="button"
+              disabled={false}
+              text="RÉINITIALISER"
+              path=""
+              click={handleClick}
+            />
+          </div>
         </form>
       </fieldset>
       <section className="w-full flex gap-8 flex-wrap items-center flex-col ">
@@ -137,13 +157,11 @@ export default function NationList(){
                   data={nation.data}
                   createdAt={nation.createdAt}
                 />
-                <b className="absolute top-0 right-2 font-bolder">
-                  {i + 1}
-                </b>
+                <b className="absolute top-0 right-2 font-bolder">{i + 1}</b>
               </div>
             );
           })}
       </section>
-        </>
-    )
+    </>
+  );
 }
