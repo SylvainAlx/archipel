@@ -3,6 +3,7 @@ import { confirmBox, infoModal, nationAtom } from "../../settings/store";
 import { useNavigate } from "react-router-dom";
 import { DeleteSelfFetch } from "../../utils/fetch";
 import { EmptyNation } from "../../types/typNation";
+import Button from "../button";
 
 export default function ConfirmModal() {
   const [confirm, setConfirm] = useAtom(confirmBox);
@@ -15,9 +16,10 @@ export default function ConfirmModal() {
       <h2 className="text-2xl text-center p-4">DEMANDE DE CONFIRMATION</h2>
       <p className="text-center">{confirm.text}</p>
       <div className="flex gap-4 justify-center my-4">
-        <button
-          className="button"
-          onClick={() => {
+        <Button
+          text="VALIDER"
+          path=""
+          click={() => {
             setConfirm({ action: confirm.action, text: "", result: "OK" });
             if (confirm.action === "logout") {
               setInfo("déconnexion effectuée");
@@ -40,17 +42,14 @@ export default function ConfirmModal() {
                 });
             }
           }}
-        >
-          VALIDER
-        </button>
-        <button
-          className="button"
-          onClick={() =>
+        />
+        <Button
+          text="ANNULER"
+          path=""
+          click={() =>
             setConfirm({ action: confirm.action, text: "", result: "KO" })
           }
-        >
-          ANNULER
-        </button>
+        />
       </div>
     </>
   );

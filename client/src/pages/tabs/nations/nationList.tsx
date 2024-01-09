@@ -1,20 +1,20 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useAtom } from "jotai";
-import Button from "../../components/button";
-import Input from "../../components/form/input";
+import Button from "../../../components/button";
+import Input from "../../../components/form/input";
 import {
   loadingSpinner,
   nationsListAtom,
   selectedNationAtom,
-} from "../../settings/store";
+} from "../../../settings/store";
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { nationSortOptions } from "../../settings/consts";
-import { getAll, getTop100 } from "../../utils/fetch";
-import H1 from "../../components/titles/h1";
-import PublicNationTile from "../../components/nations/publicNationTile";
-import Select from "../../components/form/select";
-import { StringProps } from "../../types/typProp";
+import { nationSortOptions } from "../../../settings/consts";
+import { getAll, getTop100 } from "../../../utils/fetch";
+import H1 from "../../../components/titles/h1";
+import PublicNationTile from "../../../components/nations/publicNationTile";
+import Select from "../../../components/form/select";
+import { StringProps } from "../../../types/typProp";
 
 export default function NationList({ text }: StringProps) {
   const [nationsList, setNationsList] = useAtom(nationsListAtom);

@@ -37,3 +37,9 @@ export const nationTabs = [
   {id: 1, label: "STATISTIQUES"},
   {id: 2, label: "COMMUNICATIONS"},
 ]
+
+export const DashboardTabs = [
+  {id: 0, label: "TABLEAU DE BORD"},
+  {id: 1, label: "PARAMETRES"},
+  {id: 2, label: "CONTACT"},
+]

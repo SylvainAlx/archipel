@@ -16,7 +16,12 @@ export interface SelectProps {
   required?: boolean;
   options: Array<{id:number, label:string}>;
   onChange: (event: ChangeEvent<HTMLSelectElement>) => void;
+}
 
+export interface TabNavProps {
+  tabs: Array<{id:number, label:string}>;
+  tabId: number;
+  setTab: React.Dispatch<React.SetStateAction<{id:number, label:string}>>; 
 }
 
 export interface ButtonProps {
