@@ -9,7 +9,7 @@ const server = {
   dev : "http://localhost:3000"
 }
 
-export const SERVER_URL = server.dev;
+export const SERVER_URL = server.prod;
 
 export const COM_TYP = [
   {id:0, label: "Test serveur"},
