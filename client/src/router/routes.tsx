@@ -9,6 +9,7 @@ import Recovery from "../pages/recovery";
 import Register from "../pages/register";
 import { ArchipelRoute } from "../types/typReact";
 
+
 export const authRoutes: ArchipelRoute[] = [
   { path: "/login", page: <Login /> },
   { path: "/register", page: <Register /> },

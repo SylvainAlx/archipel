@@ -18,8 +18,8 @@ export default function ModalsRouter() {
 
   if (recovery != "" || confirm.text != "" || info != "" || loading.show) {
     return (
-      <div className="animate-in fade-in z-20 absolute top-0 w-[100vw] h-[100vh] backdrop-blur-sm bg-black_alpha flex items-center justify-center">
-        <div className="w-[40%] min-w-min bg-slate-800 rounded-md p-6 flex flex-col items-center gap-4">
+      <div className="animate-in fade-in z-20 fixed top-0 w-[100%] h-[100%] backdrop-blur-sm bg-black_alpha flex items-center justify-center">
+        <div className="w-[350px] bg-slate-800 rounded-md p-6 flex flex-col items-center gap-4">
           {recovery != "" && <RecoveryModal />}
           {confirm.text != "" && <ConfirmModal />}
           {info != "" && <InfoModal />}

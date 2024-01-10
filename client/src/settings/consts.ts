@@ -1,3 +1,7 @@
+// Auth
+
+export const MDP_LOBBY = "navir2024"
+
 //  server
 
 const server = {
@@ -5,7 +9,13 @@ const server = {
   dev : "http://localhost:3000"
 }
 
-export const SERVER_URL = server.prod;
+export const SERVER_URL = server.dev;
+
+export const COM_TYP = [
+  {id:0, label: "Test serveur"},
+  {id:1, label: "Nouvelle nation"},
+  {id:2, label: "Suppression d'une nation"}
+]
 
 // Titles
 
@@ -33,13 +43,7 @@ export const nationSortOptions = [
 // onglets
 
 export const nationTabs = [
-  {id: 0, label: "LISTE DES NATIONS"},
-  {id: 1, label: "STATISTIQUES"},
-  {id: 2, label: "COMMUNICATIONS"},
-]
-
-export const DashboardTabs = [
-  {id: 0, label: "TABLEAU DE BORD"},
-  {id: 1, label: "PARAMETRES"},
-  {id: 2, label: "CONTACT"},
+  {id: 0, label: "ACTUALITES"},
+  {id: 1, label: "LISTE DES NATIONS"},
+  {id: 2, label: "STATISTIQUES"},
 ]

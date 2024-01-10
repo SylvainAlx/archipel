@@ -11,9 +11,9 @@ export default function Nations() {
   return (
     <>
       <TabNav tabs={nationTabs} tabId={tab.id} setTab={setTab} />
-      {tab.id === 0 && <NationList text={tab.label} />}
-      {tab.id === 1 && <NationStatistics text={tab.label} />}
-      {tab.id === 2 && <NationComs text={tab.label} />}
+      {tab.id === 0 && <NationComs text={tab.label} />}
+      {tab.id === 1 && <NationList text={tab.label} />}
+      {tab.id === 2 && <NationStatistics text={tab.label} />}
     </>
   );
 }

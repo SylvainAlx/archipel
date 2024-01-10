@@ -2,10 +2,10 @@ import mongoose from "mongoose";
 import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
-import authRouter from "./routers/authRouter.js";
 import { home } from "./views/serverHome.js";
+import authRouter from "./routers/authRouter.js";
 import nationRouter from "./routers/nationRouter.js";
-import workRouter from "./routers/workRouter.js";
+import comRouter from "./routers/comRouter.js";
 
 //config serveur
 const app = express();
@@ -31,6 +31,6 @@ app.listen(PORT, () => {
   console.log(`server running at PORT : ${PORT}`);
   app.use("/auth", authRouter);
   app.use("/nation", nationRouter);
-  app.use("/work", workRouter);
+  app.use("/com", comRouter);
   app.use("/", home);
 });

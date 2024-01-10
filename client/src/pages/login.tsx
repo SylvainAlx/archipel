@@ -38,6 +38,7 @@ export default function Login() {
         setLoading({ show: false, text: "Connexion au serveur" });
         if (data.nation) {
           localStorage.setItem("jwt", data.jwt);
+          setNationsList([EmptyNation]);
           setNation({
             _id: data.nation._id,
             name: data.nation.name,
@@ -45,8 +46,7 @@ export default function Login() {
             data: data.nation.data,
             createdAt: data.nation.createdAt,
           });
-          setNationsList([EmptyNation]);
-          navigate("/dashboard");
+          navigate("/dashboard")
         } else {
           setLoading({ show: false, text: "Connexion au serveur" });
           setInfo(data.message);

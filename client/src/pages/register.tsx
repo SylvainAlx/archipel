@@ -1,8 +1,9 @@
 import { ChangeEvent, FormEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { registerFetch } from "../utils/fetch";
+import { createCom, registerFetch } from "../utils/fetch";
 import { useAtom } from "jotai";
 import {
+  comsListAtom,
   infoModal,
   loadingSpinner,
   nationAtom,
@@ -13,6 +14,8 @@ import H1 from "../components/titles/h1";
 import Input from "../components/form/input";
 import Button from "../components/button";
 import { EmptyNation } from "../types/typNation";
+import { COM_TYP } from "../settings/consts";
+import { EmptyCom } from "../types/typCom";
 
 export default function Register() {
   const [name, setName] = useState("");
@@ -22,6 +25,7 @@ export default function Register() {
   const [, setRecovery] = useAtom(recoveryKey);
   const [, setInfo] = useAtom(infoModal);
   const [, setNationsList] = useAtom(nationsListAtom);
+  const [, setComsList] = useAtom(comsListAtom);
 
   const navigate = useNavigate();
 
@@ -40,7 +44,15 @@ export default function Register() {
       .then((data) => {
         setLoading({ show: false, text: "Connexion au serveur" });
         if (data.nation) {
+          createCom({
+            originId: data.nation._id,
+            originName : data.nation.name,
+            comType: COM_TYP[1].id,
+          });
           localStorage.setItem("jwt", data.jwt);
+          setRecovery(data.recovery);
+          setNationsList([EmptyNation]);
+          setComsList([EmptyCom]);
           setNation({
             _id: data.nation._id,
             name: data.nation.name,
@@ -48,9 +60,7 @@ export default function Register() {
             data: data.nation.data,
             createdAt: data.nation.createdAt,
           });
-          setRecovery(data.recovery);
-          navigate("/");
-          setNationsList([EmptyNation]);
+          navigate("/dashboard")
         } else {
           setLoading({ show: false, text: "Connexion au serveur" });
           setInfo("création impossible : " + data.message);

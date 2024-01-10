@@ -1,0 +1,45 @@
+import Com from "../models/comSchema.js";
+
+export const getAll = async (req, res) => {
+    try {
+      const coms = await Com.find();
+      res.status(200).json(coms);
+    } catch (error) {
+      res.status(400).json({ message: "aucune communication" });
+    }
+  };
+
+export const createCom = async (req, res) => {
+    try {
+        const { originId, originName, title, comType, message } = req.body;
+
+        const com = new Com({
+        originId,
+        originName,
+        title,
+        comType,
+        message
+        });
+        com
+        .save()
+        .then((com) => {
+            res.status(201).json({ com });
+        })
+
+        .catch((error) => {
+            if (error.code === 11000) {
+            res.status(400).json({
+                message: "informations déjà existantes dans la base de données",
+                erreur: error.keyValue,
+            });
+            } else {
+            res.status(400).json({
+                message: `certaines informations sont erronées ou manquantes`,
+                erreur: error.message
+            });
+            }
+        });
+    } catch (error) {
+        res.status(400).json({ error });
+    }
+};

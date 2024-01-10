@@ -51,7 +51,7 @@ export default function Button({
     <button
       disabled={disabled != undefined && disabled}
       type={type != undefined ? type : "button"}
-      className="w-full max-w-[300px] inline-block rounded-full py-2 px-4 bg-secondary transition-all duration-300 hover:text-primary hover:bg-light"
+      className={`w-full max-w-[300px] inline-block rounded-full py-2 px-4 transition-all duration-300 bg-secondary hover:text-primary hover:bg-light`}
       onClick={click ? click : handleClick}
     >
       {text}

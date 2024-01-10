@@ -8,3 +8,11 @@ export interface AuthPayload {
     recovery: string;
     newPassword: string;
   }
+
+  export interface ComPayload {
+    originId: string;
+    originName : string;
+    title?: string;
+    comType: number;
+    message?: string;
+  }

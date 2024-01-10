@@ -1,4 +1,4 @@
-import mongoose, { Mongoose } from "mongoose";
+import mongoose from "mongoose";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
@@ -55,15 +55,7 @@ const nationSchema = mongoose.Schema(
           default: -1,
         },
       },
-      distribution: [
-        {
-          workId: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "Work",
-          },
-          points: Number,
-        },
-      ],
+      distribution: [],
     },
   },
   {
