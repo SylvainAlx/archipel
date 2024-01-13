@@ -46,7 +46,7 @@ export default function Login() {
             data: data.nation.data,
             createdAt: data.nation.createdAt,
           });
-          navigate("/dashboard")
+          navigate("/dashboard");
         } else {
           setLoading({ show: false, text: "Connexion au serveur" });
           setInfo(data.message);

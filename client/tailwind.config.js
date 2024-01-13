@@ -12,6 +12,8 @@ export default {
         complementary: "var(--color-complementary)",
         info: "var(--color-info)",
         black_alpha: "var(--color-black-alpha)",
+        success: "var(--color-success)",
+        fail: "var(--color-fail)",
       },
     },
   },

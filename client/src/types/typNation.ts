@@ -1,5 +1,5 @@
 export interface Nation {
-  _id?: string,
+  _id: string,
   name: string,
   role: string,
   data: {

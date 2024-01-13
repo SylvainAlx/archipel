@@ -1,15 +1,24 @@
-import { useAtom } from "jotai";
-import { confirmBox, infoModal, nationAtom } from "../../settings/store";
-import { useNavigate } from "react-router-dom";
-import { DeleteSelfFetch } from "../../utils/fetch";
-import { EmptyNation } from "../../types/typNation";
-import Button from "../button";
+import { useAtom } from 'jotai'
+import {
+  comsListAtom,
+  confirmBox,
+  infoModal,
+  nationAtom,
+  nationsListAtom,
+} from '../../settings/store'
+import { useNavigate } from 'react-router-dom'
+import { DeleteSelfFetch, createCom } from '../../utils/fetch'
+import { EmptyNation } from '../../types/typNation'
+import Button from '../button'
+import { EmptyCom } from '../../types/typCom'
 
 export default function ConfirmModal() {
-  const [confirm, setConfirm] = useAtom(confirmBox);
-  const [, setInfo] = useAtom(infoModal);
-  const [, setNation] = useAtom(nationAtom);
-  const navigate = useNavigate();
+  const [confirm, setConfirm] = useAtom(confirmBox)
+  const [, setInfo] = useAtom(infoModal)
+  const [nation, setNation] = useAtom(nationAtom)
+  const [, setComsList] = useAtom(comsListAtom)
+  const [, setNationsList] = useAtom(nationsListAtom)
+  const navigate = useNavigate()
 
   return (
     <>
@@ -20,26 +29,33 @@ export default function ConfirmModal() {
           text="VALIDER"
           path=""
           click={() => {
-            setConfirm({ action: confirm.action, text: "", result: "OK" });
-            if (confirm.action === "logout") {
-              setInfo("déconnexion effectuée");
-              setNation(EmptyNation);
-              localStorage.removeItem("jwt");
-              navigate("/");
+            setConfirm({ action: confirm.action, text: '', result: 'OK' })
+            if (confirm.action === 'logout') {
+              setInfo('déconnexion effectuée')
+              setNation(EmptyNation)
+              localStorage.removeItem('jwt')
+              navigate('/')
               // window.location.reload();
             }
-            if (confirm.action === "delete") {
+            if (confirm.action === 'delete') {
               DeleteSelfFetch()
                 .then((resp) => {
-                  setInfo(resp.message);
-                  setNation(EmptyNation);
-                  localStorage.removeItem("jwt");
-                  navigate("/");
+                  createCom({
+                    originId: nation._id,
+                    originName: nation.name,
+                    comType: 2,
+                  })
+                  setComsList([EmptyCom])
+                  setNationsList([EmptyNation])
+                  setInfo(resp.message)
+                  setNation(EmptyNation)
+                  localStorage.removeItem('jwt')
+                  navigate('/')
                   // window.location.reload();
                 })
                 .catch((error) => {
-                  console.log(error);
-                });
+                  console.log(error)
+                })
             }
           }}
         />
@@ -47,10 +63,10 @@ export default function ConfirmModal() {
           text="ANNULER"
           path=""
           click={() =>
-            setConfirm({ action: confirm.action, text: "", result: "KO" })
+            setConfirm({ action: confirm.action, text: '', result: 'KO' })
           }
         />
       </div>
     </>
-  );
+  )
 }

@@ -46,7 +46,7 @@ export default function Register() {
         if (data.nation) {
           createCom({
             originId: data.nation._id,
-            originName : data.nation.name,
+            originName: data.nation.name,
             comType: COM_TYP[1].id,
           });
           localStorage.setItem("jwt", data.jwt);
@@ -60,7 +60,7 @@ export default function Register() {
             data: data.nation.data,
             createdAt: data.nation.createdAt,
           });
-          navigate("/dashboard")
+          navigate("/dashboard");
         } else {
           setLoading({ show: false, text: "Connexion au serveur" });
           setInfo("création impossible : " + data.message);
