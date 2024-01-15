@@ -5,8 +5,8 @@ export const MDP_LOBBY = "navir2024"
 //  server
 
 const server = {
-  prod : "https://archipel-server.onrender.com",
-  dev : "http://localhost:3000"
+  prod : import.meta.env.VITE_SERVER_URL_PROD,
+  dev : import.meta.env.VITE_SERVER_URL_DEV
 }
 
 export const SERVER_URL = server.prod;
