@@ -69,6 +69,7 @@ export default function Login() {
           required={true}
           onChange={handleChange}
           type="text"
+          name="name"
           placeholder="Nom de la nation"
           value={name}
         />
@@ -76,6 +77,7 @@ export default function Login() {
           required={true}
           onChange={handleChange}
           type="password"
+          name="password"
           placeholder="Mot de passe"
           value={password}
         />

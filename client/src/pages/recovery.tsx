@@ -63,6 +63,7 @@ export default function Recovery() {
           required={true}
           onChange={handleChange}
           type="text"
+          name="name"
           placeholder="Nom de la nation"
           value={name}
         />
@@ -77,6 +78,7 @@ export default function Recovery() {
           required={true}
           onChange={handleChange}
           type="password"
+          name="password"
           placeholder="Nouveau mot de passe"
           value={password}
         />
@@ -87,6 +89,7 @@ export default function Recovery() {
             setPasswordsMatch(password === e.target.value);
           }}
           type="password"
+          name="confirm"
           placeholder="Confirmer le mot de passe"
           value={confirmPassword}
         />

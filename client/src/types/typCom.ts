@@ -1,15 +1,19 @@
 export interface Com  {
+    _id: string;
     originId: string;
     originName : string;
-    title?: string;
+    title: string;
     comType: number;
-    message?: string;
+    message: string;
     createdAt: Date;
 }
 
 export const EmptyCom: Com = {
+    _id: "",
     originId: "",
     originName: "",
-    comType: 0,
+    title: "",
+    comType: -1,
+    message: "",
     createdAt: new Date
 }

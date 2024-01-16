@@ -7,7 +7,7 @@ import {
   nationsListAtom,
 } from '../../settings/store'
 import { useNavigate } from 'react-router-dom'
-import { DeleteSelfFetch, createCom } from '../../utils/fetch'
+import { DeleteCom, DeleteSelfFetch, createCom } from '../../utils/fetch'
 import { EmptyNation } from '../../types/typNation'
 import Button from '../button'
 import { EmptyCom } from '../../types/typCom'
@@ -37,7 +37,7 @@ export default function ConfirmModal() {
               navigate('/')
               // window.location.reload();
             }
-            if (confirm.action === 'delete') {
+            if (confirm.action === 'deleteSelfNation') {
               DeleteSelfFetch()
                 .then((resp) => {
                   createCom({
@@ -52,6 +52,16 @@ export default function ConfirmModal() {
                   localStorage.removeItem('jwt')
                   navigate('/')
                   // window.location.reload();
+                })
+                .catch((error) => {
+                  console.log(error)
+                })
+            }
+            if (confirm.action === 'deleteCom') {
+              DeleteCom(confirm.target)
+                .then((resp) => {
+                  setComsList([EmptyCom])
+                  setInfo(resp.message)
                 })
                 .catch((error) => {
                   console.log(error)

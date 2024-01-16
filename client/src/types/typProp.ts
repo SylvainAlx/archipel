@@ -1,4 +1,4 @@
-import { ChangeEvent, MouseEventHandler } from "react";
+import { ChangeEvent, FormEvent, MouseEventHandler } from "react";
 import { ReactNode  } from "react";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -8,6 +8,7 @@ export interface InputProps {
     required?: boolean;
     onChange: (event: ChangeEvent<HTMLInputElement>) => void;
     type: string;
+    name: string;
     placeholder: string;
     value: string;
 }
@@ -46,7 +47,7 @@ export interface ButtonProps {
   }
   
   export interface ConfirmModalProps {
-    text: string,
+    text: string;
     result: string;
   }
 
@@ -56,4 +57,10 @@ export interface ButtonProps {
   
   export interface Children {
     children: ReactNode;
+  }
+
+  export interface FormProps {
+    children: JSX.Element;
+    title: string;
+    submit: (event: FormEvent) => void;
   }

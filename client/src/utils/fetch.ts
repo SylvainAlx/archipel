@@ -86,3 +86,13 @@ export const getAllComs = async () => {
   const result = await resp.json();
   return result;
 };
+
+export const DeleteCom = async (id: string) => {
+  const jwt = GET_JWT();
+  const resp = await fetch(`${SERVER_URL}/com/delete/${id}`, {
+    method: "DELETE",
+    headers: { authorization: `Bearer ${jwt}` },
+  });
+  const result = await resp.json();
+  return result;
+};

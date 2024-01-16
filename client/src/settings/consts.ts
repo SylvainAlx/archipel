@@ -14,7 +14,8 @@ export const SERVER_URL = server.prod;
 export const COM_TYP = [
   {id:0, label: "Test serveur"},
   {id:1, label: "Nouvelle nation"},
-  {id:2, label: "Suppression d'une nation"}
+  {id:2, label: "Suppression d'une nation"},
+  {id:3, label: "Annonce"},
 ]
 
 // Titles

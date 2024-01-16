@@ -31,7 +31,7 @@ export default function Button({
       });
     } else if (path === "delete") {
       setConfirm({
-        action: "delete",
+        action: "deleteSelfNation",
         text: "Confirmez-vous la suppression définitive de votre nation ?",
         result: "",
       });

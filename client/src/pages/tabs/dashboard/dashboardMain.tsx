@@ -24,6 +24,7 @@ export default function DashboardMain() {
     }
   }, [selectedNation]);
 
+
   return (
     <>
       <H2 text={nation.name} />

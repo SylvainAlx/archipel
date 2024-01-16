@@ -124,6 +124,7 @@ export default function NationList({ text }: StringProps) {
             required={true}
             onChange={handleSearch}
             type="text"
+            name="name"
             placeholder="nom de la nation"
             value={searchName}
           />
@@ -151,7 +152,7 @@ export default function NationList({ text }: StringProps) {
             if (i < displayedNations) {
               return (
                 <div
-                  className="w-[300px] md:w-full relative hover:scale-[101%] cursor-pointer transition-all duration-300"
+                  className="min-w-[300px] w-full relative hover:scale-[101%] cursor-pointer transition-all duration-300"
                   key={i}
                   onClick={() => {
                     setNation(nation);

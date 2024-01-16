@@ -2,7 +2,7 @@ import { useState } from "react";
 import TabNav from "../components/tabNav";
 import DashboardMain from "./tabs/dashboard/dashboardMain";
 import DashboardSettings from "./tabs/dashboard/dashboardSettings";
-import DashboardContact from "./tabs/dashboard/dashboardContact";
+import DashboardCom from "./tabs/dashboard/dashboardCom";
 import { nationAtom, selectedNationAtom } from "../settings/store";
 import { useAtom } from "jotai";
 
@@ -31,7 +31,7 @@ export default function Dashboard() {
       <TabNav tabs={DashboardTabs} tabId={tab.id} setTab={setTab} />
       {tab.id === 0 && <DashboardMain />}
       {tab.id === 1 && <DashboardSettings text={tab.label} />}
-      {tab.id === 2 && <DashboardContact text={tab.label} />}
+      {tab.id === 2 && <DashboardCom text={tab.label} />}
     </>
   );
 }
