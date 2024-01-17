@@ -5,7 +5,7 @@ export const getAll = async (req, res) => {
     const searchText = req.query.texteRecherche;
     const nations = await Nation.find(
       { name: { $regex: searchText, $options: "i" } },
-      "name role data.general.points data.general.regime data.url.flagUrl createdAt"
+      "name role data.general data.url createdAt"
     );
     res.status(200).json(nations);
   } catch (error) {

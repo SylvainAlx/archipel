@@ -9,6 +9,12 @@
       "options": {
         "parser": "typescript"
       }
+    },
+    {
+      "files": ["*.css", "*.scss"],
+      "options": {
+        "parser": "css"
+      }
     }
   ]
 }

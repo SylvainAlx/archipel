@@ -1,47 +1,48 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Montserrat&display=swap");
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-
-
 #root {
-    --color-main: #081825;
-    --color-light: #ffffff;
-    --color-secondary: #00818a;
-    --color-complementary: #222222;
-    --color-black-alpha: rgba(0, 0, 0, 0.63);
-    --color-info: rgba(255, 0, 0, 0.678);
-    --color-success: rgb(0, 65, 43);
-    --color-fail: rgb(124, 27, 27);
+  --color-main: #081825;
+  --color-light: #ffffff;
+  --color-secondary: #00818a;
+  --color-complementary: #222222;
+  --color-black-alpha: rgba(0, 0, 0, 0.63);
+  --color-info: rgb(0, 156, 218);
+  --color-success: rgb(0, 65, 43);
+  --color-danger: rgb(124, 27, 27);
 
-    --main-font: 'Montserrat', sans-serif;
+  --main-font: "Montserrat", sans-serif;
 
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 
-
-    min-height: 100vh;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    /* justify-content: space-between; */
-    font-synthesis: none;
-    text-rendering: optimizeLegibility;
-    font-family: var(--main-font);
-    color: var(--color-light);
-    background-color: var(--color-main);
+  min-height: 100vh;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  /* justify-content: space-between; */
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  font-family: var(--main-font);
+  color: var(--color-light);
+  background-color: var(--color-main);
 }
 
 b {
-    color: var(--color-secondary);
+  color: var(--color-secondary);
+}
+
+em {
+  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+  font-style: italic;
 }
 
 /* button[type="submit"] {
     width: 100%;
   } */
-  
-input {
-color: var(--color-main);
-}
 
+input {
+  color: var(--color-main);
+}

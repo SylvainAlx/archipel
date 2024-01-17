@@ -1,8 +1,8 @@
 import { Nation } from "../../types/typNation";
 import { GiBlackFlag } from "react-icons/gi";
-import Points from "../points";
+import Tag from "../tag";
 
-export default function PublicNationTile({ name, data }: Nation) {
+export default function PublicNationTile({ name, data, role }: Nation) {
   // const createdAtDate: Date = new Date(createdAt);
   // const formattedDate: string = createdAtDate.toLocaleDateString();
 
@@ -24,7 +24,16 @@ export default function PublicNationTile({ name, data }: Nation) {
         </div>
         <h2 className="text-light text-xl pl-4 pr-6">{name}</h2>
       </div>
-      <Points text={data.general.points} />
+      <div className="flex gap-2 self-end flex-wrap justify-end">
+        {role === "admin" && <Tag text="admin" bgColor="bg-info" />}
+        <Tag
+          text={data.general.points.toString() + " points"}
+          bgColor="bg-secondary"
+        />
+        {data.general.regime === -1 && (
+          <Tag text="régime politique inconnu" bgColor="bg-danger" />
+        )}
+      </div>
 
       {/* <em className="text-[8px]">{formattedDate}</em> */}
     </div>

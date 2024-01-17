@@ -13,7 +13,7 @@ export default {
         info: "var(--color-info)",
         black_alpha: "var(--color-black-alpha)",
         success: "var(--color-success)",
-        fail: "var(--color-fail)",
+        danger: "var(--color-danger)",
       },
     },
   },

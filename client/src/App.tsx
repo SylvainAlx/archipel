@@ -1,50 +1,50 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route } from "react-router-dom";
 import {
   adminRoutes,
   authRoutes,
   privateRoutes,
   publicRoutes,
-} from './router/routes'
+} from "./router/routes";
 
-import Header from './layouts/header'
-import Footer from './layouts/footer'
-import './App.css'
-import { useAtom } from 'jotai'
+import Header from "./layouts/header";
+import Footer from "./layouts/footer";
+import "./App.css";
+import { useAtom } from "jotai";
 import {
   loadingSpinner,
   nationAtom,
   selectedNationAtom,
   showApp,
-} from './settings/store'
-import { useEffect } from 'react'
-import { authGet } from './utils/fetch'
-import { GET_JWT } from './utils/functions'
-import ModalsRouter from './router/modalsRouter'
-import { ArchipelRoute } from './types/typReact'
-import { EmptyNation } from './types/typNation'
-import Lobby from './pages/lobby'
-import { MDP_LOBBY } from './settings/consts'
+} from "./settings/store";
+import { useEffect } from "react";
+import { authGet } from "./utils/fetch";
+import { GET_JWT } from "./utils/functions";
+import ModalsRouter from "./router/modalsRouter";
+import { ArchipelRoute } from "./types/typReact";
+import { EmptyNation } from "./types/typNation";
+import Lobby from "./pages/lobby";
+import { MDP_LOBBY } from "./settings/consts";
 
 export default function App() {
-  const [nation, setNation] = useAtom(nationAtom)
-  const [, setSelectedNation] = useAtom(selectedNationAtom)
-  const [, setLoading] = useAtom(loadingSpinner)
-  const [showApplication, setShowApplication] = useAtom(showApp)
+  const [nation, setNation] = useAtom(nationAtom);
+  const [, setSelectedNation] = useAtom(selectedNationAtom);
+  const [, setLoading] = useAtom(loadingSpinner);
+  const [showApplication, setShowApplication] = useAtom(showApp);
 
   useEffect(() => {
-    const jwt = GET_JWT()
-    const lobbyToken = localStorage.getItem('lobbyToken')
+    const jwt = GET_JWT();
+    const lobbyToken = localStorage.getItem("lobbyToken");
     if (lobbyToken === MDP_LOBBY) {
-      setShowApplication(true)
+      setShowApplication(true);
     }
     if (jwt) {
-      setShowApplication(true)
-      setLoading({ show: true, text: 'Connexion au serveur' })
+      setShowApplication(true);
+      setLoading({ show: true, text: "Connexion au serveur" });
       authGet(jwt)
         .then((data) => {
-          setLoading({ show: false, text: 'Connexion au serveur' })
+          setLoading({ show: false, text: "Connexion au serveur" });
           if (data.name != undefined) {
             setNation({
               _id: data._id,
@@ -52,28 +52,28 @@ export default function App() {
               role: data.role,
               data: data.data,
               createdAt: data.createdAt,
-            })
+            });
           } else {
-            setNation(EmptyNation)
-            setLoading({ show: false, text: 'Connexion au serveur' })
-            localStorage.removeItem('jwt')
+            setNation(EmptyNation);
+            setLoading({ show: false, text: "Connexion au serveur" });
+            localStorage.removeItem("jwt");
           }
         })
         .catch((error) => {
-          setLoading({ show: false, text: 'Connexion au serveur' })
-          alert(error.message)
-        })
+          setLoading({ show: false, text: "Connexion au serveur" });
+          alert(error.message);
+        });
     } else {
-      setNation(EmptyNation)
+      setNation(EmptyNation);
     }
-  }, [])
+  }, []);
 
   useEffect(() => {
-    console.log(nation)
-    if (nation.name != '') {
-      setSelectedNation(nation)
+    console.log(nation);
+    if (nation.name != "") {
+      setSelectedNation(nation);
     }
-  }, [nation])
+  }, [nation]);
 
   return (
     <>
@@ -85,14 +85,14 @@ export default function App() {
               {publicRoutes.map((route: ArchipelRoute, i: number) => (
                 <Route path={route.path} element={route.page} key={i} />
               ))}
-              {nation.name != ''
+              {nation.name != ""
                 ? privateRoutes.map((route: ArchipelRoute, i: number) => (
                     <Route path={route.path} element={route.page} key={i} />
                   ))
                 : authRoutes.map((route: ArchipelRoute, i: number) => (
                     <Route path={route.path} element={route.page} key={i} />
                   ))}
-              {nation.role === 'admin' &&
+              {nation.role === "admin" &&
                 adminRoutes.map((route: ArchipelRoute, i: number) => (
                   <Route path={route.path} element={route.page} key={i} />
                 ))}
@@ -105,5 +105,5 @@ export default function App() {
         <Lobby />
       )}
     </>
-  )
+  );
 }
