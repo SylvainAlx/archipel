@@ -69,7 +69,6 @@ export default function App() {
   }, []);
 
   useEffect(() => {
-    console.log(nation);
     if (nation.name != "") {
       setSelectedNation(nation);
     }

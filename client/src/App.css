@@ -43,6 +43,7 @@ em {
     width: 100%;
   } */
 
-input {
+input,
+textarea {
   color: var(--color-main);
 }

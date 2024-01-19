@@ -38,7 +38,7 @@ export interface BooleanProps {
 }
 
 export interface StringProps {
-  text: string;
+  text: string | number;
 }
 
 export interface NumberProps {
@@ -73,4 +73,14 @@ export interface DashTileProps {
 export interface TagProps {
   text: string;
   bgColor?: string;
+}
+
+export interface TextAreaProps {
+  required?: boolean;
+  onChange: (event: ChangeEvent<HTMLTextAreaElement>) => void;
+  name: string;
+  placeholder: string;
+  value: string;
+  maxLength: number;
+  rows?: number;
 }

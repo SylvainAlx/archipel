@@ -14,6 +14,7 @@ import { getAllComs } from "../../../utils/fetch";
 import Button from "../../../components/button";
 import { IoMdTrash } from "react-icons/io";
 import { COM_TYP } from "../../../settings/consts";
+import { dateToString } from "../../../utils/functions";
 
 export default function NationComs({ text }: StringProps) {
   const [, setLoading] = useAtom(loadingSpinner);
@@ -43,11 +44,6 @@ export default function NationComs({ text }: StringProps) {
       });
   };
 
-  const dateToString = (date: Date) => {
-    const createdAtDate: Date = new Date(date);
-    return createdAtDate.toLocaleString("fr");
-  };
-
   const handleDelete = (id: string) => {
     setConfirm({
       action: "deleteCom",
@@ -66,7 +62,7 @@ export default function NationComs({ text }: StringProps) {
       <section className="w-full min-w-[300px] flex flex-col-reverse justify-center gap-1 items-center text-sm">
         {comsList != undefined &&
           comsList.map((com, i) => {
-            if (com.comType != -1) {
+            if (com.comType > 0) {
               return (
                 <div
                   key={i}

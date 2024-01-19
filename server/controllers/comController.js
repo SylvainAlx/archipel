@@ -11,11 +11,13 @@ export const getAll = async (req, res) => {
 
 export const createCom = async (req, res) => {
   try {
-    const { originId, originName, title, comType, message } = req.body;
+    const { originId, originName, destinationId, title, comType, message } =
+      req.body;
 
     const com = new Com({
       originId,
       originName,
+      destinationId,
       title,
       comType,
       message,
@@ -23,7 +25,7 @@ export const createCom = async (req, res) => {
     com
       .save()
       .then((com) => {
-        res.status(201).json({ com });
+        res.status(201).json({ com, message: "communication enregistrée" });
       })
 
       .catch((error) => {

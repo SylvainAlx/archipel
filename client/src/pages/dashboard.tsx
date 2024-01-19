@@ -16,7 +16,7 @@ export default function Dashboard() {
     DashboardTabs = [
       ...DashboardTabs,
       { id: 1, label: "PARAMETRES" },
-      { id: 2, label: "CONTACT" },
+      { id: 2, label: "COMMUNICATIONS" },
     ];
   }
 

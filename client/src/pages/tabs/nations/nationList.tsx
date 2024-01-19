@@ -32,7 +32,7 @@ export default function NationList({ text }: StringProps) {
 
   useEffect(() => {
     if (nationsList[0]._id === "") {
-      handleClick();
+      getNations();
     }
   }, []);
 
@@ -69,7 +69,7 @@ export default function NationList({ text }: StringProps) {
     setSearchName(e.target.value);
   };
 
-  const handleClick = () => {
+  const getNations = () => {
     setSearchName("");
     setLoading({ show: true, text: "Connexion au serveur" });
     getAllNations(searchName)
@@ -141,7 +141,7 @@ export default function NationList({ text }: StringProps) {
               disabled={false}
               text="RÉINITIALISER"
               path=""
-              click={handleClick}
+              click={getNations}
             />
           </div>
         </form>
@@ -152,7 +152,7 @@ export default function NationList({ text }: StringProps) {
             if (i < displayedNations) {
               return (
                 <div
-                  className="min-w-[300px] w-full relative hover:scale-[101%] cursor-pointer transition-all duration-300"
+                  className="min-w-[300px] w-full relative transition-all duration-300"
                   key={i}
                   onClick={() => {
                     setNation(nation);

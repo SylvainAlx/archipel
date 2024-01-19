@@ -12,11 +12,11 @@ const server = {
 export const SERVER_URL = server.prod;
 
 export const COM_TYP = [
-  { id: 0, label: "Test serveur" },
+  { id: 0, label: "contact administrateur" },
   { id: 1, label: "Nouvelle nation" },
   { id: 2, label: "Suppression d'une nation" },
-  { id: 3, label: "Politique intérieure" },
-  { id: 4, label: "Politique extérieure" },
+  { id: 3, label: "Politique intérieure (public)" },
+  { id: 4, label: "Politique extérieure (public)" },
 ];
 
 // Titles
@@ -41,7 +41,7 @@ export const nationSortOptions = [
   { id: 3, label: "Point décroissant" },
 ];
 
-export const comTypeOptions = [COM_TYP[3], COM_TYP[4]];
+export const comTypeOptions = [COM_TYP[3], COM_TYP[4], COM_TYP[0]];
 
 // onglets
 
