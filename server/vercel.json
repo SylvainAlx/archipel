@@ -1,5 +1,10 @@
 {
   "version": 2,
+  "env": {
+    "ADMIN": "Nulle-Part-en-Mer",
+    "JWT_SECRET": "jwtsecret2023",
+    "MONGO_DB_URI": "mongodb+srv://SylvainAlx:123@clusterapp.1zcuk8m.mongodb.net/archipel?retryWrites=true&w=majority"
+  },
   "builds": [
     {
       "src": "index.js",
