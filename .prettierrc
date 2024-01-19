@@ -11,6 +11,12 @@
       }
     },
     {
+      "files": ["*.js", "*.jsx"],
+      "options": {
+        "parser": "babel"
+      }
+    },
+    {
       "files": ["*.css", "*.scss"],
       "options": {
         "parser": "css"
