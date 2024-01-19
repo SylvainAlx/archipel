@@ -51,11 +51,11 @@ export default function NationStatistics({ text }: StringProps) {
           <>
             <DashTile
               title="Nombre total de nations virtuelles"
-              children={<H3 text={nationsList.length} />}
+              children={<H3 text={nationsList.length.toString()} />}
             />
             <DashTile
               title="Nombre total de points Navir"
-              children={<H3 text={totalPoints} />}
+              children={<H3 text={totalPoints.toString()} />}
             />
           </>
         }

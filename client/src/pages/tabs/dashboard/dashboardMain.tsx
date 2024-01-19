@@ -107,7 +107,7 @@ export default function DashboardMain({ text }: StringProps) {
               title="Points Navir"
               children={
                 <>
-                  <H3 text={nation.data.general.points} />
+                  <H3 text={nation.data.general.points.toString()} />
                 </>
               }
             />

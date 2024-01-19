@@ -38,7 +38,7 @@ export interface BooleanProps {
 }
 
 export interface StringProps {
-  text: string | number;
+  text: string;
 }
 
 export interface NumberProps {
