@@ -60,8 +60,9 @@ export interface Children {
 
 export interface FormProps {
   children: JSX.Element;
-  title: string;
+  title?: string;
   submit: (event: FormEvent) => void;
+  background?: boolean;
 }
 
 export interface DashTileProps {

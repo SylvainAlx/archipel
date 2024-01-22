@@ -11,7 +11,7 @@ export default function TextArea({
 }: TextAreaProps) {
   return (
     <textarea
-      className="w-full rounded-lg p-4 pe-12 text-sm shadow-sm"
+      className="w-full rounded-lg p-4 pe-12 text-sm shadow-sm text-primary"
       onChange={onChange}
       required={required}
       name={name}

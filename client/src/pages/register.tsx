@@ -16,6 +16,7 @@ import Button from "../components/button";
 import { EmptyNation } from "../types/typNation";
 import { COM_TYP } from "../settings/consts";
 import { EmptyCom } from "../types/typCom";
+import Form from "../components/form/form";
 
 export default function Register() {
   const [name, setName] = useState("");
@@ -74,37 +75,39 @@ export default function Register() {
   return (
     <>
       <H1 text="Nouvelle nation" />
-      <form
-        onSubmit={handleSubmit}
-        className="flex flex-col gap-2 min-w-[300px] items-center"
-      >
-        <Input
-          required={true}
-          onChange={handleChange}
-          type="text"
-          name="name"
-          placeholder="Nom de la nation"
-          value={name}
-        />
-        <Input
-          required={true}
-          onChange={handleChange}
-          type="password"
-          name="password"
-          placeholder="Mot de passe"
-          value={password}
-        />
-        <div className="flex justify-center text-sm gap-2">
-          <span>Déjà une nation ?</span>
-          <span
-            className="underline cursor-pointer"
-            onClick={() => navigate("/login")}
-          >
-            Se connecter
-          </span>
-        </div>
-        <Button path="" text="CRÉER SA NATION" type="submit" />
-      </form>
+      <Form
+        submit={handleSubmit}
+        children={
+          <>
+            <Input
+              required={true}
+              onChange={handleChange}
+              type="text"
+              name="name"
+              placeholder="Nom de la nation"
+              value={name}
+            />
+            <Input
+              required={true}
+              onChange={handleChange}
+              type="password"
+              name="password"
+              placeholder="Mot de passe"
+              value={password}
+            />
+            <div className="flex justify-center text-sm gap-2">
+              <span>Déjà une nation ?</span>
+              <span
+                className="underline cursor-pointer"
+                onClick={() => navigate("/login")}
+              >
+                Se connecter
+              </span>
+            </div>
+            <Button path="" text="CRÉER SA NATION" type="submit" />
+          </>
+        }
+      />
     </>
   );
 }

@@ -6,7 +6,7 @@ export default {
   theme: {
     extend: {
       colors: {
-        primary: "var(--color-main)",
+        primary: "var(--color-primary)",
         secondary: "var(--color-secondary)",
         light: "var(--color-light)",
         complementary: "var(--color-complementary)",
@@ -15,7 +15,17 @@ export default {
         success: "var(--color-success)",
         danger: "var(--color-danger)",
       },
+      animation: {
+        fadeIn: "fadeIn 0.3s ease-in-out",
+      },
+
+      keyframes: {
+        fadeIn: {
+          from: { opacity: 0 },
+          to: { opacity: 1 },
+        },
+      },
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [],
 };

@@ -6,6 +6,8 @@ import { infoModal, loadingSpinner } from "../settings/store";
 import { useAtom } from "jotai";
 import Input from "../components/form/input";
 import Button from "../components/button";
+import Form from "../components/form/form";
+import TextArea from "../components/form/textArea";
 
 export default function Recovery() {
   const [name, setName] = useState("");
@@ -19,7 +21,7 @@ export default function Recovery() {
   const navigate = useNavigate();
 
   const handleChange = (
-    e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>
+    e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>,
   ) => {
     if (e.target.type == "text") {
       setName(e.target.value);
@@ -55,60 +57,63 @@ export default function Recovery() {
   return (
     <>
       <H1 text="Réinitialisation du mot de passe" />
-      <form
-        onSubmit={handleSubmit}
-        className="flex flex-col gap-2 min-w-[300px] items-center"
-      >
-        <Input
-          required={true}
-          onChange={handleChange}
-          type="text"
-          name="name"
-          placeholder="Nom de la nation"
-          value={name}
-        />
-        <textarea
-          required
-          onChange={handleChange}
-          className="w-full rounded-lg p-4 pe-12 text-sm shadow-sm text-primary"
-          placeholder="Phrase de récupération"
-          value={recovery}
-        />
-        <Input
-          required={true}
-          onChange={handleChange}
-          type="password"
-          name="password"
-          placeholder="Nouveau mot de passe"
-          value={password}
-        />
-        <Input
-          required={true}
-          onChange={(e) => {
-            setConfirmPassword(e.target.value);
-            setPasswordsMatch(password === e.target.value);
-          }}
-          type="password"
-          name="confirm"
-          placeholder="Confirmer le mot de passe"
-          value={confirmPassword}
-        />
-        {/* <button
+      <Form
+        submit={handleSubmit}
+        children={
+          <>
+            <Input
+              required={true}
+              onChange={handleChange}
+              type="text"
+              name="name"
+              placeholder="Nom de la nation"
+              value={name}
+            />
+            <TextArea
+              required={true}
+              onChange={handleChange}
+              name="recovery"
+              maxLength={1000}
+              placeholder="Phrase de récupération"
+              value={recovery}
+            />
+            <Input
+              required={true}
+              onChange={handleChange}
+              type="password"
+              name="password"
+              placeholder="Nouveau mot de passe"
+              value={password}
+            />
+            <Input
+              required={true}
+              onChange={(e) => {
+                setConfirmPassword(e.target.value);
+                setPasswordsMatch(password === e.target.value);
+              }}
+              type="password"
+              name="confirm"
+              placeholder="Confirmer le mot de passe"
+              value={confirmPassword}
+            />
+            {/* <button
           disabled={!passwordsMatch}
           type="submit"
           className={`button ${!passwordsMatch && "cursor-not-allowed"}`}
         >
           CHANGER DE MOT DE PASSE
         </button> */}
-        <div className={`${!passwordsMatch && "cursor-not-allowed"}`}>
-          <Button
-            path=""
-            text="CHANGER DE MOT DE PASSE"
-            type="submit"
-            disabled={!passwordsMatch}
-          />
-        </div>
-      </form>
+            <div className={`${!passwordsMatch && "cursor-not-allowed"}`}>
+              <Button
+                path=""
+                text="CHANGER DE MOT DE PASSE"
+                type="submit"
+                disabled={!passwordsMatch}
+              />
+            </div>
+          </>
+        }
+      />
     </>
   );
 }

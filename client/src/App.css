@@ -4,7 +4,7 @@
 @tailwind utilities;
 
 #root {
-  --color-main: #081825;
+  --color-primary: #081825;
   --color-light: #ffffff;
   --color-secondary: #00818a;
   --color-complementary: #222222;
@@ -27,7 +27,7 @@
   text-rendering: optimizeLegibility;
   font-family: var(--main-font);
   color: var(--color-light);
-  background-color: var(--color-main);
+  background-color: var(--color-primary);
 }
 
 b {
@@ -37,13 +37,4 @@ b {
 em {
   font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
   font-style: italic;
-}
-
-/* button[type="submit"] {
-    width: 100%;
-  } */
-
-input,
-textarea {
-  color: var(--color-main);
 }
