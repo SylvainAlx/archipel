@@ -25,7 +25,8 @@ export const register = async (req, res) => {
       role: name === process.env.ADMIN ? "admin" : "standard",
       data: {
         general: {
-          points: 100,
+          points: 0,
+          unusedPoints: 100,
         },
       },
     });

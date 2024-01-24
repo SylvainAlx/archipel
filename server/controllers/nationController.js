@@ -85,3 +85,28 @@ export const deleteOne = async (req, res) => {
     });
   }
 };
+
+export const updateNation = async (req, res) => {
+  try {
+    const { _id, name, data } = req.body;
+    if (req.nationId === _id) {
+      const nation = await Nation.findOne({ _id });
+      nation.name = name;
+      nation.data = data;
+      nation
+        .save()
+        .then((nation) => {
+          const jwt = nation.createJWT();
+          res.status(200).json({ nation, jwt, message: "mise à jour réussie" });
+        })
+        .catch((error) => {
+          res.status(400).json({
+            message: `certaines informations sont erronées ou manquantes`,
+            erreur: error.message,
+          });
+        });
+    }
+  } catch (error) {
+    res.status(400).json({ error });
+  }
+};

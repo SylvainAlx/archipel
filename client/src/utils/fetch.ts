@@ -1,7 +1,7 @@
 import { AuthPayload, ComPayload, RecoveryPayload } from "../types/typPayload";
 import { SERVER_URL } from "../settings/consts";
 import { GET_JWT } from "./functions";
-
+import { Nation } from "../types/typNation";
 
 export const registerFetch = async (payload: AuthPayload) => {
   const resp = await fetch(`${SERVER_URL}/auth/register`, {
@@ -64,7 +64,9 @@ export const DeleteSelfFetch = async () => {
 // };
 
 export const getAllNations = async (searchText: string) => {
-  const resp = await fetch(`${SERVER_URL}/nation/getall?texteRecherche=${encodeURIComponent(searchText)}`);
+  const resp = await fetch(
+    `${SERVER_URL}/nation/getall?texteRecherche=${encodeURIComponent(searchText)}`,
+  );
   const result = await resp.json();
   return result;
 };
@@ -87,11 +89,25 @@ export const getAllComs = async () => {
   return result;
 };
 
-export const DeleteCom = async (id: string) => {
+export const deleteComFetch = async (id: string) => {
   const jwt = GET_JWT();
   const resp = await fetch(`${SERVER_URL}/com/delete/${id}`, {
     method: "DELETE",
     headers: { authorization: `Bearer ${jwt}` },
+  });
+  const result = await resp.json();
+  return result;
+};
+
+export const updateNationFetch = async (payload: Nation) => {
+  const jwt = GET_JWT();
+  const resp = await fetch(`${SERVER_URL}/nation/update`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      authorization: "Bearer " + jwt,
+    },
+    body: JSON.stringify(payload),
   });
   const result = await resp.json();
   return result;

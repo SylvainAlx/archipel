@@ -15,11 +15,12 @@ import Input from "../../../components/form/input";
 import Button from "../../../components/button";
 import { getAllComs } from "../../../utils/fetch";
 import Select from "../../../components/form/select";
-import { comTypeOptions } from "../../../settings/consts";
+import { TITLE, comTypeOptions } from "../../../settings/consts";
 import TextArea from "../../../components/form/textArea";
 import ListTile from "../../../components/listTile";
 import Tag from "../../../components/tag";
 import { IoMdTrash } from "react-icons/io";
+import { dateToString } from "../../../utils/functions";
 
 export default function DashboardCom({ text }: StringProps) {
   const [nation] = useAtom(nationAtom);
@@ -81,7 +82,7 @@ export default function DashboardCom({ text }: StringProps) {
   return (
     <>
       <H1 text={text} />
-      <section className="flex flex-wrap justify-center gap-4 items-start">
+      <section className="w-full flex flex-col md:flex-row justify-center items-center md:items-start gap-4">
         <Form
           title="Nouveau message"
           submit={handleSubmit}
@@ -118,11 +119,11 @@ export default function DashboardCom({ text }: StringProps) {
             </>
           }
         />
-        <ListTile
-          children={
-            <>
-              {comList.length != undefined &&
-                comList.map((com, i) => {
+        {comList.length > 0 && (
+          <ListTile
+            children={
+              <>
+                {comList.map((com, i) => {
                   if (
                     (nation.role === "admin" && com.comType === 0) ||
                     com.originId === nation._id ||
@@ -134,8 +135,16 @@ export default function DashboardCom({ text }: StringProps) {
                         className="w-full p-2 rounded bg-complementary flex flex-col gap-2"
                       >
                         <div className="w-full flex items-center justify-between gap-2">
-                          {nation.role === "admin" && (
-                            <span>origine : {com.originName}</span>
+                          <span className="text-[10px]">
+                            {dateToString(com.createdAt)}
+                          </span>
+                          {nation.role === "admin" &&
+                            com.comType != 1 &&
+                            com.comType != 2 && (
+                              <span>origine : {com.originName}</span>
+                            )}
+                          {com.comType === 1 && (
+                            <span>Bienvenue sur {TITLE} !</span>
                           )}
                           <div className="flex items-center gap-2">
                             {com.comType === 0 && (
@@ -154,17 +163,21 @@ export default function DashboardCom({ text }: StringProps) {
                             )}
                           </div>
                         </div>
-                        <div className="bg-black_alpha p-2 rounded">
-                          <b className="text-lg"> {com.title}</b>
-                          <blockquote>{com.message}</blockquote>
-                        </div>
+
+                        {com.comType != 1 && com.comType != 2 && (
+                          <div className="bg-black_alpha p-2 rounded">
+                            <b className="text-lg"> {com.title}</b>
+                            <blockquote>{com.message}</blockquote>
+                          </div>
+                        )}
                       </div>
                     );
                   }
                 })}
-            </>
-          }
-        />
+              </>
+            }
+          />
+        )}
       </section>
     </>
   );

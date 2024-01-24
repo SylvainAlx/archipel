@@ -50,6 +50,10 @@ const nationSchema = mongoose.Schema(
           type: Number,
           default: -1,
         },
+        unusedPoints: {
+          type: Number,
+          default: -1,
+        },
         politicalSide: {
           type: Number,
           default: -1,

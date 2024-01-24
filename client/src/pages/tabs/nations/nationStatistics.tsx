@@ -19,47 +19,48 @@ export default function NationStatistics({ text }: StringProps) {
   const [totalPoints, setTotalPoints] = useState(0);
 
   useEffect(() => {
-    if (nationsList[0]._id === "") {
-      setLoading({ show: true, text: "Connexion au serveur" });
-      getAllNations("")
-        .then((data) => {
-          setLoading({ show: false, text: "Connexion au serveur" });
-          if (data != undefined) {
-            setNationsList(data);
-          }
-        })
-        .catch((error) => {
-          setLoading({ show: false, text: "Connexion au serveur" });
-          setInfo(error.message);
-        });
+    if (nationsList.length > 0) {
+      let points = 0;
+      for (let i = 0; i < nationsList.length - 1; i++) {
+        points += nationsList[i].data.general.points;
+      }
+      setTotalPoints(points);
+      if (nationsList[0]._id === "") {
+        setLoading({ show: true, text: "Connexion au serveur" });
+        getAllNations("")
+          .then((data) => {
+            setLoading({ show: false, text: "Connexion au serveur" });
+            if (data != undefined) {
+              setNationsList(data);
+            }
+          })
+          .catch((error) => {
+            setLoading({ show: false, text: "Connexion au serveur" });
+            setInfo(error.message);
+          });
+      }
     }
-  }, []);
-
-  useEffect(() => {
-    let points = 0;
-    for (let i = 0; i < nationsList.length - 1; i++) {
-      points += nationsList[i].data.general.points;
-    }
-    setTotalPoints(points);
   }, []);
 
   return (
     <>
       <H1 text={text} />
-      <TileContainer
-        children={
-          <>
-            <DashTile
-              title="Nombre total de nations virtuelles"
-              children={<H3 text={nationsList.length.toString()} />}
-            />
-            <DashTile
-              title="Nombre total de points Navir"
-              children={<H3 text={totalPoints.toString()} />}
-            />
-          </>
-        }
-      />
+      {nationsList != undefined && (
+        <TileContainer
+          children={
+            <>
+              <DashTile
+                title="Nombre total de nations virtuelles"
+                children={<H3 text={nationsList.length.toString()} />}
+              />
+              <DashTile
+                title="Nombre total de points Navir"
+                children={<H3 text={totalPoints.toString()} />}
+              />
+            </>
+          }
+        />
+      )}
     </>
   );
 }

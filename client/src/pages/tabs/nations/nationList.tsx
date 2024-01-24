@@ -31,8 +31,10 @@ export default function NationList({ text }: StringProps) {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (nationsList[0]._id === "") {
-      getNations();
+    if (nationsList.length > 0) {
+      if (nationsList[0]._id === "") {
+        getNations();
+      }
     }
   }, []);
 
@@ -148,6 +150,7 @@ export default function NationList({ text }: StringProps) {
       </fieldset>
       <section className="w-full flex gap-3 flex-wrap items-center flex-col ">
         {nationsList != undefined &&
+          nationsList.length > 0 &&
           nationsList.map((nation, i) => {
             if (i < displayedNations) {
               return (

@@ -24,3 +24,14 @@ export const createElementOfAtomArray = (
   tempArray.push(payload);
   setAtom(tempArray);
 };
+
+export const updateElementOfAtomArray = (
+  payload: any,
+  atom: any[],
+  setAtom: React.Dispatch<React.SetStateAction<any>>,
+) => {
+  const tempArray = atom.map((objet) =>
+    objet._id === payload._id ? payload : objet,
+  );
+  setAtom(tempArray);
+};

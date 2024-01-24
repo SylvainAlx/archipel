@@ -7,13 +7,19 @@ import {
   nationsListAtom,
 } from "../../settings/store";
 import { useNavigate } from "react-router-dom";
-import { DeleteCom, DeleteSelfFetch, createCom } from "../../utils/fetch";
-import { EmptyNation } from "../../types/typNation";
+import {
+  deleteComFetch,
+  DeleteSelfFetch,
+  createCom,
+  updateNationFetch,
+} from "../../utils/fetch";
+import { EmptyNation, Nation } from "../../types/typNation";
 import Button from "../button";
 import { EmptyCom } from "../../types/typCom";
 import {
   createElementOfAtomArray,
   deleteElementOfAtomArray,
+  updateElementOfAtomArray,
 } from "../../utils/functions";
 
 export default function ConfirmModal() {
@@ -54,7 +60,7 @@ export default function ConfirmModal() {
   };
 
   const deleteCom = () => {
-    DeleteCom(confirm.target)
+    deleteComFetch(confirm.target)
       .then((resp) => {
         deleteElementOfAtomArray(confirm.target, comsList, setComsList);
         setInfo(resp.message);
@@ -68,6 +74,19 @@ export default function ConfirmModal() {
     createCom(payload)
       .then((resp) => {
         createElementOfAtomArray(resp.com, comsList, setComsList);
+        setInfo(resp.message);
+      })
+      .catch((error) => {
+        setInfo(error);
+      });
+  };
+
+  const updateNation = (payload: Nation) => {
+    updateNationFetch(payload)
+      .then((resp) => {
+        setNation(resp.nation);
+        updateElementOfAtomArray(resp.nation, nationsList, setNationsList);
+        localStorage.setItem("jwt", resp.jwt);
         setInfo(resp.message);
       })
       .catch((error) => {
@@ -96,6 +115,9 @@ export default function ConfirmModal() {
             }
             if (confirm.action === "createCom") {
               createNewCom(confirm.payload);
+            }
+            if (confirm.action === "updateNation") {
+              updateNation(confirm.payload);
             }
           }}
         />

@@ -7,7 +7,7 @@ export default function DashTile({
 }: DashTileProps) {
   return (
     <section
-      className={`bg-complementary rounded p-4 flex flex-col items-center flex-grow gap-2 ${className && className}`}
+      className={`bg-complementary rounded py-2 flex flex-col items-center flex-grow gap-3 ${className && className}`}
     >
       <b>{title}</b>
       {children}

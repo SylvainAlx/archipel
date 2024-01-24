@@ -61,7 +61,7 @@ export default function App() {
         })
         .catch((error) => {
           setLoading({ show: false, text: "Connexion au serveur" });
-          alert(error.message);
+          console.log(error);
         });
     } else {
       setNation(EmptyNation);
@@ -79,7 +79,7 @@ export default function App() {
       {showApplication ? (
         <>
           <Header />
-          <main className="animate-fadeIn flex flex-grow flex-col items-center gap-2 self-center pt-10 pb-[100px] sm:pt-20 px-4 w-full min-w-[300px] max-w-[1280px]">
+          <main className="animate-fadeIn flex flex-grow flex-col items-center gap-2 self-center pt-10 pb-[100px] sm:pt-20 px-2 md:px-4 w-full min-w-[300px] max-w-[1280px]">
             <Routes>
               {publicRoutes.map((route: ArchipelRoute, i: number) => (
                 <Route path={route.path} element={route.page} key={i} />
