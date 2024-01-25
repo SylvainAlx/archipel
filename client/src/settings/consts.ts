@@ -1,6 +1,6 @@
 // Auth
 
-export const MDP_LOBBY = "navir2024";
+export const MDP_LOBBY = import.meta.env.VITE_MDP_LOBBY;
 
 //  server
 

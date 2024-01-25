@@ -6,7 +6,6 @@ import {
   selectedNationAtom,
 } from "../../../settings/store";
 import { ChangeEvent, useEffect, useState } from "react";
-import { EmptyNation } from "../../../types/typNation";
 import H1 from "../../../components/titles/h1";
 import DashTile from "../../../components/dashTile";
 import { StringProps } from "../../../types/typProp";
@@ -20,6 +19,7 @@ import Button from "../../../components/button";
 import { regimeOptions } from "../../../settings/consts";
 import Select from "../../../components/form/select";
 import Input from "../../../components/form/input";
+import { EmptyNation } from "../../../types/typNation";
 
 // import { GiBlackFlag } from "react-icons/gi";
 // import Uploader from "../components/uploader";
@@ -28,9 +28,12 @@ export default function DashboardMain({ text }: StringProps) {
   const [myNation] = useAtom(nationAtom);
   const [selectedNation] = useAtom(selectedNationAtom);
   const [, setConfirm] = useAtom(confirmBox);
+
   const [nation, setNation] = useState(EmptyNation);
   const [owner, setOwner] = useState(false);
   const [saved, setSaved] = useState(true);
+  const [regimeList, setRegimeList] = useState(regimeOptions);
+  const [regimeTag, setRegimeTag] = useState(regimeOptions[0]);
 
   useEffect(() => {
     if (myNation._id === selectedNation._id) {
@@ -42,6 +45,12 @@ export default function DashboardMain({ text }: StringProps) {
     }
   }, [selectedNation]);
 
+  useEffect(() => {
+    sortRegimeList();
+
+    return sortRegimeList();
+  }, [nation]);
+
   const saveData = () => {
     setConfirm({
       action: "updateNation",
@@ -49,20 +58,37 @@ export default function DashboardMain({ text }: StringProps) {
       result: "",
       payload: nation,
     });
-    setNation(myNation);
+  };
+
+  const cancel = () => {
     setSaved(true);
+    setNation(myNation);
+  };
+
+  const updateRegimeTag = () => {
+    regimeOptions.map((regime) => {
+      if (regime.id === nation.data.general.regime) {
+        setRegimeTag(regime);
+      }
+    });
+  };
+
+  const sortRegimeList = () => {
+    let regimes = [...regimeList];
+    regimes.sort((a, b) => {
+      if (a.id === nation.data.general.regime) {
+        return -1;
+      } else if (b.id === nation.data.general.regime) {
+        return 1;
+      } else {
+        return 0;
+      }
+    });
+    setRegimeList(regimes);
+    updateRegimeTag();
   };
 
   const edit = () => {
-    regimeOptions.sort((a, b) => {
-      if (a.id === nation.data.general.regime) {
-        return -1; // Met l'objet a en première position
-      } else if (b.id === nation.data.general.regime) {
-        return 1; // Met l'objet b en première position
-      } else {
-        return 0; // Laisse les autres objets inchangés dans leur ordre relatif
-      }
-    });
     setSaved(false);
   };
 
@@ -86,10 +112,13 @@ export default function DashboardMain({ text }: StringProps) {
       <H1 text={text} />
       <section className="w-full flex flex-col gap-8 items-center">
         <div className="w-full md:hidden text-center">
-          {saved ? (
+          {saved && owner ? (
             <Button path="" text="MODIFIER" click={edit} />
           ) : (
-            <Button path="" text="ENREGISTRER" click={saveData} />
+            <div className="flex flex-col md:flex-row gap-2 items-center justify-center">
+              <Button path="" text="ENREGISTRER" click={saveData} />
+              <Button path="" text="ANNULER" click={cancel} />
+            </div>
           )}
         </div>
         <TileContainer
@@ -105,30 +134,18 @@ export default function DashboardMain({ text }: StringProps) {
                         {nation.role === "admin" && (
                           <Tag text="admin" bgColor="bg-success" />
                         )}
-                        {regimeOptions.map((regime, i) => {
-                          if (regime.id === nation.data.general.regime) {
-                            return (
-                              <span key={i}>
-                                <Tag
-                                  text={regime.label}
-                                  bgColor={regime.color}
-                                />
-                              </span>
-                            );
-                          }
-                        })}
+
+                        <Tag text={regimeTag.label} bgColor={regimeTag.color} />
                       </div>
                       <H3 text={nation.name} />
                     </>
                   ) : (
                     <div className="p-4 flex flex-col gap-2 items-center">
                       <Select
-                        options={regimeOptions}
-                        required
+                        options={regimeList}
                         onChange={handleSelectChange}
                       />
                       <Input
-                        required
                         placeholder={nation.name}
                         value={nation.name}
                         name="name"
@@ -218,12 +235,16 @@ export default function DashboardMain({ text }: StringProps) {
             </>
           }
         />
-        {saved ? (
-          <Button path="" text="MODIFIER" click={edit} />
-        ) : (
-          <Button path="" text="ENREGISTRER" click={saveData} />
-        )}
-        {owner && <></>}
+        <div className="w-full text-center">
+          {saved && owner ? (
+            <Button path="" text="MODIFIER" click={edit} />
+          ) : (
+            <div className="flex flex-col md:flex-row gap-2 items-center justify-center">
+              <Button path="" text="ENREGISTRER" click={saveData} />
+              <Button path="" text="ANNULER" click={cancel} />
+            </div>
+          )}
+        </div>
       </section>
     </>
   );
