@@ -28,83 +28,61 @@ export default function DashboardMain({ text }: StringProps) {
   const [myNation] = useAtom(nationAtom);
   const [selectedNation] = useAtom(selectedNationAtom);
   const [, setConfirm] = useAtom(confirmBox);
-
-  const [nation, setNation] = useState(EmptyNation);
   const [owner, setOwner] = useState(false);
   const [saved, setSaved] = useState(true);
-  const [regimeList, setRegimeList] = useState(regimeOptions);
   const [regimeTag, setRegimeTag] = useState(regimeOptions[0]);
+  const [tempNation, setTempNation] = useState(EmptyNation);
 
   useEffect(() => {
     if (myNation._id === selectedNation._id) {
-      setNation(myNation);
       setOwner(true);
-    } else {
-      setNation(selectedNation);
-      setOwner(false);
     }
-  }, [selectedNation]);
-
-  useEffect(() => {
-    sortRegimeList();
-
-    return sortRegimeList();
-  }, [nation]);
+    setTempNation(selectedNation);
+    updateRegimeTag(selectedNation.data.general.regime);
+    return () => {
+      cancel();
+    };
+  }, []);
 
   const saveData = () => {
     setConfirm({
       action: "updateNation",
       text: "Valider les modification ?",
       result: "",
-      payload: nation,
+      payload: tempNation,
     });
+    setSaved(true);
   };
 
   const cancel = () => {
     setSaved(true);
-    setNation(myNation);
+    setTempNation(myNation);
+    updateRegimeTag(myNation.data.general.regime);
   };
 
-  const updateRegimeTag = () => {
+  const updateRegimeTag = (value: number) => {
     regimeOptions.map((regime) => {
-      if (regime.id === nation.data.general.regime) {
+      if (regime.id === value) {
         setRegimeTag(regime);
       }
     });
   };
 
-  const sortRegimeList = () => {
-    let regimes = [...regimeList];
-    regimes.sort((a, b) => {
-      if (a.id === nation.data.general.regime) {
-        return -1;
-      } else if (b.id === nation.data.general.regime) {
-        return 1;
-      } else {
-        return 0;
-      }
-    });
-    setRegimeList(regimes);
-    updateRegimeTag();
-  };
-
-  const edit = () => {
-    setSaved(false);
-  };
-
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    let editedNation = nation;
+    let editedNation = tempNation;
     const name = e.target.name;
     if (name === "name") {
       editedNation = { ...editedNation, [e.target.name]: e.target.value };
     }
-    setNation(editedNation);
+    setTempNation(editedNation);
   };
 
   const handleSelectChange = (e: ChangeEvent<HTMLSelectElement>) => {
-    let editedNation = nation;
-    editedNation.data.general.regime = Number(e.target.value);
-    setNation(editedNation);
+    let editedNation = tempNation;
+    let value = Number(e.target.value);
+    editedNation.data.general.regime = value;
+    setTempNation(editedNation);
+    updateRegimeTag(value);
   };
 
   return (
@@ -113,7 +91,7 @@ export default function DashboardMain({ text }: StringProps) {
       <section className="w-full flex flex-col gap-8 items-center">
         <div className="w-full md:hidden text-center">
           {saved && owner ? (
-            <Button path="" text="MODIFIER" click={edit} />
+            <Button path="" text="MODIFIER" click={() => setSaved(false)} />
           ) : (
             <div className="flex flex-col md:flex-row gap-2 items-center justify-center">
               <Button path="" text="ENREGISTRER" click={saveData} />
@@ -131,23 +109,24 @@ export default function DashboardMain({ text }: StringProps) {
                   saved ? (
                     <>
                       <div className="flex gap-2">
-                        {nation.role === "admin" && (
+                        {selectedNation.role === "admin" && (
                           <Tag text="admin" bgColor="bg-success" />
                         )}
 
                         <Tag text={regimeTag.label} bgColor={regimeTag.color} />
                       </div>
-                      <H3 text={nation.name} />
+                      <H3 text={selectedNation.name} />
                     </>
                   ) : (
                     <div className="p-4 flex flex-col gap-2 items-center">
                       <Select
-                        options={regimeList}
+                        options={regimeOptions}
                         onChange={handleSelectChange}
+                        value={regimeTag.id}
                       />
                       <Input
-                        placeholder={nation.name}
-                        value={nation.name}
+                        placeholder={tempNation.name}
+                        value={tempNation.name}
                         name="name"
                         onChange={handleInputChange}
                         type="text"
@@ -161,10 +140,10 @@ export default function DashboardMain({ text }: StringProps) {
                 children={
                   <>
                     <div className="w-[50px] h-[50px] bg-complementary rounded-full flex flex-col items-center justify-center">
-                      {nation.data.url.flagUrl ? (
+                      {selectedNation.data.url.flagUrl ? (
                         <img
-                          src={nation.data.url.flagUrl}
-                          alt={`flag of ${nation.name}`}
+                          src={selectedNation.data.url.flagUrl}
+                          alt={`flag of ${selectedNation.name}`}
                           className="w-full h-full"
                         />
                       ) : (
@@ -174,8 +153,8 @@ export default function DashboardMain({ text }: StringProps) {
                       )}
                     </div>
                     <em>
-                      {nation.data.general.motto
-                        ? nation.data.general.motto
+                      {selectedNation.data.general.motto
+                        ? selectedNation.data.general.motto
                         : "Pas de devise"}
                     </em>
                   </>
@@ -187,15 +166,15 @@ export default function DashboardMain({ text }: StringProps) {
                 children={
                   <>
                     <div className=" bg-complementary rounded-full flex flex-col items-center justify-center">
-                      {nation.data.url.websiteUrl ? (
+                      {selectedNation.data.url.websiteUrl ? (
                         <a
-                          href={nation.data.url.websiteUrl}
+                          href={selectedNation.data.url.websiteUrl}
                           className="cursor-pointer"
                         >
                           <div className="text-[3.1rem] flex justify-center">
                             <FaLink />
                           </div>
-                          <p>{nation.data.url.websiteUrl}</p>
+                          <p>{selectedNation.data.url.websiteUrl}</p>
                         </a>
                       ) : (
                         <div>
@@ -220,7 +199,7 @@ export default function DashboardMain({ text }: StringProps) {
                 title="Total points Navir"
                 children={
                   <>
-                    <H3 text={nation.data.general.points.toString()} />
+                    <H3 text={selectedNation.data.general.points.toString()} />
                   </>
                 }
               />
@@ -228,7 +207,9 @@ export default function DashboardMain({ text }: StringProps) {
                 title="Points non attribués"
                 children={
                   <>
-                    <H3 text={nation.data.general.unusedPoints.toString()} />
+                    <H3
+                      text={selectedNation.data.general.unusedPoints.toString()}
+                    />
                   </>
                 }
               />
@@ -237,7 +218,7 @@ export default function DashboardMain({ text }: StringProps) {
         />
         <div className="w-full text-center">
           {saved && owner ? (
-            <Button path="" text="MODIFIER" click={edit} />
+            <Button path="" text="MODIFIER" click={() => setSaved(false)} />
           ) : (
             <div className="flex flex-col md:flex-row gap-2 items-center justify-center">
               <Button path="" text="ENREGISTRER" click={saveData} />

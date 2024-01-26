@@ -14,7 +14,12 @@ export interface InputProps {
 
 export interface SelectProps {
   required?: boolean;
-  options: Array<{ id: number; label: string }>;
+  options: Array<{
+    id: number;
+    label: string;
+    color: string;
+  }>;
+  value: string | number;
   onChange: (e: ChangeEvent<HTMLSelectElement>) => void;
 }
 
