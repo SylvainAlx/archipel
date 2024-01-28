@@ -9,7 +9,7 @@ const server = {
   dev: import.meta.env.VITE_SERVER_URL_DEV,
 };
 
-export const SERVER_URL = server.prod;
+export const SERVER_URL = server.dev;
 
 export const COM_TYP = [
   { id: 0, label: "contact administrateur" },

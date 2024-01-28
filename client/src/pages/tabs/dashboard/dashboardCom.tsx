@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useAtom } from "jotai";
 import H1 from "../../../components/titles/h1";
 import { StringProps } from "../../../types/typProp";

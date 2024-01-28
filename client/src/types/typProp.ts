@@ -17,9 +17,9 @@ export interface SelectProps {
   options: Array<{
     id: number;
     label: string;
-    color: string;
+    color?: string;
   }>;
-  value: string | number;
+  value?: string | number;
   onChange: (e: ChangeEvent<HTMLSelectElement>) => void;
 }
 

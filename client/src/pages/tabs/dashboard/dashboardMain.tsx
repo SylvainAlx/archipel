@@ -30,6 +30,7 @@ export default function DashboardMain({ text }: StringProps) {
   const [, setConfirm] = useAtom(confirmBox);
   const [owner, setOwner] = useState(false);
   const [saved, setSaved] = useState(true);
+  const [regimeValue, setRegimeValue] = useState(regimeOptions[0].id);
   const [regimeTag, setRegimeTag] = useState(regimeOptions[0]);
   const [tempNation, setTempNation] = useState(EmptyNation);
 
@@ -38,11 +39,18 @@ export default function DashboardMain({ text }: StringProps) {
       setOwner(true);
     }
     setTempNation(selectedNation);
-    updateRegimeTag(selectedNation.data.general.regime);
+    setRegimeValue(selectedNation.data.general.regime);
     return () => {
       cancel();
     };
   }, []);
+
+  useEffect(() => {
+    const editedNation = { ...tempNation };
+    editedNation.data.general.regime = regimeValue;
+    setTempNation(editedNation);
+    updateRegimeTag(regimeValue);
+  }, [regimeValue]);
 
   const saveData = () => {
     setConfirm({
@@ -56,8 +64,13 @@ export default function DashboardMain({ text }: StringProps) {
 
   const cancel = () => {
     setSaved(true);
-    setTempNation(myNation);
-    updateRegimeTag(myNation.data.general.regime);
+    setRegimeValue(selectedNation.data.general.regime);
+    // setTempNation(selectedNation);
+  };
+
+  const edit = () => {
+    setSaved(false);
+    // setTempNation(selectedNation);
   };
 
   const updateRegimeTag = (value: number) => {
@@ -78,11 +91,7 @@ export default function DashboardMain({ text }: StringProps) {
   };
 
   const handleSelectChange = (e: ChangeEvent<HTMLSelectElement>) => {
-    let editedNation = tempNation;
-    let value = Number(e.target.value);
-    editedNation.data.general.regime = value;
-    setTempNation(editedNation);
-    updateRegimeTag(value);
+    setRegimeValue(Number(e.target.value));
   };
 
   return (
@@ -91,7 +100,7 @@ export default function DashboardMain({ text }: StringProps) {
       <section className="w-full flex flex-col gap-8 items-center">
         <div className="w-full md:hidden text-center">
           {saved && owner ? (
-            <Button path="" text="MODIFIER" click={() => setSaved(false)} />
+            <Button path="" text="MODIFIER" click={edit} />
           ) : (
             <div className="flex flex-col md:flex-row gap-2 items-center justify-center">
               <Button path="" text="ENREGISTRER" click={saveData} />
@@ -218,7 +227,7 @@ export default function DashboardMain({ text }: StringProps) {
         />
         <div className="w-full text-center">
           {saved && owner ? (
-            <Button path="" text="MODIFIER" click={() => setSaved(false)} />
+            <Button path="" text="MODIFIER" click={edit} />
           ) : (
             <div className="flex flex-col md:flex-row gap-2 items-center justify-center">
               <Button path="" text="ENREGISTRER" click={saveData} />
