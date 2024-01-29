@@ -30,68 +30,46 @@ export default function DashboardMain({ text }: StringProps) {
   const [, setConfirm] = useAtom(confirmBox);
   const [owner, setOwner] = useState(false);
   const [saved, setSaved] = useState(true);
-  const [regimeValue, setRegimeValue] = useState(regimeOptions[0].id);
-  const [regimeTag, setRegimeTag] = useState(regimeOptions[0]);
-  const [tempNation, setTempNation] = useState(EmptyNation);
+  const [regimeId, setRegimeId] = useState(-1);
+  const [nationName, setNationName] = useState("");
 
   useEffect(() => {
     if (myNation._id === selectedNation._id) {
       setOwner(true);
     }
-    setTempNation(selectedNation);
-    setRegimeValue(selectedNation.data.general.regime);
+
     return () => {
-      cancel();
+      setSaved(true);
     };
   }, []);
 
   useEffect(() => {
-    const editedNation = { ...tempNation };
-    editedNation.data.general.regime = regimeValue;
-    setTempNation(editedNation);
-    updateRegimeTag(regimeValue);
-  }, [regimeValue]);
+    setRegimeId(selectedNation.data.general.regime);
+    setNationName(selectedNation.name);
+  }, [saved]);
 
   const saveData = () => {
+    const editedNation = EmptyNation;
+    editedNation._id = selectedNation._id;
+    editedNation.name = nationName;
+    editedNation.data = selectedNation.data;
+    editedNation.data.general.regime = regimeId;
+
     setConfirm({
       action: "updateNation",
       text: "Valider les modification ?",
       result: "",
-      payload: tempNation,
+      payload: editedNation,
     });
     setSaved(true);
-  };
-
-  const cancel = () => {
-    setSaved(true);
-    setRegimeValue(selectedNation.data.general.regime);
-    // setTempNation(selectedNation);
-  };
-
-  const edit = () => {
-    setSaved(false);
-    // setTempNation(selectedNation);
-  };
-
-  const updateRegimeTag = (value: number) => {
-    regimeOptions.map((regime) => {
-      if (regime.id === value) {
-        setRegimeTag(regime);
-      }
-    });
   };
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    let editedNation = tempNation;
-    const name = e.target.name;
-    if (name === "name") {
-      editedNation = { ...editedNation, [e.target.name]: e.target.value };
-    }
-    setTempNation(editedNation);
+    setNationName(e.target.value);
   };
 
   const handleSelectChange = (e: ChangeEvent<HTMLSelectElement>) => {
-    setRegimeValue(Number(e.target.value));
+    setRegimeId(Number(e.target.value));
   };
 
   return (
@@ -100,11 +78,11 @@ export default function DashboardMain({ text }: StringProps) {
       <section className="w-full flex flex-col gap-8 items-center">
         <div className="w-full md:hidden text-center">
           {saved && owner ? (
-            <Button path="" text="MODIFIER" click={edit} />
+            <Button path="" text="MODIFIER" click={() => setSaved(false)} />
           ) : (
             <div className="flex flex-col md:flex-row gap-2 items-center justify-center">
               <Button path="" text="ENREGISTRER" click={saveData} />
-              <Button path="" text="ANNULER" click={cancel} />
+              <Button path="" text="ANNULER" click={() => setSaved(true)} />
             </div>
           )}
         </div>
@@ -121,8 +99,20 @@ export default function DashboardMain({ text }: StringProps) {
                         {selectedNation.role === "admin" && (
                           <Tag text="admin" bgColor="bg-success" />
                         )}
-
-                        <Tag text={regimeTag.label} bgColor={regimeTag.color} />
+                        {regimeOptions.map((regime, i) => {
+                          if (
+                            regime.id === selectedNation.data.general.regime
+                          ) {
+                            return (
+                              <span key={i}>
+                                <Tag
+                                  text={regime.label}
+                                  bgColor={regime.color}
+                                />
+                              </span>
+                            );
+                          }
+                        })}
                       </div>
                       <H3 text={selectedNation.name} />
                     </>
@@ -131,11 +121,11 @@ export default function DashboardMain({ text }: StringProps) {
                       <Select
                         options={regimeOptions}
                         onChange={handleSelectChange}
-                        value={regimeTag.id}
+                        value={regimeId}
                       />
                       <Input
-                        placeholder={tempNation.name}
-                        value={tempNation.name}
+                        placeholder={nationName}
+                        value={nationName}
                         name="name"
                         onChange={handleInputChange}
                         type="text"
@@ -227,11 +217,11 @@ export default function DashboardMain({ text }: StringProps) {
         />
         <div className="w-full text-center">
           {saved && owner ? (
-            <Button path="" text="MODIFIER" click={edit} />
+            <Button path="" text="MODIFIER" click={() => setSaved(false)} />
           ) : (
             <div className="flex flex-col md:flex-row gap-2 items-center justify-center">
               <Button path="" text="ENREGISTRER" click={saveData} />
-              <Button path="" text="ANNULER" click={cancel} />
+              <Button path="" text="ANNULER" click={() => setSaved(true)} />
             </div>
           )}
         </div>

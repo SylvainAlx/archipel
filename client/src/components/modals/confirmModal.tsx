@@ -3,6 +3,7 @@ import {
   comsListAtom,
   confirmBox,
   infoModal,
+  loadingSpinner,
   nationAtom,
   nationsListAtom,
 } from "../../settings/store";
@@ -25,6 +26,7 @@ import {
 export default function ConfirmModal() {
   const [confirm, setConfirm] = useAtom(confirmBox);
   const [, setInfo] = useAtom(infoModal);
+  const [, setLoading] = useAtom(loadingSpinner);
   const [nation, setNation] = useAtom(nationAtom);
   const [comsList, setComsList] = useAtom(comsListAtom);
   const [nationsList, setNationsList] = useAtom(nationsListAtom);
@@ -39,8 +41,10 @@ export default function ConfirmModal() {
   };
 
   const deleteSelfNation = () => {
+    setLoading({ show: true, text: "Connexion au serveur" });
     DeleteSelfFetch()
       .then((resp) => {
+        setLoading({ show: false, text: "Connexion au serveur" });
         createCom({
           originId: nation._id,
           originName: nation.name,
@@ -55,41 +59,51 @@ export default function ConfirmModal() {
         // window.location.reload();
       })
       .catch((error) => {
+        setLoading({ show: false, text: "Connexion au serveur" });
         setInfo(error);
       });
   };
 
   const deleteCom = () => {
+    setLoading({ show: true, text: "Connexion au serveur" });
     deleteComFetch(confirm.target)
       .then((resp) => {
+        setLoading({ show: false, text: "Connexion au serveur" });
         deleteElementOfAtomArray(confirm.target, comsList, setComsList);
         setInfo(resp.message);
       })
       .catch((error) => {
+        setLoading({ show: false, text: "Connexion au serveur" });
         setInfo(error);
       });
   };
 
   const createNewCom = (payload: any) => {
+    setLoading({ show: true, text: "Connexion au serveur" });
     createCom(payload)
       .then((resp) => {
+        setLoading({ show: false, text: "Connexion au serveur" });
         createElementOfAtomArray(resp.com, comsList, setComsList);
         setInfo(resp.message);
       })
       .catch((error) => {
+        setLoading({ show: false, text: "Connexion au serveur" });
         setInfo(error);
       });
   };
 
   const updateNation = (payload: Nation) => {
+    setLoading({ show: true, text: "Connexion au serveur" });
     updateNationFetch(payload)
       .then((resp) => {
+        setLoading({ show: false, text: "Connexion au serveur" });
         setNation(resp.nation);
         updateElementOfAtomArray(resp.nation, nationsList, setNationsList);
         localStorage.setItem("jwt", resp.jwt);
         setInfo(resp.message);
       })
       .catch((error) => {
+        setLoading({ show: false, text: "Connexion au serveur" });
         setInfo(error);
       });
   };
