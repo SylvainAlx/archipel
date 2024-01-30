@@ -90,3 +90,7 @@ export interface TextAreaProps {
   maxLength: number;
   rows?: number;
 }
+
+export interface GeneralInfoProps {
+  saved: boolean;
+}
