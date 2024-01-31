@@ -14,6 +14,10 @@ export default {
         black_alpha: "var(--color-black-alpha)",
         success: "var(--color-success)",
         danger: "var(--color-danger)",
+        regime_0: "var(--color-regime-0)",
+        regime_1: "var(--color-regime-1)",
+        regime_100: "var(--color-regime-100)",
+        regime_200: "var(--color-regime-200)",
       },
       animation: {
         fadeIn: "fadeIn 0.3s ease-in-out",

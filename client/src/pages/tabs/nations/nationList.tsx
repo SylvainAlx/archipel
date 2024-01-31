@@ -158,7 +158,7 @@ export default function NationList({ text }: StringProps) {
                   className="min-w-[300px] w-full relative transition-all duration-300"
                   key={i}
                   onClick={() => {
-                    setNation(nation);
+                    setNation({ ...nation });
                     navigate("/dashboard");
                   }}
                 >

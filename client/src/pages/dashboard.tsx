@@ -12,12 +12,15 @@ export default function Dashboard() {
 
   let DashboardTabs = [{ id: 0, label: "TABLEAU DE BORD" }];
 
-  if (myNation.name === selectedNation.name) {
+  if (myNation._id === selectedNation._id) {
     DashboardTabs = [
       ...DashboardTabs,
       { id: 1, label: "PARAMETRES" },
       { id: 2, label: "COMMUNICATIONS" },
     ];
+    localStorage.setItem("owner", "true");
+  } else {
+    localStorage.removeItem("owner");
   }
 
   const [tab, setTab] = useState(DashboardTabs[0]);

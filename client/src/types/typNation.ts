@@ -53,3 +53,9 @@ export const EmptyNation: Nation = {
   },
   createdAt: new Date(0),
 };
+
+export interface RegimeOption {
+  id: number;
+  label: string;
+  color: string;
+}

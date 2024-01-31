@@ -1,5 +1,6 @@
 import { ChangeEvent, FormEvent, MouseEventHandler } from "react";
 import { ReactNode } from "react";
+import { Nation, RegimeOption } from "./typNation";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
@@ -9,7 +10,7 @@ export interface InputProps {
   type: string;
   name: string;
   placeholder: string;
-  value: string;
+  value: string | number;
 }
 
 export interface SelectProps {
@@ -91,6 +92,13 @@ export interface TextAreaProps {
   rows?: number;
 }
 
-export interface GeneralInfoProps {
-  saved: boolean;
+export interface SelectedNationProps {
+  selectedNation: Nation;
+  owner?: boolean;
+}
+
+export interface EditIconProps {
+  param: number | string | boolean | RegimeOption[];
+  path: string;
+  indice?: number;
 }

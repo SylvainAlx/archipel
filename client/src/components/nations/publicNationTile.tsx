@@ -10,7 +10,7 @@ export default function PublicNationTile({ name, data, role }: Nation) {
   return (
     <div className="bg-complementary hover:bg-black_alpha hover:cursor-pointer flex flex-col items-center p-2 gap-4 rounded transition-all">
       <div className="w-full flex items-center">
-        <div className="w-[50px] h-[50px] bg-complementary rounded-full flex items-center justify-center">
+        <div className="w-[50px] h-[50px] bg-complementary rounded-full flex items-center justify-center overflow-hidden">
           {data.url.flagUrl != "" ? (
             <img
               src={data.url.flagUrl}

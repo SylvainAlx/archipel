@@ -10,7 +10,6 @@ import { GiBlackFlag } from "react-icons/gi";
 import { confirmBox, nationAtom, selectedNationAtom } from "../settings/store";
 import { useAtom } from "jotai";
 import { ButtonProps } from "../types/typProp";
-import Avatar from "./avatar";
 
 export default function IconLink({ path, text }: ButtonProps) {
   const [, setConfirm] = useAtom(confirmBox);
@@ -43,7 +42,12 @@ export default function IconLink({ path, text }: ButtonProps) {
       {path === "/register" && <IoMdAddCircleOutline />}
       {path === "/dashboard" &&
         (nation.data.url.flagUrl ? (
-          <Avatar text={nation.data.url.flagUrl} />
+          <div className="rounded-full w-[45px] h-[45px] overflow-hidden">
+            <img
+              src={nation.data.url.flagUrl}
+              className={`w-full h-full ${nation.data.url.flagUrl === "/logo.png" && "opacity-20"}`}
+            />
+          </div>
         ) : (
           <GiBlackFlag />
         ))}

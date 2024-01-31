@@ -70,7 +70,7 @@ export default function App() {
 
   useEffect(() => {
     if (nation.name != "") {
-      setSelectedNation(nation);
+      setSelectedNation({ ...nation });
     }
   }, [nation]);
 
