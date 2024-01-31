@@ -13,7 +13,7 @@ import { useAtom } from "jotai";
 import { getAllComs } from "../../../utils/fetch";
 import Button from "../../../components/button";
 import { IoMdTrash } from "react-icons/io";
-import { COM_TYP } from "../../../settings/consts";
+import { comOptions } from "../../../settings/consts";
 import { dateToString } from "../../../utils/functions";
 
 export default function NationComs({ text }: StringProps) {
@@ -84,7 +84,9 @@ export default function NationComs({ text }: StringProps) {
                         {dateToString(com.createdAt)}
                       </div>
                     </span>
-                    <span className="w-1/4">{COM_TYP[com.comType].label}</span>
+                    <span className="w-1/4">
+                      {comOptions[com.comType].label}
+                    </span>
                     <span className="w-2/4 text-right text-md">
                       {com.originName}
                     </span>

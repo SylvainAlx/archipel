@@ -14,9 +14,9 @@ import H1 from "../components/titles/h1";
 import Input from "../components/form/input";
 import Button from "../components/button";
 import { EmptyNation } from "../types/typNation";
-import { COM_TYP } from "../settings/consts";
-import { EmptyCom } from "../types/typCom";
 import Form from "../components/form/form";
+import { comOptions } from "../settings/consts";
+import { EmptyCom } from "../types/typAtom";
 
 export default function Register() {
   const [name, setName] = useState("");
@@ -48,7 +48,7 @@ export default function Register() {
           createCom({
             originId: data.nation._id,
             originName: data.nation.name,
-            comType: COM_TYP[1].id,
+            comType: comOptions[1].id,
           });
           localStorage.setItem("jwt", data.jwt);
           setRecovery(data.recovery);

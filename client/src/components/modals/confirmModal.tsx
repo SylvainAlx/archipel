@@ -16,12 +16,12 @@ import {
 } from "../../utils/fetch";
 import { EmptyNation, Nation } from "../../types/typNation";
 import Button from "../button";
-import { EmptyCom } from "../../types/typCom";
 import {
   createElementOfAtomArray,
   deleteElementOfAtomArray,
   updateElementOfAtomArray,
 } from "../../utils/functions";
+import { EmptyCom } from "../../types/typAtom";
 
 export default function ConfirmModal() {
   const [confirm, setConfirm] = useAtom(confirmBox);

@@ -55,7 +55,7 @@ export default function EditBoxModal() {
         MODIFICATION D'UNE INFORMATION
       </h2>
       <b>VALEUR ACTUELLE</b>
-      <em>
+      <em className="w-full overflow-scroll">
         {typeof editBox.original != "object" && editBox.original.toString()}
         {typeof editBox.original == "object" &&
           editBox.indice &&

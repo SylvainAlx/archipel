@@ -9,7 +9,6 @@ import {
   loadingSpinner,
   nationAtom,
 } from "../../../settings/store";
-import { EmptyCom } from "../../../types/typCom";
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import Form from "../../../components/form/form";
 import Input from "../../../components/form/input";
@@ -22,6 +21,7 @@ import ListTile from "../../../components/listTile";
 import Tag from "../../../components/tag";
 import { IoMdTrash } from "react-icons/io";
 import { dateToString } from "../../../utils/functions";
+import { EmptyCom } from "../../../types/typAtom";
 
 export default function DashboardCom({ text }: StringProps) {
   const [nation] = useAtom(nationAtom);

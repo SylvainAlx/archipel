@@ -1,5 +1,7 @@
 import { RegimeOption } from "./typNation";
 
+// confirmBox
+
 export interface ConfirmBox {
   action: string;
   text: string;
@@ -14,6 +16,8 @@ export const ConfirmBoxDefault: ConfirmBox = {
   result: "",
 };
 
+// editBox
+
 export interface EditBox {
   original: string | number | boolean | RegimeOption[];
   new: string | number | boolean | RegimeOption[];
@@ -25,4 +29,28 @@ export const EditBoxDefault: EditBox = {
   original: -1,
   new: -1,
   path: "",
+};
+
+//  Com
+
+export interface Com {
+  _id: string;
+  originId: string;
+  destinationId?: string;
+  originName: string;
+  title: string;
+  comType: number;
+  message: string;
+  createdAt: Date;
+}
+
+export const EmptyCom: Com = {
+  _id: "",
+  originId: "",
+  destinationId: "",
+  originName: "",
+  title: "",
+  comType: -1,
+  message: "",
+  createdAt: new Date(),
 };

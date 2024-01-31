@@ -13,7 +13,7 @@ const server = {
 
 export const SERVER_URL = server.prod;
 
-export const COM_TYP = [
+export const comOptions = [
   { id: 0, label: "contact administrateur" },
   { id: 1, label: "Nouvelle nation" },
   { id: 2, label: "Suppression d'une nation" },
@@ -43,7 +43,7 @@ export const nationSortOptions = [
   { id: 3, label: "Point décroissant" },
 ];
 
-export const comTypeOptions = [COM_TYP[3], COM_TYP[4], COM_TYP[0]];
+export const comTypeOptions = [comOptions[3], comOptions[4], comOptions[0]];
 
 export const regimeOptions: RegimeOption[] = [
   { id: 0, label: "régime politique inconnu", color: "bg-regime_0" },
