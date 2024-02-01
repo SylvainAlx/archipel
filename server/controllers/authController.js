@@ -23,12 +23,12 @@ export const register = async (req, res) => {
       password,
       recovery,
       role: name === process.env.ADMIN ? "admin" : "standard",
-      data: {
-        general: {
-          points: 0,
-          unusedPoints: 100,
-        },
-      },
+      // data: {
+      //   general: {
+      //     points: 0,
+      //     unusedPoints: 100,
+      //   },
+      // },
     });
     nation
       .save()

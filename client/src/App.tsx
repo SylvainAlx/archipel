@@ -25,7 +25,7 @@ import ModalsRouter from "./router/modalsRouter";
 import { ArchipelRoute } from "./types/typReact";
 import { EmptyNation } from "./types/typNation";
 import Lobby from "./pages/lobby";
-import { MDP_LOBBY } from "./settings/consts";
+import { MDP_LOBBY, SERVEUR_LOADING_STRING } from "./settings/consts";
 
 export default function App() {
   const [nation, setNation] = useAtom(nationAtom);
@@ -41,10 +41,10 @@ export default function App() {
     }
     if (jwt) {
       setShowApplication(true);
-      setLoading({ show: true, text: "Connexion au serveur" });
+      setLoading({ show: true, text: SERVEUR_LOADING_STRING });
       authGet(jwt)
         .then((data) => {
-          setLoading({ show: false, text: "Connexion au serveur" });
+          setLoading({ show: false, text: SERVEUR_LOADING_STRING });
           if (data.name != undefined) {
             setNation({
               _id: data._id,
@@ -55,12 +55,12 @@ export default function App() {
             });
           } else {
             setNation(EmptyNation);
-            setLoading({ show: false, text: "Connexion au serveur" });
+            setLoading({ show: false, text: SERVEUR_LOADING_STRING });
             localStorage.removeItem("jwt");
           }
         })
         .catch((error) => {
-          setLoading({ show: false, text: "Connexion au serveur" });
+          setLoading({ show: false, text: SERVEUR_LOADING_STRING });
           console.log(error);
         });
     } else {

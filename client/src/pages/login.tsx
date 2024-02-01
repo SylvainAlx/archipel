@@ -13,6 +13,7 @@ import Input from "../components/form/input";
 import Button from "../components/button";
 import { EmptyNation } from "../types/typNation";
 import Form from "../components/form/form";
+import { SERVEUR_LOADING_STRING } from "../settings/consts";
 
 export default function Login() {
   const [name, setName] = useState("");
@@ -33,10 +34,10 @@ export default function Login() {
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    setLoading({ show: true, text: "Connexion au serveur" });
+    setLoading({ show: true, text: SERVEUR_LOADING_STRING });
     loginFetch({ name, password })
       .then((data) => {
-        setLoading({ show: false, text: "Connexion au serveur" });
+        setLoading({ show: false, text: SERVEUR_LOADING_STRING });
         if (data.nation) {
           localStorage.setItem("jwt", data.jwt);
           setNationsList([EmptyNation]);
@@ -49,12 +50,12 @@ export default function Login() {
           });
           navigate("/dashboard");
         } else {
-          setLoading({ show: false, text: "Connexion au serveur" });
+          setLoading({ show: false, text: SERVEUR_LOADING_STRING });
           setInfo(data.message);
         }
       })
       .catch((error) => {
-        setLoading({ show: false, text: "Connexion au serveur" });
+        setLoading({ show: false, text: SERVEUR_LOADING_STRING });
         setInfo(error.message);
       });
   };

@@ -4,24 +4,27 @@ export interface Nation {
   role: string;
   data: {
     url: {
-      flagUrl: string;
-      bannerUrl?: string;
-      websiteUrl?: string;
+      flag: string;
+      banner: string;
+      website: string;
+      wiki: string;
+      instagram: string;
+      discord: string;
     };
     general: {
-      motto?: string;
-      nationalDay?: Date;
+      motto: string;
+      nationalDay: Date;
       regime: number;
+    };
+    roleplay: {
       points: number;
       unusedPoints: number;
-      politicalSide?: number;
+      politicalSide: number;
+      pointsDistribution: {
+        citizens: number;
+        structures: number;
+      };
     };
-    distribution?: [
-      {
-        workId: number;
-        points: number;
-      },
-    ];
   };
   createdAt: Date;
 }
@@ -32,24 +35,27 @@ export const EmptyNation: Nation = {
   role: "",
   data: {
     url: {
-      flagUrl: "",
-      bannerUrl: "",
-      websiteUrl: "",
+      flag: "",
+      banner: "",
+      website: "",
+      wiki: "",
+      instagram: "",
+      discord: "",
     },
     general: {
       motto: "",
       nationalDay: new Date(0),
       regime: -1,
-      points: -1,
-      unusedPoints: -1,
-      politicalSide: -1,
     },
-    distribution: [
-      {
-        workId: -1,
-        points: -1,
+    roleplay: {
+      points: 0,
+      unusedPoints: 100,
+      politicalSide: -1,
+      pointsDistribution: {
+        citizens: 0,
+        structures: 0,
       },
-    ],
+    },
   },
   createdAt: new Date(0),
 };

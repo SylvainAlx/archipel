@@ -20,7 +20,6 @@ export default function EditBoxModal() {
       if (typeof objetCourant === "object" && objetCourant !== null) {
         objetCourant = objetCourant[parties[i]];
       } else {
-        // Gérer le cas où l'un des niveaux du chemin n'existe pas
         console.error(`Chemin incorrect. Propriété ${parties[i]} non trouvée.`);
         break;
       }
@@ -55,7 +54,7 @@ export default function EditBoxModal() {
         MODIFICATION D'UNE INFORMATION
       </h2>
       <b>VALEUR ACTUELLE</b>
-      <em className="w-full overflow-scroll">
+      <em className="w-full text-center overflow-x-scroll">
         {typeof editBox.original != "object" && editBox.original.toString()}
         {typeof editBox.original == "object" &&
           editBox.indice &&

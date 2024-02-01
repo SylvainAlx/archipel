@@ -15,7 +15,11 @@ import Input from "../../../components/form/input";
 import Button from "../../../components/button";
 import { getAllComs } from "../../../utils/fetch";
 import Select from "../../../components/form/select";
-import { TITLE, comTypeOptions } from "../../../settings/consts";
+import {
+  SERVEUR_LOADING_STRING,
+  TITLE,
+  comTypeOptions,
+} from "../../../settings/consts";
 import TextArea from "../../../components/form/textArea";
 import ListTile from "../../../components/listTile";
 import Tag from "../../../components/tag";
@@ -33,16 +37,16 @@ export default function DashboardCom({ text }: StringProps) {
 
   useEffect(() => {
     if (comList[0]._id === "") {
-      setLoading({ show: true, text: "Connexion au serveur" });
+      setLoading({ show: true, text: SERVEUR_LOADING_STRING });
       getAllComs()
         .then((data) => {
-          setLoading({ show: false, text: "Connexion au serveur" });
+          setLoading({ show: false, text: SERVEUR_LOADING_STRING });
           if (data != undefined) {
             setComsList(data);
           }
         })
         .catch((error) => {
-          setLoading({ show: false, text: "Connexion au serveur" });
+          setLoading({ show: false, text: SERVEUR_LOADING_STRING });
           setInfo(error.message);
         });
     }

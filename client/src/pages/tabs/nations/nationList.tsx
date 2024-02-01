@@ -10,7 +10,10 @@ import {
 } from "../../../settings/store";
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { nationSortOptions } from "../../../settings/consts";
+import {
+  SERVEUR_LOADING_STRING,
+  nationSortOptions,
+} from "../../../settings/consts";
 import { getAllNations } from "../../../utils/fetch";
 import H1 from "../../../components/titles/h1";
 import PublicNationTile from "../../../components/nations/publicNationTile";
@@ -73,30 +76,30 @@ export default function NationList({ text }: StringProps) {
 
   const getNations = () => {
     setSearchName("");
-    setLoading({ show: true, text: "Connexion au serveur" });
+    setLoading({ show: true, text: SERVEUR_LOADING_STRING });
     getAllNations(searchName)
       .then((data) => {
-        setLoading({ show: false, text: "Connexion au serveur" });
+        setLoading({ show: false, text: SERVEUR_LOADING_STRING });
         if (data != undefined) {
           setNationsList(data);
         }
       })
       .catch((error) => {
-        setLoading({ show: false, text: "Connexion au serveur" });
+        setLoading({ show: false, text: SERVEUR_LOADING_STRING });
         setInfo(error.message);
       });
   };
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    setLoading({ show: true, text: "Connexion au serveur" });
+    setLoading({ show: true, text: SERVEUR_LOADING_STRING });
     getAllNations(searchName)
       .then((data) => {
-        setLoading({ show: false, text: "Connexion au serveur" });
+        setLoading({ show: false, text: SERVEUR_LOADING_STRING });
         setNationsList(data);
       })
       .catch((error) => {
-        setLoading({ show: false, text: "Connexion au serveur" });
+        setLoading({ show: false, text: SERVEUR_LOADING_STRING });
         setInfo(error.message);
       });
   };

@@ -11,9 +11,9 @@ export default function PublicNationTile({ name, data, role }: Nation) {
     <div className="bg-complementary hover:bg-black_alpha hover:cursor-pointer flex flex-col items-center p-2 gap-4 rounded transition-all">
       <div className="w-full flex items-center">
         <div className="w-[50px] h-[50px] bg-complementary rounded-full flex items-center justify-center overflow-hidden">
-          {data.url.flagUrl != "" ? (
+          {data.url.flag != "" ? (
             <img
-              src={data.url.flagUrl}
+              src={data.url.flag}
               alt={`flag of ${name}`}
               className="w-full h-full"
             />
@@ -28,7 +28,7 @@ export default function PublicNationTile({ name, data, role }: Nation) {
       <div className="flex gap-2 self-end flex-wrap justify-end">
         {role === "admin" && <Tag text="admin" bgColor="bg-success" />}
         <Tag
-          text={data.general.points.toString() + " points"}
+          text={data.roleplay.points.toString() + " points"}
           bgColor="bg-secondary"
         />
         {regimeOptions.map((regime, i) => {

@@ -14,7 +14,7 @@ export default function PointsDistribution({
             title="Total points Navir"
             children={
               <>
-                <H3 text={selectedNation.data.general.points.toString()} />
+                <H3 text={selectedNation.data.roleplay.points.toString()} />
               </>
             }
           />
@@ -23,7 +23,7 @@ export default function PointsDistribution({
             children={
               <>
                 <H3
-                  text={selectedNation.data.general.unusedPoints.toString()}
+                  text={selectedNation.data.roleplay.unusedPoints.toString()}
                 />
               </>
             }

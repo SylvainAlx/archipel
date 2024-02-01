@@ -11,6 +11,7 @@ import { StringProps } from "../../../types/typProp";
 import { useEffect, useState } from "react";
 import { getAllNations } from "../../../utils/fetch";
 import H3 from "../../../components/titles/h3";
+import { SERVEUR_LOADING_STRING } from "../../../settings/consts";
 
 export default function NationStatistics({ text }: StringProps) {
   const [nationsList, setNationsList] = useAtom(nationsListAtom);
@@ -26,16 +27,16 @@ export default function NationStatistics({ text }: StringProps) {
       }
       setTotalPoints(points);
       if (nationsList[0]._id === "") {
-        setLoading({ show: true, text: "Connexion au serveur" });
+        setLoading({ show: true, text: SERVEUR_LOADING_STRING });
         getAllNations("")
           .then((data) => {
-            setLoading({ show: false, text: "Connexion au serveur" });
+            setLoading({ show: false, text: SERVEUR_LOADING_STRING });
             if (data != undefined) {
               setNationsList(data);
             }
           })
           .catch((error) => {
-            setLoading({ show: false, text: "Connexion au serveur" });
+            setLoading({ show: false, text: SERVEUR_LOADING_STRING });
             setInfo(error.message);
           });
       }

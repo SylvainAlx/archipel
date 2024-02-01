@@ -13,7 +13,7 @@ import { useAtom } from "jotai";
 import { getAllComs } from "../../../utils/fetch";
 import Button from "../../../components/button";
 import { IoMdTrash } from "react-icons/io";
-import { comOptions } from "../../../settings/consts";
+import { SERVEUR_LOADING_STRING, comOptions } from "../../../settings/consts";
 import { dateToString } from "../../../utils/functions";
 
 export default function NationComs({ text }: StringProps) {
@@ -30,16 +30,16 @@ export default function NationComs({ text }: StringProps) {
   }, []);
 
   const getComs = () => {
-    setLoading({ show: true, text: "Connexion au serveur" });
+    setLoading({ show: true, text: SERVEUR_LOADING_STRING });
     getAllComs()
       .then((data) => {
-        setLoading({ show: false, text: "Connexion au serveur" });
+        setLoading({ show: false, text: SERVEUR_LOADING_STRING });
         if (data != undefined) {
           setComsList(data);
         }
       })
       .catch((error) => {
-        setLoading({ show: false, text: "Connexion au serveur" });
+        setLoading({ show: false, text: SERVEUR_LOADING_STRING });
         setInfo(error.message);
       });
   };

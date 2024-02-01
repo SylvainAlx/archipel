@@ -13,13 +13,7 @@ const server = {
 
 export const SERVER_URL = server.prod;
 
-export const comOptions = [
-  { id: 0, label: "contact administrateur" },
-  { id: 1, label: "Nouvelle nation" },
-  { id: 2, label: "Suppression d'une nation" },
-  { id: 3, label: "Politique intérieure (public)" },
-  { id: 4, label: "Politique extérieure (public)" },
-];
+export const SERVEUR_LOADING_STRING = "Connexion au serveur";
 
 // Titles
 
@@ -41,6 +35,14 @@ export const nationSortOptions = [
   { id: 1, label: "Alphabetique décroissant" },
   { id: 2, label: "Point croissant" },
   { id: 3, label: "Point décroissant" },
+];
+
+export const comOptions = [
+  { id: 0, label: "contact administrateur" },
+  { id: 1, label: "Nouvelle nation" },
+  { id: 2, label: "Suppression d'une nation" },
+  { id: 3, label: "Politique intérieure (public)" },
+  { id: 4, label: "Politique extérieure (public)" },
 ];
 
 export const comTypeOptions = [comOptions[3], comOptions[4], comOptions[0]];

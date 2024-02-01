@@ -8,6 +8,7 @@ import Input from "../components/form/input";
 import Button from "../components/button";
 import Form from "../components/form/form";
 import TextArea from "../components/form/textArea";
+import { SERVEUR_LOADING_STRING } from "../settings/consts";
 
 export default function Recovery() {
   const [name, setName] = useState("");
@@ -34,7 +35,7 @@ export default function Recovery() {
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    setLoading({ show: true, text: "Connexion au serveur" });
+    setLoading({ show: true, text: SERVEUR_LOADING_STRING });
     const dataToSend = {
       name,
       recovery,
@@ -42,14 +43,14 @@ export default function Recovery() {
     };
     RecoveryFetch(dataToSend)
       .then((data) => {
-        setLoading({ show: false, text: "Connexion au serveur" });
+        setLoading({ show: false, text: SERVEUR_LOADING_STRING });
         setInfo(data.message);
         if (data.message === "nouveau mot de passe pris en compte") {
           navigate("/login");
         }
       })
       .catch((error) => {
-        setLoading({ show: false, text: "Connexion au serveur" });
+        setLoading({ show: false, text: SERVEUR_LOADING_STRING });
         alert(error.message);
       });
   };

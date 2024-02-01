@@ -31,7 +31,19 @@ const nationSchema = mongoose.Schema(
           type: String,
           default: "",
         },
-        websiteUrl: {
+        website: {
+          type: String,
+          default: "",
+        },
+        wiki: {
+          type: String,
+          default: "",
+        },
+        instagram: {
+          type: String,
+          default: "",
+        },
+        discord: {
           type: String,
           default: "",
         },
@@ -46,20 +58,31 @@ const nationSchema = mongoose.Schema(
           type: Number,
           default: -1,
         },
+      },
+      roleplay: {
         points: {
           type: Number,
-          default: -1,
+          default: 0,
         },
         unusedPoints: {
           type: Number,
-          default: -1,
+          default: 100,
         },
         politicalSide: {
           type: Number,
           default: -1,
         },
+        pointsDistribution: {
+          citizens: {
+            type: Number,
+            default: 0,
+          },
+          structures: {
+            type: Number,
+            default: 0,
+          },
+        },
       },
-      distribution: [],
     },
   },
   {

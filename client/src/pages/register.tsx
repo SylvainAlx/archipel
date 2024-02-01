@@ -15,7 +15,7 @@ import Input from "../components/form/input";
 import Button from "../components/button";
 import { EmptyNation } from "../types/typNation";
 import Form from "../components/form/form";
-import { comOptions } from "../settings/consts";
+import { SERVEUR_LOADING_STRING, comOptions } from "../settings/consts";
 import { EmptyCom } from "../types/typAtom";
 
 export default function Register() {
@@ -40,10 +40,10 @@ export default function Register() {
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    setLoading({ show: true, text: "Connexion au serveur" });
+    setLoading({ show: true, text: SERVEUR_LOADING_STRING });
     registerFetch({ name, password })
       .then((data) => {
-        setLoading({ show: false, text: "Connexion au serveur" });
+        setLoading({ show: false, text: SERVEUR_LOADING_STRING });
         if (data.nation) {
           createCom({
             originId: data.nation._id,
@@ -63,12 +63,12 @@ export default function Register() {
           });
           navigate("/dashboard");
         } else {
-          setLoading({ show: false, text: "Connexion au serveur" });
+          setLoading({ show: false, text: SERVEUR_LOADING_STRING });
           setInfo("création impossible : " + data.message);
         }
       })
       .catch((error) => {
-        setLoading({ show: false, text: "Connexion au serveur" });
+        setLoading({ show: false, text: SERVEUR_LOADING_STRING });
         setInfo(error.message);
       });
   };

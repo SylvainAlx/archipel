@@ -18,14 +18,52 @@ export default function GeneralInformations({
         <>
           <DashTile
             title="Informations générales"
-            className="w-full"
+            className="min-w-[300px]"
             children={
               <>
                 <div className="p-4 flex flex-col gap-2 items-center">
                   <div className="flex gap-2 items-center">
+                    <div className="w-[200px] h-[140px] bg-complementary flex flex-col items-center justify-center rounded overflow-hidden">
+                      {selectedNation.data.url.flag ? (
+                        <img
+                          src={selectedNation.data.url.flag}
+                          alt={`flag of ${selectedNation.name}`}
+                          className="object-cover w-full h-full"
+                        />
+                      ) : (
+                        <div className="text-[3.1rem]">
+                          <GiBlackFlag />
+                        </div>
+                      )}
+                    </div>
+                    {owner && (
+                      <EditIcon
+                        param={selectedNation.data.url.flag}
+                        path="data.url.flagUrl"
+                      />
+                    )}
+                  </div>
+                  <div className="flex gap-2 items-center">
                     <H3 text={selectedNation.name} />
                     {owner && (
                       <EditIcon param={selectedNation.name} path="name" />
+                    )}
+                  </div>
+                  <div className="flex gap-2 items-center">
+                    <em>
+                      {selectedNation.data.general.motto
+                        ? selectedNation.data.general.motto
+                        : "Pas de devise"}
+                    </em>
+                    {owner && (
+                      <EditIcon
+                        param={
+                          selectedNation.data.general.motto
+                            ? selectedNation.data.general.motto
+                            : ""
+                        }
+                        path="data.general.motto"
+                      />
                     )}
                   </div>
                   <div className="flex gap-2">
@@ -54,64 +92,19 @@ export default function GeneralInformations({
             }
           />
           <DashTile
-            title="Symboles"
-            children={
-              <>
-                <div className="flex gap-2 items-center">
-                  <div className="w-[150px] bg-complementary flex flex-col items-center justify-center">
-                    {selectedNation.data.url.flagUrl ? (
-                      <img
-                        src={selectedNation.data.url.flagUrl}
-                        alt={`flag of ${selectedNation.name}`}
-                        className="w-full h-full"
-                      />
-                    ) : (
-                      <div className="text-[3.1rem]">
-                        <GiBlackFlag />
-                      </div>
-                    )}
-                  </div>
-                  {owner && (
-                    <EditIcon
-                      param={selectedNation.data.url.flagUrl}
-                      path="data.url.flagUrl"
-                    />
-                  )}
-                </div>
-                <div className="flex gap-2 items-center">
-                  <em>
-                    {selectedNation.data.general.motto
-                      ? selectedNation.data.general.motto
-                      : "Pas de devise"}
-                  </em>
-                  {owner && (
-                    <EditIcon
-                      param={
-                        selectedNation.data.general.motto
-                          ? selectedNation.data.general.motto
-                          : ""
-                      }
-                      path="data.general.motto"
-                    />
-                  )}
-                </div>
-              </>
-            }
-          />
-          <DashTile
             title="Lien externe"
             children={
               <>
                 <div className=" bg-complementary rounded-full flex flex-col items-center justify-center">
-                  {selectedNation.data.url.websiteUrl ? (
+                  {selectedNation.data.url.website ? (
                     <a
-                      href={selectedNation.data.url.websiteUrl}
+                      href={selectedNation.data.url.website}
                       className="cursor-pointer"
                     >
                       <div className="text-[3.1rem] flex justify-center">
                         <FaLink />
                       </div>
-                      <p>{selectedNation.data.url.websiteUrl}</p>
+                      <p>{selectedNation.data.url.website}</p>
                     </a>
                   ) : (
                     <div>

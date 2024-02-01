@@ -22,6 +22,7 @@ import {
   updateElementOfAtomArray,
 } from "../../utils/functions";
 import { EmptyCom } from "../../types/typAtom";
+import { SERVEUR_LOADING_STRING } from "../../settings/consts";
 
 export default function ConfirmModal() {
   const [confirm, setConfirm] = useAtom(confirmBox);
@@ -41,10 +42,10 @@ export default function ConfirmModal() {
   };
 
   const deleteSelfNation = () => {
-    setLoading({ show: true, text: "Connexion au serveur" });
+    setLoading({ show: true, text: SERVEUR_LOADING_STRING });
     DeleteSelfFetch()
       .then((resp) => {
-        setLoading({ show: false, text: "Connexion au serveur" });
+        setLoading({ show: false, text: SERVEUR_LOADING_STRING });
         createCom({
           originId: nation._id,
           originName: nation.name,
@@ -59,51 +60,51 @@ export default function ConfirmModal() {
         // window.location.reload();
       })
       .catch((error) => {
-        setLoading({ show: false, text: "Connexion au serveur" });
+        setLoading({ show: false, text: SERVEUR_LOADING_STRING });
         setInfo(error);
       });
   };
 
   const deleteCom = () => {
-    setLoading({ show: true, text: "Connexion au serveur" });
+    setLoading({ show: true, text: SERVEUR_LOADING_STRING });
     deleteComFetch(confirm.target)
       .then((resp) => {
-        setLoading({ show: false, text: "Connexion au serveur" });
+        setLoading({ show: false, text: SERVEUR_LOADING_STRING });
         deleteElementOfAtomArray(confirm.target, comsList, setComsList);
         setInfo(resp.message);
       })
       .catch((error) => {
-        setLoading({ show: false, text: "Connexion au serveur" });
+        setLoading({ show: false, text: SERVEUR_LOADING_STRING });
         setInfo(error);
       });
   };
 
   const createNewCom = (payload: any) => {
-    setLoading({ show: true, text: "Connexion au serveur" });
+    setLoading({ show: true, text: SERVEUR_LOADING_STRING });
     createCom(payload)
       .then((resp) => {
-        setLoading({ show: false, text: "Connexion au serveur" });
+        setLoading({ show: false, text: SERVEUR_LOADING_STRING });
         createElementOfAtomArray(resp.com, comsList, setComsList);
         setInfo(resp.message);
       })
       .catch((error) => {
-        setLoading({ show: false, text: "Connexion au serveur" });
+        setLoading({ show: false, text: SERVEUR_LOADING_STRING });
         setInfo(error);
       });
   };
 
   const updateNation = (payload: Nation) => {
-    setLoading({ show: true, text: "Connexion au serveur" });
+    setLoading({ show: true, text: SERVEUR_LOADING_STRING });
     updateNationFetch(payload)
       .then((resp) => {
-        setLoading({ show: false, text: "Connexion au serveur" });
+        setLoading({ show: false, text: SERVEUR_LOADING_STRING });
         setNation(resp.nation);
         updateElementOfAtomArray(resp.nation, nationsList, setNationsList);
         localStorage.setItem("jwt", resp.jwt);
         setInfo(resp.message);
       })
       .catch((error) => {
-        setLoading({ show: false, text: "Connexion au serveur" });
+        setLoading({ show: false, text: SERVEUR_LOADING_STRING });
         setInfo(error);
       });
   };
