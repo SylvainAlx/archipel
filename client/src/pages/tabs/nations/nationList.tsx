@@ -58,13 +58,13 @@ export default function NationList({ text }: StringProps) {
     } else if (selectOption === "2") {
       setNationsList(
         tempList.sort(function (a, b) {
-          return a.data.general.points - b.data.general.points;
+          return a.data.roleplay.points - b.data.roleplay.points;
         }),
       );
     } else if (selectOption === "3") {
       setNationsList(
         tempList.sort(function (a, b) {
-          return b.data.general.points - a.data.general.points;
+          return b.data.roleplay.points - a.data.roleplay.points;
         }),
       );
     }

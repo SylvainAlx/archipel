@@ -23,7 +23,7 @@ export default function NationStatistics({ text }: StringProps) {
     if (nationsList.length > 0) {
       let points = 0;
       for (let i = 0; i < nationsList.length - 1; i++) {
-        points += nationsList[i].data.general.points;
+        points += nationsList[i].data.roleplay.points;
       }
       setTotalPoints(points);
       if (nationsList[0]._id === "") {
