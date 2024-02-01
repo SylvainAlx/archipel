@@ -41,11 +41,11 @@ export default function IconLink({ path, text }: ButtonProps) {
       {path === "/login" && <IoMdLogIn />}
       {path === "/register" && <IoMdAddCircleOutline />}
       {path === "/dashboard" &&
-        (nation.data.url.flagUrl ? (
+        (nation.data.url.flag ? (
           <div className="rounded-full w-[45px] h-[45px] overflow-hidden">
             <img
-              src={nation.data.url.flagUrl}
-              className={`w-full h-full ${nation.data.url.flagUrl === "/logo.png" && "opacity-20"}`}
+              src={nation.data.url.flag}
+              className={`w-full h-full ${nation.data.url.flag === "/logo.png" && "opacity-20"}`}
             />
           </div>
         ) : (

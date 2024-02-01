@@ -5,7 +5,7 @@ export const getAll = async (req, res) => {
     const searchText = req.query.texteRecherche;
     const nations = await Nation.find(
       { name: { $regex: searchText, $options: "i" } },
-      "name role data.general data.url createdAt"
+      "name role data createdAt"
     );
     res.status(200).json(nations);
   } catch (error) {
@@ -15,10 +15,9 @@ export const getAll = async (req, res) => {
 
 export const getTop100 = async (req, res) => {
   try {
-    const nations = await Nation.find(
-      {},
-      "name role data.general.points data.general.regime data.url.flagUrl createdAt"
-    ).limit(100);
+    const nations = await Nation.find({}, "name role data createdAt").limit(
+      100
+    );
     res.status(200).json(nations);
   } catch (error) {
     res.status(400).json({ message: "Aucune nation trouvée" });
@@ -28,7 +27,10 @@ export const getTop100 = async (req, res) => {
 export const getOne = async (req, res) => {
   try {
     const nationId = req.params.id;
-    const nation = await Nation.findOne({ _id: nationId });
+    const nation = await Nation.findOne(
+      { _id: nationId },
+      "name role data createdAt"
+    );
     res.status(200).json({
       name: nation.name,
       data: nation.data,
@@ -44,7 +46,10 @@ export const getOne = async (req, res) => {
 export const getSelf = async (req, res) => {
   try {
     const id = req.nationId;
-    const nation = await Nation.findOne({ _id: id });
+    const nation = await Nation.findOne(
+      { _id: id },
+      "name role data createdAt"
+    );
     res.status(200).json({ nation });
   } catch (error) {
     res.status(400).json({
@@ -90,7 +95,7 @@ export const updateNation = async (req, res) => {
   try {
     const { _id, name, data } = req.body;
     if (req.nationId === _id) {
-      const nation = await Nation.findOne({ _id });
+      const nation = await Nation.findOne({ _id }, "name role data createdAt");
       nation.name = name;
       nation.data = data;
       nation

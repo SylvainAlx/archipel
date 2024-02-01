@@ -22,7 +22,7 @@ import {
   updateElementOfAtomArray,
 } from "../../utils/functions";
 import { EmptyCom } from "../../types/typAtom";
-import { SERVEUR_LOADING_STRING } from "../../settings/consts";
+import { SERVEUR_LOADING_STRING, comOptions } from "../../settings/consts";
 
 export default function ConfirmModal() {
   const [confirm, setConfirm] = useAtom(confirmBox);
@@ -101,7 +101,22 @@ export default function ConfirmModal() {
         setNation(resp.nation);
         updateElementOfAtomArray(resp.nation, nationsList, setNationsList);
         localStorage.setItem("jwt", resp.jwt);
-        setInfo(resp.message);
+        // setInfo(resp.message);
+
+        const updateCom = {
+          originId: payload._id,
+          originName: payload.name,
+          title: "Mise à jour des informations",
+          comType: comOptions[3].id,
+          message: payload.name + " a modifié certaines informations",
+        };
+        setConfirm({
+          action: "createCom",
+          text: "Mise a jour réussie. Publier la modification dans les communications ?",
+          result: "",
+          target: "",
+          payload: updateCom,
+        });
       })
       .catch((error) => {
         setLoading({ show: false, text: SERVEUR_LOADING_STRING });

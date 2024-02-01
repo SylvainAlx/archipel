@@ -23,11 +23,11 @@ const nationSchema = mongoose.Schema(
     },
     data: {
       url: {
-        flagUrl: {
+        flag: {
           type: String,
           default: "",
         },
-        bannerUrl: {
+        banner: {
           type: String,
           default: "",
         },
@@ -56,7 +56,7 @@ const nationSchema = mongoose.Schema(
         nationalDay: Date,
         regime: {
           type: Number,
-          default: -1,
+          default: 0,
         },
       },
       roleplay: {
@@ -70,7 +70,7 @@ const nationSchema = mongoose.Schema(
         },
         politicalSide: {
           type: Number,
-          default: -1,
+          default: 0,
         },
         pointsDistribution: {
           citizens: {

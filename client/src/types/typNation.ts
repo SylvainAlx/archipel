@@ -45,12 +45,12 @@ export const EmptyNation: Nation = {
     general: {
       motto: "",
       nationalDay: new Date(0),
-      regime: -1,
+      regime: 0,
     },
     roleplay: {
       points: 0,
       unusedPoints: 100,
-      politicalSide: -1,
+      politicalSide: 0,
       pointsDistribution: {
         citizens: 0,
         structures: 0,

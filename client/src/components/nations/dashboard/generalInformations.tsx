@@ -39,7 +39,7 @@ export default function GeneralInformations({
                     {owner && (
                       <EditIcon
                         param={selectedNation.data.url.flag}
-                        path="data.url.flagUrl"
+                        path="data.url.flag"
                       />
                     )}
                   </div>
