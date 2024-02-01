@@ -97,6 +97,8 @@ export default function ConfirmModal() {
     setLoading({ show: true, text: SERVEUR_LOADING_STRING });
     updateNationFetch(payload)
       .then((resp) => {
+        console.log(resp);
+
         setLoading({ show: false, text: SERVEUR_LOADING_STRING });
         setNation(resp.nation);
         updateElementOfAtomArray(resp.nation, nationsList, setNationsList);

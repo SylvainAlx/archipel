@@ -3,10 +3,11 @@ import { regimeOptions } from "../../../settings/consts";
 import DashTile from "../../dashTile";
 import TileContainer from "../../tileContainer";
 import H3 from "../../titles/h3";
-import { FaLink } from "react-icons/fa6";
+import { FaDiscord, FaInstagram, FaLink, FaWikipediaW } from "react-icons/fa6";
 import Tag from "../../tag";
 import { SelectedNationProps } from "../../../types/typProp";
 import EditIcon from "../../editIcon";
+import ExternalLink from "../../externalLink";
 
 export default function GeneralInformations({
   selectedNation,
@@ -95,25 +96,32 @@ export default function GeneralInformations({
             title="Lien externe"
             children={
               <>
-                <div className=" bg-complementary rounded-full flex flex-col items-center justify-center">
-                  {selectedNation.data.url.website ? (
-                    <a
-                      href={selectedNation.data.url.website}
-                      className="cursor-pointer"
-                    >
-                      <div className="text-[3.1rem] flex justify-center">
-                        <FaLink />
-                      </div>
-                      <p>{selectedNation.data.url.website}</p>
-                    </a>
-                  ) : (
-                    <div>
-                      <div className="text-[3.1rem] flex justify-center cursor-not-allowed">
-                        <FaLink />
-                      </div>
-                      <p>aucun lien</p>
-                    </div>
-                  )}
+                <div className=" flex items-center justify-center gap-4">
+                  <span className="flex items-center">
+                    <ExternalLink
+                      url={selectedNation.data.url.website}
+                      children={<FaLink />}
+                    />
+                    {owner && (
+                      <EditIcon
+                        param={selectedNation.data.url.website}
+                        path="data.url.website"
+                      />
+                    )}
+                  </span>
+
+                  <ExternalLink
+                    url={selectedNation.data.url.instagram}
+                    children={<FaInstagram />}
+                  />
+                  <ExternalLink
+                    url={selectedNation.data.url.wiki}
+                    children={<FaWikipediaW />}
+                  />
+                  <ExternalLink
+                    url={selectedNation.data.url.discord}
+                    children={<FaDiscord />}
+                  />
                 </div>
               </>
             }

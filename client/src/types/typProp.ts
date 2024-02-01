@@ -102,3 +102,8 @@ export interface EditIconProps {
   path: string;
   indice?: number;
 }
+
+export interface ExternalLinkProps {
+  url: string;
+  children: JSX.Element;
+}
