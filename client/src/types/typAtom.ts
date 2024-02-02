@@ -54,3 +54,8 @@ export const EmptyCom: Com = {
   message: "",
   createdAt: new Date(),
 };
+
+export interface StandardOption {
+  id: number;
+  label: string;
+}

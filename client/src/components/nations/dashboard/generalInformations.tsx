@@ -19,7 +19,7 @@ export default function GeneralInformations({
         <>
           <DashTile
             title="Informations générales"
-            className="min-w-[300px]"
+            className="w-full min-w-[300px]"
             children={
               <>
                 <div className="p-4 flex flex-col gap-2 items-center">
@@ -109,19 +109,42 @@ export default function GeneralInformations({
                       />
                     )}
                   </span>
-
-                  <ExternalLink
-                    url={selectedNation.data.url.instagram}
-                    children={<FaInstagram />}
-                  />
-                  <ExternalLink
-                    url={selectedNation.data.url.wiki}
-                    children={<FaWikipediaW />}
-                  />
-                  <ExternalLink
-                    url={selectedNation.data.url.discord}
-                    children={<FaDiscord />}
-                  />
+                  <span className="flex items-center">
+                    <ExternalLink
+                      url={selectedNation.data.url.instagram}
+                      children={<FaInstagram />}
+                    />
+                    {owner && (
+                      <EditIcon
+                        param={selectedNation.data.url.instagram}
+                        path="data.url.instagram"
+                      />
+                    )}
+                  </span>
+                  <span className="flex items-center">
+                    <ExternalLink
+                      url={selectedNation.data.url.wiki}
+                      children={<FaWikipediaW />}
+                    />
+                    {owner && (
+                      <EditIcon
+                        param={selectedNation.data.url.wiki}
+                        path="data.url.wiki"
+                      />
+                    )}
+                  </span>
+                  <span className="flex items-center">
+                    <ExternalLink
+                      url={selectedNation.data.url.discord}
+                      children={<FaDiscord />}
+                    />
+                    {owner && (
+                      <EditIcon
+                        param={selectedNation.data.url.discord}
+                        path="data.url.discord"
+                      />
+                    )}
+                  </span>
                 </div>
               </>
             }

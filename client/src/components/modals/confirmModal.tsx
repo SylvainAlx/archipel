@@ -97,19 +97,16 @@ export default function ConfirmModal() {
     setLoading({ show: true, text: SERVEUR_LOADING_STRING });
     updateNationFetch(payload)
       .then((resp) => {
-        console.log(resp);
-
         setLoading({ show: false, text: SERVEUR_LOADING_STRING });
+
         setNation(resp.nation);
         updateElementOfAtomArray(resp.nation, nationsList, setNationsList);
-        localStorage.setItem("jwt", resp.jwt);
-        // setInfo(resp.message);
 
         const updateCom = {
           originId: payload._id,
           originName: payload.name,
           title: "Mise à jour des informations",
-          comType: comOptions[3].id,
+          comType: comOptions[5].id,
           message: payload.name + " a modifié certaines informations",
         };
         setConfirm({

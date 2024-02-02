@@ -1,7 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import H1 from "../../../components/titles/h1";
 import { StringProps } from "../../../types/typProp";
-import BreakLine from "../../../components/breakLine";
 import GeneralInformations from "../../../components/nations/dashboard/generalInformations";
 import { selectedNationAtom } from "../../../settings/store";
 import { useAtom } from "jotai";
@@ -22,9 +21,8 @@ export default function DashboardMain({ text }: StringProps) {
   return (
     <>
       <H1 text={text} />
-      <section className="w-full flex flex-col gap-8 items-center">
+      <section className="w-full flex flex-wrap gap-8 items- justify-center">
         <GeneralInformations selectedNation={selectedNation} owner={owner} />
-        <BreakLine />
         <PointsDistribution selectedNation={selectedNation} owner={owner} />
       </section>
     </>

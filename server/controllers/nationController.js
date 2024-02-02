@@ -110,6 +110,8 @@ export const updateNation = async (req, res) => {
             erreur: error.message,
           });
         });
+    } else {
+      res.sendStatus(403).json({ message: "modification interdite" });
     }
   } catch (error) {
     res.status(400).json({ error });

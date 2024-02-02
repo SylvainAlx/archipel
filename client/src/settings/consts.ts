@@ -1,5 +1,6 @@
 // Auth
 
+import { StandardOption } from "../types/typAtom";
 import { RegimeOption } from "../types/typNation";
 
 export const MDP_LOBBY = import.meta.env.VITE_MDP_LOBBY;
@@ -13,7 +14,8 @@ const server = {
 
 export const SERVER_URL = server.prod;
 
-export const SERVEUR_LOADING_STRING = "Connexion au serveur";
+export const SERVEUR_LOADING_STRING =
+  "Connexion au serveur, merci de patienter quelques instants";
 
 // Titles
 
@@ -30,19 +32,20 @@ export const color_black_alpha = "var(--color-black-alpha)";
 
 // listes
 
-export const nationSortOptions = [
+export const nationSortOptions: StandardOption[] = [
   { id: 0, label: "Alphabetique croissant" },
   { id: 1, label: "Alphabetique décroissant" },
   { id: 2, label: "Point croissant" },
   { id: 3, label: "Point décroissant" },
 ];
 
-export const comOptions = [
+export const comOptions: StandardOption[] = [
   { id: 0, label: "contact administrateur" },
   { id: 1, label: "Nouvelle nation" },
   { id: 2, label: "Suppression d'une nation" },
   { id: 3, label: "Politique intérieure (public)" },
   { id: 4, label: "Politique extérieure (public)" },
+  { id: 5, label: "Modification apportée" },
 ];
 
 export const comTypeOptions = [comOptions[3], comOptions[4], comOptions[0]];
@@ -67,7 +70,7 @@ export const regimeOptions: RegimeOption[] = [
 
 // onglets
 
-export const nationTabs = [
+export const nationTabs: StandardOption[] = [
   { id: 0, label: "ACTUALITES" },
   { id: 1, label: "LISTE DES NATIONS" },
   { id: 2, label: "STATISTIQUES" },
