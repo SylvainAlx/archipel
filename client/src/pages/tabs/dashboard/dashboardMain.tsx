@@ -21,7 +21,7 @@ export default function DashboardMain({ text }: StringProps) {
   return (
     <>
       <H1 text={text} />
-      <section className="w-full flex flex-wrap gap-8 items- justify-center">
+      <section className="w-full flex flex-wrap gap-8 items-start justify-center">
         <GeneralInformations selectedNation={selectedNation} owner={owner} />
         <PointsDistribution selectedNation={selectedNation} owner={owner} />
       </section>

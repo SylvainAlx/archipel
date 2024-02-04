@@ -65,3 +65,8 @@ export interface RegimeOption {
   label: string;
   color: string;
 }
+
+export interface Distribution {
+  citizens: number;
+  structures: number,
+}

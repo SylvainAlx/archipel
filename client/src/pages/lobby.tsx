@@ -17,7 +17,7 @@ export default function Lobby() {
     e.preventDefault();
     if (password === MDP_LOBBY) {
       setShowApp(true);
-      localStorage.setItem("lobbyToken", MDP_LOBBY);
+      localStorage.setItem("lobbyToken", password);
     }
   };
   return (

@@ -8,6 +8,7 @@ import Tag from "../../tag";
 import { SelectedNationProps } from "../../../types/typProp";
 import EditIcon from "../../editIcon";
 import ExternalLink from "../../externalLink";
+import H2 from "../../titles/h2";
 
 export default function GeneralInformations({
   selectedNation,
@@ -17,6 +18,7 @@ export default function GeneralInformations({
     <TileContainer
       children={
         <>
+          <H2 text="Identité de la nation" />
           <DashTile
             title="Informations générales"
             className="w-full min-w-[300px]"

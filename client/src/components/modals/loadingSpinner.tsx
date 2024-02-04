@@ -6,7 +6,7 @@ export default function LoadingSpinner() {
   const [loading, setLoading] = useAtom(loadingSpinner);
   return (
     <>
-      <h2 className="text-2xl text-center p-4">PATIENTEZ</h2>
+      <h2 className="animate-fadeIn text-2xl text-center p-4">PATIENTEZ</h2>
       <p className="text-center">{loading.text}</p>
       <div role="status">
         <svg
