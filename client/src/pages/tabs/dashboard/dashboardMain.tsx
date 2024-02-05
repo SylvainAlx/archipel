@@ -12,6 +12,8 @@ export default function DashboardMain({ text }: StringProps) {
   const [owner, setOwner] = useState(false);
 
   useEffect(() => {
+    console.log(selectedNation);
+
     const ownerToker = localStorage.getItem("owner");
     if (ownerToker) {
       setOwner(true);

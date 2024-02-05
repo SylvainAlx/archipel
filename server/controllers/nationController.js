@@ -94,6 +94,7 @@ export const deleteOne = async (req, res) => {
 export const updateNation = async (req, res) => {
   try {
     const { _id, name, data } = req.body;
+    console.log(req.body);
     if (req.nationId === _id) {
       const nation = await Nation.findOne({ _id }, "name role data createdAt");
       nation.name = name;

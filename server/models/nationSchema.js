@@ -64,7 +64,7 @@ const nationSchema = mongoose.Schema(
           type: Number,
           default: 0,
         },
-        unusedPoints: {
+        credits: {
           type: Number,
           default: 100,
         },
@@ -72,15 +72,15 @@ const nationSchema = mongoose.Schema(
           type: Number,
           default: 0,
         },
-        pointsDistribution: {
-          citizens: {
-            type: Number,
-            default: 0,
-          },
-          structures: {
-            type: Number,
-            default: 0,
-          },
+        citizens: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "Citizen",
+          default: [],
+        },
+        structures: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "Structure",
+          default: [],
         },
       },
     },

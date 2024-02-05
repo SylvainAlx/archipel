@@ -18,12 +18,10 @@ export interface Nation {
     };
     roleplay: {
       points: number;
-      unusedPoints: number;
+      credits: number;
       politicalSide: number;
-      pointsDistribution: {
-        citizens: number;
-        structures: number;
-      };
+      citizens: [];
+      structures: [];
     };
   };
   createdAt: Date;
@@ -49,12 +47,10 @@ export const EmptyNation: Nation = {
     },
     roleplay: {
       points: 0,
-      unusedPoints: 100,
+      credits: 100,
       politicalSide: 0,
-      pointsDistribution: {
-        citizens: 0,
-        structures: 0,
-      },
+      citizens: [],
+      structures: [],
     },
   },
   createdAt: new Date(0),
@@ -64,9 +60,4 @@ export interface RegimeOption {
   id: number;
   label: string;
   color: string;
-}
-
-export interface Distribution {
-  citizens: number;
-  structures: number,
 }
