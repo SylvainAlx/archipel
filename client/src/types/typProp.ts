@@ -97,6 +97,11 @@ export interface SelectedNationProps {
   owner?: boolean;
 }
 
+export interface DashboardTabProps {
+  text: string;
+  owner: boolean;
+}
+
 export interface EditIconProps {
   param: number | string | boolean | RegimeOption[];
   path: string;

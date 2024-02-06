@@ -99,24 +99,27 @@ export default function ConfirmModal() {
     updateNationFetch(payload)
       .then((resp) => {
         setLoading({ show: false, text: SERVEUR_LOADING_STRING });
+        if (resp.nation) {
+          setNation(resp.nation);
+          updateElementOfAtomArray(resp.nation, nationsList, setNationsList);
 
-        setNation(resp.nation);
-        updateElementOfAtomArray(resp.nation, nationsList, setNationsList);
-
-        const updateCom = {
-          originId: payload._id,
-          originName: payload.name,
-          title: "Mise à jour des informations",
-          comType: comOptions[5].id,
-          message: payload.name + " a modifié certaines informations",
-        };
-        setConfirm({
-          action: "createCom",
-          text: "Mise a jour réussie. Publier la modification dans les communications ?",
-          result: "",
-          target: "",
-          payload: updateCom,
-        });
+          const updateCom = {
+            originId: payload._id,
+            originName: payload.name,
+            title: "Mise à jour des informations",
+            comType: comOptions[5].id,
+            message: payload.name + " a modifié certaines informations",
+          };
+          setConfirm({
+            action: "createCom",
+            text: "Mise a jour réussie. Publier la modification dans les communications ?",
+            result: "",
+            target: "",
+            payload: updateCom,
+          });
+        } else {
+          setInfo(resp.message);
+        }
       })
       .catch((error) => {
         setLoading({ show: false, text: SERVEUR_LOADING_STRING });

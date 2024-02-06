@@ -68,7 +68,6 @@ export const regimeOptions: RegimeOption[] = [
   { id: 10, label: "autre", color: "bg-regime_200" },
 ];
 
-
 // onglets
 
 export const nationTabs: StandardOption[] = [

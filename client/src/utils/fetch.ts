@@ -110,5 +110,6 @@ export const updateNationFetch = async (payload: Nation) => {
     body: JSON.stringify(payload),
   });
   const result = await resp.json();
+
   return result;
 };

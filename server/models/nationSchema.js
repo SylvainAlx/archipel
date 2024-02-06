@@ -75,12 +75,10 @@ const nationSchema = mongoose.Schema(
         citizens: {
           type: mongoose.Schema.Types.ObjectId,
           ref: "Citizen",
-          default: [],
         },
         structures: {
           type: mongoose.Schema.Types.ObjectId,
           ref: "Structure",
-          default: [],
         },
       },
     },

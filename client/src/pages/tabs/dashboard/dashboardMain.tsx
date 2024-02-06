@@ -1,24 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import H1 from "../../../components/titles/h1";
-import { StringProps } from "../../../types/typProp";
 import GeneralInformations from "../../../components/nations/dashboard/generalInformations";
 import { selectedNationAtom } from "../../../settings/store";
 import { useAtom } from "jotai";
 import PointsDistribution from "../../../components/nations/dashboard/pointsDistribution";
-import { useEffect, useState } from "react";
+import { DashboardTabProps } from "../../../types/typProp";
 
-export default function DashboardMain({ text }: StringProps) {
+export default function DashboardMain({ text, owner }: DashboardTabProps) {
   const [selectedNation] = useAtom(selectedNationAtom);
-  const [owner, setOwner] = useState(false);
-
-  useEffect(() => {
-    console.log(selectedNation);
-
-    const ownerToker = localStorage.getItem("owner");
-    if (ownerToker) {
-      setOwner(true);
-    }
-  }, []);
 
   return (
     <>
