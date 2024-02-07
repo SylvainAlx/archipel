@@ -1,3 +1,18 @@
+export interface Citizen {
+  nationality: number;
+  name: string;
+  surname: string;
+  image: string;
+  role: string;
+}
+
+export interface Structure {
+  nation: number;
+  type: number;
+  name: string;
+  image: string;
+}
+
 export interface Nation {
   _id: string;
   name: string;
@@ -20,8 +35,8 @@ export interface Nation {
       points: number;
       credits: number;
       politicalSide: number;
-      citizens: [];
-      structures: [];
+      citizens: Citizen[];
+      structures: Structure[];
     };
   };
   createdAt: Date;

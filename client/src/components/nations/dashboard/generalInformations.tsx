@@ -25,8 +25,10 @@ export default function GeneralInformations({
             children={
               <>
                 <div className="p-4 flex flex-col gap-2 items-center">
-                  <div className="flex gap-2 items-center">
-                    <div className="w-[200px] h-[140px] bg-complementary flex flex-col items-center justify-center rounded overflow-hidden">
+                  <div className="relative">
+                    <div
+                      className={`w-[200px] h-[140px] bg-complementary flex flex-col items-center justify-center overflow-hidden rounded`}
+                    >
                       {selectedNation.data.url.flag ? (
                         <img
                           src={selectedNation.data.url.flag}
@@ -46,14 +48,14 @@ export default function GeneralInformations({
                       />
                     )}
                   </div>
-                  <div className="flex gap-2 items-center">
+                  <div className="relative">
                     <H3 text={selectedNation.name} />
                     {owner && (
                       <EditIcon param={selectedNation.name} path="name" />
                     )}
                   </div>
-                  <div className="flex gap-2 items-center">
-                    <em>
+                  <div className="relative">
+                    <em className="text-xl">
                       {selectedNation.data.general.motto
                         ? selectedNation.data.general.motto
                         : "Pas de devise"}
@@ -76,7 +78,7 @@ export default function GeneralInformations({
                     {regimeOptions.map((regime, i) => {
                       if (regime.id === selectedNation.data.general.regime) {
                         return (
-                          <span key={i} className="flex gap-2 items-center">
+                          <span key={i} className="relative">
                             <Tag text={regime.label} bgColor={regime.color} />
                             {owner && (
                               <EditIcon
@@ -98,8 +100,8 @@ export default function GeneralInformations({
             title="Lien externe"
             children={
               <>
-                <div className=" flex items-center justify-center gap-4">
-                  <span className="flex items-center">
+                <div className=" flex items-center justify-center gap-6">
+                  <span className="relative">
                     <ExternalLink
                       url={selectedNation.data.url.website}
                       children={<FaLink />}
@@ -111,7 +113,7 @@ export default function GeneralInformations({
                       />
                     )}
                   </span>
-                  <span className="flex items-center">
+                  <span className="relative">
                     <ExternalLink
                       url={selectedNation.data.url.instagram}
                       children={<FaInstagram />}
@@ -123,7 +125,7 @@ export default function GeneralInformations({
                       />
                     )}
                   </span>
-                  <span className="flex items-center">
+                  <span className="relative">
                     <ExternalLink
                       url={selectedNation.data.url.wiki}
                       children={<FaWikipediaW />}
@@ -135,7 +137,7 @@ export default function GeneralInformations({
                       />
                     )}
                   </span>
-                  <span className="flex items-center">
+                  <span className="relative">
                     <ExternalLink
                       url={selectedNation.data.url.discord}
                       children={<FaDiscord />}

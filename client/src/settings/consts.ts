@@ -12,7 +12,7 @@ const server = {
   dev: import.meta.env.VITE_SERVER_URL_DEV,
 };
 
-export const SERVER_URL = server.prod;
+export const SERVER_URL = server.dev;
 
 export const SERVEUR_LOADING_STRING =
   "Connexion au serveur, merci de patienter quelques instants";

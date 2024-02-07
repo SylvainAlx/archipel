@@ -9,7 +9,6 @@ import Recovery from "../pages/recovery";
 import Register from "../pages/register";
 import { ArchipelRoute } from "../types/typReact";
 
-
 export const authRoutes: ArchipelRoute[] = [
   { path: "/login", page: <Login /> },
   { path: "/register", page: <Register /> },
@@ -19,7 +18,7 @@ export const publicRoutes: ArchipelRoute[] = [
   { path: "/", page: <Home /> },
   { path: "/recovery", page: <Recovery /> },
   { path: "/nations", page: <Nations /> },
-  { path: "/dashboard", page: <Dashboard /> },
+  { path: "/dashboard/:id", page: <Dashboard /> },
   { path: "/contact", page: <Contact /> },
 ];
 

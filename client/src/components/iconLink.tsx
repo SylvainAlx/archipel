@@ -26,7 +26,7 @@ export default function IconLink({ path, text }: ButtonProps) {
       });
     } else if (path === "/dashboard") {
       setSelectedNation(nation);
-      navigate(path);
+      navigate(`/dashboard/${nation._id}`);
     } else {
       navigate(path);
     }

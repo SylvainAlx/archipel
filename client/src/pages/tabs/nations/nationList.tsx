@@ -162,7 +162,7 @@ export default function NationList({ text }: StringProps) {
                   key={i}
                   onClick={() => {
                     setNation({ ...nation });
-                    navigate("/dashboard");
+                    navigate(`/dashboard/${nation._id}`);
                   }}
                 >
                   <PublicNationTile

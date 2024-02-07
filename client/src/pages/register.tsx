@@ -61,7 +61,7 @@ export default function Register() {
             data: data.nation.data,
             createdAt: data.nation.createdAt,
           });
-          navigate("/dashboard");
+          navigate(`/dashboard/${data.nation._id}`);
         } else {
           setLoading({ show: false, text: SERVEUR_LOADING_STRING });
           setInfo("création impossible : " + data.message);

@@ -53,14 +53,17 @@ export default function EditBoxModal() {
       <h2 className="text-2xl text-center p-4">
         MODIFICATION D'UNE INFORMATION
       </h2>
-      <b>VALEUR ACTUELLE</b>
-      <em className="w-full text-center overflow-x-scroll">
+      <b>INFORMATION ACTUELLE</b>
+      <em
+        className={`w-full text-center text-2xl ${editBox.original.toString().length > 30 && "overflow-x-scroll"} ${editBox.original.toString() === "" && "text-danger"}`}
+      >
         {typeof editBox.original != "object" && editBox.original.toString()}
+        {editBox.original.toString() === "" && "aucune valeur"}
         {typeof editBox.original == "object" &&
           editBox.indice &&
           editBox.original[editBox.indice].label}
       </em>
-      <b>NOUVELLE VALEUR</b>
+      <b>NOUVELLE INFORMATION</b>
       <form
         className="flex flex-col gap-2 items-center"
         onSubmit={handleSubmit}

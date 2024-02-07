@@ -4,10 +4,10 @@
 @tailwind utilities;
 
 #root {
-  --color-primary: #081825;
+  --color-primary: rgb(8, 24, 37);
   --color-light: #ffffff;
   --color-secondary: #00818a;
-  --color-complementary: #222222;
+  --color-complementary: rgb(34, 34, 34);
   --color-black-alpha: rgba(0, 0, 0, 0.63);
   --color-info: rgb(0, 156, 218);
   --color-success: rgb(0, 65, 43);
@@ -42,4 +42,16 @@ b {
 em {
   font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
   font-style: italic;
+}
+
+.shape01 {
+  position: absolute;
+  bottom: -15px;
+  right: 50;
+}
+
+.shape02 {
+  position: absolute;
+  top: -15px;
+  right: 50;
 }

@@ -57,11 +57,11 @@ export const DeleteSelfFetch = async () => {
   return result;
 };
 
-// export const getTop100 = async () => {
-//   const resp = await fetch(`${SERVER_URL}/nation/getnations`);
-//   const result = await resp.json();
-//   return result;
-// };
+export const getOneNationFetch = async (id: string) => {
+  const resp = await fetch(`${SERVER_URL}/nation/${id}`);
+  const result = await resp.json();
+  return result;
+};
 
 export const getAllNations = async (searchText: string) => {
   const resp = await fetch(

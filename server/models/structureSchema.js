@@ -8,7 +8,7 @@ const StructureSchema = mongoose.Schema(
       required: true,
     },
     type: {
-      type: String,
+      type: Number,
       required: true,
     },
     name: {

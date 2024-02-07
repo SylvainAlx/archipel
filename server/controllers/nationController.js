@@ -32,8 +32,7 @@ export const getOne = async (req, res) => {
       "name role data createdAt"
     );
     res.status(200).json({
-      name: nation.name,
-      data: nation.data,
+      nation,
     });
   } catch (error) {
     res.status(400).json({

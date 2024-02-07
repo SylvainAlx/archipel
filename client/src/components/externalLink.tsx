@@ -8,7 +8,7 @@ export default function ExternalLink({ url, children }: ExternalLinkProps) {
           {children}
         </a>
       ) : (
-        <div className="opacity-20">{children}</div>
+        <div className="opacity-10">{children}</div>
       )}
     </div>
   );

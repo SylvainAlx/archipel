@@ -48,7 +48,7 @@ export default function Login() {
             data: data.nation.data,
             createdAt: data.nation.createdAt,
           });
-          navigate("/dashboard");
+          navigate(`/dashboard/${data.nation._id}`);
         } else {
           setLoading({ show: false, text: SERVEUR_LOADING_STRING });
           setInfo(data.message);
