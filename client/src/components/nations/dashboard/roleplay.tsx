@@ -1,8 +1,10 @@
 import { SelectedNationProps } from "../../../types/typProp";
 import DashTile from "../../dashTile";
 import H2 from "../../titles/h2";
+import { IoMdPersonAdd } from "react-icons/io";
+import { MdOutlineAddLocationAlt } from "react-icons/md";
 
-export default function RolePlay({ selectedNation }: SelectedNationProps) {
+export default function RolePlay({ owner }: SelectedNationProps) {
   return (
     <div className="w-full p-1 flex flex-wrap gap-1 justify-center">
       <H2 text="Roleplay" />
@@ -10,7 +12,11 @@ export default function RolePlay({ selectedNation }: SelectedNationProps) {
         title="Citoyens"
         children={
           <>
-            {!selectedNation.data.roleplay.citizens && <em>Aucun citoyen</em>}
+            {owner && (
+              <div className="text-5xl hover:scale-105 hover:text-secondary cursor-pointer transition-all">
+                <IoMdPersonAdd />
+              </div>
+            )}
           </>
         }
       />
@@ -18,8 +24,11 @@ export default function RolePlay({ selectedNation }: SelectedNationProps) {
         title="Lieux"
         children={
           <>
-            {" "}
-            {!selectedNation.data.roleplay.structures && <em>Aucun lieux</em>}
+            {owner && (
+              <div className="text-5xl hover:scale-105 hover:text-secondary cursor-pointer transition-all">
+                <MdOutlineAddLocationAlt />
+              </div>
+            )}
           </>
         }
       />

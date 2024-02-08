@@ -25,7 +25,7 @@ export default function DashStatistics({
     <TileContainer
       children={
         <>
-          <H2 text="Statistiques" />
+          <H2 text="Roleplay" />
           <DashTile
             title="Total points Navir"
             children={
@@ -42,24 +42,7 @@ export default function DashStatistics({
               </>
             }
           />
-          <DashTile
-            title="Citoyens"
-            children={
-              <>
-                {selectedNation.data.roleplay.citizens ? (
-                  <H3
-                    text={selectedNation.data.roleplay.citizens.length.toString()}
-                  />
-                ) : (
-                  <H3 text="0" />
-                )}
-              </>
-            }
-          />
-          <DashTile
-            title="Lieux"
-            children={<H3 text={locationCount.toString()} />}
-          />
+          <DashTile title="Composantes" children={<></>} />
         </>
       }
     />

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useAtom } from "jotai";
 import { confirmBox, editbox, nationAtom } from "../../settings/store";
 import Button from "../button";
@@ -12,8 +13,8 @@ export default function EditBoxModal() {
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    let updatedNation: any = { ...nation };
-    let parties: string[] = editBox.path.split(".");
+    const updatedNation: any = { ...nation };
+    const parties: string[] = editBox.path.split(".");
 
     let objetCourant: any = updatedNation;
     for (let i = 0; i < parties.length - 1; i++) {
@@ -24,7 +25,7 @@ export default function EditBoxModal() {
         break;
       }
     }
-    let dernierePartie: string = parties[parties.length - 1];
+    const dernierePartie: string = parties[parties.length - 1];
     if (typeof objetCourant === "object" && objetCourant !== null) {
       objetCourant[dernierePartie] = editBox.new;
     }
@@ -53,8 +54,7 @@ export default function EditBoxModal() {
       <h2 className="text-2xl text-center p-4">
         MODIFICATION D'UNE INFORMATION
       </h2>
-      <b>INFORMATION ACTUELLE</b>
-      <em
+      <b
         className={`w-full text-center text-2xl ${editBox.original.toString().length > 30 && "overflow-x-scroll"} ${editBox.original.toString() === "" && "text-danger"}`}
       >
         {typeof editBox.original != "object" && editBox.original.toString()}
@@ -62,8 +62,7 @@ export default function EditBoxModal() {
         {typeof editBox.original == "object" &&
           editBox.indice &&
           editBox.original[editBox.indice].label}
-      </em>
-      <b>NOUVELLE INFORMATION</b>
+      </b>
       <form
         className="flex flex-col gap-2 items-center"
         onSubmit={handleSubmit}
