@@ -1,6 +1,6 @@
 import { ChangeEvent, FormEvent, MouseEventHandler } from "react";
 import { ReactNode } from "react";
-import { Nation, RegimeOption } from "./typNation";
+import { Nation, PoliticalSide, RegimeOption } from "./typNation";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
@@ -80,6 +80,7 @@ export interface DashTileProps {
 export interface TagProps {
   text: string;
   bgColor?: string;
+  children?: JSX.Element;
 }
 
 export interface TextAreaProps {
@@ -97,13 +98,21 @@ export interface SelectedNationProps {
   owner?: boolean;
 }
 
+export interface RoleplayTileProps {
+  owner?: boolean;
+  title: string;
+  target: any[];
+  cost: number;
+  benefit: number;
+}
+
 export interface DashboardTabProps {
   text: string;
   owner: boolean;
 }
 
 export interface EditIconProps {
-  param: number | string | boolean | RegimeOption[];
+  param: number | string | boolean | RegimeOption[] | PoliticalSide[];
   path: string;
   indice?: number;
 }

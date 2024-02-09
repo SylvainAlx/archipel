@@ -1,7 +1,7 @@
 // Auth
 
 import { StandardOption } from "../types/typAtom";
-import { RegimeOption } from "../types/typNation";
+import { PoliticalSide, RegimeOption } from "../types/typNation";
 
 export const MDP_LOBBY = import.meta.env.VITE_MDP_LOBBY;
 
@@ -66,6 +66,15 @@ export const regimeOptions: RegimeOption[] = [
   { id: 8, label: "dictature militaire", color: "bg-regime_200" },
   { id: 9, label: "gouvernement provisoire", color: "bg-regime_200" },
   { id: 10, label: "autre", color: "bg-regime_200" },
+];
+
+export const politicalSideList: PoliticalSide[] = [
+  { id: -90, label: "Extrême gauche" },
+  { id: -60, label: "Gauche radicale" },
+  { id: -20, label: "Gauche modérée" },
+  { id: 0, label: "Centriste" },
+  { id: 20, label: "Droite radicale" },
+  { id: 20, label: "Droite modérée" },
 ];
 
 // onglets

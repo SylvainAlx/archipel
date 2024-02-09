@@ -11,7 +11,7 @@ export default function EditIcon({ param, indice, path }: EditIconProps) {
   return (
     <div
       onClick={handleClick}
-      className="absolute top-1 right-[-20px] opacity-30 hover:text-secondary hover:opacity-100 cursor-pointer transition-all"
+      className="absolute top-1 right-[-20px] opacity-30 hover:text-secondary hover:opacity-100 cursor-pointer transition-all text-sm"
     >
       <FaPen />
     </div>

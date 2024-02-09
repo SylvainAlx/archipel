@@ -35,3 +35,17 @@ export const updateElementOfAtomArray = (
   );
   setAtom(tempArray);
 };
+
+export const getPoliticalSide = (value: number) => {
+  if (value >= -20 && value <= 20) {
+    return "Centriste";
+  } else if (value >= -60 && value < 20) {
+    return "Gauche modérée";
+  } else if (value >= -90 && value < -60) {
+    return "Gauche radicale";
+  } else if (value > 20 && value <= 60) {
+    return "Droite modérée";
+  } else if (value > 60 && value <= 90) {
+    return "Droite radicale";
+  }
+};

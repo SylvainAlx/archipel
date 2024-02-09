@@ -76,3 +76,8 @@ export interface RegimeOption {
   label: string;
   color: string;
 }
+
+export interface PoliticalSide {
+  id: number;
+  label: string;
+}

@@ -13,6 +13,7 @@ export default function EditBoxModal() {
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
+
     const updatedNation: any = { ...nation };
     const parties: string[] = editBox.path.split(".");
 
@@ -55,7 +56,7 @@ export default function EditBoxModal() {
         MODIFICATION D'UNE INFORMATION
       </h2>
       <b
-        className={`w-full text-center text-2xl ${editBox.original.toString().length > 30 && "overflow-x-scroll"} ${editBox.original.toString() === "" && "text-danger"}`}
+        className={`w-full text-center text-2xl ${editBox.original.toString().length > 30 && typeof editBox.original != "object" && "overflow-x-scroll"} ${editBox.original.toString() === "" && "text-danger"}`}
       >
         {typeof editBox.original != "object" && editBox.original.toString()}
         {editBox.original.toString() === "" && "aucune valeur"}
