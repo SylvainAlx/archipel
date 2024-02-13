@@ -13,8 +13,7 @@ export const verifyJwt = (req, res, next) => {
       res.status(400).json({ error: "jwt not decoded" });
     }
   } catch (error) {
-    console.log(error);
-    res.status(400).json({ error });
+    res.status(400).json({ erreur: error.message });
   }
 };
 
@@ -29,7 +28,6 @@ export const isAdmin = (req, res, next) => {
       res.status(400).json({ error: "not admin" });
     }
   } catch (error) {
-    console.log(error);
-    res.status(400).json({ error });
+    res.status(400).json({ erreur: error.message });
   }
 };

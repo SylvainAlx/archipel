@@ -3,6 +3,10 @@ import { SERVER_URL } from "../settings/consts";
 import { GET_JWT } from "./functions";
 import { Nation } from "../types/typNation";
 
+//--------------
+// Authentification
+//--------------
+
 export const registerFetch = async (payload: AuthPayload) => {
   const resp = await fetch(`${SERVER_URL}/auth/register`, {
     method: "POST",
@@ -47,6 +51,10 @@ export const authGet = async (token: string) => {
   return result;
 };
 
+//--------------
+// Nations
+//--------------
+
 export const DeleteSelfFetch = async () => {
   const jwt = GET_JWT();
   const resp = await fetch(`${SERVER_URL}/nation/owner/delete`, {
@@ -70,6 +78,25 @@ export const getAllNations = async (searchText: string) => {
   const result = await resp.json();
   return result;
 };
+
+export const updateNationFetch = async (payload: Nation) => {
+  const jwt = GET_JWT();
+  const resp = await fetch(`${SERVER_URL}/nation/update`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      authorization: "Bearer " + jwt,
+    },
+    body: JSON.stringify(payload),
+  });
+  const result = await resp.json();
+
+  return result;
+};
+
+//--------------
+// Coms
+//--------------
 
 export const createCom = async (payload: ComPayload) => {
   const resp = await fetch(`${SERVER_URL}/com/create`, {
@@ -99,17 +126,22 @@ export const deleteComFetch = async (id: string) => {
   return result;
 };
 
-export const updateNationFetch = async (payload: Nation) => {
-  const jwt = GET_JWT();
-  const resp = await fetch(`${SERVER_URL}/nation/update`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      authorization: "Bearer " + jwt,
-    },
-    body: JSON.stringify(payload),
-  });
-  const result = await resp.json();
+//--------------
+// Citizens
+//--------------
 
+export const getNationCitizensFetch = async (id: string) => {
+  const resp = await fetch(`${SERVER_URL}/citizen/${id}`);
+  const result = await resp.json();
+  return result;
+};
+
+//--------------
+// Places
+//--------------
+
+export const getNationPlacesFetch = async (id: string) => {
+  const resp = await fetch(`${SERVER_URL}/place/${id}`);
+  const result = await resp.json();
   return result;
 };

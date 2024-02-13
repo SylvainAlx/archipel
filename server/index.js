@@ -6,6 +6,8 @@ import { home } from "./views/serverHome.js";
 import authRouter from "./routers/authRouter.js";
 import nationRouter from "./routers/nationRouter.js";
 import comRouter from "./routers/comRouter.js";
+import citizenRouter from "./routers/citizenRouter.js";
+import placeRouter from "./routers/placeRouter.js";
 
 //config serveur
 const app = express();
@@ -37,6 +39,8 @@ try {
     app.use("/auth", authRouter);
     app.use("/nation", nationRouter);
     app.use("/com", comRouter);
+    app.use("/citizen", citizenRouter);
+    app.use("/place", placeRouter);
     app.use("/", home);
   });
 } catch (error) {

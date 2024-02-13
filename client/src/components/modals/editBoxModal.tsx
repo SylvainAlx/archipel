@@ -52,9 +52,7 @@ export default function EditBoxModal() {
 
   return (
     <>
-      <h2 className="text-2xl text-center p-4">
-        MODIFICATION D'UNE INFORMATION
-      </h2>
+      <h2 className="text-2xl text-center p-4">ENTREZ UNE NOUVELLE VALEUR</h2>
       <b
         className={`w-full text-center text-2xl ${editBox.original.toString().length > 30 && typeof editBox.original != "object" && "overflow-x-scroll"} ${editBox.original.toString() === "" && "text-danger"}`}
       >

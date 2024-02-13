@@ -6,7 +6,7 @@ export interface Citizen {
   role: string;
 }
 
-export interface Structure {
+export interface Place {
   nation: number;
   type: number;
   name: string;
@@ -35,8 +35,6 @@ export interface Nation {
       points: number;
       credits: number;
       politicalSide: number;
-      citizens: Citizen[];
-      structures: Structure[];
     };
   };
   createdAt: Date;
@@ -64,8 +62,6 @@ export const EmptyNation: Nation = {
       points: 0,
       credits: 100,
       politicalSide: 0,
-      citizens: [],
-      structures: [],
     },
   },
   createdAt: new Date(0),

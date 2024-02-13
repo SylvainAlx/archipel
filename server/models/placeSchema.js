@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const StructureSchema = mongoose.Schema(
+const PlaceSchema = mongoose.Schema(
   {
     nation: {
       type: mongoose.Schema.Types.ObjectId,
@@ -25,4 +25,4 @@ const StructureSchema = mongoose.Schema(
   }
 );
 
-export default mongoose.model("Structure", StructureSchema);
+export default mongoose.model("Place", PlaceSchema);

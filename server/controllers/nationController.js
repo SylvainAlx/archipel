@@ -3,13 +3,18 @@ import Nation from "../models/nationSchema.js";
 export const getAll = async (req, res) => {
   try {
     const searchText = req.query.texteRecherche;
-    const nations = await Nation.find(
-      { name: { $regex: searchText, $options: "i" } },
-      "name role data createdAt"
-    );
-    res.status(200).json(nations);
+    if (searchText) {
+      const nations = await Nation.find(
+        { name: { $regex: searchText, $options: "i" } },
+        "name role data createdAt"
+      );
+      res.status(200).json(nations);
+    } else {
+      const nations = await Nation.find({}, "name role data createdAt");
+      res.status(200).json(nations);
+    }
   } catch (error) {
-    res.status(400).json({ message: "aucune nations" });
+    res.status(404).json({ message: "aucune nations" });
   }
 };
 
@@ -20,7 +25,7 @@ export const getTop100 = async (req, res) => {
     );
     res.status(200).json(nations);
   } catch (error) {
-    res.status(400).json({ message: "Aucune nation trouvée" });
+    res.status(404).json({ message: "Aucune nation trouvée" });
   }
 };
 
@@ -35,7 +40,7 @@ export const getOne = async (req, res) => {
       nation,
     });
   } catch (error) {
-    res.status(400).json({
+    res.status(404).json({
       message: "aucune nation à afficher",
       erreur: error.message,
     });
@@ -51,7 +56,7 @@ export const getSelf = async (req, res) => {
     );
     res.status(200).json({ nation });
   } catch (error) {
-    res.status(400).json({
+    res.status(404).json({
       message: "nation impossible à récupérer",
       erreur: error.message,
     });

@@ -5,7 +5,9 @@ export const getAll = async (req, res) => {
     const coms = await Com.find();
     res.status(200).json(coms);
   } catch (error) {
-    res.status(400).json({ message: "aucune communication" });
+    res
+      .status(400)
+      .json({ message: "aucune communication", erreur: error.message });
   }
 };
 
@@ -42,7 +44,7 @@ export const createCom = async (req, res) => {
         }
       });
   } catch (error) {
-    res.status(400).json({ error });
+    res.status(400).json({ message: error.message });
   }
 };
 

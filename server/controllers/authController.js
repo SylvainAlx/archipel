@@ -23,12 +23,6 @@ export const register = async (req, res) => {
       password,
       recovery,
       role: name === process.env.ADMIN ? "admin" : "standard",
-      // data: {
-      //   general: {
-      //     points: 0,
-      //     unusedPoints: 100,
-      //   },
-      // },
     });
     nation
       .save()
@@ -50,14 +44,17 @@ export const register = async (req, res) => {
         }
       });
   } catch (error) {
-    res.status(400).json({ error });
+    res.status(400).json({ erreur: error.message });
   }
 };
 
 export const login = async (req, res) => {
   try {
     const { name, password } = req.body;
-    const nation = await Nation.findOne({ name })
+    const nation = await Nation.findOne(
+      { name },
+      "_id name password role data createdAt"
+    )
       .then((nation) => {
         nation.comparePassword(password, async (error, isMatch) => {
           if (isMatch) {
@@ -66,15 +63,20 @@ export const login = async (req, res) => {
           } else {
             res.status(401).json({
               message: "mot de passe invalide",
+              erreur: error.message,
             });
           }
         });
       })
       .catch((error) => {
-        res.status(400).json({ message: "nation introuvable" });
+        res
+          .status(404)
+          .json({ message: "nation introuvable", erreur: error.message });
       });
   } catch (error) {
-    res.status(400).json({ message: "connexion impossible" });
+    res
+      .status(400)
+      .json({ message: "connexion impossible", erreur: error.message });
   }
 };
 
@@ -83,10 +85,20 @@ export const verify = async (req, res) => {
     const token = req.headers.authorization.split(" ")[1];
     const secret = process.env.JWT_SECRET;
     const decoded = jwt.verify(token, secret);
-    const nation = await Nation.findOne({ name: decoded.name });
-    res.status(200).json(nation);
+    const nation = await Nation.findOne(
+      { name: decoded.name },
+      "_id name role data createdAt"
+    )
+      .then(async (nation) => {
+        res.status(200).json(nation);
+      })
+      .catch((error) => {
+        res
+          .status(404)
+          .json({ message: "nation introuvable", erreur: error.message });
+      });
   } catch (error) {
-    res.status(401).json({ message: "JWT erroné" });
+    res.status(401).json({ message: "JWT erroné", erreur: error.message });
   }
 };
 
@@ -103,15 +115,17 @@ export const forgetPassword = async (req, res) => {
               message: "nouveau mot de passe pris en compte",
             });
           } else {
-            res.status(400).json({
+            res.status(401).json({
               message: "clé de récupération erronée",
+              erreur: error.message,
             });
           }
         });
       })
-      .catch((e) => {
-        res.status(400).json({
+      .catch((error) => {
+        res.status(404).json({
           message: "nation inconnue",
+          erreur: error.message,
         });
       });
   } catch (error) {

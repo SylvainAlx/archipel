@@ -1,6 +1,6 @@
 import { atom } from "jotai";
 
-import { EmptyNation, Nation } from "../types/typNation";
+import { Citizen, EmptyNation, Nation, Place } from "../types/typNation";
 import {
   Com,
   ConfirmBoxDefault,
@@ -17,6 +17,8 @@ export const tempNationAtom = atom<Nation>(EmptyNation);
 export const nationsListAtom = atom<Nation[]>([EmptyNation]);
 
 export const comsListAtom = atom<Com[]>([EmptyCom]);
+export const citizensListAtom = atom<Citizen[]>([]);
+export const placesListAtom = atom<Place[]>([]);
 
 export const recoveryKey = atom("");
 export const confirmBox = atom(ConfirmBoxDefault);

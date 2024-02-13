@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { SelectedNationProps } from "../../../types/typProp";
 import DashTile from "../../dashTile";
 import TileContainer from "../../tileContainer";
@@ -8,22 +8,56 @@ import Tag from "../../tag";
 import { MdAddCircle } from "react-icons/md";
 import { getPoliticalSide } from "../../../utils/functions";
 import EditIcon from "../../editIcon";
-import { politicalSideList } from "../../../settings/consts";
+import {
+  SERVEUR_LOADING_STRING,
+  politicalSideList,
+} from "../../../settings/consts";
+import {
+  citizensListAtom,
+  infoModal,
+  loadingSpinner,
+  placesListAtom,
+} from "../../../settings/store";
+import { useAtom } from "jotai";
+import {
+  getNationCitizensFetch,
+  getNationPlacesFetch,
+} from "../../../utils/fetch";
 import RoleplayTile from "./roleplayTile";
 
 export default function Roleplay({
   selectedNation,
   owner,
 }: SelectedNationProps) {
-  const [locationCount, setLocationCount] = useState(0);
+  const [citizensList, setCitizensList] = useAtom(citizensListAtom);
+  const [placesList, setPlacesList] = useAtom(placesListAtom);
+  const [, setLoading] = useAtom(loadingSpinner);
+  const [, setInfo] = useAtom(infoModal);
 
   useEffect(() => {
-    if (selectedNation.data.roleplay.structures) {
-      selectedNation.data.roleplay.structures.map((structure) => {
-        if (structure.type === 1) {
-          setLocationCount(locationCount + 1);
-        }
-      });
+    if (citizensList.length < 1) {
+      setLoading({ show: true, text: SERVEUR_LOADING_STRING });
+      getNationCitizensFetch(selectedNation._id)
+        .then((data) => {
+          setLoading({ show: false, text: SERVEUR_LOADING_STRING });
+          setCitizensList(data);
+        })
+        .catch((error) => {
+          setLoading({ show: false, text: SERVEUR_LOADING_STRING });
+          setInfo(error.message);
+        });
+    }
+    if (placesList.length < 1) {
+      setLoading({ show: true, text: SERVEUR_LOADING_STRING });
+      getNationPlacesFetch(selectedNation._id)
+        .then((data) => {
+          setLoading({ show: false, text: SERVEUR_LOADING_STRING });
+          setPlacesList(data);
+        })
+        .catch((error) => {
+          setLoading({ show: false, text: SERVEUR_LOADING_STRING });
+          setInfo(error.message);
+        });
     }
   }, []);
 
@@ -93,11 +127,14 @@ export default function Roleplay({
                 <RoleplayTile
                   owner={owner}
                   title="Citoyens"
-                  target={
-                    selectedNation.data.roleplay.citizens != undefined
-                      ? selectedNation.data.roleplay.citizens
-                      : []
-                  }
+                  target={citizensList}
+                  cost={100}
+                  benefit={1}
+                />
+                <RoleplayTile
+                  owner={owner}
+                  title="Lieux"
+                  target={placesList}
                   cost={100}
                   benefit={1}
                 />
