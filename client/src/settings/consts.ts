@@ -73,8 +73,66 @@ export const politicalSideList: PoliticalSide[] = [
   { id: -60, label: "Gauche radicale" },
   { id: -20, label: "Gauche modérée" },
   { id: 0, label: "Centriste" },
-  { id: 20, label: "Droite radicale" },
   { id: 20, label: "Droite modérée" },
+  { id: 60, label: "Droite radicale" },
+  { id: 90, label: "Extrême droite" },
+];
+
+export const placesTypeList = [
+  {
+    id: 0,
+    label: "Hameau",
+    cost: 100,
+    points: 1,
+    capacity: 10,
+    image: "",
+    description: "Quelques maisons au milieu de nulle part",
+  },
+  {
+    id: 1,
+    label: "Bourgade",
+    cost: 1000,
+    points: 10,
+    capacity: 100,
+    image: "",
+    description: "L'ébauche d'un petit village",
+  },
+  {
+    id: 2,
+    label: "Village",
+    cost: 10000,
+    points: 100,
+    capacity: 1000,
+    image: "",
+    description: "Tout ce qu'il faut pour faire une communauté",
+  },
+  {
+    id: 3,
+    label: "Ville",
+    cost: 100000,
+    points: 1000,
+    capacity: 10000,
+    image: "",
+    description: "Communauté de grande taille",
+  },
+  {
+    id: 4,
+    label: "Métropole",
+    cost: 1000000,
+    points: 10000,
+    capacity: 100000,
+    image: "",
+    description: "Grande agglomération",
+  },
+  {
+    id: 5,
+    label: "Mégalopole",
+    cost: 10000000,
+    points: 100000,
+    capacity: 1000000,
+    image: "",
+    description: "Grande métropole à rayonnement internationnal",
+  },
 ];
 
 // onglets

@@ -98,12 +98,15 @@ export interface SelectedNationProps {
   owner?: boolean;
 }
 
-export interface RoleplayTileProps {
+export interface NewPlaceTileProps {
   owner?: boolean;
   title: string;
-  target: any[];
   cost: number;
   benefit: number;
+  capacity: number;
+  image: string;
+  description: string;
+  canBuy: Boolean;
 }
 
 export interface DashboardTabProps {

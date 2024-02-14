@@ -23,7 +23,7 @@ import {
   updateElementOfAtomArray,
 } from "../../utils/functions";
 import { EmptyCom } from "../../types/typAtom";
-import { SERVEUR_LOADING_STRING, comOptions } from "../../settings/consts";
+import { SERVEUR_LOADING_STRING } from "../../settings/consts";
 
 export default function ConfirmModal() {
   const [confirm, setConfirm] = useAtom(confirmBox);
@@ -103,20 +103,20 @@ export default function ConfirmModal() {
           setNation(resp.nation);
           updateElementOfAtomArray(resp.nation, nationsList, setNationsList);
 
-          const updateCom = {
-            originId: payload._id,
-            originName: payload.name,
-            title: "Mise à jour des informations",
-            comType: comOptions[5].id,
-            message: payload.name + " a modifié certaines informations",
-          };
-          setConfirm({
-            action: "createCom",
-            text: "Mise a jour réussie. Publier la modification dans les communications ?",
-            result: "",
-            target: "",
-            payload: updateCom,
-          });
+          // const updateCom = {
+          //   originId: payload._id,
+          //   originName: payload.name,
+          //   title: "Mise à jour des informations",
+          //   comType: comOptions[5].id,
+          //   message: payload.name + " a modifié certaines informations",
+          // };
+          // setConfirm({
+          //   action: "createCom",
+          //   text: "Mise a jour réussie. Publier la modification dans les communications ?",
+          //   result: "",
+          //   target: "",
+          //   payload: updateCom,
+          // });
         } else {
           setInfo(resp.message);
         }

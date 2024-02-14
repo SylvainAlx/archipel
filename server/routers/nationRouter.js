@@ -8,6 +8,7 @@ import {
   getSelf,
   getTop100,
   updateNation,
+  getRoleplayData,
 } from "../controllers/nationController.js";
 
 const nationRouter = express.Router();
@@ -15,6 +16,7 @@ const nationRouter = express.Router();
 nationRouter.get("/getall", getAll);
 nationRouter.get("/getnations", getTop100);
 nationRouter.get("/:id", getOne);
+nationRouter.get("/roleplay/:id", getRoleplayData);
 nationRouter.get("/owner/get", [verifyJwt], getSelf);
 nationRouter.post("/update", [verifyJwt], updateNation);
 nationRouter.delete("/owner/delete", [verifyJwt], deleteSelf);

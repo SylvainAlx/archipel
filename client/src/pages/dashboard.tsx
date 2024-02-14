@@ -5,6 +5,7 @@ import DashboardMain from "./tabs/dashboard/dashboardMain";
 import DashboardSettings from "./tabs/dashboard/dashboardSettings";
 import DashboardCom from "./tabs/dashboard/dashboardCom";
 import {
+  confirmBox,
   infoModal,
   loadingSpinner,
   nationAtom,
@@ -13,12 +14,14 @@ import {
 import { useAtom } from "jotai";
 import { getOneNationFetch } from "../utils/fetch";
 import { SERVEUR_LOADING_STRING } from "../settings/consts";
+import { differenceEnMinutes } from "../utils/functions";
 
 export default function Dashboard() {
   const [nation] = useAtom(nationAtom);
   const [selectedNation, setSelectedNation] = useAtom(selectedNationAtom);
   const [, setLoading] = useAtom(loadingSpinner);
   const [, setInfo] = useAtom(infoModal);
+  const [, setConfirm] = useAtom(confirmBox);
   const [owner, setOwner] = useState(false);
   const [tabList, setTabList] = useState<{ id: number; label: string }[]>([]);
   const [tab, setTab] = useState({ id: 0, label: "TABLEAU DE BORD" });
@@ -57,6 +60,26 @@ export default function Dashboard() {
         });
     }
   }, [selectedNation]);
+
+  useEffect(() => {
+    if (owner) {
+      const reward = differenceEnMinutes(
+        selectedNation.data.roleplay.lastUpdated,
+      );
+      if (reward > 0) {
+        const updatedNation = { ...selectedNation };
+        updatedNation.data.roleplay.credits += reward;
+        updatedNation.data.roleplay.lastUpdated = new Date();
+        setConfirm({
+          action: "updateNation",
+          text: reward + " nouveau(x) crédit(s) ! Récupérer ?",
+          result: "",
+          target: "",
+          payload: updatedNation,
+        });
+      }
+    }
+  }, [owner]);
 
   return (
     <>

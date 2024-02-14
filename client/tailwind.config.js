@@ -10,6 +10,7 @@ export default {
         secondary: "var(--color-secondary)",
         light: "var(--color-light)",
         complementary: "var(--color-complementary)",
+        complementary2: "var(--color-complementary2)",
         info: "var(--color-info)",
         black_alpha: "var(--color-black-alpha)",
         success: "var(--color-success)",

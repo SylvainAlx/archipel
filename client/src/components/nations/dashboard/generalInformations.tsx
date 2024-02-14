@@ -1,5 +1,5 @@
 import { GiBlackFlag } from "react-icons/gi";
-import { regimeOptions } from "../../../settings/consts";
+import { politicalSideList, regimeOptions } from "../../../settings/consts";
 import DashTile from "../../dashTile";
 import TileContainer from "../../tileContainer";
 import H3 from "../../titles/h3";
@@ -9,6 +9,7 @@ import { SelectedNationProps } from "../../../types/typProp";
 import EditIcon from "../../editIcon";
 import ExternalLink from "../../externalLink";
 import H2 from "../../titles/h2";
+import { getPoliticalSide } from "../../../utils/functions";
 
 export default function GeneralInformations({
   selectedNation,
@@ -92,6 +93,27 @@ export default function GeneralInformations({
                       }
                     })}
                   </div>
+                </div>
+              </>
+            }
+          />
+
+          <DashTile
+            title="Orientation politique"
+            children={
+              <>
+                <div className={`relative text-3xl flex flex-col items-center`}>
+                  <p className="text-[18px]">
+                    {getPoliticalSide(
+                      selectedNation.data.roleplay.politicalSide,
+                    )}
+                  </p>
+                  {owner && (
+                    <EditIcon
+                      param={politicalSideList}
+                      path="data.roleplay.politicalSide"
+                    />
+                  )}
                 </div>
               </>
             }

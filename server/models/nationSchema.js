@@ -60,6 +60,10 @@ const nationSchema = mongoose.Schema(
         },
       },
       roleplay: {
+        lastUpdated: {
+          type: Date,
+          default: new Date(),
+        },
         points: {
           type: Number,
           default: 0,

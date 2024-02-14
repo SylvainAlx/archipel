@@ -94,6 +94,12 @@ export const updateNationFetch = async (payload: Nation) => {
   return result;
 };
 
+export const getRoleplayDataFetch = async (id: string) => {
+  const resp = await fetch(`${SERVER_URL}/nation/roleplay/${id}`);
+  const result = await resp.json();
+  return result;
+};
+
 //--------------
 // Coms
 //--------------

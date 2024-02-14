@@ -1,4 +1,6 @@
 import Nation from "../models/nationSchema.js";
+import Citizen from "../models/citizenSchema.js";
+import Place from "../models/placeSchema.js";
 
 export const getAll = async (req, res) => {
   try {
@@ -58,6 +60,20 @@ export const getSelf = async (req, res) => {
   } catch (error) {
     res.status(404).json({
       message: "nation impossible à récupérer",
+      erreur: error.message,
+    });
+  }
+};
+
+export const getRoleplayData = async (req, res) => {
+  try {
+    const nationId = req.params.id;
+    const citizens = await Citizen.find({ nationId });
+    const places = await Place.find({ nationId });
+    res.status(200).json({ citizens, places });
+  } catch (error) {
+    res.status(404).json({
+      message: "données impossible à récupérer",
       erreur: error.message,
     });
   }

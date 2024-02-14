@@ -1,5 +1,6 @@
 export interface Citizen {
-  nationality: number;
+  _id: string;
+  nationId: string;
   name: string;
   surname: string;
   image: string;
@@ -7,10 +8,20 @@ export interface Citizen {
 }
 
 export interface Place {
-  nation: number;
+  _id: string;
+  nationId: string;
   type: number;
+  cost: number;
+  points: number;
+  capacity: number;
   name: string;
   image: string;
+}
+
+export interface NationRoleplayData {
+  nationId: string;
+  citizens: Citizen[];
+  places: Place[];
 }
 
 export interface Nation {
@@ -32,6 +43,7 @@ export interface Nation {
       regime: number;
     };
     roleplay: {
+      lastUpdated: Date;
       points: number;
       credits: number;
       politicalSide: number;
@@ -59,6 +71,7 @@ export const EmptyNation: Nation = {
       regime: 0,
     },
     roleplay: {
+      lastUpdated: new Date(),
       points: 0,
       credits: 100,
       politicalSide: 0,

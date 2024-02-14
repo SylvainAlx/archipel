@@ -1,69 +1,82 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { SelectedNationProps } from "../../../types/typProp";
 import DashTile from "../../dashTile";
 import TileContainer from "../../tileContainer";
 import H2 from "../../titles/h2";
 import Tag from "../../tag";
 import { MdAddCircle } from "react-icons/md";
-import { getPoliticalSide } from "../../../utils/functions";
-import EditIcon from "../../editIcon";
 import {
   SERVEUR_LOADING_STRING,
-  politicalSideList,
+  placesTypeList,
 } from "../../../settings/consts";
 import {
-  citizensListAtom,
   infoModal,
   loadingSpinner,
-  placesListAtom,
+  NationsRoleplayDataAtom,
 } from "../../../settings/store";
 import { useAtom } from "jotai";
-import {
-  getNationCitizensFetch,
-  getNationPlacesFetch,
-} from "../../../utils/fetch";
-import RoleplayTile from "./roleplayTile";
+import { getRoleplayDataFetch } from "../../../utils/fetch";
+import NewPlaceTile from "./newPlaceTile";
+import { Citizen, Place } from "../../../types/typNation";
+import { FaCoins, FaTrophy, FaUserCheck, FaUserGroup } from "react-icons/fa6";
+import { addCredits } from "../../../utils/functions";
 
 export default function Roleplay({
   selectedNation,
   owner,
 }: SelectedNationProps) {
-  const [citizensList, setCitizensList] = useAtom(citizensListAtom);
-  const [placesList, setPlacesList] = useAtom(placesListAtom);
+  const [citizensList, setCitizensList] = useState<Citizen[]>([]);
+  const [placesList, setPlacesList] = useState<Place[]>([]);
+  const [virtualCitizens, setVirtualCitizens] = useState(0);
+  const [dataChecked, setDataChecked] = useState(false);
+  const [nationsRoleplayData, setNationsRoleplayData] = useAtom(
+    NationsRoleplayDataAtom,
+  );
   const [, setLoading] = useAtom(loadingSpinner);
   const [, setInfo] = useAtom(infoModal);
 
   useEffect(() => {
-    if (citizensList.length < 1) {
+    if (selectedNation._id != "" && !dataChecked) {
       setLoading({ show: true, text: SERVEUR_LOADING_STRING });
-      getNationCitizensFetch(selectedNation._id)
+      getRoleplayDataFetch(selectedNation._id)
         .then((data) => {
           setLoading({ show: false, text: SERVEUR_LOADING_STRING });
-          setCitizensList(data);
+          setNationsRoleplayData([
+            ...nationsRoleplayData,
+            {
+              nationId: selectedNation._id,
+              citizens: data.citizens,
+              places: data.places,
+            },
+          ]);
         })
         .catch((error) => {
           setLoading({ show: false, text: SERVEUR_LOADING_STRING });
           setInfo(error.message);
         });
+      setDataChecked(true);
     }
-    if (placesList.length < 1) {
-      setLoading({ show: true, text: SERVEUR_LOADING_STRING });
-      getNationPlacesFetch(selectedNation._id)
-        .then((data) => {
-          setLoading({ show: false, text: SERVEUR_LOADING_STRING });
-          setPlacesList(data);
-        })
-        .catch((error) => {
-          setLoading({ show: false, text: SERVEUR_LOADING_STRING });
-          setInfo(error.message);
-        });
-    }
-  }, []);
+  }, [selectedNation]);
 
-  const addCredits = () => {
-    alert("plus de thune !");
-  };
+  useEffect(() => {
+    if (nationsRoleplayData.length > 0) {
+      nationsRoleplayData.forEach((data) => {
+        if (data.nationId === selectedNation._id) {
+          setCitizensList(data.citizens);
+          setPlacesList(data.places);
+        }
+      });
+    }
+  }, [nationsRoleplayData]);
+
+  useEffect(() => {
+    if (placesList.length > 0) {
+      placesList.forEach((place) => {
+        setVirtualCitizens(virtualCitizens + place.capacity);
+      });
+    }
+  }, [placesList]);
 
   return (
     <TileContainer
@@ -76,68 +89,73 @@ export default function Roleplay({
               <>
                 <div className="w-full px-2 flex items-center justify-center gap-4">
                   <Tag
-                    text={
-                      selectedNation.data.roleplay.points.toString() + " points"
-                    }
+                    text={selectedNation.data.roleplay.points.toString()}
                     bgColor="bg-info"
+                    children={<FaTrophy />}
                   />
                   <Tag
-                    text={
-                      "Crédits : " +
-                      selectedNation.data.roleplay.credits.toString()
-                    }
+                    text={citizensList.length.toString()}
+                    bgColor="bg-info"
+                    children={<FaUserGroup />}
+                  />
+                  <Tag
+                    text={virtualCitizens.toString()}
+                    bgColor="bg-info"
+                    children={<FaUserCheck />}
+                  />
+                  <Tag
+                    text={selectedNation.data.roleplay.credits.toString()}
                     bgColor="bg-info"
                     children={
-                      <span
-                        className="text-2xl cursor-pointer"
-                        onClick={addCredits}
-                      >
-                        <MdAddCircle />
-                      </span>
+                      <>
+                        <FaCoins />
+                        {owner && (
+                          <span
+                            className="text-2xl cursor-pointer"
+                            onClick={addCredits}
+                          >
+                            <MdAddCircle />
+                          </span>
+                        )}
+                      </>
                     }
                   />
                 </div>
               </>
             }
           />
-          <DashTile
-            title="Orientation politique"
-            children={
-              <>
-                <div className={`relative text-3xl flex flex-col items-center`}>
-                  <em>
-                    {getPoliticalSide(
-                      selectedNation.data.roleplay.politicalSide,
-                    )}
-                  </em>
-                  {owner && (
-                    <EditIcon
-                      param={politicalSideList}
-                      path="data.roleplay.politicalSide"
-                    />
-                  )}
-                </div>
-              </>
-            }
-          />
+
           <DashTile
             title="Composantes"
             children={
               <>
-                <RoleplayTile
-                  owner={owner}
-                  title="Citoyens"
-                  target={citizensList}
-                  cost={100}
-                  benefit={1}
-                />
-                <RoleplayTile
-                  owner={owner}
-                  title="Lieux"
-                  target={placesList}
-                  cost={100}
-                  benefit={1}
-                />
+                {/* {placesList.length > 0 && placesList.map((place, i) => {})} */}
+                {owner && (
+                  <div className="w-full flex flex-col items-center gap-2">
+                    <em className="text-center">
+                      Créer des lieux pour augmenter vos points et votre
+                      population
+                    </em>
+                    {placesTypeList.map((place, i) => {
+                      return (
+                        <div className="w-full" key={i}>
+                          <NewPlaceTile
+                            owner={owner}
+                            title={placesTypeList[i].label}
+                            cost={placesTypeList[i].cost}
+                            benefit={placesTypeList[i].points}
+                            capacity={placesTypeList[i].capacity}
+                            image={placesTypeList[i].image}
+                            description={placesTypeList[i].description}
+                            canBuy={
+                              place.cost <= selectedNation.data.roleplay.credits
+                            }
+                          />
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
               </>
             }
           />

@@ -11,6 +11,18 @@ const PlaceSchema = mongoose.Schema(
       type: Number,
       required: true,
     },
+    cost: {
+      type: Number,
+      required: true,
+    },
+    point: {
+      type: Number,
+      required: true,
+    },
+    capacity: {
+      type: Number,
+      required: true,
+    },
     name: {
       type: String,
       required: true,

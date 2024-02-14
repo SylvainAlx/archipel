@@ -1,3 +1,5 @@
+import { politicalSideList } from "../settings/consts";
+
 export const GET_JWT = () => localStorage.getItem("jwt");
 
 export const dateToString = (date: Date) => {
@@ -37,15 +39,21 @@ export const updateElementOfAtomArray = (
 };
 
 export const getPoliticalSide = (value: number) => {
-  if (value >= -20 && value <= 20) {
-    return "Centriste";
-  } else if (value >= -60 && value < 20) {
-    return "Gauche modérée";
-  } else if (value >= -90 && value < -60) {
-    return "Gauche radicale";
-  } else if (value > 20 && value <= 60) {
-    return "Droite modérée";
-  } else if (value > 60 && value <= 90) {
-    return "Droite radicale";
-  }
+  let label = "";
+  politicalSideList.map((politicalSide) => {
+    if (value === politicalSide.id) {
+      label = politicalSide.label;
+    }
+  });
+  return label;
+};
+
+export const differenceEnMinutes = (date: Date) => {
+  const difference = new Date().getTime() - new Date(date).getTime();
+  const differenceMinutes: number = Math.round(difference / (1000 * 60));
+  return differenceMinutes;
+};
+
+export const addCredits = () => {
+  alert("plus de thune !");
 };
