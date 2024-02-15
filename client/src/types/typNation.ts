@@ -8,13 +8,15 @@ export interface Citizen {
 }
 
 export interface Place {
-  _id: string;
+  _id?: string;
   nationId: string;
+  buildDate: Date;
   type: number;
   cost: number;
   points: number;
-  capacity: number;
+  population: number;
   name: string;
+  description: string;
   image: string;
 }
 

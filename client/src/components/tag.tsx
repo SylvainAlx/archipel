@@ -1,16 +1,9 @@
-import { useEffect, useState } from "react";
 import { TagProps } from "../types/typProp";
 
-export default function Tag({ text, bgColor, children }: TagProps) {
-  const [fontSize, setFontSize] = useState("text-sm");
-  useEffect(() => {
-    if (text.length > 7) {
-      setFontSize("text-[11px]");
-    }
-  }, []);
+export default function Tag({ text, bgColor, textColor, children }: TagProps) {
   return (
     <div
-      className={`h-[30px] py-1 px-2 rounded ${fontSize} flex items-center gap-1 ${bgColor && bgColor} shadow-md`}
+      className={`h-[30px] py-1 px-2 rounded text-sm flex items-center gap-1 ${bgColor && bgColor} ${textColor && textColor} shadow-md`}
     >
       {text}
       {children}

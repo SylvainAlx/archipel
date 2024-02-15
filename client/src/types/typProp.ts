@@ -1,6 +1,6 @@
 import { ChangeEvent, FormEvent, MouseEventHandler } from "react";
 import { ReactNode } from "react";
-import { Nation, PoliticalSide, RegimeOption } from "./typNation";
+import { Nation, Place, PoliticalSide, RegimeOption } from "./typNation";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
@@ -80,6 +80,7 @@ export interface DashTileProps {
 export interface TagProps {
   text: string;
   bgColor?: string;
+  textColor?: string;
   children?: JSX.Element;
 }
 
@@ -98,15 +99,30 @@ export interface SelectedNationProps {
   owner?: boolean;
 }
 
+export interface PlaceTileProp {
+  owner?: boolean;
+  name: string;
+  type: number;
+  population: number;
+  buildDate: Date;
+  image: string;
+  description: string;
+}
+
 export interface NewPlaceTileProps {
   owner?: boolean;
+  nationId: string;
   title: string;
+  type: number;
   cost: number;
   benefit: number;
-  capacity: number;
+  waitTime: number;
+  population: number;
   image: string;
   description: string;
   canBuy: Boolean;
+  placeList: Place[];
+  setPlaceList: React.Dispatch<React.SetStateAction<Place[]>>;
 }
 
 export interface DashboardTabProps {

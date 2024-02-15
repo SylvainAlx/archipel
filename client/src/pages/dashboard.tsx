@@ -15,6 +15,7 @@ import { useAtom } from "jotai";
 import { getOneNationFetch } from "../utils/fetch";
 import { SERVEUR_LOADING_STRING } from "../settings/consts";
 import { differenceEnMinutes } from "../utils/functions";
+import AdBanner from "../components/ads/adBanner";
 
 export default function Dashboard() {
   const [nation] = useAtom(nationAtom);
@@ -87,6 +88,7 @@ export default function Dashboard() {
       {tab.id === 0 && <DashboardMain text={tab.label} owner={owner} />}
       {tab.id === 1 && <DashboardSettings text={tab.label} />}
       {tab.id === 2 && <DashboardCom text={tab.label} />}
+      <AdBanner />
     </>
   );
 }

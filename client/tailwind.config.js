@@ -15,6 +15,7 @@ export default {
         black_alpha: "var(--color-black-alpha)",
         success: "var(--color-success)",
         danger: "var(--color-danger)",
+        wait: "var(--color-wait)",
         regime_0: "var(--color-regime-0)",
         regime_1: "var(--color-regime-1)",
         regime_100: "var(--color-regime-100)",

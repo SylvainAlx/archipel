@@ -7,6 +7,10 @@ const PlaceSchema = mongoose.Schema(
       ref: "Nation",
       required: true,
     },
+    buildDate: {
+      type: Date,
+      require: true,
+    },
     type: {
       type: Number,
       required: true,
@@ -15,11 +19,11 @@ const PlaceSchema = mongoose.Schema(
       type: Number,
       required: true,
     },
-    point: {
+    points: {
       type: Number,
       required: true,
     },
-    capacity: {
+    population: {
       type: Number,
       required: true,
     },
@@ -27,9 +31,13 @@ const PlaceSchema = mongoose.Schema(
       type: String,
       required: true,
     },
+    description: {
+      type: String,
+      default: "",
+    },
     image: {
       type: String,
-      default: true,
+      default: "",
     },
   },
   {

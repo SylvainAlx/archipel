@@ -57,3 +57,11 @@ export const differenceEnMinutes = (date: Date) => {
 export const addCredits = () => {
   alert("plus de thune !");
 };
+
+export const formatTime = (totalMinutes: number): string => {
+  const days = Math.floor(totalMinutes / (24 * 60));
+  const hours = Math.floor((totalMinutes % (24 * 60)) / 60);
+  const minutes = Math.floor(totalMinutes % 60);
+
+  return `${days} j ${hours} h ${minutes} min`;
+};

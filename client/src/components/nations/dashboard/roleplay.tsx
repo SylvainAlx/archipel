@@ -21,6 +21,7 @@ import NewPlaceTile from "./newPlaceTile";
 import { Citizen, Place } from "../../../types/typNation";
 import { FaCoins, FaTrophy, FaUserCheck, FaUserGroup } from "react-icons/fa6";
 import { addCredits } from "../../../utils/functions";
+import PlaceTile from "./placeTile";
 
 export default function Roleplay({
   selectedNation,
@@ -73,7 +74,9 @@ export default function Roleplay({
   useEffect(() => {
     if (placesList.length > 0) {
       placesList.forEach((place) => {
-        setVirtualCitizens(virtualCitizens + place.capacity);
+        if (place.buildDate <= new Date()) {
+          setVirtualCitizens(virtualCitizens + place.population);
+        }
       });
     }
   }, [placesList]);
@@ -126,39 +129,69 @@ export default function Roleplay({
           />
 
           <DashTile
-            title="Composantes"
+            title="Lieux"
             children={
               <>
-                {/* {placesList.length > 0 && placesList.map((place, i) => {})} */}
-                {owner && (
+                {placesList.length > 0 ? (
+                  placesList.map((place, i) => {
+                    return (
+                      <div className="w-full" key={i}>
+                        <PlaceTile
+                          owner={owner}
+                          name={place.name}
+                          population={place.population}
+                          buildDate={place.buildDate}
+                          description={place.description}
+                          image={place.image}
+                          type={place.type}
+                        />
+                      </div>
+                    );
+                  })
+                ) : (
+                  <em className="text-center">Aucun lieux</em>
+                )}
+              </>
+            }
+          />
+          {owner && (
+            <DashTile
+              title="Créer un nouveau lieu"
+              children={
+                <>
                   <div className="w-full flex flex-col items-center gap-2">
-                    <em className="text-center">
+                    <p className="text-center">
                       Créer des lieux pour augmenter vos points et votre
                       population
-                    </em>
+                    </p>
                     {placesTypeList.map((place, i) => {
                       return (
                         <div className="w-full" key={i}>
                           <NewPlaceTile
                             owner={owner}
+                            nationId={selectedNation._id}
                             title={placesTypeList[i].label}
+                            type={placesTypeList[i].id}
                             cost={placesTypeList[i].cost}
                             benefit={placesTypeList[i].points}
-                            capacity={placesTypeList[i].capacity}
+                            population={placesTypeList[i].population}
                             image={placesTypeList[i].image}
                             description={placesTypeList[i].description}
+                            waitTime={placesTypeList[i].waitTime}
                             canBuy={
                               place.cost <= selectedNation.data.roleplay.credits
                             }
+                            placeList={placesList}
+                            setPlaceList={setPlacesList}
                           />
                         </div>
                       );
                     })}
                   </div>
-                )}
-              </>
-            }
-          />
+                </>
+              }
+            />
+          )}
         </>
       }
     />
