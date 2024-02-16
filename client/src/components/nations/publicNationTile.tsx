@@ -2,6 +2,7 @@ import { Nation } from "../../types/typNation";
 import { GiBlackFlag } from "react-icons/gi";
 import Tag from "../tag";
 import { regimeOptions } from "../../settings/consts";
+import { FaTrophy, FaUserGroup } from "react-icons/fa6";
 
 export default function PublicNationTile({ name, data, role }: Nation) {
   // const createdAtDate: Date = new Date(createdAt);
@@ -28,8 +29,14 @@ export default function PublicNationTile({ name, data, role }: Nation) {
       <div className="flex gap-2 self-end flex-wrap justify-end">
         {role === "admin" && <Tag text="admin" bgColor="bg-success" />}
         <Tag
-          text={data.roleplay.points.toString() + " points"}
-          bgColor="bg-secondary"
+          text={data.roleplay.points.toString()}
+          bgColor="bg-info"
+          children={<FaTrophy />}
+        />
+        <Tag
+          text={data.roleplay.population.toString()}
+          bgColor="bg-info"
+          children={<FaUserGroup />}
         />
         {regimeOptions.map((regime, i) => {
           if (regime.id === data.general.regime) {

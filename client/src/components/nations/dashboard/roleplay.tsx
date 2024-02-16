@@ -13,14 +13,16 @@ import {
 import {
   infoModal,
   loadingSpinner,
+  nationAtom,
+  nationsListAtom,
   NationsRoleplayDataAtom,
 } from "../../../settings/store";
 import { useAtom } from "jotai";
-import { getRoleplayDataFetch } from "../../../utils/fetch";
+import { getRoleplayDataFetch, updateNationFetch } from "../../../utils/fetch";
 import NewPlaceTile from "./newPlaceTile";
 import { Citizen, Place } from "../../../types/typNation";
 import { FaCoins, FaTrophy, FaUserCheck, FaUserGroup } from "react-icons/fa6";
-import { addCredits } from "../../../utils/functions";
+import { addCredits, updateElementOfAtomArray } from "../../../utils/functions";
 import PlaceTile from "./placeTile";
 
 export default function Roleplay({
@@ -34,8 +36,10 @@ export default function Roleplay({
   const [nationsRoleplayData, setNationsRoleplayData] = useAtom(
     NationsRoleplayDataAtom,
   );
+  const [, setNation] = useAtom(nationAtom);
   const [, setLoading] = useAtom(loadingSpinner);
   const [, setInfo] = useAtom(infoModal);
+  const [nationsList, setNationsList] = useAtom(nationsListAtom);
 
   useEffect(() => {
     if (selectedNation._id != "" && !dataChecked) {
@@ -73,13 +77,38 @@ export default function Roleplay({
 
   useEffect(() => {
     if (placesList.length > 0) {
+      let points = 0;
       placesList.forEach((place) => {
         if (place.buildDate <= new Date()) {
           setVirtualCitizens(virtualCitizens + place.population);
+          points += place.points;
         }
       });
+      updateNationScore(points);
     }
   }, [placesList]);
+
+  const updateNationScore = (points: number) => {
+    let updatedNation = { ...selectedNation };
+    if (selectedNation.data.roleplay.points != points) {
+      updatedNation.data.roleplay.points = points;
+      setLoading({ show: true, text: SERVEUR_LOADING_STRING });
+      updateNationFetch(updatedNation)
+        .then((resp) => {
+          setLoading({ show: false, text: SERVEUR_LOADING_STRING });
+          if (resp.nation) {
+            setNation(resp.nation);
+            updateElementOfAtomArray(resp.nation, nationsList, setNationsList);
+          } else {
+            setInfo(resp.message);
+          }
+        })
+        .catch((error) => {
+          setLoading({ show: false, text: SERVEUR_LOADING_STRING });
+          setInfo(error);
+        });
+    }
+  };
 
   return (
     <TileContainer
@@ -99,12 +128,12 @@ export default function Roleplay({
                   <Tag
                     text={citizensList.length.toString()}
                     bgColor="bg-info"
-                    children={<FaUserGroup />}
+                    children={<FaUserCheck />}
                   />
                   <Tag
                     text={virtualCitizens.toString()}
                     bgColor="bg-info"
-                    children={<FaUserCheck />}
+                    children={<FaUserGroup />}
                   />
                   <Tag
                     text={selectedNation.data.roleplay.credits.toString()}
@@ -139,6 +168,7 @@ export default function Roleplay({
                         <PlaceTile
                           owner={owner}
                           name={place.name}
+                          points={place.points}
                           population={place.population}
                           buildDate={place.buildDate}
                           description={place.description}
@@ -181,8 +211,6 @@ export default function Roleplay({
                             canBuy={
                               place.cost <= selectedNation.data.roleplay.credits
                             }
-                            placeList={placesList}
-                            setPlaceList={setPlacesList}
                           />
                         </div>
                       );

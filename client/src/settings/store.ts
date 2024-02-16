@@ -1,6 +1,12 @@
 import { atom } from "jotai";
 
-import { EmptyNation, Nation, NationRoleplayData } from "../types/typNation";
+import {
+  EmptyNation,
+  Nation,
+  NationRoleplayData,
+  Place,
+  emptyPlace,
+} from "../types/typNation";
 import {
   Com,
   ConfirmBoxDefault,
@@ -19,10 +25,13 @@ export const nationsListAtom = atom<Nation[]>([EmptyNation]);
 
 export const comsListAtom = atom<Com[]>([EmptyCom]);
 
+export const newPlaceAtom = atom<Place>(emptyPlace);
+
 export const recoveryKey = atom("");
 export const confirmBox = atom(ConfirmBoxDefault);
 export const editbox = atom(EditBoxDefault);
 export const infoModal = atom("");
+
 const loadingAtom = {
   show: false,
   text: "",

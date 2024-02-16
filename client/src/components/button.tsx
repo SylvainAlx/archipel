@@ -13,6 +13,7 @@ export default function Button({
   type,
   path,
   text,
+  bgColor,
   disabled,
   click,
 }: ButtonProps) {
@@ -51,7 +52,7 @@ export default function Button({
     <button
       disabled={disabled != undefined && disabled}
       type={type != undefined ? type : "button"}
-      className={`w-full max-w-[300px] inline-block rounded-full py-2 px-4 transition-all duration-300 bg-secondary hover:text-primary hover:bg-light`}
+      className={`${bgColor ? bgColor : "bg-secondary"} w-full max-w-[300px] inline-block rounded-full py-2 px-4 transition-all duration-300 hover:text-primary hover:bg-light`}
       onClick={click ? click : handleClick}
     >
       {text}

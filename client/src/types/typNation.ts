@@ -20,6 +20,18 @@ export interface Place {
   image: string;
 }
 
+export const emptyPlace: Place = {
+  nationId: "",
+  buildDate: new Date(0),
+  type: 0,
+  cost: 0,
+  points: 0,
+  population: 0,
+  name: "",
+  description: "",
+  image: "",
+};
+
 export interface NationRoleplayData {
   nationId: string;
   citizens: Citizen[];
@@ -48,6 +60,7 @@ export interface Nation {
       lastUpdated: Date;
       points: number;
       credits: number;
+      population: number;
       politicalSide: number;
     };
   };
@@ -76,6 +89,7 @@ export const EmptyNation: Nation = {
       lastUpdated: new Date(),
       points: 0,
       credits: 100,
+      population: 0,
       politicalSide: 0,
     },
   },

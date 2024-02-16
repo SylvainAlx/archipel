@@ -72,6 +72,10 @@ const nationSchema = mongoose.Schema(
           type: Number,
           default: 100,
         },
+        population: {
+          type: Number,
+          default: 0,
+        },
         politicalSide: {
           type: Number,
           default: 0,

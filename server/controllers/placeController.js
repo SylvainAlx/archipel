@@ -1,9 +1,10 @@
 import Place from "../models/placeSchema.js";
+import Nation from "../models/nationSchema.js";
 
 export const getPlaces = async (req, res) => {
   try {
     const nationId = req.params.id;
-    const places = await Place.find({ _id: nationId })
+    const places = await Place.find({ nation: nationId })
       .then((places) => {
         res.status(200).json(places);
       })
@@ -18,7 +19,7 @@ export const getPlaces = async (req, res) => {
 export const createPlace = async (req, res) => {
   try {
     const {
-      nation,
+      nationId,
       buildDate,
       type,
       cost,
@@ -30,7 +31,7 @@ export const createPlace = async (req, res) => {
     } = req.body;
 
     const place = new Place({
-      nation,
+      nation: nationId,
       buildDate,
       type,
       cost,
@@ -42,10 +43,20 @@ export const createPlace = async (req, res) => {
     });
     place
       .save()
-      .then((place) => {
-        res.status(201).json({ place, message: "lieu créé" });
+      .then(async (place) => {
+        const nation = await Nation.findOne({ _id: place.nation })
+          .then((nation) => {
+            nation.data.roleplay.credits -= place.cost;
+            nation.save();
+            res.status(201).json({ place, nation, message: "lieu créé" });
+          })
+          .catch((error) => {
+            res.status(400).json({
+              message: `certaines informations sont erronées ou manquantes`,
+              erreur: error.message,
+            });
+          });
       })
-
       .catch((error) => {
         if (error.code === 11000) {
           res.status(400).json({
@@ -57,6 +68,7 @@ export const createPlace = async (req, res) => {
             message: `certaines informations sont erronées ou manquantes`,
             erreur: error.message,
           });
+          console.log(error);
         }
       });
   } catch (error) {

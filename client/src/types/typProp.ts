@@ -1,6 +1,6 @@
 import { ChangeEvent, FormEvent, MouseEventHandler } from "react";
 import { ReactNode } from "react";
-import { Nation, Place, PoliticalSide, RegimeOption } from "./typNation";
+import { Nation, PoliticalSide, RegimeOption } from "./typNation";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
@@ -34,6 +34,7 @@ export interface ButtonProps {
   type?: "button" | "submit";
   path: string;
   text: string;
+  bgColor?: string;
   disabled?: boolean;
   click?: MouseEventHandler<HTMLButtonElement>;
 }
@@ -96,6 +97,7 @@ export interface TextAreaProps {
 
 export interface SelectedNationProps {
   selectedNation: Nation;
+  setSelectedNation?: React.Dispatch<React.SetStateAction<Nation>>;
   owner?: boolean;
 }
 
@@ -103,6 +105,7 @@ export interface PlaceTileProp {
   owner?: boolean;
   name: string;
   type: number;
+  points: number;
   population: number;
   buildDate: Date;
   image: string;
@@ -121,8 +124,6 @@ export interface NewPlaceTileProps {
   image: string;
   description: string;
   canBuy: Boolean;
-  placeList: Place[];
-  setPlaceList: React.Dispatch<React.SetStateAction<Place[]>>;
 }
 
 export interface DashboardTabProps {

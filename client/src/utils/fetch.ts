@@ -1,4 +1,9 @@
-import { AuthPayload, ComPayload, RecoveryPayload } from "../types/typPayload";
+import {
+  AuthPayload,
+  ComPayload,
+  PlacePayload,
+  RecoveryPayload,
+} from "../types/typPayload";
 import { SERVER_URL } from "../settings/consts";
 import { GET_JWT } from "./functions";
 import { Nation } from "../types/typNation";
@@ -105,14 +110,17 @@ export const getRoleplayDataFetch = async (id: string) => {
 //--------------
 
 export const createCom = async (payload: ComPayload) => {
+  const jwt = GET_JWT();
   const resp = await fetch(`${SERVER_URL}/com/create`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+      authorization: "Bearer " + jwt,
     },
     body: JSON.stringify(payload),
   });
   const result = await resp.json();
+
   return result;
 };
 
@@ -149,5 +157,20 @@ export const getNationCitizensFetch = async (id: string) => {
 export const getNationPlacesFetch = async (id: string) => {
   const resp = await fetch(`${SERVER_URL}/place/${id}`);
   const result = await resp.json();
+  return result;
+};
+
+export const createPlaceFetch = async (payload: PlacePayload) => {
+  const jwt = GET_JWT();
+  const resp = await fetch(`${SERVER_URL}/place/create`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      authorization: "Bearer " + jwt,
+    },
+    body: JSON.stringify(payload),
+  });
+  const result = await resp.json();
+
   return result;
 };

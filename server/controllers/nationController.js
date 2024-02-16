@@ -68,8 +68,8 @@ export const getSelf = async (req, res) => {
 export const getRoleplayData = async (req, res) => {
   try {
     const nationId = req.params.id;
-    const citizens = await Citizen.find({ nationId });
-    const places = await Place.find({ nationId });
+    const citizens = await Citizen.find({ nation: nationId });
+    const places = await Place.find({ nation: nationId });
     res.status(200).json({ citizens, places });
   } catch (error) {
     res.status(404).json({

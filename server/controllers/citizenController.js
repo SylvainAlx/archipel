@@ -3,7 +3,7 @@ import Citizen from "../models/citizenSchema.js";
 export const getCitizens = async (req, res) => {
   try {
     const nationId = req.params.id;
-    const citizens = await Citizen.find({ _id: nationId })
+    const citizens = await Citizen.find({ nationality: nationId })
       .then((citizens) => {
         res.status(200).json(citizens);
       })
