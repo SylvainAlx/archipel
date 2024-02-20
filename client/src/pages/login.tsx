@@ -5,6 +5,7 @@ import { useAtom } from "jotai";
 import {
   infoModal,
   loadingSpinner,
+  myStore,
   nationAtom,
   nationsListAtom,
 } from "../settings/store";
@@ -20,7 +21,6 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const [, setInfo] = useAtom(infoModal);
   const [, setNation] = useAtom(nationAtom);
-  const [, setLoading] = useAtom(loadingSpinner);
   const [, setNationsList] = useAtom(nationsListAtom);
   const navigate = useNavigate();
 
@@ -34,10 +34,10 @@ export default function Login() {
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    setLoading({ show: true, text: SERVEUR_LOADING_STRING });
+    myStore.set(loadingSpinner, { show: true, text: SERVEUR_LOADING_STRING });
     loginFetch({ name, password })
       .then((data) => {
-        setLoading({ show: false, text: SERVEUR_LOADING_STRING });
+        myStore.set(loadingSpinner, { show: false, text: "" });
         if (data.nation) {
           localStorage.setItem("jwt", data.jwt);
           setNationsList([EmptyNation]);
@@ -50,12 +50,12 @@ export default function Login() {
           });
           navigate(`/dashboard/${data.nation._id}`);
         } else {
-          setLoading({ show: false, text: SERVEUR_LOADING_STRING });
+          myStore.set(loadingSpinner, { show: false, text: "" });
           setInfo(data.message);
         }
       })
       .catch((error) => {
-        setLoading({ show: false, text: SERVEUR_LOADING_STRING });
+        myStore.set(loadingSpinner, { show: false, text: "" });
         setInfo(error.message);
       });
   };

@@ -19,7 +19,7 @@ export const SERVEUR_LOADING_STRING =
 
 // Titles
 
-export const TITLE = "NAVIR";
+export const TITLE = "NaVir";
 export const SUBTITLE = "NATIONS VIRTUELLES";
 
 //  Colors

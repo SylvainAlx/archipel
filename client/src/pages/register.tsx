@@ -6,6 +6,7 @@ import {
   comsListAtom,
   infoModal,
   loadingSpinner,
+  myStore,
   nationAtom,
   nationsListAtom,
   recoveryKey,
@@ -21,7 +22,6 @@ import { EmptyCom } from "../types/typAtom";
 export default function Register() {
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
-  const [, setLoading] = useAtom(loadingSpinner);
   const [, setNation] = useAtom(nationAtom);
   const [, setRecovery] = useAtom(recoveryKey);
   const [, setInfo] = useAtom(infoModal);
@@ -40,10 +40,10 @@ export default function Register() {
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    setLoading({ show: true, text: SERVEUR_LOADING_STRING });
+    myStore.set(loadingSpinner, { show: true, text: SERVEUR_LOADING_STRING });
     registerFetch({ name, password })
       .then((data) => {
-        setLoading({ show: false, text: SERVEUR_LOADING_STRING });
+        myStore.set(loadingSpinner, { show: false, text: "" });
         if (data.nation) {
           createCom({
             originId: data.nation._id,
@@ -63,12 +63,12 @@ export default function Register() {
           });
           navigate(`/dashboard/${data.nation._id}`);
         } else {
-          setLoading({ show: false, text: SERVEUR_LOADING_STRING });
+          myStore.set(loadingSpinner, { show: false, text: "" });
           setInfo("création impossible : " + data.message);
         }
       })
       .catch((error) => {
-        setLoading({ show: false, text: SERVEUR_LOADING_STRING });
+        myStore.set(loadingSpinner, { show: false, text: "" });
         setInfo(error.message);
       });
   };

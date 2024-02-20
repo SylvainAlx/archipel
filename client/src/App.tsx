@@ -11,9 +11,10 @@ import {
 import Header from "./layouts/header";
 import Footer from "./layouts/footer";
 import "./App.css";
-import { useAtom } from "jotai";
+import { Provider, useAtom } from "jotai";
 import {
   loadingSpinner,
+  myStore,
   nationAtom,
   selectedNationAtom,
 } from "./settings/store";
@@ -28,15 +29,14 @@ import { SERVEUR_LOADING_STRING } from "./settings/consts";
 export default function App() {
   const [nation, setNation] = useAtom(nationAtom);
   const [, setSelectedNation] = useAtom(selectedNationAtom);
-  const [, setLoading] = useAtom(loadingSpinner);
 
   useEffect(() => {
     const jwt = GET_JWT();
     if (jwt) {
-      setLoading({ show: true, text: SERVEUR_LOADING_STRING });
+      myStore.set(loadingSpinner, { show: true, text: SERVEUR_LOADING_STRING });
       authGet(jwt)
         .then((data) => {
-          setLoading({ show: false, text: SERVEUR_LOADING_STRING });
+          myStore.set(loadingSpinner, { show: false, text: "" });
           if (data.name != undefined) {
             setNation({
               _id: data._id,
@@ -47,12 +47,12 @@ export default function App() {
             });
           } else {
             setNation(EmptyNation);
-            setLoading({ show: false, text: SERVEUR_LOADING_STRING });
+            myStore.set(loadingSpinner, { show: false, text: "" });
             localStorage.removeItem("jwt");
           }
         })
         .catch((error) => {
-          setLoading({ show: false, text: SERVEUR_LOADING_STRING });
+          myStore.set(loadingSpinner, { show: false, text: "" });
           console.log(error);
         });
     } else {
@@ -67,7 +67,7 @@ export default function App() {
   }, [nation]);
 
   return (
-    <>
+    <Provider store={myStore}>
       <Header />
       <main className="animate-fadeIn flex flex-grow flex-col items-center gap-2 self-center pt-10 pb-[100px] sm:pt-20 px-1 md:px-4 w-full min-w-[300px] max-w-[1280px]">
         <Routes>
@@ -89,6 +89,6 @@ export default function App() {
         <ModalsRouter />
       </main>
       <Footer />
-    </>
+    </Provider>
   );
 }

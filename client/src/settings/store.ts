@@ -1,4 +1,4 @@
-import { atom } from "jotai";
+import { atom, createStore } from "jotai";
 
 import {
   EmptyNation,
@@ -14,10 +14,22 @@ import {
   EmptyCom,
 } from "../types/typAtom";
 
+export const myStore = createStore();
+
+// Loading
+
+const loadingAtom = {
+  show: false,
+  text: "",
+};
+export const loadingSpinner = atom(loadingAtom);
+
+// Nation
+
 export const nationAtom = atom<Nation>(EmptyNation);
+export const selectedNationAtom = atom<Nation>(EmptyNation);
 export const NationsRoleplayDataAtom = atom<NationRoleplayData[]>([]);
 
-export const selectedNationAtom = atom<Nation>(EmptyNation);
 export const getSelectedNation = atom((get) => get(selectedNationAtom));
 
 export const tempNationAtom = atom<Nation>(EmptyNation);
@@ -32,9 +44,4 @@ export const confirmBox = atom(ConfirmBoxDefault);
 export const editbox = atom(EditBoxDefault);
 export const infoModal = atom("");
 
-const loadingAtom = {
-  show: false,
-  text: "",
-};
-export const loadingSpinner = atom(loadingAtom);
 export const showApp = atom(false);
