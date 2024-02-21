@@ -13,23 +13,25 @@ import {
 import {
   infoModal,
   loadingSpinner,
+  myStore,
   nationAtom,
   nationsListAtom,
   NationsRoleplayDataAtom,
+  newPlaceAtom,
 } from "../../../settings/store";
 import { useAtom } from "jotai";
 import { getRoleplayDataFetch, updateNationFetch } from "../../../utils/fetch";
-import NewPlaceTile from "./newPlaceTile";
 import { Citizen, Place } from "../../../types/typNation";
-import { FaCoins, FaTrophy, FaUserCheck, FaUserGroup } from "react-icons/fa6";
+import { FaCoins, FaTrophy, FaUserGroup } from "react-icons/fa6";
 import { addCredits, updateElementOfAtomArray } from "../../../utils/functions";
 import PlaceTile from "./placeTile";
+import Button from "../../button";
 
 export default function Roleplay({
   selectedNation,
   owner,
 }: SelectedNationProps) {
-  const [citizensList, setCitizensList] = useState<Citizen[]>([]);
+  const [, setCitizensList] = useState<Citizen[]>([]);
   const [placesList, setPlacesList] = useState<Place[]>([]);
   const [virtualCitizens, setVirtualCitizens] = useState(0);
   const [dataChecked, setDataChecked] = useState(false);
@@ -110,6 +112,22 @@ export default function Roleplay({
     }
   };
 
+  const handleClick = () => {
+    let date = new Date();
+    let newPlace: Place = {
+      nationId: selectedNation._id,
+      buildDate: new Date(date.getTime() + placesTypeList[0].waitTime * 60000),
+      type: placesTypeList[0].id,
+      cost: placesTypeList[0].cost,
+      points: placesTypeList[0].points,
+      population: placesTypeList[0].population,
+      name: placesTypeList[0].label,
+      description: placesTypeList[0].description,
+      image: placesTypeList[0].image,
+    };
+    myStore.set(newPlaceAtom, newPlace);
+  };
+
   return (
     <TileContainer
       children={
@@ -125,13 +143,13 @@ export default function Roleplay({
                     bgColor="bg-info"
                     children={<FaTrophy />}
                   />
-                  <Tag
+                  {/* <Tag
                     text={citizensList.length.toString()}
                     bgColor="bg-info"
                     children={<FaUserCheck />}
-                  />
+                  /> */}
                   <Tag
-                    text={virtualCitizens.toString()}
+                    text={selectedNation.data.roleplay.population.toString()}
                     bgColor="bg-info"
                     children={<FaUserGroup />}
                   />
@@ -174,6 +192,12 @@ export default function Roleplay({
                           description={place.description}
                           image={place.image}
                           type={place.type}
+                          update={
+                            selectedNation.data.roleplay.credits >=
+                            placesTypeList[place.type + 1].cost
+                              ? place.type + 1
+                              : -1
+                          }
                         />
                       </div>
                     );
@@ -181,10 +205,27 @@ export default function Roleplay({
                 ) : (
                   <em className="text-center">Aucun lieux</em>
                 )}
+                {selectedNation.data.roleplay.credits >=
+                placesTypeList[0].cost ? (
+                  <Button
+                    text="CRÉER UN NOUVEAU LIEU"
+                    type="button"
+                    path=""
+                    click={handleClick}
+                  />
+                ) : (
+                  <Button
+                    text="CRÉDITS INSUFFISANTS"
+                    type="button"
+                    path=""
+                    bgColor="bg-danger"
+                    click={addCredits}
+                  />
+                )}
               </>
             }
           />
-          {owner && (
+          {/* {owner && (
             <DashTile
               title="Créer un nouveau lieu"
               children={
@@ -219,7 +260,7 @@ export default function Roleplay({
                 </>
               }
             />
-          )}
+          )} */}
         </>
       }
     />

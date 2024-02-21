@@ -5,6 +5,7 @@ import {
   confirmBox,
   infoModal,
   loadingSpinner,
+  myStore,
   nationAtom,
   nationsListAtom,
 } from "../../settings/store";
@@ -27,26 +28,23 @@ import { SERVEUR_LOADING_STRING } from "../../settings/consts";
 
 export default function ConfirmModal() {
   const [confirm, setConfirm] = useAtom(confirmBox);
-  const [, setInfo] = useAtom(infoModal);
-  const [, setLoading] = useAtom(loadingSpinner);
   const [nation, setNation] = useAtom(nationAtom);
   const [comsList, setComsList] = useAtom(comsListAtom);
   const [nationsList, setNationsList] = useAtom(nationsListAtom);
   const navigate = useNavigate();
 
   const logout = () => {
-    setInfo("déconnexion effectuée");
+    myStore.set(infoModal, "déconnexion effectuée");
     setNation(EmptyNation);
     localStorage.removeItem("jwt");
     navigate("/");
-    // window.location.reload();
   };
 
   const deleteSelfNation = () => {
-    setLoading({ show: true, text: SERVEUR_LOADING_STRING });
+    myStore.set(loadingSpinner, { show: true, text: SERVEUR_LOADING_STRING });
     DeleteSelfFetch()
       .then((resp) => {
-        setLoading({ show: false, text: SERVEUR_LOADING_STRING });
+        myStore.set(loadingSpinner, { show: false, text: "" });
         createCom({
           originId: nation._id,
           originName: nation.name,
@@ -54,51 +52,51 @@ export default function ConfirmModal() {
         });
         deleteElementOfAtomArray(nation._id, nationsList, setNationsList);
         setComsList([EmptyCom]);
-        setInfo(resp.message);
+        myStore.set(infoModal, resp.message);
         setNation(EmptyNation);
         localStorage.removeItem("jwt");
         navigate("/");
         // window.location.reload();
       })
       .catch((error) => {
-        setLoading({ show: false, text: SERVEUR_LOADING_STRING });
-        setInfo(error);
+        myStore.set(loadingSpinner, { show: false, text: "" });
+        myStore.set(infoModal, error);
       });
   };
 
   const deleteCom = () => {
-    setLoading({ show: true, text: SERVEUR_LOADING_STRING });
+    myStore.set(loadingSpinner, { show: true, text: SERVEUR_LOADING_STRING });
     deleteComFetch(confirm.target)
       .then((resp) => {
-        setLoading({ show: false, text: SERVEUR_LOADING_STRING });
+        myStore.set(loadingSpinner, { show: false, text: "" });
         deleteElementOfAtomArray(confirm.target, comsList, setComsList);
-        setInfo(resp.message);
+        myStore.set(infoModal, resp.message);
       })
       .catch((error) => {
-        setLoading({ show: false, text: SERVEUR_LOADING_STRING });
-        setInfo(error);
+        myStore.set(loadingSpinner, { show: false, text: "" });
+        myStore.set(infoModal, error);
       });
   };
 
   const createNewCom = (payload: any) => {
-    setLoading({ show: true, text: SERVEUR_LOADING_STRING });
+    myStore.set(loadingSpinner, { show: true, text: SERVEUR_LOADING_STRING });
     createCom(payload)
       .then((resp) => {
-        setLoading({ show: false, text: SERVEUR_LOADING_STRING });
+        myStore.set(loadingSpinner, { show: false, text: "" });
         createElementOfAtomArray(resp.com, comsList, setComsList);
-        setInfo(resp.message);
+        myStore.set(infoModal, resp.message);
       })
       .catch((error) => {
-        setLoading({ show: false, text: SERVEUR_LOADING_STRING });
-        setInfo(error);
+        myStore.set(loadingSpinner, { show: false, text: "" });
+        myStore.set(infoModal, error);
       });
   };
 
   const updateNation = (payload: Nation) => {
-    setLoading({ show: true, text: SERVEUR_LOADING_STRING });
+    myStore.set(loadingSpinner, { show: true, text: SERVEUR_LOADING_STRING });
     updateNationFetch(payload)
       .then((resp) => {
-        setLoading({ show: false, text: SERVEUR_LOADING_STRING });
+        myStore.set(loadingSpinner, { show: false, text: "" });
         if (resp.nation) {
           setNation(resp.nation);
           updateElementOfAtomArray(resp.nation, nationsList, setNationsList);
@@ -118,12 +116,12 @@ export default function ConfirmModal() {
           //   payload: updateCom,
           // });
         } else {
-          setInfo(resp.message);
+          myStore.set(infoModal, resp.message);
         }
       })
       .catch((error) => {
-        setLoading({ show: false, text: SERVEUR_LOADING_STRING });
-        setInfo(error);
+        myStore.set(loadingSpinner, { show: false, text: "" });
+        myStore.set(infoModal, error);
       });
   };
 

@@ -8,6 +8,7 @@ import {
   confirmBox,
   infoModal,
   loadingSpinner,
+  myStore,
   nationAtom,
   selectedNationAtom,
 } from "../settings/store";
@@ -20,7 +21,6 @@ import AdBanner from "../components/ads/adBanner";
 export default function Dashboard() {
   const [nation] = useAtom(nationAtom);
   const [selectedNation, setSelectedNation] = useAtom(selectedNationAtom);
-  const [, setLoading] = useAtom(loadingSpinner);
   const [, setInfo] = useAtom(infoModal);
   const [, setConfirm] = useAtom(confirmBox);
   const [owner, setOwner] = useState(false);
@@ -38,10 +38,10 @@ export default function Dashboard() {
       ]);
       setOwner(true);
     } else if (selectedNation._id === "" && id) {
-      setLoading({ show: true, text: SERVEUR_LOADING_STRING });
+      myStore.set(loadingSpinner, { show: true, text: SERVEUR_LOADING_STRING });
       getOneNationFetch(id)
         .then((data) => {
-          setLoading({ show: false, text: SERVEUR_LOADING_STRING });
+          myStore.set(loadingSpinner, { show: false, text: "" });
           if (data.nation) {
             setSelectedNation({
               _id: data.nation._id,
@@ -51,12 +51,12 @@ export default function Dashboard() {
               createdAt: data.nation.createdAt,
             });
           } else {
-            setLoading({ show: false, text: SERVEUR_LOADING_STRING });
+            myStore.set(loadingSpinner, { show: false, text: "" });
             setInfo(data.message);
           }
         })
         .catch((error) => {
-          setLoading({ show: false, text: SERVEUR_LOADING_STRING });
+          myStore.set(loadingSpinner, { show: false, text: "" });
           setInfo(error.message);
         });
     }

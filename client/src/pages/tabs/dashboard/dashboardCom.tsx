@@ -7,6 +7,7 @@ import {
   confirmBox,
   infoModal,
   loadingSpinner,
+  myStore,
   nationAtom,
 } from "../../../settings/store";
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
@@ -31,22 +32,21 @@ export default function DashboardCom({ text }: StringProps) {
   const [nation] = useAtom(nationAtom);
   const [newCom, setNewCom] = useState(EmptyCom);
   const [, setInfo] = useAtom(infoModal);
-  const [, setLoading] = useAtom(loadingSpinner);
   const [comList, setComsList] = useAtom(comsListAtom);
   const [, setConfirm] = useAtom(confirmBox);
 
   useEffect(() => {
     if (comList[0]._id === "") {
-      setLoading({ show: true, text: SERVEUR_LOADING_STRING });
+      myStore.set(loadingSpinner, { show: true, text: SERVEUR_LOADING_STRING });
       getAllComs()
         .then((data) => {
-          setLoading({ show: false, text: SERVEUR_LOADING_STRING });
+          myStore.set(loadingSpinner, { show: false, text: "" });
           if (data != undefined) {
             setComsList(data);
           }
         })
         .catch((error) => {
-          setLoading({ show: false, text: SERVEUR_LOADING_STRING });
+          myStore.set(loadingSpinner, { show: false, text: "" });
           setInfo(error.message);
         });
     }

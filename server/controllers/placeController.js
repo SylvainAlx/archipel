@@ -47,6 +47,8 @@ export const createPlace = async (req, res) => {
         const nation = await Nation.findOne({ _id: place.nation })
           .then((nation) => {
             nation.data.roleplay.credits -= place.cost;
+            nation.data.roleplay.population += place.population;
+            nation.data.roleplay.points += place.points;
             nation.save();
             res.status(201).json({ place, nation, message: "lieu créé" });
           })

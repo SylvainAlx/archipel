@@ -5,6 +5,7 @@ import Input from "../../../components/form/input";
 import {
   infoModal,
   loadingSpinner,
+  myStore,
   nationsListAtom,
   selectedNationAtom,
 } from "../../../settings/store";
@@ -23,7 +24,6 @@ import { IoIosArrowDropdownCircle } from "react-icons/io";
 
 export default function NationList({ text }: StringProps) {
   const [nationsList, setNationsList] = useAtom(nationsListAtom);
-  const [, setLoading] = useAtom(loadingSpinner);
   const [, setNation] = useAtom(selectedNationAtom);
   const [, setInfo] = useAtom(infoModal);
   const [searchName, setSearchName] = useState("");
@@ -76,30 +76,30 @@ export default function NationList({ text }: StringProps) {
 
   const getNations = () => {
     setSearchName("");
-    setLoading({ show: true, text: SERVEUR_LOADING_STRING });
+    myStore.set(loadingSpinner, { show: true, text: SERVEUR_LOADING_STRING });
     getAllNations(searchName)
       .then((data) => {
-        setLoading({ show: false, text: SERVEUR_LOADING_STRING });
+        myStore.set(loadingSpinner, { show: false, text: "" });
         if (data != undefined) {
           setNationsList(data);
         }
       })
       .catch((error) => {
-        setLoading({ show: false, text: SERVEUR_LOADING_STRING });
+        myStore.set(loadingSpinner, { show: false, text: "" });
         setInfo(error.message);
       });
   };
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    setLoading({ show: true, text: SERVEUR_LOADING_STRING });
+    myStore.set(loadingSpinner, { show: true, text: SERVEUR_LOADING_STRING });
     getAllNations(searchName)
       .then((data) => {
-        setLoading({ show: false, text: SERVEUR_LOADING_STRING });
+        myStore.set(loadingSpinner, { show: false, text: "" });
         setNationsList(data);
       })
       .catch((error) => {
-        setLoading({ show: false, text: SERVEUR_LOADING_STRING });
+        myStore.set(loadingSpinner, { show: false, text: "" });
         setInfo(error.message);
       });
   };

@@ -2,7 +2,7 @@ import { ChangeEvent, FormEvent, useState } from "react";
 import H1 from "../components/titles/h1";
 import { RecoveryFetch } from "../utils/fetch";
 import { useNavigate } from "react-router-dom";
-import { infoModal, loadingSpinner } from "../settings/store";
+import { infoModal, loadingSpinner, myStore } from "../settings/store";
 import { useAtom } from "jotai";
 import Input from "../components/form/input";
 import Button from "../components/button";
@@ -16,7 +16,6 @@ export default function Recovery() {
   const [recovery, setRecovery] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [passwordsMatch, setPasswordsMatch] = useState(true);
-  const [, setLoading] = useAtom(loadingSpinner);
   const [, setInfo] = useAtom(infoModal);
 
   const navigate = useNavigate();
@@ -35,7 +34,7 @@ export default function Recovery() {
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    setLoading({ show: true, text: SERVEUR_LOADING_STRING });
+    myStore.set(loadingSpinner, { show: true, text: SERVEUR_LOADING_STRING });
     const dataToSend = {
       name,
       recovery,
@@ -43,14 +42,14 @@ export default function Recovery() {
     };
     RecoveryFetch(dataToSend)
       .then((data) => {
-        setLoading({ show: false, text: SERVEUR_LOADING_STRING });
+        myStore.set(loadingSpinner, { show: false, text: "" });
         setInfo(data.message);
         if (data.message === "nouveau mot de passe pris en compte") {
           navigate("/login");
         }
       })
       .catch((error) => {
-        setLoading({ show: false, text: SERVEUR_LOADING_STRING });
+        myStore.set(loadingSpinner, { show: false, text: "" });
         alert(error.message);
       });
   };

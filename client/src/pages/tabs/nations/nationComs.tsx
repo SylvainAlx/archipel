@@ -7,6 +7,7 @@ import {
   confirmBox,
   infoModal,
   loadingSpinner,
+  myStore,
   nationAtom,
 } from "../../../settings/store";
 import { useAtom } from "jotai";
@@ -17,7 +18,6 @@ import { SERVEUR_LOADING_STRING, comOptions } from "../../../settings/consts";
 import { dateToString } from "../../../utils/functions";
 
 export default function NationComs({ text }: StringProps) {
-  const [, setLoading] = useAtom(loadingSpinner);
   const [, setInfo] = useAtom(infoModal);
   const [nation] = useAtom(nationAtom);
   const [comsList, setComsList] = useAtom(comsListAtom);
@@ -30,16 +30,16 @@ export default function NationComs({ text }: StringProps) {
   }, []);
 
   const getComs = () => {
-    setLoading({ show: true, text: SERVEUR_LOADING_STRING });
+    myStore.set(loadingSpinner, { show: true, text: SERVEUR_LOADING_STRING });
     getAllComs()
       .then((data) => {
-        setLoading({ show: false, text: SERVEUR_LOADING_STRING });
+        myStore.set(loadingSpinner, { show: false, text: "" });
         if (data != undefined) {
           setComsList(data);
         }
       })
       .catch((error) => {
-        setLoading({ show: false, text: SERVEUR_LOADING_STRING });
+        myStore.set(loadingSpinner, { show: false, text: "" });
         setInfo(error.message);
       });
   };

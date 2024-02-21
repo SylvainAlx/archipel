@@ -1,3 +1,4 @@
+import { placesTypeList } from "../../../settings/consts";
 import { PlaceTileProp } from "../../../types/typProp";
 import Countdown from "../../countdown";
 import Tag from "../../tag";
@@ -9,6 +10,8 @@ export default function PlaceTile({
   points,
   buildDate,
   description,
+  update,
+  type,
 }: PlaceTileProp) {
   return (
     <div
@@ -17,6 +20,7 @@ export default function PlaceTile({
       <div className="w-full flex justify-between items-center">
         <h3 className="text-xl">{name}</h3>
         <div className="flex items-center gap-2">
+          <Tag text={placesTypeList[type].label.toString()} bgColor="bg-info" />
           <Tag
             text={points.toString()}
             bgColor="bg-info"
@@ -31,6 +35,12 @@ export default function PlaceTile({
       </div>
       {new Date(buildDate) > new Date() && <Countdown targetDate={buildDate} />}
       <em>{description}</em>
+      {update != -1 && update != undefined && (
+        <b>
+          transformer en "{placesTypeList[update].label}" pour{" "}
+          {placesTypeList[update].cost} crédits
+        </b>
+      )}
     </div>
   );
 }

@@ -110,6 +110,7 @@ export interface PlaceTileProp {
   buildDate: Date;
   image: string;
   description: string;
+  update?: number;
 }
 
 export interface NewPlaceTileProps {
