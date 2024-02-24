@@ -1,6 +1,7 @@
 import Nation from "../models/nationSchema.js";
 import Citizen from "../models/citizenSchema.js";
 import Place from "../models/placeSchema.js";
+import Com from "../models/comSchema.js";
 
 export const getAll = async (req, res) => {
   try {
@@ -82,7 +83,9 @@ export const getRoleplayData = async (req, res) => {
 export const deleteSelf = async (req, res) => {
   try {
     const id = req.nationId;
-    Nation.findByIdAndDelete(id).then((resp) => {
+    Nation.findByIdAndDelete(id).then(async (resp) => {
+      await Place.deleteMany({ nation: id });
+      await Com.deleteMany({ originId: id });
       res.status(200).json({
         message: `Votre nation a été supprimée`,
       });

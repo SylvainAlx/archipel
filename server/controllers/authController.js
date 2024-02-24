@@ -40,11 +40,12 @@ export const register = async (req, res) => {
         } else {
           res.status(400).json({
             message: `certaines informations sont erronées ou manquantes`,
+            error,
           });
         }
       });
   } catch (error) {
-    res.status(400).json({ erreur: error.message });
+    res.status(400).json({ erreur: error });
   }
 };
 
@@ -63,20 +64,16 @@ export const login = async (req, res) => {
           } else {
             res.status(401).json({
               message: "mot de passe invalide",
-              erreur: error.message,
+              erreur: error,
             });
           }
         });
       })
       .catch((error) => {
-        res
-          .status(404)
-          .json({ message: "nation introuvable", erreur: error.message });
+        res.status(404).json({ message: "nation introuvable", erreur: error });
       });
   } catch (error) {
-    res
-      .status(400)
-      .json({ message: "connexion impossible", erreur: error.message });
+    res.status(400).json({ message: "connexion impossible", erreur: error });
   }
 };
 
@@ -93,12 +90,10 @@ export const verify = async (req, res) => {
         res.status(200).json(nation);
       })
       .catch((error) => {
-        res
-          .status(404)
-          .json({ message: "nation introuvable", erreur: error.message });
+        res.status(404).json({ message: "nation introuvable", erreur: error });
       });
   } catch (error) {
-    res.status(401).json({ message: "JWT erroné", erreur: error.message });
+    res.status(401).json({ message: "JWT erroné", erreur: error });
   }
 };
 
@@ -117,7 +112,7 @@ export const forgetPassword = async (req, res) => {
           } else {
             res.status(401).json({
               message: "clé de récupération erronée",
-              erreur: error.message,
+              erreur: error,
             });
           }
         });
@@ -125,13 +120,13 @@ export const forgetPassword = async (req, res) => {
       .catch((error) => {
         res.status(404).json({
           message: "nation inconnue",
-          erreur: error.message,
+          erreur: error,
         });
       });
   } catch (error) {
     res.status(400).json({
       message: "impossible de récupérer la nation",
-      erreur: error.message,
+      erreur: error,
     });
   }
 };
