@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useAtom } from "jotai";
 import {
   NationsRoleplayDataAtom,
@@ -42,7 +43,7 @@ export default function NewPlaceModal() {
       .then((data) => {
         if (data.place) {
           setLoading({ show: false, text: SERVEUR_LOADING_STRING });
-          let updateRoleplatData = [...nationsRoleplayData];
+          const updateRoleplatData = [...nationsRoleplayData];
           nationsRoleplayData.forEach((nationData, i) => {
             if (nationData.nationId === newPlace.nationId) {
               updateRoleplatData[i].places.push(data.place);
@@ -63,8 +64,8 @@ export default function NewPlaceModal() {
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
-    let name = e.target.name;
-    let value = e.target.value;
+    const name = e.target.name;
+    const value = e.target.value;
     setNewPlace({ ...newPlace, [name]: value });
   };
 

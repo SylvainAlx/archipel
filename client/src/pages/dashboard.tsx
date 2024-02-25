@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import TabNav from "../components/tabNav";
@@ -69,11 +70,15 @@ export default function Dashboard() {
       );
       if (reward > 0) {
         const updatedNation = { ...selectedNation };
-        updatedNation.data.roleplay.credits += reward;
+        const bonus = Math.ceil(
+          (reward * updatedNation.data.roleplay.points) / 10,
+        );
+        const totalReward = reward + bonus;
+        updatedNation.data.roleplay.credits += totalReward;
         updatedNation.data.roleplay.lastUpdated = new Date();
         setConfirm({
           action: "updateNation",
-          text: reward + " nouveau(x) crédit(s) ! Récupérer ?",
+          text: totalReward + " nouveau(x) crédit(s) ! Récupérer ?",
           result: "",
           target: "",
           payload: updatedNation,
