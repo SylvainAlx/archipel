@@ -25,7 +25,11 @@ export default function Home() {
         </div>
       ) : (
         <div className="w-full py-4 flex justify-center gap-4 flex-wrap">
-          <Button text="TABLEAU DE BORD" type="button" path="/dashboard" />
+          <Button
+            text="TABLEAU DE BORD"
+            type="button"
+            path={`/dashboard/${nation._id}`}
+          />
         </div>
       )}
     </>

@@ -174,3 +174,13 @@ export const createPlaceFetch = async (payload: PlacePayload) => {
 
   return result;
 };
+
+export const deletePlaceFetch = async (id: string) => {
+  const jwt = GET_JWT();
+  const resp = await fetch(`${SERVER_URL}/place/delete/${id}`, {
+    method: "DELETE",
+    headers: { authorization: `Bearer ${jwt}` },
+  });
+  const result = await resp.json();
+  return result;
+};

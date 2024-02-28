@@ -1,6 +1,6 @@
 import { ChangeEvent, FormEvent, MouseEventHandler } from "react";
 import { ReactNode } from "react";
-import { Nation, PoliticalSide, RegimeOption } from "./typNation";
+import { Nation, Place, PoliticalSide, RegimeOption } from "./typNation";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
@@ -83,6 +83,7 @@ export interface TagProps {
   bgColor?: string;
   textColor?: string;
   children?: JSX.Element;
+  click?: MouseEventHandler<HTMLDivElement>;
 }
 
 export interface TextAreaProps {
@@ -103,13 +104,7 @@ export interface SelectedNationProps {
 
 export interface PlaceTileProp {
   owner?: boolean;
-  name: string;
-  type: number;
-  points: number;
-  population: number;
-  buildDate: Date;
-  image: string;
-  description: string;
+  place: Place;
   update?: number;
 }
 

@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { MdTimer } from "react-icons/md";
+import Tag from "./tag";
 
 interface CountdownProps {
   targetDate: Date;
@@ -35,20 +37,30 @@ const Countdown: React.FC<CountdownProps> = ({ targetDate }) => {
   const renderTime = () => {
     return (
       <div>
-        <span>{timeLeft.days}</span> j <span>{timeLeft.hours}</span> h{" "}
-        <span>{timeLeft.minutes}</span> min <span>{timeLeft.seconds}</span> s
+        {timeLeft.days > 0 && <span>{timeLeft.days}j </span>}
+        {timeLeft.hours > 0 && <span>{timeLeft.hours}h </span>}
+        {timeLeft.minutes > 0 && <span>{timeLeft.minutes}min </span>}
+        {timeLeft.seconds > 0 && <span>{timeLeft.seconds}s</span>}
       </div>
     );
   };
 
   return (
     <div className="flex flex-col items-center">
-      <h1>Terminé dans </h1>
-      {Object.keys(timeLeft).length === 0 ? (
-        <span>Terminé !</span>
-      ) : (
-        renderTime()
-      )}
+      <Tag
+        text=""
+        bgColor="bg-wait"
+        children={
+          <>
+            <MdTimer />
+            {Object.keys(timeLeft).length === 0 ? (
+              <span>Terminé !</span>
+            ) : (
+              renderTime()
+            )}
+          </>
+        }
+      />
     </div>
   );
 };

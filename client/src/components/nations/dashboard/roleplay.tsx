@@ -11,6 +11,7 @@ import {
   placesTypeList,
 } from "../../../settings/consts";
 import {
+  dataCheckedAtom,
   infoModal,
   loadingSpinner,
   myStore,
@@ -31,7 +32,7 @@ export default function Roleplay({
 }: SelectedNationProps) {
   const [, setCitizensList] = useState<Citizen[]>([]);
   const [placesList, setPlacesList] = useState<Place[]>([]);
-  const [dataChecked, setDataChecked] = useState(false);
+  const dataChecked = myStore.get(dataCheckedAtom);
   const [nationsRoleplayData, setNationsRoleplayData] = useAtom(
     NationsRoleplayDataAtom,
   );
@@ -56,7 +57,7 @@ export default function Roleplay({
           myStore.set(loadingSpinner, { show: false, text: "" });
           setInfo(error.message);
         });
-      setDataChecked(true);
+      myStore.set(dataCheckedAtom, true);
     }
   }, [selectedNation]);
 
@@ -76,13 +77,16 @@ export default function Roleplay({
     const newPlace: Place = {
       nationId: selectedNation._id,
       buildDate: new Date(date.getTime() + placesTypeList[0].waitTime * 60000),
-      type: placesTypeList[0].id,
       cost: placesTypeList[0].cost,
       points: placesTypeList[0].points,
-      population: placesTypeList[0].population,
-      name: placesTypeList[0].label,
+      type: placesTypeList[0].id,
+      slots: placesTypeList[0].slots,
+      level: 1,
+      builds: 0,
+      population: 0,
+      name: "Nouvelle ville",
       description: placesTypeList[0].description,
-      image: placesTypeList[0].image,
+      image: "",
     };
     myStore.set(newPlaceAtom, newPlace);
   };
@@ -91,7 +95,7 @@ export default function Roleplay({
     <TileContainer
       children={
         <>
-          <H2 text="Roleplay" />
+          <H2 text="Simulation" />
           <DashTile
             title="Score"
             className="w-full"
@@ -136,39 +140,35 @@ export default function Roleplay({
           />
 
           <DashTile
-            title="Lieux"
+            title="Villes"
             children={
               <>
-                {placesList.length > 0 ? (
-                  placesList.map((place, i) => {
-                    return (
-                      <div className="w-full" key={i}>
-                        <PlaceTile
-                          owner={owner}
-                          name={place.name}
-                          points={place.points}
-                          population={place.population}
-                          buildDate={place.buildDate}
-                          description={place.description}
-                          image={place.image}
-                          type={place.type}
-                          update={
-                            selectedNation.data.roleplay.credits >=
-                            placesTypeList[place.type + 1].cost
-                              ? place.type + 1
-                              : -1
-                          }
-                        />
-                      </div>
-                    );
-                  })
-                ) : (
-                  <em className="text-center">Aucun lieux</em>
-                )}
+                <div className="flex flex-wrap items-start justify-center gap-2">
+                  {placesList.length > 0 ? (
+                    placesList.map((place, i) => {
+                      return (
+                        <div className="w-[48%] min-w-[250px]" key={i}>
+                          <PlaceTile
+                            owner={owner}
+                            place={place}
+                            update={
+                              selectedNation.data.roleplay.credits >=
+                              placesTypeList[place.level].cost
+                                ? place.level
+                                : -1
+                            }
+                          />
+                        </div>
+                      );
+                    })
+                  ) : (
+                    <em className="text-center">Aucune ville</em>
+                  )}
+                </div>
                 {selectedNation.data.roleplay.credits >= placesTypeList[0].cost
                   ? owner && (
                       <Button
-                        text="CRÉER UN NOUVEAU LIEU"
+                        text={`CRÉER UNE NOUVELLE VILLE POUR ${placesTypeList[0].cost} CRÉDITS`}
                         type="button"
                         path=""
                         click={handleClick}

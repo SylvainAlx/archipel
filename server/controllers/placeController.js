@@ -18,25 +18,16 @@ export const getPlaces = async (req, res) => {
 
 export const createPlace = async (req, res) => {
   try {
-    const {
-      nationId,
-      buildDate,
-      type,
-      cost,
-      points,
-      population,
-      name,
-      description,
-      image,
-    } = req.body;
+    const { nationId, buildDate, name, description, image } = req.body;
 
     const place = new Place({
       nation: nationId,
       buildDate,
-      type,
-      cost,
-      points,
-      population,
+      level: 1,
+      slots: 10,
+      builds: 0,
+      points: 1,
+      population: 0,
       name,
       description,
       image,
@@ -46,16 +37,21 @@ export const createPlace = async (req, res) => {
       .then(async (place) => {
         const nation = await Nation.findOne({ _id: place.nation })
           .then((nation) => {
-            nation.data.roleplay.credits -= place.cost;
-            nation.data.roleplay.population += place.population;
-            nation.data.roleplay.points += place.points;
+            if (
+              nation.data.roleplay.capital === "" ||
+              nation.data.roleplay.capital == undefined
+            ) {
+              nation.data.roleplay.capital = place._id;
+            }
+            nation.data.roleplay.credits -= 100;
+            nation.data.roleplay.points += 1;
             nation.save();
             res.status(201).json({ place, nation, message: "lieu créé" });
           })
           .catch((error) => {
             res.status(400).json({
               message: `certaines informations sont erronées ou manquantes`,
-              erreur: error.message,
+              erreur: error,
             });
           });
       })
@@ -68,12 +64,41 @@ export const createPlace = async (req, res) => {
         } else {
           res.status(400).json({
             message: `certaines informations sont erronées ou manquantes`,
-            erreur: error.message,
+            erreur: error,
           });
           console.log(error);
         }
       });
   } catch (error) {
     res.status(400).json({ message: error.message });
+  }
+};
+
+export const deletePlace = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const place = await Place.findOne({ _id: id });
+    if (!place) {
+      return res.status(404).json({ message: "Lieu non trouvé" });
+    }
+
+    const nation = await Nation.findOne({ _id: place.nation });
+    if (!nation) {
+      return res.status(404).json({ message: "Nation non trouvée" });
+    }
+
+    nation.data.roleplay.population -= place.population;
+    nation.data.roleplay.points -= place.points;
+    await nation.save();
+
+    await Place.findByIdAndDelete(id);
+
+    res.status(200).json({ nation, message: `Lieu supprimé` });
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({
+      message: "Impossible de supprimer le lieu",
+      erreur: error.message,
+    });
   }
 };

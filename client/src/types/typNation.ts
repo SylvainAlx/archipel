@@ -13,7 +13,10 @@ export interface Place {
   buildDate: Date;
   type: number;
   cost: number;
+  level: number;
   points: number;
+  slots: number;
+  builds: number;
   population: number;
   name: string;
   description: string;
@@ -25,7 +28,10 @@ export const emptyPlace: Place = {
   buildDate: new Date(0),
   type: 0,
   cost: 0,
+  level: 0,
   points: 0,
+  slots: 0,
+  builds: 0,
   population: 0,
   name: "",
   description: "",
@@ -60,6 +66,7 @@ export interface Nation {
       lastUpdated: Date;
       points: number;
       credits: number;
+      capital: string;
       population: number;
       politicalSide: number;
     };
@@ -89,6 +96,7 @@ export const EmptyNation: Nation = {
       lastUpdated: new Date(),
       points: 0,
       credits: 100,
+      capital: "",
       population: 0,
       politicalSide: 0,
     },

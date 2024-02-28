@@ -20,10 +20,6 @@ export interface ComPayload {
 export interface PlacePayload {
   nationId: string;
   buildDate: Date;
-  type: number;
-  cost: number;
-  points: number;
-  population: number;
   name: string;
   description: string;
   image: string;

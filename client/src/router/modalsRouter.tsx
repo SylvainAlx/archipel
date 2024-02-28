@@ -34,11 +34,11 @@ export default function ModalsRouter() {
       <div className="animate-in fade-in z-20 fixed top-0 w-[100%] h-[100%] backdrop-blur-sm bg-black_alpha flex items-center justify-center">
         <div className="w-[350px] bg-slate-800 rounded-md p-6 flex flex-col items-center gap-4">
           {loading.show && <LoadingSpinner />}
-          {recovery != "" && <RecoveryModal />}
-          {confirm.text != "" && <ConfirmModal />}
-          {info != "" && <InfoModal />}
-          {editBox.original != -1 && <EditBoxModal />}
-          {newPlace.nationId != "" && <NewPlaceModal />}
+          {recovery != "" && !loading.show && <RecoveryModal />}
+          {confirm.text != "" && !loading.show && <ConfirmModal />}
+          {info != "" && !loading.show && <InfoModal />}
+          {editBox.original != -1 && !loading.show && <EditBoxModal />}
+          {newPlace.nationId != "" && !loading.show && <NewPlaceModal />}
         </div>
       </div>
     );

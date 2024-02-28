@@ -46,3 +46,5 @@ export const editbox = atom(EditBoxDefault);
 export const infoModal = atom("");
 
 export const showApp = atom(false);
+
+export const dataCheckedAtom = atom(false);

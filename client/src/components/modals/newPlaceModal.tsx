@@ -9,13 +9,13 @@ import {
 } from "../../settings/store";
 import Button from "../button";
 import { emptyPlace } from "../../types/typNation";
-import { ChangeEvent, FormEvent, useEffect, useState } from "react";
+import { ChangeEvent, FormEvent } from "react";
 import Form from "../form/form";
 import Input from "../form/input";
 import TextArea from "../form/textArea";
 import Tag from "../tag";
-import { FaTrophy, FaUserGroup } from "react-icons/fa6";
-import { SERVEUR_LOADING_STRING, placesTypeList } from "../../settings/consts";
+import { FaArrowUpRightDots, FaTrophy } from "react-icons/fa6";
+import { SERVEUR_LOADING_STRING } from "../../settings/consts";
 import { createPlaceFetch } from "../../utils/fetch";
 
 export default function NewPlaceModal() {
@@ -26,15 +26,6 @@ export default function NewPlaceModal() {
   const [nationsRoleplayData, setNationsRoleplayData] = useAtom(
     NationsRoleplayDataAtom,
   );
-  const [placeType, setPlaceType] = useState("");
-
-  useEffect(() => {
-    placesTypeList.forEach((place) => {
-      if (place.id === newPlace.type) {
-        setPlaceType(place.label);
-      }
-    });
-  }, []);
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
@@ -71,17 +62,17 @@ export default function NewPlaceModal() {
 
   return (
     <div>
-      <h2 className="text-2xl text-center p-4">NOUVEAU LIEU : {placeType}</h2>
+      <h2 className="text-2xl text-center p-4">NOUVELLE VILLE</h2>
       <div className="w-full px-2 flex items-center justify-center gap-4">
-        <Tag
-          text={newPlace.population.toString()}
-          bgColor="bg-info"
-          children={<FaUserGroup />}
-        />
         <Tag
           text={newPlace.points.toString()}
           bgColor="bg-info"
           children={<FaTrophy />}
+        />
+        <Tag
+          text={"niveau " + newPlace.level.toString()}
+          bgColor="bg-info"
+          children={<FaArrowUpRightDots />}
         />
       </div>
       <Form

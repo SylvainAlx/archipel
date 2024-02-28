@@ -11,11 +11,15 @@ const PlaceSchema = mongoose.Schema(
       type: Date,
       require: true,
     },
-    type: {
+    level: {
       type: Number,
       required: true,
     },
-    cost: {
+    slots: {
+      type: Number,
+      required: true,
+    },
+    builds: {
       type: Number,
       required: true,
     },

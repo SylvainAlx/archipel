@@ -72,6 +72,10 @@ const nationSchema = mongoose.Schema(
           type: Number,
           default: 100,
         },
+        capital: {
+          type: String,
+          default: "",
+        },
         population: {
           type: Number,
           default: 0,

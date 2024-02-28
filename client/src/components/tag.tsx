@@ -1,9 +1,16 @@
 import { TagProps } from "../types/typProp";
 
-export default function Tag({ text, bgColor, textColor, children }: TagProps) {
+export default function Tag({
+  text,
+  bgColor,
+  textColor,
+  children,
+  click,
+}: TagProps) {
   return (
     <div
-      className={`h-[30px] py-1 px-2 rounded text-sm flex items-center gap-1 ${bgColor && bgColor} ${textColor && textColor} shadow-md`}
+      onClick={click && click}
+      className={`h-[30px] py-1 px-2 rounded text-sm flex items-center gap-1 ${bgColor && bgColor} ${textColor && textColor} shadow-md ${click && "cursor-pointer"}`}
     >
       {text}
       {children}

@@ -3,6 +3,7 @@ import { useAtom } from "jotai";
 import {
   comsListAtom,
   confirmBox,
+  dataCheckedAtom,
   infoModal,
   loadingSpinner,
   myStore,
@@ -15,6 +16,7 @@ import {
   DeleteSelfFetch,
   createCom,
   updateNationFetch,
+  deletePlaceFetch,
 } from "../../utils/fetch";
 import { EmptyNation, Nation } from "../../types/typNation";
 import Button from "../button";
@@ -100,24 +102,24 @@ export default function ConfirmModal() {
         if (resp.nation) {
           setNation(resp.nation);
           updateElementOfAtomArray(resp.nation, nationsList, setNationsList);
-
-          // const updateCom = {
-          //   originId: payload._id,
-          //   originName: payload.name,
-          //   title: "Mise à jour des informations",
-          //   comType: comOptions[5].id,
-          //   message: payload.name + " a modifié certaines informations",
-          // };
-          // setConfirm({
-          //   action: "createCom",
-          //   text: "Mise a jour réussie. Publier la modification dans les communications ?",
-          //   result: "",
-          //   target: "",
-          //   payload: updateCom,
-          // });
         } else {
           myStore.set(infoModal, resp.message);
         }
+      })
+      .catch((error) => {
+        myStore.set(loadingSpinner, { show: false, text: "" });
+        myStore.set(infoModal, error);
+      });
+  };
+
+  const deletePlace = () => {
+    myStore.set(loadingSpinner, { show: true, text: SERVEUR_LOADING_STRING });
+    deletePlaceFetch(confirm.target._id)
+      .then((resp) => {
+        myStore.set(dataCheckedAtom, false);
+        myStore.set(nationAtom, resp.nation);
+        myStore.set(loadingSpinner, { show: false, text: "" });
+        myStore.set(infoModal, resp.message);
       })
       .catch((error) => {
         myStore.set(loadingSpinner, { show: false, text: "" });
@@ -149,6 +151,9 @@ export default function ConfirmModal() {
             }
             if (confirm.action === "updateNation") {
               updateNation(confirm.payload);
+            }
+            if (confirm.action === "deletePlace") {
+              deletePlace();
             }
           }}
         />
