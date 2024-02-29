@@ -114,3 +114,8 @@ export interface PoliticalSide {
   id: number;
   label: string;
 }
+
+export interface LabelId {
+  id: string;
+  label: string;
+}

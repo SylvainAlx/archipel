@@ -63,5 +63,5 @@ export const formatTime = (totalMinutes: number): string => {
   const hours = Math.floor((totalMinutes % (24 * 60)) / 60);
   const minutes = Math.floor(totalMinutes % 60);
 
-  return `${days} j ${hours} h ${minutes} min`;
+  return `${days > 0 ? days + "j" : ""} ${hours > 0 ? hours + "h" : ""} ${minutes > 0 ? hours + "m" : ""}`;
 };

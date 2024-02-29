@@ -5,7 +5,7 @@ import DashTile from "../../dashTile";
 import TileContainer from "../../tileContainer";
 import H2 from "../../titles/h2";
 import Tag from "../../tag";
-import { MdAddCircle } from "react-icons/md";
+import { MdAddCircle, MdTimer } from "react-icons/md";
 import {
   SERVEUR_LOADING_STRING,
   placesTypeList,
@@ -22,7 +22,7 @@ import { useAtom } from "jotai";
 import { getRoleplayDataFetch } from "../../../utils/fetch";
 import { Citizen, Place } from "../../../types/typNation";
 import { FaCoins, FaTrophy, FaUserGroup } from "react-icons/fa6";
-import { addCredits } from "../../../utils/functions";
+import { addCredits, formatTime } from "../../../utils/functions";
 import PlaceTile from "./placeTile";
 import Button from "../../button";
 
@@ -147,7 +147,10 @@ export default function Roleplay({
                   {placesList.length > 0 ? (
                     placesList.map((place, i) => {
                       return (
-                        <div className="w-[48%] min-w-[250px]" key={i}>
+                        <div
+                          className="w-full md:w-[48%] md:min-w-[250px]"
+                          key={i}
+                        >
                           <PlaceTile
                             owner={owner}
                             place={place}
@@ -168,10 +171,25 @@ export default function Roleplay({
                 {selectedNation.data.roleplay.credits >= placesTypeList[0].cost
                   ? owner && (
                       <Button
-                        text={`CRÉER UNE NOUVELLE VILLE POUR ${placesTypeList[0].cost} CRÉDITS`}
+                        text=""
                         type="button"
                         path=""
                         click={handleClick}
+                        children={
+                          <div className="w-full flex flex-col justify-center items-center gap-1 flex-wrap">
+                            <span>Nouvelle ville</span>
+                            <div className="w-full flex items-center justify-center gap-2 text-sm">
+                              <span className="flex gap-1 items-center">
+                                <FaCoins />
+                                {placesTypeList[0].cost}
+                              </span>
+                              <span className="flex gap-1 items-center">
+                                <MdTimer />
+                                {formatTime(placesTypeList[0].waitTime)}
+                              </span>
+                            </div>
+                          </div>
+                        }
                       />
                     )
                   : owner && (

@@ -1,4 +1,4 @@
-import { PoliticalSide, RegimeOption } from "./typNation";
+import { LabelId, PoliticalSide, RegimeOption } from "./typNation";
 
 // confirmBox
 
@@ -19,8 +19,14 @@ export const ConfirmBoxDefault: ConfirmBox = {
 // editBox
 
 export interface EditBox {
-  original: string | number | boolean | RegimeOption[] | PoliticalSide[];
-  new: string | number | boolean | RegimeOption[] | PoliticalSide[];
+  original:
+    | string
+    | number
+    | boolean
+    | RegimeOption[]
+    | PoliticalSide[]
+    | LabelId[];
+  new: string | number | boolean | RegimeOption[] | PoliticalSide[] | LabelId[];
   path: string;
   indice?: number;
 }

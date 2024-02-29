@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { SelectProps } from "../../types/typProp";
 
 export default function Select({
@@ -6,6 +7,13 @@ export default function Select({
   value,
   onChange,
 }: SelectProps) {
+  const [updatedOptions, setUpdatedOptions] = useState(options);
+  useEffect(() => {
+    let update = [...updatedOptions];
+    update.unshift({ id: -1, label: "- CHOISIR -" });
+    setUpdatedOptions(update);
+  }, []);
+
   return (
     <select
       required={required}
@@ -13,7 +21,7 @@ export default function Select({
       className="w-full rounded-lg p-4 pe-12 text-sm shadow-sm text-primary capitalize"
       value={value}
     >
-      {options.map((option, i) => {
+      {updatedOptions.map((option, i) => {
         return (
           <option key={i} value={option.id} label={option.label}>
             {option.label}

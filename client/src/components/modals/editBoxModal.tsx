@@ -47,7 +47,11 @@ export default function EditBoxModal() {
   };
 
   const handleSelectChange = (e: ChangeEvent<HTMLSelectElement>) => {
-    setEditBox({ ...editBox, new: Number(e.target.value) });
+    if (editBox.path === "data.roleplay.capital") {
+      setEditBox({ ...editBox, new: e.target.value });
+    } else {
+      setEditBox({ ...editBox, new: Number(e.target.value) });
+    }
   };
 
   return (
@@ -99,7 +103,9 @@ export default function EditBoxModal() {
           path=""
           click={() => setEditBox({ original: -1, new: -1, path: "" })}
         />
-        <Button type="submit" text="VALIDER" path="" />
+        {editBox.new != -1 && editBox.new != "" && (
+          <Button type="submit" text="VALIDER" path="" />
+        )}
       </form>
     </>
   );

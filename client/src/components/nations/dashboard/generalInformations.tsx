@@ -3,17 +3,49 @@ import { regimeOptions } from "../../../settings/consts";
 import DashTile from "../../dashTile";
 import TileContainer from "../../tileContainer";
 import H3 from "../../titles/h3";
-import { FaDiscord, FaInstagram, FaLink, FaWikipediaW } from "react-icons/fa6";
+import {
+  FaDiscord,
+  FaInstagram,
+  FaLink,
+  FaShieldHalved,
+  FaWikipediaW,
+} from "react-icons/fa6";
 import Tag from "../../tag";
 import { SelectedNationProps } from "../../../types/typProp";
 import EditIcon from "../../editIcon";
 import ExternalLink from "../../externalLink";
 import H2 from "../../titles/h2";
+import { useEffect, useState } from "react";
+import { NationsRoleplayDataAtom, myStore } from "../../../settings/store";
+import { LabelId } from "../../../types/typNation";
 
 export default function GeneralInformations({
   selectedNation,
   owner,
 }: SelectedNationProps) {
+  const [capital, setCapital] = useState("");
+  const [placesList, setPlacesList] = useState<LabelId[]>([]);
+  const dataRoleplay = myStore.get(NationsRoleplayDataAtom);
+
+  useEffect(() => {
+    if (dataRoleplay.length > 0) {
+      dataRoleplay.forEach((data) => {
+        if (data.nationId === selectedNation._id) {
+          let tempPlaces: LabelId[] = [];
+          data.places.forEach((place) => {
+            if (place._id) {
+              tempPlaces.push({ id: place._id, label: place.name });
+            }
+            if (place._id === selectedNation.data.roleplay.capital) {
+              setCapital(place.name);
+            }
+            setPlacesList(tempPlaces);
+          });
+        }
+      });
+    }
+  }, [selectedNation]);
+
   return (
     <TileContainer
       children={
@@ -91,6 +123,24 @@ export default function GeneralInformations({
                         );
                       }
                     })}
+                  </div>
+                  <div className="relative">
+                    <Tag
+                      text=""
+                      bgColor="bg-info"
+                      children={
+                        <>
+                          <FaShieldHalved />
+                          <p>{capital}</p>
+                        </>
+                      }
+                    />
+                    {owner && (
+                      <EditIcon
+                        param={placesList}
+                        path="data.roleplay.capital"
+                      />
+                    )}
                   </div>
                 </div>
               </>

@@ -36,7 +36,7 @@ export default function DashboardCom({ text }: StringProps) {
   const [, setConfirm] = useAtom(confirmBox);
 
   useEffect(() => {
-    if (comList[0]._id === "") {
+    if (comList.length < 1) {
       myStore.set(loadingSpinner, { show: true, text: SERVEUR_LOADING_STRING });
       getAllComs()
         .then((data) => {

@@ -1,6 +1,12 @@
 import { ChangeEvent, FormEvent, MouseEventHandler } from "react";
 import { ReactNode } from "react";
-import { Nation, Place, PoliticalSide, RegimeOption } from "./typNation";
+import {
+  LabelId,
+  Nation,
+  Place,
+  PoliticalSide,
+  RegimeOption,
+} from "./typNation";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
@@ -16,7 +22,7 @@ export interface InputProps {
 export interface SelectProps {
   required?: boolean;
   options: Array<{
-    id: number;
+    id: number | string;
     label: string;
     color?: string;
   }>;
@@ -36,6 +42,7 @@ export interface ButtonProps {
   text: string;
   bgColor?: string;
   disabled?: boolean;
+  children?: JSX.Element;
   click?: MouseEventHandler<HTMLButtonElement>;
 }
 
@@ -128,7 +135,13 @@ export interface DashboardTabProps {
 }
 
 export interface EditIconProps {
-  param: number | string | boolean | RegimeOption[] | PoliticalSide[];
+  param:
+    | number
+    | string
+    | boolean
+    | RegimeOption[]
+    | PoliticalSide[]
+    | LabelId[];
   path: string;
   indice?: number;
 }

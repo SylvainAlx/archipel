@@ -1,3 +1,4 @@
 export const home = (req, res) => {
-  res.status(200).send("<h1>Backend Navir</h1>");
+  const time = new Date();
+  res.status(200).send(`<b>${time.toLocaleTimeString()}</b>`);
 };

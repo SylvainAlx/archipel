@@ -7,12 +7,7 @@ import {
   Place,
   emptyPlace,
 } from "../types/typNation";
-import {
-  Com,
-  ConfirmBoxDefault,
-  EditBoxDefault,
-  EmptyCom,
-} from "../types/typAtom";
+import { Com, ConfirmBoxDefault, EditBoxDefault } from "../types/typAtom";
 
 export const myStore = createStore();
 
@@ -35,7 +30,7 @@ export const getSelectedNation = atom((get) => get(selectedNationAtom));
 export const tempNationAtom = atom<Nation>(EmptyNation);
 export const nationsListAtom = atom<Nation[]>([EmptyNation]);
 
-export const comsListAtom = atom<Com[]>([EmptyCom]);
+export const comsListAtom = atom<Com[]>([]);
 
 export const newPlaceAtom = atom<Place>(emptyPlace);
 

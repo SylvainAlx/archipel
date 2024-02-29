@@ -15,6 +15,7 @@ export default function Button({
   text,
   bgColor,
   disabled,
+  children,
   click,
 }: ButtonProps) {
   const [, setConfirm] = useAtom(confirmBox);
@@ -56,6 +57,7 @@ export default function Button({
       onClick={click ? click : handleClick}
     >
       {text}
+      {children}
     </button>
   );
 }

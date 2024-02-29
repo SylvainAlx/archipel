@@ -6,6 +6,7 @@ import Tag from "../../tag";
 import {
   FaArrowUpRightDots,
   FaCity,
+  FaCoins,
   FaMountainCity,
   FaShieldHalved,
   FaTrophy,
@@ -18,6 +19,8 @@ import {
   selectedNationAtom,
 } from "../../../settings/store";
 import { useAtom } from "jotai";
+import { MdTimer } from "react-icons/md";
+import { formatTime } from "../../../utils/functions";
 
 export default function PlaceTile({ place, update }: PlaceTileProp) {
   const [selectedNation] = useAtom(selectedNationAtom);
@@ -36,13 +39,25 @@ export default function PlaceTile({ place, update }: PlaceTileProp) {
       className={`p-4 rounded flex flex-col items-center gap-3 bg-complementary2 shadow-xl`}
     >
       <div className="w-full flex flex-col items-center gap-2">
-        <h3 className="text-xl flex items-center gap-2">
-          <span className="text-lg text-info">
-            {place._id === selectedNation.data.roleplay.capital && (
-              <FaShieldHalved />
-            )}
-          </span>
-          <span>{place.name}</span>
+        <h3 className="w-full flex justify-between">
+          <div className="text-xl flex items-center gap-2">
+            <span className="text-lg text-info">
+              {place._id === selectedNation.data.roleplay.capital && (
+                <FaShieldHalved />
+              )}
+            </span>
+            <span>{place.name}</span>
+          </div>
+          <Tag
+            text=""
+            bgColor="bg-danger"
+            click={handleDelete}
+            children={
+              <div className="text-xl">
+                <IoMdCloseCircle />
+              </div>
+            }
+          />
         </h3>
         <div className="w-full relative">
           <div
@@ -88,16 +103,6 @@ export default function PlaceTile({ place, update }: PlaceTileProp) {
           {new Date(place.buildDate) > new Date() && (
             <Countdown targetDate={place.buildDate} />
           )}
-          <Tag
-            text=""
-            bgColor="bg-danger"
-            click={handleDelete}
-            children={
-              <div className="text-xl">
-                <IoMdCloseCircle />
-              </div>
-            }
-          />
         </div>
       </div>
       <em>{place.description}</em>
@@ -105,9 +110,23 @@ export default function PlaceTile({ place, update }: PlaceTileProp) {
         update != undefined &&
         new Date(place.buildDate) < new Date() && (
           <Button
-            text={`Faire évoluer au niveau ${place.level + 1} pour ${placesTypeList[update].cost} crédits`}
+            text=""
             path=""
-            bgColor="bg-success"
+            children={
+              <div className="w-full flex flex-col justify-center items-center gap-1 flex-wrap">
+                <span>Passer niveau {place.level + 1}</span>
+                <div className="w-full flex items-center justify-center gap-2 text-sm">
+                  <span className="flex gap-1 items-center">
+                    <FaCoins />
+                    {placesTypeList[update].cost}
+                  </span>
+                  <span className="flex gap-1 items-center">
+                    <MdTimer />
+                    {formatTime(placesTypeList[update].waitTime)}
+                  </span>
+                </div>
+              </div>
+            }
           />
         )}
     </div>

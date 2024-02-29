@@ -89,8 +89,8 @@ export default function Dashboard() {
 
   return (
     <>
-      <TabNav tabs={tabList} tabId={tab.id} setTab={setTab} />
       <AdBanner />
+      <TabNav tabs={tabList} tabId={tab.id} setTab={setTab} />
       {tab.id === 0 && <DashboardMain text={tab.label} owner={owner} />}
       {tab.id === 1 && <DashboardSettings text={tab.label} />}
       {tab.id === 2 && <DashboardCom text={tab.label} />}
