@@ -2,25 +2,17 @@
 import { useEffect } from "react";
 import H1 from "../../../components/titles/h1";
 import { StringProps } from "../../../types/typProp";
-import {
-  comsListAtom,
-  confirmBox,
-  infoModal,
-  loadingSpinner,
-  myStore,
-  nationAtom,
-} from "../../../settings/store";
+import { comsListAtom, confirmBox, nationAtom } from "../../../settings/store";
 import { useAtom } from "jotai";
-import { getAllComs } from "../../../utils/fetch";
 import Button from "../../../components/button";
 import { IoMdTrash } from "react-icons/io";
-import { SERVEUR_LOADING_STRING, comOptions } from "../../../settings/consts";
+import { comOptions } from "../../../settings/consts";
 import { dateToString } from "../../../utils/functions";
+import { getComs } from "../../../utils/api";
 
 export default function NationComs({ text }: StringProps) {
-  const [, setInfo] = useAtom(infoModal);
   const [nation] = useAtom(nationAtom);
-  const [comsList, setComsList] = useAtom(comsListAtom);
+  const [comsList] = useAtom(comsListAtom);
   const [, setConfirm] = useAtom(confirmBox);
 
   useEffect(() => {
@@ -28,21 +20,6 @@ export default function NationComs({ text }: StringProps) {
       getComs();
     }
   }, []);
-
-  const getComs = () => {
-    myStore.set(loadingSpinner, { show: true, text: SERVEUR_LOADING_STRING });
-    getAllComs()
-      .then((data) => {
-        myStore.set(loadingSpinner, { show: false, text: "" });
-        if (data != undefined) {
-          setComsList(data);
-        }
-      })
-      .catch((error) => {
-        myStore.set(loadingSpinner, { show: false, text: "" });
-        setInfo(error.message);
-      });
-  };
 
   const handleDelete = (id: string) => {
     setConfirm({

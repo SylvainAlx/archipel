@@ -58,6 +58,10 @@ export interface Nation {
       discord: string;
     };
     general: {
+      coords: {
+        lat: number,
+        lng: number,
+      }
       motto: string;
       nationalDay: Date;
       regime: number;
@@ -88,6 +92,10 @@ export const EmptyNation: Nation = {
       discord: "",
     },
     general: {
+      coords: {
+        lat: 0,
+        lng: 0,
+      },
       motto: "",
       nationalDay: new Date(0),
       regime: 0,

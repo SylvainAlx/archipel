@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { politicalSideList } from "../settings/consts";
 
 export const GET_JWT = () => localStorage.getItem("jwt");
@@ -12,8 +13,7 @@ export const deleteElementOfAtomArray = (
   atom: any[],
   setAtom: React.Dispatch<React.SetStateAction<any>>,
 ) => {
-  let tempArray: any[];
-  tempArray = atom.filter((objet) => objet._id !== id);
+  const tempArray: any[]  = atom.filter((objet) => objet._id !== id);
   setAtom(tempArray);
 };
 
@@ -22,7 +22,7 @@ export const createElementOfAtomArray = (
   atom: any[],
   setAtom: React.Dispatch<React.SetStateAction<any>>,
 ) => {
-  let tempArray = [...atom];
+  const tempArray = [...atom];
   tempArray.push(payload);
   setAtom(tempArray);
 };

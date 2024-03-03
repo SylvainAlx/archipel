@@ -49,6 +49,16 @@ const nationSchema = mongoose.Schema(
         },
       },
       general: {
+        coords: {
+          lat: {
+            type: Number,
+            required: true,
+          },
+          lng: {
+            type: Number,
+            required: true,
+          },
+        },
         motto: {
           type: String,
           default: "",

@@ -28,7 +28,7 @@ export const NationsRoleplayDataAtom = atom<NationRoleplayData[]>([]);
 export const getSelectedNation = atom((get) => get(selectedNationAtom));
 
 export const tempNationAtom = atom<Nation>(EmptyNation);
-export const nationsListAtom = atom<Nation[]>([EmptyNation]);
+export const nationsListAtom = atom<Nation[]>([]);
 
 export const comsListAtom = atom<Com[]>([]);
 

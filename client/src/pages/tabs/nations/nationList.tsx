@@ -2,30 +2,20 @@
 import { useAtom } from "jotai";
 import Button from "../../../components/button";
 import Input from "../../../components/form/input";
-import {
-  infoModal,
-  loadingSpinner,
-  myStore,
-  nationsListAtom,
-  selectedNationAtom,
-} from "../../../settings/store";
+import { nationsListAtom, selectedNationAtom } from "../../../settings/store";
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import {
-  SERVEUR_LOADING_STRING,
-  nationSortOptions,
-} from "../../../settings/consts";
-import { getAllNations } from "../../../utils/fetch";
+import { nationSortOptions } from "../../../settings/consts";
 import H1 from "../../../components/titles/h1";
 import PublicNationTile from "../../../components/nations/publicNationTile";
 import Select from "../../../components/form/select";
 import { StringProps } from "../../../types/typProp";
 import { IoIosArrowDropdownCircle } from "react-icons/io";
+import { getNations } from "../../../utils/api";
 
 export default function NationList({ text }: StringProps) {
   const [nationsList, setNationsList] = useAtom(nationsListAtom);
   const [, setNation] = useAtom(selectedNationAtom);
-  const [, setInfo] = useAtom(infoModal);
   const [searchName, setSearchName] = useState("");
   const [showSearch, setShowSearch] = useState(false);
   const [selectOption, setSelectOption] = useState(nationSortOptions[0].label);
@@ -36,7 +26,8 @@ export default function NationList({ text }: StringProps) {
   useEffect(() => {
     if (nationsList.length > 0) {
       if (nationsList[0]._id === "") {
-        getNations();
+        setSearchName("");
+        getNations("");
       }
     }
   }, []);
@@ -74,34 +65,9 @@ export default function NationList({ text }: StringProps) {
     setSearchName(e.target.value);
   };
 
-  const getNations = () => {
-    setSearchName("");
-    myStore.set(loadingSpinner, { show: true, text: SERVEUR_LOADING_STRING });
-    getAllNations(searchName)
-      .then((data) => {
-        myStore.set(loadingSpinner, { show: false, text: "" });
-        if (data != undefined) {
-          setNationsList(data);
-        }
-      })
-      .catch((error) => {
-        myStore.set(loadingSpinner, { show: false, text: "" });
-        setInfo(error.message);
-      });
-  };
-
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    myStore.set(loadingSpinner, { show: true, text: SERVEUR_LOADING_STRING });
-    getAllNations(searchName)
-      .then((data) => {
-        myStore.set(loadingSpinner, { show: false, text: "" });
-        setNationsList(data);
-      })
-      .catch((error) => {
-        myStore.set(loadingSpinner, { show: false, text: "" });
-        setInfo(error.message);
-      });
+    getNations(searchName);
   };
 
   return (
@@ -146,7 +112,7 @@ export default function NationList({ text }: StringProps) {
               disabled={false}
               text="RÉINITIALISER"
               path=""
-              click={getNations}
+              click={() => getNations(searchName)}
             />
           </div>
         </form>

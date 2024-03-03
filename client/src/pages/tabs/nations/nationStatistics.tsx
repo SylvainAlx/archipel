@@ -1,22 +1,21 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useAtom } from "jotai";
 import DashTile from "../../../components/dashTile";
 import TileContainer from "../../../components/tileContainer";
 import H1 from "../../../components/titles/h1";
 import {
-  infoModal,
   loadingSpinner,
   myStore,
   nationsListAtom,
 } from "../../../settings/store";
 import { StringProps } from "../../../types/typProp";
 import { useEffect, useState } from "react";
-import { getAllNations } from "../../../utils/fetch";
 import H3 from "../../../components/titles/h3";
 import { SERVEUR_LOADING_STRING } from "../../../settings/consts";
+import { getNations } from "../../../utils/api";
 
 export default function NationStatistics({ text }: StringProps) {
-  const [nationsList, setNationsList] = useAtom(nationsListAtom);
-  const [, setInfo] = useAtom(infoModal);
+  const [nationsList] = useAtom(nationsListAtom);
   const [totalPoints, setTotalPoints] = useState(0);
 
   useEffect(() => {
@@ -31,17 +30,7 @@ export default function NationStatistics({ text }: StringProps) {
           show: true,
           text: SERVEUR_LOADING_STRING,
         });
-        getAllNations("")
-          .then((data) => {
-            myStore.set(loadingSpinner, { show: false, text: "" });
-            if (data != undefined) {
-              setNationsList(data);
-            }
-          })
-          .catch((error) => {
-            myStore.set(loadingSpinner, { show: false, text: "" });
-            setInfo(error.message);
-          });
+        getNations("");
       }
     }
   }, []);

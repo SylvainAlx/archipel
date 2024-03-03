@@ -138,7 +138,8 @@ export const placesTypeList = [
 // onglets
 
 export const nationTabs: StandardOption[] = [
-  { id: 0, label: "ACTUALITES" },
-  { id: 1, label: "LISTE DES NATIONS" },
-  { id: 2, label: "STATISTIQUES" },
+  { id: 0, label: "GLOBE" },
+  { id: 1, label: "ACTUALITES" },
+  { id: 2, label: "LISTE DES NATIONS" },
+  { id: 3, label: "STATISTIQUES" },
 ];

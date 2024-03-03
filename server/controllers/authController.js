@@ -20,7 +20,13 @@ export const register = async (req, res) => {
 
     const role = name === process.env.ADMIN ? "admin" : "standard";
 
-    const nation = new Nation({ name, password, recovery, role });
+    const coords = {
+      lat: (Math.random() * (90 - -90) + -90).toFixed(2),
+      lng: (Math.random() * 360).toFixed(2),
+    };
+    let data = { general: coords };
+    data.general.coords = coords;
+    const nation = new Nation({ name, password, recovery, role, data });
 
     try {
       const savedNation = await nation.save();
