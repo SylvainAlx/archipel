@@ -2,53 +2,30 @@
 import { useAtom } from "jotai";
 import H1 from "../../../components/titles/h1";
 import { StringProps } from "../../../types/typProp";
-import {
-  comsListAtom,
-  confirmBox,
-  infoModal,
-  loadingSpinner,
-  myStore,
-  nationAtom,
-} from "../../../settings/store";
+import { comsListAtom, confirmBox, nationAtom } from "../../../settings/store";
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import Form from "../../../components/form/form";
 import Input from "../../../components/form/input";
 import Button from "../../../components/button";
-import { getAllComs } from "../../../utils/fetch";
 import Select from "../../../components/form/select";
-import {
-  SERVEUR_LOADING_STRING,
-  TITLE,
-  comTypeOptions,
-} from "../../../settings/consts";
+import { TITLE, comTypeOptions } from "../../../settings/consts";
 import TextArea from "../../../components/form/textArea";
 import ListTile from "../../../components/listTile";
 import Tag from "../../../components/tag";
 import { IoMdTrash } from "react-icons/io";
 import { dateToString } from "../../../utils/functions";
 import { EmptyCom } from "../../../types/typAtom";
+import { getComs } from "../../../utils/api";
 
 export default function DashboardCom({ text }: StringProps) {
   const [nation] = useAtom(nationAtom);
   const [newCom, setNewCom] = useState(EmptyCom);
-  const [, setInfo] = useAtom(infoModal);
-  const [comList, setComsList] = useAtom(comsListAtom);
+  const [comList] = useAtom(comsListAtom);
   const [, setConfirm] = useAtom(confirmBox);
 
   useEffect(() => {
     if (comList.length < 1) {
-      myStore.set(loadingSpinner, { show: true, text: SERVEUR_LOADING_STRING });
-      getAllComs()
-        .then((data) => {
-          myStore.set(loadingSpinner, { show: false, text: "" });
-          if (data != undefined) {
-            setComsList(data);
-          }
-        })
-        .catch((error) => {
-          myStore.set(loadingSpinner, { show: false, text: "" });
-          setInfo(error.message);
-        });
+      getComs();
     }
     setNewCom({
       ...newCom,

@@ -139,7 +139,7 @@ export const placesTypeList = [
 
 export const nationTabs: StandardOption[] = [
   { id: 0, label: "GLOBE" },
-  { id: 1, label: "ACTUALITES" },
-  { id: 2, label: "LISTE DES NATIONS" },
+  { id: 1, label: "LISTE DES NATIONS" },
+  { id: 2, label: "ACTUALITES" },
   { id: 3, label: "STATISTIQUES" },
 ];

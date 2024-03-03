@@ -5,24 +5,15 @@ import TabNav from "../components/tabNav";
 import DashboardMain from "./tabs/dashboard/dashboardMain";
 import DashboardSettings from "./tabs/dashboard/dashboardSettings";
 import DashboardCom from "./tabs/dashboard/dashboardCom";
-import {
-  confirmBox,
-  infoModal,
-  loadingSpinner,
-  myStore,
-  nationAtom,
-  selectedNationAtom,
-} from "../settings/store";
+import { confirmBox, nationAtom, selectedNationAtom } from "../settings/store";
 import { useAtom } from "jotai";
-import { getOneNationFetch } from "../utils/fetch";
-import { SERVEUR_LOADING_STRING } from "../settings/consts";
 import { differenceEnMinutes } from "../utils/functions";
 import AdBanner from "../components/ads/adBanner";
+import { getNation } from "../utils/api";
 
 export default function Dashboard() {
   const [nation] = useAtom(nationAtom);
   const [selectedNation, setSelectedNation] = useAtom(selectedNationAtom);
-  const [, setInfo] = useAtom(infoModal);
   const [, setConfirm] = useAtom(confirmBox);
   const [owner, setOwner] = useState(false);
   const [tabList, setTabList] = useState<{ id: number; label: string }[]>([]);
@@ -39,27 +30,9 @@ export default function Dashboard() {
       ]);
       setOwner(true);
     } else if (selectedNation._id === "" && id) {
-      myStore.set(loadingSpinner, { show: true, text: SERVEUR_LOADING_STRING });
-      getOneNationFetch(id)
-        .then((data) => {
-          myStore.set(loadingSpinner, { show: false, text: "" });
-          if (data.nation) {
-            setSelectedNation({
-              _id: data.nation._id,
-              name: data.nation.name,
-              role: data.nation.role,
-              data: data.nation.data,
-              createdAt: data.nation.createdAt,
-            });
-          } else {
-            myStore.set(loadingSpinner, { show: false, text: "" });
-            setInfo(data.message);
-          }
-        })
-        .catch((error) => {
-          myStore.set(loadingSpinner, { show: false, text: "" });
-          setInfo(error.message);
-        });
+      getNation(id);
+    } else if (id && selectedNation._id != id) {
+      getNation(id);
     }
   }, [selectedNation]);
 

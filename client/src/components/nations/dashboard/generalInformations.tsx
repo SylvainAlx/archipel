@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { GiBlackFlag } from "react-icons/gi";
 import { regimeOptions } from "../../../settings/consts";
 import DashTile from "../../dashTile";
@@ -31,7 +32,7 @@ export default function GeneralInformations({
     if (dataRoleplay.length > 0) {
       dataRoleplay.forEach((data) => {
         if (data.nationId === selectedNation._id) {
-          let tempPlaces: LabelId[] = [];
+          const tempPlaces: LabelId[] = [];
           data.places.forEach((place) => {
             if (place._id) {
               tempPlaces.push({ id: place._id, label: place.name });

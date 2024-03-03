@@ -15,8 +15,8 @@ export default function Nations() {
       <AdBanner />
       <TabNav tabs={nationTabs} tabId={tab.id} setTab={setTab} />
       {tab.id === 0 && <NationGlobe text={tab.label} />}
-      {tab.id === 1 && <NationComs text={tab.label} />}
-      {tab.id === 2 && <NationList text={tab.label} />}
+      {tab.id === 1 && <NationList text={tab.label} />}
+      {tab.id === 2 && <NationComs text={tab.label} />}
       {tab.id === 3 && <NationStatistics text={tab.label} />}
     </>
   );

@@ -12,52 +12,17 @@ import Header from "./layouts/header";
 import Footer from "./layouts/footer";
 import "./App.css";
 import { useAtom } from "jotai";
-import {
-  loadingSpinner,
-  myStore,
-  nationAtom,
-  selectedNationAtom,
-} from "./settings/store";
+import { myStore, nationAtom, selectedNationAtom } from "./settings/store";
 import { useEffect } from "react";
-import { authGet } from "./utils/fetch";
-import { GET_JWT } from "./utils/functions";
 import ModalsRouter from "./router/modalsRouter";
 import { ArchipelRoute } from "./types/typReact";
-import { EmptyNation } from "./types/typNation";
-import { SERVEUR_LOADING_STRING } from "./settings/consts";
+import { authentification } from "./utils/api";
 
 export default function App() {
-  const [nation, setNation] = useAtom(nationAtom);
+  const [nation] = useAtom(nationAtom);
 
   useEffect(() => {
-    const jwt = GET_JWT();
-    if (jwt) {
-      myStore.set(loadingSpinner, { show: true, text: SERVEUR_LOADING_STRING });
-      authGet(jwt)
-        .then((data) => {
-          myStore.set(loadingSpinner, { show: false, text: "" });
-          if (data.name != undefined) {
-            setNation({
-              _id: data._id,
-              name: data.name,
-              role: data.role,
-              data: data.data,
-              createdAt: data.createdAt,
-            });
-          } else {
-            setNation(EmptyNation);
-            myStore.set(loadingSpinner, { show: false, text: "" });
-            localStorage.removeItem("jwt");
-          }
-        })
-        .catch((error) => {
-          setNation(EmptyNation);
-          myStore.set(loadingSpinner, { show: false, text: "" });
-          console.log(error);
-        });
-    } else {
-      setNation(EmptyNation);
-    }
+    authentification();
   }, []);
 
   useEffect(() => {
