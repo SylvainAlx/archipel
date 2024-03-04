@@ -7,12 +7,7 @@ export const MDP_LOBBY = import.meta.env.VITE_MDP_LOBBY;
 
 //  server
 
-const server = {
-  prod: import.meta.env.VITE_SERVER_URL_PROD,
-  dev: import.meta.env.VITE_SERVER_URL_DEV,
-};
-
-export const SERVER_URL = server.prod;
+export const SERVER_URL = import.meta.env.VITE_SERVER_URL;
 
 export const SERVEUR_LOADING_STRING =
   "Connexion au serveur, merci de patienter quelques instants";

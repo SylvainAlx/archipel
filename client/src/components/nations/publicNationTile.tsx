@@ -3,8 +3,9 @@ import { GiBlackFlag } from "react-icons/gi";
 import Tag from "../tag";
 import { regimeOptions } from "../../settings/consts";
 import { FaTrophy, FaUserGroup } from "react-icons/fa6";
+import IdTag from "../tags/idTag";
 
-export default function PublicNationTile({ name, data, role }: Nation) {
+export default function PublicNationTile({ _id, name, data, role }: Nation) {
   // const createdAtDate: Date = new Date(createdAt);
   // const formattedDate: string = createdAtDate.toLocaleDateString();
 
@@ -27,6 +28,7 @@ export default function PublicNationTile({ name, data, role }: Nation) {
         <h2 className="text-light text-xl pl-4 pr-6">{name}</h2>
       </div>
       <div className="flex gap-2 self-end flex-wrap justify-end">
+        <IdTag label={_id} />
         {role === "admin" && <Tag text="admin" bgColor="bg-success" />}
         <Tag
           text={data.roleplay.points.toString()}

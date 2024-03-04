@@ -1,12 +1,7 @@
 import { ChangeEvent, FormEvent, MouseEventHandler } from "react";
 import { ReactNode } from "react";
-import {
-  LabelId,
-  Nation,
-  Place,
-  PoliticalSide,
-  RegimeOption,
-} from "./typNation";
+import { LabelId, Nation, PoliticalSide, RegimeOption } from "./typNation";
+import { Place } from "./typPlace";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
@@ -59,6 +54,12 @@ export interface NumberProps {
   text: number;
 }
 
+export interface customTagProps {
+  label: string | number;
+  bgColor?: string;
+  owner?: boolean;
+}
+
 export interface ConfirmModalProps {
   text: string;
   result: string;
@@ -89,6 +90,7 @@ export interface TagProps {
   text: string;
   bgColor?: string;
   textColor?: string;
+  textStyle?: string;
   children?: JSX.Element;
   click?: MouseEventHandler<HTMLDivElement>;
 }

@@ -4,13 +4,15 @@ import Globe from "react-globe.gl";
 import { StringProps } from "../../../types/typProp";
 import H1 from "../../../components/titles/h1";
 import { useAtom } from "jotai";
-import { nationsListAtom } from "../../../settings/store";
+import { nationsListAtom, selectedNationAtom } from "../../../settings/store";
 import { useEffect, useRef, useState } from "react";
 import { getNations } from "../../../utils/api";
 import Button from "../../../components/button";
+import { useNavigate } from "react-router-dom";
 
 export default function NationGlobe({ text }: StringProps) {
   const [nationsList] = useAtom(nationsListAtom);
+  const [selectedNation, setSelectedNation] = useAtom(selectedNationAtom);
   const [showInfos, setShowInfos] = useState<{
     id: string;
     flag: string;
@@ -20,6 +22,8 @@ export default function NationGlobe({ text }: StringProps) {
   }>({ id: "", flag: "", name: "", population: -1, points: -1 });
   const container = useRef<HTMLDivElement>(null);
   const [largeur, setLargeur] = useState<number | undefined>(undefined);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     getNations("");
@@ -40,6 +44,10 @@ export default function NationGlobe({ text }: StringProps) {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
+
+  const handleClick = () => {
+    navigate(`/dashboard/${selectedNation._id}`);
+  };
 
   return (
     <>
@@ -69,7 +77,7 @@ export default function NationGlobe({ text }: StringProps) {
             <div>Nom : {showInfos.name}</div>
             <div>Population : {showInfos.population}</div>
             <div>Points : {showInfos.points}</div>
-            <Button text="VOIR" path={`/dashboard/${showInfos.id}`} />
+            <Button text="VOIR" path="" click={handleClick} />
           </div>
         )}
         <Globe
@@ -85,15 +93,16 @@ export default function NationGlobe({ text }: StringProps) {
           labelDotRadius={(d: any): number =>
             1 + d.data.roleplay.population / 1000
           }
-          onLabelClick={(d: any) =>
+          onLabelClick={(d: any) => {
+            setSelectedNation(d);
             setShowInfos({
               id: d._id,
               flag: d.data.url.flag,
               name: d.name,
               population: d.data.roleplay.population,
               points: d.data.roleplay.points,
-            })
-          }
+            });
+          }}
           backgroundColor={"rgba(0,0,0,0.3)"}
           showGraticules={true}
           showAtmosphere={false}

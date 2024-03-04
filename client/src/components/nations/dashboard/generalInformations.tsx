@@ -17,16 +17,20 @@ import EditIcon from "../../editIcon";
 import ExternalLink from "../../externalLink";
 import H2 from "../../titles/h2";
 import { useEffect, useState } from "react";
-import { NationsRoleplayDataAtom, myStore } from "../../../settings/store";
+import { nationsRoleplayDataAtom } from "../../../settings/store";
 import { LabelId } from "../../../types/typNation";
+import { useAtom } from "jotai";
+import { getCapitalName } from "../../../utils/functions";
+import RegimeTag from "../../tags/regimeTag";
+import IdTag from "../../tags/idTag";
 
 export default function GeneralInformations({
   selectedNation,
   owner,
 }: SelectedNationProps) {
-  const [capital, setCapital] = useState("");
+  const [dataRoleplay] = useAtom(nationsRoleplayDataAtom);
   const [placesList, setPlacesList] = useState<LabelId[]>([]);
-  const dataRoleplay = myStore.get(NationsRoleplayDataAtom);
+  const [capital, setCapital] = useState<string>("");
 
   useEffect(() => {
     if (dataRoleplay.length > 0) {
@@ -37,15 +41,22 @@ export default function GeneralInformations({
             if (place._id) {
               tempPlaces.push({ id: place._id, label: place.name });
             }
-            if (place._id === selectedNation.data.roleplay.capital) {
-              setCapital(place.name);
-            }
             setPlacesList(tempPlaces);
           });
         }
       });
     }
-  }, [selectedNation]);
+  }, [selectedNation, dataRoleplay]);
+
+  useEffect(() => {
+    if (placesList.length > 0 && selectedNation._id != "") {
+      const capitalName = getCapitalName(
+        placesList,
+        selectedNation.data.roleplay.capital,
+      );
+      setCapital(capitalName);
+    }
+  }, [placesList]);
 
   return (
     <TileContainer
@@ -104,7 +115,9 @@ export default function GeneralInformations({
                       />
                     )}
                   </div>
-                  <div className="flex gap-2">
+
+                  <div className="flex gap-2 flex-wrap items-center justify-center">
+                    <IdTag label={selectedNation._id} />
                     {selectedNation.role === "admin" && (
                       <Tag text="admin" bgColor="bg-success" />
                     )}
@@ -112,7 +125,10 @@ export default function GeneralInformations({
                       if (regime.id === selectedNation.data.general.regime) {
                         return (
                           <span key={i} className="relative">
-                            <Tag text={regime.label} bgColor={regime.color} />
+                            <RegimeTag
+                              label={regime.label}
+                              bgColor={regime.color}
+                            />
                             {owner && (
                               <EditIcon
                                 param={regimeOptions}
@@ -125,24 +141,26 @@ export default function GeneralInformations({
                       }
                     })}
                   </div>
-                  <div className="relative">
-                    <Tag
-                      text=""
-                      bgColor="bg-info"
-                      children={
-                        <>
-                          <FaShieldHalved />
-                          <p>{capital}</p>
-                        </>
-                      }
-                    />
-                    {owner && (
-                      <EditIcon
-                        param={placesList}
-                        path="data.roleplay.capital"
+                  {selectedNation.data.roleplay.capital != "" && (
+                    <div className="relative">
+                      <Tag
+                        text=""
+                        bgColor="bg-info"
+                        children={
+                          <>
+                            <FaShieldHalved />
+                            <p>{capital}</p>
+                          </>
+                        }
                       />
-                    )}
-                  </div>
+                      {owner && (
+                        <EditIcon
+                          param={placesList}
+                          path="data.roleplay.capital"
+                        />
+                      )}
+                    </div>
+                  )}
                 </div>
               </>
             }

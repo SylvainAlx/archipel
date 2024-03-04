@@ -21,6 +21,7 @@ import {
 import { useAtom } from "jotai";
 import { MdTimer } from "react-icons/md";
 import { formatTime } from "../../../utils/functions";
+import IdTag from "../../tags/idTag";
 
 export default function PlaceTile({ place, update }: PlaceTileProp) {
   const [selectedNation] = useAtom(selectedNationAtom);
@@ -47,6 +48,7 @@ export default function PlaceTile({ place, update }: PlaceTileProp) {
               )}
             </span>
             <span>{place.name}</span>
+            {place._id && <IdTag label={place._id} />}
           </div>
           <Tag
             text=""
@@ -59,6 +61,7 @@ export default function PlaceTile({ place, update }: PlaceTileProp) {
             }
           />
         </h3>
+
         <div className="w-full relative">
           <div
             className={`w-full h-[140px] bg-complementary flex flex-col items-center justify-center overflow-hidden rounded`}

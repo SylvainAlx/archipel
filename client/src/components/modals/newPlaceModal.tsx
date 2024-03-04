@@ -1,14 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useAtom } from "jotai";
 import {
-  NationsRoleplayDataAtom,
+  nationsRoleplayDataAtom,
   infoModal,
   loadingSpinner,
   nationAtom,
   newPlaceAtom,
 } from "../../settings/store";
 import Button from "../button";
-import { emptyPlace } from "../../types/typNation";
 import { ChangeEvent, FormEvent } from "react";
 import Form from "../form/form";
 import Input from "../form/input";
@@ -17,6 +16,7 @@ import Tag from "../tag";
 import { FaArrowUpRightDots, FaTrophy } from "react-icons/fa6";
 import { SERVEUR_LOADING_STRING } from "../../settings/consts";
 import { createPlaceFetch } from "../../utils/fetch";
+import { emptyPlace } from "../../types/typPlace";
 
 export default function NewPlaceModal() {
   const [newPlace, setNewPlace] = useAtom(newPlaceAtom);
@@ -24,7 +24,7 @@ export default function NewPlaceModal() {
   const [, setLoading] = useAtom(loadingSpinner);
   const [, setInfo] = useAtom(infoModal);
   const [nationsRoleplayData, setNationsRoleplayData] = useAtom(
-    NationsRoleplayDataAtom,
+    nationsRoleplayDataAtom,
   );
 
   const handleSubmit = (e: FormEvent) => {

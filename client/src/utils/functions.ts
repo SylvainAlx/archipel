@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { politicalSideList } from "../settings/consts";
+import { LabelId } from "../types/typNation";
 
 export const GET_JWT = () => localStorage.getItem("jwt");
 
@@ -13,7 +14,7 @@ export const deleteElementOfAtomArray = (
   atom: any[],
   setAtom: React.Dispatch<React.SetStateAction<any>>,
 ) => {
-  const tempArray: any[]  = atom.filter((objet) => objet._id !== id);
+  const tempArray: any[] = atom.filter((objet) => objet._id !== id);
   setAtom(tempArray);
 };
 
@@ -64,4 +65,13 @@ export const formatTime = (totalMinutes: number): string => {
   const minutes = Math.floor(totalMinutes % 60);
 
   return `${days > 0 ? days + "j" : ""} ${hours > 0 ? hours + "h" : ""} ${minutes > 0 ? hours + "m" : ""}`;
+};
+
+export const getCapitalName = (placesList: LabelId[], id: string): string => {
+  const foundPlace = placesList.find((place) => place.id === id);
+  if (foundPlace) {
+    return foundPlace.label;
+  } else {
+    return "";
+  }
 };
