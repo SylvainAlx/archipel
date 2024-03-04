@@ -77,7 +77,7 @@ export const placesTypeList = [
   {
     id: 0,
     level: 1,
-    cost: 100,
+    cost: 1000,
     points: 1,
     slots: 10,
     waitTime: 315,
@@ -86,7 +86,7 @@ export const placesTypeList = [
   {
     id: 1,
     level: 2,
-    cost: 1000,
+    cost: 10000,
     points: 10,
     slots: 100,
     waitTime: 630,
@@ -95,7 +95,7 @@ export const placesTypeList = [
   {
     id: 2,
     level: 3,
-    cost: 10000,
+    cost: 100000,
     points: 100,
     slots: 1000,
     waitTime: 1260,
@@ -104,7 +104,7 @@ export const placesTypeList = [
   {
     id: 3,
     level: 4,
-    cost: 100000,
+    cost: 1000000,
     points: 1000,
     slots: 10000,
     waitTime: 2520,
@@ -113,7 +113,7 @@ export const placesTypeList = [
   {
     id: 4,
     level: 5,
-    cost: 1000000,
+    cost: 10000000,
     points: 10000,
     slots: 100000,
     waitTime: 5040,
@@ -122,7 +122,7 @@ export const placesTypeList = [
   {
     id: 5,
     level: 6,
-    cost: 10000000,
+    cost: 100000000,
     points: 100000,
     slots: 102400,
     waitTime: 10080,
@@ -133,7 +133,7 @@ export const placesTypeList = [
 // onglets
 
 export const nationTabs: StandardOption[] = [
-  { id: 0, label: "GLOBE" },
+  { id: 0, label: "GLOBE VIRTUEL" },
   { id: 1, label: "LISTE DES NATIONS" },
   { id: 2, label: "ACTUALITES" },
   { id: 3, label: "STATISTIQUES" },

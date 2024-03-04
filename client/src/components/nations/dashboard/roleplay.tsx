@@ -109,7 +109,7 @@ export default function Roleplay({
                     placesList.map((place, i) => {
                       return (
                         <div
-                          className="w-full md:w-[48%] md:min-w-[250px]"
+                          className="w-full md:w-[49%] md:min-w-[250px]"
                           key={i}
                         >
                           <PlaceTile

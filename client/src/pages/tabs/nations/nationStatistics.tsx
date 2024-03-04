@@ -7,15 +7,17 @@ import {
   loadingSpinner,
   myStore,
   nationsListAtom,
+  placesListAtom,
 } from "../../../settings/store";
 import { StringProps } from "../../../types/typProp";
 import { useEffect, useState } from "react";
 import H3 from "../../../components/titles/h3";
 import { SERVEUR_LOADING_STRING } from "../../../settings/consts";
-import { getNations } from "../../../utils/api";
+import { getAllPlaces, getNations } from "../../../utils/api";
 
 export default function NationStatistics({ text }: StringProps) {
   const [nationsList] = useAtom(nationsListAtom);
+  const [placeList] = useAtom(placesListAtom);
   const [totalPoints, setTotalPoints] = useState(0);
 
   useEffect(() => {
@@ -32,6 +34,9 @@ export default function NationStatistics({ text }: StringProps) {
         });
         getNations("");
       }
+    }
+    if (placeList.length === 0) {
+      getAllPlaces();
     }
   }, []);
 
@@ -50,6 +55,10 @@ export default function NationStatistics({ text }: StringProps) {
                 title="Nombre total de points Navir"
                 children={<H3 text={totalPoints.toString()} />}
               />
+              {/* <DashTile
+                title="Nombre total de villes"
+                children={<H3 text={placeList.length.toString()} />}
+              /> */}
             </>
           }
         />

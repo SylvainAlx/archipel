@@ -13,8 +13,8 @@ export default function Tag({
       onClick={click && click}
       className={`h-[30px] py-1 px-2 rounded text-sm flex items-center gap-1 ${bgColor && bgColor} ${textStyle && textStyle} ${textColor && textColor} shadow-md ${click && "cursor-pointer"}`}
     >
-      {text}
       {children}
+      {text}
     </div>
   );
 }

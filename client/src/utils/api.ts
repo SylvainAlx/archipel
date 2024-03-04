@@ -8,12 +8,14 @@ import {
   nationAtom,
   selectedNationAtom,
   nationsRoleplayDataAtom,
+  placesListAtom,
 } from "../settings/store";
 import { EmptyNation, Nation } from "../types/typNation";
 import {
   authGet,
   getAllComs,
   getAllNations,
+  getAllPlacesFetch,
   getOneNationFetch,
   getRoleplayDataFetch,
 } from "./fetch";
@@ -120,6 +122,23 @@ export const getComs = () => {
       myStore.set(loadingSpinner, { show: false, text: "" });
       if (data != undefined) {
         myStore.set(comsListAtom, data);
+      }
+    })
+    .catch((error) => {
+      myStore.set(loadingSpinner, { show: false, text: "" });
+      myStore.set(infoModal, error.message);
+    });
+};
+
+// Place
+
+export const getAllPlaces = () => {
+  myStore.set(loadingSpinner, { show: true, text: SERVEUR_LOADING_STRING });
+  getAllPlacesFetch()
+    .then((data) => {
+      myStore.set(loadingSpinner, { show: false, text: "" });
+      if (data != undefined) {
+        myStore.set(placesListAtom, data);
       }
     })
     .catch((error) => {

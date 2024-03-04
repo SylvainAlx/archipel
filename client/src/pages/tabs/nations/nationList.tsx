@@ -117,7 +117,7 @@ export default function NationList({ text }: StringProps) {
           </div>
         </form>
       </fieldset>
-      <section className="w-full flex gap-3 flex-wrap items-center flex-col ">
+      <section className="w-full flex gap-1 flex-wrap items-center flex-col ">
         {nationsList != undefined &&
           nationsList.length > 0 &&
           nationsList.map((nation, i) => {

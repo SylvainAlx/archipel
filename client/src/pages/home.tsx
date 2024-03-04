@@ -22,6 +22,7 @@ export default function Home() {
         <div className="w-full py-4 flex justify-center gap-4 flex-wrap">
           <Button text="SE CONNECTER" type="button" path="/login" />
           <Button text="S'ENREGISTRER" type="button" path="/register" />
+          <Button text="EXPLORER" type="button" path="/nations" />
         </div>
       ) : (
         <div className="w-full py-4 flex justify-center gap-4 flex-wrap">
@@ -30,6 +31,7 @@ export default function Home() {
             type="button"
             path={`/dashboard/${nation._id}`}
           />
+          <Button text="EXPLORER" type="button" path="/nations" />
         </div>
       )}
     </>

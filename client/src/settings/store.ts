@@ -25,6 +25,8 @@ export const getSelectedNation = atom((get) => get(selectedNationAtom));
 export const tempNationAtom = atom<Nation>(EmptyNation);
 export const nationsListAtom = atom<Nation[]>([]);
 
+export const placesListAtom = atom<Place[]>([]);
+
 export const comsListAtom = atom<Com[]>([]);
 
 export const newPlaceAtom = atom<Place>(emptyPlace);

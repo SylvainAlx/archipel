@@ -16,6 +16,20 @@ export const getPlaces = async (req, res) => {
   }
 };
 
+export const getAllPlaces = async (req, res) => {
+  try {
+    const places = await Place.find({})
+      .then((places) => {
+        res.status(200).json(places);
+      })
+      .catch((error) => {
+        res.status(400).json({ message: error.message });
+      });
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+};
+
 export const createPlace = async (req, res) => {
   try {
     const { nationId, buildDate, name, description, image } = req.body;

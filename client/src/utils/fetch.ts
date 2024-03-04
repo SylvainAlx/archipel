@@ -154,6 +154,12 @@ export const getNationCitizensFetch = async (id: string) => {
 // Places
 //--------------
 
+export const getAllPlacesFetch = async () => {
+  const resp = await fetch(`${SERVER_URL}/place/getall`);
+  const result = await resp.json();
+  return result;
+};
+
 export const getNationPlacesFetch = async (id: string) => {
   const resp = await fetch(`${SERVER_URL}/place/${id}`);
   const result = await resp.json();

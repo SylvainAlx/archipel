@@ -9,8 +9,6 @@ import {
   FaCoins,
   FaMountainCity,
   FaShieldHalved,
-  FaTrophy,
-  FaUserGroup,
 } from "react-icons/fa6";
 import Button from "../../button";
 import {
@@ -22,8 +20,10 @@ import { useAtom } from "jotai";
 import { MdTimer } from "react-icons/md";
 import { formatTime } from "../../../utils/functions";
 import IdTag from "../../tags/idTag";
+import PointTag from "../../tags/pointTag";
+import PopulationTag from "../../tags/populationTag";
 
-export default function PlaceTile({ place, update }: PlaceTileProp) {
+export default function PlaceTile({ place, update, owner }: PlaceTileProp) {
   const [selectedNation] = useAtom(selectedNationAtom);
 
   const handleDelete = () => {
@@ -48,18 +48,19 @@ export default function PlaceTile({ place, update }: PlaceTileProp) {
               )}
             </span>
             <span>{place.name}</span>
-            {place._id && <IdTag label={place._id} />}
           </div>
-          <Tag
-            text=""
-            bgColor="bg-danger"
-            click={handleDelete}
-            children={
-              <div className="text-xl">
-                <IoMdCloseCircle />
-              </div>
-            }
-          />
+          {owner && (
+            <Tag
+              text=""
+              bgColor="bg-danger"
+              click={handleDelete}
+              children={
+                <div className="text-xl">
+                  <IoMdCloseCircle />
+                </div>
+              }
+            />
+          )}
         </h3>
 
         <div className="w-full relative">
@@ -81,21 +82,14 @@ export default function PlaceTile({ place, update }: PlaceTileProp) {
           {/* {owner && <EditIcon param={place.image} path="data.url.flag" />} */}
         </div>
         <div className="w-full flex flex-wrap items-center gap-2 justify-center">
+          {place._id && <IdTag label={place._id} />}
           <Tag
             text={"niveau " + place.level.toString()}
             bgColor="bg-info"
             children={<FaArrowUpRightDots />}
           />
-          <Tag
-            text={place.points.toString()}
-            bgColor="bg-info"
-            children={<FaTrophy />}
-          />
-          <Tag
-            text={place.population.toString()}
-            bgColor="bg-info"
-            children={<FaUserGroup />}
-          />
+          <PointTag label={place.points.toString()} />
+          <PopulationTag label={place.population.toString()} />
           <Tag
             text={place.builds.toString() + " / " + place.slots.toString()}
             bgColor="bg-info"
@@ -109,25 +103,26 @@ export default function PlaceTile({ place, update }: PlaceTileProp) {
         </div>
       </div>
       <em>{place.description}</em>
-      {update != -1 &&
+      {owner &&
+        update != -1 &&
         update != undefined &&
         new Date(place.buildDate) < new Date() && (
           <Button
             text=""
             path=""
             children={
-              <div className="w-full flex flex-col justify-center items-center gap-1 flex-wrap">
-                <span>Passer niveau {place.level + 1}</span>
-                <div className="w-full flex items-center justify-center gap-2 text-sm">
-                  <span className="flex gap-1 items-center">
-                    <FaCoins />
-                    {placesTypeList[update].cost}
-                  </span>
-                  <span className="flex gap-1 items-center">
-                    <MdTimer />
-                    {formatTime(placesTypeList[update].waitTime)}
-                  </span>
-                </div>
+              <div className="w-full flex items-center justify-evenly flex-wrap gap-2 text-sm">
+                <span className="flex gap-1 items-center">
+                  Niveau {place.level + 1} <FaArrowUpRightDots />
+                </span>
+                <span className="flex gap-1 items-center">
+                  <FaCoins />
+                  {placesTypeList[update].cost}
+                </span>
+                <span className="flex gap-1 items-center">
+                  <MdTimer />
+                  {formatTime(placesTypeList[update].waitTime)}
+                </span>
               </div>
             }
           />

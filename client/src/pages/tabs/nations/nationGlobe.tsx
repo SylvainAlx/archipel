@@ -9,6 +9,7 @@ import { useEffect, useRef, useState } from "react";
 import { getNations } from "../../../utils/api";
 import Button from "../../../components/button";
 import { useNavigate } from "react-router-dom";
+import { GiBlackFlag } from "react-icons/gi";
 
 export default function NationGlobe({ text }: StringProps) {
   const [nationsList] = useAtom(nationsListAtom);
@@ -21,6 +22,7 @@ export default function NationGlobe({ text }: StringProps) {
     points: number;
   }>({ id: "", flag: "", name: "", population: -1, points: -1 });
   const container = useRef<HTMLDivElement>(null);
+  const globe = useRef<any>(null);
   const [largeur, setLargeur] = useState<number | undefined>(undefined);
 
   const navigate = useNavigate();
@@ -30,6 +32,8 @@ export default function NationGlobe({ text }: StringProps) {
   }, []);
 
   useEffect(() => {
+    globe.current.controls().autoRotate = true;
+    globe.current.controls().autoRotateSpeed = 0.3;
     const handleResize = () => {
       if (container.current) {
         const rect = container.current.getBoundingClientRect();
@@ -64,35 +68,43 @@ export default function NationGlobe({ text }: StringProps) {
           })
         }
         ref={container}
-        className="relative w-[90%] max-w-3xl flex flex-col items-center rounded-xl border-2 border-secondary overflow-hidden"
+        className="relative w-[90%] flex flex-col items-center rounded-xl border-2 border-secondary overflow-hidden"
       >
         {showInfos.name != "" && (
-          <div className="z-20 absolute top-0 right-0 p-2 bg-complementary flex flex-col rounded">
-            <div className="w-[70px] h-[50px]">
-              <img
-                className="w-full h-full object-cover"
-                src={showInfos.flag}
-              />
+          <div className="z-20 absolute top-0 right-0 p-2 bg-complementary flex flex-col rounded gap-1">
+            <div className="w-[50px] h-[50px] rounded-full overflow-hidden">
+              {showInfos.flag != "" ? (
+                <img
+                  className="w-full h-full object-cover"
+                  src={showInfos.flag}
+                />
+              ) : (
+                <div className="text-[3.1rem]">
+                  <GiBlackFlag />
+                </div>
+              )}
             </div>
-            <div>Nom : {showInfos.name}</div>
-            <div>Population : {showInfos.population}</div>
-            <div>Points : {showInfos.points}</div>
+            <div className="text-lg">{showInfos.name}</div>
+            <div className="text-sm">
+              <div>Population : {showInfos.population}</div>
+              <div>Points : {showInfos.points}</div>
+            </div>
             <Button text="VOIR" path="" click={handleClick} />
           </div>
         )}
         <Globe
+          ref={globe}
           width={largeur}
           height={500}
           labelsData={nationsList}
           labelLat={(d: any): number => d.data.general.coords.lat}
           labelLng={(d: any): number => d.data.general.coords.lng}
           labelText={(d: any): string => d.name}
-          labelSize={(d: any): number =>
-            1.5 + d.data.roleplay.population / 1000
-          }
+          labelSize={(d: any): number => 2 + d.data.roleplay.population / 1000}
           labelDotRadius={(d: any): number =>
-            1 + d.data.roleplay.population / 1000
+            2 + d.data.roleplay.population / 1000
           }
+          labelColor={() => "rgb(0, 129, 138)"}
           onLabelClick={(d: any) => {
             setSelectedNation(d);
             setShowInfos({

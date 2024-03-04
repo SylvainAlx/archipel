@@ -16,7 +16,7 @@ export default function NationComs({ text }: StringProps) {
   const [, setConfirm] = useAtom(confirmBox);
 
   useEffect(() => {
-    if (comsList === undefined || comsList.length === 1) {
+    if (comsList === undefined || comsList.length === 0) {
       getComs();
     }
   }, []);
