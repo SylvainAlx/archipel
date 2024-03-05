@@ -137,8 +137,8 @@ export const getAllPlaces = () => {
   getAllPlacesFetch()
     .then((data) => {
       myStore.set(loadingSpinner, { show: false, text: "" });
-      if (data != undefined) {
-        myStore.set(placesListAtom, data);
+      if (data.places) {
+        myStore.set(placesListAtom, data.places);
       }
     })
     .catch((error) => {

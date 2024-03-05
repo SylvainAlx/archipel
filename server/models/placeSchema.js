@@ -3,8 +3,7 @@ import mongoose from "mongoose";
 const PlaceSchema = mongoose.Schema(
   {
     nation: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Nation",
+      type: String,
       required: true,
     },
     buildDate: {
