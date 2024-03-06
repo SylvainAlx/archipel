@@ -9,8 +9,8 @@ import { verifyJwt } from "../middlewares/authMiddleware.js";
 
 const placeRouter = express.Router();
 
-placeRouter.get("/:id", getPlaces);
 placeRouter.get("/getall", getAllPlaces);
+placeRouter.get("/:id", getPlaces);
 placeRouter.post("/create", [verifyJwt], createPlace);
 placeRouter.delete("/delete/:id", [verifyJwt], deletePlace);
 

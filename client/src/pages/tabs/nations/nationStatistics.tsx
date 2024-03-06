@@ -21,7 +21,6 @@ export default function NationStatistics({ text }: StringProps) {
   const [totalPoints, setTotalPoints] = useState(0);
 
   useEffect(() => {
-    console.log(placeList);
     if (nationsList.length > 0) {
       let points = 0;
       for (let i = 0; i < nationsList.length - 1; i++) {
@@ -41,8 +40,6 @@ export default function NationStatistics({ text }: StringProps) {
     }
   }, []);
 
-  // useEffect(() => {}, [placeList]);
-
   return (
     <>
       <H1 text={text} />
@@ -58,10 +55,12 @@ export default function NationStatistics({ text }: StringProps) {
                 title="Nombre total de points Navir"
                 children={<H3 text={totalPoints.toString()} />}
               />
-              <DashTile
-                title="Nombre total de villes"
-                children={<H3 text={placeList.length.toString()} />}
-              />
+              {placeList != undefined && (
+                <DashTile
+                  title="Nombre total de villes"
+                  children={<H3 text={placeList.length.toString()} />}
+                />
+              )}
             </>
           }
         />

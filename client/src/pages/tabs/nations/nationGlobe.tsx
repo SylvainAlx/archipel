@@ -28,7 +28,9 @@ export default function NationGlobe({ text }: StringProps) {
   const navigate = useNavigate();
 
   useEffect(() => {
-    getNations("");
+    if (nationsList.length === 0) {
+      getNations("");
+    }
   }, []);
 
   useEffect(() => {
@@ -68,7 +70,7 @@ export default function NationGlobe({ text }: StringProps) {
           })
         }
         ref={container}
-        className="relative w-[90%] flex flex-col items-center rounded-xl border-2 border-secondary overflow-hidden"
+        className="relative w-[90%] flex flex-col items-center rounded-xl overflow-hidden shadow-xl"
       >
         {showInfos.name != "" && (
           <div className="z-20 absolute top-0 right-0 p-2 bg-complementary flex flex-col rounded gap-1">

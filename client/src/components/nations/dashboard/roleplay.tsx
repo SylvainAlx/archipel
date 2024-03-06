@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { SelectedNationProps } from "../../../types/typProp";
 import DashTile from "../../dashTile";
 import TileContainer from "../../tileContainer";
@@ -8,7 +8,7 @@ import { MdTimer } from "react-icons/md";
 import { placesTypeList } from "../../../settings/consts";
 import {
   myStore,
-  nationsRoleplayDataAtom,
+  nationPlacesListAtom,
   newPlaceAtom,
 } from "../../../settings/store";
 import { useAtom } from "jotai";
@@ -17,8 +17,8 @@ import { FaCoins } from "react-icons/fa6";
 import { addCredits, formatTime } from "../../../utils/functions";
 import PlaceTile from "./placeTile";
 import Button from "../../button";
-import { getRoleplayData } from "../../../utils/api";
-import { Citizen } from "../../../types/typCitizen";
+import { getNationPlaces } from "../../../utils/api";
+
 import { Place } from "../../../types/typPlace";
 import PointTag from "../../tags/pointTag";
 import CreditTag from "../../tags/creditTag";
@@ -28,34 +28,13 @@ export default function Roleplay({
   selectedNation,
   owner,
 }: SelectedNationProps) {
-  const [, setCitizensList] = useState<Citizen[]>([]);
-  const [placesList, setPlacesList] = useState<Place[]>([]);
-  const [nationsRoleplayData] = useAtom(nationsRoleplayDataAtom);
+  const [nationPlacesList] = useAtom(nationPlacesListAtom);
 
   useEffect(() => {
-    let isOk = false;
-    if (selectedNation._id != "") {
-      nationsRoleplayData.forEach((data) => {
-        if (data.nationId === selectedNation._id) {
-          isOk = true;
-        }
-      });
-      if (!isOk) {
-        getRoleplayData(selectedNation);
-      }
+    if (nationPlacesList.length === 0 && selectedNation._id !== "") {
+      getNationPlaces(selectedNation._id);
     }
-  }, [selectedNation]);
-
-  useEffect(() => {
-    if (nationsRoleplayData.length > 0) {
-      nationsRoleplayData.forEach((data) => {
-        if (data.nationId === selectedNation._id) {
-          setCitizensList(data.citizens);
-          setPlacesList(data.places);
-        }
-      });
-    }
-  }, [nationsRoleplayData]);
+  }, []);
 
   const handleClick = () => {
     const date = new Date();
@@ -105,8 +84,8 @@ export default function Roleplay({
             children={
               <>
                 <div className="flex flex-wrap items-start justify-center gap-2">
-                  {placesList.length > 0 ? (
-                    placesList.map((place, i) => {
+                  {nationPlacesList != undefined ? (
+                    nationPlacesList.map((place, i) => {
                       return (
                         <div
                           className="w-full md:w-[49%] md:min-w-[250px]"

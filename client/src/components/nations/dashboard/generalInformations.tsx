@@ -117,7 +117,7 @@ export default function GeneralInformations({
                   </div>
 
                   <div className="flex gap-2 flex-wrap items-center justify-center">
-                    <IdTag label={selectedNation._id} />
+                    <IdTag label={selectedNation.name + selectedNation._id} />
                     {selectedNation.role === "admin" && (
                       <Tag text="admin" bgColor="bg-success" />
                     )}

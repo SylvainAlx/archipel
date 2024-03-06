@@ -95,14 +95,16 @@ export const deletePlace = async (req, res) => {
     if (!nation) {
       return res.status(404).json({ message: "Nation non trouvée" });
     }
-
+    if (nation.data.roleplay.capital === place._id) {
+      nation.data.roleplay.capital = "";
+    }
     nation.data.roleplay.population -= place.population;
     nation.data.roleplay.points -= place.points;
     await nation.save();
 
     await Place.findByIdAndDelete(id);
 
-    res.status(200).json({ nation, message: `Lieu supprimé` });
+    res.status(200).json({ place, nation, message: `Lieu supprimé` });
   } catch (error) {
     console.log(error);
     res.status(400).json({

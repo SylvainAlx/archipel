@@ -3,7 +3,6 @@ import { useAtom } from "jotai";
 import {
   comsListAtom,
   confirmBox,
-  dataCheckedAtom,
   infoModal,
   loadingSpinner,
   myStore,
@@ -16,7 +15,6 @@ import {
   DeleteSelfFetch,
   createCom,
   updateNationFetch,
-  deletePlaceFetch,
 } from "../../utils/fetch";
 import { EmptyNation, Nation } from "../../types/typNation";
 import Button from "../button";
@@ -27,6 +25,7 @@ import {
 } from "../../utils/functions";
 import { EmptyCom } from "../../types/typAtom";
 import { SERVEUR_LOADING_STRING } from "../../settings/consts";
+import { deletePlace } from "../../utils/api";
 
 export default function ConfirmModal() {
   const [confirm, setConfirm] = useAtom(confirmBox);
@@ -112,21 +111,6 @@ export default function ConfirmModal() {
       });
   };
 
-  const deletePlace = () => {
-    myStore.set(loadingSpinner, { show: true, text: SERVEUR_LOADING_STRING });
-    deletePlaceFetch(confirm.target._id)
-      .then((resp) => {
-        myStore.set(dataCheckedAtom, false);
-        myStore.set(nationAtom, resp.nation);
-        myStore.set(loadingSpinner, { show: false, text: "" });
-        myStore.set(infoModal, resp.message);
-      })
-      .catch((error) => {
-        myStore.set(loadingSpinner, { show: false, text: "" });
-        myStore.set(infoModal, error);
-      });
-  };
-
   return (
     <>
       <h2 className="text-2xl text-center p-4">DEMANDE DE CONFIRMATION</h2>
@@ -153,7 +137,7 @@ export default function ConfirmModal() {
               updateNation(confirm.payload);
             }
             if (confirm.action === "deletePlace") {
-              deletePlace();
+              deletePlace(confirm.target._id);
             }
           }}
         />

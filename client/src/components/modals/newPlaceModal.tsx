@@ -1,12 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useAtom } from "jotai";
-import {
-  nationsRoleplayDataAtom,
-  infoModal,
-  loadingSpinner,
-  nationAtom,
-  newPlaceAtom,
-} from "../../settings/store";
+import { newPlaceAtom } from "../../settings/store";
 import Button from "../button";
 import { ChangeEvent, FormEvent } from "react";
 import Form from "../form/form";
@@ -14,41 +8,15 @@ import Input from "../form/input";
 import TextArea from "../form/textArea";
 import Tag from "../tag";
 import { FaArrowUpRightDots, FaTrophy } from "react-icons/fa6";
-import { SERVEUR_LOADING_STRING } from "../../settings/consts";
-import { createPlaceFetch } from "../../utils/fetch";
 import { emptyPlace } from "../../types/typPlace";
+import { createNewPlace } from "../../utils/api";
 
 export default function NewPlaceModal() {
   const [newPlace, setNewPlace] = useAtom(newPlaceAtom);
-  const [, setNation] = useAtom(nationAtom);
-  const [, setLoading] = useAtom(loadingSpinner);
-  const [, setInfo] = useAtom(infoModal);
-  const [nationsRoleplayData, setNationsRoleplayData] = useAtom(
-    nationsRoleplayDataAtom,
-  );
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    setLoading({ show: true, text: SERVEUR_LOADING_STRING });
-    createPlaceFetch(newPlace)
-      .then((data) => {
-        if (data.place) {
-          setLoading({ show: false, text: SERVEUR_LOADING_STRING });
-          const updateRoleplatData = [...nationsRoleplayData];
-          nationsRoleplayData.forEach((nationData, i) => {
-            if (nationData.nationId === newPlace.nationId) {
-              updateRoleplatData[i].places.push(data.place);
-            }
-          });
-          setNation(data.nation);
-          setNationsRoleplayData(updateRoleplatData);
-          setInfo(data.message);
-        }
-      })
-      .catch((error) => {
-        setLoading({ show: false, text: SERVEUR_LOADING_STRING });
-        setInfo(error.message);
-      });
+    createNewPlace(newPlace);
     setNewPlace(emptyPlace);
   };
 

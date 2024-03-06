@@ -30,7 +30,7 @@ export default function PublicNationTile({ _id, name, data, role }: Nation) {
         <h2 className="text-light text-xl pl-4 pr-6">{name}</h2>
       </div>
       <div className="flex gap-2 self-end flex-wrap justify-end">
-        <IdTag label={_id} />
+        <IdTag label={name + _id} />
         {role === "admin" && <Tag text="admin" bgColor="bg-success" />}
         <PointTag label={data.roleplay.points} />
         <PopulationTag label={data.roleplay.population} />
