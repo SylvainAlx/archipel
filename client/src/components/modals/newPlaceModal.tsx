@@ -9,7 +9,7 @@ import TextArea from "../form/textArea";
 import Tag from "../tag";
 import { FaArrowUpRightDots, FaTrophy } from "react-icons/fa6";
 import { emptyPlace } from "../../types/typPlace";
-import { createNewPlace } from "../../utils/api";
+import { createNewPlace } from "../../api/place/placeAPI";
 
 export default function NewPlaceModal() {
   const [newPlace, setNewPlace] = useAtom(newPlaceAtom);

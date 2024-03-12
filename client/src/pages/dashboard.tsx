@@ -8,8 +8,7 @@ import DashboardCom from "./tabs/dashboard/dashboardCom";
 import { nationAtom, selectedNationAtom } from "../settings/store";
 import { useAtom } from "jotai";
 import AdBanner from "../components/ads/adBanner";
-import { getNation } from "../utils/api";
-import Notification from "../components/notification";
+import { getNation } from "../api/nation/nationAPI";
 
 export default function Dashboard() {
   const [nation] = useAtom(nationAtom);
@@ -39,8 +38,7 @@ export default function Dashboard() {
     <>
       <AdBanner />
       <div className="flex items-center">
-        <TabNav tabs={tabList} tabId={tab.id} setTab={setTab} />
-        {owner && <Notification owner={owner} />}
+        <TabNav tabs={tabList} tabId={tab.id} setTab={setTab} owner={owner} />
       </div>
       {tab.id === 0 && <DashboardMain text={tab.label} owner={owner} />}
       {tab.id === 1 && <DashboardSettings text={tab.label} />}

@@ -8,7 +8,7 @@ import Button from "../../../components/button";
 import { IoMdTrash } from "react-icons/io";
 import { comOptions } from "../../../settings/consts";
 import { dateToString } from "../../../utils/functions";
-import { getComs } from "../../../utils/api";
+import { getComs } from "../../../api/communication/comAPI";
 
 export default function NationComs({ text }: StringProps) {
   const [nation] = useAtom(nationAtom);

@@ -17,7 +17,7 @@ import EditIcon from "../../editIcon";
 import ExternalLink from "../../externalLink";
 import H2 from "../../titles/h2";
 import { useEffect, useState } from "react";
-import { nationsRoleplayDataAtom } from "../../../settings/store";
+import { nationPlacesListAtom } from "../../../settings/store";
 import { LabelId } from "../../../types/typNation";
 import { useAtom } from "jotai";
 import { getCapitalName } from "../../../utils/functions";
@@ -28,35 +28,28 @@ export default function GeneralInformations({
   selectedNation,
   owner,
 }: SelectedNationProps) {
-  const [dataRoleplay] = useAtom(nationsRoleplayDataAtom);
   const [placesList, setPlacesList] = useState<LabelId[]>([]);
+  const [nationPlaceList] = useAtom(nationPlacesListAtom);
   const [capital, setCapital] = useState<string>("");
 
   useEffect(() => {
-    if (dataRoleplay.length > 0) {
-      dataRoleplay.forEach((data) => {
-        if (data.nationId === selectedNation._id) {
-          const tempPlaces: LabelId[] = [];
-          data.places.forEach((place) => {
-            if (place._id) {
-              tempPlaces.push({ id: place._id, label: place.name });
-            }
-            setPlacesList(tempPlaces);
-          });
-        }
-      });
-    }
-  }, [selectedNation, dataRoleplay]);
+    const updatedPlaces: LabelId[] = [];
+    nationPlaceList.forEach((place) => {
+      if (place._id) {
+        const newPlace: LabelId = { id: place._id, label: place.name };
+        updatedPlaces.push(newPlace);
+      }
+    });
+    setPlacesList(updatedPlaces);
 
-  useEffect(() => {
-    if (placesList.length > 0 && selectedNation._id != "") {
+    if (selectedNation.data.roleplay.capital != "") {
       const capitalName = getCapitalName(
-        placesList,
+        nationPlaceList,
         selectedNation.data.roleplay.capital,
       );
       setCapital(capitalName);
     }
-  }, [placesList]);
+  }, [nationPlaceList, selectedNation]);
 
   return (
     <TileContainer
@@ -141,7 +134,7 @@ export default function GeneralInformations({
                       }
                     })}
                   </div>
-                  {selectedNation.data.roleplay.capital != "" && (
+                  {capital != "" && (
                     <div className="relative">
                       <Tag
                         text=""

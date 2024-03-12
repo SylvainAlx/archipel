@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { politicalSideList } from "../settings/consts";
-import { LabelId } from "../types/typNation";
+import { Place } from "../types/typPlace";
 
 export const GET_JWT = () => localStorage.getItem("jwt");
 
@@ -67,10 +67,10 @@ export const formatTime = (totalMinutes: number): string => {
   return `${days > 0 ? days + "j" : ""} ${hours > 0 ? hours + "h" : ""} ${minutes > 0 ? hours + "m" : ""}`;
 };
 
-export const getCapitalName = (placesList: LabelId[], id: string): string => {
-  const foundPlace = placesList.find((place) => place.id === id);
+export const getCapitalName = (placesList: Place[], id:string): string => {
+  const foundPlace = placesList.find((place) => place._id === id);
   if (foundPlace) {
-    return foundPlace.label;
+    return foundPlace.name;
   } else {
     return "";
   }

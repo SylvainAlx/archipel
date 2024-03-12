@@ -29,6 +29,7 @@ export interface TabNavProps {
   tabs: Array<{ id: number; label: string }>;
   tabId: number;
   setTab: React.Dispatch<React.SetStateAction<{ id: number; label: string }>>;
+  owner: boolean;
 }
 
 export interface ButtonProps {
@@ -128,11 +129,11 @@ export interface NewPlaceTileProps {
   population: number;
   image: string;
   description: string;
-  canBuy: Boolean;
+  canBuy: boolean;
 }
 
 export interface DashboardTabProps {
-  text?: string;
+  text: string;
   owner: boolean;
 }
 

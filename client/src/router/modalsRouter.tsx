@@ -2,7 +2,7 @@ import { useAtom } from "jotai";
 import {
   confirmBox,
   editbox,
-  infoModal,
+  infoModalAtom,
   loadingSpinner,
   newPlaceAtom,
   recoveryKey,
@@ -17,7 +17,7 @@ import NewPlaceModal from "../components/modals/newPlaceModal";
 export default function ModalsRouter() {
   const [recovery] = useAtom(recoveryKey);
   const [confirm] = useAtom(confirmBox);
-  const [info] = useAtom(infoModal);
+  const [info] = useAtom(infoModalAtom);
   const [loading] = useAtom(loadingSpinner);
   const [editBox] = useAtom(editbox);
   const [newPlace] = useAtom(newPlaceAtom);

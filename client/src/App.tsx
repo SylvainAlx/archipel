@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import {
   adminRoutes,
   authRoutes,
@@ -16,10 +16,12 @@ import { myStore, nationAtom, selectedNationAtom } from "./settings/store";
 import { useEffect } from "react";
 import ModalsRouter from "./router/modalsRouter";
 import { ArchipelRoute } from "./types/typReact";
-import { authentification } from "./utils/api";
+import { authentification } from "./api/authentification/authAPI";
 
 export default function App() {
   const [nation] = useAtom(nationAtom);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     authentification();
@@ -28,6 +30,9 @@ export default function App() {
   useEffect(() => {
     if (nation.name != "") {
       myStore.set(selectedNationAtom, { ...nation });
+      navigate(`/dashboard/${nation._id}`);
+    } else {
+      navigate("/");
     }
   }, [nation]);
 

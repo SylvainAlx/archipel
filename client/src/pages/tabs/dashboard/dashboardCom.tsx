@@ -15,7 +15,7 @@ import Tag from "../../../components/tag";
 import { IoMdTrash } from "react-icons/io";
 import { dateToString } from "../../../utils/functions";
 import { EmptyCom } from "../../../types/typAtom";
-import { getComs } from "../../../utils/api";
+import { getComs } from "../../../api/communication/comAPI";
 
 export default function DashboardCom({ text }: StringProps) {
   const [nation] = useAtom(nationAtom);

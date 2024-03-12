@@ -6,7 +6,8 @@ export interface AuthPayload {
 export interface RecoveryPayload {
   name: string;
   recovery: string;
-  newPassword: string;
+  password?: string;
+  newPassword?: string;
 }
 
 export interface ComPayload {

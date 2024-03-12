@@ -5,11 +5,9 @@ import { differenceEnMinutes } from "../utils/functions";
 import { confirmBox, myStore, selectedNationAtom } from "../settings/store";
 import { useAtom } from "jotai";
 
-export default function Notification({ owner }: DashboardTabProps) {
+export default function Notification({ owner, text }: DashboardTabProps) {
   const [selectedNation] = useAtom(selectedNationAtom);
-  const [showNotif, setShowNotif] = useState(false);
   const [totalReward, setTotalReward] = useState(0);
-  const [notifs, setNotifs] = useState<string[]>([]);
 
   useEffect(() => {
     if (owner) {
@@ -21,10 +19,16 @@ export default function Notification({ owner }: DashboardTabProps) {
           (reward * selectedNation.data.roleplay.points) / 10,
         );
         setTotalReward(reward + bonus);
-        setNotifs(["Récupérer " + totalReward + " nouveau(x) crédit(s) ?"]);
+      } else {
+        setTotalReward(0);
       }
     }
-  }, [owner, showNotif]);
+  }, [
+    owner,
+    selectedNation.data.roleplay.lastUpdated,
+    selectedNation.data.roleplay.points,
+    totalReward,
+  ]);
 
   const updateNation = () => {
     const updatedNation = { ...selectedNation };
@@ -32,37 +36,26 @@ export default function Notification({ owner }: DashboardTabProps) {
     updatedNation.data.roleplay.lastUpdated = new Date();
     myStore.set(confirmBox, {
       action: "updateNation",
-      text: notifs[0],
+      text: "Récupérer " + totalReward + " nouveau(x) crédit(s) ?",
       result: "",
       target: "",
       payload: updatedNation,
     });
-    setShowNotif(false);
   };
 
   return (
-    <div className="relative">
-      <div
-        className="text-2xl cursor-pointer"
-        onClick={() => setShowNotif(!showNotif)}
-      >
+    <div
+      className="p-2 relative md:bg-complementary cursor-pointer"
+      onClick={() => totalReward > 0 && updateNation()}
+    >
+      <div className="relative text-5xl md:text-2xl">
         <MdNotifications />
+        {totalReward > 0 && (
+          <div className="absolute top-0 left-0 w-[15px] h-[15px] bg-danger rounded-full text-[12px] flex justify-center items-center">
+            <div>{text}</div>
+          </div>
+        )}
       </div>
-      {showNotif && (
-        <div className="w-[200px] absolute top-[30px] left-3 z-100 bg-secondary p-1 rounded">
-          {notifs.map((element, i) => {
-            return (
-              <div
-                className="w-full cursor-pointer"
-                key={i}
-                onClick={updateNation}
-              >
-                {element}
-              </div>
-            );
-          })}
-        </div>
-      )}
     </div>
   );
 }

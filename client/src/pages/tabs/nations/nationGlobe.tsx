@@ -6,10 +6,10 @@ import H1 from "../../../components/titles/h1";
 import { useAtom } from "jotai";
 import { nationsListAtom, selectedNationAtom } from "../../../settings/store";
 import { useEffect, useRef, useState } from "react";
-import { getNations } from "../../../utils/api";
 import Button from "../../../components/button";
 import { useNavigate } from "react-router-dom";
 import { GiBlackFlag } from "react-icons/gi";
+import { getNations } from "../../../api/nation/nationAPI";
 
 export default function NationGlobe({ text }: StringProps) {
   const [nationsList] = useAtom(nationsListAtom);

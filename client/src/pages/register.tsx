@@ -1,32 +1,14 @@
 import { ChangeEvent, FormEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { createCom, registerFetch } from "../utils/fetch";
-import { useAtom } from "jotai";
-import {
-  comsListAtom,
-  infoModal,
-  loadingSpinner,
-  myStore,
-  nationAtom,
-  nationsListAtom,
-  recoveryKey,
-} from "../settings/store";
 import H1 from "../components/titles/h1";
 import Input from "../components/form/input";
 import Button from "../components/button";
-import { EmptyNation } from "../types/typNation";
 import Form from "../components/form/form";
-import { SERVEUR_LOADING_STRING, comOptions } from "../settings/consts";
-import { EmptyCom } from "../types/typAtom";
+import { register } from "../api/authentification/authAPI";
 
 export default function Register() {
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
-  const [, setNation] = useAtom(nationAtom);
-  const [, setRecovery] = useAtom(recoveryKey);
-  const [, setInfo] = useAtom(infoModal);
-  const [, setNationsList] = useAtom(nationsListAtom);
-  const [, setComsList] = useAtom(comsListAtom);
 
   const navigate = useNavigate();
 
@@ -40,37 +22,7 @@ export default function Register() {
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    myStore.set(loadingSpinner, { show: true, text: SERVEUR_LOADING_STRING });
-    registerFetch({ name, password })
-      .then((data) => {
-        myStore.set(loadingSpinner, { show: false, text: "" });
-        if (data.nation) {
-          createCom({
-            originId: data.nation._id,
-            originName: data.nation.name,
-            comType: comOptions[1].id,
-          });
-          localStorage.setItem("jwt", data.jwt);
-          setRecovery(data.recovery);
-          setNationsList([EmptyNation]);
-          setComsList([EmptyCom]);
-          setNation({
-            _id: data.nation._id,
-            name: data.nation.name,
-            role: data.nation.role,
-            data: data.nation.data,
-            createdAt: data.nation.createdAt,
-          });
-          navigate(`/dashboard/${data.nation._id}`);
-        } else {
-          myStore.set(loadingSpinner, { show: false, text: "" });
-          setInfo("création impossible : " + data.message);
-        }
-      })
-      .catch((error) => {
-        myStore.set(loadingSpinner, { show: false, text: "" });
-        setInfo(error.message);
-      });
+    register({ name, password });
   };
   return (
     <>

@@ -17,12 +17,12 @@ import { FaCoins } from "react-icons/fa6";
 import { addCredits, formatTime } from "../../../utils/functions";
 import PlaceTile from "./placeTile";
 import Button from "../../button";
-import { getNationPlaces } from "../../../utils/api";
 
 import { Place } from "../../../types/typPlace";
 import PointTag from "../../tags/pointTag";
 import CreditTag from "../../tags/creditTag";
 import PopulationTag from "../../tags/populationTag";
+import { getNationPlaces } from "../../../api/place/placeAPI";
 
 export default function Roleplay({
   selectedNation,

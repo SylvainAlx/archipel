@@ -1,14 +1,10 @@
 import { ChangeEvent, FormEvent, useState } from "react";
 import H1 from "../components/titles/h1";
-import { RecoveryFetch } from "../utils/fetch";
-import { useNavigate } from "react-router-dom";
-import { infoModal, loadingSpinner, myStore } from "../settings/store";
-import { useAtom } from "jotai";
+import { recoveryNation } from "../api/authentification/authAPI";
 import Input from "../components/form/input";
 import Button from "../components/button";
 import Form from "../components/form/form";
 import TextArea from "../components/form/textArea";
-import { SERVEUR_LOADING_STRING } from "../settings/consts";
 
 export default function Recovery() {
   const [name, setName] = useState("");
@@ -16,9 +12,6 @@ export default function Recovery() {
   const [recovery, setRecovery] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [passwordsMatch, setPasswordsMatch] = useState(true);
-  const [, setInfo] = useAtom(infoModal);
-
-  const navigate = useNavigate();
 
   const handleChange = (
     e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>,
@@ -34,24 +27,7 @@ export default function Recovery() {
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    myStore.set(loadingSpinner, { show: true, text: SERVEUR_LOADING_STRING });
-    const dataToSend = {
-      name,
-      recovery,
-      newPassword: password,
-    };
-    RecoveryFetch(dataToSend)
-      .then((data) => {
-        myStore.set(loadingSpinner, { show: false, text: "" });
-        setInfo(data.message);
-        if (data.message === "nouveau mot de passe pris en compte") {
-          navigate("/login");
-        }
-      })
-      .catch((error) => {
-        myStore.set(loadingSpinner, { show: false, text: "" });
-        alert(error.message);
-      });
+    recoveryNation({ name, password, recovery });
   };
 
   return (

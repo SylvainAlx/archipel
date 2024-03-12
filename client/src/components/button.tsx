@@ -2,7 +2,7 @@
 import { useNavigate } from "react-router-dom";
 import {
   confirmBox,
-  infoModal,
+  infoModalAtom,
   nationAtom,
   selectedNationAtom,
 } from "../settings/store";
@@ -19,7 +19,7 @@ export default function Button({
   click,
 }: ButtonProps) {
   const [, setConfirm] = useAtom(confirmBox);
-  const [, setInfo] = useAtom(infoModal);
+  const [, setInfo] = useAtom(infoModalAtom);
   const [, setSelectedNation] = useAtom(selectedNationAtom);
   const [nation] = useAtom(nationAtom);
   const navigate = useNavigate();

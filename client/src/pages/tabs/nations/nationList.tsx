@@ -11,7 +11,7 @@ import PublicNationTile from "../../../components/nations/publicNationTile";
 import Select from "../../../components/form/select";
 import { StringProps } from "../../../types/typProp";
 import { IoIosArrowDropdownCircle } from "react-icons/io";
-import { getNations } from "../../../utils/api";
+import { getNations } from "../../../api/nation/nationAPI";
 
 export default function NationList({ text }: StringProps) {
   const [nationsList, setNationsList] = useAtom(nationsListAtom);

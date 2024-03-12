@@ -36,7 +36,7 @@ export const recoveryKey = atom("");
 export const confirmBox = atom(ConfirmBoxDefault);
 export const editbox = atom(EditBoxDefault);
 
-export const infoModal = atom("");
+export const infoModalAtom = atom("");
 
 export const showApp = atom(false);
 

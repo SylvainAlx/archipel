@@ -1,115 +1,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useAtom } from "jotai";
-import {
-  comsListAtom,
-  confirmBox,
-  infoModal,
-  loadingSpinner,
-  myStore,
-  nationAtom,
-  nationsListAtom,
-} from "../../settings/store";
-import { useNavigate } from "react-router-dom";
-import {
-  deleteComFetch,
-  DeleteSelfFetch,
-  createCom,
-  updateNationFetch,
-} from "../../utils/fetch";
-import { EmptyNation, Nation } from "../../types/typNation";
+import { confirmBox } from "../../settings/store";
 import Button from "../button";
-import {
-  createElementOfAtomArray,
-  deleteElementOfAtomArray,
-  updateElementOfAtomArray,
-} from "../../utils/functions";
-import { EmptyCom } from "../../types/typAtom";
-import { SERVEUR_LOADING_STRING } from "../../settings/consts";
-import { deletePlace } from "../../utils/api";
+import { deleteSelfNation, updateNation } from "../../api/nation/nationAPI";
+import { logout } from "../../api/authentification/authAPI";
+import { createNewCom, deleteCom } from "../../api/communication/comAPI";
+import { deletePlace } from "../../api/place/placeAPI";
 
 export default function ConfirmModal() {
   const [confirm, setConfirm] = useAtom(confirmBox);
-  const [nation, setNation] = useAtom(nationAtom);
-  const [comsList, setComsList] = useAtom(comsListAtom);
-  const [nationsList, setNationsList] = useAtom(nationsListAtom);
-  const navigate = useNavigate();
-
-  const logout = () => {
-    myStore.set(infoModal, "déconnexion effectuée");
-    setNation(EmptyNation);
-    localStorage.removeItem("jwt");
-    navigate("/");
-  };
-
-  const deleteSelfNation = () => {
-    myStore.set(loadingSpinner, { show: true, text: SERVEUR_LOADING_STRING });
-    DeleteSelfFetch()
-      .then((resp) => {
-        myStore.set(loadingSpinner, { show: false, text: "" });
-        createCom({
-          originId: nation._id,
-          originName: nation.name,
-          comType: 2,
-        });
-        deleteElementOfAtomArray(nation._id, nationsList, setNationsList);
-        setComsList([EmptyCom]);
-        myStore.set(infoModal, resp.message);
-        setNation(EmptyNation);
-        localStorage.removeItem("jwt");
-        navigate("/");
-        // window.location.reload();
-      })
-      .catch((error) => {
-        myStore.set(loadingSpinner, { show: false, text: "" });
-        myStore.set(infoModal, error);
-      });
-  };
-
-  const deleteCom = () => {
-    myStore.set(loadingSpinner, { show: true, text: SERVEUR_LOADING_STRING });
-    deleteComFetch(confirm.target)
-      .then((resp) => {
-        myStore.set(loadingSpinner, { show: false, text: "" });
-        deleteElementOfAtomArray(confirm.target, comsList, setComsList);
-        myStore.set(infoModal, resp.message);
-      })
-      .catch((error) => {
-        myStore.set(loadingSpinner, { show: false, text: "" });
-        myStore.set(infoModal, error);
-      });
-  };
-
-  const createNewCom = (payload: any) => {
-    myStore.set(loadingSpinner, { show: true, text: SERVEUR_LOADING_STRING });
-    createCom(payload)
-      .then((resp) => {
-        myStore.set(loadingSpinner, { show: false, text: "" });
-        createElementOfAtomArray(resp.com, comsList, setComsList);
-        myStore.set(infoModal, resp.message);
-      })
-      .catch((error) => {
-        myStore.set(loadingSpinner, { show: false, text: "" });
-        myStore.set(infoModal, error);
-      });
-  };
-
-  const updateNation = (payload: Nation) => {
-    myStore.set(loadingSpinner, { show: true, text: SERVEUR_LOADING_STRING });
-    updateNationFetch(payload)
-      .then((resp) => {
-        myStore.set(loadingSpinner, { show: false, text: "" });
-        if (resp.nation) {
-          setNation(resp.nation);
-          updateElementOfAtomArray(resp.nation, nationsList, setNationsList);
-        } else {
-          myStore.set(infoModal, resp.message);
-        }
-      })
-      .catch((error) => {
-        myStore.set(loadingSpinner, { show: false, text: "" });
-        myStore.set(infoModal, error);
-      });
-  };
 
   return (
     <>

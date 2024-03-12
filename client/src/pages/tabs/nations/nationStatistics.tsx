@@ -13,7 +13,8 @@ import { StringProps } from "../../../types/typProp";
 import { useEffect, useState } from "react";
 import H3 from "../../../components/titles/h3";
 import { SERVEUR_LOADING_STRING } from "../../../settings/consts";
-import { getAllPlaces, getNations } from "../../../utils/api";
+import { getNations } from "../../../api/nation/nationAPI";
+import { getAllPlaces } from "../../../api/place/placeAPI";
 
 export default function NationStatistics({ text }: StringProps) {
   const [nationsList] = useAtom(nationsListAtom);

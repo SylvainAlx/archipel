@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { LabelId, PoliticalSide, RegimeOption } from "./typNation";
 
 // confirmBox

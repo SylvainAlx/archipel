@@ -82,7 +82,7 @@ export default function PlaceTile({ place, update, owner }: PlaceTileProp) {
           {/* {owner && <EditIcon param={place.image} path="data.url.flag" />} */}
         </div>
         <div className="w-full flex flex-wrap items-center gap-2 justify-center">
-          {place._id && <IdTag label={place._id} />}
+          {place._id && <IdTag label={place.name + place._id} />}
           <Tag
             text={"niveau " + place.level.toString()}
             bgColor="bg-info"

@@ -1,27 +1,14 @@
 import { ChangeEvent, FormEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { loginFetch } from "../utils/fetch";
-import { useAtom } from "jotai";
-import {
-  infoModal,
-  loadingSpinner,
-  myStore,
-  nationAtom,
-  nationsListAtom,
-} from "../settings/store";
 import H1 from "../components/titles/h1";
 import Input from "../components/form/input";
 import Button from "../components/button";
-import { EmptyNation } from "../types/typNation";
 import Form from "../components/form/form";
-import { SERVEUR_LOADING_STRING } from "../settings/consts";
+import { login } from "../api/authentification/authAPI";
 
 export default function Login() {
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
-  const [, setInfo] = useAtom(infoModal);
-  const [, setNation] = useAtom(nationAtom);
-  const [, setNationsList] = useAtom(nationsListAtom);
   const navigate = useNavigate();
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -34,30 +21,7 @@ export default function Login() {
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    myStore.set(loadingSpinner, { show: true, text: SERVEUR_LOADING_STRING });
-    loginFetch({ name, password })
-      .then((data) => {
-        myStore.set(loadingSpinner, { show: false, text: "" });
-        if (data.nation) {
-          localStorage.setItem("jwt", data.jwt);
-          setNationsList([EmptyNation]);
-          setNation({
-            _id: data.nation._id,
-            name: data.nation.name,
-            role: data.nation.role,
-            data: data.nation.data,
-            createdAt: data.nation.createdAt,
-          });
-          navigate(`/dashboard/${data.nation._id}`);
-        } else {
-          myStore.set(loadingSpinner, { show: false, text: "" });
-          setInfo(data.message);
-        }
-      })
-      .catch((error) => {
-        myStore.set(loadingSpinner, { show: false, text: "" });
-        setInfo(error.message);
-      });
+    login({ name, password });
   };
 
   return (
