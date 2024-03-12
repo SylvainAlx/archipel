@@ -12,6 +12,7 @@ export interface InputProps {
   name: string;
   placeholder: string;
   value: string | number;
+  id?: string;
 }
 
 export interface SelectProps {

@@ -8,6 +8,7 @@ import nationRouter from "./routers/nationRouter.js";
 import comRouter from "./routers/comRouter.js";
 import citizenRouter from "./routers/citizenRouter.js";
 import placeRouter from "./routers/placeRouter.js";
+import paramRouter from "./routers/paramRouter.js";
 
 //config serveur
 const app = express();
@@ -41,6 +42,7 @@ try {
     app.use("/com", comRouter);
     app.use("/citizen", citizenRouter);
     app.use("/place", placeRouter);
+    app.use("/param", paramRouter);
     app.use("/", home);
   });
 } catch (error) {

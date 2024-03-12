@@ -7,9 +7,11 @@ export default function Input({
   placeholder,
   value,
   name,
+  id
 }: InputProps) {
   return (
     <input
+      id={id && id}
       required={required}
       onChange={onChange}
       type={type}

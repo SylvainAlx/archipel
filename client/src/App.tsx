@@ -12,7 +12,7 @@ import Header from "./layouts/header";
 import Footer from "./layouts/footer";
 import "./App.css";
 import { useAtom } from "jotai";
-import { myStore, nationAtom, selectedNationAtom } from "./settings/store";
+import { myStore, nationAtom, ownerAtom, selectedNationAtom } from "./settings/store";
 import { useEffect } from "react";
 import ModalsRouter from "./router/modalsRouter";
 import { ArchipelRoute } from "./types/typReact";
@@ -30,6 +30,7 @@ export default function App() {
   useEffect(() => {
     if (nation.name != "") {
       myStore.set(selectedNationAtom, { ...nation });
+      myStore.set(ownerAtom, true);
       navigate(`/dashboard/${nation._id}`);
     } else {
       navigate("/");

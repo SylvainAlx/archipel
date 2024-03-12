@@ -16,28 +16,29 @@ export const loadingSpinner = atom(loadingAtom);
 
 // Nation
 
+export const ownerAtom = atom(false);
 export const nationAtom = atom<Nation>(EmptyNation);
 export const selectedNationAtom = atom<Nation>(EmptyNation);
 export const nationsRoleplayDataAtom = atom<NationRoleplayData[]>([]);
-
 export const getSelectedNation = atom((get) => get(selectedNationAtom));
-
 export const tempNationAtom = atom<Nation>(EmptyNation);
 export const nationsListAtom = atom<Nation[]>([]);
 
+// place
+
 export const placesListAtom = atom<Place[]>([]);
 export const nationPlacesListAtom = atom<Place[]>([]);
+export const newPlaceAtom = atom<Place>(emptyPlace);
+
+// com
 
 export const comsListAtom = atom<Com[]>([]);
 
-export const newPlaceAtom = atom<Place>(emptyPlace);
 
 export const recoveryKey = atom("");
 export const confirmBox = atom(ConfirmBoxDefault);
 export const editbox = atom(EditBoxDefault);
-
 export const infoModalAtom = atom("");
-
 export const showApp = atom(false);
 
 export const dataCheckedAtom = atom(false);

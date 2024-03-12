@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export interface AuthPayload {
   name: string;
   password: string;
@@ -24,4 +25,9 @@ export interface PlacePayload {
   name: string;
   description: string;
   image: string;
+}
+
+export interface ParamPayload {
+  name: string;
+  props: Array<{label: string; value: string | number}>;
 }

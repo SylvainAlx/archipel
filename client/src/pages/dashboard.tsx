@@ -5,7 +5,7 @@ import TabNav from "../components/tabNav";
 import DashboardMain from "./tabs/dashboard/dashboardMain";
 import DashboardSettings from "./tabs/dashboard/dashboardSettings";
 import DashboardCom from "./tabs/dashboard/dashboardCom";
-import { nationAtom, selectedNationAtom } from "../settings/store";
+import { nationAtom, ownerAtom, selectedNationAtom } from "../settings/store";
 import { useAtom } from "jotai";
 import AdBanner from "../components/ads/adBanner";
 import { getNation } from "../api/nation/nationAPI";
@@ -13,7 +13,7 @@ import { getNation } from "../api/nation/nationAPI";
 export default function Dashboard() {
   const [nation] = useAtom(nationAtom);
   const [selectedNation, setSelectedNation] = useAtom(selectedNationAtom);
-  const [owner, setOwner] = useState(false);
+  const [owner] = useAtom(ownerAtom);
   const [tabList, setTabList] = useState<{ id: number; label: string }[]>([]);
   const [tab, setTab] = useState({ id: 0, label: "TABLEAU DE BORD" });
   const { id } = useParams();
@@ -26,7 +26,6 @@ export default function Dashboard() {
         { id: 1, label: "PARAMETRES" },
         { id: 2, label: "COMMUNICATIONS" },
       ]);
-      setOwner(true);
     } else if (selectedNation._id === "" && id) {
       getNation(id);
     } else if (id && selectedNation._id != id) {
