@@ -1,6 +1,6 @@
 export interface Place {
   _id?: string;
-  nationId: string;
+  nation: string;
   buildDate: Date;
   type: number;
   cost: number;
@@ -15,7 +15,7 @@ export interface Place {
 }
 
 export const emptyPlace: Place = {
-  nationId: "",
+  nation: "",
   buildDate: new Date(0),
   type: 0,
   cost: 0,

@@ -20,7 +20,7 @@ export interface ComPayload {
 }
 
 export interface PlacePayload {
-  nationId: string;
+  nation: string;
   buildDate: Date;
   name: string;
   description: string;

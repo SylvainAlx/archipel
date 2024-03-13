@@ -11,6 +11,9 @@ const setNationsList = (list: Nation[]) => myStore.set(nationsListAtom, list);
 const nationPlacesList = myStore.get(nationPlacesListAtom);
 const setNationPlacesList = (list: Place[]) =>
   myStore.set(nationPlacesListAtom, list);
+const placesList = myStore.get(placesListAtom)
+const setPlacesList = (list: Place[]) => myStore.set(placesListAtom, list);
+
 
 export const createNewPlace = (newPlace: PlacePayload) => {
   myStore.set(loadingSpinner, { show: true, text: SERVEUR_LOADING_STRING });
@@ -23,6 +26,7 @@ export const createNewPlace = (newPlace: PlacePayload) => {
           nationPlacesList,
           setNationPlacesList,
         );
+        createElementOfAtomArray(data.place, placesList, setPlacesList)
         myStore.set(nationAtom, data.nation);
         myStore.set(infoModalAtom, data.message);
       }
@@ -49,16 +53,32 @@ export const getAllPlaces = () => {
 };
 
 export const getNationPlaces = (id: string) => {
-  myStore.set(loadingSpinner, { show: true, text: SERVEUR_LOADING_STRING });
-  getNationPlacesFetch(id)
-    .then((resp: Place[]) => {
-      myStore.set(loadingSpinner, { show: false, text: "" });
-      setNationPlacesList(resp);
-    })
-    .catch((error) => {
-      myStore.set(loadingSpinner, { show: false, text: "" });
-      myStore.set(infoModalAtom, error.message);
-    });
+  const savedNationPlacesList: Place[] = []
+  placesList.forEach((place) => {
+    if (place.nation === id) {    
+      savedNationPlacesList.push(place)
+    }
+  })
+  if (savedNationPlacesList.length > 0) {
+    setNationPlacesList(savedNationPlacesList);
+  } else {
+    myStore.set(loadingSpinner, { show: true, text: SERVEUR_LOADING_STRING });
+    getNationPlacesFetch(id)
+      .then((resp: Place[]) => {
+        myStore.set(loadingSpinner, { show: false, text: "" });
+        setNationPlacesList(resp);
+        if (resp.length > 0) {
+          const copyPlacesList: Place[] = [...placesList]
+          copyPlacesList.push(...resp)
+          setPlacesList(copyPlacesList)
+        }
+      })
+      .catch((error) => {
+        myStore.set(loadingSpinner, { show: false, text: "" });
+        myStore.set(infoModalAtom, error.message);
+      });
+    }
+  
 };
 
 export const deletePlace = (id: string) => {
@@ -73,6 +93,7 @@ export const deletePlace = (id: string) => {
         nationPlacesList,
         setNationPlacesList,
       );
+      deleteElementOfAtomArray(resp.place, placesList, setPlacesList)
       myStore.set(loadingSpinner, { show: false, text: "" });
       myStore.set(infoModalAtom, resp.message);
     })

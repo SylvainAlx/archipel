@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect } from "react";
 import { SelectedNationProps } from "../../../types/typProp";
 import DashTile from "../../dashTile";
@@ -31,15 +30,17 @@ export default function Roleplay({
   const [nationPlacesList] = useAtom(nationPlacesListAtom);
 
   useEffect(() => {
-    if (nationPlacesList.length === 0 && selectedNation._id !== "") {
+    if (selectedNation._id !== ""){
       getNationPlaces(selectedNation._id);
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
 
   const handleClick = () => {
     const date = new Date();
     const newPlace: Place = {
-      nationId: selectedNation._id,
+      nation: selectedNation._id,
       buildDate: new Date(date.getTime() + placesTypeList[0].waitTime * 60000),
       cost: placesTypeList[0].cost,
       points: placesTypeList[0].points,
@@ -86,23 +87,25 @@ export default function Roleplay({
                 <div className="flex flex-wrap items-start justify-center gap-2">
                   {nationPlacesList != undefined ? (
                     nationPlacesList.map((place, i) => {
-                      return (
-                        <div
-                          className="w-full md:w-[49%] md:min-w-[250px]"
-                          key={i}
-                        >
-                          <PlaceTile
-                            owner={owner}
-                            place={place}
-                            update={
-                              selectedNation.data.roleplay.credits >=
-                              placesTypeList[place.level].cost
-                                ? place.level
-                                : -1
-                            }
-                          />
-                        </div>
-                      );
+                      if (place.nation === selectedNation._id) {
+                        return (
+                          <div
+                            className="w-full md:w-[49%] md:min-w-[250px]"
+                            key={i}
+                          >
+                            <PlaceTile
+                              owner={owner}
+                              place={place}
+                              update={
+                                selectedNation.data.roleplay.credits >=
+                                placesTypeList[place.level].cost
+                                  ? place.level
+                                  : -1
+                              }
+                            />
+                          </div>
+                        );
+                      }
                     })
                   ) : (
                     <em className="text-center">Aucune ville</em>

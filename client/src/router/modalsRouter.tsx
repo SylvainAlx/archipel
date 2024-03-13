@@ -28,7 +28,7 @@ export default function ModalsRouter() {
     info != "" ||
     loading.show ||
     editBox.original != -1 ||
-    newPlace.nationId != ""
+    newPlace.nation != ""
   ) {
     return (
       <div className="animate-in fade-in z-20 fixed top-0 w-[100%] h-[100%] backdrop-blur-sm bg-black_alpha flex items-center justify-center">
@@ -44,7 +44,7 @@ export default function ModalsRouter() {
                   {confirm.text != "" && <ConfirmModal />}
                   {info != "" && <InfoModal />}
                   {editBox.original != -1 && <EditBoxModal />}
-                  {newPlace.nationId != "" && <NewPlaceModal />}
+                  {newPlace.nation != "" && <NewPlaceModal />}
                 </>
               )}
             </>

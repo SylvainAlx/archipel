@@ -20,6 +20,7 @@ import { authentification } from "./api/authentification/authAPI";
 
 export default function App() {
   const [nation] = useAtom(nationAtom);
+  const [selectedNation] = useAtom(selectedNationAtom)
 
   const navigate = useNavigate();
 
@@ -30,12 +31,19 @@ export default function App() {
   useEffect(() => {
     if (nation.name != "") {
       myStore.set(selectedNationAtom, { ...nation });
-      myStore.set(ownerAtom, true);
       navigate(`/dashboard/${nation._id}`);
     } else {
       navigate("/");
     }
   }, [nation]);
+
+  useEffect(() => {
+    if (nation._id === selectedNation._id) {
+      myStore.set(ownerAtom, true);
+    } else {
+      myStore.set(ownerAtom, false);
+    }
+  }, [selectedNation]);
 
   return (
     <>
