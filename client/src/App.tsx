@@ -38,7 +38,8 @@ export default function App() {
   }, [nation]);
 
   useEffect(() => {
-    if (nation._id === selectedNation._id) {
+    
+    if (nation._id === selectedNation._id && nation._id != "") {
       myStore.set(ownerAtom, true);
     } else {
       myStore.set(ownerAtom, false);

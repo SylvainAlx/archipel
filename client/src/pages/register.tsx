@@ -9,6 +9,7 @@ import { register } from "../api/authentification/authAPI";
 export default function Register() {
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
+  const [acceptCGU, setAcceptCGU] = useState(false);
 
   const navigate = useNavigate();
 
@@ -56,7 +57,12 @@ export default function Register() {
                 Se connecter
               </span>
             </div>
-            <Button path="" text="CRÉER SA NATION" type="submit" />
+            <div className="flex justify-start items-center gap-2">
+              <input type="checkbox" onClick={()=>setAcceptCGU(!acceptCGU)}></input>
+              <p>En cochant cette case vous acceptez les CGU</p>
+            </div>
+            
+            <Button path="" text="CRÉER SA NATION" type="submit" disabled={!acceptCGU} />
           </>
         }
       />

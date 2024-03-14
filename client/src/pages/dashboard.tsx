@@ -7,7 +7,7 @@ import DashboardSettings from "./tabs/dashboard/dashboardSettings";
 import DashboardCom from "./tabs/dashboard/dashboardCom";
 import { nationAtom, ownerAtom, selectedNationAtom } from "../settings/store";
 import { useAtom } from "jotai";
-import AdBanner from "../components/ads/adBanner";
+// import AdBanner from "../components/ads/adBanner";
 import { getNation } from "../api/nation/nationAPI";
 
 export default function Dashboard() {
@@ -35,7 +35,7 @@ export default function Dashboard() {
 
   return (
     <>
-      <AdBanner />
+      {/* <AdBanner /> */}
       <div className="flex items-center">
         <TabNav tabs={tabList} tabId={tab.id} setTab={setTab} owner={owner} />
       </div>

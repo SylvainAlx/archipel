@@ -5,12 +5,12 @@ import { differenceEnMinutes } from "../utils/functions";
 import { confirmBox, myStore, selectedNationAtom } from "../settings/store";
 import { useAtom } from "jotai";
 
-export default function Notification({ owner, text }: DashboardTabProps) {
+export default function Notification({ text }: DashboardTabProps) {
   const [selectedNation] = useAtom(selectedNationAtom);
   const [totalReward, setTotalReward] = useState(0);
 
   useEffect(() => {
-    if (owner) {
+
       const reward = differenceEnMinutes(
         selectedNation.data.roleplay.lastUpdated,
       );
@@ -22,9 +22,8 @@ export default function Notification({ owner, text }: DashboardTabProps) {
       } else {
         setTotalReward(0);
       }
-    }
+    
   }, [
-    owner,
     selectedNation.data.roleplay.lastUpdated,
     selectedNation.data.roleplay.points,
     totalReward,

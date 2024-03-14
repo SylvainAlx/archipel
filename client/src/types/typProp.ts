@@ -135,7 +135,7 @@ export interface NewPlaceTileProps {
 
 export interface DashboardTabProps {
   text: string;
-  owner: boolean;
+  owner?: boolean;
 }
 
 export interface EditIconProps {

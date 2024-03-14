@@ -51,9 +51,9 @@ export default function Button({
 
   return (
     <button
-      disabled={disabled != undefined && disabled}
+      disabled={disabled != undefined && disabled && disabled}
       type={type != undefined ? type : "button"}
-      className={`${bgColor ? bgColor : "bg-secondary"} w-full max-w-[300px] inline-block rounded-full py-2 px-4 transition-all duration-300 hover:text-primary hover:bg-light`}
+      className={`${disabled ? "bg-complementary2" : bgColor ? bgColor : "bg-secondary"} ${!disabled && "hover:text-primary hover:bg-light"} w-full max-w-[300px] inline-block rounded-full py-2 px-4 transition-all duration-300`}
       onClick={click ? click : handleClick}
     >
       {text}
