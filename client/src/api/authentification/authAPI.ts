@@ -1,5 +1,5 @@
 import { SERVEUR_LOADING_STRING, comOptions } from "../../settings/consts";
-import { comsListAtom, infoModalAtom, loadingSpinner, myStore, nationAtom, nationsListAtom, recoveryKey } from "../../settings/store";
+import { comsListAtom, infoModalAtom, loadingSpinner, myStore, nationAtom, nationsListAtom, ownerAtom, recoveryKey } from "../../settings/store";
 import { EmptyNation } from "../../types/typNation";
 import { GET_JWT } from "../../utils/functions";
 import { RecoveryFetch, authGet, loginFetch, registerFetch } from "./authFetch";
@@ -75,6 +75,7 @@ export const authentification = () => {
 export const logout = () => {
   myStore.set(infoModalAtom, "déconnexion effectuée");
   myStore.set(nationAtom, EmptyNation)
+  myStore.set(ownerAtom, false)
   localStorage.removeItem("jwt");
 };
 

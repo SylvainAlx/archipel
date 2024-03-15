@@ -1,5 +1,5 @@
 import { ChangeEvent, FormEvent, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import H1 from "../components/titles/h1";
 import Input from "../components/form/input";
 import Button from "../components/button";
@@ -58,11 +58,25 @@ export default function Register() {
               </span>
             </div>
             <div className="flex justify-start items-center gap-2">
-              <input type="checkbox" onClick={()=>setAcceptCGU(!acceptCGU)}></input>
-              <p>En cochant cette case vous acceptez les CGU</p>
+              <input
+                type="checkbox"
+                className="cursor-pointer"
+                onClick={() => setAcceptCGU(!acceptCGU)}
+              ></input>
+              <p className="text-sm">
+                En cochant cette case vous acceptez les{" "}
+                <Link to="/termsofservice">
+                  <b>CGU</b>
+                </Link>
+              </p>
             </div>
-            
-            <Button path="" text="CRÉER SA NATION" type="submit" disabled={!acceptCGU} />
+
+            <Button
+              path=""
+              text="CRÉER SA NATION"
+              type="submit"
+              disabled={!acceptCGU}
+            />
           </>
         }
       />

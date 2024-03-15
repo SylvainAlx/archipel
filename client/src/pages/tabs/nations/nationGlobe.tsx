@@ -70,7 +70,7 @@ export default function NationGlobe({ text }: StringProps) {
           })
         }
         ref={container}
-        className="relative w-[90%] flex flex-col items-center rounded-xl overflow-hidden shadow-xl"
+        className="relative w-[80%] min-w-[300px] flex flex-col items-center rounded-xl overflow-hidden shadow-xl"
       >
         {showInfos.name != "" && (
           <div className="z-20 absolute top-0 right-0 p-2 bg-complementary flex flex-col rounded gap-1">

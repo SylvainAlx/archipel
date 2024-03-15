@@ -3,6 +3,7 @@ import Button from "../components/button";
 import H1 from "../components/titles/h1";
 import { nationAtom } from "../settings/store";
 import { TITLE } from "../settings/consts";
+import { Link } from "react-router-dom";
 
 export default function Home() {
   const [nation] = useAtom(nationAtom);
@@ -34,6 +35,11 @@ export default function Home() {
           <Button text="EXPLORER" type="button" path="/nations" />
         </div>
       )}
+      <div className="text-[10px] flex gap-2 pt-20">
+        <Link to="/legalnotice">mentions légales</Link>
+        <span>-</span>
+        <Link to="/termsofservice">conditions générales d'utilisation</Link>
+      </div>
     </>
   );
 }

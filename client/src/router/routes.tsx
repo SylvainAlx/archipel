@@ -3,10 +3,12 @@ import Admin from "../pages/admin";
 import Contact from "../pages/contact";
 import Dashboard from "../pages/dashboard";
 import Home from "../pages/home";
+import LegalNotice from "../pages/legalNotice";
 import Login from "../pages/login";
 import Nations from "../pages/nations";
 import Recovery from "../pages/recovery";
 import Register from "../pages/register";
+import TermsOfService from "../pages/termsOfService";
 import { ArchipelRoute } from "../types/typReact";
 
 export const authRoutes: ArchipelRoute[] = [
@@ -20,6 +22,8 @@ export const publicRoutes: ArchipelRoute[] = [
   { path: "/nations", page: <Nations /> },
   { path: "/dashboard/:id", page: <Dashboard /> },
   { path: "/contact", page: <Contact /> },
+  { path: "/legalnotice", page: <LegalNotice /> },
+  { path: "/termsofservice", page: <TermsOfService /> },
 ];
 
 export const privateRoutes: ArchipelRoute[] = [];
