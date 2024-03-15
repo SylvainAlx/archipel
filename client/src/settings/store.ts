@@ -1,7 +1,7 @@
 import { atom, createStore } from "jotai";
 
 import { EmptyNation, Nation, NationRoleplayData } from "../types/typNation";
-import { Com, ConfirmBoxDefault, EditBoxDefault } from "../types/typAtom";
+import { Com, ConfirmBoxDefault, EditBoxDefault, Param } from "../types/typAtom";
 import { Place, emptyPlace } from "../types/typPlace";
 
 export const myStore = createStore();
@@ -33,6 +33,10 @@ export const newPlaceAtom = atom<Place>(emptyPlace);
 // com
 
 export const comsListAtom = atom<Com[]>([]);
+
+// Param
+
+export const paramsListAtom = atom<Param[]>([])
 
 
 export const recoveryKey = atom("");

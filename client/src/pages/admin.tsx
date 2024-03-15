@@ -1,50 +1,69 @@
-import { useState, ChangeEvent, FormEvent } from "react";
-import Form from "../components/form/form";
-import Input from "../components/form/input";
+import { useEffect } from "react";
 import H1 from "../components/titles/h1";
 import { TITLE } from "../settings/consts";
-import { ParamPayload } from "../types/typPayload";
+import { paramsListAtom } from "../settings/store";
+import { useAtom } from "jotai";
+import { getAllParams } from "../api/param/paramAPI";
+import H2 from "../components/titles/h2";
+import TileContainer from "../components/tileContainer";
+import DashTile from "../components/dashTile";
 
 export default function Admin() {
-  const [param, setParam] = useState<ParamPayload>({name:"", props: []})
-  const [props, setProps] = useState([{label: "", value: ""}])
+  const [paramsList] = useAtom(paramsListAtom)
 
-  const handleChangeName = (e: ChangeEvent<HTMLInputElement>) => {
-    setParam({...param, name: e.target.value})
-  }
-
-  const handleChangeProp = (e: ChangeEvent<HTMLInputElement>) => {
-    const updatedProps = [...props]
-    const index = Number(e.target.id)
-    if (e.target.name === "label"){
-      updatedProps[index].label = e.target.value
+  useEffect(()=>{
+    if(paramsList.length === 0){
+      getAllParams()
     }
-    else if (e.target.name === "value"){
-      updatedProps[index].value = e.target.value
-    }
-    setProps(updatedProps)
-  }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
-  const handleSubmit = (e: FormEvent) => {
-    e.preventDefault()
-    console.log(param);
+  useEffect(()=>{
+    console.log(paramsList);
     
-  }
+  }, [paramsList])
 
   return (
     <>
       <H1 text={`Administration de ${TITLE}`} />
-      <Form title="Nouveau paramètres" submit={handleSubmit} children={
-        <>
-        <Input required={true} type="text" name="name" placeholder="NOM DU PARAM" value={param.name} onChange={handleChangeName} />
-        {props.map((prop, i)=>{
+      <H2 text={"Paramètres"} />
+      <TileContainer children={<>
+      {paramsList.map((param,i)=>{
+        return (
           <div key={i}>
-            <Input required={true} type="text" id={i.toString()} name="label" placeholder="LIBÉLÉ" value={prop.label} onChange={handleChangeProp} />
-            <Input required={true} type="text" id={i.toString()} name="value" placeholder="VALEUR" value={prop.value} onChange={handleChangeProp} />
+          <DashTile title={param.name} children={
+            
+            <table>
+              <thead>
+                <tr>
+                  <th>propriété</th>
+                  <th>valeur</th>
+                </tr>
+              </thead>
+              <tbody>
+                {paramsList.map((param)=>{
+                  return (
+                    <>
+                    {param.props.map((prop, k) =>{
+                        return (
+                          <tr key={k}>
+                            <td>{prop.label}</td>
+                            <td className="text-right">{prop.value}</td>
+                          </tr>
+                        )
+                    })}
+                    </>
+                  )
+                })}
+              </tbody>
+            </table>
+            }
+          />
           </div>
-        })}
-        </>
-      }  />
+        )
+      })}
+    </>} />
+      
     </>
   );
 }

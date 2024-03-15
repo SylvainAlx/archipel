@@ -26,8 +26,3 @@ export interface PlacePayload {
   description: string;
   image: string;
 }
-
-export interface ParamPayload {
-  name: string;
-  props: Array<{label: string; value: string | number}>;
-}

@@ -50,7 +50,7 @@ export default function Notification({ text }: DashboardTabProps) {
       <div className="relative text-5xl md:text-2xl">
         <MdNotifications />
         {totalReward > 0 && (
-          <div className="absolute top-0 left-0 w-[15px] h-[15px] bg-danger rounded-full text-[12px] flex justify-center items-center">
+          <div className="absolute top-0 left-0 w-[20px] h-[20px] md:w-[15px] md:h-[15px] bg-danger rounded-full text-lg md:text-[12px] flex justify-center items-center">
             <div>{text}</div>
           </div>
         )}

@@ -1,9 +1,9 @@
 import { SERVEUR_LOADING_STRING } from "../../settings/consts";
-import { infoModalAtom, loadingSpinner, myStore } from "../../settings/store";
-import { ParamPayload } from "../../types/typPayload";
-import { createParamFetch } from "./paramFetch";
+import { infoModalAtom, loadingSpinner, myStore, paramsListAtom } from "../../settings/store";
+import { Param } from "../../types/typAtom";
+import { createParamFetch, getAllParamsFetch } from "./paramFetch";
 
-export const createNewParam = (param: ParamPayload) => {
+export const createNewParam = (param: Param) => {
   myStore.set(loadingSpinner, { show: true, text: SERVEUR_LOADING_STRING });
   createParamFetch(param)
     .then((data) => {
@@ -17,3 +17,16 @@ export const createNewParam = (param: ParamPayload) => {
       myStore.set(infoModalAtom, error.message);
     });
 };
+
+export const getAllParams = () => {
+  myStore.set(loadingSpinner, { show: true, text: SERVEUR_LOADING_STRING });
+  getAllParamsFetch()
+  .then((data: Param[]) => {
+    myStore.set(loadingSpinner, { show: false, text: "" });
+    myStore.set(paramsListAtom, data);
+  })
+  .catch((error) => {
+    myStore.set(loadingSpinner, { show: false, text: "" });
+    myStore.set(infoModalAtom, error.message);
+  });
+}

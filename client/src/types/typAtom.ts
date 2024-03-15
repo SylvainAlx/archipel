@@ -38,6 +38,13 @@ export const EditBoxDefault: EditBox = {
   path: "",
 };
 
+// Param
+
+export interface Param {
+  name: string;
+  props: Array<{label: string; value: string | number | string}>;
+}
+
 //  Com
 
 export interface Com {
