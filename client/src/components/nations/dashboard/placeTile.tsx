@@ -1,24 +1,22 @@
 import { IoMdCloseCircle } from "react-icons/io";
-import { placesTypeList } from "../../../settings/consts";
+// import { placesTypeList } from "../../../settings/consts";
 import { PlaceTileProp } from "../../../types/typProp";
-import Countdown from "../../countdown";
+
 import Tag from "../../tag";
 import {
   FaArrowUpRightDots,
-  FaCity,
-  FaCoins,
+  // FaCoins,
   FaMountainCity,
   FaShieldHalved,
 } from "react-icons/fa6";
 import Button from "../../button";
 import {
   confirmBox,
+  editPlaceAtom,
   myStore,
   selectedNationAtom,
 } from "../../../settings/store";
 import { useAtom } from "jotai";
-import { MdTimer } from "react-icons/md";
-import { formatTime } from "../../../utils/functions";
 import IdTag from "../../tags/idTag";
 import PointTag from "../../tags/pointTag";
 import PopulationTag from "../../tags/populationTag";
@@ -33,6 +31,10 @@ export default function PlaceTile({ place, update, owner }: PlaceTileProp) {
       result: "",
       target: place,
     });
+  };
+
+  const handleClick = () => {
+    myStore.set(editPlaceAtom, { place, update });
   };
 
   return (
@@ -90,43 +92,29 @@ export default function PlaceTile({ place, update, owner }: PlaceTileProp) {
           />
           <PointTag label={place.points.toString()} />
           <PopulationTag label={place.population.toString()} />
-          <Tag
-            text={place.builds.toString() + " / " + place.slots.toString()}
-            bgColor="bg-info"
-            children={<FaCity />}
-          />
-        </div>
-        <div className="w-full flex items-center gap-2 justify-center">
-          {new Date(place.buildDate) > new Date() && (
-            <Countdown targetDate={place.buildDate} />
-          )}
         </div>
       </div>
       <em>{place.description}</em>
-      {owner &&
-        update != -1 &&
-        update != undefined &&
-        new Date(place.buildDate) < new Date() && (
-          <Button
-            text=""
-            path=""
-            children={
-              <div className="w-full flex items-center justify-evenly flex-wrap gap-2 text-sm">
-                <span className="flex gap-1 items-center">
-                  Niveau {place.level + 1} <FaArrowUpRightDots />
-                </span>
-                <span className="flex gap-1 items-center">
-                  <FaCoins />
-                  {placesTypeList[update].cost}
-                </span>
-                <span className="flex gap-1 items-center">
-                  <MdTimer />
-                  {formatTime(placesTypeList[update].waitTime)}
-                </span>
-              </div>
-            }
-          />
-        )}
+      {owner && (
+        <Button text="ACCÉDER A LA VILLE" path="" click={handleClick} />
+      )}
+      {/* {owner && update != -1 && update != undefined && (
+        <Button
+          text=""
+          path=""
+          children={
+            <div className="w-full flex items-center justify-evenly flex-wrap gap-2 text-sm">
+              <span className="flex gap-1 items-center">
+                Niveau {place.level + 1} <FaArrowUpRightDots />
+              </span>
+              <span className="flex gap-1 items-center">
+                <FaCoins />
+                {placesTypeList[update].cost}
+              </span>
+            </div>
+          }
+        />
+      )} */}
     </div>
   );
 }

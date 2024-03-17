@@ -27,19 +27,18 @@ export const getAllPlaces = async (req, res) => {
 
 export const createPlace = async (req, res) => {
   try {
-    const { nationId, buildDate, name, description, image } = req.body;
+    const { nation, name, description, image, builds } = req.body;
 
     const place = new Place({
-      nation: nationId,
-      buildDate,
+      nation,
       level: 1,
       slots: 10,
-      builds: 0,
       points: 1,
       population: 0,
       name,
       description,
       image,
+      builds,
     });
     place
       .save()

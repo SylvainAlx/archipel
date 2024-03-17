@@ -1,5 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { LabelId, PoliticalSide, RegimeOption } from "./typNation";
+import { Place } from "./typPlace";
+
+// editPlace
+
+export interface EditPlaceParam {
+  place: Place;
+  update?: number;
+}
 
 // confirmBox
 

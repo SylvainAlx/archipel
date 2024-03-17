@@ -1,3 +1,5 @@
+import { BuildCategory } from "./typPlace";
+
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export interface AuthPayload {
   name: string;
@@ -21,8 +23,8 @@ export interface ComPayload {
 
 export interface PlacePayload {
   nation: string;
-  buildDate: Date;
   name: string;
   description: string;
   image: string;
+  builds: BuildCategory[]
 }

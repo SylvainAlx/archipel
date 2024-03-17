@@ -3,8 +3,7 @@ import { SelectedNationProps } from "../../../types/typProp";
 import DashTile from "../../dashTile";
 import TileContainer from "../../tileContainer";
 import H2 from "../../titles/h2";
-import { MdTimer } from "react-icons/md";
-import { placesTypeList } from "../../../settings/consts";
+import { buildList, placesTypeList } from "../../../settings/consts";
 import {
   myStore,
   nationPlacesListAtom,
@@ -13,7 +12,7 @@ import {
 import { useAtom } from "jotai";
 
 import { FaCoins } from "react-icons/fa6";
-import { addCredits, formatTime } from "../../../utils/functions";
+import { addCredits } from "../../../utils/functions";
 import PlaceTile from "./placeTile";
 import Button from "../../button";
 
@@ -30,28 +29,25 @@ export default function Roleplay({
   const [nationPlacesList] = useAtom(nationPlacesListAtom);
 
   useEffect(() => {
-    if (selectedNation._id !== ""){
+    if (selectedNation._id !== "") {
       getNationPlaces(selectedNation._id);
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-
   const handleClick = () => {
-    const date = new Date();
     const newPlace: Place = {
       nation: selectedNation._id,
-      buildDate: new Date(date.getTime() + placesTypeList[0].waitTime * 60000),
       cost: placesTypeList[0].cost,
       points: placesTypeList[0].points,
       type: placesTypeList[0].id,
       slots: placesTypeList[0].slots,
       level: 1,
-      builds: 0,
       population: 0,
       name: "Nouvelle ville",
       description: placesTypeList[0].description,
       image: "",
+      builds: buildList,
     };
     myStore.set(newPlaceAtom, newPlace);
   };
@@ -119,18 +115,12 @@ export default function Roleplay({
                         path=""
                         click={handleClick}
                         children={
-                          <div className="w-full flex flex-col justify-center items-center gap-1 flex-wrap">
+                          <div className="w-full flex justify-center items-center gap-2 flex-wrap">
                             <span>Nouvelle ville</span>
-                            <div className="w-full flex items-center justify-center gap-2 text-sm">
-                              <span className="flex gap-1 items-center">
-                                <FaCoins />
-                                {placesTypeList[0].cost}
-                              </span>
-                              <span className="flex gap-1 items-center">
-                                <MdTimer />
-                                {formatTime(placesTypeList[0].waitTime)}
-                              </span>
-                            </div>
+                            <span className="flex gap-1 items-center">
+                              <FaCoins />
+                              {placesTypeList[0].cost}
+                            </span>
                           </div>
                         }
                       />

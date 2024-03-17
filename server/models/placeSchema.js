@@ -6,19 +6,11 @@ const PlaceSchema = mongoose.Schema(
       type: String,
       required: true,
     },
-    buildDate: {
-      type: Date,
-      require: true,
-    },
     level: {
       type: Number,
       required: true,
     },
     slots: {
-      type: Number,
-      required: true,
-    },
-    builds: {
       type: Number,
       required: true,
     },
@@ -42,10 +34,11 @@ const PlaceSchema = mongoose.Schema(
       type: String,
       default: "",
     },
+    builds: Array,
   },
   {
     timestamps: true,
-  }
+  },
 );
 
 export default mongoose.model("Place", PlaceSchema);
