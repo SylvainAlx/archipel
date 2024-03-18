@@ -53,10 +53,10 @@ export default function Button({
     <button
       disabled={disabled != undefined && disabled && disabled}
       type={type != undefined ? type : "button"}
-      className={`${disabled ? "bg-complementary2" : bgColor ? bgColor : "bg-secondary"} ${!disabled && "hover:text-primary hover:bg-light"} animate-fadeIn w-full max-w-[300px] inline-block rounded-full py-2 px-4 transition-all duration-300`}
+      className={`${disabled ? "bg-complementary2" : bgColor ? bgColor : "bg-secondary"} ${!disabled && "hover:text-primary hover:bg-light"} animate-fadeIn w-full max-w-[300px] flex justify-center rounded-full py-2 px-4 transition-all duration-300`}
       onClick={click ? click : handleClick}
     >
-      {text}
+      {text != "" && text}
       {children}
     </button>
   );

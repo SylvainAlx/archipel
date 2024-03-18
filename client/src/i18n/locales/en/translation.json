@@ -32,7 +32,7 @@
     "buttons": {
       "login": "LOGIN",
       "logout": "LOGOUT",
-      "register": "REGISTER",
+      "register": "SIGN UP",
       "explore": "EXPLORE",
       "dashboard": "DASHBOARD",
       "close": "CLOSE",

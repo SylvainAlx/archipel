@@ -25,6 +25,7 @@ import { ArchipelRoute } from "./types/typReact";
 import { authentification } from "./api/authentification/authAPI";
 import { IoLanguage } from "react-icons/io5";
 import i18n from "./i18n/i18n";
+import Button from "./components/button";
 
 export default function App() {
   const [nation] = useAtom(nationAtom);
@@ -56,11 +57,17 @@ export default function App() {
 
   return (
     <>
-      <div
-        className="absolute z-10 right-[5px] bottom-[5px] md:bottom-auto md:top-[5px] text-md rounded-full bg-secondary p-1 flex items-center"
-        onClick={() => myStore.set(showLangModalAtom, true)}
-      >
-        <IoLanguage />
+      <div className="w-[30px] h-[30px] fixed z-10 right-[10px] bottom-[10px] md:bottom-auto md:top-[10px]">
+        <Button
+          text=""
+          path=""
+          children={
+            <div>
+              <IoLanguage />
+            </div>
+          }
+          click={() => myStore.set(showLangModalAtom, true)}
+        />
       </div>
       <Header />
       <main className="animate-fadeIn flex flex-grow flex-col items-center gap-2 self-center pt-10 pb-[100px] sm:pt-20 px-1 md:px-4 w-full min-w-[300px] max-w-[1280px]">
