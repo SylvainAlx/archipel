@@ -7,6 +7,7 @@ import {
   loadingSpinner,
   newPlaceAtom,
   recoveryKey,
+  showLangModalAtom,
 } from "../settings/store";
 import { RecoveryModal } from "../components/modals/recoveryModal";
 import ConfirmModal from "../components/modals/confirmModal";
@@ -15,6 +16,7 @@ import LoadingSpinner from "../components/modals/loadingSpinner";
 import EditBoxModal from "../components/modals/editBoxModal";
 import NewPlaceModal from "../components/modals/newPlaceModal";
 import EditPlaceModal from "../components/modals/editPlaceModal";
+import LangModal from "../components/modals/langModal";
 
 export default function ModalsRouter() {
   const [recovery] = useAtom(recoveryKey);
@@ -24,6 +26,7 @@ export default function ModalsRouter() {
   const [editBox] = useAtom(editbox);
   const [newPlace] = useAtom(newPlaceAtom);
   const [editPlace] = useAtom(editPlaceAtom);
+  const [lang] = useAtom(showLangModalAtom);
 
   if (
     recovery != "" ||
@@ -32,7 +35,8 @@ export default function ModalsRouter() {
     loading.show ||
     editBox.original != -1 ||
     newPlace.nation != "" ||
-    editPlace.update != undefined
+    editPlace.update != undefined ||
+    lang
   ) {
     return (
       <div className="animate-in fade-in z-20 fixed top-0 w-[100%] h-[100%] backdrop-blur-sm bg-black_alpha flex items-center justify-center">
@@ -50,6 +54,7 @@ export default function ModalsRouter() {
                   {editBox.original != -1 && <EditBoxModal />}
                   {newPlace.nation != "" && <NewPlaceModal />}
                   {editPlace.update != undefined && <EditPlaceModal />}
+                  {lang && <LangModal />}
                 </>
               )}
             </>

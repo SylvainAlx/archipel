@@ -1,0 +1,48 @@
+{
+  "pages": {
+    "home": {
+      "title": "Bienvenue",
+      "presentation": "Découvrez le monde fascinant des Nations Virtuelles avec Navir, l'appli qui donne vie à votre propre nation numérique. Suivez son évolution, interagissez avec d'autres nations et forgez des alliances dans un univers virtuel où l'imagination rencontre la réalité. Bienvenue sur Nations Virtuelles, où le pouvoir de la communauté façonne l'avenir numérique de votre nation !"
+    },
+    "legalNotice": {
+      "title": "mentions légales"
+    },
+    "termsOfService": {
+      "title": "conditions générales d'utilisation"
+    },
+    "login": {
+      "title": "accéder à sa nation",
+      "placeholderName": "Nom de la nation",
+      "placeholderPassword": "Mot de passe",
+      "forgottenPassword": "Mot de passe oublié ?",
+      "firstVisit": "Première visite ?",
+      "newNation": "Créez une nouvelle nation"
+    },
+    "register": {
+      "title": "nouvelle nation",
+      "placeholderName": "Nom de la nation",
+      "placeholderPassword": "Mot de passe",
+      "ownNation": "Déja une nation ?",
+      "connect": "Se connecter",
+      "acceptTerms": "En cochant cette case vous acceptez les",
+      "termsOfService": "CGU"
+    }
+  },
+  "components": {
+    "buttons": {
+      "login": "SE CONNECTER",
+      "logout": "SE DÉCONNECTER",
+      "register": "S'ENREGISTRER",
+      "explore": "EXPLORER",
+      "dashboard": "TABLEAU DE BORD",
+      "close": "FERMER",
+      "nation": "MA NATION",
+      "admin": "ADMINISTRATION"
+    },
+    "modals": {
+      "titles": {
+        "changeLanguage": "CHOIX DE LA LANGUE"
+      }
+    }
+  }
+}

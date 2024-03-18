@@ -6,6 +6,7 @@ export const GET_JWT = () => localStorage.getItem("jwt");
 
 export const dateToString = (date: Date) => {
   const createdAtDate: Date = new Date(date);
+  return createdAtDate.toLocaleDateString("fr");
   return createdAtDate.toLocaleString("fr");
 };
 
@@ -67,7 +68,7 @@ export const formatTime = (totalMinutes: number): string => {
   return `${days > 0 ? days + "j" : ""} ${hours > 0 ? hours + "h" : ""} ${minutes > 0 ? hours + "m" : ""}`;
 };
 
-export const getCapitalName = (placesList: Place[], id:string): string => {
+export const getCapitalName = (placesList: Place[], id: string): string => {
   const foundPlace = placesList.find((place) => place._id === id);
   if (foundPlace) {
     return foundPlace.name;

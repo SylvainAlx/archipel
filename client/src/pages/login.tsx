@@ -5,11 +5,13 @@ import Input from "../components/form/input";
 import Button from "../components/button";
 import Form from "../components/form/form";
 import { login } from "../api/authentification/authAPI";
+import { useTranslation } from "react-i18next";
 
 export default function Login() {
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.type == "text") {
@@ -26,7 +28,7 @@ export default function Login() {
 
   return (
     <>
-      <H1 text="Accéder à sa nation" />
+      <H1 text={t("pages.login.title")} />
       <Form
         submit={handleSubmit}
         children={
@@ -36,7 +38,7 @@ export default function Login() {
               onChange={handleChange}
               type="text"
               name="name"
-              placeholder="Nom de la nation"
+              placeholder={t("pages.login.placeholderName")}
               value={name}
             />
             <Input
@@ -44,7 +46,7 @@ export default function Login() {
               onChange={handleChange}
               type="password"
               name="password"
-              placeholder="Mot de passe"
+              placeholder={t("pages.login.placeholderPassword")}
               value={password}
             />
             <div className="flex justify-center text-sm gap-2">
@@ -52,19 +54,23 @@ export default function Login() {
                 className="underline cursor-pointer"
                 onClick={() => navigate("/recovery")}
               >
-                Mot de passe oublié ?
+                {t("pages.login.forgottenPassword")}
               </span>
             </div>
-            <div className="flex justify-center text-sm gap-2">
-              <span>Première visite ?</span>
+            <div className="flex justify-center text-sm gap-2 flex-wrap">
+              <span>{t("pages.login.firstVisit")} </span>
               <span
                 className="underline cursor-pointer"
                 onClick={() => navigate("/register")}
               >
-                Créer une nation
+                {t("pages.login.newNation")}
               </span>
             </div>
-            <Button path="" text="SE CONNECTER" type="submit" />
+            <Button
+              path=""
+              text={t("components.buttons.login")}
+              type="submit"
+            />
           </>
         }
       />

@@ -1,0 +1,48 @@
+{
+  "pages": {
+    "home": {
+      "title": "Welcome",
+      "presentation": "Discover the fascinating world of Virtual Nations with Navir, the app that brings your own digital nation to life. Follow its evolution, interact with other nations, and forge alliances in a virtual universe where imagination meets reality. Welcome to Virtual Nations, where the power of community shapes your nation's digital future!"
+    },
+    "legalNotice": {
+      "title": "legal notice"
+    },
+    "termsOfService": {
+      "title": "terms of service"
+    },
+    "login": {
+      "title": "access your nation",
+      "placeholderName": "Nation name",
+      "placeholderPassword": "Password",
+      "forgottenPassword": "Forgotten password ?",
+      "firstVisit": "First visit ?",
+      "newNation": "Create new nation"
+    },
+    "register": {
+      "title": "new nation",
+      "placeholderName": "Nation name",
+      "placeholderPassword": "Password",
+      "ownNation": "Own nation ?",
+      "connect": "Login",
+      "acceptTerms": "By ticking this box, you agree to the",
+      "termsOfService": "TOS"
+    }
+  },
+  "components": {
+    "buttons": {
+      "login": "LOGIN",
+      "logout": "LOGOUT",
+      "register": "REGISTER",
+      "explore": "EXPLORE",
+      "dashboard": "DASHBOARD",
+      "close": "CLOSE",
+      "nation": "MY NATION",
+      "admin": "ADMINISTRATION"
+    },
+    "modals": {
+      "titles": {
+        "changeLanguage": "LANGUAGE"
+      }
+    }
+  }
+}

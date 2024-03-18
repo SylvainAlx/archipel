@@ -136,14 +136,14 @@ export const buildList: BuildCategory[] = [
     id: 0,
     label: {
       fr: "logements",
-      en: "homes"
+      en: "homes",
     },
     builds: [
       {
         id: 0,
         label: {
           fr: "maison individuelle",
-          en: "individual house"
+          en: "individual house",
         },
         level: 1,
         count: 0,
@@ -153,26 +153,26 @@ export const buildList: BuildCategory[] = [
         id: 1,
         label: {
           fr: "immeuble",
-          en: "building"
+          en: "building",
         },
         level: 1,
         count: 0,
         max: -1,
-      }
-    ]
+      },
+    ],
   },
   {
     id: 1,
     label: {
       fr: "services publics",
-      en: "public services"
+      en: "public services",
     },
     builds: [
       {
         id: 0,
         label: {
           fr: "lieu administratif",
-          en: "administration"
+          en: "administration",
         },
         level: 1,
         count: 0,
@@ -182,26 +182,26 @@ export const buildList: BuildCategory[] = [
         id: 1,
         label: {
           fr: "embassade",
-          en: "embassy"
+          en: "embassy",
         },
         level: 1,
         count: 0,
         max: -1,
-      }
-    ]
+      },
+    ],
   },
   {
     id: 2,
     label: {
       fr: "entreprises",
-      en: "companies"
+      en: "companies",
     },
     builds: [
       {
         id: 0,
         label: {
           fr: "secteur primaire",
-          en: "primary sector"
+          en: "primary sector",
         },
         level: 1,
         count: 0,
@@ -211,7 +211,7 @@ export const buildList: BuildCategory[] = [
         id: 1,
         label: {
           fr: "secteur secondaire",
-          en: "secondary sector"
+          en: "secondary sector",
         },
         level: 1,
         count: 0,
@@ -221,16 +221,15 @@ export const buildList: BuildCategory[] = [
         id: 1,
         label: {
           fr: "secteur tertiaire",
-          en: "tertiary sector"
+          en: "tertiary sector",
         },
         level: 1,
         count: 0,
         max: -1,
-      }
-    ]
-  }
-]
-
+      },
+    ],
+  },
+];
 
 // onglets
 

@@ -5,11 +5,13 @@ import Input from "../components/form/input";
 import Button from "../components/button";
 import Form from "../components/form/form";
 import { register } from "../api/authentification/authAPI";
+import { useTranslation } from "react-i18next";
 
 export default function Register() {
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [acceptCGU, setAcceptCGU] = useState(false);
+  const { t } = useTranslation();
 
   const navigate = useNavigate();
 
@@ -27,7 +29,7 @@ export default function Register() {
   };
   return (
     <>
-      <H1 text="Nouvelle nation" />
+      <H1 text={t("pages.register.title")} />
       <Form
         submit={handleSubmit}
         children={
@@ -37,7 +39,7 @@ export default function Register() {
               onChange={handleChange}
               type="text"
               name="name"
-              placeholder="Nom de la nation"
+              placeholder={t("pages.register.placeholderName")}
               value={name}
             />
             <Input
@@ -45,16 +47,16 @@ export default function Register() {
               onChange={handleChange}
               type="password"
               name="password"
-              placeholder="Mot de passe"
+              placeholder={t("pages.register.placeholderPassword")}
               value={password}
             />
             <div className="flex justify-center text-sm gap-2">
-              <span>Déjà une nation ?</span>
+              <span>{t("pages.register.ownNation")}</span>
               <span
                 className="underline cursor-pointer"
                 onClick={() => navigate("/login")}
               >
-                Se connecter
+                {t("pages.register.connect")}
               </span>
             </div>
             <div className="flex justify-start items-center gap-2">
@@ -64,16 +66,16 @@ export default function Register() {
                 onClick={() => setAcceptCGU(!acceptCGU)}
               ></input>
               <p className="text-sm">
-                En cochant cette case vous acceptez les{" "}
+                {t("pages.register.acceptTerms")}{" "}
                 <Link to="/termsofservice">
-                  <b>CGU</b>
+                  <b>{t("pages.register.termsOfService")}</b>
                 </Link>
               </p>
             </div>
 
             <Button
               path=""
-              text="CRÉER SA NATION"
+              text={t("components.buttons.register")}
               type="submit"
               disabled={!acceptCGU}
             />
