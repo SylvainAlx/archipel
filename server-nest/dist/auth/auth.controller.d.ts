@@ -1,4 +1,4 @@
-import { AuthService } from './auth.service';
+import { AuthService } from "./auth.service";
 export declare class AuthController {
     private readonly authService;
     constructor(authService: AuthService);
@@ -6,4 +6,5 @@ export declare class AuthController {
     login(req: any, res: any): Promise<void>;
     forgetPassword(req: any, res: any): Promise<void>;
     verify(req: any, res: any): Promise<void>;
+    getHello(req: any, res: any): Promise<string>;
 }

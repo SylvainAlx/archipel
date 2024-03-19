@@ -138,7 +138,7 @@ export default function NationList({ text }: StringProps) {
                     data={nation.data}
                     createdAt={nation.createdAt}
                   />
-                  <b className="absolute top-0 right-2 font-bolder">{i + 1}</b>
+                  <b className="absolute top-0 right-2 font-bolder">#{i + 1}</b>
                 </div>
               );
             }

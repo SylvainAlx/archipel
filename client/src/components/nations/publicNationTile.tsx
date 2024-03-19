@@ -8,9 +8,6 @@ import PopulationTag from "../tags/populationTag";
 import RegimeTag from "../tags/regimeTag";
 
 export default function PublicNationTile({ _id, name, data, role }: Nation) {
-  // const createdAtDate: Date = new Date(createdAt);
-  // const formattedDate: string = createdAtDate.toLocaleDateString();
-
   return (
     <div className="bg-complementary hover:bg-black_alpha hover:cursor-pointer flex flex-col items-center p-2 gap-4 rounded transition-all">
       <div className="w-full flex items-center">
@@ -44,8 +41,6 @@ export default function PublicNationTile({ _id, name, data, role }: Nation) {
           }
         })}
       </div>
-
-      {/* <em className="text-[8px]">{formattedDate}</em> */}
     </div>
   );
 }

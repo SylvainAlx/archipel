@@ -5,6 +5,7 @@ import Input from "../components/form/input";
 import Button from "../components/button";
 import Form from "../components/form/form";
 import TextArea from "../components/form/textArea";
+import { useTranslation } from "react-i18next";
 
 export default function Recovery() {
   const [name, setName] = useState("");
@@ -12,6 +13,7 @@ export default function Recovery() {
   const [recovery, setRecovery] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [passwordsMatch, setPasswordsMatch] = useState(true);
+  const { t } = useTranslation();
 
   const handleChange = (
     e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>,
@@ -32,7 +34,7 @@ export default function Recovery() {
 
   return (
     <>
-      <H1 text="Réinitialisation du mot de passe" />
+      <H1 text={t("pages.recovery.title")} />
       <Form
         submit={handleSubmit}
         children={
@@ -42,7 +44,7 @@ export default function Recovery() {
               onChange={handleChange}
               type="text"
               name="name"
-              placeholder="Nom de la nation"
+              placeholder={t("pages.recovery.placeholderName")}
               value={name}
             />
             <TextArea
@@ -50,7 +52,7 @@ export default function Recovery() {
               onChange={handleChange}
               name="recovery"
               maxLength={1000}
-              placeholder="Phrase de récupération"
+              placeholder={t("pages.recovery.recoveryKey")}
               value={recovery}
             />
             <Input
@@ -58,7 +60,7 @@ export default function Recovery() {
               onChange={handleChange}
               type="password"
               name="password"
-              placeholder="Nouveau mot de passe"
+              placeholder={t("pages.recovery.newPassword")}
               value={password}
             />
             <Input
@@ -69,7 +71,7 @@ export default function Recovery() {
               }}
               type="password"
               name="confirm"
-              placeholder="Confirmer le mot de passe"
+              placeholder={t("pages.recovery.confirmPassword")}
               value={confirmPassword}
             />
             {/* <button
@@ -82,7 +84,7 @@ export default function Recovery() {
             <div className={`${!passwordsMatch && "cursor-not-allowed"}`}>
               <Button
                 path=""
-                text="CHANGER DE MOT DE PASSE"
+                text={t("pages.recovery.changePassword")}
                 type="submit"
                 disabled={!passwordsMatch}
               />

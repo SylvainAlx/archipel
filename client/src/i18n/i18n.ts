@@ -1,5 +1,6 @@
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
+import LanguageDetector from "i18next-browser-languagedetector";
 
 // Importez les fichiers de traduction
 import translationEN from "./locales/en/translation.json";
@@ -8,7 +9,11 @@ import translationFR from "./locales/fr/translation.json";
 // Configuration de react-i18next
 i18n
   .use(initReactI18next) // initialise react-i18next
+  .use(LanguageDetector)
   .init({
+    detection: {
+      order: ["navigator"],
+    },
     resources: {
       en: {
         translation: translationEN,

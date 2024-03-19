@@ -26,9 +26,20 @@
       "connect": "Login",
       "acceptTerms": "By ticking this box, you agree to the",
       "termsOfService": "TOS"
+    },
+    "recovery": {
+      "title": "password reset",
+      "placeholderName": "Nation name",
+      "recoveryKey": "Recovery key",
+      "newPassword": "New password",
+      "confirmPassword": "Confirm new password",
+      "changePassword": "Change password"
     }
   },
   "components": {
+    "logo": {
+      "subtitle": "VIRTUAL NATIONS"
+    },
     "buttons": {
       "login": "LOGIN",
       "logout": "LOGOUT",

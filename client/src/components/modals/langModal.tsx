@@ -12,6 +12,7 @@ export default function LangModal() {
   const handleChange = (e: ChangeEvent<HTMLSelectElement>) => {
     i18n.changeLanguage(e.target.value);
     setLang(e.target.value);
+    myStore.set(showLangModalAtom, false);
   };
 
   return (
