@@ -6,6 +6,8 @@ import { BuildCategory } from "../types/typPlace";
 
 export const MDP_LOBBY = import.meta.env.VITE_MDP_LOBBY;
 
+export const VERSION = "0.1";
+
 //  server
 
 export const SERVER_URL = import.meta.env.VITE_SERVER_URL;

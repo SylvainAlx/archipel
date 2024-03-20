@@ -35,7 +35,11 @@ export default function PublicNationTile({ _id, name, data, role }: Nation) {
           if (regime.id === data.general.regime) {
             return (
               <span key={i}>
-                <RegimeTag label={regime.label} bgColor={regime.color} />
+                <RegimeTag
+                  label={regime.label}
+                  bgColor={regime.color}
+                  type={regime.type}
+                />
               </span>
             );
           }
