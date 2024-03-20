@@ -78,6 +78,7 @@ export const EmptyNation: Nation = {
 export interface RegimeOption {
   id: number;
   label: string;
+  type: number;
   color: string;
 }
 

@@ -1,4 +1,5 @@
 import Nation from "../models/nationSchema.js";
+import Param from "../models/paramSchema.js";
 import jwt from "jsonwebtoken";
 import { LoremIpsum } from "lorem-ipsum";
 
@@ -18,7 +19,14 @@ export const register = async (req, res) => {
     });
     const recovery = random.generateWords(15);
 
-    const role = name === process.env.ADMIN ? "admin" : "standard";
+    let role = "standard";
+
+    const roles = await Param.findOne({ name: "role" });
+    roles.props.forEach((prop) => {
+      if (prop.value === "admin" && prop.label === name) {
+        role = "admin";
+      }
+    });
 
     const coords = {
       lat: (Math.random() * (90 - -90) + -90).toFixed(2),
@@ -56,7 +64,7 @@ export const login = async (req, res) => {
 
     const nation = await Nation.findOne(
       { name },
-      "_id name password role data createdAt"
+      "_id name password role data createdAt",
     );
     if (!nation) {
       return res.status(404).json({ message: "Nation introuvable" });
@@ -87,7 +95,7 @@ export const verify = async (req, res) => {
 
     const nation = await Nation.findOne(
       { name: decoded.name },
-      "_id name role data createdAt"
+      "_id name role data createdAt",
     );
 
     if (nation) {

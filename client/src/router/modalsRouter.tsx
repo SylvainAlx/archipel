@@ -40,7 +40,7 @@ export default function ModalsRouter() {
   ) {
     return (
       <div className="animate-in fade-in z-20 fixed top-0 w-[100%] h-[100%] backdrop-blur-sm bg-black_alpha flex items-center justify-center">
-        <div className="min-w-[350px] bg-slate-800 rounded-md p-6 flex flex-col items-center gap-4">
+        <div className="min-w-[350px] max-w-[90%] bg-slate-800 rounded-md p-6 flex flex-col items-center gap-4">
           {loading.show ? (
             <LoadingSpinner />
           ) : (

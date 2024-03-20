@@ -2,7 +2,7 @@ import Tag from "../tag";
 import { customTagProps } from "../../types/typProp";
 import { FaCoins } from "react-icons/fa6";
 import { addCredits } from "../../utils/functions";
-import { MdAddCircle } from "react-icons/md";
+// import { MdAddCircle } from "react-icons/md";
 
 export default function CreditTag({ owner, label }: customTagProps) {
   return (
@@ -14,7 +14,7 @@ export default function CreditTag({ owner, label }: customTagProps) {
           <FaCoins />
           {owner && (
             <span className="text-2xl cursor-pointer" onClick={addCredits}>
-              <MdAddCircle />
+              {/* <MdAddCircle /> */}
             </span>
           )}
         </>

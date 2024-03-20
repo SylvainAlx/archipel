@@ -4,13 +4,7 @@ import { regimeOptions } from "../../../settings/consts";
 import DashTile from "../../dashTile";
 import TileContainer from "../../tileContainer";
 import H3 from "../../titles/h3";
-import {
-  FaDiscord,
-  FaInstagram,
-  FaLink,
-  FaShieldHalved,
-  FaWikipediaW,
-} from "react-icons/fa6";
+import { FaDiscord, FaInstagram, FaLink, FaWikipediaW } from "react-icons/fa6";
 import Tag from "../../tag";
 import { SelectedNationProps } from "../../../types/typProp";
 import EditIcon from "../../editIcon";
@@ -23,6 +17,7 @@ import { useAtom } from "jotai";
 import { getCapitalName } from "../../../utils/functions";
 import RegimeTag from "../../tags/regimeTag";
 import IdTag from "../../tags/idTag";
+import CapitalTag from "../../tags/capitalTag";
 
 export default function GeneralInformations({
   selectedNation,
@@ -30,7 +25,7 @@ export default function GeneralInformations({
 }: SelectedNationProps) {
   const [placesList, setPlacesList] = useState<LabelId[]>([]);
   const [nationPlaceList] = useAtom(nationPlacesListAtom);
-  const [capital, setCapital] = useState<string>("");
+  const [capital, setCapital] = useState<string>("aucune capitale");
 
   useEffect(() => {
     const updatedPlaces: LabelId[] = [];
@@ -47,7 +42,11 @@ export default function GeneralInformations({
         nationPlaceList,
         selectedNation.data.roleplay.capital,
       );
-      setCapital(capitalName);
+      if (capitalName != "") {
+        setCapital(capitalName);
+      } else {
+        setCapital("aucune capitale");
+      }
     }
   }, [nationPlaceList, selectedNation]);
 
@@ -120,6 +119,7 @@ export default function GeneralInformations({
                           <span key={i} className="relative">
                             <RegimeTag
                               label={regime.label}
+                              type={regime.type}
                               bgColor={regime.color}
                             />
                             {owner && (
@@ -136,16 +136,7 @@ export default function GeneralInformations({
                   </div>
                   {capital != "" && (
                     <div className="relative">
-                      <Tag
-                        text=""
-                        bgColor="bg-info"
-                        children={
-                          <>
-                            <FaShieldHalved />
-                            <p>{capital}</p>
-                          </>
-                        }
-                      />
+                      <CapitalTag label={capital} />
                       {owner && (
                         <EditIcon
                           param={placesList}

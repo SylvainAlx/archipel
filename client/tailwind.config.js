@@ -23,12 +23,22 @@ export default {
       },
       animation: {
         fadeIn: "fadeIn 0.3s ease-in-out",
+        slideInFromTop: "slideInFromTop 0.3s ease-in-out",
+        slideInFromBottom: "slideInFromBottom 0.3s ease-in-out",
       },
 
       keyframes: {
         fadeIn: {
           from: { opacity: 0 },
           to: { opacity: 1 },
+        },
+        slideInFromTop: {
+          from: { transform: "translateY(-100px)" },
+          to: { transform: "translateY(0)" },
+        },
+        slideInFromBottom: {
+          from: { transform: "translateY(100px)" },
+          to: { transform: "translateY(0)" },
         },
       },
     },

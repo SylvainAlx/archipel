@@ -12,9 +12,12 @@ export default function Logo() {
   return (
     <div
       onClick={handleClick}
-      className="flex gap-2 h-[50px] w-full md:w-min items-center"
+      className="animate-fadeIn flex gap-2 h-[50px] w-full md:w-min items-center"
     >
-      <img src="/logo.png" className="cursor-pointer h-full"></img>
+      <img
+        src="/logo.png"
+        className="cursor-pointer h-full hover:animate-pulse"
+      ></img>
       <h4 className="text-md lg:text-xl xl:text-2xl">
         {subtitle.map((word, i) => {
           return <div key={i}>{word}</div>;

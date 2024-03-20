@@ -47,21 +47,38 @@ export const comOptions: StandardOption[] = [
 export const comTypeOptions = [comOptions[3], comOptions[4], comOptions[0]];
 
 export const regimeOptions: RegimeOption[] = [
-  { id: 0, label: "régime politique inconnu", color: "bg-regime_0" },
-  { id: 1, label: "pas de gouvernement", color: "bg-regime_0" },
-  { id: 2, label: "république à régime présidentiel", color: "bg-regime_1" },
+  { id: 0, label: "régime politique inconnu", color: "bg-regime_0", type: 0 },
+  { id: 1, label: "pas de gouvernement", color: "bg-regime_0", type: 0 },
+  {
+    id: 2,
+    label: "république à régime présidentiel",
+    color: "bg-regime_1",
+    type: 1,
+  },
   {
     id: 3,
     label: "république à régime semi-présidentiel",
     color: "bg-regime_1",
+    type: 1,
   },
-  { id: 4, label: "république parlementaire", color: "bg-regime_1" },
-  { id: 5, label: "république à parti unique", color: "bg-regime_1" },
-  { id: 6, label: "monarchie constitutionnelle", color: "bg-regime_100" },
-  { id: 7, label: "monarchie absolue", color: "bg-regime_100" },
-  { id: 8, label: "dictature militaire", color: "bg-regime_200" },
-  { id: 9, label: "gouvernement provisoire", color: "bg-regime_200" },
-  { id: 10, label: "autre", color: "bg-regime_200" },
+  { id: 4, label: "république parlementaire", color: "bg-regime_1", type: 1 },
+  { id: 5, label: "république à parti unique", color: "bg-regime_1", type: 1 },
+  {
+    id: 6,
+    label: "monarchie constitutionnelle",
+    color: "bg-regime_100",
+    type: 100,
+  },
+  { id: 7, label: "monarchie absolue", color: "bg-regime_100", type: 100 },
+  { id: 8, label: "dictature militaire", color: "bg-regime_200", type: 200 },
+  {
+    id: 9,
+    label: "gouvernement provisoire",
+    color: "bg-regime_200",
+    type: 200,
+  },
+  { id: 10, label: "autre", color: "bg-regime_200", type: 200 },
+  { id: 11, label: "démocratie directe", color: "bg-regime_1", type: 1 },
 ];
 
 export const politicalSideList: PoliticalSide[] = [

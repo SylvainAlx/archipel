@@ -50,7 +50,7 @@ export const EditBoxDefault: EditBox = {
 
 export interface Param {
   name: string;
-  props: Array<{label: string; value: string | number | string}>;
+  props: Array<{ label: string; value: string | number }>;
 }
 
 //  Com

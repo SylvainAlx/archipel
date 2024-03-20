@@ -8,9 +8,11 @@ import DashTile from "../dashTile";
 
 export default function EditPlaceModal() {
   const [data, setData] = useAtom(editPlaceAtom);
+
   const handleClose = () => {
     setData({ place: emptyPlace });
   };
+
   return (
     <>
       <h2 className="text-2xl text-center p-4">{data.place.name}</h2>

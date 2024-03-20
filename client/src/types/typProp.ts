@@ -58,6 +58,7 @@ export interface NumberProps {
 
 export interface customTagProps {
   label: string | number;
+  type?: number;
   bgColor?: string;
   owner?: boolean;
 }

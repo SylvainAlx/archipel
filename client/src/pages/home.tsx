@@ -2,7 +2,6 @@ import { useAtom } from "jotai";
 import Button from "../components/button";
 import H1 from "../components/titles/h1";
 import { nationAtom } from "../settings/store";
-import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
 export default function Home() {
@@ -14,7 +13,7 @@ export default function Home() {
       <H1 text={t("pages.home.title")} />
       <p className="text-xl px-4">{t("pages.home.presentation")}</p>
       {nation._id === undefined || nation._id === "" ? (
-        <div className="w-full py-4 flex justify-center gap-4 flex-wrap">
+        <div className="w-full py-4 flex justify-center gap-2 flex-wrap">
           <Button
             text={t("components.buttons.login")}
             type="button"
@@ -45,11 +44,6 @@ export default function Home() {
           />
         </div>
       )}
-      <div className="text-[10px] flex gap-2 pt-20">
-        <Link to="/legalnotice">{t("pages.legalNotice.title")}</Link>
-        <span>-</span>
-        <Link to="/termsofservice">{t("pages.termsOfService.title")}</Link>
-      </div>
     </>
   );
 }

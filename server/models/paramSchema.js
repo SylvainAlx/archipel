@@ -5,7 +5,7 @@ const ParamSchema = mongoose.Schema({
     type: String,
     required: true,
   },
-  props: Array,
+  props: [{ label: String, value: String || Number }],
 });
 
 export default mongoose.model("Param", ParamSchema);

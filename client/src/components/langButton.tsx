@@ -1,16 +1,18 @@
 import { IoLanguage } from "react-icons/io5";
 import Button from "./button";
-import { myStore, showLangModalAtom } from "../settings/store";
+import { langAtom, myStore, showLangModalAtom } from "../settings/store";
 import { useEffect, useState } from "react";
+import { useAtom } from "jotai";
 
 export default function LangButton() {
   const [prevScrollPos, setPrevScrollPos] = useState(0);
   const [visible, setVisible] = useState(true);
+  const [lang] = useAtom(langAtom);
 
   const handleScroll = () => {
     const currentScrollPos = window.scrollY;
 
-    if (currentScrollPos < prevScrollPos) {
+    if (currentScrollPos <= prevScrollPos) {
       setVisible(false);
     } else {
       setVisible(true);
@@ -27,13 +29,14 @@ export default function LangButton() {
   return (
     <>
       <div
-        className={`w-[30px] h-[30px] fixed z-10 right-[10px] top-[10px] ${!visible && "opacity-50"} transition-all duration-300`}
+        className={`w-[45px] fixed z-10 right-[10px] top-[10px] ${!visible && "opacity-50"} transition-all duration-300`}
       >
         <Button
           text=""
           path=""
           children={
-            <div>
+            <div className="flex items-center gap-1">
+              <span className="text-[10px]">{lang.toUpperCase()}</span>
               <IoLanguage />
             </div>
           }

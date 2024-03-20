@@ -132,6 +132,12 @@ export default function Roleplay({
                         path=""
                         bgColor="bg-danger"
                         click={addCredits}
+                        children={
+                          <div className="pl-2 flex gap-1 items-center">
+                            <FaCoins />
+                            {placesTypeList[0].cost}
+                          </div>
+                        }
                       />
                     )}
               </>

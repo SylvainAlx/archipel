@@ -9,6 +9,7 @@ import {
   Param,
 } from "../types/typAtom";
 import { Place, emptyPlace } from "../types/typPlace";
+import i18n from "../i18n/i18n";
 
 export const myStore = createStore();
 
@@ -53,3 +54,5 @@ export const infoModalAtom = atom("");
 export const showApp = atom(false);
 
 export const dataCheckedAtom = atom(false);
+
+export const langAtom = atom(i18n.language);

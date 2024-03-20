@@ -7,7 +7,6 @@ import {
   FaArrowUpRightDots,
   // FaCoins,
   FaMountainCity,
-  FaShieldHalved,
 } from "react-icons/fa6";
 import Button from "../../button";
 import {
@@ -20,6 +19,7 @@ import { useAtom } from "jotai";
 import IdTag from "../../tags/idTag";
 import PointTag from "../../tags/pointTag";
 import PopulationTag from "../../tags/populationTag";
+import { GiCapitol } from "react-icons/gi";
 
 export default function PlaceTile({ place, update, owner }: PlaceTileProp) {
   const [selectedNation] = useAtom(selectedNationAtom);
@@ -46,7 +46,7 @@ export default function PlaceTile({ place, update, owner }: PlaceTileProp) {
           <div className="text-xl flex items-center gap-2">
             <span className="text-lg text-info">
               {place._id === selectedNation.data.roleplay.capital && (
-                <FaShieldHalved />
+                <GiCapitol />
               )}
             </span>
             <span>{place.name}</span>

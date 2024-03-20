@@ -1,6 +1,6 @@
 import Tag from "../tag";
 import { customTagProps } from "../../types/typProp";
-import { BiSolidTagAlt } from "react-icons/bi";
+import { IoQrCodeOutline } from "react-icons/io5";
 
 export default function IdTag({ label }: customTagProps) {
   return (
@@ -11,7 +11,7 @@ export default function IdTag({ label }: customTagProps) {
       }
       bgColor="bg-[rgba(255,255,255,0.3)]"
       // textStyle="uppercase"
-      children={<BiSolidTagAlt />}
+      children={<IoQrCodeOutline />}
     />
   );
 }

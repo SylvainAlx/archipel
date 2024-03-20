@@ -10,19 +10,17 @@ export default function Notification({ text }: DashboardTabProps) {
   const [totalReward, setTotalReward] = useState(0);
 
   useEffect(() => {
-
-      const reward = differenceEnMinutes(
-        selectedNation.data.roleplay.lastUpdated,
+    const reward = differenceEnMinutes(
+      selectedNation.data.roleplay.lastUpdated,
+    );
+    if (reward > 0) {
+      const bonus = Math.ceil(
+        (reward * selectedNation.data.roleplay.points) / 10,
       );
-      if (reward > 0) {
-        const bonus = Math.ceil(
-          (reward * selectedNation.data.roleplay.points) / 10,
-        );
-        setTotalReward(reward + bonus);
-      } else {
-        setTotalReward(0);
-      }
-    
+      setTotalReward(reward + bonus);
+    } else {
+      setTotalReward(0);
+    }
   }, [
     selectedNation.data.roleplay.lastUpdated,
     selectedNation.data.roleplay.points,
@@ -50,7 +48,7 @@ export default function Notification({ text }: DashboardTabProps) {
       <div className="relative text-5xl md:text-2xl">
         <MdNotifications />
         {totalReward > 0 && (
-          <div className="absolute top-0 left-0 w-[20px] h-[20px] md:w-[15px] md:h-[15px] bg-danger rounded-full text-lg md:text-[12px] flex justify-center items-center">
+          <div className="animate-ping absolute top-0 left-0 w-[20px] h-[20px] md:w-[15px] md:h-[15px] bg-danger rounded-full text-lg md:text-[12px] flex justify-center items-center">
             <div>{text}</div>
           </div>
         )}

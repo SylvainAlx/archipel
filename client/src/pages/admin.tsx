@@ -31,32 +31,19 @@ export default function Admin() {
                   <DashTile
                     title={param.name}
                     children={
-                      <table>
-                        <thead>
-                          <tr>
-                            <th>propriété</th>
-                            <th>valeur</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {paramsList.map((param) => {
-                            return (
-                              <>
-                                {param.props.map((prop, k) => {
-                                  return (
-                                    <tr key={k}>
-                                      <td>{prop.label}</td>
-                                      <td className="text-right">
-                                        {prop.value}
-                                      </td>
-                                    </tr>
-                                  );
-                                })}
-                              </>
-                            );
-                          })}
-                        </tbody>
-                      </table>
+                      <>
+                        {param.props.map((prop, j) => {
+                          return (
+                            <div
+                              key={j}
+                              className="w-full flex items-center justify-between"
+                            >
+                              <p>{prop.label}</p>
+                              <p className="text-right">{prop.value}</p>
+                            </div>
+                          );
+                        })}
+                      </>
                     }
                   />
                 </div>

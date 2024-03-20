@@ -12,7 +12,8 @@ i18n
   .use(LanguageDetector)
   .init({
     detection: {
-      order: ["navigator"],
+      order: ["localStorage", "navigator"],
+      lookupLocalStorage: "i18nextLng",
     },
     resources: {
       en: {

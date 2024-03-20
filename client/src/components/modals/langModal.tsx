@@ -1,12 +1,13 @@
-import { ChangeEvent, useState } from "react";
-import { myStore, showLangModalAtom } from "../../settings/store";
+import { ChangeEvent } from "react";
+import { langAtom, myStore, showLangModalAtom } from "../../settings/store";
 import Button from "../button";
 import i18n, { langOptions } from "../../i18n/i18n";
 import Select from "../form/select";
 import { useTranslation } from "react-i18next";
+import { useAtom } from "jotai";
 
 export default function LangModal() {
-  const [lang, setLang] = useState(i18n.language);
+  const [lang, setLang] = useAtom(langAtom);
   const { t } = useTranslation();
 
   const handleChange = (e: ChangeEvent<HTMLSelectElement>) => {
