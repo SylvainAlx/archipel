@@ -1,53 +1,61 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { SERVEUR_LOADING_STRING } from "../../settings/consts";
-import { comsListAtom, confirmBox, infoModalAtom, loadingSpinner, myStore } from "../../settings/store";
+import {
+  comsListAtom,
+  confirmBox,
+  infoModalAtom,
+  loadingAtom,
+  myStore,
+} from "../../settings/store";
 import { Com } from "../../types/typAtom";
-import { createElementOfAtomArray, deleteElementOfAtomArray } from "../../utils/functions";
+import {
+  createElementOfAtomArray,
+  deleteElementOfAtomArray,
+} from "../../utils/functions";
 import { createComFetch, deleteComFetch, getAllComs } from "./comFetch";
 
-const confirm = myStore.get(confirmBox)
-const comsList = myStore.get(comsListAtom)
-const setComsList = (list: Com[]) => myStore.set(comsListAtom, list)
+const confirm = myStore.get(confirmBox);
+const comsList = myStore.get(comsListAtom);
+const setComsList = (list: Com[]) => myStore.set(comsListAtom, list);
 
 export const getComs = () => {
-  myStore.set(loadingSpinner, { show: true, text: SERVEUR_LOADING_STRING });
+  myStore.set(loadingAtom, true);
   getAllComs()
     .then((data) => {
-      myStore.set(loadingSpinner, { show: false, text: "" });
+      myStore.set(loadingAtom, false);
       if (data != undefined) {
         myStore.set(comsListAtom, data);
       }
     })
     .catch((error) => {
-      myStore.set(loadingSpinner, { show: false, text: "" });
+      myStore.set(loadingAtom, false);
       myStore.set(infoModalAtom, error.message);
     });
 };
 
 export const createNewCom = (payload: any) => {
-  myStore.set(loadingSpinner, { show: true, text: SERVEUR_LOADING_STRING });
+  myStore.set(loadingAtom, true);
   createComFetch(payload)
     .then((resp) => {
-      myStore.set(loadingSpinner, { show: false, text: "" });
+      myStore.set(loadingAtom, false);
       createElementOfAtomArray(resp.com, comsList, setComsList);
       myStore.set(infoModalAtom, resp.message);
     })
     .catch((error) => {
-      myStore.set(loadingSpinner, { show: false, text: "" });
+      myStore.set(loadingAtom, false);
       myStore.set(infoModalAtom, error);
     });
 };
 
 export const deleteCom = () => {
-  myStore.set(loadingSpinner, { show: true, text: SERVEUR_LOADING_STRING });
+  myStore.set(loadingAtom, true);
   deleteComFetch(confirm.target)
     .then((resp) => {
-      myStore.set(loadingSpinner, { show: false, text: "" });
+      myStore.set(loadingAtom, false);
       deleteElementOfAtomArray(confirm.target, comsList, setComsList);
       myStore.set(infoModalAtom, resp.message);
     })
     .catch((error) => {
-      myStore.set(loadingSpinner, { show: false, text: "" });
+      myStore.set(loadingAtom, false);
       myStore.set(infoModalAtom, error);
     });
 };

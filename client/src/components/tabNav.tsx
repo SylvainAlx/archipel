@@ -16,7 +16,7 @@ export default function TabNav({ tabs, tabId, setTab, owner }: TabNavProps) {
             key={i}
             onClick={() => setTab(tab)}
           >
-            {tab.label}
+            {tab.label.toUpperCase()}
           </div>
         );
       })}

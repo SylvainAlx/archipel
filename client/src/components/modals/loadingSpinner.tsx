@@ -1,18 +1,23 @@
 // import { useAtom } from "jotai";
-import { loadingSpinner, myStore } from "../../settings/store";
+import { useTranslation } from "react-i18next";
+import { loadingAtom, myStore } from "../../settings/store";
 import Button from "../button";
 
 export default function LoadingSpinner() {
-  const loading = myStore.get(loadingSpinner);
+  const { t } = useTranslation();
 
   const handleClick = () => {
-    myStore.set(loadingSpinner, { show: false, text: "" });
+    myStore.set(loadingAtom, false);
   };
 
   return (
     <>
-      <h2 className="animate-fadeIn text-2xl text-center p-4">PATIENTEZ</h2>
-      <p className="text-center">{loading.text}</p>
+      <h2 className="animate-fadeIn text-2xl text-center p-4">
+        {t("components.modals.loadingModal.title")}
+      </h2>
+      <p className="text-center">
+        {t("components.modals.loadingModal.information")}
+      </p>
       <div role="status">
         <svg
           aria-hidden="true"
@@ -32,7 +37,7 @@ export default function LoadingSpinner() {
         </svg>
       </div>
       <div onClick={handleClick}>
-        <Button path="/" text="ANNULER" />
+        <Button path="/" text={t("components.buttons.cancel")} />
       </div>
     </>
   );

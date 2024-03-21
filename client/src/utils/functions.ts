@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import i18n from "../i18n/i18n";
 import { politicalSideList } from "../settings/consts";
 import { Place } from "../types/typPlace";
 
@@ -75,4 +76,14 @@ export const getCapitalName = (placesList: Place[], id: string): string => {
   } else {
     return "";
   }
+};
+
+export const getRegimeLabel = (id: number): string => {
+  switch (id) {
+    case 1:
+      return i18n.t("listes.regimeList.others.noGovernment");
+    case 11:
+      return i18n.t("listes.regimeList.democracies.directDemocracy");
+  }
+  return i18n.t("listes.regimeList.others.unknownPoliticalRegime");
 };

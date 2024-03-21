@@ -1,24 +1,14 @@
 // Auth
 
+import i18n from "../i18n/i18n";
 import { StandardOption } from "../types/typAtom";
 import { PoliticalSide, RegimeOption } from "../types/typNation";
 import { BuildCategory } from "../types/typPlace";
 
 export const MDP_LOBBY = import.meta.env.VITE_MDP_LOBBY;
-
-export const VERSION = "0.1";
-
-//  server
-
 export const SERVER_URL = import.meta.env.VITE_SERVER_URL;
-
-export const SERVEUR_LOADING_STRING =
-  "Connexion au serveur, merci de patienter quelques instants";
-
-// Titles
-
+export const VERSION = "0.1";
 export const TITLE = "Navir";
-export const SUBTITLE = "NATIONS VIRTUELLES";
 
 //  Colors
 
@@ -49,8 +39,18 @@ export const comOptions: StandardOption[] = [
 export const comTypeOptions = [comOptions[3], comOptions[4], comOptions[0]];
 
 export const regimeOptions: RegimeOption[] = [
-  { id: 0, label: "régime politique inconnu", color: "bg-regime_0", type: 0 },
-  { id: 1, label: "pas de gouvernement", color: "bg-regime_0", type: 0 },
+  {
+    id: 0,
+    label: i18n.t("listes.regimeList.others.unknownPoliticalRegime"),
+    color: "bg-regime_0",
+    type: 0,
+  },
+  {
+    id: 1,
+    label: i18n.t("listes.regimeList.others.noGovernment"),
+    color: "bg-regime_0",
+    type: 0,
+  },
   {
     id: 2,
     label: "république à régime présidentiel",
@@ -80,7 +80,12 @@ export const regimeOptions: RegimeOption[] = [
     type: 200,
   },
   { id: 10, label: "autre", color: "bg-regime_200", type: 200 },
-  { id: 11, label: "démocratie directe", color: "bg-regime_1", type: 1 },
+  {
+    id: 11,
+    label: i18n.t("listes.regimeList.democracies.directDemocracy"),
+    color: "bg-regime_1",
+    type: 1,
+  },
 ];
 
 export const politicalSideList: PoliticalSide[] = [

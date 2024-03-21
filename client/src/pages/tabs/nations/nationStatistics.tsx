@@ -3,16 +3,10 @@ import { useAtom } from "jotai";
 import DashTile from "../../../components/dashTile";
 import TileContainer from "../../../components/tileContainer";
 import H1 from "../../../components/titles/h1";
-import {
-  loadingSpinner,
-  myStore,
-  nationsListAtom,
-  placesListAtom,
-} from "../../../settings/store";
+import { nationsListAtom, placesListAtom } from "../../../settings/store";
 import { StringProps } from "../../../types/typProp";
 import { useEffect, useState } from "react";
 import H3 from "../../../components/titles/h3";
-import { SERVEUR_LOADING_STRING } from "../../../settings/consts";
 import { getNations } from "../../../api/nation/nationAPI";
 import { getAllPlaces } from "../../../api/place/placeAPI";
 
@@ -29,10 +23,6 @@ export default function NationStatistics({ text }: StringProps) {
       }
       setTotalPoints(points);
       if (nationsList[0]._id === "") {
-        myStore.set(loadingSpinner, {
-          show: true,
-          text: SERVEUR_LOADING_STRING,
-        });
         getNations("");
       }
     }

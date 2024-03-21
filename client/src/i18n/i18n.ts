@@ -13,7 +13,7 @@ i18n
   .init({
     detection: {
       order: ["localStorage", "navigator"],
-      lookupLocalStorage: "i18nextLng",
+      lookupLocalStorage: "lng",
     },
     resources: {
       en: {
@@ -23,7 +23,6 @@ i18n
         translation: translationFR,
       },
     },
-    lng: "fr", // langue par défaut
     fallbackLng: "en", // langue de secours si la langue actuelle n'est pas disponible
     interpolation: {
       escapeValue: false, // pas besoin d'échapper les valeurs

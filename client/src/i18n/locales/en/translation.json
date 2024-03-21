@@ -4,11 +4,28 @@
       "title": "Welcome",
       "presentation": "Discover the fascinating world of Virtual Nations with Navir, the app that brings your own digital nation to life. Follow its evolution, interact with other nations, and forge alliances in a virtual universe where imagination meets reality. Welcome to Virtual Nations, where the power of community shapes your nation's digital future!"
     },
+    "dashboard": {
+      "tabs": {
+        "dashboard": {
+          "title": "dashboard",
+          "nationIdentity": {
+            "title": "nation identity",
+            "generalInformations": "general informations",
+            "noCapital": "no capital",
+            "noMotto": "no motto",
+            "externalLinks": "external links"
+          }
+        },
+        "params": {
+          "title": "parameters"
+        },
+        "coms": {
+          "title": "communications"
+        }
+      }
+    },
     "legalNotice": {
       "title": "legal notice"
-    },
-    "termsOfService": {
-      "title": "terms of service"
     },
     "login": {
       "title": "access your nation",
@@ -17,6 +34,14 @@
       "forgottenPassword": "Forgotten password ?",
       "firstVisit": "First visit ?",
       "newNation": "Create new nation"
+    },
+    "recovery": {
+      "title": "password reset",
+      "placeholderName": "Nation name",
+      "recoveryKey": "Recovery key",
+      "newPassword": "New password",
+      "confirmPassword": "Confirm new password",
+      "changePassword": "Change password"
     },
     "register": {
       "title": "new nation",
@@ -27,19 +52,11 @@
       "acceptTerms": "By ticking this box, you agree to the",
       "termsOfService": "TOS"
     },
-    "recovery": {
-      "title": "password reset",
-      "placeholderName": "Nation name",
-      "recoveryKey": "Recovery key",
-      "newPassword": "New password",
-      "confirmPassword": "Confirm new password",
-      "changePassword": "Change password"
+    "termsOfService": {
+      "title": "terms of service"
     }
   },
   "components": {
-    "logo": {
-      "subtitle": "VIRTUAL NATIONS"
-    },
     "buttons": {
       "login": "LOGIN",
       "logout": "LOGOUT",
@@ -47,12 +64,44 @@
       "explore": "EXPLORE",
       "dashboard": "DASHBOARD",
       "close": "CLOSE",
+      "cancel": "CANCEL",
       "nation": "MY NATION",
       "admin": "ADMINISTRATION"
     },
+    "logo": {
+      "subtitle": "VIRTUAL NATIONS"
+    },
     "modals": {
-      "titles": {
-        "changeLanguage": "LANGUAGE"
+      "langModal": {
+        "titles": "LANGUAGE"
+      }
+    },
+    "loadingModal": {
+      "title": "WAIT",
+      "information": "Connecting to the server, please wait a few moments"
+    }
+  },
+  "listes": {
+    "regimeList": {
+      "democracies": {
+        "presidentialRepublic": "presidential republic",
+        "semiPresidentialRepublic": "semi-presidential republic",
+        "parliamentaryRepublic": "parliamentary republic",
+        "onePartyRepublic": "one-party republic",
+        "directDemocracy": "direct democracy"
+      },
+      "monarchies": {
+        "constitutionalMonarchy": "constitutional monarchy",
+        "absoluteMonarchy": "absolute monarchy"
+      },
+      "autoritarianRegimes": {
+        "militaryDictatorship": "military dictatorship"
+      },
+      "others": {
+        "provisionalGovernment": "provisional government",
+        "unknownPoliticalRegime": "unknown political regime",
+        "noGovernment": "no gouvernment",
+        "other": "other"
       }
     }
   }

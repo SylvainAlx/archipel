@@ -11,21 +11,27 @@ import EditIcon from "../../editIcon";
 import ExternalLink from "../../externalLink";
 import H2 from "../../titles/h2";
 import { useEffect, useState } from "react";
-import { nationPlacesListAtom } from "../../../settings/store";
+import { langAtom, nationPlacesListAtom } from "../../../settings/store";
 import { LabelId } from "../../../types/typNation";
 import { useAtom } from "jotai";
-import { getCapitalName } from "../../../utils/functions";
+import { getCapitalName, getRegimeLabel } from "../../../utils/functions";
 import RegimeTag from "../../tags/regimeTag";
 import IdTag from "../../tags/idTag";
 import CapitalTag from "../../tags/capitalTag";
+import { useTranslation } from "react-i18next";
 
-export default function GeneralInformations({
+export default function NationIdentity({
   selectedNation,
   owner,
 }: SelectedNationProps) {
+  const [lang] = useAtom(langAtom);
+  const { t } = useTranslation();
   const [placesList, setPlacesList] = useState<LabelId[]>([]);
+  const [regime, setRegime] = useState(regimeOptions[0]);
   const [nationPlaceList] = useAtom(nationPlacesListAtom);
-  const [capital, setCapital] = useState<string>("aucune capitale");
+  const [capital, setCapital] = useState<string>(
+    t("pages.dashboard.tabs.dashboard.nationIdentity.noCapital"),
+  );
 
   useEffect(() => {
     const updatedPlaces: LabelId[] = [];
@@ -45,18 +51,31 @@ export default function GeneralInformations({
       if (capitalName != "") {
         setCapital(capitalName);
       } else {
-        setCapital("aucune capitale");
+        setCapital(
+          t("pages.dashboard.tabs.dashboard.nationIdentity.noCapital"),
+        );
       }
     }
   }, [nationPlaceList, selectedNation]);
+
+  useEffect(() => {
+    regimeOptions.map((option) => {
+      if (option.id === selectedNation.data.general.regime) {
+        option.label = getRegimeLabel(option.id);
+        setRegime(option);
+      }
+    });
+  }, [lang]);
 
   return (
     <TileContainer
       children={
         <>
-          <H2 text="Identité de la nation" />
+          <H2 text={t("pages.dashboard.tabs.dashboard.nationIdentity.title")} />
           <DashTile
-            title="Informations générales"
+            title={t(
+              "pages.dashboard.tabs.dashboard.nationIdentity.generalInformations",
+            )}
             className="w-full min-w-[300px]"
             children={
               <>
@@ -94,7 +113,9 @@ export default function GeneralInformations({
                     <em className="text-xl">
                       {selectedNation.data.general.motto
                         ? selectedNation.data.general.motto
-                        : "Pas de devise"}
+                        : t(
+                            "pages.dashboard.tabs.dashboard.nationIdentity.noMotto",
+                          )}
                     </em>
                     {owner && (
                       <EditIcon
@@ -113,26 +134,20 @@ export default function GeneralInformations({
                     {selectedNation.role === "admin" && (
                       <Tag text="admin" bgColor="bg-success" />
                     )}
-                    {regimeOptions.map((regime, i) => {
-                      if (regime.id === selectedNation.data.general.regime) {
-                        return (
-                          <span key={i} className="relative">
-                            <RegimeTag
-                              label={regime.label}
-                              type={regime.type}
-                              bgColor={regime.color}
-                            />
-                            {owner && (
-                              <EditIcon
-                                param={regimeOptions}
-                                path="data.general.regime"
-                                indice={regime.id}
-                              />
-                            )}
-                          </span>
-                        );
-                      }
-                    })}
+                    <span className="relative">
+                      <RegimeTag
+                        label={regime.label}
+                        type={regime.type}
+                        bgColor={regime.color}
+                      />
+                      {owner && (
+                        <EditIcon
+                          param={regimeOptions}
+                          path="data.general.regime"
+                          indice={regime.id}
+                        />
+                      )}
+                    </span>
                   </div>
                   {capital != "" && (
                     <div className="relative">
@@ -151,7 +166,9 @@ export default function GeneralInformations({
           />
 
           <DashTile
-            title="Lien externe"
+            title={t(
+              "pages.dashboard.tabs.dashboard.nationIdentity.externalLinks",
+            )}
             children={
               <>
                 <div className=" flex items-center justify-center gap-6">

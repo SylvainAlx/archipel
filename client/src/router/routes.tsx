@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import Admin from "../pages/admin";
-import Contact from "../pages/contact";
 import Dashboard from "../pages/dashboard";
 import Home from "../pages/home";
 import LegalNotice from "../pages/legalNotice";
@@ -21,7 +20,6 @@ export const publicRoutes: ArchipelRoute[] = [
   { path: "/recovery", page: <Recovery /> },
   { path: "/nations", page: <Nations /> },
   { path: "/dashboard/:id", page: <Dashboard /> },
-  { path: "/contact", page: <Contact /> },
   { path: "/legalnotice", page: <LegalNotice /> },
   { path: "/termsofservice", page: <TermsOfService /> },
 ];

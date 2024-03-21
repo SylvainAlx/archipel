@@ -4,11 +4,28 @@
       "title": "Bienvenue",
       "presentation": "Découvrez le monde fascinant des Nations Virtuelles avec Navir, l'appli qui donne vie à votre propre nation numérique. Suivez son évolution, interagissez avec d'autres nations et forgez des alliances dans un univers virtuel où l'imagination rencontre la réalité. Bienvenue sur Nations Virtuelles, où le pouvoir de la communauté façonne l'avenir numérique de votre nation !"
     },
+    "dashboard": {
+      "tabs": {
+        "dashboard": {
+          "title": "tableau de bord",
+          "nationIdentity": {
+            "title": "identité de la nation",
+            "generalInformations": "informations générales",
+            "noCapital": "aucune capitale",
+            "noMotto": "pas de devise",
+            "externalLinks": "liens externes"
+          }
+        },
+        "params": {
+          "title": "paramètres"
+        },
+        "coms": {
+          "title": "communications"
+        }
+      }
+    },
     "legalNotice": {
       "title": "mentions légales"
-    },
-    "termsOfService": {
-      "title": "conditions générales d'utilisation"
     },
     "login": {
       "title": "accéder à sa nation",
@@ -17,6 +34,14 @@
       "forgottenPassword": "Mot de passe oublié ?",
       "firstVisit": "Première visite ?",
       "newNation": "Créez une nouvelle nation"
+    },
+    "recovery": {
+      "title": "réinitialisation du mot de passe",
+      "placeholderName": "Nom de la nation",
+      "recoveryKey": "Phrase de récupération",
+      "newPassword": "Nouveau mot de passe",
+      "confirmPassword": "Confirmez le mot de passe",
+      "changePassword": "Changer le mot de passe"
     },
     "register": {
       "title": "nouvelle nation",
@@ -27,19 +52,11 @@
       "acceptTerms": "En cochant cette case vous acceptez les",
       "termsOfService": "CGU"
     },
-    "recovery": {
-      "title": "réinitialisation du mot de passe",
-      "placeholderName": "Nom de la nation",
-      "recoveryKey": "Phrase de récupération",
-      "newPassword": "Nouveau mot de passe",
-      "confirmPassword": "Confirmez le mot de passe",
-      "changePassword": "Changer le mot de passe"
+    "termsOfService": {
+      "title": "conditions générales d'utilisation"
     }
   },
   "components": {
-    "logo": {
-      "subtitle": "NATIONS VIRTUELLES"
-    },
     "buttons": {
       "login": "SE CONNECTER",
       "logout": "SE DÉCONNECTER",
@@ -47,12 +64,44 @@
       "explore": "EXPLORER",
       "dashboard": "TABLEAU DE BORD",
       "close": "FERMER",
+      "cancel": "ANNULER",
       "nation": "MA NATION",
       "admin": "ADMINISTRATION"
     },
+    "logo": {
+      "subtitle": "NATIONS VIRTUELLES"
+    },
     "modals": {
-      "titles": {
-        "changeLanguage": "CHOIX DE LA LANGUE"
+      "langModal": {
+        "titles": "CHOIX DE LA LANGUE"
+      },
+      "loadingModal": {
+        "title": "PATIENTEZ",
+        "information": "Connexion au serveur, merci de patienter quelques instants"
+      }
+    }
+  },
+  "listes": {
+    "regimeList": {
+      "democracies": {
+        "presidentialRepublic": "république présidentielle",
+        "semiPresidentialRepublic": "république à régime semi-présidentiel",
+        "parliamentaryRepublic": "république parlementaire",
+        "onePartyRepublic": "république à parti unique",
+        "directDemocracy": "démocratie directe"
+      },
+      "monarchies": {
+        "constitutionalMonarchy": "monarchie constitutionnelle",
+        "absoluteMonarchy": "monarchie absolue"
+      },
+      "autoritarianRegimes": {
+        "militaryDictatorship": "dictature militaire"
+      },
+      "others": {
+        "provisionalGovernment": "gouvernement provisoire",
+        "unknownPoliticalRegime": "régime politique inconnu",
+        "noGovernment": "pas de gouvernement",
+        "other": "autre"
       }
     }
   }

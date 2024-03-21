@@ -4,7 +4,7 @@ import {
   editPlaceAtom,
   editbox,
   infoModalAtom,
-  loadingSpinner,
+  loadingAtom,
   newPlaceAtom,
   recoveryKey,
   showLangModalAtom,
@@ -22,7 +22,7 @@ export default function ModalsRouter() {
   const [recovery] = useAtom(recoveryKey);
   const [confirm] = useAtom(confirmBox);
   const [info] = useAtom(infoModalAtom);
-  const [loading] = useAtom(loadingSpinner);
+  const [loading] = useAtom(loadingAtom);
   const [editBox] = useAtom(editbox);
   const [newPlace] = useAtom(newPlaceAtom);
   const [editPlace] = useAtom(editPlaceAtom);
@@ -32,7 +32,7 @@ export default function ModalsRouter() {
     recovery != "" ||
     confirm.text != "" ||
     info != "" ||
-    loading.show ||
+    loading ||
     editBox.original != -1 ||
     newPlace.nation != "" ||
     editPlace.update != undefined ||
@@ -41,7 +41,7 @@ export default function ModalsRouter() {
     return (
       <div className="animate-in fade-in z-20 fixed top-0 w-[100%] h-[100%] backdrop-blur-sm bg-black_alpha flex items-center justify-center">
         <div className="min-w-[350px] max-w-[90%] bg-slate-800 rounded-md p-6 flex flex-col items-center gap-4">
-          {loading.show ? (
+          {loading ? (
             <LoadingSpinner />
           ) : (
             <>
