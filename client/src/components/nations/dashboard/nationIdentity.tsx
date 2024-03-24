@@ -1,6 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { GiBlackFlag } from "react-icons/gi";
-import { regimeOptions } from "../../../settings/consts";
 import DashTile from "../../dashTile";
 import TileContainer from "../../tileContainer";
 import H3 from "../../titles/h3";
@@ -14,11 +13,12 @@ import { useEffect, useState } from "react";
 import { langAtom, nationPlacesListAtom } from "../../../settings/store";
 import { LabelId } from "../../../types/typNation";
 import { useAtom } from "jotai";
-import { getCapitalName, getRegimeLabel } from "../../../utils/functions";
+import { createTagRegime, getCapitalName } from "../../../utils/functions";
 import RegimeTag from "../../tags/regimeTag";
 import IdTag from "../../tags/idTag";
 import CapitalTag from "../../tags/capitalTag";
 import { useTranslation } from "react-i18next";
+import { regimeList } from "../../../settings/consts";
 
 export default function NationIdentity({
   selectedNation,
@@ -26,12 +26,21 @@ export default function NationIdentity({
 }: SelectedNationProps) {
   const [lang] = useAtom(langAtom);
   const { t } = useTranslation();
+  const [regime, setRegime] = useState({
+    id: 0,
+    label: "",
+    type: 0,
+    bgColor: "bg-regime_0",
+  });
   const [placesList, setPlacesList] = useState<LabelId[]>([]);
-  const [regime, setRegime] = useState(regimeOptions[0]);
   const [nationPlaceList] = useAtom(nationPlacesListAtom);
   const [capital, setCapital] = useState<string>(
     t("pages.dashboard.tabs.dashboard.nationIdentity.noCapital"),
   );
+
+  useEffect(() => {
+    setRegime(createTagRegime(selectedNation.data.general.regime));
+  }, [lang]);
 
   useEffect(() => {
     const updatedPlaces: LabelId[] = [];
@@ -58,15 +67,6 @@ export default function NationIdentity({
     }
   }, [nationPlaceList, selectedNation]);
 
-  useEffect(() => {
-    regimeOptions.map((option) => {
-      if (option.id === selectedNation.data.general.regime) {
-        option.label = getRegimeLabel(option.id);
-        setRegime(option);
-      }
-    });
-  }, [lang]);
-
   return (
     <TileContainer
       children={
@@ -76,7 +76,7 @@ export default function NationIdentity({
             title={t(
               "pages.dashboard.tabs.dashboard.nationIdentity.generalInformations",
             )}
-            className="w-full min-w-[300px]"
+            className="w-full min-w-[300px] flex-grow"
             children={
               <>
                 <div className="p-4 flex flex-col gap-2 items-center">
@@ -103,11 +103,12 @@ export default function NationIdentity({
                       />
                     )}
                   </div>
-                  <div className="relative">
+                  <div className="relative flex flex-col items-center">
                     <H3 text={selectedNation.name} />
                     {owner && (
                       <EditIcon param={selectedNation.name} path="name" />
                     )}
+                    <IdTag label={selectedNation._id} />
                   </div>
                   <div className="relative">
                     <em className="text-xl">
@@ -130,7 +131,6 @@ export default function NationIdentity({
                   </div>
 
                   <div className="flex gap-2 flex-wrap items-center justify-center">
-                    <IdTag label={selectedNation.name + selectedNation._id} />
                     {selectedNation.role === "admin" && (
                       <Tag text="admin" bgColor="bg-success" />
                     )}
@@ -138,11 +138,11 @@ export default function NationIdentity({
                       <RegimeTag
                         label={regime.label}
                         type={regime.type}
-                        bgColor={regime.color}
+                        bgColor={regime.bgColor}
                       />
                       {owner && (
                         <EditIcon
-                          param={regimeOptions}
+                          param={regimeList}
                           path="data.general.regime"
                           indice={regime.id}
                         />

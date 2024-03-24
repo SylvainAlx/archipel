@@ -62,9 +62,9 @@ export default function EditBoxModal() {
       >
         {typeof editBox.original != "object" && editBox.original.toString()}
         {editBox.original.toString() === "" && "aucune valeur"}
-        {typeof editBox.original == "object" &&
+        {/* {typeof editBox.original == "object" &&
           editBox.indice &&
-          editBox.original[editBox.indice].label}
+          editBox.original[editBox.indice].label} */}
       </b>
       <form
         className="flex flex-col gap-2 items-center"

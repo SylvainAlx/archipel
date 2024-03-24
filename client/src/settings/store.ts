@@ -10,7 +10,6 @@ import {
 } from "../types/typAtom";
 import { Place, emptyPlace } from "../types/typPlace";
 import i18n from "../i18n/i18n";
-import { regimeOptions } from "./consts";
 
 export const myStore = createStore();
 
@@ -42,10 +41,6 @@ export const comsListAtom = atom<Com[]>([]);
 // Param
 
 export const paramsListAtom = atom<Param[]>([]);
-
-// List
-
-export const regimeListAtom = atom(regimeOptions);
 
 export const showLangModalAtom = atom(false);
 export const recoveryKey = atom("");

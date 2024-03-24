@@ -9,9 +9,10 @@ export default function Select({
 }: SelectProps) {
   const [updatedOptions, setUpdatedOptions] = useState(options);
   useEffect(() => {
-    let update = [...updatedOptions];
+    const update = [...updatedOptions];
     update.unshift({ id: -1, label: "- CHOISIR -" });
     setUpdatedOptions(update);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

@@ -86,7 +86,7 @@ export default function Roleplay({
                       if (place.nation === selectedNation._id) {
                         return (
                           <div
-                            className="w-full md:w-[49%] md:min-w-[250px]"
+                            className="w-full sm:min-w-[250px] sm:max-w-[280px]"
                             key={i}
                           >
                             <PlaceTile

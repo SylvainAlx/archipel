@@ -1,6 +1,6 @@
 import { ChangeEvent, FormEvent, MouseEventHandler } from "react";
 import { ReactNode } from "react";
-import { LabelId, Nation, PoliticalSide, RegimeOption } from "./typNation";
+import { LabelId, Nation, PoliticalSide, Regime } from "./typNation";
 import { Place } from "./typPlace";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -144,7 +144,7 @@ export interface EditIconProps {
     | number
     | string
     | boolean
-    | RegimeOption[]
+    | Regime[]
     | PoliticalSide[]
     | LabelId[];
   path: string;

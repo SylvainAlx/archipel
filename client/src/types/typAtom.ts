@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { LabelId, PoliticalSide, RegimeOption } from "./typNation";
+import { LabelId, PoliticalSide, Regime } from "./typNation";
 import { Place } from "./typPlace";
 
 // editPlace
@@ -32,10 +32,10 @@ export interface EditBox {
     | string
     | number
     | boolean
-    | RegimeOption[]
+    | Regime[]
     | PoliticalSide[]
     | LabelId[];
-  new: string | number | boolean | RegimeOption[] | PoliticalSide[] | LabelId[];
+  new: string | number | boolean | Regime[] | PoliticalSide[] | LabelId[];
   path: string;
   indice?: number;
 }

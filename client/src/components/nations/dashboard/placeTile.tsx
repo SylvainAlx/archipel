@@ -6,7 +6,6 @@ import Tag from "../../tag";
 import {
   FaArrowUpRightDots,
   // FaCoins,
-  FaMountainCity,
 } from "react-icons/fa6";
 import Button from "../../button";
 import {
@@ -42,7 +41,7 @@ export default function PlaceTile({ place, update, owner }: PlaceTileProp) {
       className={`p-4 rounded flex flex-col items-center gap-3 bg-complementary2 shadow-xl`}
     >
       <div className="w-full flex flex-col items-center gap-2">
-        <h3 className="w-full flex justify-between">
+        <h3 className="w-full flex justify-center">
           <div className="text-xl flex items-center gap-2">
             <span className="text-lg text-info">
               {place._id === selectedNation.data.roleplay.capital && (
@@ -64,27 +63,28 @@ export default function PlaceTile({ place, update, owner }: PlaceTileProp) {
             />
           )}
         </h3>
-
-        <div className="w-full relative">
+        {place._id && <IdTag label={place._id} />}
+        <div className="w-full relative flex justify-center">
           <div
-            className={`w-full h-[140px] bg-complementary flex flex-col items-center justify-center overflow-hidden rounded`}
+            className={`bg-complementary flex flex-col items-center justify-center overflow-hidden rounded`}
           >
             {place.image != "" ? (
               <img
                 src={place.image}
-                alt={`flag of ${place.name}`}
+                alt={`image of ${place.name}`}
                 className="object-cover w-full h-full"
               />
             ) : (
-              <div className="text-[3.1rem]">
-                <FaMountainCity />
-              </div>
+              <img
+                src="/place/default.webp"
+                alt={`default image of city`}
+                className="object-cover w-full h-full"
+              />
             )}
           </div>
           {/* {owner && <EditIcon param={place.image} path="data.url.flag" />} */}
         </div>
         <div className="w-full flex flex-wrap items-center gap-2 justify-center">
-          {place._id && <IdTag label={place.name + place._id} />}
           <Tag
             text={"niveau " + place.level.toString()}
             bgColor="bg-info"

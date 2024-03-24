@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import i18n from "../i18n/i18n";
-import { politicalSideList } from "../settings/consts";
+import { politicalSideList, regimeList, regimeTypeList } from "../settings/consts";
 import { Place } from "../types/typPlace";
 
 export const GET_JWT = () => localStorage.getItem("jwt");
@@ -78,12 +78,36 @@ export const getCapitalName = (placesList: Place[], id: string): string => {
   }
 };
 
-export const getRegimeLabel = (id: number): string => {
-  switch (id) {
-    case 1:
-      return i18n.t("listes.regimeList.others.noGovernment");
-    case 11:
-      return i18n.t("listes.regimeList.democracies.directDemocracy");
+export const createTagRegime = (id: number) => {
+  const tagRegime = {
+    id,
+    label: "",
+    type: 0,
+    bgColor: "bg-regime_0"
   }
-  return i18n.t("listes.regimeList.others.unknownPoliticalRegime");
+  const getLabel = (id: number): string => {
+    switch (id) {
+      case 1:
+        return i18n.t("listes.regimeList.others.unknownPoliticalRegime");
+      case 2:
+        return i18n.t("listes.regimeList.others.noGovernment");
+      case 3:
+        return i18n.t("listes.regimeList.others.provisionalGovernment");
+      case 104:
+        return i18n.t("listes.regimeList.democracies.directDemocracy");
+    }
+    return i18n.t("listes.regimeList.others.unknownPoliticalRegime");
+  }
+  tagRegime.label = getLabel(id)
+  regimeList.map((regime) => {
+    if (regime.id === id) {
+      regimeTypeList.map((type) => {
+        if (regime.type === type.type) {
+          tagRegime.type = type.type
+          tagRegime.bgColor = type.color 
+        }
+      })
+    }
+  })
+  return tagRegime
 };

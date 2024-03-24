@@ -74,11 +74,11 @@
     "modals": {
       "langModal": {
         "titles": "LANGUAGE"
+      },
+      "loadingModal": {
+        "title": "WAIT",
+        "information": "Connecting to the server, please wait a few moments"
       }
-    },
-    "loadingModal": {
-      "title": "WAIT",
-      "information": "Connecting to the server, please wait a few moments"
     }
   },
   "listes": {
