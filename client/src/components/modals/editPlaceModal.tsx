@@ -1,5 +1,9 @@
 import { useAtom } from "jotai";
-import { editPlaceAtom } from "../../settings/store";
+import {
+  editPlaceAtom,
+  myStore,
+  selectedNationAtom,
+} from "../../settings/store";
 import { emptyPlace } from "../../types/typPlace";
 import Button from "../button";
 import { placesTypeList } from "../../settings/consts";
@@ -8,6 +12,7 @@ import DashTile from "../dashTile";
 
 export default function EditPlaceModal() {
   const [data, setData] = useAtom(editPlaceAtom);
+  const selectedNation = myStore.get(selectedNationAtom);
 
   const handleClose = () => {
     setData({ place: emptyPlace });
@@ -41,21 +46,28 @@ export default function EditPlaceModal() {
           );
         })}
       </section>
-      <Button
-        text=""
-        path=""
-        children={
-          <div className="w-full flex items-center justify-evenly flex-wrap gap-2 text-sm">
-            <span className="flex gap-1 items-center">
-              Niveau {data.place.level + 1} <FaArrowUpRightDots />
-            </span>
-            <span className="flex gap-1 items-center">
-              <FaCoins />
-              {data.update != undefined && placesTypeList[data.update].cost}
-            </span>
-          </div>
-        }
-      />
+      {data.owner && (
+        <Button
+          text=""
+          path=""
+          disabled={
+            data.update != undefined &&
+            selectedNation.data.roleplay.credits <
+              placesTypeList[data.update].cost
+          }
+          children={
+            <div className="w-full flex items-center justify-evenly flex-wrap gap-2 text-sm">
+              <span className="flex gap-1 items-center">
+                Niveau {data.place.level + 1} <FaArrowUpRightDots />
+              </span>
+              <span className="flex gap-1 items-center">
+                <FaCoins />
+                {data.update != undefined && placesTypeList[data.update].cost}
+              </span>
+            </div>
+          }
+        />
+      )}
       <Button text="FERMER" path="" click={handleClose} />
     </>
   );

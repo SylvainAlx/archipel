@@ -92,12 +92,7 @@ export default function Roleplay({
                             <PlaceTile
                               owner={owner}
                               place={place}
-                              update={
-                                selectedNation.data.roleplay.credits >=
-                                placesTypeList[place.level].cost
-                                  ? place.level
-                                  : -1
-                              }
+                              update={place.level}
                             />
                           </div>
                         );

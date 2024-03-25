@@ -33,7 +33,7 @@ export default function PlaceTile({ place, update, owner }: PlaceTileProp) {
   };
 
   const handleClick = () => {
-    myStore.set(editPlaceAtom, { place, update });
+    myStore.set(editPlaceAtom, { place, update, owner });
   };
 
   return (
@@ -95,9 +95,7 @@ export default function PlaceTile({ place, update, owner }: PlaceTileProp) {
         </div>
       </div>
       <em>{place.description}</em>
-      {owner && (
-        <Button text="ACCÉDER A LA VILLE" path="" click={handleClick} />
-      )}
+      <Button text="VOIR LA VILLE" path="" click={handleClick} />
       {/* {owner && update != -1 && update != undefined && (
         <Button
           text=""

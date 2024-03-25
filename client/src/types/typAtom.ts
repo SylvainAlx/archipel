@@ -7,6 +7,7 @@ import { Place } from "./typPlace";
 export interface EditPlaceParam {
   place: Place;
   update?: number;
+  owner?: boolean;
 }
 
 // confirmBox
@@ -28,13 +29,7 @@ export const ConfirmBoxDefault: ConfirmBox = {
 // editBox
 
 export interface EditBox {
-  original:
-    | string
-    | number
-    | boolean
-    | Regime[]
-    | PoliticalSide[]
-    | LabelId[];
+  original: string | number | boolean | Regime[] | PoliticalSide[] | LabelId[];
   new: string | number | boolean | Regime[] | PoliticalSide[] | LabelId[];
   path: string;
   indice?: number;
