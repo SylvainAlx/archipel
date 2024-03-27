@@ -80,15 +80,12 @@ export default function Roleplay({
             title="Villes"
             children={
               <>
-                <div className="flex flex-wrap items-start justify-center gap-2">
+                <div className="w-full flex flex-col gap-2">
                   {nationPlacesList != undefined ? (
                     nationPlacesList.map((place, i) => {
                       if (place.nation === selectedNation._id) {
                         return (
-                          <div
-                            className="w-full sm:min-w-[250px] sm:max-w-[280px]"
-                            key={i}
-                          >
+                          <div className="w-full" key={i}>
                             <PlaceTile
                               owner={owner}
                               place={place}

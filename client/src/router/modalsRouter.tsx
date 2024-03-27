@@ -3,6 +3,7 @@ import {
   confirmBox,
   editPlaceAtom,
   editbox,
+  imageAtom,
   infoModalAtom,
   loadingAtom,
   newPlaceAtom,
@@ -17,6 +18,7 @@ import EditBoxModal from "../components/modals/editBoxModal";
 import NewPlaceModal from "../components/modals/newPlaceModal";
 import EditPlaceModal from "../components/modals/editPlaceModal";
 import LangModal from "../components/modals/langModal";
+import ImageModal from "../components/modals/imageModal";
 
 export default function ModalsRouter() {
   const [recovery] = useAtom(recoveryKey);
@@ -27,6 +29,7 @@ export default function ModalsRouter() {
   const [newPlace] = useAtom(newPlaceAtom);
   const [editPlace] = useAtom(editPlaceAtom);
   const [lang] = useAtom(showLangModalAtom);
+  const [image] = useAtom(imageAtom);
 
   if (
     recovery != "" ||
@@ -36,7 +39,8 @@ export default function ModalsRouter() {
     editBox.original != -1 ||
     newPlace.nation != "" ||
     editPlace.update != undefined ||
-    lang
+    lang ||
+    image != ""
   ) {
     return (
       <div className="animate-in fade-in z-20 fixed top-0 w-[100%] h-[100%] backdrop-blur-sm bg-black_alpha flex items-center justify-center">
@@ -55,6 +59,7 @@ export default function ModalsRouter() {
                   {newPlace.nation != "" && <NewPlaceModal />}
                   {editPlace.update != undefined && <EditPlaceModal />}
                   {lang && <LangModal />}
+                  {image != "" && <ImageModal />}
                 </>
               )}
             </>

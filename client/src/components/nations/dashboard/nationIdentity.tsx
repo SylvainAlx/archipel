@@ -10,7 +10,12 @@ import EditIcon from "../../editIcon";
 import ExternalLink from "../../externalLink";
 import H2 from "../../titles/h2";
 import { useEffect, useState } from "react";
-import { langAtom, nationPlacesListAtom } from "../../../settings/store";
+import {
+  imageAtom,
+  langAtom,
+  myStore,
+  nationPlacesListAtom,
+} from "../../../settings/store";
 import { LabelId } from "../../../types/typNation";
 import { useAtom } from "jotai";
 import { createTagRegime, getCapitalName } from "../../../utils/functions";
@@ -67,6 +72,10 @@ export default function NationIdentity({
     }
   }, [nationPlaceList, selectedNation]);
 
+  const handleClick = () => {
+    myStore.set(imageAtom, selectedNation.data.url.flag);
+  };
+
   return (
     <TileContainer
       children={
@@ -80,7 +89,10 @@ export default function NationIdentity({
             children={
               <>
                 <div className="p-4 flex flex-col gap-2 items-center">
-                  <div className="relative">
+                  <div
+                    onClick={handleClick}
+                    className="relative cursor-zoom-in"
+                  >
                     <div
                       className={`w-[200px] h-[140px] bg-complementary flex flex-col items-center justify-center overflow-hidden rounded`}
                     >

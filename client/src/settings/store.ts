@@ -52,3 +52,5 @@ export const showApp = atom(false);
 export const dataCheckedAtom = atom(false);
 
 export const langAtom = atom(i18n.language);
+
+export const imageAtom = atom("");
