@@ -23,8 +23,8 @@ export const color_black_alpha = "var(--color-black-alpha)";
 export const nationSortOptions: StandardOption[] = [
   { id: 0, label: "Alphabetique croissant" },
   { id: 1, label: "Alphabetique décroissant" },
-  { id: 2, label: "Point croissant" },
-  { id: 3, label: "Point décroissant" },
+  { id: 2, label: "Succès croissant" },
+  { id: 3, label: "Succès décroissant" },
 ];
 
 export const comOptions: StandardOption[] = [
@@ -41,11 +41,11 @@ export const comTypeOptions = [comOptions[3], comOptions[4], comOptions[0]];
 export const regimeTypeList: RegimeType[] = [
   {
     type: 0,
-    color: "bg-regime_0"
+    color: "bg-regime_0",
   },
   {
     type: 1,
-    color: "bg-regime_1"
+    color: "bg-regime_1",
   },
   {
     type: 2,
@@ -54,24 +54,24 @@ export const regimeTypeList: RegimeType[] = [
   {
     type: 3,
     color: "bg-regime_3",
-  }
-]
+  },
+];
 
 export const regimeList: Regime[] = [
   {
     id: 1,
     label: i18n.t("listes.regimeList.others.unknownPoliticalRegime"),
-    type: 0
+    type: 0,
   },
   {
     id: 2,
     label: i18n.t("listes.regimeList.others.noGovernment"),
-    type: 0
+    type: 0,
   },
   {
     id: 3,
     label: i18n.t("listes.regimeList.others.provisionalGovernment"),
-    type: 0
+    type: 0,
   },
   {
     id: 4,
@@ -81,39 +81,43 @@ export const regimeList: Regime[] = [
   {
     id: 100,
     label: i18n.t("listes.regimeList.democracies.presidentialRepublic"),
-    type: 1
+    type: 1,
   },
   {
     id: 101,
     label: i18n.t("listes.regimeList.democracies.semiPresidentialRepublic"),
-    type: 1
+    type: 1,
   },
-  { id: 102,
+  {
+    id: 102,
     label: i18n.t("listes.regimeList.democracies.parliamentaryRepublic"),
-    type: 1 
+    type: 1,
   },
-  { id: 103,
-    label: i18n.t("listes.regimeList.democracies.onePartyRepublic"), 
-    type: 1 
+  {
+    id: 103,
+    label: i18n.t("listes.regimeList.democracies.onePartyRepublic"),
+    type: 1,
   },
   {
     id: 104,
     label: i18n.t("listes.regimeList.democracies.directDemocracy"),
-    type: 1
+    type: 1,
   },
   {
     id: 200,
     label: i18n.t("listes.regimeList.monarchies.constitutionalMonarchy"),
-    type: 2
+    type: 2,
   },
-  { id: 201,
+  {
+    id: 201,
     label: i18n.t("listes.regimeList.monarchies.absoluteMonarchy"),
-    type: 2 
+    type: 2,
   },
-  { id: 300,
-    label: i18n.t("listes.regimeList.autoritarianRegimes.militaryDictatorship"), 
-    type: 3
-  }
+  {
+    id: 300,
+    label: i18n.t("listes.regimeList.autoritarianRegimes.militaryDictatorship"),
+    type: 3,
+  },
 ];
 
 export const politicalSideList: PoliticalSide[] = [

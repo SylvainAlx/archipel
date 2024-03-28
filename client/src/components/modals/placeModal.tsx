@@ -9,8 +9,9 @@ import Button from "../button";
 import { placesTypeList } from "../../settings/consts";
 import { FaArrowUpRightDots, FaCoins } from "react-icons/fa6";
 import DashTile from "../dashTile";
+import IdTag from "../tags/idTag";
 
-export default function EditPlaceModal() {
+export default function PlaceModal() {
   const [data, setData] = useAtom(editPlaceAtom);
   const selectedNation = myStore.get(selectedNationAtom);
 
@@ -21,6 +22,7 @@ export default function EditPlaceModal() {
   return (
     <>
       <h2 className="text-2xl text-center p-4">{data.place.name}</h2>
+      {data.place._id && <IdTag label={data.place._id} />}
       <section className="flex flex-wrap justify-center gap-2">
         {data.place.builds.map((placeCategory, i) => {
           return (

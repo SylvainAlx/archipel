@@ -125,7 +125,7 @@ export default function NationIdentity({
                   <div className="relative">
                     <em className="text-xl">
                       {selectedNation.data.general.motto
-                        ? selectedNation.data.general.motto
+                        ? `" ${selectedNation.data.general.motto} "`
                         : t(
                             "pages.dashboard.tabs.dashboard.nationIdentity.noMotto",
                           )}
@@ -144,7 +144,7 @@ export default function NationIdentity({
 
                   <div className="flex gap-2 flex-wrap items-center justify-center">
                     {selectedNation.role === "admin" && (
-                      <Tag text="admin" bgColor="bg-success" />
+                      <Tag text="admin" bgColor="bg-danger" />
                     )}
                     <span className="relative">
                       <RegimeTag

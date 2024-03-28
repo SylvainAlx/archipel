@@ -16,7 +16,7 @@ import InfoModal from "../components/modals/infoModal";
 import LoadingSpinner from "../components/modals/loadingSpinner";
 import EditBoxModal from "../components/modals/editBoxModal";
 import NewPlaceModal from "../components/modals/newPlaceModal";
-import EditPlaceModal from "../components/modals/editPlaceModal";
+import PlaceModal from "../components/modals/placeModal";
 import LangModal from "../components/modals/langModal";
 import ImageModal from "../components/modals/imageModal";
 
@@ -57,7 +57,7 @@ export default function ModalsRouter() {
                   {info != "" && <InfoModal />}
                   {editBox.original != -1 && <EditBoxModal />}
                   {newPlace.nation != "" && <NewPlaceModal />}
-                  {editPlace.update != undefined && <EditPlaceModal />}
+                  {editPlace.update != undefined && <PlaceModal />}
                   {lang && <LangModal />}
                   {image != "" && <ImageModal />}
                 </>
