@@ -6,17 +6,21 @@ import { deleteSelfNation, updateNation } from "../../api/nation/nationAPI";
 import { logout } from "../../api/authentification/authAPI";
 import { createNewCom, deleteCom } from "../../api/communication/comAPI";
 import { deletePlace } from "../../api/place/placeAPI";
+import { useTranslation } from "react-i18next";
 
 export default function ConfirmModal() {
+  const { t } = useTranslation();
   const [confirm, setConfirm] = useAtom(confirmBox);
 
   return (
     <>
-      <h2 className="text-2xl text-center p-4">DEMANDE DE CONFIRMATION</h2>
+      <h2 className="text-2xl text-center p-4">
+        {t("components.modals.confirmModal.title")}
+      </h2>
       <p className="text-center">{confirm.text}</p>
       <div className="flex gap-4 justify-center my-4">
         <Button
-          text="VALIDER"
+          text={t("components.buttons.validate")}
           path=""
           click={() => {
             setConfirm({ action: confirm.action, text: "", result: "OK" });
@@ -41,7 +45,7 @@ export default function ConfirmModal() {
           }}
         />
         <Button
-          text="ANNULER"
+          text={t("components.buttons.cancel")}
           path=""
           click={() =>
             setConfirm({ action: confirm.action, text: "", result: "KO" })

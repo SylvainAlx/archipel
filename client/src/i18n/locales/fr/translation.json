@@ -66,14 +66,18 @@
       "close": "FERMER",
       "cancel": "ANNULER",
       "nation": "MA NATION",
-      "admin": "ADMINISTRATION"
+      "admin": "ADMINISTRATION",
+      "validate": "VALIDER"
     },
     "logo": {
       "subtitle": "NATIONS VIRTUELLES"
     },
     "modals": {
+      "confirmModal": {
+        "title": "DEMANDE DE CONFIRMATION"
+      },
       "langModal": {
-        "titles": "CHOIX DE LA LANGUE"
+        "title": "CHOIX DE LA LANGUE"
       },
       "loadingModal": {
         "title": "PATIENTEZ",

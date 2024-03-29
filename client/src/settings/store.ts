@@ -54,3 +54,5 @@ export const dataCheckedAtom = atom(false);
 export const langAtom = atom(i18n.language);
 
 export const imageAtom = atom("");
+
+export const showMenuAtom = atom(false);

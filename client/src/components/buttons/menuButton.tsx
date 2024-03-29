@@ -1,5 +1,6 @@
 import { IoMenu } from "react-icons/io5";
 import Button from "../button";
+import { myStore, showMenuAtom } from "../../settings/store";
 
 export default function MenuButton() {
   return (
@@ -13,7 +14,7 @@ export default function MenuButton() {
               <IoMenu />
             </div>
           }
-          click={() => alert("menu")}
+          click={() => myStore.set(showMenuAtom, true)}
         />
       </div>
     </>

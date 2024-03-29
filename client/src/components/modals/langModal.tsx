@@ -19,7 +19,7 @@ export default function LangModal() {
   return (
     <>
       <h2 className="text-2xl text-center p-4">
-        {t("components.modals.langModal.titles")}
+        {t("components.modals.langModal.title")}
       </h2>
       {langOptions.length > 0 && (
         <Select

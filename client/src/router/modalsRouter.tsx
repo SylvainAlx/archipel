@@ -9,6 +9,7 @@ import {
   newPlaceAtom,
   recoveryKey,
   showLangModalAtom,
+  showMenuAtom,
 } from "../settings/store";
 import { RecoveryModal } from "../components/modals/recoveryModal";
 import ConfirmModal from "../components/modals/confirmModal";
@@ -19,6 +20,7 @@ import NewPlaceModal from "../components/modals/newPlaceModal";
 import PlaceModal from "../components/modals/placeModal";
 import LangModal from "../components/modals/langModal";
 import ImageModal from "../components/modals/imageModal";
+import MenuModal from "../components/modals/menuModal";
 
 export default function ModalsRouter() {
   const [recovery] = useAtom(recoveryKey);
@@ -30,6 +32,7 @@ export default function ModalsRouter() {
   const [editPlace] = useAtom(editPlaceAtom);
   const [lang] = useAtom(showLangModalAtom);
   const [image] = useAtom(imageAtom);
+  const [menu] = useAtom(showMenuAtom);
 
   if (
     recovery != "" ||
@@ -40,7 +43,8 @@ export default function ModalsRouter() {
     newPlace.nation != "" ||
     editPlace.update != undefined ||
     lang ||
-    image != ""
+    image != "" ||
+    menu
   ) {
     return (
       <div className="animate-in fade-in z-20 fixed top-0 w-[100%] h-[100%] backdrop-blur-sm bg-black_alpha flex items-center justify-center">
@@ -60,6 +64,7 @@ export default function ModalsRouter() {
                   {editPlace.update != undefined && <PlaceModal />}
                   {lang && <LangModal />}
                   {image != "" && <ImageModal />}
+                  {menu && <MenuModal />}
                 </>
               )}
             </>
