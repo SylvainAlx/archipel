@@ -16,7 +16,7 @@ export default function Nav() {
         </>
       ) : (
         <>
-          <IconLink path="/dashboard" text={t("components.buttons.nation")} />
+          <IconLink path="/nation" text={t("components.buttons.nation")} />
           {nation.role === "admin" && (
             <IconLink path="/admin" text={t("components.buttons.admin")} />
           )}

@@ -2,6 +2,11 @@ import mongoose from "mongoose";
 
 const PlaceSchema = mongoose.Schema(
   {
+    officialId: {
+      type: String,
+      required: true,
+      unique: true,
+    },
     nation: {
       type: String,
       required: true,

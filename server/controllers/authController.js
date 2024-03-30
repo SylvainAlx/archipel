@@ -2,6 +2,7 @@ import Nation from "../models/nationSchema.js";
 import Param from "../models/paramSchema.js";
 import jwt from "jsonwebtoken";
 import { LoremIpsum } from "lorem-ipsum";
+import { createOfficialId } from "../utils/functions.js";
 
 export const register = async (req, res) => {
   try {
@@ -28,13 +29,22 @@ export const register = async (req, res) => {
       }
     });
 
+    const officialId = createOfficialId("n");
+
     const coords = {
       lat: (Math.random() * (90 - -90) + -90).toFixed(2),
       lng: (Math.random() * 360).toFixed(2),
     };
     let data = { general: coords };
     data.general.coords = coords;
-    const nation = new Nation({ name, password, recovery, role, data });
+    const nation = new Nation({
+      officialId,
+      name,
+      password,
+      recovery,
+      role,
+      data,
+    });
 
     try {
       const savedNation = await nation.save();
@@ -64,7 +74,7 @@ export const login = async (req, res) => {
 
     const nation = await Nation.findOne(
       { name },
-      "_id name password role data createdAt",
+      "_id officialId name password role data createdAt",
     );
     if (!nation) {
       return res.status(404).json({ message: "Nation introuvable" });
@@ -95,7 +105,7 @@ export const verify = async (req, res) => {
 
     const nation = await Nation.findOne(
       { name: decoded.name },
-      "_id name role data createdAt",
+      "_id officialId name role data createdAt",
     );
 
     if (nation) {

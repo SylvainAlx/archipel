@@ -35,6 +35,7 @@ export const getNation = (id: string) => {
       if (data.nation) {
         myStore.set(selectedNationAtom, {
           _id: data.nation._id,
+          officialId : data.nation.officialId,
           name: data.nation.name,
           role: data.nation.role,
           data: data.nation.data,

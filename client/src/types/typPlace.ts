@@ -2,6 +2,7 @@ import { buildList } from "../settings/consts";
 
 export interface Place {
   _id?: string;
+  officialId: string;
   nation: string;
   type: number;
   cost: number;
@@ -17,6 +18,7 @@ export interface Place {
 
 export const emptyPlace: Place = {
   nation: "",
+  officialId: "",
   type: 0,
   cost: 0,
   level: 0,

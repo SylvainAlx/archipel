@@ -29,6 +29,7 @@ export const nationsListAtom = atom<Nation[]>([]);
 
 // place
 
+export const placeAtom = atom<Place>(emptyPlace);
 export const placesListAtom = atom<Place[]>([]);
 export const nationPlacesListAtom = atom<Place[]>([]);
 export const newPlaceAtom = atom<Place>(emptyPlace);

@@ -52,7 +52,7 @@ export default function NationGlobe({ text }: StringProps) {
   }, []);
 
   const handleClick = () => {
-    navigate(`/dashboard/${selectedNation._id}`);
+    navigate(`/nation/${selectedNation.officialId}`);
   };
 
   return (

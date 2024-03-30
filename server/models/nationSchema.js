@@ -4,6 +4,11 @@ import jwt from "jsonwebtoken";
 
 const nationSchema = mongoose.Schema(
   {
+    officialId: {
+      type: String,
+      required: true,
+      unique: true,
+    },
     name: {
       type: String,
       required: true,
@@ -99,7 +104,7 @@ const nationSchema = mongoose.Schema(
   },
   {
     timestamps: true,
-  }
+  },
 );
 
 //cryptage du mot de passe  ou la clé de récupération avant chaque save qui modifie
@@ -145,7 +150,7 @@ nationSchema.methods.createJWT = function () {
       role: this.role,
     },
     process.env.JWT_SECRET,
-    { expiresIn: "24h" }
+    { expiresIn: "24h" },
   );
 };
 

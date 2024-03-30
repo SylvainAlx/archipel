@@ -18,9 +18,11 @@ import { useAtom } from "jotai";
 import PointTag from "../../tags/pointTag";
 import PopulationTag from "../../tags/populationTag";
 import { GiCapitol } from "react-icons/gi";
+import { useNavigate } from "react-router-dom";
 
 export default function PlaceTile({ place, update, owner }: PlaceTileProp) {
   const [selectedNation] = useAtom(selectedNationAtom);
+  const navigate = useNavigate();
 
   const handleDelete = () => {
     myStore.set(confirmBox, {
@@ -33,6 +35,7 @@ export default function PlaceTile({ place, update, owner }: PlaceTileProp) {
 
   const handleClick = () => {
     myStore.set(editPlaceAtom, { place, update, owner });
+    navigate(`/place/${place.officialId}`);
   };
 
   return (

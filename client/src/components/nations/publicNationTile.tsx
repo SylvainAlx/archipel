@@ -5,7 +5,12 @@ import IdTag from "../tags/idTag";
 import PointTag from "../tags/pointTag";
 import PopulationTag from "../tags/populationTag";
 
-export default function PublicNationTile({ _id, name, data, role }: Nation) {
+export default function PublicNationTile({
+  officialId,
+  name,
+  data,
+  role,
+}: Nation) {
   return (
     <div className="bg-complementary hover:bg-black_alpha hover:cursor-pointer flex flex-col items-center p-2 gap-4 rounded transition-all">
       <div className="w-full flex items-center">
@@ -25,7 +30,7 @@ export default function PublicNationTile({ _id, name, data, role }: Nation) {
         <h2 className="text-light text-xl pl-4 pr-6">{name}</h2>
       </div>
       <div className="flex gap-2 self-end flex-wrap justify-end">
-        <IdTag label={_id} />
+        <IdTag label={officialId} />
         {role === "admin" && <Tag text="admin" bgColor="bg-success" />}
         <PointTag label={data.roleplay.points} />
         <PopulationTag label={data.roleplay.population} />

@@ -9,10 +9,16 @@ export const getAllPlacesFetch = async () => {
 };
 
 export const getNationPlacesFetch = async (id: string) => {
-  const resp = await fetch(`${SERVER_URL}/place/${id}`);
+  const resp = await fetch(`${SERVER_URL}/place/bynation/${id}`);
   const result = await resp.json();
   return result;
 };
+
+export const getPlaceFetch = async (id: string) => {
+  const resp = await fetch(`${SERVER_URL}/place/${id}`);
+  const result = await resp.json();
+  return result;
+}
 
 export const createPlaceFetch = async (payload: PlacePayload) => {
   const jwt = GET_JWT();

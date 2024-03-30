@@ -128,11 +128,12 @@ export default function NationList({ text }: StringProps) {
                   key={i}
                   onClick={() => {
                     setNation({ ...nation });
-                    navigate(`/dashboard/${nation._id}`);
+                    navigate(`/nation/${nation.officialId}`);
                   }}
                 >
                   <PublicNationTile
                     _id={nation._id}
+                    officialId={nation.officialId}
                     name={nation.name}
                     role={nation.role}
                     data={nation.data}

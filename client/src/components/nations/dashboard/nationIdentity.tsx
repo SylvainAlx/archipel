@@ -120,7 +120,7 @@ export default function NationIdentity({
                     {owner && (
                       <EditIcon param={selectedNation.name} path="name" />
                     )}
-                    <IdTag label={selectedNation._id} />
+                    <IdTag label={selectedNation.officialId} />
                   </div>
                   <div className="relative">
                     <em className="text-xl">

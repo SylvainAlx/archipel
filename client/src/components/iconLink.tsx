@@ -24,9 +24,9 @@ export default function IconLink({ path, text }: ButtonProps) {
         text: "Souhaitez-vous vous déconnecter ?",
         result: "",
       });
-    } else if (path === "/dashboard") {
+    } else if (path === "/nation") {
       setSelectedNation(nation);
-      navigate(`/dashboard/${nation._id}`);
+      navigate(`/nation/${nation.officialId}`);
     } else {
       navigate(path);
     }
@@ -40,7 +40,7 @@ export default function IconLink({ path, text }: ButtonProps) {
       {path === "/nations" && <IoMdGlobe />}
       {path === "/login" && <IoMdLogIn />}
       {path === "/register" && <IoMdAddCircleOutline />}
-      {path === "/dashboard" &&
+      {path === "/nation" &&
         (nation.data.url.flag ? (
           <div className="rounded-full w-[45px] h-[45px] overflow-hidden">
             <img

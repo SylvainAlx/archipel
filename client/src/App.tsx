@@ -38,7 +38,7 @@ export default function App() {
   useEffect(() => {
     if (nation.name != "") {
       myStore.set(selectedNationAtom, { ...nation });
-      navigate(`/dashboard/${nation._id}`);
+      navigate(`/nation/${nation.officialId}`);
     } else {
       navigate("/");
     }

@@ -9,6 +9,7 @@ export interface NationRoleplayData {
 
 export interface Nation {
   _id: string;
+  officialId: string;
   name: string;
   role: string;
   data: {
@@ -43,6 +44,7 @@ export interface Nation {
 
 export const EmptyNation: Nation = {
   _id: "",
+  officialId: "",
   name: "",
   role: "",
   data: {

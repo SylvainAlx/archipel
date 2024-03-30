@@ -35,7 +35,7 @@ export default function Home() {
           <Button
             text={t("components.buttons.dashboard")}
             type="button"
-            path={`/dashboard/${nation._id}`}
+            path={`/dashboard/${nation.officialId}`}
           />
           <Button
             text={t("components.buttons.explore")}

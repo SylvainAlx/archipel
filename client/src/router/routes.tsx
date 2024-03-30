@@ -5,6 +5,7 @@ import Home from "../pages/home";
 import LegalNotice from "../pages/legalNotice";
 import Login from "../pages/login";
 import Nations from "../pages/nations";
+import Place from "../pages/place";
 import Recovery from "../pages/recovery";
 import Register from "../pages/register";
 import TermsOfService from "../pages/termsOfService";
@@ -19,7 +20,8 @@ export const publicRoutes: ArchipelRoute[] = [
   { path: "/", page: <Home /> },
   { path: "/recovery", page: <Recovery /> },
   { path: "/nations", page: <Nations /> },
-  { path: "/dashboard/:id", page: <Dashboard /> },
+  { path: "/nation/:id", page: <Dashboard /> },
+  { path: "/place/:id", page: <Place /> },
   { path: "/legalnotice", page: <LegalNotice /> },
   { path: "/termsofservice", page: <TermsOfService /> },
 ];

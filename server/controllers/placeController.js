@@ -1,5 +1,6 @@
 import Place from "../models/placeSchema.js";
 import Nation from "../models/nationSchema.js";
+import { createOfficialId } from "../utils/functions.js";
 
 export const getPlaces = async (req, res) => {
   try {
@@ -16,6 +17,21 @@ export const getPlaces = async (req, res) => {
   }
 };
 
+export const getOne = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const place = await Place.findOne({ officialId: id });
+    res.status(200).json({
+      place,
+    });
+  } catch (error) {
+    res.status(404).json({
+      message: "aucun lieu à afficher",
+      erreur: error.message,
+    });
+  }
+};
+
 export const getAllPlaces = async (req, res) => {
   try {
     const places = await Place.find({});
@@ -29,8 +45,11 @@ export const createPlace = async (req, res) => {
   try {
     const { nation, name, description, image, builds } = req.body;
 
+    const officialId = createOfficialId("p");
+
     const place = new Place({
       nation,
+      officialId,
       level: 1,
       slots: 10,
       points: 1,
@@ -43,13 +62,13 @@ export const createPlace = async (req, res) => {
     place
       .save()
       .then(async (place) => {
-        const nation = await Nation.findOne({ _id: place.nation })
+        const nation = await Nation.findOne({ officialId: place.nation })
           .then((nation) => {
             if (
               nation.data.roleplay.capital === "" ||
               nation.data.roleplay.capital == undefined
             ) {
-              nation.data.roleplay.capital = place._id;
+              nation.data.roleplay.capital = place.officialId;
             }
             nation.data.roleplay.credits -= 100;
             nation.data.roleplay.points += 1;
@@ -85,23 +104,23 @@ export const createPlace = async (req, res) => {
 export const deletePlace = async (req, res) => {
   try {
     const id = req.params.id;
-    const place = await Place.findOne({ _id: id });
+    const place = await Place.findOne({ officialId: id });
     if (!place) {
       return res.status(404).json({ message: "Lieu non trouvé" });
     }
 
-    const nation = await Nation.findOne({ _id: place.nation });
+    const nation = await Nation.findOne({ officialId: place.nation });
     if (!nation) {
       return res.status(404).json({ message: "Nation non trouvée" });
     }
-    if (nation.data.roleplay.capital === place._id) {
+    if (nation.data.roleplay.capital === place.officialId) {
       nation.data.roleplay.capital = "";
     }
     nation.data.roleplay.population -= place.population;
     nation.data.roleplay.points -= place.points;
     await nation.save();
 
-    await Place.findByIdAndDelete(id);
+    await Place.findByIdAndDelete(place._id);
 
     res.status(200).json({ place, nation, message: `Lieu supprimé` });
   } catch (error) {

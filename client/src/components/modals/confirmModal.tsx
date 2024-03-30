@@ -40,7 +40,7 @@ export default function ConfirmModal() {
               updateNation(confirm.payload);
             }
             if (confirm.action === "deletePlace") {
-              deletePlace(confirm.target._id);
+              deletePlace(confirm.target.officialId);
             }
           }}
         />

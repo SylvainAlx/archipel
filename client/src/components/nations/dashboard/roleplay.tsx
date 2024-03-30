@@ -29,15 +29,16 @@ export default function Roleplay({
   const [nationPlacesList] = useAtom(nationPlacesListAtom);
 
   useEffect(() => {
-    if (selectedNation._id !== "") {
-      getNationPlaces(selectedNation._id);
+    if (selectedNation.officialId !== "" && nationPlacesList.length === 0) {
+      getNationPlaces(selectedNation.officialId);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleClick = () => {
     const newPlace: Place = {
-      nation: selectedNation._id,
+      officialId: "",
+      nation: selectedNation.officialId,
       cost: placesTypeList[0].cost,
       points: placesTypeList[0].points,
       type: placesTypeList[0].id,
@@ -83,7 +84,7 @@ export default function Roleplay({
                 <div className="w-full flex flex-col gap-2">
                   {nationPlacesList != undefined ? (
                     nationPlacesList.map((place, i) => {
-                      if (place.nation === selectedNation._id) {
+                      if (place.nation === selectedNation.officialId) {
                         return (
                           <div className="w-full" key={i}>
                             <PlaceTile

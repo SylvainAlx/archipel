@@ -9,11 +9,14 @@ export const getAll = async (req, res) => {
     if (searchText) {
       const nations = await Nation.find(
         { name: { $regex: searchText, $options: "i" } },
-        "name role data createdAt"
+        "name role data createdAt",
       );
       res.status(200).json(nations);
     } else {
-      const nations = await Nation.find({}, "name role data createdAt");
+      const nations = await Nation.find(
+        {},
+        "officialId name role data createdAt",
+      );
       res.status(200).json(nations);
     }
   } catch (error) {
@@ -23,9 +26,10 @@ export const getAll = async (req, res) => {
 
 export const getTop100 = async (req, res) => {
   try {
-    const nations = await Nation.find({}, "name role data createdAt").limit(
-      100
-    );
+    const nations = await Nation.find(
+      {},
+      "officialId name role data createdAt",
+    ).limit(100);
     res.status(200).json(nations);
   } catch (error) {
     res.status(404).json({ message: "Aucune nation trouvée" });
@@ -36,8 +40,8 @@ export const getOne = async (req, res) => {
   try {
     const nationId = req.params.id;
     const nation = await Nation.findOne(
-      { _id: nationId },
-      "name role data createdAt"
+      { officialId: nationId },
+      "officialId name role data createdAt",
     );
     res.status(200).json({
       nation,
@@ -55,7 +59,7 @@ export const getSelf = async (req, res) => {
     const id = req.nationId;
     const nation = await Nation.findOne(
       { _id: id },
-      "name role data createdAt"
+      "officialId name role data createdAt",
     );
     res.status(200).json({ nation });
   } catch (error) {
@@ -118,7 +122,10 @@ export const updateNation = async (req, res) => {
   try {
     const { _id, name, data } = req.body;
     if (req.nationId === _id) {
-      const nation = await Nation.findOne({ _id }, "name role data createdAt");
+      const nation = await Nation.findOne(
+        { _id },
+        "officialId name role data createdAt",
+      );
       nation.name = name;
       nation.data = data;
       nation

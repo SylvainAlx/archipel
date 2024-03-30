@@ -30,16 +30,16 @@ export default function Dashboard() {
   const { id } = useParams();
 
   useEffect(() => {
-    if (nation._id === id) {
+    if (nation.officialId === id) {
       setSelectedNation(nation);
       setTabList([
         { id: 0, label: t("pages.dashboard.tabs.dashboard.title") },
         { id: 1, label: t("pages.dashboard.tabs.params.title") },
         { id: 2, label: t("pages.dashboard.tabs.coms.title") },
       ]);
-    } else if (selectedNation._id === "" && id) {
+    } else if (selectedNation.officialId === "" && id) {
       getNation(id);
-    } else if (id && selectedNation._id != id) {
+    } else if (id && selectedNation.officialId != id) {
       getNation(id);
     }
   }, [selectedNation, lang]);

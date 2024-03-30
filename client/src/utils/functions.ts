@@ -16,7 +16,7 @@ export const deleteElementOfAtomArray = (
   atom: any[],
   setAtom: React.Dispatch<React.SetStateAction<any>>,
 ) => {
-  const tempArray: any[] = atom.filter((objet) => objet._id !== id);
+  const tempArray: any[] = atom.filter((objet) => objet.officialId !== id);
   setAtom(tempArray);
 };
 
@@ -36,7 +36,7 @@ export const updateElementOfAtomArray = (
   setAtom: React.Dispatch<React.SetStateAction<any>>,
 ) => {
   const tempArray = atom.map((objet) =>
-    objet._id === payload._id ? payload : objet,
+    objet._id === payload.officialId ? payload : objet,
   );
   setAtom(tempArray);
 };
@@ -70,7 +70,7 @@ export const formatTime = (totalMinutes: number): string => {
 };
 
 export const getCapitalName = (placesList: Place[], id: string): string => {
-  const foundPlace = placesList.find((place) => place._id === id);
+  const foundPlace = placesList.find((place) => place.officialId === id);
   if (foundPlace) {
     return foundPlace.name;
   } else {

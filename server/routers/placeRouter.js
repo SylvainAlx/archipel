@@ -4,13 +4,15 @@ import {
   createPlace,
   deletePlace,
   getAllPlaces,
+  getOne,
 } from "../controllers/placeController.js";
 import { verifyJwt } from "../middlewares/authMiddleware.js";
 
 const placeRouter = express.Router();
 
 placeRouter.get("/getall", getAllPlaces);
-placeRouter.get("/:id", getPlaces);
+placeRouter.get("/:id", getOne);
+placeRouter.get("/bynation/:id", getPlaces);
 placeRouter.post("/create", [verifyJwt], createPlace);
 placeRouter.delete("/delete/:id", [verifyJwt], deletePlace);
 

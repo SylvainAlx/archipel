@@ -33,6 +33,7 @@ export const register = ({ name, password }: AuthPayload) => {
         myStore.set(comsListAtom, [EmptyCom]);
         myStore.set(nationAtom, {
           _id: data.nation._id,
+          officialId : data.nation.officialId,
           name: data.nation.name,
           role: data.nation.role,
           data: data.nation.data,
@@ -59,6 +60,7 @@ export const authentification = () => {
         if (data.name != undefined) {
           myStore.set(nationAtom, {
             _id: data._id,
+            officialId : data.officialId,
             name: data.name,
             role: data.role,
             data: data.data,
@@ -97,6 +99,7 @@ export const login = ({ name, password }: AuthPayload) => {
         myStore.set(nationsListAtom, [EmptyNation]);
         myStore.set(nationAtom, {
           _id: data.nation._id,
+          officialId : data.nation.officialId,
           name: data.nation.name,
           role: data.nation.role,
           data: data.nation.data,
