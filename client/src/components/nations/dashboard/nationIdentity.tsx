@@ -12,13 +12,11 @@ import H2 from "../../titles/h2";
 import { useEffect, useState } from "react";
 import {
   imageAtom,
-  langAtom,
   myStore,
   nationPlacesListAtom,
 } from "../../../settings/store";
 import { LabelId } from "../../../types/typNation";
 import { useAtom } from "jotai";
-import { createTagRegime, getCapitalName } from "../../../utils/functions";
 import RegimeTag from "../../tags/regimeTag";
 import IdTag from "../../tags/idTag";
 import CapitalTag from "../../tags/capitalTag";
@@ -29,23 +27,9 @@ export default function NationIdentity({
   selectedNation,
   owner,
 }: SelectedNationProps) {
-  const [lang] = useAtom(langAtom);
   const { t } = useTranslation();
-  const [regime, setRegime] = useState({
-    id: 0,
-    label: "",
-    type: 0,
-    bgColor: "bg-regime_0",
-  });
   const [placesList, setPlacesList] = useState<LabelId[]>([]);
   const [nationPlaceList] = useAtom(nationPlacesListAtom);
-  const [capital, setCapital] = useState<string>(
-    t("pages.dashboard.tabs.dashboard.nationIdentity.noCapital"),
-  );
-
-  useEffect(() => {
-    setRegime(createTagRegime(selectedNation.data.general.regime));
-  }, [lang]);
 
   useEffect(() => {
     const updatedPlaces: LabelId[] = [];
@@ -56,21 +40,7 @@ export default function NationIdentity({
       }
     });
     setPlacesList(updatedPlaces);
-
-    if (selectedNation.data.roleplay.capital != "") {
-      const capitalName = getCapitalName(
-        nationPlaceList,
-        selectedNation.data.roleplay.capital,
-      );
-      if (capitalName != "") {
-        setCapital(capitalName);
-      } else {
-        setCapital(
-          t("pages.dashboard.tabs.dashboard.nationIdentity.noCapital"),
-        );
-      }
-    }
-  }, [nationPlaceList, selectedNation]);
+  }, [nationPlaceList]);
 
   const handleClick = () => {
     myStore.set(imageAtom, selectedNation.data.url.flag);
@@ -120,7 +90,6 @@ export default function NationIdentity({
                     {owner && (
                       <EditIcon param={selectedNation.name} path="name" />
                     )}
-                    <IdTag label={selectedNation.officialId} />
                   </div>
                   <div className="relative">
                     <em className="text-xl">
@@ -142,36 +111,35 @@ export default function NationIdentity({
                     )}
                   </div>
 
-                  <div className="flex gap-2 flex-wrap items-center justify-center">
+                  <div className="flex gap-1 flex-wrap items-center justify-center">
+                    <IdTag label={selectedNation.officialId} />
                     {selectedNation.role === "admin" && (
                       <Tag text="admin" bgColor="bg-danger" />
                     )}
                     <span className="relative">
-                      <RegimeTag
-                        label={regime.label}
-                        type={regime.type}
-                        bgColor={regime.bgColor}
-                      />
+                      {selectedNation.data != undefined && (
+                        <RegimeTag selectedNation={selectedNation} />
+                      )}
                       {owner && (
                         <EditIcon
                           param={regimeList}
                           path="data.general.regime"
-                          indice={regime.id}
+                          indice={selectedNation.data.general.regime}
                         />
                       )}
                     </span>
+                    {selectedNation.data.roleplay.capital != "" && (
+                      <div className="relative">
+                        <CapitalTag selectedNation={selectedNation} />
+                        {owner && (
+                          <EditIcon
+                            param={placesList}
+                            path="data.roleplay.capital"
+                          />
+                        )}
+                      </div>
+                    )}
                   </div>
-                  {capital != "" && (
-                    <div className="relative">
-                      <CapitalTag label={capital} />
-                      {owner && (
-                        <EditIcon
-                          param={placesList}
-                          path="data.roleplay.capital"
-                        />
-                      )}
-                    </div>
-                  )}
                 </div>
               </>
             }

@@ -4,21 +4,25 @@ import Tag from "../tag";
 import IdTag from "../tags/idTag";
 import PointTag from "../tags/pointTag";
 import PopulationTag from "../tags/populationTag";
+import EyeButton from "../buttons/eyeButton";
+import { myStore, selectedNationAtom } from "../../settings/store";
+import { useNavigate } from "react-router-dom";
+import RegimeTag from "../tags/regimeTag";
 
-export default function PublicNationTile({
-  officialId,
-  name,
-  data,
-  role,
-}: Nation) {
+export default function PublicNationTile(nation: Nation) {
+  const navigate = useNavigate();
+  const handleClick = () => {
+    myStore.set(selectedNationAtom, { ...nation });
+    navigate(`/nation/${nation.officialId}`);
+  };
   return (
-    <div className="bg-complementary hover:bg-black_alpha hover:cursor-pointer flex flex-col items-center p-2 gap-4 rounded transition-all">
+    <div className="bg-complementary flex flex-col items-center p-2 gap-4 rounded transition-all">
       <div className="w-full flex items-center">
         <div className="w-[50px] h-[50px] bg-complementary rounded-full flex items-center justify-center overflow-hidden">
-          {data.url.flag != "" ? (
+          {nation.data.url.flag != "" ? (
             <img
-              src={data.url.flag}
-              alt={`flag of ${name}`}
+              src={nation.data.url.flag}
+              alt={`flag of ${nation.name}`}
               className="w-full h-full"
             />
           ) : (
@@ -27,13 +31,15 @@ export default function PublicNationTile({
             </div>
           )}
         </div>
-        <h2 className="text-light text-xl pl-4 pr-6">{name}</h2>
+        <h2 className="text-light text-xl pl-4 pr-6">{nation.name}</h2>
       </div>
-      <div className="flex gap-2 self-end flex-wrap justify-end">
-        <IdTag label={officialId} />
-        {role === "admin" && <Tag text="admin" bgColor="bg-success" />}
-        <PointTag label={data.roleplay.points} />
-        <PopulationTag label={data.roleplay.population} />
+      <div className="flex gap-1 self-end flex-wrap justify-end">
+        <EyeButton click={handleClick} />
+        <IdTag label={nation.officialId} />
+        {nation.role === "admin" && <Tag text="admin" bgColor="bg-success" />}
+        <RegimeTag selectedNation={nation} />
+        <PointTag label={nation.data.roleplay.points} />
+        <PopulationTag label={nation.data.roleplay.population} />
       </div>
     </div>
   );

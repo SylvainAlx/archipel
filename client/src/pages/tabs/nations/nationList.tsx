@@ -2,26 +2,34 @@
 import { useAtom } from "jotai";
 import Button from "../../../components/button";
 import Input from "../../../components/form/input";
-import { nationsListAtom, selectedNationAtom } from "../../../settings/store";
-import { ChangeEvent, FormEvent, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { nationsListAtom } from "../../../settings/store";
+import {
+  ChangeEvent,
+  FormEvent,
+  useEffect,
+  useState,
+  lazy,
+  Suspense,
+} from "react";
 import { nationSortOptions } from "../../../settings/consts";
 import H1 from "../../../components/titles/h1";
-import PublicNationTile from "../../../components/nations/publicNationTile";
 import Select from "../../../components/form/select";
 import { StringProps } from "../../../types/typProp";
 import { IoIosArrowDropdownCircle } from "react-icons/io";
 import { getNations } from "../../../api/nation/nationAPI";
+import Spinner from "../../../components/loading/spinner";
+import Tag from "../../../components/tag";
 
 export default function NationList({ text }: StringProps) {
   const [nationsList, setNationsList] = useAtom(nationsListAtom);
-  const [, setNation] = useAtom(selectedNationAtom);
   const [searchName, setSearchName] = useState("");
   const [showSearch, setShowSearch] = useState(false);
   const [selectOption, setSelectOption] = useState(nationSortOptions[0].label);
   const [displayedNations, setDisplayedNations] = useState(5);
 
-  const navigate = useNavigate();
+  const PublicNationTile = lazy(
+    () => import("../../../components/nations/publicNationTile"),
+  );
 
   useEffect(() => {
     if (nationsList.length > 0) {
@@ -123,24 +131,24 @@ export default function NationList({ text }: StringProps) {
           nationsList.map((nation, i) => {
             if (i < displayedNations) {
               return (
-                <div
-                  className="min-w-[300px] w-full relative transition-all duration-300"
-                  key={i}
-                  onClick={() => {
-                    setNation({ ...nation });
-                    navigate(`/nation/${nation.officialId}`);
-                  }}
-                >
-                  <PublicNationTile
-                    _id={nation._id}
-                    officialId={nation.officialId}
-                    name={nation.name}
-                    role={nation.role}
-                    data={nation.data}
-                    createdAt={nation.createdAt}
-                  />
-                  <b className="absolute top-0 right-2 font-bolder">#{i + 1}</b>
-                </div>
+                <Suspense key={i} fallback={<Spinner />}>
+                  <div className="min-w-[300px] w-full relative transition-all duration-300">
+                    <PublicNationTile
+                      _id={nation._id}
+                      officialId={nation.officialId}
+                      name={nation.name}
+                      role={nation.role}
+                      data={nation.data}
+                      createdAt={nation.createdAt}
+                    />
+                    <div className="absolute top-2 right-2">
+                      <Tag
+                        text={(i + 1).toString()}
+                        bgColor="bg-complementary2"
+                      />
+                    </div>
+                  </div>
+                </Suspense>
               );
             }
           })}

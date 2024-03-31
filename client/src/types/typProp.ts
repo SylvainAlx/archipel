@@ -98,6 +98,11 @@ export interface TagProps {
   click?: MouseEventHandler<HTMLDivElement>;
 }
 
+export interface ClickProps {
+  text? : string;
+  click: MouseEventHandler<HTMLDivElement>;
+}
+
 export interface TextAreaProps {
   required?: boolean;
   onChange: (event: ChangeEvent<HTMLTextAreaElement>) => void;

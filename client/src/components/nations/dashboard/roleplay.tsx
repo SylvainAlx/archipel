@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { Suspense, lazy, useEffect } from "react";
 import { SelectedNationProps } from "../../../types/typProp";
 import DashTile from "../../dashTile";
 import TileContainer from "../../tileContainer";
@@ -13,7 +13,7 @@ import { useAtom } from "jotai";
 
 import { FaCoins } from "react-icons/fa6";
 import { addCredits } from "../../../utils/functions";
-import PlaceTile from "./placeTile";
+
 import Button from "../../button";
 
 import { Place } from "../../../types/typPlace";
@@ -21,12 +21,17 @@ import PointTag from "../../tags/pointTag";
 import CreditTag from "../../tags/creditTag";
 import PopulationTag from "../../tags/populationTag";
 import { getNationPlaces } from "../../../api/place/placeAPI";
+import Spinner from "../../loading/spinner";
+import Tag from "../../tag";
 
 export default function Roleplay({
   selectedNation,
   owner,
 }: SelectedNationProps) {
   const [nationPlacesList] = useAtom(nationPlacesListAtom);
+  const PlaceTile = lazy(
+    () => import("../../../components/nations/dashboard/placeTile"),
+  );
 
   useEffect(() => {
     if (selectedNation.officialId !== "" && nationPlacesList.length === 0) {
@@ -63,7 +68,7 @@ export default function Roleplay({
             className="w-full"
             children={
               <>
-                <div className="w-full px-2 flex items-center justify-center gap-4">
+                <div className="w-full px-2 flex items-center justify-center gap-1">
                   <PointTag label={selectedNation.data.roleplay.points} />
                   <PopulationTag
                     label={selectedNation.data.roleplay.population}
@@ -78,7 +83,7 @@ export default function Roleplay({
           />
 
           <DashTile
-            title="Villes"
+            title="Lieux"
             children={
               <>
                 <div className="w-full flex flex-col gap-2">
@@ -86,13 +91,21 @@ export default function Roleplay({
                     nationPlacesList.map((place, i) => {
                       if (place.nation === selectedNation.officialId) {
                         return (
-                          <div className="w-full" key={i}>
-                            <PlaceTile
-                              owner={owner}
-                              place={place}
-                              update={place.level}
-                            />
-                          </div>
+                          <Suspense key={i} fallback={<Spinner />}>
+                            <div className="relative w-full">
+                              <PlaceTile
+                                owner={owner}
+                                place={place}
+                                update={place.level}
+                              />
+                              <div className="absolute top-2 right-2">
+                                <Tag
+                                  text={(i + 1).toString()}
+                                  bgColor="bg-complementary"
+                                />
+                              </div>
+                            </div>
+                          </Suspense>
                         );
                       }
                     })

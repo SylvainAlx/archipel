@@ -1,12 +1,7 @@
-import { IoMdCloseCircle, IoMdEye } from "react-icons/io";
-// import { placesTypeList } from "../../../settings/consts";
+import { IoMdCloseCircle } from "react-icons/io";
 import { PlaceTileProp } from "../../../types/typProp";
-
 import Tag from "../../tag";
-import {
-  FaArrowUpRightDots,
-  // FaCoins,
-} from "react-icons/fa6";
+import { FaArrowUpRightDots } from "react-icons/fa6";
 import {
   confirmBox,
   editPlaceAtom,
@@ -14,11 +9,12 @@ import {
   selectedNationAtom,
 } from "../../../settings/store";
 import { useAtom } from "jotai";
-// import IdTag from "../../tags/idTag";
 import PointTag from "../../tags/pointTag";
 import PopulationTag from "../../tags/populationTag";
 import { GiCapitol } from "react-icons/gi";
 import { useNavigate } from "react-router-dom";
+import EyeButton from "../../buttons/eyeButton";
+import IdTag from "../../tags/idTag";
 
 export default function PlaceTile({ place, update, owner }: PlaceTileProp) {
   const [selectedNation] = useAtom(selectedNationAtom);
@@ -40,29 +36,19 @@ export default function PlaceTile({ place, update, owner }: PlaceTileProp) {
 
   return (
     <div
-      className={`p-4 rounded flex flex-col items-center gap-3 bg-complementary2 shadow-xl`}
+      className={`p-2 rounded flex flex-col items-center gap-3 bg-complementary2 shadow-xl`}
     >
       <div className="w-full flex flex-col items-center gap-2">
         <h3 className="w-full flex justify-between">
           <div className="text-xl flex items-center gap-2">
             <span className="text-lg text-info">
-              {place._id === selectedNation.data.roleplay.capital && (
+              {place.officialId === selectedNation.data.roleplay.capital && (
                 <GiCapitol />
               )}
             </span>
             <span>{place.name}</span>
           </div>
-          <div className="flex gap-2">
-            <Tag
-              text=""
-              bgColor="bg-secondary"
-              click={handleClick}
-              children={
-                <div className="text-xl hover:animate-ping">
-                  <IoMdEye />
-                </div>
-              }
-            />
+          <div className="flex gap-2 pr-6">
             {owner && (
               <Tag
                 text=""
@@ -77,37 +63,18 @@ export default function PlaceTile({ place, update, owner }: PlaceTileProp) {
             )}
           </div>
         </h3>
+        <p className="w-full">{place.description}</p>
         <div className="w-full flex justify-between gap-2">
-          {/* <div className="w-[100px] relative flex justify-center">
-            <div
-              className={`bg-complementary flex flex-col items-center justify-center overflow-hidden rounded`}
-            >
-              {place.image != "" ? (
-                <img
-                  src={place.image}
-                  alt={`image of ${place.name}`}
-                  className="object-cover w-full h-full"
-                />
-              ) : (
-                <img
-                  src="/place/default.webp"
-                  alt={`default image of city`}
-                  className="object-cover w-full h-full"
-                />
-              )}
-            </div>
-          </div> */}
-          <div className="flex flex-col items-end justify-between gap-2 flex-grow">
-            <div className="w-full flex flex-wrap items-center gap-2">
-              {/* {place._id && <IdTag label={place._id} />} */}
-              <Tag
-                text={"niveau " + place.level.toString()}
-                bgColor="bg-info"
-                children={<FaArrowUpRightDots />}
-              />
-              <PointTag label={place.points.toString()} />
-              <PopulationTag label={place.population.toString()} />
-            </div>
+          <div className="w-full flex flex-wrap items-center justify-end gap-1">
+            <EyeButton click={handleClick} />
+            {place.officialId && <IdTag label={place.officialId} />}
+            <Tag
+              text={"niveau " + place.level.toString()}
+              bgColor="bg-info"
+              children={<FaArrowUpRightDots />}
+            />
+            <PointTag label={place.points.toString()} />
+            <PopulationTag label={place.population.toString()} />
           </div>
         </div>
       </div>
