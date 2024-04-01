@@ -43,13 +43,16 @@ export const getAllPlaces = async (req, res) => {
 
 export const createPlace = async (req, res) => {
   try {
-    const { nation, name, description, image, builds } = req.body;
+    const { nation, parentId, name, type, description, image, builds } =
+      req.body;
 
     const officialId = createOfficialId("p");
 
     const place = new Place({
       nation,
       officialId,
+      parentId,
+      type,
       level: 1,
       slots: 10,
       points: 1,

@@ -30,7 +30,7 @@ export default function NewPlaceModal() {
 
   return (
     <div>
-      <h2 className="text-2xl text-center p-4">NOUVELLE VILLE</h2>
+      <h2 className="text-2xl text-center p-4">NOUVEAU LIEU</h2>
       <div className="w-full px-2 flex items-center justify-center gap-4">
         <Tag
           text={newPlace.points.toString()}
@@ -56,6 +56,7 @@ export default function NewPlaceModal() {
               placeholder="NOM DU LIEU"
             />
             <TextArea
+              required
               onChange={handleChange}
               name="description"
               placeholder="DESCRIPTION"

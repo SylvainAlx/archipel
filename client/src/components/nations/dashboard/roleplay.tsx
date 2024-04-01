@@ -43,6 +43,7 @@ export default function Roleplay({
   const handleClick = () => {
     const newPlace: Place = {
       officialId: "",
+      parentId: selectedNation.officialId,
       nation: selectedNation.officialId,
       cost: placesTypeList[0].cost,
       points: placesTypeList[0].points,
@@ -50,8 +51,8 @@ export default function Roleplay({
       slots: placesTypeList[0].slots,
       level: 1,
       population: 0,
-      name: "Nouvelle ville",
-      description: placesTypeList[0].description,
+      name: "",
+      description: "",
       image: "",
       builds: buildList,
     };
@@ -122,7 +123,7 @@ export default function Roleplay({
                         click={handleClick}
                         children={
                           <div className="w-full flex justify-center items-center gap-2 flex-wrap">
-                            <span>Nouvelle ville</span>
+                            <span>Nouveau lieu</span>
                             <span className="flex gap-1 items-center">
                               <FaCoins />
                               {placesTypeList[0].cost}

@@ -4,6 +4,7 @@ export interface Place {
   _id?: string;
   officialId: string;
   nation: string;
+  parentId: string;
   type: number;
   cost: number;
   level: number;
@@ -19,6 +20,7 @@ export interface Place {
 export const emptyPlace: Place = {
   nation: "",
   officialId: "",
+  parentId: "",
   type: 0,
   cost: 0,
   level: 0,

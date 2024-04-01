@@ -19,15 +19,20 @@ export default function Place() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const handleClick = () => {
+    if (data.place.nation === data.place.parentId) {
+      navigate(`/nation/${data.place.nation}`);
+    } else {
+      navigate(`/place/${data.place.nation}`);
+    }
+  };
+
   return (
     <>
       <H1 text={data.place.name} />
       <div className="flex items-center justify-center gap-1">
         {data.place.officialId && <IdTag label={data.place.officialId} />}
-        <EyeButton
-          text="voir la nation"
-          click={() => navigate(`/nation/${data.place.nation}`)}
-        />
+        <EyeButton text="voir le lieu parent" click={handleClick} />
       </div>
       <section className="w-full flex flex-wrap justify-center gap-2">
         {data.place.builds.map((placeCategory, i) => {

@@ -11,6 +11,14 @@ const PlaceSchema = mongoose.Schema(
       type: String,
       required: true,
     },
+    parentId: {
+      type: String,
+      required: true,
+    },
+    type: {
+      type: Number,
+      required: true,
+    },
     level: {
       type: Number,
       required: true,
@@ -39,7 +47,14 @@ const PlaceSchema = mongoose.Schema(
       type: String,
       default: "",
     },
-    builds: Array,
+    builds: {
+      type: Array,
+      default: [],
+    },
+    children: {
+      type: Array,
+      default: [],
+    },
   },
   {
     timestamps: true,
