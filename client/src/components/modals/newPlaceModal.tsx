@@ -1,15 +1,17 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useAtom } from "jotai";
 import { newPlaceAtom } from "../../settings/store";
-import Button from "../button";
+import Button from "../buttons/button";
 import { ChangeEvent, FormEvent } from "react";
 import Form from "../form/form";
 import Input from "../form/input";
 import TextArea from "../form/textArea";
 import Tag from "../tag";
-import { FaArrowUpRightDots, FaTrophy } from "react-icons/fa6";
+import { FaTrophy } from "react-icons/fa6";
 import { emptyPlace } from "../../types/typPlace";
 import { createNewPlace } from "../../api/place/placeAPI";
+import Select from "../form/select";
+import { placesTypeList } from "../../settings/consts";
 
 export default function NewPlaceModal() {
   const [newPlace, setNewPlace] = useAtom(newPlaceAtom);
@@ -28,6 +30,11 @@ export default function NewPlaceModal() {
     setNewPlace({ ...newPlace, [name]: value });
   };
 
+  const handleSelectChange = (e: ChangeEvent<HTMLSelectElement>) => {
+    const value = Number(e.target.value);
+    setNewPlace({ ...newPlace, type: value });
+  };
+
   return (
     <div>
       <h2 className="text-2xl text-center p-4">NOUVEAU LIEU</h2>
@@ -36,11 +43,6 @@ export default function NewPlaceModal() {
           text={newPlace.points.toString()}
           bgColor="bg-info"
           children={<FaTrophy />}
-        />
-        <Tag
-          text={"niveau " + newPlace.level.toString()}
-          bgColor="bg-info"
-          children={<FaArrowUpRightDots />}
         />
       </div>
       <Form
@@ -55,6 +57,7 @@ export default function NewPlaceModal() {
               onChange={handleChange}
               placeholder="NOM DU LIEU"
             />
+            <Select options={placesTypeList} onChange={handleSelectChange} />
             <TextArea
               required
               onChange={handleChange}

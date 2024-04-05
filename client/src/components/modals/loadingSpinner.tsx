@@ -1,7 +1,7 @@
 // import { useAtom } from "jotai";
 import { useTranslation } from "react-i18next";
 import { loadingAtom, myStore } from "../../settings/store";
-import Button from "../button";
+import Button from "../buttons/button";
 import Spinner from "../loading/spinner";
 
 export default function LoadingSpinner() {

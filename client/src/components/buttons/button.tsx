@@ -5,9 +5,9 @@ import {
   infoModalAtom,
   nationAtom,
   selectedNationAtom,
-} from "../settings/store";
+} from "../../settings/store";
 import { useAtom } from "jotai";
-import { ButtonProps } from "../types/typProp";
+import { ButtonProps } from "../../types/typProp";
 
 export default function Button({
   type,

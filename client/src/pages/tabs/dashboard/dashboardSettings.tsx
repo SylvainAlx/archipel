@@ -1,4 +1,4 @@
-import Button from "../../../components/button";
+import Button from "../../../components/buttons/button";
 import H1 from "../../../components/titles/h1";
 import { StringProps } from "../../../types/typProp";
 

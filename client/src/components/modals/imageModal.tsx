@@ -1,5 +1,5 @@
 import { useAtom } from "jotai";
-import Button from "../button";
+import Button from "../buttons/button";
 import { imageAtom } from "../../settings/store";
 import { GiBlackFlag } from "react-icons/gi";
 

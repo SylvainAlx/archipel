@@ -1,5 +1,5 @@
 import { useAtom } from "jotai";
-import Button from "../button";
+import Button from "../buttons/button";
 import { infoModalAtom } from "../../settings/store";
 
 export default function InfoModal() {

@@ -1,5 +1,5 @@
 import { useAtom } from "jotai";
-import Button from "../components/button";
+import Button from "../components/buttons/button";
 import H1 from "../components/titles/h1";
 import { nationAtom } from "../settings/store";
 import { useTranslation } from "react-i18next";

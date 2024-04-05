@@ -1,5 +1,5 @@
 import { IoMenu } from "react-icons/io5";
-import Button from "../button";
+import Button from "./button";
 import { myStore, showMenuAtom } from "../../settings/store";
 
 export default function MenuButton() {

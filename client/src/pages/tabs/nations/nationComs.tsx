@@ -4,7 +4,7 @@ import H1 from "../../../components/titles/h1";
 import { StringProps } from "../../../types/typProp";
 import { comsListAtom, confirmBox, nationAtom } from "../../../settings/store";
 import { useAtom } from "jotai";
-import Button from "../../../components/button";
+import Button from "../../../components/buttons/button";
 import { IoMdTrash } from "react-icons/io";
 import { comOptions } from "../../../settings/consts";
 import { dateToString } from "../../../utils/functions";

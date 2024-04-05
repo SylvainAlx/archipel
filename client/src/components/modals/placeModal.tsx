@@ -1,19 +1,19 @@
 import { useAtom } from "jotai";
 import {
   editPlaceAtom,
-  myStore,
-  selectedNationAtom,
+  // myStore,
+  // selectedNationAtom,
 } from "../../settings/store";
 import { emptyPlace } from "../../types/typPlace";
-import Button from "../button";
-import { placesTypeList } from "../../settings/consts";
-import { FaArrowUpRightDots, FaCoins } from "react-icons/fa6";
+import Button from "../buttons/button";
+// import { placesTypeList } from "../../settings/consts";
+// import { FaArrowUpRightDots, FaCoins } from "react-icons/fa6";
 import DashTile from "../dashTile";
 import IdTag from "../tags/idTag";
 
 export default function PlaceModal() {
   const [data, setData] = useAtom(editPlaceAtom);
-  const selectedNation = myStore.get(selectedNationAtom);
+  // const selectedNation = myStore.get(selectedNationAtom);
 
   const handleClose = () => {
     setData({ place: emptyPlace });
@@ -48,7 +48,7 @@ export default function PlaceModal() {
           );
         })}
       </section>
-      {data.owner && (
+      {/* {data.owner && (
         <Button
           text=""
           path=""
@@ -69,7 +69,7 @@ export default function PlaceModal() {
             </div>
           }
         />
-      )}
+      )} */}
       <Button text="FERMER" path="" click={handleClose} />
     </>
   );

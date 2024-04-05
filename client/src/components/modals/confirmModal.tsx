@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useAtom } from "jotai";
 import { confirmBox } from "../../settings/store";
-import Button from "../button";
+import Button from "../buttons/button";
 import { deleteSelfNation, updateNation } from "../../api/nation/nationAPI";
 import { logout } from "../../api/authentification/authAPI";
 import { createNewCom, deleteCom } from "../../api/communication/comAPI";

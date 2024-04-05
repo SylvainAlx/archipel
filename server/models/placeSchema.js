@@ -19,10 +19,6 @@ const PlaceSchema = mongoose.Schema(
       type: Number,
       required: true,
     },
-    level: {
-      type: Number,
-      required: true,
-    },
     slots: {
       type: Number,
       required: true,

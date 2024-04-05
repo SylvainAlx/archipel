@@ -1,6 +1,6 @@
 import { useAtom } from "jotai";
 import { recoveryKey } from "../../settings/store";
-import Button from "../button";
+import Button from "../buttons/button";
 import { useState } from "react";
 
 export function RecoveryModal() {

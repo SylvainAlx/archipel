@@ -2,7 +2,7 @@ import { ChangeEvent, FormEvent, useState } from "react";
 import H1 from "../components/titles/h1";
 import { recoveryNation } from "../api/authentification/authAPI";
 import Input from "../components/form/input";
-import Button from "../components/button";
+import Button from "../components/buttons/button";
 import Form from "../components/form/form";
 import TextArea from "../components/form/textArea";
 import { useTranslation } from "react-i18next";

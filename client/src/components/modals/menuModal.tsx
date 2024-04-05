@@ -1,5 +1,5 @@
 import { myStore, showMenuAtom } from "../../settings/store";
-import Button from "../button";
+import Button from "../buttons/button";
 import { useTranslation } from "react-i18next";
 
 export default function MenuModal() {

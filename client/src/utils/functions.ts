@@ -1,6 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import i18n from "../i18n/i18n";
-import { politicalSideList, regimeList, regimeTypeList } from "../settings/consts";
+import {
+  placesTypeList,
+  politicalSideList,
+  regimeList,
+  regimeTypeList,
+} from "../settings/consts";
 import { Place } from "../types/typPlace";
 
 export const GET_JWT = () => localStorage.getItem("jwt");
@@ -78,13 +83,22 @@ export const getCapitalName = (placesList: Place[], id: string): string => {
   }
 };
 
+export const getPlaceTypeLabel = (id: number) => {
+  const foundType = placesTypeList.find((type) => type.id === id);
+  if (foundType) {
+    return foundType.label;
+  } else {
+    return "";
+  }
+};
+
 export const createTagRegime = (id: number) => {
   const tagRegime = {
     id,
     label: "",
     type: 0,
-    bgColor: "bg-regime_0"
-  }
+    bgColor: "bg-regime_0",
+  };
   const getLabel = (id: number): string => {
     switch (id) {
       case 1:
@@ -97,17 +111,17 @@ export const createTagRegime = (id: number) => {
         return i18n.t("listes.regimeList.democracies.directDemocracy");
     }
     return i18n.t("listes.regimeList.others.unknownPoliticalRegime");
-  }
-  tagRegime.label = getLabel(id)
+  };
+  tagRegime.label = getLabel(id);
   regimeList.map((regime) => {
     if (regime.id === id) {
       regimeTypeList.map((type) => {
         if (regime.type === type.type) {
-          tagRegime.type = type.type
-          tagRegime.bgColor = type.color 
+          tagRegime.type = type.type;
+          tagRegime.bgColor = type.color;
         }
-      })
+      });
     }
-  })
-  return tagRegime
+  });
+  return tagRegime;
 };

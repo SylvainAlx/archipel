@@ -1,6 +1,6 @@
 import { ChangeEvent } from "react";
 import { langAtom, myStore, showLangModalAtom } from "../../settings/store";
-import Button from "../button";
+import Button from "../buttons/button";
 import i18n, { langOptions } from "../../i18n/i18n";
 import Select from "../form/select";
 import { useTranslation } from "react-i18next";

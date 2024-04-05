@@ -6,7 +6,7 @@ import { comsListAtom, confirmBox, nationAtom } from "../../../settings/store";
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import Form from "../../../components/form/form";
 import Input from "../../../components/form/input";
-import Button from "../../../components/button";
+import Button from "../../../components/buttons/button";
 import Select from "../../../components/form/select";
 import { TITLE, comTypeOptions } from "../../../settings/consts";
 import TextArea from "../../../components/form/textArea";

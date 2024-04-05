@@ -18,6 +18,10 @@ export const color_complementary = "var(--color-complementary)";
 export const color_light = "var(--color-light)";
 export const color_black_alpha = "var(--color-black-alpha)";
 
+// Const
+
+export const NEW_PLACE_COST = 1000;
+
 // listes
 
 export const nationSortOptions: StandardOption[] = [
@@ -133,57 +137,15 @@ export const politicalSideList: PoliticalSide[] = [
 export const placesTypeList = [
   {
     id: 0,
-    level: 1,
-    cost: 1000,
-    points: 1,
-    slots: 10,
-    waitTime: 315,
-    description: "Quelques maisons au milieu de nulle part",
+    label: "État",
   },
   {
     id: 1,
-    level: 2,
-    cost: 10000,
-    points: 10,
-    slots: 100,
-    waitTime: 630,
-    description: "L'ébauche d'un petit village",
+    label: "Région",
   },
   {
     id: 2,
-    level: 3,
-    cost: 100000,
-    points: 100,
-    slots: 1000,
-    waitTime: 1260,
-    description: "Tout ce qu'il faut pour faire une communauté",
-  },
-  {
-    id: 3,
-    level: 4,
-    cost: 1000000,
-    points: 1000,
-    slots: 10000,
-    waitTime: 2520,
-    description: "Communauté de grande taille",
-  },
-  {
-    id: 4,
-    level: 5,
-    cost: 10000000,
-    points: 10000,
-    slots: 100000,
-    waitTime: 5040,
-    description: "Grande agglomération",
-  },
-  {
-    id: 5,
-    level: 6,
-    cost: 100000000,
-    points: 100000,
-    slots: 102400,
-    waitTime: 10080,
-    description: "Grande métropole à rayonnement internationnal",
+    label: "Ville",
   },
 ];
 

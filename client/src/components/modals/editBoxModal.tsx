@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useAtom } from "jotai";
 import { confirmBox, editbox, nationAtom } from "../../settings/store";
-import Button from "../button";
+import Button from "../buttons/button";
 import Input from "../form/input";
 import Select from "../form/select";
 import { ChangeEvent, FormEvent } from "react";

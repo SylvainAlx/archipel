@@ -3,7 +3,7 @@ import { SelectedNationProps } from "../../../types/typProp";
 import DashTile from "../../dashTile";
 import TileContainer from "../../tileContainer";
 import H2 from "../../titles/h2";
-import { buildList, placesTypeList } from "../../../settings/consts";
+import { NEW_PLACE_COST, placesTypeList } from "../../../settings/consts";
 import {
   myStore,
   nationPlacesListAtom,
@@ -14,9 +14,9 @@ import { useAtom } from "jotai";
 import { FaCoins } from "react-icons/fa6";
 import { addCredits } from "../../../utils/functions";
 
-import Button from "../../button";
+import Button from "../../buttons/button";
 
-import { Place } from "../../../types/typPlace";
+import { Place, emptyPlace } from "../../../types/typPlace";
 import PointTag from "../../tags/pointTag";
 import CreditTag from "../../tags/creditTag";
 import PopulationTag from "../../tags/populationTag";
@@ -42,19 +42,18 @@ export default function Roleplay({
 
   const handleClick = () => {
     const newPlace: Place = {
-      officialId: "",
+      officialId: emptyPlace.officialId,
       parentId: selectedNation.officialId,
       nation: selectedNation.officialId,
-      cost: placesTypeList[0].cost,
-      points: placesTypeList[0].points,
+      points: emptyPlace.points,
       type: placesTypeList[0].id,
-      slots: placesTypeList[0].slots,
-      level: 1,
-      population: 0,
-      name: "",
-      description: "",
-      image: "",
-      builds: buildList,
+      slots: emptyPlace.slots,
+      population: emptyPlace.population,
+      name: emptyPlace.name,
+      description: emptyPlace.description,
+      image: emptyPlace.image,
+      builds: emptyPlace.builds,
+      children: emptyPlace.children,
     };
     myStore.set(newPlaceAtom, newPlace);
   };
@@ -94,11 +93,7 @@ export default function Roleplay({
                         return (
                           <Suspense key={i} fallback={<Spinner />}>
                             <div className="relative w-full">
-                              <PlaceTile
-                                owner={owner}
-                                place={place}
-                                update={place.level}
-                              />
+                              <PlaceTile owner={owner} place={place} />
                               <div className="absolute top-2 right-2">
                                 <Tag
                                   text={(i + 1).toString()}
@@ -111,10 +106,10 @@ export default function Roleplay({
                       }
                     })
                   ) : (
-                    <em className="text-center">Aucune ville</em>
+                    <em className="text-center">Aucun lieu</em>
                   )}
                 </div>
-                {selectedNation.data.roleplay.credits >= placesTypeList[0].cost
+                {selectedNation.data.roleplay.credits >= NEW_PLACE_COST
                   ? owner && (
                       <Button
                         text=""
@@ -126,7 +121,7 @@ export default function Roleplay({
                             <span>Nouveau lieu</span>
                             <span className="flex gap-1 items-center">
                               <FaCoins />
-                              {placesTypeList[0].cost}
+                              {NEW_PLACE_COST}
                             </span>
                           </div>
                         }
@@ -142,7 +137,7 @@ export default function Roleplay({
                         children={
                           <div className="pl-2 flex gap-1 items-center">
                             <FaCoins />
-                            {placesTypeList[0].cost}
+                            {NEW_PLACE_COST}
                           </div>
                         }
                       />

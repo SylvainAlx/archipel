@@ -1,7 +1,6 @@
 import { IoMdCloseCircle } from "react-icons/io";
 import { PlaceTileProp } from "../../../types/typProp";
 import Tag from "../../tag";
-import { FaArrowUpRightDots } from "react-icons/fa6";
 import {
   confirmBox,
   editPlaceAtom,
@@ -15,8 +14,10 @@ import { GiCapitol } from "react-icons/gi";
 import { useNavigate } from "react-router-dom";
 import EyeButton from "../../buttons/eyeButton";
 import IdTag from "../../tags/idTag";
+import { getPlaceTypeLabel } from "../../../utils/functions";
+import PlaceTag from "../../tags/placeTag";
 
-export default function PlaceTile({ place, update, owner }: PlaceTileProp) {
+export default function PlaceTile({ place, owner }: PlaceTileProp) {
   const [selectedNation] = useAtom(selectedNationAtom);
   const navigate = useNavigate();
 
@@ -30,7 +31,7 @@ export default function PlaceTile({ place, update, owner }: PlaceTileProp) {
   };
 
   const handleClick = () => {
-    myStore.set(editPlaceAtom, { place, update, owner });
+    myStore.set(editPlaceAtom, { place, owner });
     navigate(`/place/${place.officialId}`);
   };
 
@@ -68,11 +69,7 @@ export default function PlaceTile({ place, update, owner }: PlaceTileProp) {
           <div className="w-full flex flex-wrap items-center justify-end gap-1">
             <EyeButton click={handleClick} />
             {place.officialId && <IdTag label={place.officialId} />}
-            <Tag
-              text={"niveau " + place.level.toString()}
-              bgColor="bg-info"
-              children={<FaArrowUpRightDots />}
-            />
+            <PlaceTag label={getPlaceTypeLabel(place.type)} />
             <PointTag label={place.points.toString()} />
             <PopulationTag label={place.population.toString()} />
           </div>

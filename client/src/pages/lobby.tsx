@@ -2,7 +2,7 @@ import { ChangeEvent, FormEvent, useState } from "react";
 import Input from "../components/form/input";
 import H1 from "../components/titles/h1";
 import { MDP_LOBBY, TITLE } from "../settings/consts";
-import Button from "../components/button";
+import Button from "../components/buttons/button";
 import { useAtom } from "jotai";
 import { showApp } from "../settings/store";
 

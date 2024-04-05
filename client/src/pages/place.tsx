@@ -7,6 +7,8 @@ import { getPlace } from "../api/place/placeAPI";
 import IdTag from "../components/tags/idTag";
 import DashTile from "../components/dashTile";
 import EyeButton from "../components/buttons/eyeButton";
+import PlaceTag from "../components/tags/placeTag";
+import { getPlaceTypeLabel } from "../utils/functions";
 
 export default function Place() {
   const { paramId } = useParams();
@@ -32,6 +34,7 @@ export default function Place() {
       <H1 text={data.place.name} />
       <div className="flex items-center justify-center gap-1">
         {data.place.officialId && <IdTag label={data.place.officialId} />}
+        <PlaceTag label={getPlaceTypeLabel(data.place.type)} />
         <EyeButton text="voir le lieu parent" click={handleClick} />
       </div>
       <section className="w-full flex flex-wrap justify-center gap-2">

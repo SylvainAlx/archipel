@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useAtom } from "jotai";
-import Button from "../../../components/button";
+import Button from "../../../components/buttons/button";
 import Input from "../../../components/form/input";
 import { nationsListAtom } from "../../../settings/store";
 import {

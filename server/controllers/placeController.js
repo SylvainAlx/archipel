@@ -53,7 +53,6 @@ export const createPlace = async (req, res) => {
       officialId,
       parentId,
       type,
-      level: 1,
       slots: 10,
       points: 1,
       population: 0,
@@ -61,6 +60,7 @@ export const createPlace = async (req, res) => {
       description,
       image,
       builds,
+      children: [],
     });
     place
       .save()
