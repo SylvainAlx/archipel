@@ -42,8 +42,8 @@ export default function NationIdentity({
     setPlacesList(updatedPlaces);
   }, [nationPlaceList]);
 
-  const handleClick = () => {
-    myStore.set(imageAtom, selectedNation.data.url.flag);
+  const handleClick = (image: string) => {
+    myStore.set(imageAtom, image);
   };
 
   return (
@@ -59,32 +59,63 @@ export default function NationIdentity({
             children={
               <>
                 <div className="p-4 flex flex-col gap-2 items-center">
-                  <div
-                    onClick={handleClick}
-                    className="relative cursor-zoom-in"
-                  >
+                  <div className="flex justify-center items-center flex-wrap gap-6">
                     <div
-                      className={`w-[200px] h-[140px] bg-complementary flex flex-col items-center justify-center overflow-hidden rounded`}
+                      onClick={() => handleClick(selectedNation.data.url.flag)}
+                      className="relative cursor-zoom-in"
                     >
-                      {selectedNation.data.url.flag ? (
-                        <img
-                          src={selectedNation.data.url.flag}
-                          alt={`flag of ${selectedNation.name}`}
-                          className="object-cover w-full h-full"
+                      <div
+                        className={`w-[200px] h-[140px] bg-complementary flex flex-col items-center justify-center overflow-hidden rounded`}
+                      >
+                        {selectedNation.data.url.flag ? (
+                          <img
+                            src={selectedNation.data.url.flag}
+                            alt={`flag of ${selectedNation.name}`}
+                            className="object-cover w-full h-full"
+                          />
+                        ) : (
+                          <div className="text-[3.1rem]">
+                            <GiBlackFlag />
+                          </div>
+                        )}
+                      </div>
+                      {owner && (
+                        <EditIcon
+                          param={selectedNation.data.url.flag}
+                          path="data.url.flag"
                         />
-                      ) : (
-                        <div className="text-[3.1rem]">
-                          <GiBlackFlag />
-                        </div>
                       )}
                     </div>
-                    {owner && (
-                      <EditIcon
-                        param={selectedNation.data.url.flag}
-                        path="data.url.flag"
-                      />
-                    )}
+                    <div
+                      onClick={() =>
+                        handleClick(selectedNation.data.url.coatOfArms)
+                      }
+                      className="relative cursor-zoom-in"
+                    >
+                      <div
+                        className={`w-[140px] h-[140px] bg-complementary flex flex-col items-center justify-center overflow-hidden rounded`}
+                      >
+                        {selectedNation.data.url.coatOfArms ? (
+                          <img
+                            src={selectedNation.data.url.coatOfArms}
+                            alt={`flag of ${selectedNation.name}`}
+                            className="object-contain w-full h-full"
+                          />
+                        ) : (
+                          <div className="text-[3.1rem]">
+                            <GiBlackFlag />
+                          </div>
+                        )}
+                      </div>
+                      {owner && (
+                        <EditIcon
+                          param={selectedNation.data.url.coatOfArms}
+                          path="data.url.coatOfArms"
+                        />
+                      )}
+                    </div>
                   </div>
+
                   <div className="relative flex flex-col items-center">
                     <H3 text={selectedNation.name} />
                     {owner && (

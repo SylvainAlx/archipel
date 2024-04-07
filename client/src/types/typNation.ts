@@ -15,7 +15,7 @@ export interface Nation {
   data: {
     url: {
       flag: string;
-      banner: string;
+      coatOfArms: string;
       website: string;
       wiki: string;
       instagram: string;
@@ -50,7 +50,7 @@ export const EmptyNation: Nation = {
   data: {
     url: {
       flag: "",
-      banner: "",
+      coatOfArms: "",
       website: "",
       wiki: "",
       instagram: "",

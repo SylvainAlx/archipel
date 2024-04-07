@@ -9,7 +9,7 @@ export default function ImageModal() {
     <>
       <h2 className="text-2xl text-center p-4">DÉTAIL DE L'IMAGE</h2>
       <div
-        className={`max-w-[90%] bg-complementary flex flex-col items-center justify-center overflow-hidden rounded`}
+        className={`max-w-[60%] bg-complementary flex flex-col items-center justify-center overflow-hidden rounded`}
       >
         {image ? (
           <img

@@ -38,29 +38,33 @@ export default function Place() {
         <EyeButton text="voir le lieu parent" click={handleClick} />
       </div>
       <section className="w-full flex flex-wrap justify-center gap-2">
-        {data.place.builds.map((placeCategory, i) => {
-          return (
-            <div key={i}>
-              <DashTile
-                title={placeCategory.label.fr}
-                children={
-                  <div className="flex flex-col items-center justify-center gap-2">
-                    {placeCategory.builds.map((build, j) => {
-                      return (
-                        <div
-                          className="flex flex-col items-center justify-center"
-                          key={j}
-                        >
-                          {build.label.fr}
-                        </div>
-                      );
-                    })}
-                  </div>
-                }
-              />
-            </div>
-          );
-        })}
+        {data.place.children.length === 0 ? (
+          data.place.builds.map((placeCategory, i) => {
+            return (
+              <div key={i}>
+                <DashTile
+                  title={placeCategory.label.fr}
+                  children={
+                    <div className="flex flex-col items-center justify-center gap-2">
+                      {placeCategory.builds.map((build, j) => {
+                        return (
+                          <div
+                            className="flex flex-col items-center justify-center"
+                            key={j}
+                          >
+                            {build.label.fr}
+                          </div>
+                        );
+                      })}
+                    </div>
+                  }
+                />
+              </div>
+            );
+          })
+        ) : (
+          <></>
+        )}
       </section>
     </>
   );

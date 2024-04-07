@@ -32,7 +32,7 @@ const nationSchema = mongoose.Schema(
           type: String,
           default: "",
         },
-        banner: {
+        coatOfArms: {
           type: String,
           default: "",
         },
