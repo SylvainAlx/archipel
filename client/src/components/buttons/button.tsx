@@ -53,10 +53,10 @@ export default function Button({
     <button
       disabled={disabled != undefined && disabled && disabled}
       type={type != undefined ? type : "button"}
-      className={`${disabled ? "bg-complementary2" : bgColor ? bgColor : "bg-secondary"} ${!disabled && "hover:text-primary hover:bg-light"} animate-fadeIn w-full max-w-[300px] flex justify-center rounded-md py-2 px-4 transition-all duration-300`}
+      className={`overflow-hidden ${disabled ? "bg-complementary2" : bgColor ? bgColor : "bg-secondary"} ${!disabled && "hover:text-primary hover:bg-light"} animate-fadeIn w-full max-w-[300px] h-[30px] flex justify-center items-center gap-2 rounded-md shadow-md py-2 px-4 transition-all duration-300`}
       onClick={click ? click : handleClick}
     >
-      {text != "" && text}
+      {text != "" && <span>{text}</span>}
       {children}
     </button>
   );

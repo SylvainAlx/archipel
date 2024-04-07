@@ -1,6 +1,4 @@
-import { IoMdCloseCircle } from "react-icons/io";
 import { PlaceTileProp } from "../../../types/typProp";
-import Tag from "../../tag";
 import {
   confirmBox,
   editPlaceAtom,
@@ -16,6 +14,7 @@ import EyeButton from "../../buttons/eyeButton";
 import IdTag from "../../tags/idTag";
 import { getPlaceTypeLabel } from "../../../utils/functions";
 import PlaceTag from "../../tags/placeTag";
+import CrossButton from "../../buttons/crossButton";
 
 export default function PlaceTile({ place, owner }: PlaceTileProp) {
   const [selectedNation] = useAtom(selectedNationAtom);
@@ -49,30 +48,17 @@ export default function PlaceTile({ place, owner }: PlaceTileProp) {
             </span>
             <span>{place.name}</span>
           </div>
-          <div className="flex gap-2 pr-6">
-            {owner && (
-              <Tag
-                text=""
-                bgColor="bg-danger"
-                click={handleDelete}
-                children={
-                  <div className="text-xl hover:animate-ping">
-                    <IoMdCloseCircle />
-                  </div>
-                }
-              />
-            )}
+          <div className="flex gap-2 flex-wrap self-end justify-end">
+            <EyeButton text="voir" click={handleClick} />
+            {owner && <CrossButton text="supprimer" click={handleDelete} />}
           </div>
         </h3>
         <p className="w-full">{place.description}</p>
-        <div className="w-full flex justify-between gap-2">
-          <div className="w-full flex flex-wrap items-center justify-end gap-1">
-            <EyeButton click={handleClick} />
-            {place.officialId && <IdTag label={place.officialId} />}
-            <PlaceTag label={getPlaceTypeLabel(place.type)} />
-            <PointTag label={place.points.toString()} />
-            <PopulationTag label={place.population.toString()} />
-          </div>
+        <div className="max-w-[90%] flex flex-wrap items-center self-end justify-end gap-1">
+          {place.officialId && <IdTag label={place.officialId} />}
+          <PlaceTag label={getPlaceTypeLabel(place.type)} />
+          <PointTag label={place.points.toString()} />
+          <PopulationTag label={place.population.toString()} />
         </div>
       </div>
 

@@ -18,7 +18,7 @@ import { StringProps } from "../../../types/typProp";
 import { IoIosArrowDropdownCircle } from "react-icons/io";
 import { getNations } from "../../../api/nation/nationAPI";
 import Spinner from "../../../components/loading/spinner";
-import Tag from "../../../components/tag";
+import IndexTag from "../../../components/tags/indexTag";
 
 export default function NationList({ text }: StringProps) {
   const [nationsList, setNationsList] = useAtom(nationsListAtom);
@@ -141,12 +141,7 @@ export default function NationList({ text }: StringProps) {
                       data={nation.data}
                       createdAt={nation.createdAt}
                     />
-                    <div className="absolute top-2 right-2">
-                      <Tag
-                        text={(i + 1).toString()}
-                        bgColor="bg-complementary2"
-                      />
-                    </div>
+                    <IndexTag text={i} />
                   </div>
                 </Suspense>
               );

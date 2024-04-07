@@ -1,4 +1,4 @@
-import Tag from "../tag";
+import Tag from "./tag";
 import { FaCrown, FaPersonMilitaryPointing, FaQuestion } from "react-icons/fa6";
 import { MdHowToVote } from "react-icons/md";
 import { useEffect, useState } from "react";

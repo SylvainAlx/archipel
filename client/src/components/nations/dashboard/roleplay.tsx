@@ -22,7 +22,7 @@ import CreditTag from "../../tags/creditTag";
 import PopulationTag from "../../tags/populationTag";
 import { getNationPlaces } from "../../../api/place/placeAPI";
 import Spinner from "../../loading/spinner";
-import Tag from "../../tag";
+import IndexTag from "../../tags/indexTag";
 
 export default function Roleplay({
   selectedNation,
@@ -94,12 +94,7 @@ export default function Roleplay({
                           <Suspense key={i} fallback={<Spinner />}>
                             <div className="relative w-full">
                               <PlaceTile owner={owner} place={place} />
-                              <div className="absolute top-2 right-2">
-                                <Tag
-                                  text={(i + 1).toString()}
-                                  bgColor="bg-complementary"
-                                />
-                              </div>
+                              <IndexTag text={i} />
                             </div>
                           </Suspense>
                         );

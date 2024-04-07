@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from "react";
 import { MdTimer } from "react-icons/md";
-import Tag from "./tag";
+import Tag from "./tags/tag";
 
 interface CountdownProps {
   targetDate: Date;

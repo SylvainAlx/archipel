@@ -1,4 +1,4 @@
-import Tag from "../tag";
+import Tag from "./tag";
 import { customTagProps } from "../../types/typProp";
 import { FaCoins } from "react-icons/fa6";
 import { addCredits } from "../../utils/functions";

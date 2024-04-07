@@ -100,7 +100,7 @@ export interface TagProps {
 
 export interface ClickProps {
   text? : string;
-  click: MouseEventHandler<HTMLDivElement>;
+  click: MouseEventHandler<HTMLButtonElement>;
 }
 
 export interface TextAreaProps {

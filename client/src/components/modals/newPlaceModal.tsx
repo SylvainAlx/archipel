@@ -6,7 +6,7 @@ import { ChangeEvent, FormEvent } from "react";
 import Form from "../form/form";
 import Input from "../form/input";
 import TextArea from "../form/textArea";
-import Tag from "../tag";
+import Tag from "../tags/tag";
 import { FaTrophy } from "react-icons/fa6";
 import { emptyPlace } from "../../types/typPlace";
 import { createNewPlace } from "../../api/place/placeAPI";

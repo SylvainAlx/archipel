@@ -11,7 +11,7 @@ import Select from "../../../components/form/select";
 import { TITLE, comTypeOptions } from "../../../settings/consts";
 import TextArea from "../../../components/form/textArea";
 import ListTile from "../../../components/listTile";
-import Tag from "../../../components/tag";
+import Tag from "../../../components/tags/tag";
 import { IoMdTrash } from "react-icons/io";
 import { dateToString } from "../../../utils/functions";
 import { EmptyCom } from "../../../types/typAtom";

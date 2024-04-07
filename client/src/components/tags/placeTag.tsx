@@ -1,4 +1,4 @@
-import Tag from "../tag";
+import Tag from "./tag";
 import { customTagProps } from "../../types/typProp";
 import { MdPlace } from "react-icons/md";
 

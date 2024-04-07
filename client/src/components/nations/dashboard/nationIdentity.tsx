@@ -4,7 +4,7 @@ import DashTile from "../../dashTile";
 import TileContainer from "../../tileContainer";
 import H3 from "../../titles/h3";
 import { FaDiscord, FaInstagram, FaLink, FaWikipediaW } from "react-icons/fa6";
-import Tag from "../../tag";
+import Tag from "../../tags/tag";
 import { SelectedNationProps } from "../../../types/typProp";
 import EditIcon from "../../editIcon";
 import ExternalLink from "../../externalLink";
@@ -98,7 +98,7 @@ export default function NationIdentity({
                         {selectedNation.data.url.coatOfArms ? (
                           <img
                             src={selectedNation.data.url.coatOfArms}
-                            alt={`flag of ${selectedNation.name}`}
+                            alt={`coatOfArms of ${selectedNation.name}`}
                             className="object-contain w-full h-full"
                           />
                         ) : (

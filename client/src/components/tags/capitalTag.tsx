@@ -1,4 +1,4 @@
-import Tag from "../tag";
+import Tag from "./tag";
 import { GiCapitol } from "react-icons/gi";
 import { nationPlacesListAtom } from "../../settings/store";
 import { useAtom } from "jotai";
