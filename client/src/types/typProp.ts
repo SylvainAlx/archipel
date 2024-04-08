@@ -56,6 +56,11 @@ export interface NumberProps {
   text: number;
 }
 
+export interface newPlaceProps {
+  parentId: string;
+  owner: boolean;
+}
+
 export interface customTagProps {
   label: string | number;
   type?: number;
@@ -99,7 +104,7 @@ export interface TagProps {
 }
 
 export interface ClickProps {
-  text? : string;
+  text?: string;
   click: MouseEventHandler<HTMLButtonElement>;
 }
 
@@ -145,13 +150,8 @@ export interface DashboardTabProps {
 }
 
 export interface EditIconProps {
-  param:
-    | number
-    | string
-    | boolean
-    | Regime[]
-    | PoliticalSide[]
-    | LabelId[];
+  target: string;
+  param: number | string | boolean | Regime[] | PoliticalSide[] | LabelId[];
   path: string;
   indice?: number;
 }

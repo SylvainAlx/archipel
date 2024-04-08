@@ -47,10 +47,6 @@ const PlaceSchema = mongoose.Schema(
       type: Array,
       default: [],
     },
-    children: {
-      type: Array,
-      default: [],
-    },
   },
   {
     timestamps: true,

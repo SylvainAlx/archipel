@@ -60,7 +60,6 @@ export const createPlace = async (req, res) => {
       description,
       image,
       builds,
-      children: [],
     });
     place
       .save()

@@ -3,6 +3,7 @@ import {
   confirmBox,
   editPlaceAtom,
   myStore,
+  nationPlacesListAtom,
   selectedNationAtom,
 } from "../../../settings/store";
 import { useAtom } from "jotai";
@@ -15,15 +16,25 @@ import IdTag from "../../tags/idTag";
 import { getPlaceTypeLabel } from "../../../utils/functions";
 import PlaceTag from "../../tags/placeTag";
 import CrossButton from "../../buttons/crossButton";
+import { useEffect, useState } from "react";
+import Tag from "../../tags/tag";
+import { ImTree } from "react-icons/im";
 
 export default function PlaceTile({ place, owner }: PlaceTileProp) {
   const [selectedNation] = useAtom(selectedNationAtom);
+  const [nationPlacesList] = useAtom(nationPlacesListAtom);
+  const [childrenStats, setChildrenStats] = useState({
+    points: 0,
+    population: 0,
+    children: 0,
+  });
+
   const navigate = useNavigate();
 
   const handleDelete = () => {
     myStore.set(confirmBox, {
       action: "deletePlace",
-      text: "Confirmez-vous la suppression de la ville ?",
+      text: "Confirmez-vous la suppression du lieu ?",
       result: "",
       target: place,
     });
@@ -33,6 +44,18 @@ export default function PlaceTile({ place, owner }: PlaceTileProp) {
     myStore.set(editPlaceAtom, { place, owner });
     navigate(`/place/${place.officialId}`);
   };
+
+  useEffect(() => {
+    const stats = { ...childrenStats };
+    nationPlacesList.forEach((e) => {
+      if (e.parentId === place.officialId) {
+        stats.points += e.points;
+        stats.population += e.population;
+        stats.children += 1;
+      }
+    });
+    setChildrenStats(stats);
+  }, []);
 
   return (
     <div
@@ -57,28 +80,17 @@ export default function PlaceTile({ place, owner }: PlaceTileProp) {
         <div className="max-w-[90%] flex flex-wrap items-center self-end justify-end gap-1">
           {place.officialId && <IdTag label={place.officialId} />}
           <PlaceTag label={getPlaceTypeLabel(place.type)} />
-          <PointTag label={place.points.toString()} />
-          <PopulationTag label={place.population.toString()} />
+          <PointTag label={(childrenStats.points + place.points).toString()} />
+          {place.type != 2 && (
+            <Tag
+              text={childrenStats.children.toString()}
+              bgColor="bg-info"
+              children={<ImTree />}
+            />
+          )}
+          <PopulationTag label={childrenStats.population.toString()} />
         </div>
       </div>
-
-      {/* {owner && update != -1 && update != undefined && (
-        <Button
-          text=""
-          path=""
-          children={
-            <div className="w-full flex items-center justify-evenly flex-wrap gap-2 text-sm">
-              <span className="flex gap-1 items-center">
-                Niveau {place.level + 1} <FaArrowUpRightDots />
-              </span>
-              <span className="flex gap-1 items-center">
-                <FaCoins />
-                {placesTypeList[update].cost}
-              </span>
-            </div>
-          }
-        />
-      )} */}
     </div>
   );
 }

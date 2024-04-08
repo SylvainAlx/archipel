@@ -13,7 +13,6 @@ export interface Place {
   description: string;
   image: string;
   builds: BuildCategory[];
-  children: Place[];
 }
 
 export const emptyPlace: Place = {
@@ -28,7 +27,6 @@ export const emptyPlace: Place = {
   description: "",
   image: "",
   builds: buildList,
-  children: [],
 };
 
 export interface BuildCategory {

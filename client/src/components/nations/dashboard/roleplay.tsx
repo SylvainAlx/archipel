@@ -3,26 +3,15 @@ import { SelectedNationProps } from "../../../types/typProp";
 import DashTile from "../../dashTile";
 import TileContainer from "../../tileContainer";
 import H2 from "../../titles/h2";
-import { NEW_PLACE_COST, placesTypeList } from "../../../settings/consts";
-import {
-  myStore,
-  nationPlacesListAtom,
-  newPlaceAtom,
-} from "../../../settings/store";
+import { nationPlacesListAtom } from "../../../settings/store";
 import { useAtom } from "jotai";
-
-import { FaCoins } from "react-icons/fa6";
-import { addCredits } from "../../../utils/functions";
-
-import Button from "../../buttons/button";
-
-import { Place, emptyPlace } from "../../../types/typPlace";
 import PointTag from "../../tags/pointTag";
 import CreditTag from "../../tags/creditTag";
 import PopulationTag from "../../tags/populationTag";
 import { getNationPlaces } from "../../../api/place/placeAPI";
 import Spinner from "../../loading/spinner";
 import IndexTag from "../../tags/indexTag";
+import NewPlaceButton from "../../buttons/newPlaceButton";
 
 export default function Roleplay({
   selectedNation,
@@ -39,24 +28,6 @@ export default function Roleplay({
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  const handleClick = () => {
-    const newPlace: Place = {
-      officialId: emptyPlace.officialId,
-      parentId: selectedNation.officialId,
-      nation: selectedNation.officialId,
-      points: emptyPlace.points,
-      type: placesTypeList[0].id,
-      slots: emptyPlace.slots,
-      population: emptyPlace.population,
-      name: emptyPlace.name,
-      description: emptyPlace.description,
-      image: emptyPlace.image,
-      builds: emptyPlace.builds,
-      children: emptyPlace.children,
-    };
-    myStore.set(newPlaceAtom, newPlace);
-  };
 
   return (
     <TileContainer
@@ -89,7 +60,7 @@ export default function Roleplay({
                 <div className="w-full flex flex-col gap-2">
                   {nationPlacesList != undefined ? (
                     nationPlacesList.map((place, i) => {
-                      if (place.nation === selectedNation.officialId) {
+                      if (place.parentId === selectedNation.officialId) {
                         return (
                           <Suspense key={i} fallback={<Spinner />}>
                             <div className="relative w-full">
@@ -104,42 +75,17 @@ export default function Roleplay({
                     <em className="text-center">Aucun lieu</em>
                   )}
                 </div>
-                {selectedNation.data.roleplay.credits >= NEW_PLACE_COST
-                  ? owner && (
-                      <Button
-                        text=""
-                        type="button"
-                        path=""
-                        click={handleClick}
-                        children={
-                          <div className="w-full flex justify-center items-center gap-2 flex-wrap">
-                            <span>Nouveau lieu</span>
-                            <span className="flex gap-1 items-center">
-                              <FaCoins />
-                              {NEW_PLACE_COST}
-                            </span>
-                          </div>
-                        }
-                      />
-                    )
-                  : owner && (
-                      <Button
-                        text="CRÉDITS INSUFFISANTS"
-                        type="button"
-                        path=""
-                        bgColor="bg-danger"
-                        click={addCredits}
-                        children={
-                          <div className="pl-2 flex gap-1 items-center">
-                            <FaCoins />
-                            {NEW_PLACE_COST}
-                          </div>
-                        }
-                      />
-                    )}
+                {owner && (
+                  <NewPlaceButton
+                    owner={owner}
+                    parentId={selectedNation.officialId}
+                  />
+                )}
               </>
             }
           />
+          <DashTile title="Diplomatie" className="w-full" children={<></>} />
+          <DashTile title="Citoyens" className="w-full" children={<></>} />
         </>
       }
     />

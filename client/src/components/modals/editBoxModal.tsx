@@ -1,6 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useAtom } from "jotai";
-import { confirmBox, editbox, nationAtom } from "../../settings/store";
+import {
+  confirmBox,
+  editPlaceAtom,
+  editbox,
+  nationAtom,
+} from "../../settings/store";
 import Button from "../buttons/button";
 import Input from "../form/input";
 import Select from "../form/select";
@@ -9,37 +14,73 @@ import { ChangeEvent, FormEvent } from "react";
 export default function EditBoxModal() {
   const [editBox, setEditBox] = useAtom(editbox);
   const [nation] = useAtom(nationAtom);
+  const [placeData] = useAtom(editPlaceAtom);
   const [, setConfirm] = useAtom(confirmBox);
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-
-    const updatedNation: any = { ...nation };
     const parties: string[] = editBox.path.split(".");
+    let objetCourant;
+    let dernierePartie;
+    switch (editBox.target) {
+      case "nation":
+        const updatedNation: any = { ...nation };
+        objetCourant = updatedNation;
+        for (let i = 0; i < parties.length - 1; i++) {
+          if (typeof objetCourant === "object" && objetCourant !== null) {
+            objetCourant = objetCourant[parties[i]];
+          } else {
+            console.error(
+              `Chemin incorrect. Propriété ${parties[i]} non trouvée.`,
+            );
+            break;
+          }
+        }
+        dernierePartie = parties[parties.length - 1];
+        if (typeof objetCourant === "object" && objetCourant !== null) {
+          objetCourant[dernierePartie] = editBox.new;
+        }
 
-    let objetCourant: any = updatedNation;
-    for (let i = 0; i < parties.length - 1; i++) {
-      if (typeof objetCourant === "object" && objetCourant !== null) {
-        objetCourant = objetCourant[parties[i]];
-      } else {
-        console.error(`Chemin incorrect. Propriété ${parties[i]} non trouvée.`);
+        setConfirm({
+          action: "updateNation",
+          text: "Mettre à jour votre nation ?",
+          result: "",
+          target: "",
+          payload: updatedNation,
+        });
         break;
-      }
-    }
-    const dernierePartie: string = parties[parties.length - 1];
-    if (typeof objetCourant === "object" && objetCourant !== null) {
-      objetCourant[dernierePartie] = editBox.new;
+      case "place":
+        const updatedPlace: any = { ...placeData.place };
+        objetCourant = updatedPlace;
+        for (let i = 0; i < parties.length - 1; i++) {
+          if (typeof objetCourant === "object" && objetCourant !== null) {
+            objetCourant = objetCourant[parties[i]];
+          } else {
+            console.error(
+              `Chemin incorrect. Propriété ${parties[i]} non trouvée.`,
+            );
+            break;
+          }
+        }
+        dernierePartie = parties[parties.length - 1];
+        if (typeof objetCourant === "object" && objetCourant !== null) {
+          objetCourant[dernierePartie] = editBox.new;
+        }
+        console.log(updatedPlace);
+
+        // setConfirm({
+        //   action: "updatePlace",
+        //   text: "Mettre à jour votre lieu ?",
+        //   result: "",
+        //   target: "",
+        //   payload: updatedPlace,
+        // });
+        break;
+      default:
+        break;
     }
 
-    setConfirm({
-      action: "updateNation",
-      text: "Mettre à jour votre nation ?",
-      result: "",
-      target: "",
-      payload: updatedNation,
-    });
-
-    setEditBox({ original: -1, new: -1, path: "" });
+    setEditBox({ target: "", original: -1, new: -1, path: "" });
   };
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -101,7 +142,9 @@ export default function EditBoxModal() {
         <Button
           text="ANNULER"
           path=""
-          click={() => setEditBox({ original: -1, new: -1, path: "" })}
+          click={() =>
+            setEditBox({ target: "", original: -1, new: -1, path: "" })
+          }
         />
         {editBox.new != -1 && editBox.new != "" && (
           <Button type="submit" text="VALIDER" path="" />

@@ -34,8 +34,8 @@ export default function NationIdentity({
   useEffect(() => {
     const updatedPlaces: LabelId[] = [];
     nationPlaceList.forEach((place) => {
-      if (place._id) {
-        const newPlace: LabelId = { id: place._id, label: place.name };
+      if (place._id && place.type === 2) {
+        const newPlace: LabelId = { id: place.officialId, label: place.name };
         updatedPlaces.push(newPlace);
       }
     });
@@ -81,6 +81,7 @@ export default function NationIdentity({
                       </div>
                       {owner && (
                         <EditIcon
+                          target="nation"
                           param={selectedNation.data.url.flag}
                           path="data.url.flag"
                         />
@@ -109,6 +110,7 @@ export default function NationIdentity({
                       </div>
                       {owner && (
                         <EditIcon
+                          target="nation"
                           param={selectedNation.data.url.coatOfArms}
                           path="data.url.coatOfArms"
                         />
@@ -119,7 +121,11 @@ export default function NationIdentity({
                   <div className="relative flex flex-col items-center">
                     <H3 text={selectedNation.name} />
                     {owner && (
-                      <EditIcon param={selectedNation.name} path="name" />
+                      <EditIcon
+                        target="nation"
+                        param={selectedNation.name}
+                        path="name"
+                      />
                     )}
                   </div>
                   <div className="relative">
@@ -132,6 +138,7 @@ export default function NationIdentity({
                     </em>
                     {owner && (
                       <EditIcon
+                        target="nation"
                         param={
                           selectedNation.data.general.motto
                             ? selectedNation.data.general.motto
@@ -153,6 +160,7 @@ export default function NationIdentity({
                       )}
                       {owner && (
                         <EditIcon
+                          target="nation"
                           param={regimeList}
                           path="data.general.regime"
                           indice={selectedNation.data.general.regime}
@@ -164,6 +172,7 @@ export default function NationIdentity({
                         <CapitalTag selectedNation={selectedNation} />
                         {owner && (
                           <EditIcon
+                            target="nation"
                             param={placesList}
                             path="data.roleplay.capital"
                           />
@@ -190,6 +199,7 @@ export default function NationIdentity({
                     />
                     {owner && (
                       <EditIcon
+                        target="nation"
                         param={selectedNation.data.url.website}
                         path="data.url.website"
                       />
@@ -202,6 +212,7 @@ export default function NationIdentity({
                     />
                     {owner && (
                       <EditIcon
+                        target="nation"
                         param={selectedNation.data.url.instagram}
                         path="data.url.instagram"
                       />
@@ -214,6 +225,7 @@ export default function NationIdentity({
                     />
                     {owner && (
                       <EditIcon
+                        target="nation"
                         param={selectedNation.data.url.wiki}
                         path="data.url.wiki"
                       />
@@ -226,6 +238,7 @@ export default function NationIdentity({
                     />
                     {owner && (
                       <EditIcon
+                        target="nation"
                         param={selectedNation.data.url.discord}
                         path="data.url.discord"
                       />

@@ -147,6 +147,10 @@ export const placesTypeList = [
     id: 2,
     label: "Ville",
   },
+  {
+    id: 3,
+    label: "Environnement",
+  },
 ];
 
 export const buildList: BuildCategory[] = [

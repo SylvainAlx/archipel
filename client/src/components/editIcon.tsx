@@ -3,12 +3,17 @@ import { EditIconProps } from "../types/typProp";
 import { useAtom } from "jotai";
 import { editbox } from "../settings/store";
 
-export default function EditIcon({ param, indice, path }: EditIconProps) {
+export default function EditIcon({
+  target,
+  param,
+  indice,
+  path,
+}: EditIconProps) {
   const [, setEditBox] = useAtom(editbox);
   const handleClick = () => {
     // console.log({ original: param, new: "", indice, path });
 
-    setEditBox({ original: param, new: "", indice, path });
+    setEditBox({ target: target, original: param, new: "", indice, path });
   };
   return (
     <div
