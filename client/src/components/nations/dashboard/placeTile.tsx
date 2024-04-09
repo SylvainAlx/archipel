@@ -59,9 +59,9 @@ export default function PlaceTile({ place, owner }: PlaceTileProp) {
 
   return (
     <div
-      className={`p-2 rounded flex flex-col items-center gap-3 bg-complementary2 shadow-xl`}
+      className={`p-2 rounded flex flex-col items-center gap-3 bg-complementary2 shadow-xl min-h-[200px]`}
     >
-      <div className="w-full flex flex-col items-center gap-2">
+      <div className="w-full flex flex-col flex-grow items-center gap-2">
         <h3 className="w-full flex justify-between">
           <div className="text-xl flex items-center gap-2">
             <span className="text-lg text-info">
@@ -76,7 +76,7 @@ export default function PlaceTile({ place, owner }: PlaceTileProp) {
             {owner && <CrossButton text="supprimer" click={handleDelete} />}
           </div>
         </h3>
-        <p className="w-full">{place.description}</p>
+        <p className="w-full flex-grow">{place.description}</p>
         <div className="max-w-[90%] flex flex-wrap items-center self-end justify-end gap-1">
           {place.officialId && <IdTag label={place.officialId} />}
           <PlaceTag label={getPlaceTypeLabel(place.type)} />

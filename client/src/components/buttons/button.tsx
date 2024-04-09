@@ -8,6 +8,7 @@ import {
 } from "../../settings/store";
 import { useAtom } from "jotai";
 import { ButtonProps } from "../../types/typProp";
+import { useTranslation } from "react-i18next";
 
 export default function Button({
   type,
@@ -23,18 +24,19 @@ export default function Button({
   const [, setSelectedNation] = useAtom(selectedNationAtom);
   const [nation] = useAtom(nationAtom);
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const handleClick = () => {
     if (path === "logout") {
       setConfirm({
         action: "logout",
-        text: "Souhaitez-vous vous déconnecter ?",
+        text: t("components.modals.confirmModal.logout"),
         result: "",
       });
     } else if (path === "delete") {
       setConfirm({
         action: "deleteSelfNation",
-        text: "Confirmez-vous la suppression définitive de votre nation ?",
+        text: t("components.modals.confirmModal.delete"),
         result: "",
       });
     } else if (path === "dashboard") {

@@ -74,7 +74,9 @@
     },
     "modals": {
       "confirmModal": {
-        "title": "CONFIRM YOUR CHOICE"
+        "title": "CONFIRM YOUR CHOICE",
+        "logout": "Do you want to log out ?",
+        "delete": "Do you confirm the definitive suppression of your nation ?"
       },
       "langModal": {
         "title": "LANGUAGE"

@@ -1,43 +1,66 @@
 import Place from "../models/placeSchema.js";
 import Nation from "../models/nationSchema.js";
-import { createOfficialId } from "../utils/functions.js";
+import {
+  createElementInMemory,
+  createOfficialId,
+  deleteElementInMemory,
+  findElementInMemory,
+  findNationElements,
+} from "../utils/functions.js";
+import { PLACES } from "../index.js";
 
 export const getPlaces = async (req, res) => {
-  try {
-    const nationId = req.params.id;
-    const places = await Place.find({ nation: nationId })
-      .then((places) => {
-        res.status(200).json(places);
-      })
-      .catch((error) => {
-        res.status(400).json({ message: error.message });
-      });
-  } catch (error) {
-    res.status(400).json({ message: error.message });
+  const nationId = req.params.id;
+  const places = findNationElements(PLACES, nationId);
+  if (places.length > 0) {
+    res.status(200).json(places);
+  } else {
+    try {
+      places = await Place.find({ nation: nationId })
+        .then((places) => {
+          res.status(200).json(places);
+        })
+        .catch((error) => {
+          res.status(400).json({ message: error.message });
+        });
+    } catch (error) {
+      res.status(400).json({ message: error.message });
+    }
   }
 };
 
 export const getOne = async (req, res) => {
-  try {
-    const id = req.params.id;
-    const place = await Place.findOne({ officialId: id });
+  const id = req.params.id;
+  const place = findElementInMemory(PLACES, id, true);
+  if (place != null) {
     res.status(200).json({
       place,
     });
-  } catch (error) {
-    res.status(404).json({
-      message: "aucun lieu à afficher",
-      erreur: error.message,
-    });
+  } else {
+    try {
+      place = await Place.findOne({ officialId: id });
+      res.status(200).json({
+        place,
+      });
+    } catch (error) {
+      res.status(404).json({
+        message: "aucun lieu à afficher",
+        erreur: error.message,
+      });
+    }
   }
 };
 
 export const getAllPlaces = async (req, res) => {
-  try {
-    const places = await Place.find({});
-    res.status(200).json(places);
-  } catch (error) {
-    res.status(400).json({ message: error.message });
+  if (PLACES.length > 0) {
+    res.status(200).json(PLACES);
+  } else {
+    try {
+      const places = await Place.find({});
+      res.status(200).json(places);
+    } catch (error) {
+      res.status(400).json({ message: error.message });
+    }
   }
 };
 
@@ -75,6 +98,7 @@ export const createPlace = async (req, res) => {
             nation.data.roleplay.credits -= 100;
             nation.data.roleplay.points += 1;
             nation.save();
+            createElementInMemory(PLACES, place);
             res.status(201).json({ place, nation, message: "lieu créé" });
           })
           .catch((error) => {
@@ -123,7 +147,7 @@ export const deletePlace = async (req, res) => {
     await nation.save();
 
     await Place.findByIdAndDelete(place._id);
-
+    deleteElementInMemory(PLACES, id);
     res.status(200).json({ place, nation, message: `Lieu supprimé` });
   } catch (error) {
     console.log(error);

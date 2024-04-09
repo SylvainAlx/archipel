@@ -1,13 +1,22 @@
+import { COMS } from "../index.js";
 import Com from "../models/comSchema.js";
+import {
+  createElementInMemory,
+  deleteElementInMemory,
+} from "../utils/functions.js";
 
-export const getAll = async (req, res) => {
-  try {
-    const coms = await Com.find();
-    res.status(200).json(coms);
-  } catch (error) {
-    res
-      .status(400)
-      .json({ message: "aucune communication", erreur: error.message });
+export const getAllComs = async (req, res) => {
+  if (COMS.length > 0) {
+    res.status(200).json(COMS);
+  } else {
+    try {
+      const coms = await Com.find();
+      res.status(200).json(coms);
+    } catch (error) {
+      res
+        .status(400)
+        .json({ message: "aucune communication", erreur: error.message });
+    }
   }
 };
 
@@ -27,6 +36,7 @@ export const createCom = async (req, res) => {
     com
       .save()
       .then((com) => {
+        createElementInMemory(COMS, com);
         res.status(201).json({ com, message: "communication enregistrée" });
       })
 
@@ -52,6 +62,7 @@ export const deleteCom = async (req, res) => {
   try {
     const comId = req.params.id;
     Com.findByIdAndDelete(comId).then((resp) => {
+      deleteElementInMemory(COMS, comId);
       res.status(200).json({
         message: `communication supprimée`,
       });

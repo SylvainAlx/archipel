@@ -74,7 +74,9 @@
     },
     "modals": {
       "confirmModal": {
-        "title": "DEMANDE DE CONFIRMATION"
+        "title": "DEMANDE DE CONFIRMATION",
+        "logout": "Souhaitez-vous vous déconnecter ?",
+        "delete": "Confirmez-vous la suppression définitive de votre nation ?"
       },
       "langModal": {
         "title": "CHOIX DE LA LANGUE"

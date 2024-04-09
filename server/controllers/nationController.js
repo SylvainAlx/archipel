@@ -2,8 +2,14 @@ import Nation from "../models/nationSchema.js";
 import Citizen from "../models/citizenSchema.js";
 import Place from "../models/placeSchema.js";
 import Com from "../models/comSchema.js";
+import { NATIONS } from "../index.js";
+import {
+  deleteElementInMemory,
+  findElementInMemory,
+  updateElementInMemory,
+} from "../utils/functions.js";
 
-export const getAll = async (req, res) => {
+export const getAllNations = async (req, res) => {
   try {
     const searchText = req.query.texteRecherche;
     if (searchText) {
@@ -13,18 +19,22 @@ export const getAll = async (req, res) => {
       );
       res.status(200).json(nations);
     } else {
-      const nations = await Nation.find(
-        {},
-        "officialId name role data createdAt",
-      );
-      res.status(200).json(nations);
+      if (NATIONS.length > 0) {
+        res.status(200).json(NATIONS);
+      } else {
+        const nations = await Nation.find(
+          {},
+          "officialId name role data createdAt",
+        );
+        res.status(200).json(nations);
+      }
     }
   } catch (error) {
     res.status(404).json({ message: "aucune nations" });
   }
 };
 
-export const getTop100 = async (req, res) => {
+export const getTop100Nations = async (req, res) => {
   try {
     const nations = await Nation.find(
       {},
@@ -36,37 +46,47 @@ export const getTop100 = async (req, res) => {
   }
 };
 
-export const getOne = async (req, res) => {
-  try {
-    const nationId = req.params.id;
-    const nation = await Nation.findOne(
-      { officialId: nationId },
-      "officialId name role data createdAt",
-    );
-    res.status(200).json({
-      nation,
-    });
-  } catch (error) {
-    res.status(404).json({
-      message: "aucune nation à afficher",
-      erreur: error.message,
-    });
+export const getOneNation = async (req, res) => {
+  const nationId = req.params.id;
+  const nation = findElementInMemory(NATIONS, nationId, true);
+  if (nation != null) {
+    res.status(200).json({ nation });
+  } else {
+    try {
+      const nation = await Nation.findOne(
+        { officialId: nationId },
+        "officialId name role data createdAt",
+      );
+      res.status(200).json({
+        nation,
+      });
+    } catch (error) {
+      res.status(404).json({
+        message: "aucune nation à afficher",
+        erreur: error.message,
+      });
+    }
   }
 };
 
-export const getSelf = async (req, res) => {
-  try {
-    const id = req.nationId;
-    const nation = await Nation.findOne(
-      { _id: id },
-      "officialId name role data createdAt",
-    );
+export const getSelfNation = async (req, res) => {
+  const id = req.nationId;
+  const nation = findElementInMemory(NATIONS, id, false);
+  if (nation != null) {
     res.status(200).json({ nation });
-  } catch (error) {
-    res.status(404).json({
-      message: "nation impossible à récupérer",
-      erreur: error.message,
-    });
+  } else {
+    try {
+      const nation = await Nation.findOne(
+        { _id: id },
+        "officialId name role data createdAt",
+      );
+      res.status(200).json({ nation });
+    } catch (error) {
+      res.status(404).json({
+        message: "nation impossible à récupérer",
+        erreur: error.message,
+      });
+    }
   }
 };
 
@@ -84,12 +104,13 @@ export const getRoleplayData = async (req, res) => {
   }
 };
 
-export const deleteSelf = async (req, res) => {
+export const deleteSelfNation = async (req, res) => {
   try {
     const id = req.nationId;
     Nation.findByIdAndDelete(id).then(async (resp) => {
       await Place.deleteMany({ nation: id });
       await Com.deleteMany({ originId: id });
+      deleteElementInMemory(NATIONS, id);
       res.status(200).json({
         message: `Votre nation a été supprimée`,
       });
@@ -102,10 +123,11 @@ export const deleteSelf = async (req, res) => {
   }
 };
 
-export const deleteOne = async (req, res) => {
+export const deleteOneNation = async (req, res) => {
   try {
     const nationId = req.params.id;
     Nation.findByIdAndDelete(nationId).then((resp) => {
+      deleteElementInMemory(NATIONS, id);
       res.status(200).json({
         message: `nation supprimée`,
       });
@@ -132,6 +154,7 @@ export const updateNation = async (req, res) => {
         .save()
         .then((nation) => {
           const jwt = nation.createJWT();
+          updateElementInMemory(NATIONS, nation);
           res.status(200).json({ nation, jwt, message: "mise à jour réussie" });
         })
         .catch((error) => {

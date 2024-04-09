@@ -9,8 +9,11 @@ import comRouter from "./routers/comRouter.js";
 import citizenRouter from "./routers/citizenRouter.js";
 import placeRouter from "./routers/placeRouter.js";
 import paramRouter from "./routers/paramRouter.js";
+import Nation from "./models/nationSchema.js";
+import Place from "./models/placeSchema.js";
+import Com from "./models/comSchema.js";
 
-//config serveur
+// config serveur
 const app = express();
 const PORT = 3000;
 app.use(cors());
@@ -19,7 +22,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
-//connection à la base de données
+// connection à la base de données
 try {
   mongoose.set("strictQuery", false);
   mongoose.connect(process.env.MONGO_DB_URI);
@@ -33,7 +36,8 @@ try {
   console.log(error);
 }
 
-//écouteur du port
+// écouteur du port
+
 try {
   app.listen(PORT, () => {
     console.log(`server running at PORT : ${PORT}`);
@@ -48,3 +52,12 @@ try {
 } catch (error) {
   console.log(error);
 }
+
+// mémoire
+
+export const NATIONS = await Nation.find(
+  {},
+  "officialId name role data createdAt",
+);
+export const PLACES = await Place.find({});
+export const COMS = await Com.find({});

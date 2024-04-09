@@ -1,6 +1,5 @@
 import { editPlaceAtom, nationPlacesListAtom } from "../settings/store";
 import { useAtom } from "jotai";
-import H1 from "../components/titles/h1";
 import { Suspense, lazy, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { getPlace } from "../api/place/placeAPI";
@@ -13,6 +12,7 @@ import NewPlaceButton from "../components/buttons/newPlaceButton";
 import IndexTag from "../components/tags/indexTag";
 import Spinner from "../components/loading/spinner";
 import EditIcon from "../components/editIcon";
+import H2 from "../components/titles/h2";
 
 export default function Place() {
   const { paramId } = useParams();
@@ -46,7 +46,7 @@ export default function Place() {
 
   return (
     <>
-      <H1 text={data.place.name} />
+      <H2 text={data.place.name} />
       {data.owner && (
         <EditIcon target="place" param={data.place.name} path="name" />
       )}
@@ -82,7 +82,7 @@ export default function Place() {
           })
         ) : (
           <>
-            <div className="w-full flex flex-col gap-2">
+            <div className="w-full py-4 flex flex-col gap-2">
               {nationPlacesList != undefined ? (
                 nationPlacesList.map((place, i) => {
                   if (place.parentId === data.place.officialId) {
