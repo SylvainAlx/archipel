@@ -19,6 +19,7 @@ export default function CapitalTag({ selectedNation }: SelectedNationProps) {
       const capitalName = getPlaceName(
         nationPlaceList,
         selectedNation.data.roleplay.capital,
+t("pages.dashboard.tabs.dashboard.nationIdentity.noCapital")
       );
       if (capitalName != "") {
         setCapital(capitalName);
