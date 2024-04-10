@@ -42,7 +42,7 @@ export default function Notification({ text }: DashboardTabProps) {
 
   return (
     <div
-      className="p-2 relative md:bg-complementary cursor-pointer hover:animate-pulse"
+      className={`p-2 relative md:bg-complementary ${totalReward > 0 && "cursor-pointer hover:animate-pulse"}`}
       onClick={() => totalReward > 0 && updateNation()}
     >
       <div className="relative text-5xl md:text-2xl">

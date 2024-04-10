@@ -65,27 +65,27 @@ export default function NationIdentity({
                       className="relative cursor-zoom-in"
                     >
                       <div
-                        className={`w-[200px] h-[140px] bg-complementary flex flex-col items-center justify-center overflow-hidden rounded`}
+                        className={`w-[200px] h-[140px] bg-complementary flex items-center gap-2`}
                       >
                         {selectedNation.data.url.flag ? (
                           <img
                             src={selectedNation.data.url.flag}
                             alt={`flag of ${selectedNation.name}`}
-                            className="object-cover w-full h-full"
+                            className="object-cover w-full h-full rounded"
                           />
                         ) : (
                           <div className="text-[3.1rem]">
                             <GiBlackFlag />
                           </div>
                         )}
+                        {owner && (
+                          <EditIcon
+                            target="nation"
+                            param={selectedNation.data.url.flag}
+                            path="data.url.flag"
+                          />
+                        )}
                       </div>
-                      {owner && (
-                        <EditIcon
-                          target="nation"
-                          param={selectedNation.data.url.flag}
-                          path="data.url.flag"
-                        />
-                      )}
                     </div>
                     <div
                       onClick={() =>
@@ -94,7 +94,7 @@ export default function NationIdentity({
                       className="relative cursor-zoom-in"
                     >
                       <div
-                        className={`w-[140px] h-[140px] bg-complementary flex flex-col items-center justify-center overflow-hidden rounded`}
+                        className={`w-[140px] h-[140px] bg-complementary flex items-center gap-2`}
                       >
                         {selectedNation.data.url.coatOfArms ? (
                           <img
@@ -107,18 +107,18 @@ export default function NationIdentity({
                             <GiBlackFlag />
                           </div>
                         )}
+                        {owner && (
+                          <EditIcon
+                            target="nation"
+                            param={selectedNation.data.url.coatOfArms}
+                            path="data.url.coatOfArms"
+                          />
+                        )}
                       </div>
-                      {owner && (
-                        <EditIcon
-                          target="nation"
-                          param={selectedNation.data.url.coatOfArms}
-                          path="data.url.coatOfArms"
-                        />
-                      )}
                     </div>
                   </div>
 
-                  <div className="relative flex flex-col items-center">
+                  <div className="relative flex items-center gap-2">
                     <H3 text={selectedNation.name} />
                     {owner && (
                       <EditIcon
@@ -128,7 +128,7 @@ export default function NationIdentity({
                       />
                     )}
                   </div>
-                  <div className="relative">
+                  <div className="flex items-center gap-2">
                     <em className="text-xl">
                       {selectedNation.data.general.motto
                         ? `" ${selectedNation.data.general.motto} "`
@@ -154,7 +154,7 @@ export default function NationIdentity({
                     {selectedNation.role === "admin" && (
                       <Tag text="admin" bgColor="bg-danger" />
                     )}
-                    <span className="relative">
+                    <span className="flex items-center gap-2">
                       {selectedNation.data != undefined && (
                         <RegimeTag selectedNation={selectedNation} />
                       )}
@@ -168,7 +168,7 @@ export default function NationIdentity({
                       )}
                     </span>
                     {selectedNation.data.roleplay.capital != "" && (
-                      <div className="relative">
+                      <div className="flex items-center gap-2">
                         <CapitalTag selectedNation={selectedNation} />
                         {owner && (
                           <EditIcon
@@ -192,7 +192,7 @@ export default function NationIdentity({
             children={
               <>
                 <div className=" flex items-center justify-center gap-6">
-                  <span className="relative">
+                  <span className="flex items-center gap-2">
                     <ExternalLink
                       url={selectedNation.data.url.website}
                       children={<FaLink />}
@@ -205,7 +205,7 @@ export default function NationIdentity({
                       />
                     )}
                   </span>
-                  <span className="relative">
+                  <span className="flex items-center gap-2">
                     <ExternalLink
                       url={selectedNation.data.url.instagram}
                       children={<FaInstagram />}
@@ -218,7 +218,7 @@ export default function NationIdentity({
                       />
                     )}
                   </span>
-                  <span className="relative">
+                  <span className="flex items-center gap-2">
                     <ExternalLink
                       url={selectedNation.data.url.wiki}
                       children={<FaWikipediaW />}
@@ -231,7 +231,7 @@ export default function NationIdentity({
                       />
                     )}
                   </span>
-                  <span className="relative">
+                  <span className="flex items-center gap-2">
                     <ExternalLink
                       url={selectedNation.data.url.discord}
                       children={<FaDiscord />}

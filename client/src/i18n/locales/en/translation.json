@@ -14,6 +14,14 @@
             "noCapital": "no capital",
             "noMotto": "no motto",
             "externalLinks": "external links"
+          },
+          "simulation": {
+            "title": "simulation",
+            "score": "score",
+            "places": "locations",
+            "noPlaces": "no location",
+            "diplomacy": "diplomacy",
+            "citizen": "citizen"
           }
         },
         "params": {
@@ -67,7 +75,11 @@
       "cancel": "CANCEL",
       "nation": "MY NATION",
       "admin": "ADMINISTRATION",
-      "validate": "VALIDATE"
+      "validate": "VALIDATE",
+      "deleteNation": "DELETE YOUR NATION",
+      "access": "access",
+      "delete": "delete",
+      "back": "back"
     },
     "logo": {
       "subtitle": "VIRTUAL NATIONS"
@@ -76,7 +88,8 @@
       "confirmModal": {
         "title": "CONFIRM YOUR CHOICE",
         "logout": "Do you want to log out ?",
-        "delete": "Do you confirm the definitive suppression of your nation ?"
+        "deleteNation": "Do you confirm the definitive suppression of your nation ?",
+        "deletePlace": "Do you confirm the definitive suppression of your location ?"
       },
       "langModal": {
         "title": "LANGUAGE"

@@ -1,6 +1,6 @@
 import Tag from "./tag";
 import { customTagProps } from "../../types/typProp";
-import { IoQrCodeOutline } from "react-icons/io5";
+import { TbWorld } from "react-icons/tb";
 
 export default function IdTag({ label }: customTagProps) {
   return (
@@ -8,7 +8,7 @@ export default function IdTag({ label }: customTagProps) {
       text={label.toString().toUpperCase()}
       bgColor="bg-[rgba(255,255,255,0.3)]"
       // textStyle="uppercase"
-      children={<IoQrCodeOutline />}
+      children={<TbWorld />}
     />
   );
 }

@@ -4,7 +4,7 @@ import { nationPlacesListAtom } from "../../settings/store";
 import { useAtom } from "jotai";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { getCapitalName } from "../../utils/functions";
+import { getPlaceName } from "../../utils/functions";
 import { SelectedNationProps } from "../../types/typProp";
 
 export default function CapitalTag({ selectedNation }: SelectedNationProps) {
@@ -16,7 +16,7 @@ export default function CapitalTag({ selectedNation }: SelectedNationProps) {
 
   useEffect(() => {
     if (selectedNation.data.roleplay.capital != "") {
-      const capitalName = getCapitalName(
+      const capitalName = getPlaceName(
         nationPlaceList,
         selectedNation.data.roleplay.capital,
       );

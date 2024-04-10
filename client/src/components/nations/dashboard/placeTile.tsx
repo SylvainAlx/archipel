@@ -19,8 +19,10 @@ import CrossButton from "../../buttons/crossButton";
 import { useEffect, useState } from "react";
 import Tag from "../../tags/tag";
 import { ImTree } from "react-icons/im";
+import { useTranslation } from "react-i18next";
 
 export default function PlaceTile({ place, owner }: PlaceTileProp) {
+  const { t } = useTranslation();
   const [selectedNation] = useAtom(selectedNationAtom);
   const [nationPlacesList] = useAtom(nationPlacesListAtom);
   const [childrenStats, setChildrenStats] = useState({
@@ -34,7 +36,7 @@ export default function PlaceTile({ place, owner }: PlaceTileProp) {
   const handleDelete = () => {
     myStore.set(confirmBox, {
       action: "deletePlace",
-      text: "Confirmez-vous la suppression du lieu ?",
+      text: t("components.modals.confirmModal.deletePlace"),
       result: "",
       target: place,
     });
@@ -59,7 +61,7 @@ export default function PlaceTile({ place, owner }: PlaceTileProp) {
 
   return (
     <div
-      className={`p-2 rounded flex flex-col items-center gap-3 bg-complementary2 shadow-xl min-h-[200px]`}
+      className={`p-2 rounded flex flex-col items-center gap-3 bg-complementary2 shadow-xl min-h-[150px]`}
     >
       <div className="w-full flex flex-col flex-grow items-center gap-2">
         <h3 className="w-full flex justify-between">
@@ -72,8 +74,8 @@ export default function PlaceTile({ place, owner }: PlaceTileProp) {
             <span>{place.name}</span>
           </div>
           <div className="flex gap-2 flex-wrap self-end justify-end">
-            <EyeButton text="voir" click={handleClick} />
-            {owner && <CrossButton text="supprimer" click={handleDelete} />}
+            <EyeButton click={handleClick} />
+            {owner && <CrossButton click={handleDelete} />}
           </div>
         </h3>
         <p className="w-full flex-grow">{place.description}</p>

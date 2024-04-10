@@ -5,7 +5,7 @@ import Button from "../buttons/button";
 import { deleteSelfNation, updateNation } from "../../api/nation/nationAPI";
 import { logout } from "../../api/authentification/authAPI";
 import { createNewCom, deleteCom } from "../../api/communication/comAPI";
-import { deletePlace } from "../../api/place/placeAPI";
+import { deletePlace, updatePlace } from "../../api/place/placeAPI";
 import { useTranslation } from "react-i18next";
 
 export default function ConfirmModal() {
@@ -41,6 +41,9 @@ export default function ConfirmModal() {
             }
             if (confirm.action === "deletePlace") {
               deletePlace(confirm.target.officialId);
+            }
+            if (confirm.action === "updatePlace") {
+              updatePlace(confirm.payload);
             }
           }}
         />

@@ -52,12 +52,3 @@ try {
 } catch (error) {
   console.log(error);
 }
-
-// mémoire
-
-export const NATIONS = await Nation.find(
-  {},
-  "officialId name role data createdAt",
-);
-export const PLACES = await Place.find({});
-export const COMS = await Com.find({});

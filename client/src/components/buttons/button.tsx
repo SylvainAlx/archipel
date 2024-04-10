@@ -36,7 +36,7 @@ export default function Button({
     } else if (path === "delete") {
       setConfirm({
         action: "deleteSelfNation",
-        text: t("components.modals.confirmModal.delete"),
+        text: t("components.modals.confirmModal.deleteNation"),
         result: "",
       });
     } else if (path === "dashboard") {
@@ -58,8 +58,8 @@ export default function Button({
       className={`overflow-hidden ${disabled ? "bg-complementary2" : bgColor ? bgColor : "bg-secondary"} ${!disabled && "hover:text-primary hover:bg-light"} animate-fadeIn w-full max-w-[300px] h-[30px] flex justify-center items-center gap-2 rounded shadow-md py-2 px-4 transition-all duration-300`}
       onClick={click ? click : handleClick}
     >
-      {text != "" && <span>{text}</span>}
       {children}
+      {text != "" && <span>{text}</span>}
     </button>
   );
 }

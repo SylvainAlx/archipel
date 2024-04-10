@@ -1,5 +1,6 @@
 import { SERVER_URL } from "../../settings/consts";
 import { PlacePayload } from "../../types/typPayload";
+import { Place } from "../../types/typPlace";
 import { GET_JWT } from "../../utils/functions";
 
 export const getAllPlacesFetch = async () => {
@@ -18,7 +19,7 @@ export const getPlaceFetch = async (id: string) => {
   const resp = await fetch(`${SERVER_URL}/place/${id}`);
   const result = await resp.json();
   return result;
-}
+};
 
 export const createPlaceFetch = async (payload: PlacePayload) => {
   const jwt = GET_JWT();
@@ -42,5 +43,20 @@ export const deletePlaceFetch = async (id: string) => {
     headers: { authorization: `Bearer ${jwt}` },
   });
   const result = await resp.json();
+  return result;
+};
+
+export const updatePlaceFetch = async (payload: Place) => {
+  const jwt = GET_JWT();
+  const resp = await fetch(`${SERVER_URL}/place/update`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      authorization: "Bearer " + jwt,
+    },
+    body: JSON.stringify(payload),
+  });
+  const result = await resp.json();
+
   return result;
 };

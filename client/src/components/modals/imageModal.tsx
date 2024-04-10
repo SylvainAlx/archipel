@@ -7,16 +7,11 @@ export default function ImageModal() {
   const [image, setImage] = useAtom(imageAtom);
   return (
     <>
-      <h2 className="text-2xl text-center p-4">DÉTAIL DE L'IMAGE</h2>
       <div
         className={`max-w-[60%] bg-complementary flex flex-col items-center justify-center overflow-hidden rounded`}
       >
         {image ? (
-          <img
-            src={image}
-            alt={`flag of ${image}`}
-            className="object-cover w-full h-full"
-          />
+          <img src={image} alt={image} className="object-cover w-full h-full" />
         ) : (
           <div className="text-[3.1rem]">
             <GiBlackFlag />

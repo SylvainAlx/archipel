@@ -1,66 +1,43 @@
 import Place from "../models/placeSchema.js";
 import Nation from "../models/nationSchema.js";
-import {
-  createElementInMemory,
-  createOfficialId,
-  deleteElementInMemory,
-  findElementInMemory,
-  findNationElements,
-} from "../utils/functions.js";
-import { PLACES } from "../index.js";
+import { createOfficialId } from "../utils/functions.js";
 
 export const getPlaces = async (req, res) => {
   const nationId = req.params.id;
-  const places = findNationElements(PLACES, nationId);
-  if (places.length > 0) {
-    res.status(200).json(places);
-  } else {
-    try {
-      places = await Place.find({ nation: nationId })
-        .then((places) => {
-          res.status(200).json(places);
-        })
-        .catch((error) => {
-          res.status(400).json({ message: error.message });
-        });
-    } catch (error) {
-      res.status(400).json({ message: error.message });
-    }
+  try {
+    const places = await Place.find({ nation: nationId })
+      .then((places) => {
+        res.status(200).json(places);
+      })
+      .catch((error) => {
+        res.status(400).json({ message: error.message });
+      });
+  } catch (error) {
+    res.status(400).json({ message: error.message });
   }
 };
 
 export const getOne = async (req, res) => {
   const id = req.params.id;
-  const place = findElementInMemory(PLACES, id, true);
-  if (place != null) {
+  try {
+    const place = await Place.findOne({ officialId: id });
     res.status(200).json({
       place,
     });
-  } else {
-    try {
-      place = await Place.findOne({ officialId: id });
-      res.status(200).json({
-        place,
-      });
-    } catch (error) {
-      res.status(404).json({
-        message: "aucun lieu à afficher",
-        erreur: error.message,
-      });
-    }
+  } catch (error) {
+    res.status(404).json({
+      message: "aucun lieu à afficher",
+      erreur: error.message,
+    });
   }
 };
 
 export const getAllPlaces = async (req, res) => {
-  if (PLACES.length > 0) {
-    res.status(200).json(PLACES);
-  } else {
-    try {
-      const places = await Place.find({});
-      res.status(200).json(places);
-    } catch (error) {
-      res.status(400).json({ message: error.message });
-    }
+  try {
+    const places = await Place.find({});
+    res.status(200).json(places);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
   }
 };
 
@@ -98,7 +75,6 @@ export const createPlace = async (req, res) => {
             nation.data.roleplay.credits -= 100;
             nation.data.roleplay.points += 1;
             nation.save();
-            createElementInMemory(PLACES, place);
             res.status(201).json({ place, nation, message: "lieu créé" });
           })
           .catch((error) => {
@@ -145,9 +121,11 @@ export const deletePlace = async (req, res) => {
     nation.data.roleplay.population -= place.population;
     nation.data.roleplay.points -= place.points;
     await nation.save();
-
+    const children = await Place.updateMany(
+      { parentId: id },
+      { $set: { parentId: place.parentId } },
+    );
     await Place.findByIdAndDelete(place._id);
-    deleteElementInMemory(PLACES, id);
     res.status(200).json({ place, nation, message: `Lieu supprimé` });
   } catch (error) {
     console.log(error);
@@ -155,5 +133,38 @@ export const deletePlace = async (req, res) => {
       message: "Impossible de supprimer le lieu",
       erreur: error.message,
     });
+  }
+};
+
+export const updatePlace = async (req, res) => {
+  const nation = await Nation.findOne({ _id: req.nationId });
+  try {
+    if (req.body.nation === nation.officialId) {
+      const place = await Place.findOne({ _id: req.body._id });
+      place.nation = req.body.nation;
+      place.parentId = req.body.parentId;
+      place.type = req.body.type;
+      place.slot = req.body.slot;
+      place.points = req.body.points;
+      place.population = req.body.population;
+      place.name = req.body.name;
+      place.description = req.body.description;
+      place.builds = req.body.builds;
+      place
+        .save()
+        .then((place) => {
+          res.status(200).json({ place, message: "mise à jour réussie" });
+        })
+        .catch((error) => {
+          res.status(400).json({
+            message: `certaines informations sont erronées ou manquantes`,
+            erreur: error,
+          });
+        });
+    } else {
+      res.sendStatus(403).json({ message: "modification interdite" });
+    }
+  } catch (error) {
+    res.status(400).json({ message: error });
   }
 };

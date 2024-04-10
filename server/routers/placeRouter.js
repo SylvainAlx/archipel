@@ -5,6 +5,7 @@ import {
   deletePlace,
   getAllPlaces,
   getOne,
+  updatePlace,
 } from "../controllers/placeController.js";
 import { verifyJwt } from "../middlewares/authMiddleware.js";
 
@@ -14,6 +15,7 @@ placeRouter.get("/getall", getAllPlaces);
 placeRouter.get("/:id", getOne);
 placeRouter.get("/bynation/:id", getPlaces);
 placeRouter.post("/create", [verifyJwt], createPlace);
+placeRouter.post("/update", [verifyJwt], updatePlace);
 placeRouter.delete("/delete/:id", [verifyJwt], deletePlace);
 
 export default placeRouter;

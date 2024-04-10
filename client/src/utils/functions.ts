@@ -6,6 +6,7 @@ import {
   regimeList,
   regimeTypeList,
 } from "../settings/consts";
+import { LabelId } from "../types/typNation";
 import { Place } from "../types/typPlace";
 
 export const GET_JWT = () => localStorage.getItem("jwt");
@@ -13,7 +14,6 @@ export const GET_JWT = () => localStorage.getItem("jwt");
 export const dateToString = (date: Date) => {
   const createdAtDate: Date = new Date(date);
   return createdAtDate.toLocaleDateString("fr");
-  return createdAtDate.toLocaleString("fr");
 };
 
 export const deleteElementOfAtomArray = (
@@ -30,6 +30,7 @@ export const createElementOfAtomArray = (
   atom: any[],
   setAtom: React.Dispatch<React.SetStateAction<any>>,
 ) => {
+  console.log(atom);
   const tempArray = [...atom];
   tempArray.push(payload);
   setAtom(tempArray);
@@ -41,7 +42,7 @@ export const updateElementOfAtomArray = (
   setAtom: React.Dispatch<React.SetStateAction<any>>,
 ) => {
   const tempArray = atom.map((objet) =>
-    objet._id === payload.officialId ? payload : objet,
+    objet.officialId === payload.officialId ? payload : objet,
   );
   setAtom(tempArray);
 };
@@ -74,13 +75,32 @@ export const formatTime = (totalMinutes: number): string => {
   return `${days > 0 ? days + "j" : ""} ${hours > 0 ? hours + "h" : ""} ${minutes > 0 ? hours + "m" : ""}`;
 };
 
-export const getCapitalName = (placesList: Place[], id: string): string => {
+export const getPlaceName = (
+  placesList: Place[],
+  id: string,
+  def: string,
+): string => {
   const foundPlace = placesList.find((place) => place.officialId === id);
   if (foundPlace) {
     return foundPlace.name;
   } else {
-    return "";
+    return def;
   }
+};
+
+export const getPlaceListByType = (
+  placesList: Place[],
+  types: number[],
+): LabelId[] => {
+  const result: LabelId[] = [];
+  placesList.forEach((place) => {
+    types.forEach((type) => {
+      if (place.type === type) {
+        result.push({ id: place.officialId, label: place.name });
+      }
+    });
+  });
+  return result;
 };
 
 export const getPlaceTypeLabel = (id: number) => {

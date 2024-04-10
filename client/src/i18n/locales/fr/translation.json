@@ -14,6 +14,14 @@
             "noCapital": "aucune capitale",
             "noMotto": "pas de devise",
             "externalLinks": "liens externes"
+          },
+          "simulation": {
+            "title": "simulation",
+            "score": "score",
+            "places": "lieux",
+            "noPlaces": "aucun lieu",
+            "diplomacy": "diplomatie",
+            "citizen": "citoyens"
           }
         },
         "params": {
@@ -67,7 +75,11 @@
       "cancel": "ANNULER",
       "nation": "MA NATION",
       "admin": "ADMINISTRATION",
-      "validate": "VALIDER"
+      "validate": "VALIDER",
+      "deleteNation": "SUPPRIMER VOTRE NATION",
+      "access": "voir",
+      "delete": "supprimer",
+      "back": "retour"
     },
     "logo": {
       "subtitle": "NATIONS VIRTUELLES"
@@ -76,7 +88,8 @@
       "confirmModal": {
         "title": "DEMANDE DE CONFIRMATION",
         "logout": "Souhaitez-vous vous déconnecter ?",
-        "delete": "Confirmez-vous la suppression définitive de votre nation ?"
+        "deleteNation": "Confirmez-vous la suppression définitive de votre nation ?",
+        "deletePlace": "Confirmez-vous la suppression définitive du lieu ?"
       },
       "langModal": {
         "title": "CHOIX DE LA LANGUE"

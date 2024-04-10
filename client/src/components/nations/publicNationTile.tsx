@@ -34,7 +34,7 @@ export default function PublicNationTile(nation: Nation) {
           </div>
           <h2 className="text-light text-xl pl-4 pr-6">{nation.name}</h2>
         </div>
-        <EyeButton text="voir" click={handleClick} />
+        <EyeButton click={handleClick} />
       </div>
       <div className="max-w-[80%] flex gap-1 self-end flex-wrap justify-end">
         <IdTag label={nation.officialId} />

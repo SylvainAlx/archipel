@@ -24,6 +24,7 @@ import {
   getAllPlacesFetch,
   getNationPlacesFetch,
   getPlaceFetch,
+  updatePlaceFetch,
 } from "./placeFetch";
 
 const nationsList = myStore.get(nationsListAtom);
@@ -37,7 +38,7 @@ const setPlacesList = (list: Place[]) => myStore.set(placesListAtom, list);
 export const createNewPlace = (newPlace: PlacePayload) => {
   myStore.set(loadingAtom, true);
   createPlaceFetch(newPlace)
-    .then((data: {place: Place, nation: Nation, message: string}) => {
+    .then((data: { place: Place; nation: Nation; message: string }) => {
       myStore.set(loadingAtom, false);
       if (data.place) {
         createElementOfAtomArray(
@@ -46,6 +47,12 @@ export const createNewPlace = (newPlace: PlacePayload) => {
           setNationPlacesList,
         );
         createElementOfAtomArray(data.place, placesList, setPlacesList);
+        createElementOfAtomArray(
+          data.place,
+          nationPlacesList,
+          setNationPlacesList,
+        );
+        updateElementOfAtomArray(data.nation, nationsList, setNationsList);
         myStore.set(nationAtom, data.nation);
         myStore.set(infoModalAtom, data.message);
       }
@@ -59,16 +66,16 @@ export const createNewPlace = (newPlace: PlacePayload) => {
 export const getPlace = (id: string) => {
   myStore.set(loadingAtom, true);
   getPlaceFetch(id)
-  .then((data) => {
-    const updatePlace: EditPlaceParam = {...myStore.get(editPlaceAtom)}
-    updatePlace.place = data;
-    myStore.set(editPlaceAtom, updatePlace);
-  })
-  .catch((error) => {
-    myStore.set(loadingAtom, false);
-    myStore.set(infoModalAtom, error.message);
-  });
-}
+    .then((data) => {
+      const updatePlace: EditPlaceParam = { ...myStore.get(editPlaceAtom) };
+      updatePlace.place = data;
+      myStore.set(editPlaceAtom, updatePlace);
+    })
+    .catch((error) => {
+      myStore.set(loadingAtom, false);
+      myStore.set(infoModalAtom, error.message);
+    });
+};
 
 export const getAllPlaces = () => {
   myStore.set(loadingAtom, true);
@@ -116,21 +123,49 @@ export const getNationPlaces = (id: string) => {
 export const deletePlace = (id: string) => {
   myStore.set(loadingAtom, true);
   deletePlaceFetch(id)
-    .then((resp) => {
+    .then((resp: { place: Place; nation: Nation; message: string }) => {
       myStore.set(dataCheckedAtom, false);
       myStore.set(nationAtom, resp.nation);
       updateElementOfAtomArray(resp.nation, nationsList, setNationsList);
       deleteElementOfAtomArray(
-        resp.place,
+        resp.place.officialId,
         nationPlacesList,
         setNationPlacesList,
       );
-      deleteElementOfAtomArray(resp.place, placesList, setPlacesList);
+      deleteElementOfAtomArray(
+        resp.place.officialId,
+        placesList,
+        setPlacesList,
+      );
       myStore.set(loadingAtom, false);
       myStore.set(infoModalAtom, resp.message);
     })
     .catch((error) => {
       myStore.set(loadingAtom, false);
       myStore.set(infoModalAtom, error.message);
+    });
+};
+
+export const updatePlace = (payload: Place) => {
+  myStore.set(loadingAtom, true);
+  updatePlaceFetch(payload)
+    .then((resp) => {
+      myStore.set(loadingAtom, false);
+      if (resp.place) {
+        updateElementOfAtomArray(resp.place, placesList, setPlacesList);
+        updateElementOfAtomArray(
+          resp.place,
+          nationPlacesList,
+          setNationPlacesList,
+        );
+        const data = myStore.get(editPlaceAtom);
+        myStore.set(editPlaceAtom, { ...data, place: resp.place });
+      } else {
+        myStore.set(infoModalAtom, resp.message);
+      }
+    })
+    .catch((error) => {
+      myStore.set(loadingAtom, false);
+      myStore.set(infoModalAtom, error);
     });
 };

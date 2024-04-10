@@ -1,12 +1,14 @@
 import { IoMdCloseCircle } from "react-icons/io";
 import { ClickProps } from "../../types/typProp";
 import Button from "./button";
+import { useTranslation } from "react-i18next";
 
-export default function CrossButton({ text, click }: ClickProps) {
+export default function CrossButton({ click }: ClickProps) {
+  const { t } = useTranslation();
   return (
     <div className="cursor-pointer overflow-hidden">
       <Button
-        text={text ? text : ""}
+        text={t("components.buttons.delete")}
         path=""
         bgColor="bg-danger"
         click={click}

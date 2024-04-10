@@ -4,7 +4,11 @@ export default function ExternalLink({ url, children }: ExternalLinkProps) {
   return (
     <div className="text-3xl">
       {url != "" ? (
-        <a href={url} target="_blank" className="cursor-pointer text-secondary">
+        <a
+          href={url}
+          target="_blank"
+          className="cursor-pointer text-secondary hover:animate-pulse"
+        >
           {children}
         </a>
       ) : (

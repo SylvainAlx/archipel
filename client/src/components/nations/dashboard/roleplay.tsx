@@ -1,4 +1,4 @@
-import { Suspense, lazy, useEffect } from "react";
+import { Suspense, lazy, useEffect, useState } from "react";
 import { SelectedNationProps } from "../../../types/typProp";
 import DashTile from "../../dashTile";
 import TileContainer from "../../tileContainer";
@@ -10,32 +10,40 @@ import CreditTag from "../../tags/creditTag";
 import PopulationTag from "../../tags/populationTag";
 import { getNationPlaces } from "../../../api/place/placeAPI";
 import Spinner from "../../loading/spinner";
-import IndexTag from "../../tags/indexTag";
 import NewPlaceButton from "../../buttons/newPlaceButton";
+import DevFlag from "../../devFlag";
+import { useTranslation } from "react-i18next";
 
 export default function Roleplay({
   selectedNation,
   owner,
 }: SelectedNationProps) {
+  const { t } = useTranslation();
   const [nationPlacesList] = useAtom(nationPlacesListAtom);
+  const [checked, setChecked] = useState(false);
   const PlaceTile = lazy(
     () => import("../../../components/nations/dashboard/placeTile"),
   );
 
   useEffect(() => {
-    if (selectedNation.officialId !== "" && nationPlacesList.length === 0) {
+    if (
+      selectedNation.officialId !== "" &&
+      nationPlacesList.length === 0 &&
+      !checked
+    ) {
       getNationPlaces(selectedNation.officialId);
+      setChecked(true);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [nationPlacesList]);
 
   return (
     <TileContainer
       children={
         <>
-          <H2 text="Simulation" />
+          <H2 text={t("pages.dashboard.tabs.dashboard.simulation.title")} />
           <DashTile
-            title="Score"
+            title={t("pages.dashboard.tabs.dashboard.simulation.score")}
             className="w-full"
             children={
               <>
@@ -54,7 +62,7 @@ export default function Roleplay({
           />
 
           <DashTile
-            title="Lieux"
+            title={t("pages.dashboard.tabs.dashboard.simulation.places")}
             children={
               <>
                 <div className="w-full flex flex-col gap-2">
@@ -65,14 +73,15 @@ export default function Roleplay({
                           <Suspense key={i} fallback={<Spinner />}>
                             <div className="relative w-full">
                               <PlaceTile owner={owner} place={place} />
-                              <IndexTag text={i} />
                             </div>
                           </Suspense>
                         );
                       }
                     })
                   ) : (
-                    <em className="text-center">Aucun lieu</em>
+                    <em className="text-center">
+                      {t("pages.dashboard.tabs.dashboard.simulation.noPlaces")}
+                    </em>
                   )}
                 </div>
                 {owner && (
@@ -84,8 +93,24 @@ export default function Roleplay({
               </>
             }
           />
-          <DashTile title="Diplomatie" className="w-full" children={<></>} />
-          <DashTile title="Citoyens" className="w-full" children={<></>} />
+          <DashTile
+            title={t("pages.dashboard.tabs.dashboard.simulation.diplomacy")}
+            className="w-full"
+            children={
+              <>
+                <DevFlag />
+              </>
+            }
+          />
+          <DashTile
+            title={t("pages.dashboard.tabs.dashboard.simulation.citizen")}
+            className="w-full"
+            children={
+              <>
+                <DevFlag />
+              </>
+            }
+          />
         </>
       }
     />

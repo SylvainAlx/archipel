@@ -66,15 +66,13 @@ export default function EditBoxModal() {
         if (typeof objetCourant === "object" && objetCourant !== null) {
           objetCourant[dernierePartie] = editBox.new;
         }
-        console.log(updatedPlace);
-
-        // setConfirm({
-        //   action: "updatePlace",
-        //   text: "Mettre à jour votre lieu ?",
-        //   result: "",
-        //   target: "",
-        //   payload: updatedPlace,
-        // });
+        setConfirm({
+          action: "updatePlace",
+          text: "Mettre à jour votre lieu ?",
+          result: "",
+          target: "",
+          payload: updatedPlace,
+        });
         break;
       default:
         break;
@@ -89,6 +87,8 @@ export default function EditBoxModal() {
 
   const handleSelectChange = (e: ChangeEvent<HTMLSelectElement>) => {
     if (editBox.path === "data.roleplay.capital") {
+      setEditBox({ ...editBox, new: e.target.value });
+    } else if (editBox.path === "parentId") {
       setEditBox({ ...editBox, new: e.target.value });
     } else {
       setEditBox({ ...editBox, new: Number(e.target.value) });
