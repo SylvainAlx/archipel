@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { SetStateAction } from "jotai";
 import i18n from "../i18n/i18n";
 import {
   placesTypeList,
@@ -8,6 +9,7 @@ import {
 } from "../settings/consts";
 import { LabelId } from "../types/typNation";
 import { Place } from "../types/typPlace";
+import { SetAtom } from "../settings/store";
 
 export const GET_JWT = () => localStorage.getItem("jwt");
 
@@ -19,16 +21,22 @@ export const dateToString = (date: Date) => {
 export const deleteElementOfAtomArray = (
   id: string,
   atom: any[],
-  setAtom: React.Dispatch<React.SetStateAction<any>>,
+  setAtom: SetAtom<[SetStateAction<any>], void>,
 ) => {
-  const tempArray: any[] = atom.filter((objet) => objet.officialId !== id);
+  const tempArray: any[] = [...atom];
+  for (let i = 0; i < atom.length; i++) {
+    if (atom[i].officialId === id) {
+      tempArray.splice(i, 1);
+      break;
+    }
+  }
   setAtom(tempArray);
 };
 
 export const createElementOfAtomArray = (
   payload: any,
   atom: any[],
-  setAtom: React.Dispatch<React.SetStateAction<any>>,
+  setAtom: SetAtom<[SetStateAction<any>], void>,
 ) => {
   console.log(atom);
   const tempArray = [...atom];
@@ -39,7 +47,7 @@ export const createElementOfAtomArray = (
 export const updateElementOfAtomArray = (
   payload: any,
   atom: any[],
-  setAtom: React.Dispatch<React.SetStateAction<any>>,
+  setAtom: SetAtom<[SetStateAction<any>], void>,
 ) => {
   const tempArray = atom.map((objet) =>
     objet.officialId === payload.officialId ? payload : objet,

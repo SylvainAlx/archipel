@@ -8,6 +8,7 @@ import EyeButton from "../buttons/eyeButton";
 import { myStore, selectedNationAtom } from "../../settings/store";
 import { useNavigate } from "react-router-dom";
 import RegimeTag from "../tags/regimeTag";
+import PlaceTag from "../tags/placeTag";
 
 export default function PublicNationTile(nation: Nation) {
   const navigate = useNavigate();
@@ -41,7 +42,8 @@ export default function PublicNationTile(nation: Nation) {
         {nation.role === "admin" && <Tag text="admin" bgColor="bg-success" />}
         <RegimeTag selectedNation={nation} />
         <PointTag label={nation.data.roleplay.points} />
-        <PopulationTag label={nation.data.roleplay.population} />
+        <PlaceTag label={nation.data.roleplay.places} />
+        <PopulationTag label={nation.data.roleplay.citizens} />
       </div>
     </div>
   );

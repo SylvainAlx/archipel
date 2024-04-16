@@ -91,7 +91,11 @@ const nationSchema = mongoose.Schema(
           type: String,
           default: "",
         },
-        population: {
+        citizens: {
+          type: Number,
+          default: 0,
+        },
+        places: {
           type: Number,
           default: 0,
         },

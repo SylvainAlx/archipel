@@ -35,7 +35,8 @@ export interface Nation {
       points: number;
       credits: number;
       capital: string;
-      population: number;
+      citizens: number;
+      places: number;
       politicalSide: number;
     };
   };
@@ -70,7 +71,8 @@ export const EmptyNation: Nation = {
       points: 0,
       credits: 100,
       capital: "",
-      population: 0,
+      citizens: 0,
+      places: 0,
       politicalSide: 0,
     },
   },
@@ -79,7 +81,7 @@ export const EmptyNation: Nation = {
 
 export interface RegimeType {
   type: number;
-  color: string
+  color: string;
 }
 
 export interface Regime {

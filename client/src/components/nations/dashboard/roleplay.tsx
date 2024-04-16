@@ -13,6 +13,7 @@ import Spinner from "../../loading/spinner";
 import NewPlaceButton from "../../buttons/newPlaceButton";
 import DevFlag from "../../devFlag";
 import { useTranslation } from "react-i18next";
+import PlaceTag from "../../tags/placeTag";
 
 export default function Roleplay({
   selectedNation,
@@ -49,8 +50,9 @@ export default function Roleplay({
               <>
                 <div className="w-full px-2 flex items-center justify-center gap-1">
                   <PointTag label={selectedNation.data.roleplay.points} />
+                  <PlaceTag label={selectedNation.data.roleplay.places} />
                   <PopulationTag
-                    label={selectedNation.data.roleplay.population}
+                    label={selectedNation.data.roleplay.citizens}
                   />
                   <CreditTag
                     label={selectedNation.data.roleplay.credits}
@@ -103,7 +105,7 @@ export default function Roleplay({
             }
           />
           <DashTile
-            title={t("pages.dashboard.tabs.dashboard.simulation.citizen")}
+            title={t("pages.dashboard.tabs.dashboard.simulation.citizens")}
             className="w-full"
             children={
               <>

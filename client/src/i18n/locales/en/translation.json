@@ -21,7 +21,7 @@
             "places": "locations",
             "noPlaces": "no location",
             "diplomacy": "diplomacy",
-            "citizen": "citizen"
+            "citizens": "citizens"
           }
         },
         "params": {
