@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Routes, Route, useNavigate } from "react-router-dom";
+import { Routes, Route, useNavigate, useLocation } from "react-router-dom";
 import {
   adminRoutes,
   authRoutes,
@@ -29,6 +29,7 @@ export default function App() {
   const [selectedNation] = useAtom(selectedNationAtom);
 
   const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     i18n.init();
@@ -36,9 +37,12 @@ export default function App() {
   }, []);
 
   useEffect(() => {
+    const param = location.pathname.split("/");
     if (nation.name != "") {
       myStore.set(selectedNationAtom, { ...nation });
-      navigate(`/nation/${nation.officialId}`);
+      if (param[1] === "login" || param[1] === "register") {
+        navigate(`/nation/${nation.officialId}`);
+      }
     } else {
       navigate("/");
     }

@@ -27,6 +27,7 @@ export default function CapitalTag({ selectedNation }: SelectedNationProps) {
 
   return (
     <Tag
+      hover={t("components.hoverInfos.tags.capital")}
       text={capital}
       bgColor="bg-info"
       children={

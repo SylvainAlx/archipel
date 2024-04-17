@@ -9,7 +9,7 @@ export const getAllNations = async (req, res) => {
     if (searchText) {
       const nations = await Nation.find(
         { name: { $regex: searchText, $options: "i" } },
-        "name role data createdAt",
+        "officialId name role data createdAt",
       );
       res.status(200).json(nations);
     } else {

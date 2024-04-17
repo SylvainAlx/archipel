@@ -4,12 +4,11 @@ import DashTile from "../../dashTile";
 import TileContainer from "../../tileContainer";
 import H3 from "../../titles/h3";
 import { FaDiscord, FaInstagram, FaLink, FaWikipediaW } from "react-icons/fa6";
-import Tag from "../../tags/tag";
 import { SelectedNationProps } from "../../../types/typProp";
 import EditIcon from "../../editIcon";
 import ExternalLink from "../../externalLink";
 import H2 from "../../titles/h2";
-import { useEffect, useState } from "react";
+import { Suspense, lazy, useEffect, useState } from "react";
 import {
   imageAtom,
   myStore,
@@ -22,6 +21,8 @@ import IdTag from "../../tags/idTag";
 import CapitalTag from "../../tags/capitalTag";
 import { useTranslation } from "react-i18next";
 import { regimeList } from "../../../settings/consts";
+import Spinner from "../../loading/spinner";
+import RoleTag from "../../tags/roleTag";
 
 export default function NationIdentity({
   selectedNation,
@@ -30,6 +31,8 @@ export default function NationIdentity({
   const { t } = useTranslation();
   const [placesList, setPlacesList] = useState<LabelId[]>([]);
   const [nationPlaceList] = useAtom(nationPlacesListAtom);
+
+  const LazyImage = lazy(() => import("../../lazy/lazyImage"));
 
   useEffect(() => {
     const updatedPlaces: LabelId[] = [];
@@ -59,20 +62,23 @@ export default function NationIdentity({
             children={
               <>
                 <div className="p-4 flex flex-col gap-2 items-center">
-                  <div className="flex justify-center items-center flex-wrap gap-6">
+                  <div className="flex flex-col lg:flex-row justify-center items-center lg:flex-wrap gap-6">
                     <div
                       onClick={() => handleClick(selectedNation.data.url.flag)}
                       className="relative cursor-zoom-in"
                     >
                       <div
-                        className={`w-[200px] h-[140px] bg-complementary flex items-center gap-2`}
+                        className={`w-[200px] h-[140px] bg-complementary flex items-center justify-center gap-2`}
                       >
                         {selectedNation.data.url.flag ? (
-                          <img
-                            src={selectedNation.data.url.flag}
-                            alt={`flag of ${selectedNation.name}`}
-                            className="object-cover w-full h-full rounded"
-                          />
+                          <Suspense fallback={<Spinner />}>
+                            <LazyImage
+                              src={selectedNation.data.url.flag}
+                              alt={`flag of ${selectedNation.name}`}
+                              className="object-cover w-full h-full rounded"
+                              hover={t("components.hoverInfos.flag")}
+                            />
+                          </Suspense>
                         ) : (
                           <div className="text-[3.1rem]">
                             <GiBlackFlag />
@@ -94,14 +100,17 @@ export default function NationIdentity({
                       className="relative cursor-zoom-in"
                     >
                       <div
-                        className={`w-[140px] h-[140px] bg-complementary flex items-center gap-2`}
+                        className={`w-[140px] h-[140px] bg-complementary flex items-center justify-center gap-2`}
                       >
                         {selectedNation.data.url.coatOfArms ? (
-                          <img
-                            src={selectedNation.data.url.coatOfArms}
-                            alt={`coatOfArms of ${selectedNation.name}`}
-                            className="object-contain w-full h-full"
-                          />
+                          <Suspense fallback={<Spinner />}>
+                            <LazyImage
+                              src={selectedNation.data.url.coatOfArms}
+                              alt={`coatOfArms of ${selectedNation.name}`}
+                              className="object-contain w-full h-full"
+                              hover={t("components.hoverInfos.coatOfArms")}
+                            />
+                          </Suspense>
                         ) : (
                           <div className="text-[3.1rem]">
                             <GiBlackFlag />
@@ -152,7 +161,7 @@ export default function NationIdentity({
                   <div className="flex gap-1 flex-wrap items-center justify-center">
                     <IdTag label={selectedNation.officialId} />
                     {selectedNation.role === "admin" && (
-                      <Tag text="admin" bgColor="bg-danger" />
+                      <RoleTag label="admin" />
                     )}
                     <span className="flex items-center gap-2">
                       {selectedNation.data != undefined && (
@@ -196,6 +205,7 @@ export default function NationIdentity({
                     <ExternalLink
                       url={selectedNation.data.url.website}
                       children={<FaLink />}
+                      hover={t("components.hoverInfos.links.website")}
                     />
                     {owner && (
                       <EditIcon
@@ -209,6 +219,7 @@ export default function NationIdentity({
                     <ExternalLink
                       url={selectedNation.data.url.instagram}
                       children={<FaInstagram />}
+                      hover={t("components.hoverInfos.links.instagram")}
                     />
                     {owner && (
                       <EditIcon
@@ -222,6 +233,7 @@ export default function NationIdentity({
                     <ExternalLink
                       url={selectedNation.data.url.wiki}
                       children={<FaWikipediaW />}
+                      hover={t("components.hoverInfos.links.wiki")}
                     />
                     {owner && (
                       <EditIcon
@@ -235,6 +247,7 @@ export default function NationIdentity({
                     <ExternalLink
                       url={selectedNation.data.url.discord}
                       children={<FaDiscord />}
+                      hover={t("components.hoverInfos.links.discord")}
                     />
                     {owner && (
                       <EditIcon

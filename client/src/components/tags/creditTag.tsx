@@ -2,12 +2,15 @@ import Tag from "./tag";
 import { customTagProps } from "../../types/typProp";
 import { FaCoins } from "react-icons/fa6";
 import { addCredits } from "../../utils/functions";
+import { useTranslation } from "react-i18next";
 // import { MdAddCircle } from "react-icons/md";
 
 export default function CreditTag({ owner, label }: customTagProps) {
+  const { t } = useTranslation();
   return (
     <Tag
       text={label.toString()}
+      hover={t("components.hoverInfos.tags.credits")}
       bgColor="bg-info"
       children={
         <>

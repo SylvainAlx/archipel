@@ -19,7 +19,7 @@
             "title": "simulation",
             "score": "score",
             "places": "lieux",
-            "noPlaces": "aucun lieu",
+            "noPlaces": "aucun lieu à afficher",
             "diplomacy": "diplomatie",
             "citizens": "citoyens"
           }
@@ -79,7 +79,8 @@
       "deleteNation": "SUPPRIMER VOTRE NATION",
       "access": "voir",
       "delete": "supprimer",
-      "back": "retour"
+      "back": "retour",
+      "newPlace": "nouveau lieu"
     },
     "logo": {
       "subtitle": "NATIONS VIRTUELLES"
@@ -97,6 +98,30 @@
       "loadingModal": {
         "title": "PATIENTEZ",
         "information": "Connexion au serveur, merci de patienter quelques instants"
+      }
+    },
+    "hoverInfos": {
+      "coatOfArms": "blason de la nation",
+      "flag": "drapeau de la nation",
+      "dev": "en cours de développement",
+      "links": {
+        "website": "site internet",
+        "instagram": "compte Instagram",
+        "wiki": "page Wikipedia",
+        "discord": "serveur Discord"
+      },
+      "tags": {
+        "role": "rôle de la nation",
+        "capital": "capitale de la nation",
+        "credits": "crédits",
+        "id": "identifiant unique",
+        "index": "position dans la liste",
+        "place": "type de lieu",
+        "places": "lieux",
+        "points": "succès",
+        "population": "citoyens",
+        "regime": "regime de la nation",
+        "tree": "parenté"
       }
     }
   },

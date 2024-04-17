@@ -96,6 +96,7 @@ export interface DashTileProps {
 
 export interface TagProps {
   text: string;
+  hover: string;
   bgColor?: string;
   textColor?: string;
   textStyle?: string;
@@ -159,4 +160,12 @@ export interface EditIconProps {
 export interface ExternalLinkProps {
   url: string;
   children: JSX.Element;
+  hover: string;
+}
+
+export interface LazyImageProps {
+  src: string;
+  alt: string;
+  className: string;
+  hover: string;
 }

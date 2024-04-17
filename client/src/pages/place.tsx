@@ -20,17 +20,20 @@ import Spinner from "../components/loading/spinner";
 import EditIcon from "../components/editIcon";
 import H2 from "../components/titles/h2";
 import ParentButton from "../components/buttons/parentButton";
-import Tag from "../components/tags/tag";
-import { MdLandscape } from "react-icons/md";
+import DevFlag from "../components/devFlag";
+import { useTranslation } from "react-i18next";
+import TreeTag from "../components/tags/treeTag";
 
 export default function Place() {
   const location = useLocation();
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const [data, setData] = useAtom(editPlaceAtom);
   const [selectedNation] = useAtom(selectedNationAtom);
   const [nationPlacesList] = useAtom(nationPlacesListAtom);
   const [refresh, setRefresh] = useState(false);
+  const [haveChildren, setHaveChildren] = useState(false);
   const PlaceTile = lazy(
     () => import("../components/nations/dashboard/placeTile"),
   );
@@ -91,20 +94,22 @@ export default function Place() {
           {data.place.officialId && <IdTag label={data.place.officialId} />}
 
           <div className="flex items-center gap-2">
-            <Tag
-              text={getPlaceName(
+            <TreeTag
+              label={getPlaceName(
                 nationPlacesList,
                 data.place.parentId,
                 selectedNation.name,
               )}
-              bgColor="bg-info"
-              children={<MdLandscape />}
             />
 
             {data.owner && (
               <EditIcon
                 target="place"
-                param={getPlaceListByType(nationPlacesList, [0, 1])}
+                param={getPlaceListByType(
+                  selectedNation,
+                  nationPlacesList,
+                  [0, 1],
+                )}
                 path="parentId"
               />
             )}
@@ -114,58 +119,44 @@ export default function Place() {
         </div>
       </section>
       <section className="w-full flex flex-wrap justify-center gap-2">
-        {data.place.type === 2 ? (
-          data.place.builds.map((placeCategory, i) => {
-            return (
-              <div key={i}>
-                <DashTile
-                  title={placeCategory.label.fr}
-                  children={
-                    <div className="flex flex-col items-center justify-center gap-2">
-                      {placeCategory.builds.map((build, j) => {
-                        return (
-                          <div
-                            className="flex flex-col items-center justify-center"
-                            key={j}
-                          >
-                            {build.label.fr}
-                          </div>
-                        );
-                      })}
+        <div className="w-full py-4 flex flex-col gap-2">
+          {nationPlacesList != undefined &&
+            nationPlacesList.length > 0 &&
+            nationPlacesList.map((place, i) => {
+              if (place.parentId === data.place.officialId) {
+                !haveChildren && setHaveChildren(true);
+                return (
+                  <Suspense key={i} fallback={<Spinner />}>
+                    <div className="relative w-full">
+                      <PlaceTile owner={data.owner} place={place} />
                     </div>
-                  }
-                />
-              </div>
-            );
-          })
-        ) : (
-          <>
-            <div className="w-full py-4 flex flex-col gap-2">
-              {nationPlacesList != undefined ? (
-                nationPlacesList.map((place, i) => {
-                  if (place.parentId === data.place.officialId) {
-                    return (
-                      <Suspense key={i} fallback={<Spinner />}>
-                        <div className="relative w-full">
-                          <PlaceTile owner={data.owner} place={place} />
-                        </div>
-                      </Suspense>
-                    );
-                  }
-                })
-              ) : (
-                <em className="text-center">Aucun lieu</em>
-              )}
-            </div>
-            {data.owner && (
-              <NewPlaceButton
-                parentId={data.place.officialId}
-                owner={data.owner}
-              />
-            )}
-          </>
+                  </Suspense>
+                );
+              }
+            })}
+          {!haveChildren && (
+            <em className="text-center">
+              {t("pages.dashboard.tabs.dashboard.simulation.noPlaces")}
+            </em>
+          )}
+        </div>
+        {data.owner && data.place.type != 2 && (
+          <NewPlaceButton parentId={data.place.officialId} owner={data.owner} />
         )}
+        {/* </>
+        )} */}
       </section>
+      {data.place.type === 2 && (
+        <DashTile
+          title={t("pages.dashboard.tabs.dashboard.simulation.citizens")}
+          className="w-full my-2"
+          children={
+            <>
+              <DevFlag />
+            </>
+          }
+        />
+      )}
     </>
   );
 }

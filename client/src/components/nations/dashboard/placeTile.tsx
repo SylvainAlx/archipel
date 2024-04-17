@@ -17,9 +17,8 @@ import { getPlaceTypeLabel } from "../../../utils/functions";
 import PlaceTag from "../../tags/placeTag";
 import CrossButton from "../../buttons/crossButton";
 import { useEffect, useState } from "react";
-import Tag from "../../tags/tag";
-import { ImTree } from "react-icons/im";
 import { useTranslation } from "react-i18next";
+import TreeTag from "../../tags/treeTag";
 
 export default function PlaceTile({ place, owner }: PlaceTileProp) {
   const { t } = useTranslation();
@@ -64,7 +63,7 @@ export default function PlaceTile({ place, owner }: PlaceTileProp) {
       className={`p-2 rounded flex flex-col items-center gap-3 bg-complementary2 shadow-xl min-h-[150px]`}
     >
       <div className="w-full flex flex-col flex-grow items-center gap-2">
-        <h3 className="w-full flex justify-between">
+        <h3 className="w-full flex justify-between flex-wrap">
           <div className="text-xl flex items-center gap-2">
             <span className="text-lg text-info">
               {place.officialId === selectedNation.data.roleplay.capital && (
@@ -84,11 +83,7 @@ export default function PlaceTile({ place, owner }: PlaceTileProp) {
           <PlaceTag label={getPlaceTypeLabel(place.type)} />
           <PointTag label={(childrenStats.points + place.points).toString()} />
           {place.type != 2 && (
-            <Tag
-              text={childrenStats.children.toString()}
-              bgColor="bg-info"
-              children={<ImTree />}
-            />
+            <TreeTag label={childrenStats.children.toString()} />
           )}
           <PopulationTag label={childrenStats.population.toString()} />
         </div>

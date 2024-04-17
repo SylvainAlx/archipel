@@ -18,8 +18,8 @@ export default {
         wait: "var(--color-wait)",
         regime_0: "var(--color-regime-0)",
         regime_1: "var(--color-regime-1)",
-        regime_100: "var(--color-regime-100)",
-        regime_200: "var(--color-regime-200)",
+        regime_2: "var(--color-regime-100)",
+        regime_3: "var(--color-regime-200)",
       },
       animation: {
         fadeIn: "fadeIn 0.3s ease-in-out",

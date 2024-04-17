@@ -29,9 +29,11 @@ import {
 
 const nationsList = myStore.get(nationsListAtom);
 const setNationsList = (list: Nation[]) => myStore.set(nationsListAtom, list);
+
 const nationPlacesList = myStore.get(nationPlacesListAtom);
 const setNationPlacesList = (list: Place[]) =>
   myStore.set(nationPlacesListAtom, list);
+
 const placesList = myStore.get(placesListAtom);
 const setPlacesList = (list: Place[]) => myStore.set(placesListAtom, list);
 

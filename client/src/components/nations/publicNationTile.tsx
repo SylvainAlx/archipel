@@ -1,6 +1,5 @@
 import { Nation } from "../../types/typNation";
 import { GiBlackFlag } from "react-icons/gi";
-import Tag from "../tags/tag";
 import IdTag from "../tags/idTag";
 import PointTag from "../tags/pointTag";
 import PopulationTag from "../tags/populationTag";
@@ -9,6 +8,7 @@ import { myStore, selectedNationAtom } from "../../settings/store";
 import { useNavigate } from "react-router-dom";
 import RegimeTag from "../tags/regimeTag";
 import PlaceTag from "../tags/placeTag";
+import RoleTag from "../tags/roleTag";
 
 export default function PublicNationTile(nation: Nation) {
   const navigate = useNavigate();
@@ -39,7 +39,7 @@ export default function PublicNationTile(nation: Nation) {
       </div>
       <div className="max-w-[80%] flex gap-1 self-end flex-wrap justify-end">
         <IdTag label={nation.officialId} />
-        {nation.role === "admin" && <Tag text="admin" bgColor="bg-success" />}
+        {nation.role === "admin" && <RoleTag label="admin" />}
         <RegimeTag selectedNation={nation} />
         <PointTag label={nation.data.roleplay.points} />
         <PlaceTag label={nation.data.roleplay.places} />

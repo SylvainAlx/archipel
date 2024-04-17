@@ -7,7 +7,7 @@ import {
   regimeList,
   regimeTypeList,
 } from "../settings/consts";
-import { LabelId } from "../types/typNation";
+import { LabelId, Nation } from "../types/typNation";
 import { Place } from "../types/typPlace";
 import { SetAtom } from "../settings/store";
 
@@ -38,7 +38,6 @@ export const createElementOfAtomArray = (
   atom: any[],
   setAtom: SetAtom<[SetStateAction<any>], void>,
 ) => {
-  console.log(atom);
   const tempArray = [...atom];
   tempArray.push(payload);
   setAtom(tempArray);
@@ -97,6 +96,7 @@ export const getPlaceName = (
 };
 
 export const getPlaceListByType = (
+  nation: Nation,
   placesList: Place[],
   types: number[],
 ): LabelId[] => {
@@ -108,6 +108,7 @@ export const getPlaceListByType = (
       }
     });
   });
+  result.push({ id: nation.officialId, label: nation.name });
   return result;
 };
 
@@ -135,8 +136,26 @@ export const createTagRegime = (id: number) => {
         return i18n.t("listes.regimeList.others.noGovernment");
       case 3:
         return i18n.t("listes.regimeList.others.provisionalGovernment");
+      case 4:
+        return i18n.t("listes.regimeList.others.other");
+      case 100:
+        return i18n.t("listes.regimeList.democracies.presidentialRepublic");
+      case 101:
+        return i18n.t("listes.regimeList.democracies.semiPresidentialRepublic");
+      case 102:
+        return i18n.t("listes.regimeList.democracies.parliamentaryRepublic");
+      case 103:
+        return i18n.t("listes.regimeList.democracies.onePartyRepublic");
       case 104:
         return i18n.t("listes.regimeList.democracies.directDemocracy");
+      case 200:
+        return i18n.t("listes.regimeList.monarchies.constitutionalMonarchy");
+      case 201:
+        return i18n.t("listes.regimeList.monarchies.absoluteMonarchy");
+      case 300:
+        return i18n.t(
+          "listes.regimeList.autoritarianRegimes.militaryDictatorship",
+        );
     }
     return i18n.t("listes.regimeList.others.unknownPoliticalRegime");
   };

@@ -6,9 +6,11 @@ import { langAtom } from "../../settings/store";
 import { useAtom } from "jotai";
 import { createTagRegime } from "../../utils/functions";
 import { SelectedNationProps } from "../../types/typProp";
+import { useTranslation } from "react-i18next";
 
 export default function RegimeTag({ selectedNation }: SelectedNationProps) {
   const [lang] = useAtom(langAtom);
+  const { t } = useTranslation();
   const [regime, setRegime] = useState({
     id: 0,
     label: "",
@@ -22,13 +24,14 @@ export default function RegimeTag({ selectedNation }: SelectedNationProps) {
   return (
     <Tag
       text={regime.label.toString()}
+      hover={t("components.hoverInfos.tags.regime")}
       bgColor={regime.bgColor}
       children={
         <>
           {regime.type === 0 && <FaQuestion />}
           {regime.type === 1 && <MdHowToVote />}
-          {regime.type === 100 && <FaCrown />}
-          {regime.type === 200 && <FaPersonMilitaryPointing />}
+          {regime.type === 2 && <FaCrown />}
+          {regime.type === 3 && <FaPersonMilitaryPointing />}
         </>
       }
     />

@@ -1,16 +1,16 @@
-import { FaTrophy } from "react-icons/fa6";
 import Tag from "./tag";
 import { customTagProps } from "../../types/typProp";
 import { useTranslation } from "react-i18next";
+import { MdGrade } from "react-icons/md";
 
-export default function PointTag({ label }: customTagProps) {
+export default function RoleTag({ label }: customTagProps) {
   const { t } = useTranslation();
   return (
     <Tag
       text={label.toString()}
-      hover={t("components.hoverInfos.tags.points")}
-      bgColor="bg-info"
-      children={<FaTrophy />}
+      hover={t("components.hoverInfos.tags.role")}
+      bgColor="bg-success"
+      children={<MdGrade />}
     />
   );
 }

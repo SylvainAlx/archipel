@@ -104,15 +104,6 @@ export default function Roleplay({
               </>
             }
           />
-          <DashTile
-            title={t("pages.dashboard.tabs.dashboard.simulation.citizens")}
-            className="w-full"
-            children={
-              <>
-                <DevFlag />
-              </>
-            }
-          />
         </>
       }
     />

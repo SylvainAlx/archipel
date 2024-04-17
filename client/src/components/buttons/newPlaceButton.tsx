@@ -10,9 +10,11 @@ import {
 } from "../../settings/store";
 import { useAtom } from "jotai";
 import { addCredits } from "../../utils/functions";
+import { useTranslation } from "react-i18next";
 
 export default function NewPlaceButton({ parentId, owner }: newPlaceProps) {
   const [selectedNation] = useAtom(selectedNationAtom);
+  const { t } = useTranslation();
 
   const handleClick = () => {
     const newPlace: Place = {
@@ -42,7 +44,7 @@ export default function NewPlaceButton({ parentId, owner }: newPlaceProps) {
               click={handleClick}
               children={
                 <div className="w-full flex justify-center items-center gap-2 flex-wrap">
-                  <span>Nouveau lieu</span>
+                  <span>{t("components.buttons.newPlace")}</span>
                   <span className="flex gap-1 items-center">
                     <FaCoins />
                     {NEW_PLACE_COST}

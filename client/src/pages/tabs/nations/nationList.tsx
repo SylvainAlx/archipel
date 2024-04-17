@@ -25,14 +25,16 @@ export default function NationList({ text }: StringProps) {
   const [searchName, setSearchName] = useState("");
   const [showSearch, setShowSearch] = useState(false);
   const [selectOption, setSelectOption] = useState(nationSortOptions[0].label);
-  const [displayedNations, setDisplayedNations] = useState(5);
+  const [displayedNations, setDisplayedNations] = useState(10);
 
   const PublicNationTile = lazy(
     () => import("../../../components/nations/publicNationTile"),
   );
 
   useEffect(() => {
-    if (nationsList.length > 0) {
+    if (nationsList.length === 0) {
+      getNations("");
+    } else if (nationsList.length > 0) {
       if (nationsList[0]._id === "") {
         setSearchName("");
         getNations("");
@@ -64,6 +66,30 @@ export default function NationList({ text }: StringProps) {
       setNationsList(
         tempList.sort(function (a, b) {
           return b.data.roleplay.points - a.data.roleplay.points;
+        }),
+      );
+    } else if (selectOption === "4") {
+      setNationsList(
+        tempList.sort(function (a, b) {
+          return a.data.roleplay.places - b.data.roleplay.places;
+        }),
+      );
+    } else if (selectOption === "5") {
+      setNationsList(
+        tempList.sort(function (a, b) {
+          return b.data.roleplay.places - a.data.roleplay.places;
+        }),
+      );
+    } else if (selectOption === "6") {
+      setNationsList(
+        tempList.sort(function (a, b) {
+          return a.data.roleplay.citizens - b.data.roleplay.citizens;
+        }),
+      );
+    } else if (selectOption === "7") {
+      setNationsList(
+        tempList.sort(function (a, b) {
+          return b.data.roleplay.citizens - a.data.roleplay.citizens;
         }),
       );
     }

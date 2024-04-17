@@ -19,7 +19,7 @@
             "title": "simulation",
             "score": "score",
             "places": "locations",
-            "noPlaces": "no location",
+            "noPlaces": "no location to display",
             "diplomacy": "diplomacy",
             "citizens": "citizens"
           }
@@ -79,7 +79,8 @@
       "deleteNation": "DELETE YOUR NATION",
       "access": "access",
       "delete": "delete",
-      "back": "back"
+      "back": "back",
+      "newPlace": "new location"
     },
     "logo": {
       "subtitle": "VIRTUAL NATIONS"
@@ -97,6 +98,30 @@
       "loadingModal": {
         "title": "WAIT",
         "information": "Connecting to the server, please wait a few moments"
+      }
+    },
+    "hoverInfos": {
+      "coatOfArms": "nation coat of arms",
+      "flag": "nation flag",
+      "dev": "under development",
+      "links": {
+        "website": "website",
+        "instagram": "Instagram account",
+        "wiki": "Wikipedia",
+        "discord": "Discord server"
+      },
+      "tags": {
+        "role": "nation role",
+        "capital": "capital city",
+        "credits": "credits",
+        "id": "unique ID",
+        "index": "position",
+        "place": "kind of location",
+        "places": "locations",
+        "points": "success",
+        "population": "citizens",
+        "regime": "regime",
+        "tree": "kinship"
       }
     }
   },

@@ -8,6 +8,7 @@ import {
   nationsListAtom,
   ownerAtom,
   recoveryKey,
+  selectedNationAtom,
 } from "../../settings/store";
 import { EmptyNation } from "../../types/typNation";
 import { GET_JWT } from "../../utils/functions";
@@ -33,7 +34,7 @@ export const register = ({ name, password }: AuthPayload) => {
         myStore.set(comsListAtom, [EmptyCom]);
         myStore.set(nationAtom, {
           _id: data.nation._id,
-          officialId : data.nation.officialId,
+          officialId: data.nation.officialId,
           name: data.nation.name,
           role: data.nation.role,
           data: data.nation.data,
@@ -60,7 +61,7 @@ export const authentification = () => {
         if (data.name != undefined) {
           myStore.set(nationAtom, {
             _id: data._id,
-            officialId : data.officialId,
+            officialId: data.officialId,
             name: data.name,
             role: data.role,
             data: data.data,
@@ -85,6 +86,7 @@ export const authentification = () => {
 export const logout = () => {
   myStore.set(infoModalAtom, "déconnexion effectuée");
   myStore.set(nationAtom, EmptyNation);
+  myStore.set(selectedNationAtom, EmptyNation);
   myStore.set(ownerAtom, false);
   localStorage.removeItem("jwt");
 };
@@ -99,7 +101,7 @@ export const login = ({ name, password }: AuthPayload) => {
         myStore.set(nationsListAtom, [EmptyNation]);
         myStore.set(nationAtom, {
           _id: data.nation._id,
-          officialId : data.nation.officialId,
+          officialId: data.nation.officialId,
           name: data.nation.name,
           role: data.nation.role,
           data: data.nation.data,

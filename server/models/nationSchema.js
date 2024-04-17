@@ -85,7 +85,7 @@ const nationSchema = mongoose.Schema(
         },
         credits: {
           type: Number,
-          default: 1000,
+          default: 100,
         },
         capital: {
           type: String,
