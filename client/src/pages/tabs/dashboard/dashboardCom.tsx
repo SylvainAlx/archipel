@@ -130,10 +130,14 @@ export default function DashboardCom({ text }: StringProps) {
                           )}
                           <div className="flex items-center gap-2">
                             {com.comType === 0 && (
-                              <Tag text="privé" bgColor="bg-danger" />
+                              <Tag text="privé" hover="" bgColor="bg-danger" />
                             )}
                             {com.comType > 0 && (
-                              <Tag text="public" bgColor="bg-success" />
+                              <Tag
+                                text="public"
+                                hover=""
+                                bgColor="bg-success"
+                              />
                             )}
                             {com.originId === nation._id && (
                               <div

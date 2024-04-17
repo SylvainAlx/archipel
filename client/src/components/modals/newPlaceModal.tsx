@@ -6,12 +6,11 @@ import { ChangeEvent, FormEvent } from "react";
 import Form from "../form/form";
 import Input from "../form/input";
 import TextArea from "../form/textArea";
-import Tag from "../tags/tag";
-import { FaTrophy } from "react-icons/fa6";
 import { emptyPlace } from "../../types/typPlace";
 import { createNewPlace } from "../../api/place/placeAPI";
 import Select from "../form/select";
 import { placesTypeList } from "../../settings/consts";
+import PointTag from "../tags/pointTag";
 
 export default function NewPlaceModal() {
   const [newPlace, setNewPlace] = useAtom(newPlaceAtom);
@@ -39,11 +38,7 @@ export default function NewPlaceModal() {
     <div>
       <h2 className="text-2xl text-center p-4">NOUVEAU LIEU</h2>
       <div className="w-full px-2 flex items-center justify-center gap-4">
-        <Tag
-          text={newPlace.points.toString()}
-          bgColor="bg-info"
-          children={<FaTrophy />}
-        />
+        <PointTag label={newPlace.points} />
       </div>
       <Form
         submit={handleSubmit}

@@ -50,6 +50,7 @@ const Countdown: React.FC<CountdownProps> = ({ targetDate }) => {
     <div className="flex flex-col items-center">
       <Tag
         text=""
+        hover=""
         bgColor="bg-wait"
         children={
           <>
