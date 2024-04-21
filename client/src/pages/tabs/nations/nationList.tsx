@@ -158,7 +158,7 @@ export default function NationList({ text }: StringProps) {
             if (i < displayedNations) {
               return (
                 <Suspense key={i} fallback={<Spinner />}>
-                  <div className="min-w-[300px] w-full relative transition-all duration-300">
+                  <div className="min-w-[300px] w-full relative transition-all duration-300 animate-fadeIn">
                     <PublicNationTile
                       _id={nation._id}
                       officialId={nation.officialId}

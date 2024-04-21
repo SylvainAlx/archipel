@@ -4,12 +4,12 @@
 @tailwind utilities;
 
 #root {
-  --color-primary: rgb(8, 24, 37);
+  --color-primary: #081825;
   --color-light: #ffffff;
-  --color-secondary: rgb(0, 129, 138);
+  --color-secondary: #00818a;
   --color-complementary: rgb(34, 34, 34);
   --color-complementary2: rgb(54, 54, 54);
-  --color-black-alpha: rgba(0, 0, 0, 0.63);
+  --color-black-alpha: rgba(0, 0, 0, 0.747);
   --color-info: rgb(0, 156, 218);
   --color-success: rgb(0, 148, 32);
   --color-danger: rgb(124, 27, 27);

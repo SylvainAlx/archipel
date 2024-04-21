@@ -34,7 +34,7 @@ export default function IconLink({ path, text }: ButtonProps) {
 
   return (
     <div
-      className="flex flex-col gap-2 items-center text-5xl hover:text-secondary transition-all cursor-pointer"
+      className="flex flex-col items-center text-5xl md:text-3xl hover:text-secondary transition-all cursor-pointer"
       onClick={handleClick}
     >
       {path === "/nations" && <IoMdGlobe />}
@@ -53,7 +53,7 @@ export default function IconLink({ path, text }: ButtonProps) {
         ))}
       {path === "/admin" && <IoMdSettings />}
       {path === "/logout" && <IoMdLogOut />}
-      <h2 className="text-[10px]">{text}</h2>
+      <h2 className="hidden md:block text-[10px]">{text}</h2>
     </div>
   );
 }
