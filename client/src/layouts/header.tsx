@@ -6,16 +6,16 @@ import Logo from "../components/logo";
 
 export default function Header() {
   const { t } = useTranslation();
-  const subtitle = t("components.logo.subtitle").split(" ");
   return (
     <header className="animate-slideInFromTop py-4 px-4 mx-auto md:m-0 sm:flex md:justify-around flex-wrap items-center gap-6">
-      <div className="flex gap-2 items-center">
+      <div className="flex flex-col md:flex-row gap-2 items-center">
         <Logo />
-        <h4 className="text-md lg:text-xl xl:text-2xl">
-          {subtitle.map((word, i) => {
-            return <div key={i}>{word}</div>;
-          })}
-        </h4>
+        <div className="flex flex-col items-center md:items-start">
+          <h2 className="text-2xl">{t("components.logo.title")}</h2>
+          <h4 className="text-sm lg:text-md">
+            {t("components.logo.subtitle")}
+          </h4>
+        </div>
       </div>
 
       <HeaderNav />

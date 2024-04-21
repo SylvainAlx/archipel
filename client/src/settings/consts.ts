@@ -8,7 +8,7 @@ import { BuildCategory } from "../types/typPlace";
 export const MDP_LOBBY = import.meta.env.VITE_MDP_LOBBY;
 export const SERVER_URL = import.meta.env.VITE_SERVER_URL;
 export const VERSION = "0.1";
-export const TITLE = "Navir";
+export const TITLE = "Archipel";
 
 //  Colors
 
@@ -24,7 +24,7 @@ export const NEW_PLACE_COST = 100;
 
 // listes
 
-export const nationSortOptions: StandardOption[] = [
+export const searchSortOptions: StandardOption[] = [
   { id: 0, label: "Alphabetique croissant" },
   { id: 1, label: "Alphabetique décroissant" },
   { id: 2, label: "Succès croissant" },

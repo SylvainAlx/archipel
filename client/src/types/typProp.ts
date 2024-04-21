@@ -2,6 +2,8 @@ import { ChangeEvent, FormEvent, MouseEventHandler } from "react";
 import { ReactNode } from "react";
 import { LabelId, Nation, PoliticalSide, Regime } from "./typNation";
 import { Place } from "./typPlace";
+import { SetAtom } from "../settings/store";
+import { SetStateAction } from "jotai";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
@@ -168,4 +170,10 @@ export interface LazyImageProps {
   alt: string;
   className: string;
   hover: string;
+}
+
+export interface SearchBarProps {
+  type: string;
+  list: any[];
+  setList: SetAtom<[SetStateAction<any>], void>,
 }
