@@ -56,11 +56,12 @@ export default function PlaceTile({ place, owner }: PlaceTileProp) {
       }
     });
     setChildrenStats(stats);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
     <div
-      className={`p-2 rounded flex flex-col items-center gap-3 bg-complementary2 shadow-xl min-h-[150px]`}
+      className={`p-2 rounded flex flex-col items-center gap-3 bg-complementary shadow-xl min-h-[150px]`}
     >
       <div className="w-full flex flex-col flex-grow items-center gap-2">
         <h3 className="w-full flex justify-between flex-wrap">

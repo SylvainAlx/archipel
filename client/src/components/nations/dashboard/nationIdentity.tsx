@@ -3,10 +3,8 @@ import { GiBlackFlag } from "react-icons/gi";
 import DashTile from "../../dashTile";
 import TileContainer from "../../tileContainer";
 import H3 from "../../titles/h3";
-import { FaDiscord, FaInstagram, FaLink, FaWikipediaW } from "react-icons/fa6";
 import { SelectedNationProps } from "../../../types/typProp";
 import EditIcon from "../../editIcon";
-import ExternalLink from "../../externalLink";
 import H2 from "../../titles/h2";
 import { Suspense, lazy, useEffect, useState } from "react";
 import {
@@ -52,7 +50,7 @@ export default function NationIdentity({
   return (
     <TileContainer
       children={
-        <>
+        <section className="flex flex-col items-center gap-4">
           <H2 text={t("pages.dashboard.tabs.dashboard.nationIdentity.title")} />
           <DashTile
             title={t(
@@ -193,75 +191,7 @@ export default function NationIdentity({
               </>
             }
           />
-
-          <DashTile
-            title={t(
-              "pages.dashboard.tabs.dashboard.nationIdentity.externalLinks",
-            )}
-            children={
-              <>
-                <div className=" flex items-center justify-center gap-6">
-                  <span className="flex items-center gap-2">
-                    <ExternalLink
-                      url={selectedNation.data.url.website}
-                      children={<FaLink />}
-                      hover={t("components.hoverInfos.links.website")}
-                    />
-                    {owner && (
-                      <EditIcon
-                        target="nation"
-                        param={selectedNation.data.url.website}
-                        path="data.url.website"
-                      />
-                    )}
-                  </span>
-                  <span className="flex items-center gap-2">
-                    <ExternalLink
-                      url={selectedNation.data.url.instagram}
-                      children={<FaInstagram />}
-                      hover={t("components.hoverInfos.links.instagram")}
-                    />
-                    {owner && (
-                      <EditIcon
-                        target="nation"
-                        param={selectedNation.data.url.instagram}
-                        path="data.url.instagram"
-                      />
-                    )}
-                  </span>
-                  <span className="flex items-center gap-2">
-                    <ExternalLink
-                      url={selectedNation.data.url.wiki}
-                      children={<FaWikipediaW />}
-                      hover={t("components.hoverInfos.links.wiki")}
-                    />
-                    {owner && (
-                      <EditIcon
-                        target="nation"
-                        param={selectedNation.data.url.wiki}
-                        path="data.url.wiki"
-                      />
-                    )}
-                  </span>
-                  <span className="flex items-center gap-2">
-                    <ExternalLink
-                      url={selectedNation.data.url.discord}
-                      children={<FaDiscord />}
-                      hover={t("components.hoverInfos.links.discord")}
-                    />
-                    {owner && (
-                      <EditIcon
-                        target="nation"
-                        param={selectedNation.data.url.discord}
-                        path="data.url.discord"
-                      />
-                    )}
-                  </span>
-                </div>
-              </>
-            }
-          />
-        </>
+        </section>
       }
     />
   );
