@@ -36,12 +36,12 @@
       "title": "legal notice"
     },
     "login": {
-      "title": "access your nation",
-      "placeholderName": "Nation name",
+      "title": "Sign in",
+      "placeholderName": "Name",
       "placeholderPassword": "Password",
       "forgottenPassword": "Forgotten password ?",
       "firstVisit": "First visit ?",
-      "newNation": "Create new nation"
+      "newUser": "Create account"
     },
     "recovery": {
       "title": "password reset",

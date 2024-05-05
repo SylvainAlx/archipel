@@ -7,7 +7,7 @@ export const verifyJwt = (req, res, next) => {
     const decoded = jwt.verify(token, secret);
     if (decoded) {
       req.decoded = decoded;
-      req.nationId = decoded.id;
+      req.userId = decoded.id;
       next();
     } else {
       res.status(400).json({ error: "jwt not decoded" });

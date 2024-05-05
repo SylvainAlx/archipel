@@ -10,13 +10,19 @@ import {
 } from "../types/typAtom";
 import { Place, emptyPlace } from "../types/typPlace";
 import i18n from "../i18n/i18n";
+import { emptyUser, User } from "../types/typUser";
 
 export const myStore = createStore();
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type SetAtom<Args extends any[], Result> = (...args: Args) => Result;
 
 // Loading
 
 export const loadingAtom = atom(false);
+
+// User
+
+export const userAtom = atom<User>(emptyUser)
 
 // Nation
 

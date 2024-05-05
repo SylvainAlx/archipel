@@ -10,7 +10,7 @@ import Score from "../../../components/nations/dashboard/score";
 import Diplomacy from "../../../components/nations/dashboard/diplomacy";
 import Links from "../../../components/nations/dashboard/links";
 
-export default function DashboardMain({ owner }: DashboardTabProps) {
+export default function DashboardNation({ owner }: DashboardTabProps) {
   const [selectedNation] = useAtom(selectedNationAtom);
   const { t } = useTranslation();
 

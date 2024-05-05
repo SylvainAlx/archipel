@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import TabNav from "../components/tabNav";
-import DashboardMain from "./tabs/dashboard/dashboardMain";
+import DashboardNation from "./tabs/dashboard/dashboardNation";
 import DashboardSettings from "./tabs/dashboard/dashboardSettings";
 import DashboardCom from "./tabs/dashboard/dashboardCom";
 import {
@@ -50,7 +50,7 @@ export default function Dashboard() {
       <div className="flex items-center">
         <TabNav tabs={tabList} tabId={tab.id} setTab={setTab} owner={owner} />
       </div>
-      {tab.id === 0 && <DashboardMain owner={owner} />}
+      {tab.id === 0 && <DashboardNation owner={owner} />}
       {tab.id === 1 && <DashboardSettings text={tab.label} />}
       {tab.id === 2 && <DashboardCom text={tab.label} />}
     </>

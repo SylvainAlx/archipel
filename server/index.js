@@ -6,12 +6,9 @@ import { home } from "./views/serverHome.js";
 import authRouter from "./routers/authRouter.js";
 import nationRouter from "./routers/nationRouter.js";
 import comRouter from "./routers/comRouter.js";
-import citizenRouter from "./routers/citizenRouter.js";
 import placeRouter from "./routers/placeRouter.js";
 import paramRouter from "./routers/paramRouter.js";
-import Nation from "./models/nationSchema.js";
-import Place from "./models/placeSchema.js";
-import Com from "./models/comSchema.js";
+import userRouter from "./routers/userRouter.js";
 
 // config serveur
 const app = express();
@@ -41,10 +38,10 @@ try {
 try {
   app.listen(PORT, () => {
     console.log(`server running at PORT : ${PORT}`);
+    app.use("/user", userRouter);
     app.use("/auth", authRouter);
     app.use("/nation", nationRouter);
     app.use("/com", comRouter);
-    app.use("/citizen", citizenRouter);
     app.use("/place", placeRouter);
     app.use("/param", paramRouter);
     app.use("/", home);

@@ -63,7 +63,7 @@ export default function Login() {
                 className="underline cursor-pointer"
                 onClick={() => navigate("/register")}
               >
-                {t("pages.login.newNation")}
+                {t("pages.login.newUser")}
               </span>
             </div>
             <Button

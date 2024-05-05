@@ -36,12 +36,12 @@
       "title": "mentions légales"
     },
     "login": {
-      "title": "accéder à sa nation",
-      "placeholderName": "Nom de la nation",
+      "title": "S'identifier",
+      "placeholderName": "Nom",
       "placeholderPassword": "Mot de passe",
       "forgottenPassword": "Mot de passe oublié ?",
       "firstVisit": "Première visite ?",
-      "newNation": "Créez une nouvelle nation"
+      "newUser": "Créez un compte utilisateur"
     },
     "recovery": {
       "title": "réinitialisation du mot de passe",
