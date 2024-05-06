@@ -27,7 +27,7 @@ import { createComFetch } from "../communication/comFetch";
 const nationsList = myStore.get(nationsListAtom);
 const setNationsList = (list: Nation[]) => myStore.set(nationsListAtom, list);
 
-export const getNation = (id: string) => {
+export const getNation = (id: string, owner: boolean) => {
   myStore.set(loadingAtom, true);
   getOneNationFetch(id)
     .then((data) => {
@@ -41,6 +41,16 @@ export const getNation = (id: string) => {
           data: data.nation.data,
           createdAt: data.nation.createdAt,
         });
+        if (owner) {
+          myStore.set(nationAtom, {
+            _id: data.nation._id,
+            officialId : data.nation.officialId,
+            name: data.nation.name,
+            role: data.nation.role,
+            data: data.nation.data,
+            createdAt: data.nation.createdAt,
+          });
+        }
       }
     })
     .catch((error) => {

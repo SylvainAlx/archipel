@@ -8,7 +8,7 @@ import Form from "../../../components/form/form";
 import Input from "../../../components/form/input";
 import Button from "../../../components/buttons/button";
 import Select from "../../../components/form/select";
-import { TITLE, comTypeOptions } from "../../../settings/consts";
+import { comTypeOptions } from "../../../settings/consts";
 import TextArea from "../../../components/form/textArea";
 import ListTile from "../../../components/listTile";
 import Tag from "../../../components/tags/tag";
@@ -16,12 +16,14 @@ import { IoMdTrash } from "react-icons/io";
 import { dateToString } from "../../../utils/functions";
 import { EmptyCom } from "../../../types/typAtom";
 import { getComs } from "../../../api/communication/comAPI";
+import { useTranslation } from "react-i18next";
 
 export default function DashboardCom({ text }: StringProps) {
   const [nation] = useAtom(nationAtom);
   const [newCom, setNewCom] = useState(EmptyCom);
   const [comList] = useAtom(comsListAtom);
   const [, setConfirm] = useAtom(confirmBox);
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (comList.length < 1) {
@@ -126,7 +128,9 @@ export default function DashboardCom({ text }: StringProps) {
                               <span>origine : {com.originName}</span>
                             )}
                           {com.comType === 1 && (
-                            <span>Bienvenue sur {TITLE} !</span>
+                            <span>
+                              Bienvenue sur {t("components.logo.title")} !
+                            </span>
                           )}
                           <div className="flex items-center gap-2">
                             {com.comType === 0 && (

@@ -3,10 +3,10 @@ import { useAtom } from "jotai";
 import { confirmBox } from "../../settings/store";
 import Button from "../buttons/button";
 import { deleteSelfNation, updateNation } from "../../api/nation/nationAPI";
-import { logout } from "../../api/authentification/authAPI";
 import { createNewCom, deleteCom } from "../../api/communication/comAPI";
 import { deletePlace, updatePlace } from "../../api/place/placeAPI";
 import { useTranslation } from "react-i18next";
+import { logout } from "../../api/user/userAPI";
 
 export default function ConfirmModal() {
   const { t } = useTranslation();

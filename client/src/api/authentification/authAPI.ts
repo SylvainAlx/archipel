@@ -13,9 +13,10 @@ import {
 import { EmptyNation } from "../../types/typNation";
 import { GET_JWT } from "../../utils/functions";
 import { RecoveryFetch, authGet, loginFetch, registerFetch } from "./authFetch";
-import { AuthPayload, RecoveryPayload } from "../../types/typPayload";
+
 import { createComFetch } from "../communication/comFetch";
 import { EmptyCom } from "../../types/typAtom";
+import { AuthPayload, RecoveryPayload } from "../../types/typUser";
 
 export const register = ({ name, password }: AuthPayload) => {
   myStore.set(loadingAtom, true);

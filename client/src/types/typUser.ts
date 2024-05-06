@@ -1,9 +1,10 @@
 export interface User {
+  officialId: string;
   name: string;
   surname: string;
   avatar: string;
-  password: string;
-  recovery: string;
+  password?: string;
+  recovery?: string;
   role: string;
   citizenship: {
     nationId: string;
@@ -26,6 +27,7 @@ export interface RecoveryPayload {
 }
 
 export const emptyUser: User = {
+  officialId: "",
   name: "",
   surname: "",
   avatar: "",

@@ -1,16 +1,16 @@
 import { useEffect } from "react";
 import H1 from "../components/titles/h1";
-import { TITLE } from "../settings/consts";
 import { paramsListAtom } from "../settings/store";
 import { useAtom } from "jotai";
 import { getAllParams } from "../api/param/paramAPI";
 import H2 from "../components/titles/h2";
 import TileContainer from "../components/tileContainer";
 import DashTile from "../components/dashTile";
+import { useTranslation } from "react-i18next";
 
 export default function Admin() {
   const [paramsList] = useAtom(paramsListAtom);
-
+  const { t } = useTranslation();
   useEffect(() => {
     if (paramsList.length === 0) {
       getAllParams();
@@ -20,7 +20,7 @@ export default function Admin() {
 
   return (
     <>
-      <H1 text={`Administration de ${TITLE}`} />
+      <H1 text={`Administration de ${t("components.logo.title")}`} />
       <H2 text={"Paramètres"} />
       <TileContainer
         children={

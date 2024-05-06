@@ -4,8 +4,9 @@ import H1 from "../components/titles/h1";
 import Input from "../components/form/input";
 import Button from "../components/buttons/button";
 import Form from "../components/form/form";
-import { login } from "../api/authentification/authAPI";
+
 import { useTranslation } from "react-i18next";
+import { login } from "../api/user/userAPI";
 
 export default function Login() {
   const [name, setName] = useState("");

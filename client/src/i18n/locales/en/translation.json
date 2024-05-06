@@ -4,33 +4,29 @@
       "title": "Welcome",
       "presentation": "Discover the fascinating world of Virtual Nations with Navir, the app that brings your own digital nation to life. Follow its evolution, interact with other nations, and forge alliances in a virtual universe where imagination meets reality. Welcome to Virtual Nations, where the power of community shapes your nation's digital future!"
     },
-    "dashboard": {
-      "tabs": {
-        "dashboard": {
-          "title": "dashboard",
-          "nationIdentity": {
-            "title": "nation identity",
-            "generalInformations": "general informations",
-            "noCapital": "no capital",
-            "noMotto": "no motto",
-            "externalLinks": "external links"
-          },
-          "simulation": {
-            "title": "simulation",
-            "score": "score",
-            "places": "locations",
-            "noPlaces": "no location to display",
-            "diplomacy": "diplomacy",
-            "citizens": "citizens"
-          }
-        },
-        "params": {
-          "title": "parameters"
-        },
-        "coms": {
-          "title": "communications"
-        }
+    "nation": {
+      "title": "nation",
+      "nationIdentity": {
+        "title": "nation identity",
+        "generalInformations": "general informations",
+        "noCapital": "no capital",
+        "noMotto": "no motto",
+        "externalLinks": "external links"
+      },
+      "simulation": {
+        "title": "simulation",
+        "score": "score",
+        "places": "locations",
+        "noPlaces": "no location to display",
+        "diplomacy": "diplomacy",
+        "citizens": "citizens"
       }
+    },
+    "profile": {
+      "title": "profile"
+    },
+    "coms": {
+      "title": "communications"
     },
     "legalNotice": {
       "title": "legal notice"
@@ -52,11 +48,11 @@
       "changePassword": "Change password"
     },
     "register": {
-      "title": "new nation",
-      "placeholderName": "Nation name",
+      "title": "create account",
+      "placeholderName": "Name",
       "placeholderPassword": "Password",
-      "ownNation": "Own nation ?",
-      "connect": "Login",
+      "ownNation": "Account exist ?",
+      "connect": "Sign in",
       "acceptTerms": "By ticking this box, you agree to the",
       "termsOfService": "TOS"
     },
@@ -66,14 +62,14 @@
   },
   "components": {
     "buttons": {
-      "login": "LOGIN",
+      "login": "SIGN IN",
       "logout": "LOGOUT",
       "register": "SIGN UP",
       "explore": "EXPLORE",
       "dashboard": "DASHBOARD",
       "close": "CLOSE",
       "cancel": "CANCEL",
-      "nation": "MY NATION",
+      "user": "MY ACCOUNT",
       "admin": "ADMINISTRATION",
       "validate": "VALIDATE",
       "deleteNation": "DELETE YOUR NATION",
@@ -83,8 +79,8 @@
       "newPlace": "new location"
     },
     "logo": {
-      "title": "ARCHIPEL",
-      "subtitle": "FACTORY OF VIRTUAL NATIONS"
+      "title": "VIRTUAL NATIONS",
+      "subtitle": ""
     },
     "modals": {
       "confirmModal": {

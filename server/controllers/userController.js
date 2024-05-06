@@ -70,7 +70,7 @@ export const login = async (req, res) => {
 
     const user = await User.findOne(
       { name },
-      "officialId name surname avatar password role createdAt",
+      "officialId name surname avatar password role citizenship createdAt",
     );
     if (!user) {
       return res.status(404).json({ message: "Utilisateur introuvable" });
@@ -86,7 +86,7 @@ export const login = async (req, res) => {
         return res.status(401).json({ message: "Mot de passe invalide" });
       }
       const jwt = user.createJWT();
-      res.status(200).json({ user, jwt });
+      res.status(200).json({ user, message: "bienvenue " + name, jwt });
     });
   } catch (error) {
     res.status(400).json({ message: "Connexion impossible", erreur: error });
@@ -102,11 +102,11 @@ export const verify = async (req, res) => {
 
     const user = await User.findOne(
       { name: decoded.name },
-      "officialId name surname avatar role createdAt",
+      "officialId name surname avatar role citizenship createdAt",
     );
 
     if (user) {
-      return res.status(200).json(user);
+      return res.status(200).json({ user, message: "bienvenue " + user.name });
     } else {
       return res.status(404).json({ message: "Utilisateur introuvable" });
     }
@@ -155,13 +155,13 @@ export const getAllUsers = async (req, res) => {
     if (searchText) {
       const users = await User.find(
         { name: { $regex: searchText, $options: "i" } },
-        "officialId name surname avatar role createdAt",
+        "officialId name surname avatar role citizenship createdAt",
       );
       res.status(200).json(users);
     } else {
       const users = await User.find(
         {},
-        "officialId name surname avatar role createdAt",
+        "officialId name surname avatar role citizenship createdAt",
       );
       res.status(200).json(users);
     }
@@ -175,7 +175,7 @@ export const getOneUser = async (req, res) => {
   try {
     const user = await User.findOne(
       { officialId: userId },
-      "officialId name surname avatar role createdAt",
+      "officialId name surname avatar role citizenship createdAt",
     );
     res.status(200).json({
       user,

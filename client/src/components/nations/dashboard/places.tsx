@@ -31,7 +31,7 @@ export default function Places({ selectedNation, owner }: SelectedNationProps) {
     <TileContainer
       children={
         <section className="flex flex-col items-center gap-4">
-          <H2 text={t("pages.dashboard.tabs.dashboard.simulation.places")} />
+          <H2 text={t("pages.nation.simulation.places")} />
           <div className="w-full flex flex-col gap-2">
             {nationPlacesList != undefined ? (
               nationPlacesList.map((place, i) => {
@@ -47,7 +47,7 @@ export default function Places({ selectedNation, owner }: SelectedNationProps) {
               })
             ) : (
               <em className="text-center">
-                {t("pages.dashboard.tabs.dashboard.simulation.noPlaces")}
+                {t("pages.nation.simulation.noPlaces")}
               </em>
             )}
           </div>

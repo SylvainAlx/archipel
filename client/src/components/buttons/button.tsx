@@ -1,11 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useNavigate } from "react-router-dom";
-import {
-  confirmBox,
-  infoModalAtom,
-  nationAtom,
-  selectedNationAtom,
-} from "../../settings/store";
+import { confirmBox, infoModalAtom } from "../../settings/store";
 import { useAtom } from "jotai";
 import { ButtonProps } from "../../types/typProp";
 import { useTranslation } from "react-i18next";
@@ -21,8 +16,6 @@ export default function Button({
 }: ButtonProps) {
   const [, setConfirm] = useAtom(confirmBox);
   const [, setInfo] = useAtom(infoModalAtom);
-  const [, setSelectedNation] = useAtom(selectedNationAtom);
-  const [nation] = useAtom(nationAtom);
   const navigate = useNavigate();
   const { t } = useTranslation();
 
@@ -33,15 +26,6 @@ export default function Button({
         text: t("components.modals.confirmModal.logout"),
         result: "",
       });
-    } else if (path === "delete") {
-      setConfirm({
-        action: "deleteSelfNation",
-        text: t("components.modals.confirmModal.deleteNation"),
-        result: "",
-      });
-    } else if (path === "dashboard") {
-      setSelectedNation(nation);
-      navigate(path);
     } else if (path === "info") {
       setInfo("");
     } else {

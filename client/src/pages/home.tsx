@@ -1,18 +1,18 @@
 import { useAtom } from "jotai";
 import Button from "../components/buttons/button";
 import H1 from "../components/titles/h1";
-import { nationAtom } from "../settings/store";
+import { userAtom } from "../settings/store";
 import { useTranslation } from "react-i18next";
 
 export default function Home() {
-  const [nation] = useAtom(nationAtom);
+  const [user] = useAtom(userAtom);
   const { t } = useTranslation();
 
   return (
     <>
       <H1 text={t("pages.home.title")} />
       <p className="text-xl px-4">{t("pages.home.presentation")}</p>
-      {nation._id === undefined || nation._id === "" ? (
+      {user.officialId === undefined || user.officialId === "" ? (
         <div className="w-full py-4 flex justify-center gap-2 flex-wrap">
           <Button
             text={t("components.buttons.login")}
@@ -35,7 +35,7 @@ export default function Home() {
           <Button
             text={t("components.buttons.dashboard")}
             type="button"
-            path={`/nation/${nation.officialId}`}
+            path={`/user/${user.officialId}`}
           />
           <Button
             text={t("components.buttons.explore")}

@@ -23,6 +23,7 @@ export const loadingAtom = atom(false);
 // User
 
 export const userAtom = atom<User>(emptyUser)
+export const isLoggedAtom = atom<boolean>(false)
 
 // Nation
 

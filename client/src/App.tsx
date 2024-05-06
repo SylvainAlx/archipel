@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Routes, Route, useNavigate, useLocation } from "react-router-dom";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import {
   adminRoutes,
   authRoutes,
@@ -12,24 +12,20 @@ import Header from "./layouts/header";
 import Footer from "./layouts/footer";
 import "./App.css";
 import { useAtom } from "jotai";
-import {
-  myStore,
-  nationAtom,
-  ownerAtom,
-  selectedNationAtom,
-} from "./settings/store";
-import { useEffect } from "react";
+import { isLoggedAtom, userAtom } from "./settings/store";
+import { useEffect, useState } from "react";
 import ModalsRouter from "./router/modalsRouter";
 import { ArchipelRoute } from "./types/typReact";
-import { authentification } from "./api/authentification/authAPI";
 import i18n from "./i18n/i18n";
+import { authentification } from "./api/user/userAPI";
+import { getNation } from "./api/nation/nationAPI";
 
 export default function App() {
-  const [nation] = useAtom(nationAtom);
-  const [selectedNation] = useAtom(selectedNationAtom);
+  const [user] = useAtom(userAtom);
+  const [isLogged] = useAtom(isLoggedAtom);
+  const [openPrivateRoads, setOpenPrivateRoads] = useState(false);
 
   const navigate = useNavigate();
-  const location = useLocation();
 
   useEffect(() => {
     i18n.init();
@@ -37,24 +33,22 @@ export default function App() {
   }, []);
 
   useEffect(() => {
-    const param = location.pathname.split("/");
-    if (nation.name != "") {
-      myStore.set(selectedNationAtom, { ...nation });
-      if (param[1] === "login" || param[1] === "register") {
-        navigate(`/nation/${nation.officialId}`);
+    if (user.officialId != "") {
+      if (user.citizenship.nationId != "") {
+        getNation(user.citizenship.nationId, user.citizenship.nationOwner);
       }
-    } else {
-      navigate("/");
     }
-  }, [nation]);
+  }, [user]);
 
   useEffect(() => {
-    if (nation._id === selectedNation._id && nation._id != "") {
-      myStore.set(ownerAtom, true);
+    if (isLogged) {
+      navigate(`/profile/${user.officialId}`);
+      setOpenPrivateRoads(true);
     } else {
-      myStore.set(ownerAtom, false);
+      navigate("/");
+      setOpenPrivateRoads(false);
     }
-  }, [selectedNation]);
+  }, [isLogged]);
 
   return (
     <>
@@ -65,14 +59,14 @@ export default function App() {
           {publicRoutes.map((route: ArchipelRoute, i: number) => (
             <Route path={route.path} element={route.page} key={i} />
           ))}
-          {nation.name != ""
+          {openPrivateRoads
             ? privateRoutes.map((route: ArchipelRoute, i: number) => (
                 <Route path={route.path} element={route.page} key={i} />
               ))
             : authRoutes.map((route: ArchipelRoute, i: number) => (
                 <Route path={route.path} element={route.page} key={i} />
               ))}
-          {nation.role === "admin" &&
+          {user.role === "admin" &&
             adminRoutes.map((route: ArchipelRoute, i: number) => (
               <Route path={route.path} element={route.page} key={i} />
             ))}

@@ -10,7 +10,7 @@ export default function Diplomacy() {
     <TileContainer
       children={
         <section className="flex flex-col items-center gap-4">
-          <H2 text={t("pages.dashboard.tabs.dashboard.simulation.diplomacy")} />
+          <H2 text={t("pages.nation.simulation.diplomacy")} />
           <DevFlag />
         </section>
       }

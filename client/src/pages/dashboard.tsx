@@ -2,8 +2,8 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import TabNav from "../components/tabNav";
-import DashboardNation from "./tabs/dashboard/dashboardNation";
-import DashboardSettings from "./tabs/dashboard/dashboardSettings";
+import Nation from "./nation";
+import Profile from "./profile";
 import DashboardCom from "./tabs/dashboard/dashboardCom";
 import {
   langAtom,
@@ -25,7 +25,7 @@ export default function Dashboard() {
   const [tabList, setTabList] = useState<{ id: number; label: string }[]>([]);
   const [tab, setTab] = useState({
     id: 0,
-    label: t("pages.dashboard.tabs.dashboard.title"),
+    label: t("pages.dashboard.tabs.profile.title"),
   });
   const { id } = useParams();
 
@@ -33,8 +33,8 @@ export default function Dashboard() {
     if (nation.officialId === id) {
       setSelectedNation(nation);
       setTabList([
-        { id: 0, label: t("pages.dashboard.tabs.dashboard.title") },
-        { id: 1, label: t("pages.dashboard.tabs.params.title") },
+        { id: 0, label: t("pages.dashboard.tabs.profile.title") },
+        { id: 1, label: t("pages.dashboard.tabs.nation.title") },
         { id: 2, label: t("pages.dashboard.tabs.coms.title") },
       ]);
     } else if (selectedNation.officialId === "" && id) {
@@ -50,8 +50,8 @@ export default function Dashboard() {
       <div className="flex items-center">
         <TabNav tabs={tabList} tabId={tab.id} setTab={setTab} owner={owner} />
       </div>
-      {tab.id === 0 && <DashboardNation owner={owner} />}
-      {tab.id === 1 && <DashboardSettings text={tab.label} />}
+      {tab.id === 0 && <Profile />}
+      {tab.id === 1 && <Nation owner={owner} />}
       {tab.id === 2 && <DashboardCom text={tab.label} />}
     </>
   );

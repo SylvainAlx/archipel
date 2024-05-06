@@ -4,33 +4,29 @@
       "title": "Bienvenue",
       "presentation": "Découvrez le monde fascinant des Nations Virtuelles avec Archipel, l'appli qui donne vie à votre propre nation numérique. Suivez son évolution, interagissez avec d'autres nations et forgez des alliances dans un univers virtuel où l'imagination rencontre la réalité et où le pouvoir de la communauté façonne l'avenir de votre nation !"
     },
-    "dashboard": {
-      "tabs": {
-        "dashboard": {
-          "title": "tableau de bord",
-          "nationIdentity": {
-            "title": "identité de la nation",
-            "generalInformations": "informations générales",
-            "noCapital": "aucune capitale",
-            "noMotto": "pas de devise",
-            "externalLinks": "liens externes"
-          },
-          "simulation": {
-            "title": "simulation",
-            "score": "score",
-            "places": "lieux",
-            "noPlaces": "aucun lieu à afficher",
-            "diplomacy": "diplomatie",
-            "citizens": "citoyens"
-          }
-        },
-        "params": {
-          "title": "paramètres"
-        },
-        "coms": {
-          "title": "communications"
-        }
+    "nation": {
+      "title": "nation",
+      "nationIdentity": {
+        "title": "identité de la nation",
+        "generalInformations": "informations générales",
+        "noCapital": "aucune capitale",
+        "noMotto": "pas de devise",
+        "externalLinks": "liens externes"
+      },
+      "simulation": {
+        "title": "simulation",
+        "score": "score",
+        "places": "lieux",
+        "noPlaces": "aucun lieu à afficher",
+        "diplomacy": "diplomatie",
+        "citizens": "citoyens"
       }
+    },
+    "profile": {
+      "title": "profil"
+    },
+    "coms": {
+      "title": "communications"
     },
     "legalNotice": {
       "title": "mentions légales"
@@ -52,10 +48,10 @@
       "changePassword": "Changer le mot de passe"
     },
     "register": {
-      "title": "nouvelle nation",
-      "placeholderName": "Nom de la nation",
+      "title": "créer un compte",
+      "placeholderName": "Nom",
       "placeholderPassword": "Mot de passe",
-      "ownNation": "Déja une nation ?",
+      "ownNation": "Déja un compte ?",
       "connect": "Se connecter",
       "acceptTerms": "En cochant cette case vous acceptez les",
       "termsOfService": "CGU"
@@ -73,7 +69,7 @@
       "dashboard": "TABLEAU DE BORD",
       "close": "FERMER",
       "cancel": "ANNULER",
-      "nation": "MA NATION",
+      "user": "MON COMPTE",
       "admin": "ADMINISTRATION",
       "validate": "VALIDER",
       "deleteNation": "SUPPRIMER VOTRE NATION",
@@ -83,8 +79,8 @@
       "newPlace": "nouveau lieu"
     },
     "logo": {
-      "title": "ARCHIPEL",
-      "subtitle": "COMPTOIR DES NATIONS VIRTUELLES"
+      "title": "NATIONS VIRTUELLES",
+      "subtitle": ""
     },
     "modals": {
       "confirmModal": {

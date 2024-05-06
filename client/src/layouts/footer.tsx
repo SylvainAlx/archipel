@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import FooterNav from "../components/footerNav";
-import { TITLE, VERSION } from "../settings/consts";
+import { VERSION } from "../settings/consts";
 import { useTranslation } from "react-i18next";
 
 export default function Footer() {
@@ -10,7 +10,7 @@ export default function Footer() {
       <FooterNav />
       <div className="hidden z-20 md:flex flex-col items-center gap-1">
         <div>
-          {TITLE} - {new Date().getFullYear()}
+          {t("components.logo.title")} - {new Date().getFullYear()}
         </div>
         <div className="text-[12px]">VERSION {VERSION}</div>
         <div className=" pb-1 flex gap-2 text-[10px] md:text-[12px] opacity-30 md:opacity-100">

@@ -51,11 +51,9 @@ export default function NationIdentity({
     <TileContainer
       children={
         <section className="flex flex-col items-center gap-4">
-          <H2 text={t("pages.dashboard.tabs.dashboard.nationIdentity.title")} />
+          <H2 text={t("pages.nation.nationIdentity.title")} />
           <DashTile
-            title={t(
-              "pages.dashboard.tabs.dashboard.nationIdentity.generalInformations",
-            )}
+            title={t("pages.nation.nationIdentity.generalInformations")}
             className="w-full min-w-[300px] flex-grow"
             children={
               <>
@@ -139,9 +137,7 @@ export default function NationIdentity({
                     <em className="text-xl">
                       {selectedNation.data.general.motto
                         ? `" ${selectedNation.data.general.motto} "`
-                        : t(
-                            "pages.dashboard.tabs.dashboard.nationIdentity.noMotto",
-                          )}
+                        : t("pages.nation.nationIdentity.noMotto")}
                     </em>
                     {owner && (
                       <EditIcon

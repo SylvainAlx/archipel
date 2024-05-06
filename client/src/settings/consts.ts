@@ -8,7 +8,6 @@ import { BuildCategory } from "../types/typPlace";
 export const MDP_LOBBY = import.meta.env.VITE_MDP_LOBBY;
 export const SERVER_URL = import.meta.env.VITE_SERVER_URL;
 export const VERSION = "0.1";
-export const TITLE = "Archipel";
 
 //  Colors
 

@@ -1,13 +1,15 @@
 import { ChangeEvent, FormEvent, useState } from "react";
 import Input from "../components/form/input";
 import H1 from "../components/titles/h1";
-import { MDP_LOBBY, TITLE } from "../settings/consts";
+import { MDP_LOBBY } from "../settings/consts";
 import Button from "../components/buttons/button";
 import { useAtom } from "jotai";
 import { showApp } from "../settings/store";
+import { useTranslation } from "react-i18next";
 
 export default function Lobby() {
   const [, setShowApp] = useAtom(showApp);
+  const { t } = useTranslation();
   const [password, setPassword] = useState("");
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -25,7 +27,7 @@ export default function Lobby() {
       <div className="w-[100px]">
         <img src="/logo.png" className="cursor-pointer h-full"></img>
       </div>
-      <H1 text={TITLE} />
+      <H1 text={t("components.logo.title")} />
       <p className="max-w-[80%] text-center">
         Renseignez le mot de passe pour accéder à l'application
       </p>
