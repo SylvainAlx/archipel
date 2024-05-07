@@ -1,3 +1,4 @@
+/* eslint-disable no-case-declarations */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useAtom } from "jotai";
 import {
@@ -141,13 +142,12 @@ export default function EditBoxModal() {
 
         <Button
           text="ANNULER"
-          path=""
           click={() =>
             setEditBox({ target: "", original: -1, new: -1, path: "" })
           }
         />
         {editBox.new != -1 && editBox.new != "" && (
-          <Button type="submit" text="VALIDER" path="" />
+          <Button type="submit" text="VALIDER" />
         )}
       </form>
     </>

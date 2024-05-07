@@ -1,7 +1,14 @@
 import { FaPen } from "react-icons/fa6";
-import { EditIconProps } from "../types/typProp";
 import { useAtom } from "jotai";
 import { editbox } from "../settings/store";
+import { LabelId, PoliticalSide, Regime } from "../types/typNation";
+
+export interface EditIconProps {
+  target: string;
+  param: number | string | boolean | Regime[] | PoliticalSide[] | LabelId[];
+  path: string;
+  indice?: number;
+}
 
 export default function EditIcon({
   target,

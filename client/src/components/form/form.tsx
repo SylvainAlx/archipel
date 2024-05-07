@@ -1,4 +1,11 @@
-import { FormProps } from "../../types/typProp";
+import { FormEvent } from "react";
+
+export interface FormProps {
+  children: JSX.Element;
+  title?: string;
+  submit: (event: FormEvent) => void;
+  background?: boolean;
+}
 
 export default function Form({
   children,

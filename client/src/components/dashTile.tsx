@@ -1,4 +1,8 @@
-import { DashTileProps } from "../types/typProp";
+export interface DashTileProps {
+  title: string;
+  children: JSX.Element;
+  className?: string;
+}
 
 export default function DashTile({
   title,

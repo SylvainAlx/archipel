@@ -1,5 +1,15 @@
-import { useEffect, useState } from "react";
-import { SelectProps } from "../../types/typProp";
+import { ChangeEvent, useEffect, useState } from "react";
+
+export interface SelectProps {
+  required?: boolean;
+  options: Array<{
+    id: number | string;
+    label: string;
+    color?: string;
+  }>;
+  value?: string | number;
+  onChange: (e: ChangeEvent<HTMLSelectElement>) => void;
+}
 
 export default function Select({
   required,

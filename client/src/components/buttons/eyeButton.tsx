@@ -9,7 +9,6 @@ export default function EyeButton({ click }: ClickProps) {
     <div className="cursor-pointer overflow-hidden">
       <Button
         text={t("components.buttons.access")}
-        path=""
         click={click}
         children={
           <div className="hover:animate-ping text-xl">

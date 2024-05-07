@@ -51,7 +51,7 @@
       "title": "créer un compte",
       "placeholderName": "Nom",
       "placeholderPassword": "Mot de passe",
-      "ownNation": "Déja un compte ?",
+      "ownAccount": "Déja un compte ?",
       "connect": "Se connecter",
       "acceptTerms": "En cochant cette case vous acceptez les",
       "termsOfService": "CGU"
@@ -87,7 +87,8 @@
         "title": "DEMANDE DE CONFIRMATION",
         "logout": "Souhaitez-vous vous déconnecter ?",
         "deleteNation": "Confirmez-vous la suppression définitive de votre nation ?",
-        "deletePlace": "Confirmez-vous la suppression définitive du lieu ?"
+        "deletePlace": "Confirmez-vous la suppression définitive du lieu ?",
+        "deleteUser": "Confirmez vous la suppression définitive de votre compte ?"
       },
       "langModal": {
         "title": "CHOIX DE LA LANGUE"

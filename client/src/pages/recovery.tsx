@@ -1,11 +1,11 @@
 import { ChangeEvent, FormEvent, useState } from "react";
 import H1 from "../components/titles/h1";
-import { recoveryNation } from "../api/authentification/authAPI";
 import Input from "../components/form/input";
 import Button from "../components/buttons/button";
 import Form from "../components/form/form";
 import TextArea from "../components/form/textArea";
 import { useTranslation } from "react-i18next";
+import { recoveryUser } from "../api/user/userAPI";
 
 export default function Recovery() {
   const [name, setName] = useState("");
@@ -29,7 +29,7 @@ export default function Recovery() {
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    recoveryNation({ name, password, recovery });
+    recoveryUser({ name, password, recovery });
   };
 
   return (
@@ -83,7 +83,6 @@ export default function Recovery() {
         </button> */}
             <div className={`${!passwordsMatch && "cursor-not-allowed"}`}>
               <Button
-                path=""
                 text={t("pages.recovery.changePassword")}
                 type="submit"
                 disabled={!passwordsMatch}

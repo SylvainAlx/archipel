@@ -70,7 +70,7 @@ export default function PlaceModal() {
           }
         />
       )} */}
-      <Button text="FERMER" path="" click={handleClose} />
+      <Button text="FERMER" click={handleClose} />
     </>
   );
 }

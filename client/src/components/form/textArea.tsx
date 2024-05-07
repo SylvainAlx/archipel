@@ -1,4 +1,14 @@
-import { TextAreaProps } from "../../types/typProp";
+import { ChangeEvent } from "react";
+
+export interface TextAreaProps {
+  required?: boolean;
+  onChange: (event: ChangeEvent<HTMLTextAreaElement>) => void;
+  name: string;
+  placeholder: string;
+  value: string;
+  maxLength: number;
+  rows?: number;
+}
 
 export default function TextArea({
   required,

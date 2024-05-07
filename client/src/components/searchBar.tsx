@@ -1,12 +1,25 @@
-import { ChangeEvent, FormEvent, useEffect, useState } from "react";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import {
+  ChangeEvent,
+  FormEvent,
+  SetStateAction,
+  useEffect,
+  useState,
+} from "react";
 import { searchSortOptions } from "../settings/consts";
 import { getNations } from "../api/nation/nationAPI";
 import { IoIosArrowDropdownCircle } from "react-icons/io";
 import Input from "./form/input";
 import Button from "./buttons/button";
 import Select from "./form/select";
-import { SearchBarProps } from "../types/typProp";
 import { Nation } from "../types/typNation";
+import { SetAtom } from "../settings/store";
+
+export interface SearchBarProps {
+  type: string;
+  list: any[];
+  setList: SetAtom<[SetStateAction<any>], void>;
+}
 
 export default function SearchBar({ type, list, setList }: SearchBarProps) {
   const [showSearch, setShowSearch] = useState(false);
@@ -116,12 +129,11 @@ export default function SearchBar({ type, list, setList }: SearchBarProps) {
             options={searchSortOptions}
           />
           <div className="flex flex-col md:flex-row gap-2">
-            <Button type="submit" disabled={false} text="RECHERCHER" path="" />
+            <Button type="submit" disabled={false} text="RECHERCHER" />
             <Button
               type="button"
               disabled={false}
               text="RÉINITIALISER"
-              path=""
               click={() => getNations(searchName)}
             />
           </div>

@@ -3,10 +3,12 @@ import Button from "../components/buttons/button";
 import H1 from "../components/titles/h1";
 import { userAtom } from "../settings/store";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
 
 export default function Home() {
   const [user] = useAtom(userAtom);
   const { t } = useTranslation();
+  const navigate = useNavigate();
 
   return (
     <>
@@ -17,17 +19,17 @@ export default function Home() {
           <Button
             text={t("components.buttons.login")}
             type="button"
-            path="/login"
+            click={() => navigate("/login")}
           />
           <Button
             text={t("components.buttons.register")}
             type="button"
-            path="/register"
+            click={() => navigate("/register")}
           />
           <Button
             text={t("components.buttons.explore")}
             type="button"
-            path="/nations"
+            click={() => navigate("/nations")}
           />
         </div>
       ) : (
@@ -35,12 +37,12 @@ export default function Home() {
           <Button
             text={t("components.buttons.dashboard")}
             type="button"
-            path={`/user/${user.officialId}`}
+            click={() => navigate(`/user/${user.officialId}`)}
           />
           <Button
             text={t("components.buttons.explore")}
             type="button"
-            path="/nations"
+            click={() => navigate("/nations")}
           />
         </div>
       )}

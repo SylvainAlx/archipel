@@ -1,6 +1,15 @@
-import { useState } from "react";
-import { TagProps } from "../../types/typProp";
+import { MouseEventHandler, useState } from "react";
 import HoverInfo from "../hoverInfo";
+
+export interface TagProps {
+  text: string;
+  hover: string;
+  bgColor?: string;
+  textColor?: string;
+  textStyle?: string;
+  children?: JSX.Element;
+  click?: MouseEventHandler<HTMLDivElement>;
+}
 
 export default function Tag({
   text,

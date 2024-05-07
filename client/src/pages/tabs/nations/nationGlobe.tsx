@@ -91,7 +91,7 @@ export default function NationGlobe({ text }: StringProps) {
               <div>Population : {showInfos.population}</div>
               <div>Points : {showInfos.points}</div>
             </div>
-            <Button text="VOIR" path="" click={handleClick} />
+            <Button text="VOIR" click={handleClick} />
           </div>
         )}
         <Globe

@@ -1,6 +1,5 @@
 import { FaCoins } from "react-icons/fa6";
 import { NEW_PLACE_COST, placesTypeList } from "../../settings/consts";
-import { newPlaceProps } from "../../types/typProp";
 import Button from "./button";
 import { Place, emptyPlace } from "../../types/typPlace";
 import {
@@ -11,6 +10,11 @@ import {
 import { useAtom } from "jotai";
 import { addCredits } from "../../utils/functions";
 import { useTranslation } from "react-i18next";
+
+export interface newPlaceProps {
+  parentId: string;
+  owner: boolean;
+}
 
 export default function NewPlaceButton({ parentId, owner }: newPlaceProps) {
   const [selectedNation] = useAtom(selectedNationAtom);
@@ -40,7 +44,6 @@ export default function NewPlaceButton({ parentId, owner }: newPlaceProps) {
             <Button
               text=""
               type="button"
-              path=""
               click={handleClick}
               children={
                 <div className="w-full flex justify-center items-center gap-2 flex-wrap">
@@ -57,7 +60,6 @@ export default function NewPlaceButton({ parentId, owner }: newPlaceProps) {
             <Button
               text="CRÉDITS INSUFFISANTS"
               type="button"
-              path=""
               bgColor="bg-danger"
               click={addCredits}
               children={

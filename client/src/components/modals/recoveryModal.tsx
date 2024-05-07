@@ -28,7 +28,7 @@ export function RecoveryModal() {
       </div>
       {checked && (
         <div className="my-4" onClick={() => setRecovery("")}>
-          <Button path="" text="J'AI COMPRIS" />
+          <Button text="J'AI COMPRIS" />
         </div>
       )}
     </>

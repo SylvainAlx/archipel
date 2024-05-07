@@ -1,6 +1,12 @@
 import { nationTabs } from "../settings/consts";
-import { TabNavProps } from "../types/typProp";
 import Notification from "./notification";
+
+export interface TabNavProps {
+  tabs: Array<{ id: number; label: string }>;
+  tabId: number;
+  setTab: React.Dispatch<React.SetStateAction<{ id: number; label: string }>>;
+  owner: boolean;
+}
 
 export default function TabNav({ tabs, tabId, setTab, owner }: TabNavProps) {
   return (

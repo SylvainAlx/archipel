@@ -1,5 +1,5 @@
 import { SERVER_URL } from "../../settings/consts";
-import { AuthPayload, RecoveryPayload } from "../../types/typPayload";
+import { AuthPayload, RecoveryPayload } from "../../types/typUser";
 
 export const registerFetch = async (payload: AuthPayload) => {
   const resp = await fetch(`${SERVER_URL}/auth/register`, {

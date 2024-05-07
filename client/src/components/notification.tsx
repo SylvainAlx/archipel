@@ -1,11 +1,15 @@
 import { useEffect, useState } from "react";
 import { MdNotifications } from "react-icons/md";
-import { DashboardTabProps } from "../types/typProp";
 import { differenceEnMinutes } from "../utils/functions";
 import { confirmBox, myStore, selectedNationAtom } from "../settings/store";
 import { useAtom } from "jotai";
 
-export default function Notification({ text }: DashboardTabProps) {
+export interface NotificationProps {
+  text?: string;
+  owner?: boolean;
+}
+
+export default function Notification({ text }: NotificationProps) {
   const [selectedNation] = useAtom(selectedNationAtom);
   const [totalReward, setTotalReward] = useState(0);
 

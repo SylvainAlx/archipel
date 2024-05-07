@@ -8,7 +8,6 @@ export default function MenuButton() {
       <div className={`md:hidden w-[30px] h-full`}>
         <Button
           text=""
-          path=""
           children={
             <div className="flex items-center gap-1">
               <IoMenu />

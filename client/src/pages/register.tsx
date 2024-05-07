@@ -4,8 +4,8 @@ import H1 from "../components/titles/h1";
 import Input from "../components/form/input";
 import Button from "../components/buttons/button";
 import Form from "../components/form/form";
-import { register } from "../api/authentification/authAPI";
 import { useTranslation } from "react-i18next";
+import { register } from "../api/user/userAPI";
 
 export default function Register() {
   const [name, setName] = useState("");
@@ -51,7 +51,7 @@ export default function Register() {
               value={password}
             />
             <div className="flex justify-center text-sm gap-2">
-              <span>{t("pages.register.ownNation")}</span>
+              <span>{t("pages.register.ownAccount")}</span>
               <span
                 className="underline cursor-pointer"
                 onClick={() => navigate("/login")}
@@ -74,7 +74,6 @@ export default function Register() {
             </div>
 
             <Button
-              path=""
               text={t("components.buttons.register")}
               type="submit"
               disabled={!acceptCGU}

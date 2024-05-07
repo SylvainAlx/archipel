@@ -99,7 +99,7 @@ export default function DashboardCom({ text }: StringProps) {
                 maxLength={200}
                 rows={10}
               />
-              <Button type="submit" text="ENVOYER" path="" />
+              <Button type="submit" text="ENVOYER" />
             </>
           }
         />

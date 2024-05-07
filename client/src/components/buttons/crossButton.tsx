@@ -9,7 +9,6 @@ export default function CrossButton({ click }: ClickProps) {
     <div className="cursor-pointer overflow-hidden">
       <Button
         text={t("components.buttons.delete")}
-        path=""
         bgColor="bg-danger"
         click={click}
         children={

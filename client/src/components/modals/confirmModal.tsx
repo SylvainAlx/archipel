@@ -6,7 +6,7 @@ import { deleteSelfNation, updateNation } from "../../api/nation/nationAPI";
 import { createNewCom, deleteCom } from "../../api/communication/comAPI";
 import { deletePlace, updatePlace } from "../../api/place/placeAPI";
 import { useTranslation } from "react-i18next";
-import { logout } from "../../api/user/userAPI";
+import { deleteUser, logout } from "../../api/user/userAPI";
 
 export default function ConfirmModal() {
   const { t } = useTranslation();
@@ -21,7 +21,6 @@ export default function ConfirmModal() {
       <div className="flex gap-4 justify-center my-4">
         <Button
           text={t("components.buttons.validate")}
-          path=""
           click={() => {
             setConfirm({ action: confirm.action, text: "", result: "OK" });
             if (confirm.action === "logout") {
@@ -29,6 +28,9 @@ export default function ConfirmModal() {
             }
             if (confirm.action === "deleteSelfNation") {
               deleteSelfNation();
+            }
+            if (confirm.action === "deleteUser") {
+              deleteUser();
             }
             if (confirm.action === "deleteCom") {
               deleteCom();
@@ -49,7 +51,6 @@ export default function ConfirmModal() {
         />
         <Button
           text={t("components.buttons.cancel")}
-          path=""
           click={() =>
             setConfirm({ action: confirm.action, text: "", result: "KO" })
           }

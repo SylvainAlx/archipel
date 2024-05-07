@@ -43,7 +43,7 @@ export default function Lobby() {
           value={password}
           onChange={handleChange}
         />
-        <Button type="submit" text="VALIDER" path="" />
+        <Button type="submit" text="VALIDER" />
       </form>
     </main>
   );

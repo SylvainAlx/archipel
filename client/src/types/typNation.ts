@@ -11,6 +11,7 @@ export interface Nation {
   _id: string;
   officialId: string;
   name: string;
+  owner: string;
   role: string;
   data: {
     url: {
@@ -47,6 +48,7 @@ export const EmptyNation: Nation = {
   _id: "",
   officialId: "",
   name: "",
+  owner: "",
   role: "",
   data: {
     url: {

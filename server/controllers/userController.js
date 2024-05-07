@@ -206,7 +206,12 @@ export const deleteSelfUser = async (req, res) => {
     const id = req.userId;
     User.findOneAndDelete({ officialId: id }).then(async (user) => {
       // await Place.deleteMany({ nation: id });
-      // await Nation.deleteMany({ owner: id });
+      const nation = await Nation.findOne({ owner: id });
+      if (nation != null) {
+        nation.owner = "";
+        nation.save();
+      }
+
       // await Com.deleteMany({ originId: id });
       res.status(200).json({
         message: `Utilisateur supprimé`,

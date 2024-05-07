@@ -62,10 +62,9 @@ export default function NewPlaceModal() {
               maxLength={500}
               rows={10}
             />
-            <Button type="submit" path="" text="VALIDER" />
+            <Button type="submit" text="VALIDER" />
             <Button
               type="button"
-              path=""
               text="ANNULER"
               click={() => setNewPlace(emptyPlace)}
             />

@@ -1,4 +1,3 @@
-import { PlaceTileProp } from "../../../types/typProp";
 import {
   confirmBox,
   editPlaceAtom,
@@ -19,6 +18,13 @@ import CrossButton from "../../buttons/crossButton";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import TreeTag from "../../tags/treeTag";
+import { Place } from "../../../types/typPlace";
+
+export interface PlaceTileProp {
+  owner?: boolean;
+  place: Place;
+  update?: number;
+}
 
 export default function PlaceTile({ place, owner }: PlaceTileProp) {
   const { t } = useTranslation();

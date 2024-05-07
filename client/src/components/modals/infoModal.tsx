@@ -1,6 +1,6 @@
 import { useAtom } from "jotai";
 import Button from "../buttons/button";
-import { infoModalAtom } from "../../settings/store";
+import { infoModalAtom, myStore } from "../../settings/store";
 
 export default function InfoModal() {
   const [info] = useAtom(infoModalAtom);
@@ -8,7 +8,7 @@ export default function InfoModal() {
     <>
       <h2 className="text-2xl text-center p-4">INFORMATION</h2>
       <p className="text-center">{info}</p>
-      <Button path="info" text="FERMER" />
+      <Button text="FERMER" click={() => myStore.set(infoModalAtom, "")} />
     </>
   );
 }

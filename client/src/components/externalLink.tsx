@@ -1,6 +1,11 @@
 import { useState } from "react";
-import { ExternalLinkProps } from "../types/typProp";
 import HoverInfo from "./hoverInfo";
+
+export interface ExternalLinkProps {
+  url: string;
+  children: JSX.Element;
+  hover: string;
+}
 
 export default function ExternalLink({
   url,

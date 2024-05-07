@@ -1,6 +1,12 @@
 import { useState } from "react";
-import { LazyImageProps } from "../../types/typProp";
 import HoverInfo from "../hoverInfo";
+
+export interface LazyImageProps {
+  src: string;
+  alt: string;
+  className: string;
+  hover: string;
+}
 
 export default function LazyImage({
   src,

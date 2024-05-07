@@ -34,7 +34,7 @@ export default function NationComs({ text }: StringProps) {
     <>
       <H1 text={text} />
       <div className="mb-4 w-max">
-        <Button text="ACTUALISER" path="" click={getComs} />
+        <Button text="ACTUALISER" click={getComs} />
       </div>
       <section className="w-full min-w-[300px] flex flex-col-reverse justify-center gap-1 items-center text-sm">
         {comsList != undefined &&

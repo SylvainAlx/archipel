@@ -9,7 +9,6 @@ export default function ParentButton({ click }: ClickProps) {
     <div className="cursor-pointer overflow-hidden">
       <Button
         text={t("components.buttons.back")}
-        path=""
         click={click}
         children={
           <div className="hover:animate-ping text-xl">

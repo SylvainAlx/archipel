@@ -31,7 +31,6 @@ export default function LangModal() {
       )}
       <Button
         text={t("components.buttons.close")}
-        path=""
         click={() => myStore.set(showLangModalAtom, false)}
       />
     </>

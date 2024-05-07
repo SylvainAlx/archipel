@@ -1,4 +1,14 @@
-import { InputProps } from "../../types/typProp";
+import { ChangeEvent } from "react";
+
+export interface InputProps {
+  required?: boolean;
+  onChange: (event: ChangeEvent<HTMLInputElement>) => void;
+  type: string;
+  name: string;
+  placeholder: string;
+  value: string | number;
+  id?: string;
+}
 
 export default function Input({
   required,
@@ -7,7 +17,7 @@ export default function Input({
   placeholder,
   value,
   name,
-  id
+  id,
 }: InputProps) {
   return (
     <input

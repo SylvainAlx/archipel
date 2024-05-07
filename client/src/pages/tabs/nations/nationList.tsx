@@ -58,7 +58,6 @@ export default function NationList({ text }: StringProps) {
           <Button
             click={() => setDisplayedNations(displayedNations + 5)}
             text="VOIR PLUS"
-            path=""
           />
         )}
       </section>

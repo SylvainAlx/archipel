@@ -1,8 +1,8 @@
-import { infoModalAtom, isLoggedAtom, loadingAtom, myStore, nationsListAtom, recoveryKey, selectedNationAtom, userAtom } from "../../settings/store";
+import { infoModalAtom, isLoggedAtom, loadingAtom, myStore, nationAtom, nationsListAtom, recoveryKey, selectedNationAtom, userAtom } from "../../settings/store";
 import { EmptyNation } from "../../types/typNation";
-import { AuthPayload, emptyUser } from "../../types/typUser";
+import { AuthPayload, emptyUser, RecoveryPayload } from "../../types/typUser";
 import { GET_JWT } from "../../utils/functions";
-import { authGet, loginFetch, registerFetch } from "./userFetch";
+import { authGet, DeleteUserFetch, loginFetch, RecoveryFetch, registerFetch } from "./userFetch";
 
 export const register = ({ name, password }: AuthPayload) => {
   myStore.set(loadingAtom, true);
@@ -77,6 +77,7 @@ export const login = ({ name, password }: AuthPayload) => {
   loginFetch({ name, password })
     .then((data) => {
       myStore.set(loadingAtom, false);
+      myStore.set(infoModalAtom, data.message);
       if (data.user.name != undefined) {
         localStorage.setItem("jwt", data.jwt);
         myStore.set(userAtom, {
@@ -91,12 +92,11 @@ export const login = ({ name, password }: AuthPayload) => {
         myStore.set(isLoggedAtom, true)
       } else {
         myStore.set(loadingAtom, false);
-        myStore.set(infoModalAtom, data.message);
       }
     })
     .catch((error) => {
       myStore.set(loadingAtom, false);
-      myStore.set(infoModalAtom, error.message);
+      console.log(error.message);
     });
 };
 
@@ -106,4 +106,44 @@ export const logout = () => {
   myStore.set(isLoggedAtom, false);
   myStore.set(selectedNationAtom, EmptyNation);
   localStorage.removeItem("jwt");
+};
+
+export const recoveryUser = ({
+  name,
+  recovery,
+  password,
+}: RecoveryPayload) => {
+  myStore.set(loadingAtom, true);
+  const dataToSend = {
+    name,
+    recovery,
+    newPassword: password,
+  };
+  RecoveryFetch(dataToSend)
+    .then((data) => {
+      myStore.set(loadingAtom, false);
+      myStore.set(infoModalAtom, data.messaga);
+    })
+    .catch((error) => {
+      myStore.set(loadingAtom, false);
+      myStore.set(error.message);
+    });
+};
+
+export const deleteUser = () => {
+  myStore.set(loadingAtom, true);
+  DeleteUserFetch()
+    .then((resp) => {
+      myStore.set(loadingAtom, false);
+      myStore.set(userAtom, emptyUser);
+      myStore.set(isLoggedAtom, false);
+      myStore.set(selectedNationAtom, EmptyNation);
+      myStore.set(nationAtom, EmptyNation);
+      localStorage.removeItem("jwt");
+      myStore.set(infoModalAtom, resp.message);
+    })
+    .catch((error) => {
+      myStore.set(loadingAtom, false);
+      myStore.set(infoModalAtom, error.message);
+    });
 };

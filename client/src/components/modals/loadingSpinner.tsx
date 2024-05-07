@@ -7,10 +7,6 @@ import Spinner from "../loading/spinner";
 export default function LoadingSpinner() {
   const { t } = useTranslation();
 
-  const handleClick = () => {
-    myStore.set(loadingAtom, false);
-  };
-
   return (
     <>
       <h2 className="animate-fadeIn text-2xl text-center p-4">
@@ -20,9 +16,10 @@ export default function LoadingSpinner() {
         {t("components.modals.loadingModal.information")}
       </p>
       <Spinner />
-      <div onClick={handleClick}>
-        <Button path="/" text={t("components.buttons.cancel")} />
-      </div>
+      <Button
+        text={t("components.buttons.cancel")}
+        click={() => myStore.set(loadingAtom, false)}
+      />
     </>
   );
 }

@@ -10,7 +10,6 @@ export default function LangButton() {
       <div className={`w-[35px] h-full`}>
         <Button
           text=""
-          path=""
           children={
             <div className="flex items-center gap-1">
               <IoLanguage />

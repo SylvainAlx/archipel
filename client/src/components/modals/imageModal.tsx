@@ -18,7 +18,7 @@ export default function ImageModal() {
           </div>
         )}
       </div>
-      <Button path="" text="FERMER" click={() => setImage("")} />
+      <Button text="FERMER" click={() => setImage("")} />
     </>
   );
 }

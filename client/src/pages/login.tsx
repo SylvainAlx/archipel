@@ -67,11 +67,7 @@ export default function Login() {
                 {t("pages.login.newUser")}
               </span>
             </div>
-            <Button
-              path=""
-              text={t("components.buttons.login")}
-              type="submit"
-            />
+            <Button text={t("components.buttons.login")} type="submit" />
           </>
         }
       />
