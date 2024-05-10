@@ -6,6 +6,7 @@ import {
   imageAtom,
   infoModalAtom,
   loadingAtom,
+  newNationAtom,
   newPlaceAtom,
   recoveryKey,
   showLangModalAtom,
@@ -21,6 +22,7 @@ import NewPlaceModal from "../components/modals/newPlaceModal";
 import LangModal from "../components/modals/langModal";
 import ImageModal from "../components/modals/imageModal";
 import MenuModal from "../components/modals/menuModal";
+import NewNationModal from "../components/modals/newNationModal";
 
 export default function ModalsRouter() {
   const [recovery] = useAtom(recoveryKey);
@@ -33,6 +35,7 @@ export default function ModalsRouter() {
   const [lang] = useAtom(showLangModalAtom);
   const [image] = useAtom(imageAtom);
   const [menu] = useAtom(showMenuAtom);
+  const [newNation] = useAtom(newNationAtom);
 
   if (
     recovery != "" ||
@@ -44,7 +47,8 @@ export default function ModalsRouter() {
     // editPlace.update != undefined ||
     lang ||
     image != "" ||
-    menu
+    menu ||
+    newNation.owner != ""
   ) {
     return (
       <div className="animate-in fade-in z-20 fixed top-0 w-[100%] h-[100%] backdrop-blur-sm bg-black_alpha flex items-center justify-center">
@@ -65,6 +69,7 @@ export default function ModalsRouter() {
                   {lang && <LangModal />}
                   {image != "" && <ImageModal />}
                   {menu && <MenuModal />}
+                  {newNation.owner != "" && <NewNationModal />}
                 </>
               )}
             </>

@@ -2,7 +2,7 @@ import { infoModalAtom, isLoggedAtom, loadingAtom, myStore, nationAtom, nationsL
 import { EmptyNation } from "../../types/typNation";
 import { AuthPayload, emptyUser, RecoveryPayload } from "../../types/typUser";
 import { GET_JWT } from "../../utils/functions";
-import { authGet, DeleteUserFetch, loginFetch, RecoveryFetch, registerFetch } from "./userFetch";
+import { authGet, DeleteUserFetch, getOneUserFetch, loginFetch, RecoveryFetch, registerFetch } from "./userFetch";
 
 export const register = ({ name, password }: AuthPayload) => {
   myStore.set(loadingAtom, true);
@@ -141,6 +141,29 @@ export const deleteUser = () => {
       myStore.set(nationAtom, EmptyNation);
       localStorage.removeItem("jwt");
       myStore.set(infoModalAtom, resp.message);
+    })
+    .catch((error) => {
+      myStore.set(loadingAtom, false);
+      myStore.set(infoModalAtom, error.message);
+    });
+};
+
+export const getOneUser = (id: string) => {
+  myStore.set(loadingAtom, true);
+  getOneUserFetch(id)
+    .then((data) => {
+      myStore.set(loadingAtom, false);
+      if (data.user) {
+        myStore.set(userAtom, {
+          officialId: data.user.officialId,
+          name: data.user.name,
+          surname: data.user.surname,
+          avatar: data.user.avatar,
+          role: data.user.role,
+          citizenship: data.user.citizenship,
+          createdAt: data.user.createdAt
+        })
+      }
     })
     .catch((error) => {
       myStore.set(loadingAtom, false);

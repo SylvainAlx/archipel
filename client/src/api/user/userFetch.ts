@@ -55,3 +55,9 @@ export const DeleteUserFetch = async () => {
   const result = await resp.json();
   return result;
 };
+
+export const getOneUserFetch = async (id: string) => {
+  const resp = await fetch(`${SERVER_URL}/user/${id}`);
+  const result = await resp.json();
+  return result;
+};

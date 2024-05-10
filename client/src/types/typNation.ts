@@ -8,7 +8,7 @@ export interface NationRoleplayData {
 }
 
 export interface Nation {
-  _id: string;
+  _id?: string;
   officialId: string;
   name: string;
   owner: string;
@@ -45,7 +45,6 @@ export interface Nation {
 }
 
 export const EmptyNation: Nation = {
-  _id: "",
   officialId: "",
   name: "",
   owner: "",
@@ -107,4 +106,18 @@ export interface PoliticalSide {
 export interface LabelId {
   id: string;
   label: string;
+}
+
+export interface NewNationPayload {
+  name: string;
+  owner: string;
+  motto: string;
+  regime: number;
+}
+
+export const emptyNewNationPayload: NewNationPayload = {
+  name: "",
+  owner: "",
+  motto: "",
+  regime: 0,
 }

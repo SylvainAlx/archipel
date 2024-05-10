@@ -12,7 +12,10 @@ const nationSchema = mongoose.Schema(
       required: true,
       unique: true,
     },
-    owner: String,
+    owner: {
+      type: String,
+      default: "",
+    },
     data: {
       url: {
         flag: {

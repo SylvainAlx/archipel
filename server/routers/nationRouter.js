@@ -9,6 +9,7 @@ import {
   getTop100Nations,
   updateNation,
   getRoleplayData,
+  createNation,
 } from "../controllers/nationController.js";
 
 const nationRouter = express.Router();
@@ -18,8 +19,9 @@ nationRouter.get("/getnations", getTop100Nations);
 nationRouter.get("/:id", getOneNation);
 nationRouter.get("/roleplay/:id", getRoleplayData);
 nationRouter.get("/owner/get", [verifyJwt], getSelfNation);
+nationRouter.post("/create", [verifyJwt], createNation);
 nationRouter.post("/update", [verifyJwt], updateNation);
-nationRouter.delete("/owner/delete", [verifyJwt], deleteSelfNation);
+nationRouter.delete("/delete", [verifyJwt], deleteSelfNation);
 nationRouter.delete("/admin/:id", [verifyJwt], [isAdmin], deleteOneNation);
 
 export default nationRouter;

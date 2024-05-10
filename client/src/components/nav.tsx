@@ -1,5 +1,5 @@
 import IconLink from "./iconLink";
-import { confirmBox, myStore, userAtom } from "../settings/store";
+import { myStore, userAtom } from "../settings/store";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 
@@ -7,14 +7,6 @@ export default function Nav() {
   const user = myStore.get(userAtom);
   const { t } = useTranslation();
   const navigate = useNavigate();
-
-  const logout = () => {
-    myStore.set(confirmBox, {
-      action: "logout",
-      text: t("components.modals.confirmModal.logout"),
-      result: "",
-    });
-  };
 
   return (
     <>
@@ -50,11 +42,6 @@ export default function Nav() {
               action={() => navigate(`/admin`)}
             />
           )}
-          <IconLink
-            destination="logout"
-            text={t("components.buttons.logout")}
-            action={logout}
-          />
         </>
       )}
     </>

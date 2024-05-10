@@ -2,6 +2,64 @@ import Nation from "../models/nationSchema.js";
 import User from "../models/userSchema.js";
 import Place from "../models/placeSchema.js";
 import Com from "../models/comSchema.js";
+import { createOfficialId } from "../utils/functions.js";
+
+export const createNation = async (req, res) => {
+  try {
+    const { name, owner, motto, regime } = req.body;
+
+    if (!name || !owner) {
+      return res
+        .status(400)
+        .json({ message: "Certains champs sont manquants" });
+    }
+
+    if (owner != req.userId) {
+      return res.status(403).json({ message: "Pas d'autorisation" });
+    }
+
+    const officialId = createOfficialId("n");
+
+    const coords = {
+      lat: (Math.random() * (90 - -90) + -90).toFixed(2),
+      lng: (Math.random() * 360).toFixed(2),
+    };
+    let data = { general: coords };
+    data.general.coords = coords;
+    data.general.motto = motto;
+    data.general.regime = regime;
+    const nation = new Nation({
+      officialId,
+      name,
+      owner,
+      data,
+    });
+
+    try {
+      const savedNation = await nation.save();
+      const user = await User.findOne({ officialId: owner });
+      user.citizenship.nationId = savedNation.officialId;
+      user.citizenship.nationName = savedNation.name;
+      user.citizenship.nationOwner = true;
+      const savedUser = await user.save();
+      res.status(201).json({ nation: savedNation, user: savedUser });
+    } catch (error) {
+      if (error.code === 11000) {
+        return res.status(400).json({
+          message: "Informations déjà existantes dans la base de données",
+          erreur: error.keyValue,
+        });
+      } else {
+        return res.status(400).json({
+          message: "Certaines informations sont erronées ou manquantes",
+          error,
+        });
+      }
+    }
+  } catch (error) {
+    res.status(400).json({ erreur: error.message });
+  }
+};
 
 export const getAllNations = async (req, res) => {
   try {
@@ -86,13 +144,21 @@ export const getRoleplayData = async (req, res) => {
 
 export const deleteSelfNation = async (req, res) => {
   try {
-    const id = req.nationId;
-    Nation.findByIdAndDelete(id).then(async (resp) => {
-      await Place.deleteMany({ nation: id });
-      await Com.deleteMany({ originId: id });
-      res.status(200).json({
-        message: `Votre nation a été supprimée`,
-      });
+    const userId = req.userId;
+    const user = await User.findOne({ officialId: userId });
+    const nation = await Nation.findOneAndDelete({
+      officialId: user.citizenship.nationId,
+    });
+    const places = await Place.deleteMany({ nation: nation.officialId });
+    user.citizenship.nationId = "";
+    user.citizenship.nationName = "";
+    user.citizenship.nationOwner = false;
+    const savedUser = await user.save();
+
+    // await Com.deleteMany({ originId: id });
+    res.status(200).json({
+      message: `Votre nation a été supprimée`,
+      user: savedUser,
     });
   } catch (error) {
     res.status(400).json({
@@ -105,10 +171,14 @@ export const deleteSelfNation = async (req, res) => {
 export const deleteOneNation = async (req, res) => {
   try {
     const nationId = req.params.id;
-    Nation.findByIdAndDelete(nationId).then((resp) => {
-      res.status(200).json({
-        message: `nation supprimée`,
-      });
+    const user = await User.findOne({ "citizenship.nationId": nationId });
+    user.citizenship.nationId = "";
+    user.citizenship.nationName = "";
+    user.citizenship.nationOwner = false;
+    const savedUser = await user.save();
+    const nation = await Nation.findByIdAndDelete(nationId);
+    res.status(200).json({
+      message: `nation supprimée`,
     });
   } catch (error) {
     res.status(400).json({

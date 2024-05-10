@@ -1,5 +1,4 @@
 import {
-  comsListAtom,
   infoModalAtom,
   loadingAtom,
   myStore,
@@ -7,25 +6,54 @@ import {
   nationsListAtom,
   nationsRoleplayDataAtom,
   selectedNationAtom,
+  userAtom,
 } from "../../settings/store";
-import { EmptyCom } from "../../types/typAtom";
-import { EmptyNation, Nation } from "../../types/typNation";
+import { EmptyNation, Nation, NewNationPayload } from "../../types/typNation";
 
 import {
   deleteElementOfAtomArray,
   updateElementOfAtomArray,
 } from "../../utils/functions";
 import {
+  createNationFetch,
   DeleteSelfFetch,
   getAllNations,
   getOneNationFetch,
   getRoleplayDataFetch,
   updateNationFetch,
 } from "./nationFetch";
-import { createComFetch } from "../communication/comFetch";
 
 const nationsList = myStore.get(nationsListAtom);
 const setNationsList = (list: Nation[]) => myStore.set(nationsListAtom, list);
+
+export const createNation = (payload: NewNationPayload) => {
+  myStore.set(loadingAtom, true);
+  createNationFetch(payload)
+  .then((data) => {
+    myStore.set(loadingAtom, false);
+    if (data.nation) {
+      myStore.set(nationsListAtom, [EmptyNation]);
+      myStore.set(nationAtom, {
+        officialId: data.nation.officialId,
+        name: data.nation.name,
+        owner: data.nation.owner,
+        role: data.nation.role,
+        data: data.nation.data,
+        createdAt: data.nation.createdAt,
+      });
+      if (data.user){
+        myStore.set(userAtom, data.user)
+      }
+    } else {
+      myStore.set(loadingAtom, false);
+      myStore.set(infoModalAtom, "création impossible : " + data.message);
+    }
+  })
+  .catch((error) => {
+    myStore.set(loadingAtom, false);
+    myStore.set(infoModalAtom, error.message);
+  });
+}
 
 export const getNation = (id: string, owner: boolean) => {
   myStore.set(loadingAtom, true);
@@ -34,7 +62,6 @@ export const getNation = (id: string, owner: boolean) => {
       myStore.set(loadingAtom, false);
       if (data.nation) {
         myStore.set(selectedNationAtom, {
-          _id: data.nation._id,
           officialId : data.nation.officialId,
           name: data.nation.name,
           owner: data.nation.owner,
@@ -44,7 +71,6 @@ export const getNation = (id: string, owner: boolean) => {
         });
         if (owner) {
           myStore.set(nationAtom, {
-            _id: data.nation._id,
             officialId : data.nation.officialId,
             name: data.nation.name,
             owner: data.nation.owner,
@@ -100,16 +126,12 @@ export const deleteSelfNation = () => {
   DeleteSelfFetch()
     .then((resp) => {
       myStore.set(loadingAtom, false);
-      createComFetch({
-        originId: nation._id,
-        originName: nation.name,
-        comType: 2,
-      });
-      deleteElementOfAtomArray(nation._id, nationsList, setNationsList);
-      myStore.set(comsListAtom, [EmptyCom]);
+      deleteElementOfAtomArray(nation.officialId, nationsList, setNationsList);
       myStore.set(infoModalAtom, resp.message);
       myStore.set(nationAtom, EmptyNation);
-      localStorage.removeItem("jwt");
+      if (resp.user) {
+        myStore.set(userAtom, resp.user)
+      }
     })
     .catch((error) => {
       myStore.set(loadingAtom, false);
@@ -120,13 +142,13 @@ export const deleteSelfNation = () => {
 export const getRoleplayData = (selectedNation: Nation) => {
   const nationsRoleplayData = myStore.get(nationsRoleplayDataAtom);
   myStore.set(loadingAtom, true);
-  getRoleplayDataFetch(selectedNation._id)
+  getRoleplayDataFetch(selectedNation.officialId)
     .then((data) => {
       myStore.set(loadingAtom, false);
       myStore.set(nationsRoleplayDataAtom, [
         ...nationsRoleplayData,
         {
-          nationId: selectedNation._id,
+          nationId: selectedNation.officialId,
           citizens: data.citizens,
           places: data.places,
         },

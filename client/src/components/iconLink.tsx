@@ -2,10 +2,10 @@ import {
   IoMdLogIn,
   IoMdAddCircleOutline,
   IoMdSettings,
-  IoMdLogOut,
   IoMdGlobe,
 } from "react-icons/io";
-import { GiBlackFlag } from "react-icons/gi";
+// import { GiBlackFlag } from "react-icons/gi";
+import { RxAvatar } from "react-icons/rx";
 import { userAtom } from "../settings/store";
 import { useAtom } from "jotai";
 import { MouseEventHandler } from "react";
@@ -33,10 +33,9 @@ export default function IconLink({ destination, text, action }: IconLinkProps) {
             <img src={user.avatar} className={`w-full h-full`} />
           </div>
         ) : (
-          <GiBlackFlag />
+          <RxAvatar />
         ))}
       {destination === "admin" && <IoMdSettings />}
-      {destination === "logout" && <IoMdLogOut />}
       <h2 className="hidden md:block text-[10px]">{text}</h2>
     </div>
   );

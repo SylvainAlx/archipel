@@ -1,6 +1,6 @@
 import { atom, createStore } from "jotai";
 
-import { EmptyNation, Nation, NationRoleplayData } from "../types/typNation";
+import { EmptyNation, emptyNewNationPayload, Nation, NationRoleplayData, NewNationPayload } from "../types/typNation";
 import {
   Com,
   ConfirmBoxDefault,
@@ -32,7 +32,7 @@ export const nationAtom = atom<Nation>(EmptyNation);
 export const selectedNationAtom = atom<Nation>(EmptyNation);
 export const nationsRoleplayDataAtom = atom<NationRoleplayData[]>([]);
 export const getSelectedNation = atom((get) => get(selectedNationAtom));
-export const tempNationAtom = atom<Nation>(EmptyNation);
+export const newNationAtom = atom<NewNationPayload>(emptyNewNationPayload);
 export const nationsListAtom = atom<Nation[]>([]);
 
 // place

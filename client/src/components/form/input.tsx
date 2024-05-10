@@ -8,6 +8,7 @@ export interface InputProps {
   placeholder: string;
   value: string | number;
   id?: string;
+  maxLength?: number;
 }
 
 export default function Input({
@@ -18,6 +19,7 @@ export default function Input({
   value,
   name,
   id,
+  maxLength,
 }: InputProps) {
   return (
     <input
@@ -29,6 +31,7 @@ export default function Input({
       className="w-full rounded-lg p-4 pe-12 text-sm shadow-sm text-primary"
       placeholder={placeholder}
       value={value}
+      maxLength={maxLength}
     />
   );
 }

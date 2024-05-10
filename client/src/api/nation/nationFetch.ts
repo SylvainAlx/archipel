@@ -1,10 +1,25 @@
 import { SERVER_URL } from "../../settings/consts";
-import { Nation } from "../../types/typNation";
+import { Nation, NewNationPayload } from "../../types/typNation";
 import { GET_JWT } from "../../utils/functions";
+
+export const createNationFetch = async (payload: NewNationPayload) => {
+  const jwt = GET_JWT();
+  const resp = await fetch(`${SERVER_URL}/nation/create`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      authorization: "Bearer " + jwt,
+    },
+    body: JSON.stringify(payload),
+  });
+  const result = await resp.json();
+
+  return result;
+};
 
 export const DeleteSelfFetch = async () => {
   const jwt = GET_JWT();
-  const resp = await fetch(`${SERVER_URL}/nation/owner/delete`, {
+  const resp = await fetch(`${SERVER_URL}/nation/delete`, {
     method: "DELETE",
     headers: { authorization: `Bearer ${jwt}` },
   });

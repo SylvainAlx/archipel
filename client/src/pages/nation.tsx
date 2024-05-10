@@ -16,12 +16,14 @@ import Links from "../components/nations/dashboard/links";
 import { useEffect, useState } from "react";
 import Button from "../components/buttons/button";
 import TileContainer from "../components/tileContainer";
+import { useNavigate } from "react-router-dom";
 
 export default function Nation() {
   const [selectedNation] = useAtom(selectedNationAtom);
   const [user] = useAtom(userAtom);
   const [owner, setOwner] = useState(false);
   const { t } = useTranslation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (
@@ -30,7 +32,7 @@ export default function Nation() {
     ) {
       setOwner(true);
     }
-  }, []);
+  }, [selectedNation, user]);
 
   const handleDelete = () => {
     myStore.set(confirmBox, {
@@ -38,6 +40,7 @@ export default function Nation() {
       text: t("components.modals.confirmModal.deleteNation"),
       result: "",
     });
+    navigate(`/profile/${user.officialId}`);
   };
 
   return (
@@ -55,6 +58,7 @@ export default function Nation() {
               {owner && (
                 <Button
                   text={t("components.buttons.deleteNation")}
+                  bgColor="bg-danger"
                   click={handleDelete}
                 />
               )}
