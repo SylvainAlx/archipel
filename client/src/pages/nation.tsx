@@ -4,6 +4,7 @@ import NationIdentity from "../components/nations/dashboard/nationIdentity";
 import {
   confirmBox,
   myStore,
+  nationAtom,
   selectedNationAtom,
   userAtom,
 } from "../settings/store";
@@ -16,14 +17,17 @@ import Links from "../components/nations/dashboard/links";
 import { useEffect, useState } from "react";
 import Button from "../components/buttons/button";
 import TileContainer from "../components/tileContainer";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { getNation } from "../api/nation/nationAPI";
 
 export default function Nation() {
   const [selectedNation] = useAtom(selectedNationAtom);
+  const [nation] = useAtom(nationAtom);
   const [user] = useAtom(userAtom);
   const [owner, setOwner] = useState(false);
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const param = useParams();
 
   useEffect(() => {
     if (
@@ -31,8 +35,15 @@ export default function Nation() {
       user.citizenship.nationId === selectedNation.officialId
     ) {
       setOwner(true);
+      myStore.set(selectedNationAtom, nation);
     }
-  }, [selectedNation, user]);
+  }, [selectedNation, user, nation]);
+
+  useEffect(() => {
+    if (selectedNation.officialId != param.id && param.id != undefined) {
+      getNation(param.id, owner);
+    }
+  }, [param.id, owner]);
 
   const handleDelete = () => {
     myStore.set(confirmBox, {
@@ -40,32 +51,38 @@ export default function Nation() {
       text: t("components.modals.confirmModal.deleteNation"),
       result: "",
     });
-    navigate(`/profile/${user.officialId}`);
+    navigate(`/citizen/${user.officialId}`);
   };
 
   return (
     <>
       <H1 text={t("pages.nation.title")} />
-      <section className="w-full flex flex-wrap gap-8 items-start justify-between">
-        <Score selectedNation={selectedNation} owner={owner} />
-        <Links selectedNation={selectedNation} owner={owner} />
-        <NationIdentity selectedNation={selectedNation} owner={owner} />
-        <Places selectedNation={selectedNation} owner={owner} />
-        <Diplomacy />
-        <TileContainer
-          children={
-            <section className="flex flex-col items-center gap-4">
-              {owner && (
-                <Button
-                  text={t("components.buttons.deleteNation")}
-                  bgColor="bg-danger"
-                  click={handleDelete}
-                />
-              )}
-            </section>
-          }
-        />
-      </section>
+      {selectedNation.officialId != "" ? (
+        <>
+          <section className="w-full flex flex-wrap gap-8 items-start justify-between">
+            <Score selectedNation={selectedNation} owner={owner} />
+            <Links selectedNation={selectedNation} owner={owner} />
+            <NationIdentity selectedNation={selectedNation} owner={owner} />
+            <Places selectedNation={selectedNation} owner={owner} />
+            <Diplomacy />
+            <TileContainer
+              children={
+                <section className="flex flex-col items-center gap-4">
+                  {owner && (
+                    <Button
+                      text={t("components.buttons.deleteNation")}
+                      bgColor="bg-danger"
+                      click={handleDelete}
+                    />
+                  )}
+                </section>
+              }
+            />
+          </section>
+        </>
+      ) : (
+        <div>Aucune nation à afficher</div>
+      )}
     </>
   );
 }

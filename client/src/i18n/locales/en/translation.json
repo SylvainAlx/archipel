@@ -69,6 +69,7 @@
       "dashboard": "DASHBOARD",
       "close": "CLOSE",
       "cancel": "CANCEL",
+      "nation": "NATION",
       "user": "MY ACCOUNT",
       "admin": "ADMINISTRATION",
       "validate": "VALIDATE",

@@ -42,10 +42,9 @@ export default function App() {
 
   useEffect(() => {
     if (isLogged) {
-      navigate(`/profile/${user.officialId}`);
+      navigate(`/citizen/${user.officialId}`);
       setOpenPrivateRoads(true);
     } else {
-      navigate("/");
       setOpenPrivateRoads(false);
     }
   }, [isLogged]);

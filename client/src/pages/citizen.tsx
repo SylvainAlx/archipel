@@ -22,7 +22,7 @@ import TileContainer from "../components/tileContainer";
 import { emptyNewNationPayload } from "../types/typNation";
 import { getNation } from "../api/nation/nationAPI";
 
-export default function Profile() {
+export default function Citizen() {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const param = useParams();

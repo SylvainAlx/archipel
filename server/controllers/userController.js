@@ -32,7 +32,7 @@ export const register = async (req, res) => {
       }
     });
 
-    const officialId = createOfficialId("u");
+    const officialId = createOfficialId("c");
 
     const user = new User({
       officialId,

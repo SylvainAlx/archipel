@@ -10,7 +10,7 @@ import Recovery from "../pages/recovery";
 import Register from "../pages/register";
 import TermsOfService from "../pages/termsOfService";
 import { ArchipelRoute } from "../types/typReact";
-import Profile from "../pages/profile";
+import Citizen from "../pages/citizen";
 
 export const authRoutes: ArchipelRoute[] = [
   { path: "/login", page: <Login /> },
@@ -20,7 +20,7 @@ export const authRoutes: ArchipelRoute[] = [
 export const publicRoutes: ArchipelRoute[] = [
   { path: "/", page: <Home /> },
   { path: "/recovery", page: <Recovery /> },
-  { path: "/profile/:id", page: <Profile /> },
+  { path: "/citizen/:id", page: <Citizen /> },
   { path: "/nations", page: <Nations /> },
   { path: "/nation/:id", page: <Nation /> },
   { path: "/place/:id", page: <Place /> },

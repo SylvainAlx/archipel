@@ -33,7 +33,7 @@ export default function Nav() {
           <IconLink
             destination="user"
             text={t("components.buttons.user")}
-            action={() => navigate(`/profile/${user.officialId}`)}
+            action={() => navigate(`/citizen/${user.officialId}`)}
           />
           {user.role === "admin" && (
             <IconLink
@@ -43,6 +43,13 @@ export default function Nav() {
             />
           )}
         </>
+      )}
+      {user.citizenship.nationId != "" && (
+        <IconLink
+          destination="nation"
+          text={t("components.buttons.nation")}
+          action={() => navigate(`/nation/${user.citizenship.nationId}`)}
+        />
       )}
     </>
   );

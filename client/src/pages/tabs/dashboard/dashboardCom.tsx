@@ -31,7 +31,7 @@ export default function DashboardCom({ text }: StringProps) {
     }
     setNewCom({
       ...newCom,
-      originId: nation._id,
+      originId: nation.officialId,
       originName: nation.name,
       comType: comTypeOptions[0].id,
     });

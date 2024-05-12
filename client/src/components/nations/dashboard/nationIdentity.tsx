@@ -57,7 +57,7 @@ export default function NationIdentity({
             className="w-full min-w-[300px] flex-grow"
             children={
               <>
-                <div className="p-4 flex flex-col gap-2 items-center">
+                <div className="w-full p-4 flex flex-col gap-2 items-center">
                   <div className="flex flex-col lg:flex-row justify-center items-center lg:flex-wrap gap-6">
                     <div
                       onClick={() => handleClick(selectedNation.data.url.flag)}
@@ -123,7 +123,7 @@ export default function NationIdentity({
                     </div>
                   </div>
 
-                  <div className="relative flex items-center gap-2">
+                  <div className="w-full relative flex items-center justify-center gap-2">
                     <H3 text={selectedNation.name} />
                     {owner && (
                       <EditIcon

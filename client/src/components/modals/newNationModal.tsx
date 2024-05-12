@@ -50,13 +50,18 @@ export default function NewNationModal() {
               maxLength={60}
             />
             <Input
+              required
               onChange={handleChange}
               type="text"
               name="motto"
               placeholder="Devise"
               value={newNation.motto}
             />
-            <Select onChange={handleSelectChange} options={regimeList} />
+            <Select
+              onChange={handleSelectChange}
+              options={regimeList}
+              required
+            />
             <Button type="submit" text="VALIDER" />
             <Button
               type="button"

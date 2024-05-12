@@ -28,6 +28,7 @@ export const createNation = async (req, res) => {
     data.general.coords = coords;
     data.general.motto = motto;
     data.general.regime = regime;
+    data.roleplay.citizens += 1;
     const nation = new Nation({
       officialId,
       name,
@@ -190,10 +191,10 @@ export const deleteOneNation = async (req, res) => {
 
 export const updateNation = async (req, res) => {
   try {
-    const { _id, name, data } = req.body;
-    if (req.nationId === _id) {
+    const { officialId, name, owner, data } = req.body;
+    if (req.userId === owner) {
       const nation = await Nation.findOne(
-        { _id },
+        { officialId },
         "officialId name owner role data createdAt",
       );
       nation.name = name;
@@ -201,8 +202,7 @@ export const updateNation = async (req, res) => {
       nation
         .save()
         .then((nation) => {
-          const jwt = nation.createJWT();
-          res.status(200).json({ nation, jwt, message: "mise à jour réussie" });
+          res.status(200).json({ nation, message: "mise à jour réussie" });
         })
         .catch((error) => {
           res.status(400).json({
