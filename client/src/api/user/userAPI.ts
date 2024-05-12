@@ -1,4 +1,4 @@
-import { infoModalAtom, isLoggedAtom, loadingAtom, myStore, nationAtom, nationsListAtom, recoveryKey, selectedNationAtom, userAtom } from "../../settings/store";
+import { emptySession, infoModalAtom, loadingAtom, myStore, nationsListAtom, recoveryKey, session, sessionAtom, userAtom } from "../../settings/store";
 import { EmptyNation } from "../../types/typNation";
 import { AuthPayload, emptyUser, RecoveryPayload } from "../../types/typUser";
 import { GET_JWT } from "../../utils/functions";
@@ -13,18 +13,19 @@ export const register = ({ name, password }: AuthPayload) => {
         localStorage.setItem("jwt", data.jwt);
         myStore.set(recoveryKey, data.recovery);
         myStore.set(nationsListAtom, [EmptyNation]);
-        myStore.set(userAtom, {
-          officialId: data.user.officialId,
-          name: data.user.name,
-          surname: data.user.surname,
-          avatar: data.user.avatar,
-          password: data.user.password,
-          recovery: data.user.recovery,
-          role: data.user.role,
-          citizenship: data.user.citizenship,
-          createdAt: data.user.createdAt
-        })
-      myStore.set(isLoggedAtom, true)
+        myStore.set(sessionAtom, {...session, user:data.user, jwt:data.jwt})
+        // myStore.set(userAtom, {
+        //   officialId: data.user.officialId,
+        //   name: data.user.name,
+        //   surname: data.user.surname,
+        //   avatar: data.user.avatar,
+        //   password: data.user.password,
+        //   recovery: data.user.recovery,
+        //   role: data.user.role,
+        //   citizenship: data.user.citizenship,
+        //   createdAt: data.user.createdAt
+        // })
+      // myStore.set(isLoggedAtom, data.user.officialId)
       myStore.set(loadingAtom, false);
       } else {
         myStore.set(loadingAtom, false);
@@ -45,19 +46,22 @@ export const authentification = () => {
       .then((data) => {
         myStore.set(loadingAtom, false);
         if (data.user != undefined) {
-          myStore.set(isLoggedAtom, true)
-          myStore.set(userAtom, {
-            officialId: data.user.officialId,
-            name: data.user.name,
-            surname: data.user.surname,
-            avatar: data.user.avatar,
-            role: data.user.role,
-            citizenship: data.user.citizenship,
-            createdAt: data.user.createdAt
-          })
+          
+          myStore.set(sessionAtom, {...session, user: data.user, jwt})
+          // myStore.set(isLoggedAtom, data.user.officialId)
+          // myStore.set(userAtom, {
+          //   officialId: data.user.officialId,
+          //   name: data.user.name,
+          //   surname: data.user.surname,
+          //   avatar: data.user.avatar,
+          //   role: data.user.role,
+          //   citizenship: data.user.citizenship,
+          //   createdAt: data.user.createdAt
+          // })
           
         } else {
-          myStore.set(userAtom, emptyUser);
+          myStore.set(sessionAtom, emptySession);
+          // myStore.set(userAtom, emptyUser);
           myStore.set(loadingAtom, false);
           localStorage.removeItem("jwt");
         }
@@ -80,16 +84,17 @@ export const login = ({ name, password }: AuthPayload) => {
       myStore.set(infoModalAtom, data.message);
       if (data.user.name != undefined) {
         localStorage.setItem("jwt", data.jwt);
-        myStore.set(userAtom, {
-          officialId: data.user.officialId,
-          name: data.user.name,
-          surname: data.user.surname,
-          avatar: data.user.avatar,
-          role: data.user.role,
-          citizenship: data.user.citizenship,
-          createdAt: data.user.createdAt
-        })
-        myStore.set(isLoggedAtom, true)
+        myStore.set(sessionAtom, {...session, user:data.user, jwt:data.jwt})
+        // myStore.set(userAtom, {
+        //   officialId: data.user.officialId,
+        //   name: data.user.name,
+        //   surname: data.user.surname,
+        //   avatar: data.user.avatar,
+        //   role: data.user.role,
+        //   citizenship: data.user.citizenship,
+        //   createdAt: data.user.createdAt
+        // })
+        // myStore.set(isLoggedAtom, data.user.officialId)
       } else {
         myStore.set(loadingAtom, false);
       }
@@ -102,9 +107,10 @@ export const login = ({ name, password }: AuthPayload) => {
 
 export const logout = () => {
   myStore.set(infoModalAtom, "déconnexion effectuée");
-  myStore.set(userAtom, emptyUser);
-  myStore.set(isLoggedAtom, false);
-  myStore.set(selectedNationAtom, EmptyNation);
+  myStore.set(sessionAtom, emptySession)
+  // myStore.set(userAtom, emptyUser);
+  // myStore.set(isLoggedAtom, "");
+  // myStore.set(selectedNationAtom, EmptyNation);
   localStorage.removeItem("jwt");
 };
 
@@ -135,10 +141,11 @@ export const deleteUser = () => {
   DeleteUserFetch()
     .then((resp) => {
       myStore.set(loadingAtom, false);
-      myStore.set(userAtom, emptyUser);
-      myStore.set(isLoggedAtom, false);
-      myStore.set(selectedNationAtom, EmptyNation);
-      myStore.set(nationAtom, EmptyNation);
+      myStore.set(sessionAtom, emptySession)
+      // myStore.set(userAtom, emptyUser);
+      // myStore.set(isLoggedAtom, "");
+      // myStore.set(selectedNationAtom, EmptyNation);
+      // myStore.set(nationAtom, EmptyNation);
       localStorage.removeItem("jwt");
       myStore.set(infoModalAtom, resp.message);
     })
@@ -149,11 +156,13 @@ export const deleteUser = () => {
 };
 
 export const getOneUser = (id: string) => {
+  let user = emptyUser;
   myStore.set(loadingAtom, true);
   getOneUserFetch(id)
     .then((data) => {
       myStore.set(loadingAtom, false);
       if (data.user) {
+        user = data.user
         myStore.set(userAtom, {
           officialId: data.user.officialId,
           name: data.user.name,
@@ -169,4 +178,5 @@ export const getOneUser = (id: string) => {
       myStore.set(loadingAtom, false);
       myStore.set(infoModalAtom, error.message);
     });
+    return user
 };

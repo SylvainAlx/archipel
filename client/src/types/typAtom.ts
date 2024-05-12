@@ -1,6 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { LabelId, PoliticalSide, Regime } from "./typNation";
+import { LabelId, Nation, PoliticalSide, Regime } from "./typNation";
 import { Place } from "./typPlace";
+import { User } from "./typUser";
+
+export interface Session {
+  user: User;
+  nation?: Nation;
+  jwt: string;
+}
 
 // editPlace
 

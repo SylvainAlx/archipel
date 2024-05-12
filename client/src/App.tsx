@@ -12,7 +12,7 @@ import Header from "./layouts/header";
 import Footer from "./layouts/footer";
 import "./App.css";
 import { useAtom } from "jotai";
-import { isLoggedAtom, userAtom } from "./settings/store";
+import { sessionAtom } from "./settings/store";
 import { useEffect, useState } from "react";
 import ModalsRouter from "./router/modalsRouter";
 import { ArchipelRoute } from "./types/typReact";
@@ -21,8 +21,9 @@ import { authentification } from "./api/user/userAPI";
 import { getNation } from "./api/nation/nationAPI";
 
 export default function App() {
-  const [user] = useAtom(userAtom);
-  const [isLogged] = useAtom(isLoggedAtom);
+  // const [user] = useAtom(userAtom);
+  // const [isLogged] = useAtom(isLoggedAtom);
+  const [session] = useAtom(sessionAtom);
   const [openPrivateRoads, setOpenPrivateRoads] = useState(false);
 
   const navigate = useNavigate();
@@ -33,21 +34,28 @@ export default function App() {
   }, []);
 
   useEffect(() => {
-    if (user.officialId != "") {
-      if (user.citizenship.nationId != "") {
-        getNation(user.citizenship.nationId, user.citizenship.nationOwner);
+    if (session.user.officialId != "") {
+      if (session.user.citizenship.nationId != "") {
+        getNation(
+          session.user.citizenship.nationId,
+          session.user.citizenship.nationOwner,
+        );
       }
-    }
-  }, [user]);
-
-  useEffect(() => {
-    if (isLogged) {
-      navigate(`/citizen/${user.officialId}`);
+      navigate(`/citizen/${session.user.officialId}`);
       setOpenPrivateRoads(true);
     } else {
       setOpenPrivateRoads(false);
     }
-  }, [isLogged]);
+  }, [session]);
+
+  // useEffect(() => {
+  //   if (isLogged != "") {
+  //     navigate(`/citizen/${user.officialId}`);
+  //     setOpenPrivateRoads(true);
+  //   } else {
+  //     setOpenPrivateRoads(false);
+  //   }
+  // }, [isLogged]);
 
   return (
     <>
@@ -65,7 +73,7 @@ export default function App() {
             : authRoutes.map((route: ArchipelRoute, i: number) => (
                 <Route path={route.path} element={route.page} key={i} />
               ))}
-          {user.role === "admin" &&
+          {session.user.role === "admin" &&
             adminRoutes.map((route: ArchipelRoute, i: number) => (
               <Route path={route.path} element={route.page} key={i} />
             ))}

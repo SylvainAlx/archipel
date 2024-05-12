@@ -1,43 +1,48 @@
-// import { useTranslation } from "react-i18next";
-// import Button from "../components/buttons/button";
 import { useAtom } from "jotai";
 import H1 from "../components/titles/h1";
 import {
   confirmBox,
   myStore,
-  nationAtom,
   newNationAtom,
   selectedNationAtom,
-  userAtom,
+  sessionAtom,
 } from "../settings/store";
 import Button from "../components/buttons/button";
 import { useNavigate, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import Avatar from "../components/avatar";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { getOneUser } from "../api/user/userAPI";
-import { GET_JWT } from "../utils/functions";
 import DashTile from "../components/dashTile";
 import TileContainer from "../components/tileContainer";
-import { emptyNewNationPayload } from "../types/typNation";
+import { EmptyNation, emptyNewNationPayload } from "../types/typNation";
 import { getNation } from "../api/nation/nationAPI";
+import { emptyUser } from "../types/typUser";
 
 export default function Citizen() {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const param = useParams();
 
-  const [user] = useAtom(userAtom);
-  const [nation] = useAtom(nationAtom);
+  const [user, setUser] = useState(emptyUser);
+  const [nation, setNation] = useState(EmptyNation);
+  const [session] = useAtom(sessionAtom);
 
   useEffect(() => {
-    if (user.officialId === "" && param.id && !GET_JWT) {
-      getOneUser(param.id);
+    if (param.id) {
+      if (session.user.officialId === param.id) {
+        setUser(session.user);
+      } else {
+        setUser(getOneUser(param.id));
+      }
     }
-    if (nation.officialId === "" && user.citizenship.nationId != "") {
-      getNation(user.citizenship.nationId, user.citizenship.nationOwner);
+  }, [param.id, session.user]);
+
+  useEffect(() => {
+    if (user.citizenship.nationId != "") {
+      setNation(getNation(user.citizenship.nationId));
     }
-  }, [param.id, user, nation.officialId]);
+  }, [user]);
 
   const handleClick = (dest: string) => {
     if (dest === "nation") {
@@ -72,7 +77,7 @@ export default function Citizen() {
   return (
     <>
       <H1 text={user.name} />
-      <Avatar />
+      <Avatar url={user.avatar} />
       <TileContainer
         children={
           <>
@@ -86,23 +91,26 @@ export default function Citizen() {
                   />
                 ) : (
                   <>
-                    <Button
-                      text={t("components.buttons.createNation")}
-                      click={() => handleClick("new")}
-                    />
-                    <Button
-                      text={t("components.buttons.joinNation")}
-                      click={() => handleClick("join")}
-                    />
+                    {session.user.officialId && (
+                      <>
+                        <Button
+                          text={t("components.buttons.createNation")}
+                          click={() => handleClick("new")}
+                        />
+                        <Button
+                          text={t("components.buttons.joinNation")}
+                          click={() => handleClick("join")}
+                        />
+                      </>
+                    )}
                   </>
                 )
               }
             />
-
-            <DashTile
-              title="paramètre du compte"
-              children={
-                user.officialId != "" ? (
+            {session.user.officialId ? (
+              <DashTile
+                title="paramètre du compte"
+                children={
                   <>
                     <Button
                       text={t("components.buttons.logout")}
@@ -115,11 +123,11 @@ export default function Citizen() {
                       click={handleDelete}
                     />
                   </>
-                ) : (
-                  <></>
-                )
-              }
-            />
+                }
+              />
+            ) : (
+              <></>
+            )}
           </>
         }
       />

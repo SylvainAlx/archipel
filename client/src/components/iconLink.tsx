@@ -6,7 +6,7 @@ import {
 } from "react-icons/io";
 // import { GiBlackFlag } from "react-icons/gi";
 import { RxAvatar } from "react-icons/rx";
-import { nationAtom, userAtom } from "../settings/store";
+import { sessionAtom } from "../settings/store";
 import { useAtom } from "jotai";
 import { MouseEventHandler } from "react";
 import { GiBlackFlag } from "react-icons/gi";
@@ -18,8 +18,9 @@ export interface IconLinkProps {
 }
 
 export default function IconLink({ destination, text, action }: IconLinkProps) {
-  const [user] = useAtom(userAtom);
-  const [nation] = useAtom(nationAtom);
+  // const [user] = useAtom(userAtom);
+  // const [nation] = useAtom(nationAtom);
+  const [session] = useAtom(sessionAtom);
 
   return (
     <div
@@ -30,17 +31,21 @@ export default function IconLink({ destination, text, action }: IconLinkProps) {
       {destination === "login" && <IoMdLogIn />}
       {destination === "register" && <IoMdAddCircleOutline />}
       {destination === "user" &&
-        (user.avatar ? (
+        (session.user.avatar ? (
           <div className="rounded-full w-[45px] h-[45px] md:w-[28px] md:h-[28px] overflow-hidden">
-            <img src={user.avatar} className={`w-full h-full`} />
+            <img src={session.user.avatar} className={`w-full h-full`} />
           </div>
         ) : (
           <RxAvatar />
         ))}
       {destination === "nation" &&
-        (nation.data.url.flag != "" ? (
+        session.nation &&
+        (session.nation.data.url.flag != "" ? (
           <div className="rounded-full w-[45px] h-[45px] md:w-[28px] md:h-[28px] overflow-hidden">
-            <img src={nation.data.url.flag} className={`w-full h-full`} />
+            <img
+              src={session.nation.data.url.flag}
+              className={`w-full h-full`}
+            />
           </div>
         ) : (
           <GiBlackFlag />

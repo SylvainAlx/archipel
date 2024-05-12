@@ -7,6 +7,7 @@ import {
   EditBoxDefault,
   EditPlaceParam,
   Param,
+  Session,
 } from "../types/typAtom";
 import { Place, emptyPlace } from "../types/typPlace";
 import i18n from "../i18n/i18n";
@@ -23,7 +24,11 @@ export const loadingAtom = atom(false);
 // User
 
 export const userAtom = atom<User>(emptyUser)
-export const isLoggedAtom = atom<boolean>(false)
+export const isLoggedAtom = atom<string>("")
+
+export const emptySession = {user: emptyUser, nation: EmptyNation, jwt: ""}
+export const sessionAtom = atom<Session>(emptySession)
+export const session = myStore.get(sessionAtom)
 
 // Nation
 

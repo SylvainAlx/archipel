@@ -1,10 +1,12 @@
 import IconLink from "./iconLink";
-import { myStore, userAtom } from "../settings/store";
+import { sessionAtom } from "../settings/store";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
+import { useAtom } from "jotai";
 
 export default function Nav() {
-  const user = myStore.get(userAtom);
+  // const user = myStore.get(userAtom);
+  const [session] = useAtom(sessionAtom);
   const { t } = useTranslation();
   const navigate = useNavigate();
 
@@ -15,7 +17,7 @@ export default function Nav() {
         text={t("components.buttons.explore")}
         action={() => navigate(`/nations`)}
       />
-      {user.name === "" || user.name === undefined ? (
+      {session.user.name === "" || session.user.name === undefined ? (
         <>
           <IconLink
             destination="login"
@@ -33,9 +35,9 @@ export default function Nav() {
           <IconLink
             destination="user"
             text={t("components.buttons.user")}
-            action={() => navigate(`/citizen/${user.officialId}`)}
+            action={() => navigate(`/citizen/${session.user.officialId}`)}
           />
-          {user.role === "admin" && (
+          {session.user.role === "admin" && (
             <IconLink
               destination="admin"
               text={t("components.buttons.admin")}
@@ -44,11 +46,13 @@ export default function Nav() {
           )}
         </>
       )}
-      {user.citizenship.nationId != "" && (
+      {session.user.citizenship.nationId != "" && (
         <IconLink
           destination="nation"
           text={t("components.buttons.nation")}
-          action={() => navigate(`/nation/${user.citizenship.nationId}`)}
+          action={() =>
+            navigate(`/nation/${session.user.citizenship.nationId}`)
+          }
         />
       )}
     </>

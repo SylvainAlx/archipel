@@ -11,7 +11,11 @@ import { LabelId, Nation } from "../types/typNation";
 import { Place } from "../types/typPlace";
 import { SetAtom } from "../settings/store";
 
-export const GET_JWT = () => localStorage.getItem("jwt");
+export const GET_JWT = () => {
+  const jwt = localStorage.getItem("jwt")
+  return jwt
+
+}
 
 export const dateToString = (date: Date) => {
   const createdAtDate: Date = new Date(date);

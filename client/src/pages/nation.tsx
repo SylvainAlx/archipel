@@ -1,13 +1,6 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import H1 from "../components/titles/h1";
 import NationIdentity from "../components/nations/dashboard/nationIdentity";
-import {
-  confirmBox,
-  myStore,
-  nationAtom,
-  selectedNationAtom,
-  userAtom,
-} from "../settings/store";
+import { confirmBox, myStore, sessionAtom } from "../settings/store";
 import { useAtom } from "jotai";
 import Places from "../components/nations/dashboard/places";
 import { useTranslation } from "react-i18next";
@@ -19,11 +12,11 @@ import Button from "../components/buttons/button";
 import TileContainer from "../components/tileContainer";
 import { useNavigate, useParams } from "react-router-dom";
 import { getNation } from "../api/nation/nationAPI";
+import { EmptyNation } from "../types/typNation";
 
 export default function Nation() {
-  const [selectedNation] = useAtom(selectedNationAtom);
-  const [nation] = useAtom(nationAtom);
-  const [user] = useAtom(userAtom);
+  const [nation, setNation] = useState(EmptyNation);
+  const [session] = useAtom(sessionAtom);
   const [owner, setOwner] = useState(false);
   const { t } = useTranslation();
   const navigate = useNavigate();
@@ -31,19 +24,18 @@ export default function Nation() {
 
   useEffect(() => {
     if (
-      user.citizenship.nationOwner &&
-      user.citizenship.nationId === selectedNation.officialId
+      session.user.citizenship.nationOwner &&
+      session.user.citizenship.nationId === param.id
     ) {
       setOwner(true);
-      myStore.set(selectedNationAtom, nation);
     }
-  }, [selectedNation, user, nation]);
+  }, [session.user, nation, param.id]);
 
   useEffect(() => {
-    if (selectedNation.officialId != param.id && param.id != undefined) {
-      getNation(param.id, owner);
+    if (nation.officialId != param.id && param.id != undefined) {
+      setNation(getNation(param.id));
     }
-  }, [param.id, owner]);
+  }, [param.id, owner, nation.officialId]);
 
   const handleDelete = () => {
     myStore.set(confirmBox, {
@@ -51,19 +43,19 @@ export default function Nation() {
       text: t("components.modals.confirmModal.deleteNation"),
       result: "",
     });
-    navigate(`/citizen/${user.officialId}`);
+    navigate(`/citizen/${session.user.officialId}`);
   };
 
   return (
     <>
       <H1 text={t("pages.nation.title")} />
-      {selectedNation.officialId != "" ? (
+      {nation.officialId != "" ? (
         <>
           <section className="w-full flex flex-wrap gap-8 items-start justify-between">
-            <Score selectedNation={selectedNation} owner={owner} />
-            <Links selectedNation={selectedNation} owner={owner} />
-            <NationIdentity selectedNation={selectedNation} owner={owner} />
-            <Places selectedNation={selectedNation} owner={owner} />
+            <Score selectedNation={nation} owner={owner} />
+            <Links selectedNation={nation} owner={owner} />
+            <NationIdentity selectedNation={nation} owner={owner} />
+            <Places selectedNation={nation} owner={owner} />
             <Diplomacy />
             <TileContainer
               children={

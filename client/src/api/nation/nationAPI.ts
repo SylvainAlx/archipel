@@ -5,7 +5,6 @@ import {
   nationAtom,
   nationsListAtom,
   nationsRoleplayDataAtom,
-  selectedNationAtom,
   userAtom,
 } from "../../settings/store";
 import { EmptyNation, Nation, NewNationPayload } from "../../types/typNation";
@@ -55,36 +54,40 @@ export const createNation = (payload: NewNationPayload) => {
   });
 }
 
-export const getNation = (id: string, owner: boolean) => {
+export const getNation = (id: string) => {
+  let nation = EmptyNation;
   myStore.set(loadingAtom, true);
   getOneNationFetch(id)
     .then((data) => {
       myStore.set(loadingAtom, false);
       if (data.nation) {
-        myStore.set(selectedNationAtom, {
-          officialId : data.nation.officialId,
-          name: data.nation.name,
-          owner: data.nation.owner,
-          role: data.nation.role,
-          data: data.nation.data,
-          createdAt: data.nation.createdAt,
-        });
-        if (owner) {
-          myStore.set(nationAtom, {
-            officialId : data.nation.officialId,
-            name: data.nation.name,
-            owner: data.nation.owner,
-            role: data.nation.role,
-            data: data.nation.data,
-            createdAt: data.nation.createdAt,
-          });
-        }
+        nation = data.nation;
+        // myStore.set(nationAtom, {
+        //   officialId : data.nation.officialId,
+        //   name: data.nation.name,
+        //   owner: data.nation.owner,
+        //   role: data.nation.role,
+        //   data: data.nation.data,
+        //   createdAt: data.nation.createdAt,
+        // });
+        // if (owner) {
+        //   myStore.set(sessionAtom, {...session, nation: data.nation})
+        //   myStore.set(nationAtom, {
+        //     officialId : data.nation.officialId,
+        //     name: data.nation.name,
+        //     owner: data.nation.owner,
+        //     role: data.nation.role,
+        //     data: data.nation.data,
+        //     createdAt: data.nation.createdAt,
+        //   });
+        // }
       }
     })
     .catch((error) => {
       myStore.set(loadingAtom, false);
       myStore.set(infoModalAtom, error.message);
     });
+    return nation
 };
 
 export const getNations = (searchName: string) => {

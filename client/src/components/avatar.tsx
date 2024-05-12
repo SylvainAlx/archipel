@@ -1,15 +1,15 @@
-import { useAtom } from "jotai";
-import { userAtom } from "../settings/store";
 import { RxAvatar } from "react-icons/rx";
 
-export default function Avatar() {
-  const [user] = useAtom(userAtom);
+export interface AvatarProps {
+  url: string;
+}
 
+export default function Avatar({ url }: AvatarProps) {
   return (
     <div className="animate-fadeIn h-[80px] w-[80px] flex flex-col justify-center rounded-full overflow-hidden">
-      {user.avatar != "" ? (
+      {url != "" ? (
         <img
-          src={user.avatar}
+          src={url}
           className="cursor-pointer h-full w-full hover:animate-pulse"
         ></img>
       ) : (
