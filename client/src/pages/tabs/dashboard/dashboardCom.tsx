@@ -2,7 +2,7 @@
 import { useAtom } from "jotai";
 import H1 from "../../../components/titles/h1";
 import { StringProps } from "../../../types/typProp";
-import { comsListAtom, confirmBox, nationAtom } from "../../../settings/store";
+import { comsListAtom, confirmBox, session } from "../../../settings/store";
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import Form from "../../../components/form/form";
 import Input from "../../../components/form/input";
@@ -19,7 +19,6 @@ import { getComs } from "../../../api/communication/comAPI";
 import { useTranslation } from "react-i18next";
 
 export default function DashboardCom({ text }: StringProps) {
-  const [nation] = useAtom(nationAtom);
   const [newCom, setNewCom] = useState(EmptyCom);
   const [comList] = useAtom(comsListAtom);
   const [, setConfirm] = useAtom(confirmBox);
@@ -31,8 +30,8 @@ export default function DashboardCom({ text }: StringProps) {
     }
     setNewCom({
       ...newCom,
-      originId: nation.officialId,
-      originName: nation.name,
+      originId: session.nation.officialId,
+      originName: session.nation.name,
       comType: comTypeOptions[0].id,
     });
   }, []);
@@ -109,9 +108,9 @@ export default function DashboardCom({ text }: StringProps) {
               <>
                 {comList.map((com, i) => {
                   if (
-                    (nation.role === "admin" && com.comType === 0) ||
-                    com.originId === nation._id ||
-                    com.destinationId === nation._id
+                    (session.nation.role === "admin" && com.comType === 0) ||
+                    com.originId === session.nation._id ||
+                    com.destinationId === session.nation._id
                   ) {
                     return (
                       <div
@@ -122,7 +121,7 @@ export default function DashboardCom({ text }: StringProps) {
                           <span className="text-[10px]">
                             {dateToString(com.createdAt)}
                           </span>
-                          {nation.role === "admin" &&
+                          {session.nation.role === "admin" &&
                             com.comType != 1 &&
                             com.comType != 2 && (
                               <span>origine : {com.originName}</span>
@@ -143,7 +142,7 @@ export default function DashboardCom({ text }: StringProps) {
                                 bgColor="bg-success"
                               />
                             )}
-                            {com.originId === nation._id && (
+                            {com.originId === session.nation._id && (
                               <div
                                 onClick={() => handleDelete(com._id)}
                                 className="text-lg hover:scale-110 hover:cursor-pointer transition-all"

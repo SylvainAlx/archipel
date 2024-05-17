@@ -5,7 +5,7 @@ import { User } from "./typUser";
 
 export interface Session {
   user: User;
-  nation?: Nation;
+  nation: Nation;
   jwt: string;
 }
 

@@ -3,6 +3,7 @@ import {
   IoMdAddCircleOutline,
   IoMdSettings,
   IoMdGlobe,
+  IoMdHome,
 } from "react-icons/io";
 // import { GiBlackFlag } from "react-icons/gi";
 import { RxAvatar } from "react-icons/rx";
@@ -18,8 +19,6 @@ export interface IconLinkProps {
 }
 
 export default function IconLink({ destination, text, action }: IconLinkProps) {
-  // const [user] = useAtom(userAtom);
-  // const [nation] = useAtom(nationAtom);
   const [session] = useAtom(sessionAtom);
 
   return (
@@ -27,6 +26,7 @@ export default function IconLink({ destination, text, action }: IconLinkProps) {
       className="flex flex-col items-center text-5xl md:text-3xl hover:text-secondary transition-all cursor-pointer"
       onClick={action}
     >
+      {destination === "home" && <IoMdHome />}
       {destination === "nations" && <IoMdGlobe />}
       {destination === "login" && <IoMdLogIn />}
       {destination === "register" && <IoMdAddCircleOutline />}

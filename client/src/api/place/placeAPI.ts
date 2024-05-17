@@ -4,18 +4,20 @@ import {
   infoModalAtom,
   loadingAtom,
   myStore,
-  nationAtom,
   nationPlacesListAtom,
   nationsListAtom,
+  placeFetchedAtom,
   placesListAtom,
+  session,
+  sessionAtom,
 } from "../../settings/store";
-import { EditPlaceParam } from "../../types/typAtom";
 import { Nation } from "../../types/typNation";
 import { PlacePayload } from "../../types/typPayload";
-import { Place } from "../../types/typPlace";
+import { emptyPlace, Place } from "../../types/typPlace";
 import {
   createElementOfAtomArray,
   deleteElementOfAtomArray,
+  findElementOfAtomArray,
   updateElementOfAtomArray,
 } from "../../utils/functions";
 import {
@@ -55,7 +57,7 @@ export const createNewPlace = (newPlace: PlacePayload) => {
           setNationPlacesList,
         );
         updateElementOfAtomArray(data.nation, nationsList, setNationsList);
-        myStore.set(nationAtom, data.nation);
+        myStore.set(sessionAtom, {...session, nation: data.nation})
         myStore.set(infoModalAtom, data.message);
       }
     })
@@ -67,16 +69,21 @@ export const createNewPlace = (newPlace: PlacePayload) => {
 
 export const getPlace = (id: string) => {
   myStore.set(loadingAtom, true);
+  const place = findElementOfAtomArray(id, placesList)
+  if (place === undefined || place === null) {
   getPlaceFetch(id)
     .then((data) => {
-      const updatePlace: EditPlaceParam = { ...myStore.get(editPlaceAtom) };
-      updatePlace.place = data;
-      myStore.set(editPlaceAtom, updatePlace);
+      myStore.set(placeFetchedAtom, data)
+      myStore.set(loadingAtom, false);
     })
     .catch((error) => {
       myStore.set(loadingAtom, false);
       myStore.set(infoModalAtom, error.message);
     });
+  } else {
+    myStore.set(placeFetchedAtom, emptyPlace)
+    myStore.set(loadingAtom, false);
+  }
 };
 
 export const getAllPlaces = () => {
@@ -127,7 +134,7 @@ export const deletePlace = (id: string) => {
   deletePlaceFetch(id)
     .then((resp: { place: Place; nation: Nation; message: string }) => {
       myStore.set(dataCheckedAtom, false);
-      myStore.set(nationAtom, resp.nation);
+      myStore.set(sessionAtom, {...session, nation: resp.nation})
       updateElementOfAtomArray(resp.nation, nationsList, setNationsList);
       deleteElementOfAtomArray(
         resp.place.officialId,

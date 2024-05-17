@@ -11,7 +11,7 @@ export default function Header() {
       <div className="flex flex-col md:flex-row gap-2 items-center">
         <Logo />
         <div className="flex flex-col items-center md:items-start">
-          <h2 className="text-2xl">{t("components.logo.title")}</h2>
+          <h2 className="text-3xl">{t("components.logo.title")}</h2>
           <h4 className="text-sm lg:text-md">
             {t("components.logo.subtitle")}
           </h4>

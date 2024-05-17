@@ -5,7 +5,7 @@ import {
   confirmBox,
   editPlaceAtom,
   editbox,
-  nationAtom,
+  session,
 } from "../../settings/store";
 import Button from "../buttons/button";
 import Input from "../form/input";
@@ -14,7 +14,6 @@ import { ChangeEvent, FormEvent } from "react";
 
 export default function EditBoxModal() {
   const [editBox, setEditBox] = useAtom(editbox);
-  const [nation] = useAtom(nationAtom);
   const [placeData] = useAtom(editPlaceAtom);
   const [, setConfirm] = useAtom(confirmBox);
 
@@ -25,7 +24,7 @@ export default function EditBoxModal() {
     let dernierePartie;
     switch (editBox.target) {
       case "nation":
-        const updatedNation: any = { ...nation };
+        const updatedNation: any = { ...session.nation };
         objetCourant = updatedNation;
         for (let i = 0; i < parties.length - 1; i++) {
           if (typeof objetCourant === "object" && objetCourant !== null) {

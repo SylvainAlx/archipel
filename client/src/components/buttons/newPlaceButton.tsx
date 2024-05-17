@@ -2,12 +2,7 @@ import { FaCoins } from "react-icons/fa6";
 import { NEW_PLACE_COST, placesTypeList } from "../../settings/consts";
 import Button from "./button";
 import { Place, emptyPlace } from "../../types/typPlace";
-import {
-  myStore,
-  newPlaceAtom,
-  selectedNationAtom,
-} from "../../settings/store";
-import { useAtom } from "jotai";
+import { myStore, newPlaceAtom, session } from "../../settings/store";
 import { addCredits } from "../../utils/functions";
 import { useTranslation } from "react-i18next";
 
@@ -17,14 +12,13 @@ export interface newPlaceProps {
 }
 
 export default function NewPlaceButton({ parentId, owner }: newPlaceProps) {
-  const [selectedNation] = useAtom(selectedNationAtom);
   const { t } = useTranslation();
 
   const handleClick = () => {
     const newPlace: Place = {
       officialId: emptyPlace.officialId,
       parentId,
-      nation: selectedNation.officialId,
+      nation: session.nation.officialId,
       points: emptyPlace.points,
       type: placesTypeList[0].id,
       slots: emptyPlace.slots,
@@ -39,7 +33,7 @@ export default function NewPlaceButton({ parentId, owner }: newPlaceProps) {
 
   return (
     <>
-      {selectedNation.data.roleplay.credits >= NEW_PLACE_COST
+      {session.nation.data.roleplay.credits >= NEW_PLACE_COST
         ? owner && (
             <Button
               text=""

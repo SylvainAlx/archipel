@@ -6,6 +6,7 @@ import Form from "../components/form/form";
 import TextArea from "../components/form/textArea";
 import { useTranslation } from "react-i18next";
 import { recoveryUser } from "../api/user/userAPI";
+import { useNavigate } from "react-router-dom";
 
 export default function Recovery() {
   const [name, setName] = useState("");
@@ -14,6 +15,7 @@ export default function Recovery() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [passwordsMatch, setPasswordsMatch] = useState(true);
   const { t } = useTranslation();
+  const navigate = useNavigate();
 
   const handleChange = (
     e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>,
@@ -30,6 +32,7 @@ export default function Recovery() {
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     recoveryUser({ name, password, recovery });
+    navigate("/login");
   };
 
   return (

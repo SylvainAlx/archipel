@@ -1,6 +1,11 @@
 import H1 from "../components/titles/h1";
 import NationIdentity from "../components/nations/dashboard/nationIdentity";
-import { confirmBox, myStore, sessionAtom } from "../settings/store";
+import {
+  confirmBox,
+  myStore,
+  nationFetchedAtom,
+  sessionAtom,
+} from "../settings/store";
 import { useAtom } from "jotai";
 import Places from "../components/nations/dashboard/places";
 import { useTranslation } from "react-i18next";
@@ -9,13 +14,12 @@ import Diplomacy from "../components/nations/dashboard/diplomacy";
 import Links from "../components/nations/dashboard/links";
 import { useEffect, useState } from "react";
 import Button from "../components/buttons/button";
-import TileContainer from "../components/tileContainer";
 import { useNavigate, useParams } from "react-router-dom";
 import { getNation } from "../api/nation/nationAPI";
-import { EmptyNation } from "../types/typNation";
+import Citizens from "../components/nations/dashboard/citizens";
 
 export default function Nation() {
-  const [nation, setNation] = useState(EmptyNation);
+  const [nation] = useAtom(nationFetchedAtom);
   const [session] = useAtom(sessionAtom);
   const [owner, setOwner] = useState(false);
   const { t } = useTranslation();
@@ -32,10 +36,15 @@ export default function Nation() {
   }, [session.user, nation, param.id]);
 
   useEffect(() => {
-    if (nation.officialId != param.id && param.id != undefined) {
-      setNation(getNation(param.id));
+    if (
+      nation != undefined &&
+      nation.officialId != param.id &&
+      param.id != undefined
+    ) {
+      getNation(param.id);
     }
-  }, [param.id, owner, nation.officialId]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [param.id, owner]);
 
   const handleDelete = () => {
     myStore.set(confirmBox, {
@@ -48,8 +57,8 @@ export default function Nation() {
 
   return (
     <>
-      <H1 text={t("pages.nation.title")} />
-      {nation.officialId != "" ? (
+      <H1 text={nation.name} />
+      {nation != undefined ? (
         <>
           <section className="w-full flex flex-wrap gap-8 items-start justify-between">
             <Score selectedNation={nation} owner={owner} />
@@ -57,19 +66,16 @@ export default function Nation() {
             <NationIdentity selectedNation={nation} owner={owner} />
             <Places selectedNation={nation} owner={owner} />
             <Diplomacy />
-            <TileContainer
-              children={
-                <section className="flex flex-col items-center gap-4">
-                  {owner && (
-                    <Button
-                      text={t("components.buttons.deleteNation")}
-                      bgColor="bg-danger"
-                      click={handleDelete}
-                    />
-                  )}
-                </section>
-              }
-            />
+            <Citizens />
+          </section>
+          <section className="pt-10 flex flex-col items-center gap-4">
+            {owner && (
+              <Button
+                text={t("components.buttons.deleteNation")}
+                bgColor="bg-danger"
+                click={handleDelete}
+              />
+            )}
           </section>
         </>
       ) : (

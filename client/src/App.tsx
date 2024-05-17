@@ -12,7 +12,7 @@ import Header from "./layouts/header";
 import Footer from "./layouts/footer";
 import "./App.css";
 import { useAtom } from "jotai";
-import { sessionAtom } from "./settings/store";
+import { nationFetchedAtom, sessionAtom } from "./settings/store";
 import { useEffect, useState } from "react";
 import ModalsRouter from "./router/modalsRouter";
 import { ArchipelRoute } from "./types/typReact";
@@ -21,9 +21,8 @@ import { authentification } from "./api/user/userAPI";
 import { getNation } from "./api/nation/nationAPI";
 
 export default function App() {
-  // const [user] = useAtom(userAtom);
-  // const [isLogged] = useAtom(isLoggedAtom);
-  const [session] = useAtom(sessionAtom);
+  const [session, setSession] = useAtom(sessionAtom);
+  const [nation] = useAtom(nationFetchedAtom);
   const [openPrivateRoads, setOpenPrivateRoads] = useState(false);
 
   const navigate = useNavigate();
@@ -36,26 +35,20 @@ export default function App() {
   useEffect(() => {
     if (session.user.officialId != "") {
       if (session.user.citizenship.nationId != "") {
-        getNation(
-          session.user.citizenship.nationId,
-          session.user.citizenship.nationOwner,
-        );
+        getNation(session.user.citizenship.nationId);
       }
       navigate(`/citizen/${session.user.officialId}`);
       setOpenPrivateRoads(true);
     } else {
       setOpenPrivateRoads(false);
     }
-  }, [session]);
+  }, [session.user]);
 
-  // useEffect(() => {
-  //   if (isLogged != "") {
-  //     navigate(`/citizen/${user.officialId}`);
-  //     setOpenPrivateRoads(true);
-  //   } else {
-  //     setOpenPrivateRoads(false);
-  //   }
-  // }, [isLogged]);
+  useEffect(() => {
+    if (nation.officialId === session.user.citizenship.nationId) {
+      setSession({ ...session, nation });
+    }
+  }, [nation]);
 
   return (
     <>

@@ -5,7 +5,6 @@ import TileContainer from "../../tileContainer";
 import H3 from "../../titles/h3";
 import { SelectedNationProps } from "../../../types/typProp";
 import EditIcon from "../../editIcon";
-import H2 from "../../titles/h2";
 import { Suspense, lazy, useEffect, useState } from "react";
 import {
   imageAtom,
@@ -51,20 +50,19 @@ export default function NationIdentity({
     <TileContainer
       children={
         <section className="flex flex-col items-center gap-4">
-          <H2 text={t("pages.nation.nationIdentity.title")} />
           <DashTile
-            title={t("pages.nation.nationIdentity.generalInformations")}
+            title={t("pages.nation.nationIdentity.title")}
             className="w-full min-w-[300px] flex-grow"
             children={
               <>
                 <div className="w-full p-4 flex flex-col gap-2 items-center">
-                  <div className="flex flex-col lg:flex-row justify-center items-center lg:flex-wrap gap-6">
+                  <div className="flex flex-col sm:flex-row justify-center items-center sm:flex-wrap gap-6">
                     <div
                       onClick={() => handleClick(selectedNation.data.url.flag)}
                       className="relative cursor-zoom-in"
                     >
                       <div
-                        className={`w-[200px] h-[140px] bg-complementary flex items-center justify-center gap-2`}
+                        className={`w-[200px] h-[140px] flex items-center justify-center gap-2`}
                       >
                         {selectedNation.data.url.flag ? (
                           <Suspense fallback={<Spinner />}>
@@ -96,7 +94,7 @@ export default function NationIdentity({
                       className="relative cursor-zoom-in"
                     >
                       <div
-                        className={`w-[140px] h-[140px] bg-complementary flex items-center justify-center gap-2`}
+                        className={`w-[140px] h-[140px] flex items-center justify-center gap-2`}
                       >
                         {selectedNation.data.url.coatOfArms ? (
                           <Suspense fallback={<Spinner />}>

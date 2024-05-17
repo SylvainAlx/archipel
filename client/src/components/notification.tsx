@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
 import { MdNotifications } from "react-icons/md";
 import { differenceEnMinutes } from "../utils/functions";
-import { confirmBox, myStore, selectedNationAtom } from "../settings/store";
-import { useAtom } from "jotai";
+import { confirmBox, myStore, session } from "../settings/store";
 
 export interface NotificationProps {
   text?: string;
@@ -10,29 +9,29 @@ export interface NotificationProps {
 }
 
 export default function Notification({ text }: NotificationProps) {
-  const [selectedNation] = useAtom(selectedNationAtom);
   const [totalReward, setTotalReward] = useState(0);
 
   useEffect(() => {
     const reward = differenceEnMinutes(
-      selectedNation.data.roleplay.lastUpdated,
+      session.nation.data.roleplay.lastUpdated,
     );
     if (reward > 0) {
       const bonus = Math.ceil(
-        (reward * selectedNation.data.roleplay.points) / 10,
+        (reward * session.nation.data.roleplay.points) / 10,
       );
       setTotalReward(reward + bonus);
     } else {
       setTotalReward(0);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
-    selectedNation.data.roleplay.lastUpdated,
-    selectedNation.data.roleplay.points,
+    session.nation.data.roleplay.lastUpdated,
+    session.nation.data.roleplay.points,
     totalReward,
   ]);
 
   const updateNation = () => {
-    const updatedNation = { ...selectedNation };
+    const updatedNation = { ...session.nation };
     updatedNation.data.roleplay.credits += totalReward;
     updatedNation.data.roleplay.lastUpdated = new Date();
     myStore.set(confirmBox, {

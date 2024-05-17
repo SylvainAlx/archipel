@@ -4,16 +4,16 @@ import Globe from "react-globe.gl";
 import { StringProps } from "../../../types/typProp";
 import H1 from "../../../components/titles/h1";
 import { useAtom } from "jotai";
-import { nationsListAtom, selectedNationAtom } from "../../../settings/store";
+import { nationsListAtom } from "../../../settings/store";
 import { useEffect, useRef, useState } from "react";
 import Button from "../../../components/buttons/button";
 import { useNavigate } from "react-router-dom";
 import { GiBlackFlag } from "react-icons/gi";
 import { getNations } from "../../../api/nation/nationAPI";
+import { EmptyNation } from "../../../types/typNation";
 
 export default function NationGlobe({ text }: StringProps) {
   const [nationsList] = useAtom(nationsListAtom);
-  const [selectedNation, setSelectedNation] = useAtom(selectedNationAtom);
   const [showInfos, setShowInfos] = useState<{
     id: string;
     flag: string;
@@ -24,6 +24,7 @@ export default function NationGlobe({ text }: StringProps) {
   const container = useRef<HTMLDivElement>(null);
   const globe = useRef<any>(null);
   const [largeur, setLargeur] = useState<number | undefined>(undefined);
+  const [nation, setNation] = useState(EmptyNation);
 
   const navigate = useNavigate();
 
@@ -52,7 +53,7 @@ export default function NationGlobe({ text }: StringProps) {
   }, []);
 
   const handleClick = () => {
-    navigate(`/nation/${selectedNation.officialId}`);
+    navigate(`/nation/${nation.officialId}`);
   };
 
   return (
@@ -108,7 +109,7 @@ export default function NationGlobe({ text }: StringProps) {
           }
           labelColor={() => "rgb(0, 129, 138)"}
           onLabelClick={(d: any) => {
-            setSelectedNation(d);
+            setNation(d);
             setShowInfos({
               id: d._id,
               flag: d.data.url.flag,

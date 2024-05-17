@@ -2,15 +2,17 @@ import {
   infoModalAtom,
   loadingAtom,
   myStore,
-  nationAtom,
+  nationFetchedAtom,
   nationsListAtom,
   nationsRoleplayDataAtom,
-  userAtom,
+  session,
+  sessionAtom,
 } from "../../settings/store";
 import { EmptyNation, Nation, NewNationPayload } from "../../types/typNation";
 
 import {
   deleteElementOfAtomArray,
+  findElementOfAtomArray,
   updateElementOfAtomArray,
 } from "../../utils/functions";
 import {
@@ -31,17 +33,10 @@ export const createNation = (payload: NewNationPayload) => {
   .then((data) => {
     myStore.set(loadingAtom, false);
     if (data.nation) {
-      myStore.set(nationsListAtom, [EmptyNation]);
-      myStore.set(nationAtom, {
-        officialId: data.nation.officialId,
-        name: data.nation.name,
-        owner: data.nation.owner,
-        role: data.nation.role,
-        data: data.nation.data,
-        createdAt: data.nation.createdAt,
-      });
+      myStore.set(nationsListAtom, [...nationsList, data.nation]);
+      myStore.set(sessionAtom, {...session, nation: data.nation})
       if (data.user){
-        myStore.set(userAtom, data.user)
+        myStore.set(sessionAtom, {...session, user: data.user})
       }
     } else {
       myStore.set(loadingAtom, false);
@@ -55,39 +50,27 @@ export const createNation = (payload: NewNationPayload) => {
 }
 
 export const getNation = (id: string) => {
-  let nation = EmptyNation;
+  
   myStore.set(loadingAtom, true);
-  getOneNationFetch(id)
+  const nation = findElementOfAtomArray(id, nationsList)
+  if (nation === undefined || nation === null) {
+    getOneNationFetch(id)
     .then((data) => {
       myStore.set(loadingAtom, false);
-      if (data.nation) {
-        nation = data.nation;
-        // myStore.set(nationAtom, {
-        //   officialId : data.nation.officialId,
-        //   name: data.nation.name,
-        //   owner: data.nation.owner,
-        //   role: data.nation.role,
-        //   data: data.nation.data,
-        //   createdAt: data.nation.createdAt,
-        // });
-        // if (owner) {
-        //   myStore.set(sessionAtom, {...session, nation: data.nation})
-        //   myStore.set(nationAtom, {
-        //     officialId : data.nation.officialId,
-        //     name: data.nation.name,
-        //     owner: data.nation.owner,
-        //     role: data.nation.role,
-        //     data: data.nation.data,
-        //     createdAt: data.nation.createdAt,
-        //   });
-        // }
-      }
+      myStore.set(nationFetchedAtom, data.nation)
+        myStore.set(loadingAtom, false);
+        return nation
     })
     .catch((error) => {
+      myStore.set(nationFetchedAtom, EmptyNation)
       myStore.set(loadingAtom, false);
       myStore.set(infoModalAtom, error.message);
+      return nation
     });
-    return nation
+  } else {
+    myStore.set(loadingAtom, false);
+    myStore.set(nationFetchedAtom, EmptyNation)
+  }
 };
 
 export const getNations = (searchName: string) => {
@@ -111,7 +94,7 @@ export const updateNation = (payload: Nation) => {
     .then((resp) => {
       myStore.set(loadingAtom, false);
       if (resp.nation) {
-        myStore.set(nationAtom, resp.nation);
+        myStore.set(sessionAtom, {...session, nation: resp.nation})
         updateElementOfAtomArray(resp.nation, nationsList, setNationsList);
       } else {
         myStore.set(infoModalAtom, resp.message);
@@ -124,16 +107,17 @@ export const updateNation = (payload: Nation) => {
 };
 
 export const deleteSelfNation = () => {
-  const nation = myStore.get(nationAtom);
   myStore.set(loadingAtom, true);
   DeleteSelfFetch()
     .then((resp) => {
       myStore.set(loadingAtom, false);
-      deleteElementOfAtomArray(nation.officialId, nationsList, setNationsList);
+      if (session.nation) {
+        deleteElementOfAtomArray(session.nation.officialId, nationsList, setNationsList);
+      }
       myStore.set(infoModalAtom, resp.message);
-      myStore.set(nationAtom, EmptyNation);
+      myStore.set(sessionAtom, {...session, nation: EmptyNation})
       if (resp.user) {
-        myStore.set(userAtom, resp.user)
+        myStore.set(sessionAtom, {...session, user: resp.user})
       }
     })
     .catch((error) => {

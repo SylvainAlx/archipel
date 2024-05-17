@@ -73,23 +73,23 @@ export const login = async (req, res) => {
       "officialId name surname avatar password role citizenship createdAt",
     );
     if (!user) {
-      return res.status(404).json({ message: "Utilisateur introuvable" });
+      return res.status(404).json({ infoType: "user" });
     }
     user.comparePassword(password, async (error, isMatch) => {
       if (error) {
         return res.status(500).json({
-          message: "Erreur lors du décryptage du mot de passe",
-          erreur: error,
+          infoType: "error",
+          error,
         });
       }
       if (!isMatch) {
-        return res.status(401).json({ message: "Mot de passe invalide" });
+        return res.status(401).json({ infoType: "password" });
       }
       const jwt = user.createJWT();
-      res.status(200).json({ user, message: "bienvenue " + name, jwt });
+      res.status(200).json({ user, jwt, infoType: "ok" });
     });
   } catch (error) {
-    res.status(400).json({ message: "Connexion impossible", erreur: error });
+    res.status(500).json({ error, infoType: "error" });
   }
 };
 

@@ -4,11 +4,8 @@ import {
   infoModalAtom,
   loadingAtom,
   myStore,
-  nationAtom,
   nationsListAtom,
-  ownerAtom,
   recoveryKey,
-  selectedNationAtom,
 } from "../../settings/store";
 import { EmptyNation } from "../../types/typNation";
 import { GET_JWT } from "../../utils/functions";
@@ -33,15 +30,15 @@ export const register = ({ name, password }: AuthPayload) => {
         myStore.set(recoveryKey, data.recovery);
         myStore.set(nationsListAtom, [EmptyNation]);
         myStore.set(comsListAtom, [EmptyCom]);
-        myStore.set(nationAtom, {
-          _id: data.nation._id,
-          officialId: data.nation.officialId,
-          name: data.nation.name,
-          owner: data.nation.owner,
-          role: data.nation.role,
-          data: data.nation.data,
-          createdAt: data.nation.createdAt,
-        });
+        // myStore.set(nationAtom, {
+        //   _id: data.nation._id,
+        //   officialId: data.nation.officialId,
+        //   name: data.nation.name,
+        //   owner: data.nation.owner,
+        //   role: data.nation.role,
+        //   data: data.nation.data,
+        //   createdAt: data.nation.createdAt,
+        // });
       } else {
         myStore.set(loadingAtom, false);
         myStore.set(infoModalAtom, "création impossible : " + data.message);
@@ -61,36 +58,35 @@ export const authentification = () => {
       .then((data) => {
         myStore.set(loadingAtom, false);
         if (data.name != undefined) {
-          myStore.set(nationAtom, {
-            _id: data._id,
-            officialId: data.officialId,
-            name: data.name,
-            owner: data.nation.owner,
-            role: data.role,
-            data: data.data,
-            createdAt: data.createdAt,
-          });
+          // myStore.set(nationAtom, {
+          //   _id: data._id,
+          //   officialId: data.officialId,
+          //   name: data.name,
+          //   owner: data.nation.owner,
+          //   role: data.role,
+          //   data: data.data,
+          //   createdAt: data.createdAt,
+          // });
         } else {
-          myStore.set(nationAtom, EmptyNation);
+          // myStore.set(nationAtom, EmptyNation);
           myStore.set(loadingAtom, false);
           localStorage.removeItem("jwt");
         }
       })
       .catch((error) => {
-        myStore.set(nationAtom, EmptyNation);
+        // myStore.set(nationAtom, EmptyNation);
         myStore.set(loadingAtom, false);
         console.log(error);
       });
   } else {
-    myStore.set(nationAtom, EmptyNation);
+    // myStore.set(nationAtom, EmptyNation);
   }
 };
 
 export const logout = () => {
   myStore.set(infoModalAtom, "déconnexion effectuée");
-  myStore.set(nationAtom, EmptyNation);
-  myStore.set(selectedNationAtom, EmptyNation);
-  myStore.set(ownerAtom, false);
+  // myStore.set(nationAtom, EmptyNation);
+  // myStore.set(selectedNationAtom, EmptyNation);
   localStorage.removeItem("jwt");
 };
 
@@ -102,15 +98,15 @@ export const login = ({ name, password }: AuthPayload) => {
       if (data.nation) {
         localStorage.setItem("jwt", data.jwt);
         myStore.set(nationsListAtom, [EmptyNation]);
-        myStore.set(nationAtom, {
-          _id: data.nation._id,
-          officialId: data.nation.officialId,
-          name: data.nation.name,
-          owner: data.nation.owner,
-          role: data.nation.role,
-          data: data.nation.data,
-          createdAt: data.nation.createdAt,
-        });
+        // myStore.set(nationAtom, {
+        //   _id: data.nation._id,
+        //   officialId: data.nation.officialId,
+        //   name: data.nation.name,
+        //   owner: data.nation.owner,
+        //   role: data.nation.role,
+        //   data: data.nation.data,
+        //   createdAt: data.nation.createdAt,
+        // });
       } else {
         myStore.set(loadingAtom, false);
         myStore.set(infoModalAtom, data.message);

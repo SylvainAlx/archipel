@@ -41,7 +41,7 @@
     },
     "recovery": {
       "title": "password reset",
-      "placeholderName": "Nation name",
+      "placeholderName": "User name",
       "recoveryKey": "Recovery key",
       "newPassword": "New password",
       "confirmPassword": "Confirm new password",
@@ -62,6 +62,7 @@
   },
   "components": {
     "buttons": {
+      "home": "HOME",
       "login": "SIGN IN",
       "logout": "LOGOUT",
       "register": "SIGN UP",
@@ -83,8 +84,8 @@
       "newPlace": "new location"
     },
     "logo": {
-      "title": "VIRTUAL NATIONS",
-      "subtitle": ""
+      "title": "ARCHIPEL",
+      "subtitle": "VIRTUAL NATIONS"
     },
     "modals": {
       "confirmModal": {
@@ -150,5 +151,17 @@
         "other": "other"
       }
     }
+  },
+  "toasts": {
+    "signIn": "Sign In successful",
+    "signUp": "Sign Up Successful",
+    "logout": "Logout successful",
+    "delete": "Delete successful",
+    "save": "Save successful",
+    "add": "Add successful",
+    "new": "Creation successful",
+    "badUser": "Unknown user",
+    "badPassword": "Bad password",
+    "serverError": "Server error"
   }
 }

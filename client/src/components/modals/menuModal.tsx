@@ -12,7 +12,6 @@ export default function MenuModal() {
         onClick={() => myStore.set(showMenuAtom, false)}
         className="flex flex-col items-center gap-2"
       >
-        <Button text={t("pages.home.title")} click={() => navigate("/")} />
         <Button
           text={t("pages.legalNotice.title")}
           click={() => navigate("/legalnotice")}

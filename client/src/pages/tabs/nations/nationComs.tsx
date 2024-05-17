@@ -2,7 +2,7 @@
 import { useEffect } from "react";
 import H1 from "../../../components/titles/h1";
 import { StringProps } from "../../../types/typProp";
-import { comsListAtom, confirmBox, nationAtom } from "../../../settings/store";
+import { comsListAtom, confirmBox, session } from "../../../settings/store";
 import { useAtom } from "jotai";
 import Button from "../../../components/buttons/button";
 import { IoMdTrash } from "react-icons/io";
@@ -11,7 +11,6 @@ import { dateToString } from "../../../utils/functions";
 import { getComs } from "../../../api/communication/comAPI";
 
 export default function NationComs({ text }: StringProps) {
-  const [nation] = useAtom(nationAtom);
   const [comsList] = useAtom(comsListAtom);
   const [, setConfirm] = useAtom(confirmBox);
 
@@ -49,7 +48,7 @@ export default function NationComs({ text }: StringProps) {
                 >
                   <div className="flex justify-between items-center">
                     <span className="w-1/4 flex gap-1 items-center">
-                      {nation.role === "admin" && (
+                      {session.nation.role === "admin" && (
                         <div
                           onClick={() => handleDelete(com._id)}
                           className="text-lg hover:scale-110 hover:cursor-pointer transition-all"

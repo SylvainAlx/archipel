@@ -10,6 +10,7 @@ import {
 import { LabelId, Nation } from "../types/typNation";
 import { Place } from "../types/typPlace";
 import { SetAtom } from "../settings/store";
+import { errorMessage, signInOk } from "./toasts";
 
 export const GET_JWT = () => {
   const jwt = localStorage.getItem("jwt")
@@ -21,6 +22,12 @@ export const dateToString = (date: Date) => {
   const createdAtDate: Date = new Date(date);
   return createdAtDate.toLocaleDateString("fr");
 };
+
+export const findElementOfAtomArray = (id: string,
+  atom: any[]) => {
+    const element = atom.find(objet => objet.officialId === id);
+    return element
+}
 
 export const deleteElementOfAtomArray = (
   id: string,
@@ -55,7 +62,12 @@ export const updateElementOfAtomArray = (
   const tempArray = atom.map((objet) =>
     objet.officialId === payload.officialId ? payload : objet,
   );
-  setAtom(tempArray);
+  if (tempArray.length === 0){
+    createElementOfAtomArray(payload, atom, setAtom)
+  } else {
+    setAtom(tempArray);
+  }
+  
 };
 
 export const getPoliticalSide = (value: number) => {
@@ -176,3 +188,17 @@ export const createTagRegime = (id: number) => {
   });
   return tagRegime;
 };
+
+export const displayUserInfoByType = (type: string) => {
+  if (type === "ok"){
+    signInOk()
+  } else if (type === "error"){
+    errorMessage(i18n.t("toasts.serverError"))
+  } else if (type === "user") {
+    errorMessage(i18n.t("toasts.badUser"))
+  } else if (type === "password") {
+    errorMessage(i18n.t("toasts.badPassword"))
+  } else {
+    errorMessage(i18n.t("toasts.serverError"))
+  }
+}

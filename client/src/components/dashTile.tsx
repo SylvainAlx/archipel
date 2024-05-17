@@ -10,11 +10,13 @@ export default function DashTile({
   className,
 }: DashTileProps) {
   return (
-    <section
-      className={`min-w-[300px] animate-fadeIn bg-complementary rounded p-2 flex flex-col items-center flex-grow gap-3 ${className && className}`}
+    <fieldset
+      className={`min-w-[300px] animate-fadeIn rounded p-2 flex flex-col items-center flex-grow gap-3 border-[1px] border-solid border-secondary ${className && className}`}
     >
-      <b>{title}</b>
+      {title != "" && (
+        <legend className="px-2 text-center text-secondary">{title}</legend>
+      )}
       {children}
-    </section>
+    </fieldset>
   );
 }

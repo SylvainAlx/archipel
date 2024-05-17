@@ -4,7 +4,6 @@ import IdTag from "../tags/idTag";
 import PointTag from "../tags/pointTag";
 import PopulationTag from "../tags/populationTag";
 import EyeButton from "../buttons/eyeButton";
-import { myStore, selectedNationAtom } from "../../settings/store";
 import { useNavigate } from "react-router-dom";
 import RegimeTag from "../tags/regimeTag";
 import PlaceTag from "../tags/placeTag";
@@ -13,7 +12,6 @@ import RoleTag from "../tags/roleTag";
 export default function PublicNationTile(nation: Nation) {
   const navigate = useNavigate();
   const handleClick = () => {
-    myStore.set(selectedNationAtom, { ...nation });
     navigate(`/nation/${nation.officialId}`);
   };
   return (

@@ -41,7 +41,7 @@
     },
     "recovery": {
       "title": "réinitialisation du mot de passe",
-      "placeholderName": "Nom de la nation",
+      "placeholderName": "Nom d'utilisateur",
       "recoveryKey": "Phrase de récupération",
       "newPassword": "Nouveau mot de passe",
       "confirmPassword": "Confirmez le mot de passe",
@@ -62,6 +62,7 @@
   },
   "components": {
     "buttons": {
+      "home": "ACCUEIL",
       "login": "SE CONNECTER",
       "logout": "SE DÉCONNECTER",
       "register": "S'ENREGISTRER",
@@ -83,8 +84,8 @@
       "newPlace": "nouveau lieu"
     },
     "logo": {
-      "title": "NATIONS VIRTUELLES",
-      "subtitle": ""
+      "title": "ARCHIPEL",
+      "subtitle": "NATIONS VIRTUELLES"
     },
     "modals": {
       "confirmModal": {
@@ -150,5 +151,17 @@
         "other": "autre"
       }
     }
+  },
+  "toasts": {
+    "signIn": "Connexion réussie",
+    "signUp": "Inscription réussie",
+    "logout": "Déconnexion réussie",
+    "delete": "Suppression réussie",
+    "save": "Sauvegarde effectuée",
+    "add": "Ajout effectué",
+    "new": "Création réussie",
+    "badUser": "Utilisateur inconnu",
+    "badPassword": "Mot de passe erroné",
+    "serverError": "Erreur serveur"
   }
 }

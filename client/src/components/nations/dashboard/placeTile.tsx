@@ -3,7 +3,7 @@ import {
   editPlaceAtom,
   myStore,
   nationPlacesListAtom,
-  selectedNationAtom,
+  session,
 } from "../../../settings/store";
 import { useAtom } from "jotai";
 import PointTag from "../../tags/pointTag";
@@ -28,7 +28,6 @@ export interface PlaceTileProp {
 
 export default function PlaceTile({ place, owner }: PlaceTileProp) {
   const { t } = useTranslation();
-  const [selectedNation] = useAtom(selectedNationAtom);
   const [nationPlacesList] = useAtom(nationPlacesListAtom);
   const [childrenStats, setChildrenStats] = useState({
     points: 0,
@@ -73,7 +72,7 @@ export default function PlaceTile({ place, owner }: PlaceTileProp) {
         <h3 className="w-full flex justify-between flex-wrap">
           <div className="text-xl flex items-center gap-2">
             <span className="text-lg text-info">
-              {place.officialId === selectedNation.data.roleplay.capital && (
+              {place.officialId === session.nation.data.roleplay.capital && (
                 <GiCapitol />
               )}
             </span>

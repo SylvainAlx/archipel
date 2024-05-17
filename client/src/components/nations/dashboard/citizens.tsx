@@ -1,20 +1,20 @@
-import TileContainer from "../../tileContainer";
-import DevFlag from "../../devFlag";
 import { useTranslation } from "react-i18next";
+import TileContainer from "../../tileContainer";
 import DashTile from "../../dashTile";
+import DevFlag from "../../devFlag";
 
-export default function Diplomacy() {
+export default function Citizens() {
   const { t } = useTranslation();
-
   return (
     <TileContainer
       children={
         <DashTile
-          title={t("pages.nation.simulation.diplomacy")}
+          title={t("pages.nation.simulation.citizens")}
+          className="w-full my-2"
           children={
-            <section className="flex flex-col items-center gap-4">
+            <>
               <DevFlag />
-            </section>
+            </>
           }
         />
       }

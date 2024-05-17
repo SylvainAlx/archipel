@@ -1,7 +1,6 @@
 import { Suspense, lazy, useEffect, useState } from "react";
 import { SelectedNationProps } from "../../../types/typProp";
 import TileContainer from "../../tileContainer";
-import H2 from "../../titles/h2";
 import { nationPlacesListAtom } from "../../../settings/store";
 import { useAtom } from "jotai";
 import { getNationPlaces } from "../../../api/place/placeAPI";
@@ -32,9 +31,8 @@ export default function Places({ selectedNation, owner }: SelectedNationProps) {
     <TileContainer
       children={
         <section className="flex flex-col items-center gap-4">
-          <H2 text={t("pages.nation.simulation.places")} />
           <DashTile
-            title=""
+            title={t("pages.nation.simulation.places")}
             className="w-full min-w-[300px] flex-grow"
             children={
               <div className="w-full flex flex-col gap-2 items-center">

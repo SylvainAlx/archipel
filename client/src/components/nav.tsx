@@ -13,6 +13,11 @@ export default function Nav() {
   return (
     <>
       <IconLink
+        destination="home"
+        text={t("components.buttons.home")}
+        action={() => navigate(`/`)}
+      />
+      <IconLink
         destination="nations"
         text={t("components.buttons.explore")}
         action={() => navigate(`/nations`)}

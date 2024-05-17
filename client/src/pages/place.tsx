@@ -1,14 +1,14 @@
 import {
   editPlaceAtom,
+  nationFetchedAtom,
   nationPlacesListAtom,
-  selectedNationAtom,
+  placeFetchedAtom,
 } from "../settings/store";
 import { useAtom } from "jotai";
 import { Suspense, lazy, useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { getPlace } from "../api/place/placeAPI";
 import IdTag from "../components/tags/idTag";
-import DashTile from "../components/dashTile";
 import PlaceTag from "../components/tags/placeTag";
 import {
   getPlaceListByType,
@@ -20,18 +20,19 @@ import Spinner from "../components/loading/spinner";
 import EditIcon from "../components/editIcon";
 import H2 from "../components/titles/h2";
 import ParentButton from "../components/buttons/parentButton";
-import DevFlag from "../components/devFlag";
 import { useTranslation } from "react-i18next";
 import TreeTag from "../components/tags/treeTag";
+import { getNation } from "../api/nation/nationAPI";
 
 export default function Place() {
-  const location = useLocation();
   const navigate = useNavigate();
   const { t } = useTranslation();
 
   const [data, setData] = useAtom(editPlaceAtom);
-  const [selectedNation] = useAtom(selectedNationAtom);
+  const [nation] = useAtom(nationFetchedAtom);
+  const [place] = useAtom(placeFetchedAtom);
   const [nationPlacesList] = useAtom(nationPlacesListAtom);
+  const param = useParams();
   const [refresh, setRefresh] = useState(false);
   const [haveChildren, setHaveChildren] = useState(false);
   const PlaceTile = lazy(
@@ -39,9 +40,7 @@ export default function Place() {
   );
 
   useEffect(() => {
-    const param = location.pathname.split("/");
-    const id = param[param.length - 1];
-    if (data.place.officialId != id && id != undefined) {
+    if (data.place.officialId != param.id && param.id != undefined) {
       let Ok = false;
       nationPlacesList.forEach((place) => {
         if (place.officialId === data.place.parentId) {
@@ -50,11 +49,17 @@ export default function Place() {
         }
       });
       if (!Ok) {
-        getPlace(id);
+        getPlace(param.id);
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [refresh, nationPlacesList]);
+
+  useEffect(() => {
+    if (place.officialId != "") {
+      getNation(place.nation);
+    }
+  }, [place]);
 
   const handleClick = () => {
     if (data.place.nation === data.place.parentId) {
@@ -98,18 +103,14 @@ export default function Place() {
               label={getPlaceName(
                 nationPlacesList,
                 data.place.parentId,
-                selectedNation.name,
+                nation.name,
               )}
             />
 
             {data.owner && (
               <EditIcon
                 target="place"
-                param={getPlaceListByType(
-                  selectedNation,
-                  nationPlacesList,
-                  [0, 1],
-                )}
+                param={getPlaceListByType(nation, nationPlacesList, [0, 1])}
                 path="parentId"
               />
             )}
@@ -136,7 +137,7 @@ export default function Place() {
             })}
           {!haveChildren && (
             <em className="text-center">
-              {t("pages.dashboard.tabs.dashboard.simulation.noPlaces")}
+              {t("pages.nation.simulation.noPlaces")}
             </em>
           )}
         </div>
@@ -146,17 +147,6 @@ export default function Place() {
         {/* </>
         )} */}
       </section>
-      {data.place.type === 2 && (
-        <DashTile
-          title={t("pages.dashboard.tabs.dashboard.simulation.citizens")}
-          className="w-full my-2"
-          children={
-            <>
-              <DevFlag />
-            </>
-          }
-        />
-      )}
     </>
   );
 }

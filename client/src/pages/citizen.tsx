@@ -1,57 +1,58 @@
 import { useAtom } from "jotai";
 import H1 from "../components/titles/h1";
 import {
+  citizenFetchAtom,
   confirmBox,
   myStore,
+  nationFetchedAtom,
   newNationAtom,
-  selectedNationAtom,
   sessionAtom,
 } from "../settings/store";
 import Button from "../components/buttons/button";
 import { useNavigate, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import Avatar from "../components/avatar";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { getOneUser } from "../api/user/userAPI";
 import DashTile from "../components/dashTile";
 import TileContainer from "../components/tileContainer";
-import { EmptyNation, emptyNewNationPayload } from "../types/typNation";
+import { emptyNewNationPayload } from "../types/typNation";
 import { getNation } from "../api/nation/nationAPI";
-import { emptyUser } from "../types/typUser";
+import IdTag from "../components/tags/idTag";
 
 export default function Citizen() {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const param = useParams();
 
-  const [user, setUser] = useState(emptyUser);
-  const [nation, setNation] = useState(EmptyNation);
+  const [citizen, setCitizen] = useAtom(citizenFetchAtom);
+  const [nation] = useAtom(nationFetchedAtom);
   const [session] = useAtom(sessionAtom);
 
   useEffect(() => {
     if (param.id) {
       if (session.user.officialId === param.id) {
-        setUser(session.user);
+        setCitizen(session.user);
       } else {
-        setUser(getOneUser(param.id));
+        getOneUser(param.id);
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [param.id, session.user]);
 
   useEffect(() => {
-    if (user.citizenship.nationId != "") {
-      setNation(getNation(user.citizenship.nationId));
+    if (citizen.citizenship.nationId != "") {
+      getNation(citizen.citizenship.nationId);
     }
-  }, [user]);
+  }, [citizen]);
 
   const handleClick = (dest: string) => {
     if (dest === "nation") {
-      myStore.set(selectedNationAtom, nation);
       navigate(`/nation/${nation.officialId}`);
     } else if (dest === "new") {
       myStore.set(newNationAtom, {
         ...emptyNewNationPayload,
-        owner: user.officialId,
+        owner: citizen.officialId,
       });
     } else if (dest === "join") {
       navigate(`/nations`);
@@ -72,39 +73,43 @@ export default function Citizen() {
       text: t("components.modals.confirmModal.deleteUser"),
       result: "",
     });
+    navigate("/");
   };
 
   return (
     <>
-      <H1 text={user.name} />
-      <Avatar url={user.avatar} />
+      <H1 text={citizen.name} />
+      <Avatar url={citizen.avatar} />
       <TileContainer
         children={
           <>
             <DashTile
               title="citoyenneté virtuelle"
               children={
-                nation.officialId != "" ? (
-                  <Button
-                    text={nation.name}
-                    click={() => handleClick("nation")}
-                  />
-                ) : (
-                  <>
-                    {session.user.officialId && (
-                      <>
-                        <Button
-                          text={t("components.buttons.createNation")}
-                          click={() => handleClick("new")}
-                        />
-                        <Button
-                          text={t("components.buttons.joinNation")}
-                          click={() => handleClick("join")}
-                        />
-                      </>
-                    )}
-                  </>
-                )
+                <>
+                  <IdTag label={citizen.officialId} />
+                  {nation != undefined && nation.officialId != "" ? (
+                    <Button
+                      text={nation.name}
+                      click={() => handleClick("nation")}
+                    />
+                  ) : (
+                    <>
+                      {session.user.officialId && (
+                        <>
+                          <Button
+                            text={t("components.buttons.createNation")}
+                            click={() => handleClick("new")}
+                          />
+                          <Button
+                            text={t("components.buttons.joinNation")}
+                            click={() => handleClick("join")}
+                          />
+                        </>
+                      )}
+                    </>
+                  )}
+                </>
               }
             />
             {session.user.officialId ? (

@@ -1,8 +1,11 @@
-import { emptySession, infoModalAtom, loadingAtom, myStore, nationsListAtom, recoveryKey, session, sessionAtom, userAtom } from "../../settings/store";
-import { EmptyNation } from "../../types/typNation";
-import { AuthPayload, emptyUser, RecoveryPayload } from "../../types/typUser";
-import { GET_JWT } from "../../utils/functions";
+import { citizenFetchAtom, citizenListAtom, emptySession, infoModalAtom, loadingAtom, myStore, recoveryKey, session, sessionAtom } from "../../settings/store";
+import { AuthPayload, emptyUser, RecoveryPayload, User } from "../../types/typUser";
+import { createElementOfAtomArray, displayUserInfoByType, findElementOfAtomArray, GET_JWT, updateElementOfAtomArray } from "../../utils/functions";
 import { authGet, DeleteUserFetch, getOneUserFetch, loginFetch, RecoveryFetch, registerFetch } from "./userFetch";
+import { errorMessage, signInOk, logoutOk, signUpOK, saveOk } from "../../utils/toasts";
+
+const citizenList = myStore.get(citizenListAtom)
+const setCitizenList = (list: User[]) => myStore.set(citizenListAtom, list);
 
 export const register = ({ name, password }: AuthPayload) => {
   myStore.set(loadingAtom, true);
@@ -12,29 +15,21 @@ export const register = ({ name, password }: AuthPayload) => {
       if (data.user) {
         localStorage.setItem("jwt", data.jwt);
         myStore.set(recoveryKey, data.recovery);
-        myStore.set(nationsListAtom, [EmptyNation]);
+        // myStore.set(nationsListAtom, [EmptyNation]);
+        createElementOfAtomArray(data.user, citizenList, setCitizenList)
         myStore.set(sessionAtom, {...session, user:data.user, jwt:data.jwt})
-        // myStore.set(userAtom, {
-        //   officialId: data.user.officialId,
-        //   name: data.user.name,
-        //   surname: data.user.surname,
-        //   avatar: data.user.avatar,
-        //   password: data.user.password,
-        //   recovery: data.user.recovery,
-        //   role: data.user.role,
-        //   citizenship: data.user.citizenship,
-        //   createdAt: data.user.createdAt
-        // })
-      // myStore.set(isLoggedAtom, data.user.officialId)
       myStore.set(loadingAtom, false);
+      signUpOK()
       } else {
         myStore.set(loadingAtom, false);
-        myStore.set(infoModalAtom, "création impossible : " + data.message);
+        errorMessage( "création impossible : " + data.message)
+        // myStore.set(infoModalAtom, "création impossible : " + data.message);
       }
     })
     .catch((error) => {
       myStore.set(loadingAtom, false);
-      myStore.set(infoModalAtom, error.message);
+      errorMessage(error.message)
+      // myStore.set(infoModalAtom, error.message);
     });
 };
 
@@ -46,33 +41,22 @@ export const authentification = () => {
       .then((data) => {
         myStore.set(loadingAtom, false);
         if (data.user != undefined) {
-          
-          myStore.set(sessionAtom, {...session, user: data.user, jwt})
-          // myStore.set(isLoggedAtom, data.user.officialId)
-          // myStore.set(userAtom, {
-          //   officialId: data.user.officialId,
-          //   name: data.user.name,
-          //   surname: data.user.surname,
-          //   avatar: data.user.avatar,
-          //   role: data.user.role,
-          //   citizenship: data.user.citizenship,
-          //   createdAt: data.user.createdAt
-          // })
-          
+          updateElementOfAtomArray(data.user, citizenList, setCitizenList)
+          myStore.set(sessionAtom, {...session, user: data.user, jwt})      
+          signInOk()  
         } else {
           myStore.set(sessionAtom, emptySession);
-          // myStore.set(userAtom, emptyUser);
           myStore.set(loadingAtom, false);
           localStorage.removeItem("jwt");
         }
       })
       .catch((error) => {
-        myStore.set(userAtom, emptyUser);
+        myStore.set(sessionAtom, {...session, user:emptyUser})
         myStore.set(loadingAtom, false);
-        console.log(error);
+        errorMessage(error.message)
       });
   } else {
-    myStore.set(userAtom, emptyUser);
+    myStore.set(sessionAtom, {...session, user:emptyUser})
   }
 };
 
@@ -81,37 +65,23 @@ export const login = ({ name, password }: AuthPayload) => {
   loginFetch({ name, password })
     .then((data) => {
       myStore.set(loadingAtom, false);
-      myStore.set(infoModalAtom, data.message);
-      if (data.user.name != undefined) {
+      if (data.user != undefined) {
         localStorage.setItem("jwt", data.jwt);
         myStore.set(sessionAtom, {...session, user:data.user, jwt:data.jwt})
-        // myStore.set(userAtom, {
-        //   officialId: data.user.officialId,
-        //   name: data.user.name,
-        //   surname: data.user.surname,
-        //   avatar: data.user.avatar,
-        //   role: data.user.role,
-        //   citizenship: data.user.citizenship,
-        //   createdAt: data.user.createdAt
-        // })
-        // myStore.set(isLoggedAtom, data.user.officialId)
-      } else {
-        myStore.set(loadingAtom, false);
       }
+      displayUserInfoByType(data.infoType)
     })
     .catch((error) => {
       myStore.set(loadingAtom, false);
-      console.log(error.message);
+      displayUserInfoByType("error")
+      console.log(error);
     });
 };
 
 export const logout = () => {
-  myStore.set(infoModalAtom, "déconnexion effectuée");
   myStore.set(sessionAtom, emptySession)
-  // myStore.set(userAtom, emptyUser);
-  // myStore.set(isLoggedAtom, "");
-  // myStore.set(selectedNationAtom, EmptyNation);
   localStorage.removeItem("jwt");
+  logoutOk()
 };
 
 export const recoveryUser = ({
@@ -126,13 +96,14 @@ export const recoveryUser = ({
     newPassword: password,
   };
   RecoveryFetch(dataToSend)
-    .then((data) => {
+    .then(() => {
       myStore.set(loadingAtom, false);
-      myStore.set(infoModalAtom, data.messaga);
+      saveOk()
     })
     .catch((error) => {
       myStore.set(loadingAtom, false);
-      myStore.set(error.message);
+      errorMessage(error.message)
+      // myStore.set(error.message);
     });
 };
 
@@ -156,27 +127,21 @@ export const deleteUser = () => {
 };
 
 export const getOneUser = (id: string) => {
-  let user = emptyUser;
   myStore.set(loadingAtom, true);
-  getOneUserFetch(id)
+  const user = findElementOfAtomArray(id, citizenList)
+  
+  if (user === undefined || user === null) {
+    getOneUserFetch(id)
     .then((data) => {
       myStore.set(loadingAtom, false);
       if (data.user) {
-        user = data.user
-        myStore.set(userAtom, {
-          officialId: data.user.officialId,
-          name: data.user.name,
-          surname: data.user.surname,
-          avatar: data.user.avatar,
-          role: data.user.role,
-          citizenship: data.user.citizenship,
-          createdAt: data.user.createdAt
-        })
+        myStore.set(citizenFetchAtom, data.user)
       }
     })
     .catch((error) => {
       myStore.set(loadingAtom, false);
+      myStore.set(citizenFetchAtom, emptyUser)
       myStore.set(infoModalAtom, error.message);
     });
-    return user
+  }
 };

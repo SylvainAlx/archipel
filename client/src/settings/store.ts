@@ -21,28 +21,27 @@ export type SetAtom<Args extends any[], Result> = (...args: Args) => Result;
 
 export const loadingAtom = atom(false);
 
-// User
-
-export const userAtom = atom<User>(emptyUser)
-export const isLoggedAtom = atom<string>("")
+// Session
 
 export const emptySession = {user: emptyUser, nation: EmptyNation, jwt: ""}
 export const sessionAtom = atom<Session>(emptySession)
 export const session = myStore.get(sessionAtom)
 
+// Citizen
+
+export const citizenFetchAtom = atom<User>(emptyUser)
+export const citizenListAtom = atom<User[]>([])
+
 // Nation
 
-export const ownerAtom = atom(false);
-export const nationAtom = atom<Nation>(EmptyNation);
-export const selectedNationAtom = atom<Nation>(EmptyNation);
+export const nationFetchedAtom = atom<Nation>(EmptyNation)
 export const nationsRoleplayDataAtom = atom<NationRoleplayData[]>([]);
-export const getSelectedNation = atom((get) => get(selectedNationAtom));
 export const newNationAtom = atom<NewNationPayload>(emptyNewNationPayload);
 export const nationsListAtom = atom<Nation[]>([]);
 
-// place
+// Place
 
-export const placeAtom = atom<Place>(emptyPlace);
+export const placeFetchedAtom = atom<Place>(emptyPlace);
 export const placesListAtom = atom<Place[]>([]);
 export const nationPlacesListAtom = atom<Place[]>([]);
 export const newPlaceAtom = atom<Place>(emptyPlace);
