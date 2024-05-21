@@ -1,8 +1,9 @@
+import i18n from "../../i18n/i18n";
 import { citizenFetchAtom, citizenListAtom, emptySession, infoModalAtom, loadingAtom, myStore, recoveryKey, session, sessionAtom } from "../../settings/store";
 import { AuthPayload, emptyUser, RecoveryPayload, User } from "../../types/typUser";
-import { createElementOfAtomArray, displayUserInfoByType, findElementOfAtomArray, GET_JWT, updateElementOfAtomArray } from "../../utils/functions";
-import { authGet, DeleteUserFetch, getOneUserFetch, loginFetch, RecoveryFetch, registerFetch } from "./userFetch";
-import { errorMessage, signInOk, logoutOk, signUpOK, saveOk } from "../../utils/toasts";
+import { createElementOfAtomArray, displayUserInfoByType, findElementOfAtomArray, findNationCitizens, GET_JWT, updateElementOfAtomArray } from "../../utils/functions";
+import { successMessage } from "../../utils/toasts";
+import { authGet, DeleteUserFetch, getNationCitizensFetch, getOneUserFetch, loginFetch, RecoveryFetch, registerFetch } from "./userFetch";
 
 const citizenList = myStore.get(citizenListAtom)
 const setCitizenList = (list: User[]) => myStore.set(citizenListAtom, list);
@@ -10,26 +11,21 @@ const setCitizenList = (list: User[]) => myStore.set(citizenListAtom, list);
 export const register = ({ name, password }: AuthPayload) => {
   myStore.set(loadingAtom, true);
   registerFetch({ name, password })
-    .then((data) => {
-      
+    .then((data) => { 
+      myStore.set(loadingAtom, false);
       if (data.user) {
         localStorage.setItem("jwt", data.jwt);
         myStore.set(recoveryKey, data.recovery);
         // myStore.set(nationsListAtom, [EmptyNation]);
         createElementOfAtomArray(data.user, citizenList, setCitizenList)
         myStore.set(sessionAtom, {...session, user:data.user, jwt:data.jwt})
-      myStore.set(loadingAtom, false);
-      signUpOK()
-      } else {
-        myStore.set(loadingAtom, false);
-        errorMessage( "création impossible : " + data.message)
-        // myStore.set(infoModalAtom, "création impossible : " + data.message);
       }
+      displayUserInfoByType(data.infoType)
     })
     .catch((error) => {
       myStore.set(loadingAtom, false);
-      errorMessage(error.message)
-      // myStore.set(infoModalAtom, error.message);
+      displayUserInfoByType("error")
+      console.log(error.message)
     });
 };
 
@@ -43,17 +39,19 @@ export const authentification = () => {
         if (data.user != undefined) {
           updateElementOfAtomArray(data.user, citizenList, setCitizenList)
           myStore.set(sessionAtom, {...session, user: data.user, jwt})      
-          signInOk()  
         } else {
           myStore.set(sessionAtom, emptySession);
           myStore.set(loadingAtom, false);
           localStorage.removeItem("jwt");
         }
+        displayUserInfoByType(data.infoType)
       })
       .catch((error) => {
         myStore.set(sessionAtom, {...session, user:emptyUser})
         myStore.set(loadingAtom, false);
-        errorMessage(error.message)
+        displayUserInfoByType("error")
+        console.log(error);
+        
       });
   } else {
     myStore.set(sessionAtom, {...session, user:emptyUser})
@@ -81,7 +79,7 @@ export const login = ({ name, password }: AuthPayload) => {
 export const logout = () => {
   myStore.set(sessionAtom, emptySession)
   localStorage.removeItem("jwt");
-  logoutOk()
+  successMessage(i18n.t("toasts.user.logout"))
 };
 
 export const recoveryUser = ({
@@ -96,14 +94,14 @@ export const recoveryUser = ({
     newPassword: password,
   };
   RecoveryFetch(dataToSend)
-    .then(() => {
+    .then((data) => {
       myStore.set(loadingAtom, false);
-      saveOk()
+      displayUserInfoByType(data.infoType)
     })
     .catch((error) => {
       myStore.set(loadingAtom, false);
-      errorMessage(error.message)
-      // myStore.set(error.message);
+      displayUserInfoByType("error")
+      console.log(error)
     });
 };
 
@@ -113,16 +111,13 @@ export const deleteUser = () => {
     .then((resp) => {
       myStore.set(loadingAtom, false);
       myStore.set(sessionAtom, emptySession)
-      // myStore.set(userAtom, emptyUser);
-      // myStore.set(isLoggedAtom, "");
-      // myStore.set(selectedNationAtom, EmptyNation);
-      // myStore.set(nationAtom, EmptyNation);
       localStorage.removeItem("jwt");
-      myStore.set(infoModalAtom, resp.message);
+      displayUserInfoByType(resp.infoType)
     })
     .catch((error) => {
       myStore.set(loadingAtom, false);
-      myStore.set(infoModalAtom, error.message);
+      displayUserInfoByType("error")
+      console.log(error)
     });
 };
 
@@ -145,3 +140,10 @@ export const getOneUser = (id: string) => {
     });
   }
 };
+
+export const getNationCitizens = (nationId: string) => {
+  const citizens = findNationCitizens(nationId, citizenList)
+  if (citizens.length === 0) {
+    getNationCitizensFetch(nationId)
+  }
+}

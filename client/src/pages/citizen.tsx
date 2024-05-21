@@ -84,7 +84,7 @@ export default function Citizen() {
         children={
           <>
             <DashTile
-              title="citoyenneté virtuelle"
+              title={t("pages.citizen.virtualCitizenship")}
               children={
                 <>
                   <IdTag label={citizen.officialId} />
@@ -114,7 +114,7 @@ export default function Citizen() {
             />
             {session.user.officialId ? (
               <DashTile
-                title="paramètre du compte"
+                title={t("pages.citizen.settings")}
                 children={
                   <>
                     <Button

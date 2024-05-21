@@ -13,6 +13,6 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
         <App />
       </Provider>
     </BrowserRouter>
-    <ToastContainer />
+    <ToastContainer theme="light" />
   </>,
 );

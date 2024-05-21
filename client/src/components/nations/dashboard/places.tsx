@@ -25,7 +25,7 @@ export default function Places({ selectedNation, owner }: SelectedNationProps) {
       setChecked(true);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [nationPlacesList]);
+  }, [nationPlacesList, selectedNation.officialId]);
 
   return (
     <TileContainer

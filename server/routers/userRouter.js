@@ -9,6 +9,7 @@ import {
   deleteSelfUser,
   getOneUser,
   getSelfUser,
+  getUsersByNation,
 } from "../controllers/userController.js";
 
 const userRouter = express.Router();
@@ -20,6 +21,7 @@ userRouter.get("/verify", verify);
 userRouter.get("/getall", getAllUsers);
 userRouter.get("/self", [verifyJwt], getSelfUser);
 userRouter.get("/:id", getOneUser);
+userRouter.get("/bynation/:id", getUsersByNation);
 userRouter.delete("/delete", [verifyJwt], deleteSelfUser);
 
 export default userRouter;

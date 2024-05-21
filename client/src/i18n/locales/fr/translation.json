@@ -22,8 +22,9 @@
         "citizens": "citoyens"
       }
     },
-    "profile": {
-      "title": "profil"
+    "citizen": {
+      "virtualCitizenship": "citoyenneté virtuelle",
+      "settings": "paramètre du compte"
     },
     "coms": {
       "title": "communications"
@@ -105,7 +106,9 @@
     },
     "hoverInfos": {
       "coatOfArms": "blason de la nation",
+      "noCoatOfArms": "nation sans blason",
       "flag": "drapeau de la nation",
+      "noFlag": "nation sans drapeau",
       "dev": "en cours de développement",
       "links": {
         "website": "site internet",
@@ -153,15 +156,23 @@
     }
   },
   "toasts": {
-    "signIn": "Connexion réussie",
-    "signUp": "Inscription réussie",
-    "logout": "Déconnexion réussie",
-    "delete": "Suppression réussie",
-    "save": "Sauvegarde effectuée",
-    "add": "Ajout effectué",
-    "new": "Création réussie",
-    "badUser": "Utilisateur inconnu",
-    "badPassword": "Mot de passe erroné",
-    "serverError": "Erreur serveur"
+    "user": {
+      "signIn": "Connexion réussie",
+      "signUp": "Inscription réussie",
+      "verify": "Récupération du profil réussie",
+      "logout": "Déconnexion réussie",
+      "delete": "Suppression réussie",
+      "save": "Sauvegarde effectuée",
+      "add": "Ajout effectué",
+      "new": "Création réussie",
+      "badUser": "Utilisateur inconnu",
+      "badPassword": "Mot de passe erroné",
+      "newPassword": "Nouveau mot de passe pris en compte",
+      "badRecovery": "Clé de récupération erronée",
+      "11000": "Informations déjà existantes dans la base de données",
+      "deleteKO": "impossible de supprimer l'utilisateur",
+      "error": "Certaines informations sont erronées ou manquantes",
+      "serverError": "Erreur serveur"
+    }
   }
 }

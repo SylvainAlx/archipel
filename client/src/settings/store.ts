@@ -31,6 +31,7 @@ export const session = myStore.get(sessionAtom)
 
 export const citizenFetchAtom = atom<User>(emptyUser)
 export const citizenListAtom = atom<User[]>([])
+export const nationCitizenListAtom = atom<User[]>([])
 
 // Nation
 

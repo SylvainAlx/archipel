@@ -10,7 +10,8 @@ import {
 import { LabelId, Nation } from "../types/typNation";
 import { Place } from "../types/typPlace";
 import { SetAtom } from "../settings/store";
-import { errorMessage, signInOk } from "./toasts";
+import { errorMessage, successMessage } from "./toasts";
+import { User } from "../types/typUser";
 
 export const GET_JWT = () => {
   const jwt = localStorage.getItem("jwt")
@@ -22,6 +23,16 @@ export const dateToString = (date: Date) => {
   const createdAtDate: Date = new Date(date);
   return createdAtDate.toLocaleDateString("fr");
 };
+
+export const findNationCitizens = (nationId: string, citizenList: User[]) => {
+  const elements: User[] = []
+  citizenList.forEach((citizen)=> {
+    if (citizen.citizenship.nationId === nationId) {
+      elements.push(citizen)
+    }
+  })
+  return elements
+}
 
 export const findElementOfAtomArray = (id: string,
   atom: any[]) => {
@@ -190,15 +201,44 @@ export const createTagRegime = (id: number) => {
 };
 
 export const displayUserInfoByType = (type: string) => {
-  if (type === "ok"){
-    signInOk()
-  } else if (type === "error"){
-    errorMessage(i18n.t("toasts.serverError"))
-  } else if (type === "user") {
-    errorMessage(i18n.t("toasts.badUser"))
-  } else if (type === "password") {
-    errorMessage(i18n.t("toasts.badPassword"))
-  } else {
-    errorMessage(i18n.t("toasts.serverError"))
+  switch (type) {
+    case "signin":
+      successMessage(i18n.t("toasts.user.signIn"))
+      break;
+    case "signup":
+      successMessage(i18n.t("toasts.user.signup"))
+      break;
+    case "verify":
+      successMessage(i18n.t("toasts.user.verify"))
+      break;
+    case "newPassword":
+      successMessage(i18n.t("toasts.user.newPassword"))
+      break;
+    case "delete":
+      successMessage(i18n.t("toasts.user.delete"))
+      break;
+    case "deleteKO":
+      errorMessage(i18n.t("toasts.user.deleteKO"))
+      break;
+    case "error":
+      errorMessage(i18n.t("toasts.user.error"))
+      break;
+    case "badRecovery":
+      errorMessage(i18n.t("toasts.user.badRecovery"))
+      break;
+    case "user":
+      errorMessage(i18n.t("toasts.user.badUser"))
+      break;
+    case "password":
+      errorMessage(i18n.t("toasts.user.badPassword"))
+      break;
+    case "11000":
+      errorMessage(i18n.t("toasts.user.11000"))
+      break;
+    case "serverError":
+      errorMessage(i18n.t("toasts.user.serverError"))
+    break;
+    default:
+      break;
   }
 }

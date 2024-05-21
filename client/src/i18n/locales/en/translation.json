@@ -22,8 +22,9 @@
         "citizens": "citizens"
       }
     },
-    "profile": {
-      "title": "profile"
+    "citizen": {
+      "virtualCitizenship": "virtual citizenship",
+      "settings": "settings"
     },
     "coms": {
       "title": "communications"
@@ -105,7 +106,9 @@
     },
     "hoverInfos": {
       "coatOfArms": "nation coat of arms",
+      "noCoatOfArms": "no nation coat of arms",
       "flag": "nation flag",
+      "noFlag": "no nation flag",
       "dev": "under development",
       "links": {
         "website": "website",
@@ -153,15 +156,23 @@
     }
   },
   "toasts": {
-    "signIn": "Sign In successful",
-    "signUp": "Sign Up Successful",
-    "logout": "Logout successful",
-    "delete": "Delete successful",
-    "save": "Save successful",
-    "add": "Add successful",
-    "new": "Creation successful",
-    "badUser": "Unknown user",
-    "badPassword": "Bad password",
-    "serverError": "Server error"
+    "user": {
+      "signIn": "Sign In successful",
+      "signUp": "Sign Up Successful",
+      "verify": "Profile recovery successful",
+      "logout": "Logout successful",
+      "delete": "Delete successful",
+      "save": "Save successful",
+      "add": "Add successful",
+      "new": "Creation successful",
+      "badUser": "Unknown user",
+      "badPassword": "Bad password",
+      "newPassword": "New saved password",
+      "badRecovery": "Incorrect recovery key",
+      "11000": "Information already existing in the database",
+      "deleteKO": "Unable to delete the user",
+      "error": "Some information is wrong or missing",
+      "serverError": "Server error"
+    }
   }
 }

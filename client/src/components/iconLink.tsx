@@ -41,7 +41,7 @@ export default function IconLink({ destination, text, action }: IconLinkProps) {
       {destination === "nation" &&
         session.nation &&
         (session.nation.data.url.flag != "" ? (
-          <div className="rounded-full w-[45px] h-[45px] md:w-[28px] md:h-[28px] overflow-hidden">
+          <div className="mt-[2px] rounded-full w-[43px] h-[43px] md:w-[28px] md:h-[28px] overflow-hidden">
             <img
               src={session.nation.data.url.flag}
               className={`w-full h-full`}

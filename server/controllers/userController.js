@@ -45,22 +45,24 @@ export const register = async (req, res) => {
     try {
       const savedUser = await user.save();
       const jwt = savedUser.createJWT();
-      res.status(201).json({ user: savedUser, recovery, jwt });
+      res
+        .status(201)
+        .json({ user: savedUser, recovery, jwt, infoType: "signup" });
     } catch (error) {
       if (error.code === 11000) {
         return res.status(400).json({
-          message: "Informations déjà existantes dans la base de données",
-          erreur: error.keyValue,
+          error: error.keyValue,
+          infoType: "11000",
         });
       } else {
         return res.status(400).json({
-          message: "Certaines informations sont erronées ou manquantes",
-          error,
+          error: error.message,
+          infoType: "error",
         });
       }
     }
   } catch (error) {
-    res.status(400).json({ erreur: error.message });
+    res.status(400).json({ error: error.message, infoType: "error" });
   }
 };
 
@@ -77,19 +79,19 @@ export const login = async (req, res) => {
     }
     user.comparePassword(password, async (error, isMatch) => {
       if (error) {
-        return res.status(500).json({
+        return res.status(400).json({
           infoType: "error",
-          error,
+          error: error.message,
         });
       }
       if (!isMatch) {
         return res.status(401).json({ infoType: "password" });
       }
       const jwt = user.createJWT();
-      res.status(200).json({ user, jwt, infoType: "ok" });
+      res.status(200).json({ user, jwt, infoType: "signin" });
     });
   } catch (error) {
-    res.status(500).json({ error, infoType: "error" });
+    res.status(400).json({ error: error.message, infoType: "error" });
   }
 };
 
@@ -106,12 +108,12 @@ export const verify = async (req, res) => {
     );
 
     if (user) {
-      return res.status(200).json({ user, message: "bienvenue " + user.name });
+      return res.status(200).json({ user, infoType: "verify" });
     } else {
-      return res.status(404).json({ message: "Utilisateur introuvable" });
+      return res.status(404).json({ infoType: "user" });
     }
   } catch (error) {
-    res.status(401).json({ message: "JWT erroné", erreur: error });
+    res.status(401).json({ error: error.message, infoType: "jwt" });
   }
 };
 
@@ -122,29 +124,31 @@ export const forgetPassword = async (req, res) => {
     const user = await User.findOne({ name });
 
     if (!user) {
-      return res.status(404).json({ message: "Utilisateur inconnue" });
+      return res.status(404).json({ infoType: "user" });
     }
 
     user.compare(recovery, async (error, isMatch) => {
       if (error) {
         return res
           .status(500)
-          .json({ message: "Erreur interne du serveur", erreur: error });
+          .json({ infoType: "serverError", error: error.message });
       }
       if (isMatch) {
         user.password = newPassword;
         await user.save();
-        return res
-          .status(200)
-          .json({ message: "Nouveau mot de passe pris en compte" });
+        return res.status(200).json({
+          infoType: "newPassword",
+        });
       } else {
-        return res.status(401).json({ message: "Clé de récupération erronée" });
+        return res.status(401).json({
+          infoType: "badRecovery",
+        });
       }
     });
   } catch (error) {
     res.status(400).json({
-      message: "Impossible de récupérer l'utilisateur",
-      erreur: error,
+      infoType: "error",
+      error: error.message,
     });
   }
 };
@@ -166,7 +170,7 @@ export const getAllUsers = async (req, res) => {
       res.status(200).json(users);
     }
   } catch (error) {
-    res.status(404).json({ message: "aucun utilisateur" });
+    res.status(404).json({ error: error.message, infoType: "noUser" });
   }
 };
 
@@ -182,8 +186,8 @@ export const getOneUser = async (req, res) => {
     });
   } catch (error) {
     res.status(404).json({
-      message: "aucun utilisateur à afficher",
-      erreur: error.message,
+      infoType: "noUser",
+      error: error.message,
     });
   }
 };
@@ -195,8 +199,8 @@ export const getSelfUser = async (req, res) => {
     res.status(200).json({ user });
   } catch (error) {
     res.status(404).json({
-      message: "utilisateur impossible à récupérer",
-      erreur: error.message,
+      infoType: "noUser",
+      error: error.message,
     });
   }
 };
@@ -214,13 +218,28 @@ export const deleteSelfUser = async (req, res) => {
 
       // await Com.deleteMany({ originId: id });
       res.status(200).json({
-        message: `Utilisateur supprimé`,
+        infoType: "delete",
       });
     });
   } catch (error) {
     res.status(400).json({
-      message: "impossible de supprimer l'utilisateur",
-      erreur: error.message,
+      error: error.message,
+      infoType: "deleteKO",
     });
+  }
+};
+
+export const getUsersByNation = async (req, res) => {
+  const nationId = req.params.id;
+  try {
+    const users = await User.find({ "citizenship.nationId": nationId })
+      .then((users) => {
+        res.status(200).json(users);
+      })
+      .catch((error) => {
+        res.status(400).json({ error: error.message });
+      });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
   }
 };

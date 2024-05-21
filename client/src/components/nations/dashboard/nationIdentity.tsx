@@ -1,5 +1,4 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { GiBlackFlag } from "react-icons/gi";
 import DashTile from "../../dashTile";
 import TileContainer from "../../tileContainer";
 import H3 from "../../titles/h3";
@@ -74,9 +73,14 @@ export default function NationIdentity({
                             />
                           </Suspense>
                         ) : (
-                          <div className="text-[3.1rem]">
-                            <GiBlackFlag />
-                          </div>
+                          <Suspense fallback={<Spinner />}>
+                            <LazyImage
+                              src="/flag.webp"
+                              alt={`no flag`}
+                              className="object-cover w-full h-full rounded"
+                              hover={t("components.hoverInfos.noFlag")}
+                            />
+                          </Suspense>
                         )}
                         {owner && (
                           <EditIcon
@@ -106,9 +110,14 @@ export default function NationIdentity({
                             />
                           </Suspense>
                         ) : (
-                          <div className="text-[3.1rem]">
-                            <GiBlackFlag />
-                          </div>
+                          <Suspense fallback={<Spinner />}>
+                            <LazyImage
+                              src="/coatOfArms.webp"
+                              alt={`no coat of arms`}
+                              className="object-contain w-full h-full"
+                              hover={t("components.hoverInfos.noCoatOfArms")}
+                            />
+                          </Suspense>
                         )}
                         {owner && (
                           <EditIcon
@@ -168,18 +177,17 @@ export default function NationIdentity({
                         />
                       )}
                     </span>
-                    {selectedNation.data.roleplay.capital != "" && (
-                      <div className="flex items-center gap-2">
-                        <CapitalTag selectedNation={selectedNation} />
-                        {owner && (
-                          <EditIcon
-                            target="nation"
-                            param={placesList}
-                            path="data.roleplay.capital"
-                          />
-                        )}
-                      </div>
-                    )}
+
+                    <div className="flex items-center gap-2">
+                      <CapitalTag selectedNation={selectedNation} />
+                      {owner && (
+                        <EditIcon
+                          target="nation"
+                          param={placesList}
+                          path="data.roleplay.capital"
+                        />
+                      )}
+                    </div>
                   </div>
                 </div>
               </>

@@ -61,3 +61,9 @@ export const getOneUserFetch = async (id: string) => {
   const result = await resp.json();
   return result;
 };
+
+export const getNationCitizensFetch = async (id: string) => {
+  const resp = await fetch(`${SERVER_URL}/user/bynation/${id}`);
+  const result = await resp.json();
+  return result;
+};
