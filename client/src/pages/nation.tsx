@@ -66,7 +66,7 @@ export default function Nation() {
             <NationIdentity selectedNation={nation} owner={owner} />
             <Places selectedNation={nation} owner={owner} />
             <Diplomacy />
-            <Citizens />
+            <Citizens selectedNation={nation} owner={owner} />
           </section>
           <section className="pt-10 flex flex-col items-center gap-4">
             {owner && (

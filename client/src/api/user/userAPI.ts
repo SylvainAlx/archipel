@@ -1,5 +1,5 @@
 import i18n from "../../i18n/i18n";
-import { citizenFetchAtom, citizenListAtom, emptySession, infoModalAtom, loadingAtom, myStore, recoveryKey, session, sessionAtom } from "../../settings/store";
+import { citizenFetchAtom, citizenListAtom, emptySession, infoModalAtom, loadingAtom, myStore, nationCitizenListAtom, recoveryKey, session, sessionAtom } from "../../settings/store";
 import { AuthPayload, emptyUser, RecoveryPayload, User } from "../../types/typUser";
 import { createElementOfAtomArray, displayUserInfoByType, findElementOfAtomArray, findNationCitizens, GET_JWT, updateElementOfAtomArray } from "../../utils/functions";
 import { successMessage } from "../../utils/toasts";
@@ -142,8 +142,16 @@ export const getOneUser = (id: string) => {
 };
 
 export const getNationCitizens = (nationId: string) => {
-  const citizens = findNationCitizens(nationId, citizenList)
+  myStore.set(loadingAtom, true);
+  let citizens = findNationCitizens(nationId, citizenList)
   if (citizens.length === 0) {
     getNationCitizensFetch(nationId)
+    .then((data) => {
+      if (data.users) {
+        citizens = data.users
+      }
+    })
   }
+  myStore.set(nationCitizenListAtom, citizens)
+  myStore.set(loadingAtom, false);
 }
