@@ -8,23 +8,28 @@ import { lazy, Suspense, useEffect, useState } from "react";
 import { getNationCitizens } from "../../../api/user/userAPI";
 import { SelectedNationProps } from "../../../types/typProp";
 import Spinner from "../../loading/spinner";
+import { User } from "../../../types/typUser";
 
 export default function Citizens({ selectedNation }: SelectedNationProps) {
   const [nationCitizenList] = useAtom(nationCitizenListAtom);
-  const [checked, setChecked] = useState(false);
+  const [citizens, setCitizens] = useState<User[]>([]);
   const { t } = useTranslation();
   const CitizenTile = lazy(() => import("./citizenTile"));
 
   useEffect(() => {
-    if (
-      selectedNation.officialId !== "" &&
-      nationCitizenList.length === 0 &&
-      !checked
-    ) {
+    if (selectedNation.officialId !== "") {
       getNationCitizens(selectedNation.officialId);
-      setChecked(true);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedNation.officialId]);
+
+  useEffect(() => {
+    const updatedCitizens: User[] = [];
+    nationCitizenList.forEach((citizen) => {
+      if (citizen.citizenship.nationId === selectedNation.officialId) {
+        updatedCitizens.push(citizen);
+      }
+    });
+    setCitizens(updatedCitizens);
   }, [nationCitizenList, selectedNation.officialId]);
 
   return (
@@ -35,8 +40,8 @@ export default function Citizens({ selectedNation }: SelectedNationProps) {
           className="w-full my-2"
           children={
             <div className="w-full flex flex-col gap-2 items-center">
-              {nationCitizenList != undefined ? (
-                nationCitizenList.map((citizen, i) => {
+              {citizens.length > 0 ? (
+                citizens.map((citizen, i) => {
                   return (
                     <Suspense key={i} fallback={<Spinner />}>
                       <div className="relative w-full">
@@ -47,7 +52,7 @@ export default function Citizens({ selectedNation }: SelectedNationProps) {
                 })
               ) : (
                 <em className="text-center">
-                  {/* {t("pages.nation.simulation.noPlaces")} */}
+                  {t("pages.nation.simulation.noCitizens")}
                 </em>
               )}
             </div>

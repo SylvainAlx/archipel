@@ -64,8 +64,8 @@ export default function Nation() {
             <Score selectedNation={nation} owner={owner} />
             <Links selectedNation={nation} owner={owner} />
             <NationIdentity selectedNation={nation} owner={owner} />
-            <Places selectedNation={nation} owner={owner} />
             <Diplomacy />
+            <Places selectedNation={nation} owner={owner} />
             <Citizens selectedNation={nation} owner={owner} />
           </section>
           <section className="pt-10 flex flex-col items-center gap-4">

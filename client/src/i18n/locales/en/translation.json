@@ -19,7 +19,8 @@
         "places": "locations",
         "noPlaces": "no location to display",
         "diplomacy": "diplomacy",
-        "citizens": "citizens"
+        "citizens": "citizens",
+        "noCitizens": "no citizen to display"
       }
     },
     "citizen": {

@@ -8,23 +8,28 @@ import Spinner from "../../loading/spinner";
 import NewPlaceButton from "../../buttons/newPlaceButton";
 import { useTranslation } from "react-i18next";
 import DashTile from "../../dashTile";
+import { Place } from "../../../types/typPlace";
 
 export default function Places({ selectedNation, owner }: SelectedNationProps) {
   const { t } = useTranslation();
   const [nationPlacesList] = useAtom(nationPlacesListAtom);
-  const [checked, setChecked] = useState(false);
+  const [places, setPlaces] = useState<Place[]>([]);
   const PlaceTile = lazy(() => import("./placeTile"));
 
   useEffect(() => {
-    if (
-      selectedNation.officialId !== "" &&
-      nationPlacesList.length === 0 &&
-      !checked
-    ) {
+    if (selectedNation.officialId !== "") {
       getNationPlaces(selectedNation.officialId);
-      setChecked(true);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedNation.officialId]);
+
+  useEffect(() => {
+    const updatedPlaces: Place[] = [];
+    nationPlacesList.forEach((place) => {
+      if (place.parentId === selectedNation.officialId) {
+        updatedPlaces.push(place);
+      }
+    });
+    setPlaces(updatedPlaces);
   }, [nationPlacesList, selectedNation.officialId]);
 
   return (
@@ -36,17 +41,15 @@ export default function Places({ selectedNation, owner }: SelectedNationProps) {
             className="w-full min-w-[300px] flex-grow"
             children={
               <div className="w-full flex flex-col gap-2 items-center">
-                {nationPlacesList != undefined ? (
-                  nationPlacesList.map((place, i) => {
-                    if (place.parentId === selectedNation.officialId) {
-                      return (
-                        <Suspense key={i} fallback={<Spinner />}>
-                          <div className="relative w-full">
-                            <PlaceTile owner={owner} place={place} />
-                          </div>
-                        </Suspense>
-                      );
-                    }
+                {places.length > 0 ? (
+                  places.map((place, i) => {
+                    return (
+                      <Suspense key={i} fallback={<Spinner />}>
+                        <div className="relative w-full">
+                          <PlaceTile owner={owner} place={place} />
+                        </div>
+                      </Suspense>
+                    );
                   })
                 ) : (
                   <em className="text-center">

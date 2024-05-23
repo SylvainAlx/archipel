@@ -232,10 +232,7 @@ export const deleteSelfUser = async (req, res) => {
 export const getUsersByNation = async (req, res) => {
   const nationId = req.params.id;
   try {
-    const users = await User.find(
-      { "citizenship.nationId": nationId },
-      "officialId name surname avatar role citizenship createdAt",
-    )
+    const users = await User.find({ "citizenship.nationId": nationId })
       .then((users) => {
         res.status(200).json(users);
       })

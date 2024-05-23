@@ -1,11 +1,11 @@
-import Logo from "../logo";
+// import Logo from "../logo";
 
 export default function Spinner() {
   return (
     <div role="status" className="relative">
-      <div className="absolute top-[5px] left-[5px] flex items-center justify-center">
+      {/* <div className="absolute top-[5px] left-[5px] flex items-center justify-center">
         <Logo />
-      </div>
+      </div> */}
       <svg
         aria-hidden="true"
         className="w-[60px] h-[60px] animate-[spin_2s_linear_infinite] text-gray-600 fill-secondary"
