@@ -1,10 +1,13 @@
 import { nationTabs } from "../settings/consts";
+import { StandardOption } from "../types/typAtom";
 import Notification from "./notification";
 
 export interface TabNavProps {
-  tabs: Array<{ id: number; label: string }>;
-  tabId: number;
-  setTab: React.Dispatch<React.SetStateAction<{ id: number; label: string }>>;
+  tabs: Array<StandardOption>;
+  tabId: number | string;
+  setTab: React.Dispatch<
+    React.SetStateAction<{ id: number | string; label: string }>
+  >;
   owner: boolean;
 }
 

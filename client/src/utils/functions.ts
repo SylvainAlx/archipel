@@ -206,7 +206,7 @@ export const displayUserInfoByType = (type: string) => {
       successMessage(i18n.t("toasts.user.signIn"))
       break;
     case "signup":
-      successMessage(i18n.t("toasts.user.signup"))
+      successMessage(i18n.t("toasts.user.signUp"))
       break;
     case "verify":
       successMessage(i18n.t("toasts.user.verify"))
@@ -242,3 +242,28 @@ export const displayUserInfoByType = (type: string) => {
       break;
   }
 }
+
+
+export const removeDuplicates = (array: any[]) => {
+  const uniqueArray: any[] = [];
+  const seen = new Set();
+
+  array.forEach(item => {
+      const key = `${item.name}-${item.symbol}`;
+      if (!seen.has(key)) {
+          seen.add(key);
+          uniqueArray.push(item);
+      }
+  });
+
+  return uniqueArray;
+};
+
+export const sortObjectKeys = (obj: any): any => {
+  const sortedKeys = Object.keys(obj).sort();
+  const sortedObj: any = {};
+  sortedKeys.forEach(key => {
+      sortedObj[key] = obj[key];
+  });
+  return sortedObj;
+};

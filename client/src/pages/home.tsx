@@ -36,7 +36,7 @@ export default function Home() {
       ) : (
         <div className="w-full py-4 flex justify-center gap-4 flex-wrap">
           <Button
-            text={t("components.buttons.dashboard")}
+            text={t("components.buttons.user")}
             type="button"
             click={() => navigate(`/citizen/${session.user.officialId}`)}
           />

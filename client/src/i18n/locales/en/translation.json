@@ -35,8 +35,6 @@
     },
     "login": {
       "title": "Sign in",
-      "placeholderName": "Name",
-      "placeholderPassword": "Password",
       "forgottenPassword": "Forgotten password ?",
       "firstVisit": "First visit ?",
       "newUser": "Create account"
@@ -51,8 +49,6 @@
     },
     "register": {
       "title": "create account",
-      "placeholderName": "Name",
-      "placeholderPassword": "Password",
       "ownAccount": "Account exist ?",
       "connect": "Sign in",
       "acceptTerms": "By ticking this box, you agree to the",
@@ -85,6 +81,17 @@
       "back": "back",
       "newPlace": "new location"
     },
+    "form": {
+      "input": {
+        "name": "Name *",
+        "password": "Password *"
+      },
+      "select": {
+        "choose": "CHOOSE",
+        "language": "Spoken language"
+      },
+      "missingField": "Missing field(s)"
+    },
     "logo": {
       "title": "ARCHIPEL",
       "subtitle": "VIRTUAL NATIONS NETWORK"
@@ -103,6 +110,13 @@
       "loadingModal": {
         "title": "WAIT",
         "information": "Connecting to the server, please wait a few moments"
+      },
+      "newNationModal": {
+        "title": "NEW NATION",
+        "nationName": "Nation name",
+        "motto": "Motto",
+        "currency": "Currency",
+        "regime": "Regime"
       }
     },
     "hoverInfos": {
@@ -118,7 +132,7 @@
         "discord": "Discord server"
       },
       "tags": {
-        "role": "nation role",
+        "role": "citizen role",
         "capital": "capital city",
         "credits": "credits",
         "id": "unique ID",
@@ -128,9 +142,11 @@
         "points": "success",
         "population": "citizens",
         "regime": "regime",
-        "tree": "kinship"
+        "tree": "kinship",
+        "languages": "languages"
       }
-    }
+    },
+    "requiredStar": "* : required field"
   },
   "listes": {
     "regimeList": {

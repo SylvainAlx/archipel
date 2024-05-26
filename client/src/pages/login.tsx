@@ -7,6 +7,7 @@ import Form from "../components/form/form";
 
 import { useTranslation } from "react-i18next";
 import { login } from "../api/user/userAPI";
+import RequiredStar from "../components/form/requiredStar";
 
 export default function Login() {
   const [name, setName] = useState("");
@@ -39,7 +40,7 @@ export default function Login() {
               onChange={handleChange}
               type="text"
               name="name"
-              placeholder={t("pages.login.placeholderName")}
+              placeholder={t("components.form.input.name")}
               value={name}
             />
             <Input
@@ -47,7 +48,7 @@ export default function Login() {
               onChange={handleChange}
               type="password"
               name="password"
-              placeholder={t("pages.login.placeholderPassword")}
+              placeholder={t("components.form.input.password")}
               value={password}
             />
             <div className="flex justify-center text-sm gap-2">
@@ -68,6 +69,7 @@ export default function Login() {
               </span>
             </div>
             <Button text={t("components.buttons.login")} type="submit" />
+            <RequiredStar />
           </>
         }
       />

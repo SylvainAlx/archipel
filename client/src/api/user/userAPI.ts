@@ -8,9 +8,9 @@ import { authGet, DeleteUserFetch, getNationCitizensFetch, getOneUserFetch, logi
 const citizenList = myStore.get(citizenListAtom)
 const setCitizenList = (list: User[]) => myStore.set(citizenListAtom, list);
 
-export const register = ({ name, password }: AuthPayload) => {
+export const register = ({ name, password, language }: AuthPayload) => {
   myStore.set(loadingAtom, true);
-  registerFetch({ name, password })
+  registerFetch({ name, password, language })
     .then((data) => { 
       myStore.set(loadingAtom, false);
       if (data.user) {

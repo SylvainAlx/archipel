@@ -8,7 +8,7 @@ export default function Footer() {
   return (
     <footer className="animate-slideInFromBottom flex flex-col items-center">
       <FooterNav />
-      <div className="hidden z-20 md:flex flex-col items-center gap-1">
+      <div className="hidden z-10 md:flex flex-col items-center gap-1">
         <div>
           {t("components.logo.title")} - {new Date().getFullYear()}
         </div>

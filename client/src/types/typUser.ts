@@ -3,6 +3,7 @@ export interface User {
   name: string;
   surname: string;
   avatar: string;
+  language: string;
   password?: string;
   recovery?: string;
   role: string;
@@ -17,6 +18,7 @@ export interface User {
 export interface AuthPayload {
   name: string;
   password: string;
+  language?: string
 }
 
 export interface RecoveryPayload {
@@ -31,6 +33,7 @@ export const emptyUser: User = {
   name: "",
   surname: "",
   avatar: "",
+  language: "",
   password: "",
   recovery: "",
   role: "",

@@ -1,9 +1,9 @@
-import { Citizen } from "./typCitizen";
 import { Place } from "./typPlace";
+import { User } from "./typUser";
 
 export interface NationRoleplayData {
   nationId: string;
-  citizens: Citizen[];
+  citizens: User[];
   places: Place[];
 }
 
@@ -12,7 +12,6 @@ export interface Nation {
   officialId: string;
   name: string;
   owner: string;
-  role: string;
   data: {
     url: {
       flag: string;
@@ -28,8 +27,9 @@ export interface Nation {
         lng: number;
       };
       motto: string;
-      nationalDay: Date;
+      nationalDay: string;
       regime: number;
+      currency: string
     };
     roleplay: {
       lastUpdated: Date;
@@ -48,7 +48,6 @@ export const EmptyNation: Nation = {
   officialId: "",
   name: "",
   owner: "",
-  role: "",
   data: {
     url: {
       flag: "",
@@ -64,8 +63,9 @@ export const EmptyNation: Nation = {
         lng: 0,
       },
       motto: "",
-      nationalDay: new Date(0),
+      nationalDay: "",
       regime: 0,
+      currency: ""
     },
     roleplay: {
       lastUpdated: new Date(),
@@ -113,6 +113,7 @@ export interface NewNationPayload {
   owner: string;
   motto: string;
   regime: number;
+  currency: string;
 }
 
 export const emptyNewNationPayload: NewNationPayload = {
@@ -120,4 +121,5 @@ export const emptyNewNationPayload: NewNationPayload = {
   owner: "",
   motto: "",
   regime: 0,
+  currency: ""
 }

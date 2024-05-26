@@ -10,14 +10,22 @@ import { emptyNewNationPayload } from "../../types/typNation";
 import { createNation } from "../../api/nation/nationAPI";
 import Select from "../form/select";
 import { regimeList } from "../../settings/consts";
+import { useTranslation } from "react-i18next";
+import RequiredStar from "../form/requiredStar";
+import { errorMessage } from "../../utils/toasts";
 
 export default function NewNationModal() {
   const [newNation, setNewNation] = useAtom(newNationAtom);
+  const { t } = useTranslation();
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    createNation(newNation);
-    setNewNation(emptyNewNationPayload);
+    if (newNation.regime != 0 && newNation.name != "") {
+      createNation(newNation);
+      setNewNation(emptyNewNationPayload);
+    } else {
+      errorMessage(t("components.form.missingField"));
+    }
   };
 
   const handleChange = (
@@ -35,7 +43,9 @@ export default function NewNationModal() {
 
   return (
     <div>
-      <h2 className="text-2xl text-center p-4">NOUVELLE NATION</h2>
+      <h2 className="text-2xl text-center p-4">
+        {t("components.modals.newNationModal.title")}
+      </h2>
       <Form
         submit={handleSubmit}
         children={
@@ -46,28 +56,39 @@ export default function NewNationModal() {
               name="name"
               value={newNation.name}
               onChange={handleChange}
-              placeholder="Nom de la nation"
+              placeholder={t("components.modals.newNationModal.nationName")}
               maxLength={60}
             />
             <Input
-              required
               onChange={handleChange}
               type="text"
               name="motto"
-              placeholder="Devise"
+              placeholder={t("components.modals.newNationModal.motto")}
               value={newNation.motto}
             />
-            <Select
-              onChange={handleSelectChange}
-              options={regimeList}
-              required
+            <Input
+              onChange={handleChange}
+              type="text"
+              name="currency"
+              placeholder={t("components.modals.newNationModal.currency")}
+              value={newNation.currency}
             />
-            <Button type="submit" text="VALIDER" />
+
+            <label htmlFor="regime">
+              {t("components.modals.newNationModal.regime")}
+              <Select
+                id="regime"
+                onChange={handleSelectChange}
+                options={regimeList}
+              />
+            </label>
+            <Button type="submit" text={t("components.buttons.validate")} />
             <Button
               type="button"
-              text="ANNULER"
+              text={t("components.buttons.cancel")}
               click={() => setNewNation(emptyNewNationPayload)}
             />
+            <RequiredStar />
           </>
         }
       />

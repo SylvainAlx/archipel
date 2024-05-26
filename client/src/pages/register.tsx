@@ -6,10 +6,15 @@ import Button from "../components/buttons/button";
 import Form from "../components/form/form";
 import { useTranslation } from "react-i18next";
 import { register } from "../api/user/userAPI";
+import Select from "../components/form/select";
+import { languageList } from "../settings/consts";
+import { errorMessage } from "../utils/toasts";
+import RequiredStar from "../components/form/requiredStar";
 
 export default function Register() {
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
+  const [language, setLanguage] = useState("");
   const [acceptCGU, setAcceptCGU] = useState(false);
   const { t } = useTranslation();
 
@@ -23,9 +28,21 @@ export default function Register() {
     }
   };
 
+  const handleSelectChange = (e: ChangeEvent<HTMLSelectElement>) => {
+    if (e.target.value != "-1") {
+      setLanguage(e.target.value);
+    } else {
+      setLanguage("");
+    }
+  };
+
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    register({ name, password });
+    if (name != "" && password != "") {
+      register({ name, password, language });
+    } else {
+      errorMessage(t("components.form.missingField"));
+    }
   };
   return (
     <>
@@ -39,7 +56,7 @@ export default function Register() {
               onChange={handleChange}
               type="text"
               name="name"
-              placeholder={t("pages.register.placeholderName")}
+              placeholder={t("components.form.input.name")}
               value={name}
             />
             <Input
@@ -47,8 +64,13 @@ export default function Register() {
               onChange={handleChange}
               type="password"
               name="password"
-              placeholder={t("pages.register.placeholderPassword")}
+              placeholder={t("components.form.input.password")}
               value={password}
+            />
+            <Select
+              title={t("components.form.select.language")}
+              options={languageList}
+              onChange={handleSelectChange}
             />
             <div className="flex justify-center text-sm gap-2">
               <span>{t("pages.register.ownAccount")}</span>
@@ -78,6 +100,7 @@ export default function Register() {
               type="submit"
               disabled={!acceptCGU}
             />
+            <RequiredStar />
           </>
         }
       />

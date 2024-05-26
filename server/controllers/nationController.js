@@ -6,7 +6,7 @@ import { createOfficialId } from "../utils/functions.js";
 
 export const createNation = async (req, res) => {
   try {
-    const { name, owner, motto, regime } = req.body;
+    const { name, owner, motto, regime, currency } = req.body;
 
     if (!name || !owner) {
       return res
@@ -28,6 +28,7 @@ export const createNation = async (req, res) => {
     data.general.coords = coords;
     data.general.motto = motto;
     data.general.regime = regime;
+    data.general.currency = currency;
     data.roleplay.citizens += 1;
     const nation = new Nation({
       officialId,

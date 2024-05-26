@@ -35,8 +35,6 @@
     },
     "login": {
       "title": "S'identifier",
-      "placeholderName": "Nom",
-      "placeholderPassword": "Mot de passe",
       "forgottenPassword": "Mot de passe oublié ?",
       "firstVisit": "Première visite ?",
       "newUser": "Créez un compte utilisateur"
@@ -51,8 +49,6 @@
     },
     "register": {
       "title": "créer un compte",
-      "placeholderName": "Nom",
-      "placeholderPassword": "Mot de passe",
       "ownAccount": "Déja un compte ?",
       "connect": "Se connecter",
       "acceptTerms": "En cochant cette case vous acceptez les",
@@ -85,6 +81,17 @@
       "back": "retour",
       "newPlace": "nouveau lieu"
     },
+    "form": {
+      "input": {
+        "name": "Nom *",
+        "password": "Mot de passe *"
+      },
+      "select": {
+        "choose": "CHOISIR",
+        "language": "Langue parlée"
+      },
+      "missingField": "Champ(s) manquant(s)"
+    },
     "logo": {
       "title": "ARCHIPEL",
       "subtitle": "RÉSEAU DES NATIONS VIRTUELLES"
@@ -103,6 +110,13 @@
       "loadingModal": {
         "title": "PATIENTEZ",
         "information": "Connexion au serveur, merci de patienter quelques instants"
+      },
+      "newNationModal": {
+        "title": "NOUVELLE NATION",
+        "nationName": "Nom de la nation *",
+        "motto": "Devise",
+        "currency": "Monnaie",
+        "regime": "Regime *"
       }
     },
     "hoverInfos": {
@@ -118,7 +132,7 @@
         "discord": "serveur Discord"
       },
       "tags": {
-        "role": "rôle de la nation",
+        "role": "rôle du citoyen",
         "capital": "capitale de la nation",
         "credits": "crédits",
         "id": "identifiant unique",
@@ -128,9 +142,11 @@
         "points": "succès",
         "population": "citoyens",
         "regime": "regime de la nation",
-        "tree": "parenté"
+        "tree": "parenté",
+        "languages": "langues"
       }
-    }
+    },
+    "requiredStar": "* : champ requis"
   },
   "listes": {
     "regimeList": {

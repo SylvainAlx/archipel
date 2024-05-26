@@ -84,6 +84,6 @@ export const EmptyCom: Com = {
 //  Others
 
 export interface StandardOption {
-  id: number;
+  id: number | string;
   label: string;
 }

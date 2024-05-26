@@ -58,10 +58,17 @@ const nationSchema = mongoose.Schema(
           type: String,
           default: "",
         },
-        nationalDay: Date,
+        nationalDay: {
+          type: String,
+          default: "",
+        },
         regime: {
           type: Number,
           default: 0,
+        },
+        currency: {
+          type: String,
+          default: "",
         },
       },
       roleplay: {

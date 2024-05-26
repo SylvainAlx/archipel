@@ -19,6 +19,7 @@ import TileContainer from "../components/tileContainer";
 import { emptyNewNationPayload } from "../types/typNation";
 import { getNation } from "../api/nation/nationAPI";
 import IdTag from "../components/tags/idTag";
+import RoleTag from "../components/tags/roleTag";
 
 export default function Citizen() {
   const { t } = useTranslation();
@@ -87,7 +88,10 @@ export default function Citizen() {
               title={t("pages.citizen.virtualCitizenship")}
               children={
                 <>
-                  <IdTag label={citizen.officialId} />
+                  <div className="max-w-[90%] flex flex-wrap items-center justify-center gap-1">
+                    <IdTag label={citizen.officialId} />
+                    {citizen.role === "admin" && <RoleTag label="admin" />}
+                  </div>
                   {nation != undefined && nation.officialId != "" ? (
                     <Button
                       text={nation.name}
