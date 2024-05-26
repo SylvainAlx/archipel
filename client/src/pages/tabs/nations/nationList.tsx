@@ -45,7 +45,6 @@ export default function NationList({ text }: StringProps) {
                       officialId={nation.officialId}
                       name={nation.name}
                       owner={nation.owner}
-                      role={nation.role}
                       data={nation.data}
                       createdAt={nation.createdAt}
                     />

@@ -18,7 +18,6 @@ import CapitalTag from "../../tags/capitalTag";
 import { useTranslation } from "react-i18next";
 import { regimeList } from "../../../settings/consts";
 import Spinner from "../../loading/spinner";
-import LanguagesTag from "../../tags/languagesTag";
 
 export default function NationIdentity({
   selectedNation,
@@ -174,9 +173,6 @@ export default function NationIdentity({
                         />
                       )}
                     </span>
-                    <LanguagesTag
-                      languages={selectedNation.data.general.languages}
-                    />
                     <div className="flex items-center gap-2">
                       <CapitalTag selectedNation={selectedNation} />
                       {owner && (

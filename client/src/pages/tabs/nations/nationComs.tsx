@@ -48,7 +48,7 @@ export default function NationComs({ text }: StringProps) {
                 >
                   <div className="flex justify-between items-center">
                     <span className="w-1/4 flex gap-1 items-center">
-                      {session.nation.role === "admin" && (
+                      {session.user.role === "admin" && (
                         <div
                           onClick={() => handleDelete(com._id)}
                           className="text-lg hover:scale-110 hover:cursor-pointer transition-all"

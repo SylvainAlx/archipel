@@ -20,7 +20,7 @@ export const register = ({ name, password }: AuthPayload) => {
   registerFetch({ name, password })
     .then((data) => {
       myStore.set(loadingAtom, false);
-      if (data.nation) {
+      if (data.nation && typeof comOptions[1].id === "number" ) {
         createComFetch({
           originId: data.nation._id,
           originName: data.nation.name,

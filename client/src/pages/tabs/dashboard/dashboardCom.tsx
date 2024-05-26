@@ -28,12 +28,14 @@ export default function DashboardCom({ text }: StringProps) {
     if (comList.length < 1) {
       getComs();
     }
-    setNewCom({
-      ...newCom,
-      originId: session.nation.officialId,
-      originName: session.nation.name,
-      comType: comTypeOptions[0].id,
-    });
+    if (typeof comTypeOptions[0].id === "number") {
+      setNewCom({
+        ...newCom,
+        originId: session.nation.officialId,
+        originName: session.nation.name,
+        comType: comTypeOptions[0].id,
+      });
+    }
   }, []);
 
   const handleChange = (
@@ -108,7 +110,6 @@ export default function DashboardCom({ text }: StringProps) {
               <>
                 {comList.map((com, i) => {
                   if (
-                    (session.nation.role === "admin" && com.comType === 0) ||
                     com.originId === session.nation._id ||
                     com.destinationId === session.nation._id
                   ) {
@@ -121,11 +122,9 @@ export default function DashboardCom({ text }: StringProps) {
                           <span className="text-[10px]">
                             {dateToString(com.createdAt)}
                           </span>
-                          {session.nation.role === "admin" &&
-                            com.comType != 1 &&
-                            com.comType != 2 && (
-                              <span>origine : {com.originName}</span>
-                            )}
+                          {com.comType != 1 && com.comType != 2 && (
+                            <span>origine : {com.originName}</span>
+                          )}
                           {com.comType === 1 && (
                             <span>
                               Bienvenue sur {t("components.logo.title")} !
