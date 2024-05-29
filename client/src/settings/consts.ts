@@ -128,18 +128,18 @@ export const regimeList: Regime[] = [
 ];
 
 export const languageList: StandardOption[] = [
-  {id:"ar", label:"العربية"},
-  {id:"en", label:"English"},
-  {id:"fr", label:"Français"},
-  {id:"de", label:"Deutsch"},
-  {id:"es", label:"Español"},
-  {id:"hi", label:"हिन्दी"},
-  {id:"ja", label:"日本語"},
-  {id:"ko", label:"한국어"},
-  {id:"pt", label:"Português"},
-  {id:"ru", label:"Анже"},
-  {id:"zh", label:"昂热"},
-]
+  { id: "ar", label: "العربية" },
+  { id: "en", label: "English" },
+  { id: "fr", label: "Français" },
+  { id: "de", label: "Deutsch" },
+  { id: "es", label: "Español" },
+  { id: "hi", label: "हिन्दी" },
+  { id: "ja", label: "日本語" },
+  { id: "ko", label: "한국어" },
+  { id: "pt", label: "Português" },
+  { id: "ru", label: "Анже" },
+  { id: "zh", label: "昂热" },
+];
 
 export const politicalSideList: PoliticalSide[] = [
   { id: -90, label: "Extrême gauche" },
@@ -273,8 +273,7 @@ export const buildList: BuildCategory[] = [
 // onglets
 
 export const nationTabs: StandardOption[] = [
-  //  { id: 0, label: "GLOBE VIRTUEL" },
   { id: 1, label: "LISTE DES NATIONS" },
-  { id: 2, label: "ACTUALITES" },
+  // { id: 2, label: "ACTUALITES" },
   { id: 3, label: "STATISTIQUES" },
 ];

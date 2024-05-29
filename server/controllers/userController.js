@@ -244,3 +244,17 @@ export const getUsersByNation = async (req, res) => {
     res.status(400).json({ error: error.message });
   }
 };
+
+export const usersCount = async (req, res) => {
+  try {
+    User.countDocuments({})
+      .then((count) => {
+        res.status(200).json(count);
+      })
+      .catch((error) => {
+        res.status(400).json({ message: error.message });
+      });
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+};

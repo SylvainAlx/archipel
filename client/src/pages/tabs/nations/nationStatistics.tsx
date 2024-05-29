@@ -3,49 +3,53 @@ import { useAtom } from "jotai";
 import DashTile from "../../../components/dashTile";
 import TileContainer from "../../../components/tileContainer";
 import H1 from "../../../components/titles/h1";
-import { nationsListAtom, placesListAtom } from "../../../settings/store";
+import { statsAtom } from "../../../settings/store";
 import { StringProps } from "../../../types/typProp";
 import { useEffect } from "react";
 import H3 from "../../../components/titles/h3";
-import { getNations } from "../../../api/nation/nationAPI";
-import { getAllPlaces } from "../../../api/place/placeAPI";
+import { getNationsCount } from "../../../api/nation/nationAPI";
+import { getPlacesCount } from "../../../api/place/placeAPI";
+import { getCitizensCount } from "../../../api/user/userAPI";
 
 export default function NationStatistics({ text }: StringProps) {
-  const [nationsList] = useAtom(nationsListAtom);
-  const [placeList] = useAtom(placesListAtom);
+  const [stats] = useAtom(statsAtom);
 
   useEffect(() => {
-    if (nationsList.length > 0) {
-      if (nationsList[0]._id === "") {
-        getNations("");
-      }
+    if (stats.counts.nations === 0) {
+      getNationsCount();
     }
-    if (placeList.length === 0) {
-      getAllPlaces();
+    if (stats.counts.places === 0) {
+      getPlacesCount();
+    }
+    if (stats.counts.citizens === 0) {
+      getCitizensCount();
     }
   }, []);
 
   return (
     <>
       <H1 text={text} />
-      {nationsList != undefined && (
-        <TileContainer
-          children={
-            <>
-              <DashTile
-                title="Nombre total de nations virtuelles"
-                children={<H3 text={nationsList.length.toString()} />}
-              />
-              {placeList != undefined && (
-                <DashTile
-                  title="Nombre total de villes"
-                  children={<H3 text={placeList.length.toString()} />}
-                />
-              )}
-            </>
-          }
-        />
-      )}
+
+      <TileContainer
+        children={
+          <>
+            <DashTile
+              title="Nombre total de nations virtuelles"
+              children={<H3 text={stats.counts.nations.toString()} />}
+            />
+
+            <DashTile
+              title="Nombre total de lieux"
+              children={<H3 text={stats.counts.places.toString()} />}
+            />
+
+            <DashTile
+              title="Nombre total de citoyens"
+              children={<H3 text={stats.counts.citizens.toString()} />}
+            />
+          </>
+        }
+      />
     </>
   );
 }

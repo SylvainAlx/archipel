@@ -57,7 +57,7 @@ export default function Nation() {
 
   return (
     <>
-      <H1 text={nation.name} />
+      <H1 text={t("pages.nation.title")} />
       {nation != undefined ? (
         <>
           <section className="w-full flex flex-wrap gap-8 items-start justify-between">

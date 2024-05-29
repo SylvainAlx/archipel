@@ -1,6 +1,12 @@
 import { atom, createStore } from "jotai";
 
-import { EmptyNation, emptyNewNationPayload, Nation, NationRoleplayData, NewNationPayload } from "../types/typNation";
+import {
+  EmptyNation,
+  emptyNewNationPayload,
+  Nation,
+  NationRoleplayData,
+  NewNationPayload,
+} from "../types/typNation";
 import {
   Com,
   ConfirmBoxDefault,
@@ -23,19 +29,35 @@ export const loadingAtom = atom(false);
 
 // Session
 
-export const emptySession = {user: emptyUser, nation: EmptyNation, jwt: ""}
-export const sessionAtom = atom<Session>(emptySession)
-export const session = myStore.get(sessionAtom)
+export const emptySession = { user: emptyUser, nation: EmptyNation, jwt: "" };
+export const sessionAtom = atom<Session>(emptySession);
+export const session = myStore.get(sessionAtom);
+
+// Stats
+
+interface Counts {
+  nations: number;
+  citizens: number;
+  places: number;
+}
+
+type Stats = {
+  counts: Counts;
+};
+
+export const statsAtom = atom<Stats>({
+  counts: { nations: 0, citizens: 0, places: 0 },
+});
 
 // Citizen
 
-export const citizenFetchAtom = atom<User>(emptyUser)
-export const citizenListAtom = atom<User[]>([])
-export const nationCitizenListAtom = atom<User[]>([])
+export const citizenFetchAtom = atom<User>(emptyUser);
+export const citizenListAtom = atom<User[]>([]);
+export const nationCitizenListAtom = atom<User[]>([]);
 
 // Nation
 
-export const nationFetchedAtom = atom<Nation>(EmptyNation)
+export const nationFetchedAtom = atom<Nation>(EmptyNation);
 export const nationsRoleplayDataAtom = atom<NationRoleplayData[]>([]);
 export const newNationAtom = atom<NewNationPayload>(emptyNewNationPayload);
 export const nationsListAtom = atom<Nation[]>([]);

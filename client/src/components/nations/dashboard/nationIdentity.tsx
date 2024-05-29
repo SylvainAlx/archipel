@@ -18,6 +18,8 @@ import CapitalTag from "../../tags/capitalTag";
 import { useTranslation } from "react-i18next";
 import { regimeList } from "../../../settings/consts";
 import Spinner from "../../loading/spinner";
+import { BsShieldShaded } from "react-icons/bs";
+import { GiBlackFlag } from "react-icons/gi";
 
 export default function NationIdentity({
   selectedNation,
@@ -54,10 +56,20 @@ export default function NationIdentity({
             children={
               <>
                 <div className="w-full p-4 flex flex-col gap-2 items-center">
+                  <div className="w-full relative flex items-center justify-center gap-2">
+                    <H3 text={selectedNation.name} />
+                    {owner && (
+                      <EditIcon
+                        target="nation"
+                        param={selectedNation.name}
+                        path="name"
+                      />
+                    )}
+                  </div>
                   <div className="flex flex-col sm:flex-row justify-center items-center sm:flex-wrap gap-6">
                     <div
                       onClick={() => handleClick(selectedNation.data.url.flag)}
-                      className="relative cursor-zoom-in"
+                      className="relative"
                     >
                       <div
                         className={`w-[200px] h-[140px] flex items-center justify-center gap-2`}
@@ -67,19 +79,14 @@ export default function NationIdentity({
                             <LazyImage
                               src={selectedNation.data.url.flag}
                               alt={`flag of ${selectedNation.name}`}
-                              className="object-cover w-full h-full rounded"
+                              className="object-cover w-full h-full rounded cursor-zoom-in"
                               hover={t("components.hoverInfos.flag")}
                             />
                           </Suspense>
                         ) : (
-                          <Suspense fallback={<Spinner />}>
-                            <LazyImage
-                              src="/flag.webp"
-                              alt={`no flag`}
-                              className="object-cover w-full h-full rounded"
-                              hover={t("components.hoverInfos.noFlag")}
-                            />
-                          </Suspense>
+                          <div className="text-9xl">
+                            <GiBlackFlag />
+                          </div>
                         )}
                         {owner && (
                           <EditIcon
@@ -94,7 +101,7 @@ export default function NationIdentity({
                       onClick={() =>
                         handleClick(selectedNation.data.url.coatOfArms)
                       }
-                      className="relative cursor-zoom-in"
+                      className="relative"
                     >
                       <div
                         className={`w-[140px] h-[140px] flex items-center justify-center gap-2`}
@@ -104,19 +111,14 @@ export default function NationIdentity({
                             <LazyImage
                               src={selectedNation.data.url.coatOfArms}
                               alt={`coatOfArms of ${selectedNation.name}`}
-                              className="object-contain w-full h-full"
+                              className="object-contain w-full h-full cursor-zoom-in"
                               hover={t("components.hoverInfos.coatOfArms")}
                             />
                           </Suspense>
                         ) : (
-                          <Suspense fallback={<Spinner />}>
-                            <LazyImage
-                              src="/coatOfArms.webp"
-                              alt={`no coat of arms`}
-                              className="object-contain w-full h-full"
-                              hover={t("components.hoverInfos.noCoatOfArms")}
-                            />
-                          </Suspense>
+                          <div className="text-9xl">
+                            <BsShieldShaded />
+                          </div>
                         )}
                         {owner && (
                           <EditIcon
@@ -127,17 +129,6 @@ export default function NationIdentity({
                         )}
                       </div>
                     </div>
-                  </div>
-
-                  <div className="w-full relative flex items-center justify-center gap-2">
-                    <H3 text={selectedNation.name} />
-                    {owner && (
-                      <EditIcon
-                        target="nation"
-                        param={selectedNation.name}
-                        path="name"
-                      />
-                    )}
                   </div>
                   <div className="flex items-center gap-2">
                     <em className="text-xl">

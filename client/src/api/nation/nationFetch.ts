@@ -2,6 +2,12 @@ import { SERVER_URL } from "../../settings/consts";
 import { Nation, NewNationPayload } from "../../types/typNation";
 import { GET_JWT } from "../../utils/functions";
 
+export const getNationsCountFetch = async () => {
+  const resp = await fetch(`${SERVER_URL}/nation/count`);
+  const result = await resp.json();
+  return result;
+};
+
 export const createNationFetch = async (payload: NewNationPayload) => {
   const jwt = GET_JWT();
   const resp = await fetch(`${SERVER_URL}/nation/create`, {

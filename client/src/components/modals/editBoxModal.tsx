@@ -5,7 +5,8 @@ import {
   confirmBox,
   editPlaceAtom,
   editbox,
-  session,
+  myStore,
+  sessionAtom,
 } from "../../settings/store";
 import Button from "../buttons/button";
 import Input from "../form/input";
@@ -18,6 +19,7 @@ export default function EditBoxModal() {
   const [, setConfirm] = useAtom(confirmBox);
 
   const handleSubmit = (e: FormEvent) => {
+    const session = myStore.get(sessionAtom);
     e.preventDefault();
     const parties: string[] = editBox.path.split(".");
     let objetCourant;
@@ -40,6 +42,7 @@ export default function EditBoxModal() {
         if (typeof objetCourant === "object" && objetCourant !== null) {
           objetCourant[dernierePartie] = editBox.new;
         }
+        // updatedNation.officialId = session.user.officialId;
 
         setConfirm({
           action: "updateNation",

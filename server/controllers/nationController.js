@@ -4,6 +4,20 @@ import Place from "../models/placeSchema.js";
 import Com from "../models/comSchema.js";
 import { createOfficialId } from "../utils/functions.js";
 
+export const nationsCount = async (req, res) => {
+  try {
+    Nation.countDocuments({})
+      .then((count) => {
+        res.status(200).json(count);
+      })
+      .catch((error) => {
+        res.status(400).json({ message: error.message });
+      });
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+};
+
 export const createNation = async (req, res) => {
   try {
     const { name, owner, motto, regime, currency } = req.body;

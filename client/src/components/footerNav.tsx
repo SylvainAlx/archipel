@@ -1,33 +1,30 @@
-import { useEffect, useState } from "react";
 import Nav from "./nav";
 
 export default function FooterNav() {
-  const [prevScrollPos, setPrevScrollPos] = useState(0);
-  const [visible, setVisible] = useState(true);
+  // const [prevScrollPos, setPrevScrollPos] = useState(0);
+  // const [visible, setVisible] = useState(true);
 
-  const handleScroll = () => {
-    const currentScrollPos = window.scrollY;
+  // const handleScroll = () => {
+  //   const currentScrollPos = window.scrollY;
 
-    if (currentScrollPos > prevScrollPos) {
-      setVisible(false);
-    } else {
-      setVisible(true);
-    }
+  //   if (currentScrollPos > prevScrollPos) {
+  //     setVisible(false);
+  //   } else {
+  //     setVisible(true);
+  //   }
 
-    setPrevScrollPos(currentScrollPos);
-  };
+  //   setPrevScrollPos(currentScrollPos);
+  // };
 
-  useEffect(() => {
-    window.addEventListener("scroll", handleScroll);
+  // useEffect(() => {
+  //   window.addEventListener("scroll", handleScroll);
 
-    return () => window.removeEventListener("scroll", handleScroll);
-  });
+  //   return () => window.removeEventListener("scroll", handleScroll);
+  // });
 
   return (
     <nav
-      className={`${
-        visible ? "bottom-0 opacity-100" : "bottom-[-70px] opacity-0"
-      } transition-all duration-500 fixed md:hidden w-full h-[70px] flex justify-evenly items-start pt-2 bg-black_alpha backdrop-blur-sm`}
+      className={`bottom-0 transition-all duration-500 fixed md:hidden w-full h-[70px] flex justify-evenly items-start pt-2 bg-black_alpha backdrop-blur-sm`}
     >
       <Nav />
     </nav>

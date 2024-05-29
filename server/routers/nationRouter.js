@@ -10,10 +10,12 @@ import {
   updateNation,
   getRoleplayData,
   createNation,
+  nationsCount,
 } from "../controllers/nationController.js";
 
 const nationRouter = express.Router();
 
+nationRouter.get("/count", nationsCount);
 nationRouter.get("/getall", getAllNations);
 nationRouter.get("/getnations", getTop100Nations);
 nationRouter.get("/:id", getOneNation);

@@ -2,6 +2,20 @@ import Place from "../models/placeSchema.js";
 import Nation from "../models/nationSchema.js";
 import { createOfficialId } from "../utils/functions.js";
 
+export const placesCount = async (req, res) => {
+  try {
+    Place.countDocuments({})
+      .then((count) => {
+        res.status(200).json(count);
+      })
+      .catch((error) => {
+        res.status(400).json({ message: error.message });
+      });
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+};
+
 export const getPlaces = async (req, res) => {
   const nationId = req.params.id;
   try {

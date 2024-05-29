@@ -10,6 +10,7 @@ import {
   placesListAtom,
   session,
   sessionAtom,
+  statsAtom,
 } from "../../settings/store";
 import { Nation } from "../../types/typNation";
 import { PlacePayload } from "../../types/typPayload";
@@ -26,6 +27,7 @@ import {
   getAllPlacesFetch,
   getNationPlacesFetch,
   getPlaceFetch,
+  getPlacesCountFetch,
   updatePlaceFetch,
 } from "./placeFetch";
 
@@ -38,6 +40,23 @@ const setNationPlacesList = (list: Place[]) =>
 
 const placesList = myStore.get(placesListAtom);
 const setPlacesList = (list: Place[]) => myStore.set(placesListAtom, list);
+
+export const getPlacesCount = async () => {
+  const stats = myStore.get(statsAtom);
+  myStore.set(loadingAtom, true);
+  getPlacesCountFetch()
+    .then((response) => {
+      myStore.set(loadingAtom, false);
+      const updatedStats = { ...stats };
+      updatedStats.counts.places = response;
+      myStore.set(statsAtom, updatedStats);
+    })
+    .catch((error) => {
+      myStore.set(loadingAtom, false);
+      myStore.set(loadingAtom, false);
+      myStore.set(infoModalAtom, error.message);
+    });
+};
 
 export const createNewPlace = (newPlace: PlacePayload) => {
   myStore.set(loadingAtom, true);
@@ -57,7 +76,7 @@ export const createNewPlace = (newPlace: PlacePayload) => {
           setNationPlacesList,
         );
         updateElementOfAtomArray(data.nation, nationsList, setNationsList);
-        myStore.set(sessionAtom, {...session, nation: data.nation})
+        myStore.set(sessionAtom, { ...session, nation: data.nation });
         myStore.set(infoModalAtom, data.message);
       }
     })
@@ -69,19 +88,19 @@ export const createNewPlace = (newPlace: PlacePayload) => {
 
 export const getPlace = (id: string) => {
   myStore.set(loadingAtom, true);
-  const place = findElementOfAtomArray(id, placesList)
+  const place = findElementOfAtomArray(id, placesList);
   if (place === undefined || place === null) {
-  getPlaceFetch(id)
-    .then((data) => {
-      myStore.set(placeFetchedAtom, data)
-      myStore.set(loadingAtom, false);
-    })
-    .catch((error) => {
-      myStore.set(loadingAtom, false);
-      myStore.set(infoModalAtom, error.message);
-    });
+    getPlaceFetch(id)
+      .then((data) => {
+        myStore.set(placeFetchedAtom, data);
+        myStore.set(loadingAtom, false);
+      })
+      .catch((error) => {
+        myStore.set(loadingAtom, false);
+        myStore.set(infoModalAtom, error.message);
+      });
   } else {
-    myStore.set(placeFetchedAtom, emptyPlace)
+    myStore.set(placeFetchedAtom, emptyPlace);
     myStore.set(loadingAtom, false);
   }
 };
@@ -134,7 +153,7 @@ export const deletePlace = (id: string) => {
   deletePlaceFetch(id)
     .then((resp: { place: Place; nation: Nation; message: string }) => {
       myStore.set(dataCheckedAtom, false);
-      myStore.set(sessionAtom, {...session, nation: resp.nation})
+      myStore.set(sessionAtom, { ...session, nation: resp.nation });
       updateElementOfAtomArray(resp.nation, nationsList, setNationsList);
       deleteElementOfAtomArray(
         resp.place.officialId,

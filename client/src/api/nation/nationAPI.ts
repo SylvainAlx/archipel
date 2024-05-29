@@ -7,18 +7,20 @@ import {
   nationsRoleplayDataAtom,
   session,
   sessionAtom,
+  statsAtom,
 } from "../../settings/store";
 import { EmptyNation, Nation, NewNationPayload } from "../../types/typNation";
 
 import {
   deleteElementOfAtomArray,
   findElementOfAtomArray,
-  updateElementOfAtomArray,
+  // updateElementOfAtomArray,
 } from "../../utils/functions";
 import {
   createNationFetch,
   DeleteSelfFetch,
   getAllNations,
+  getNationsCountFetch,
   getOneNationFetch,
   getRoleplayDataFetch,
   updateNationFetch,
@@ -27,49 +29,65 @@ import {
 const nationsList = myStore.get(nationsListAtom);
 const setNationsList = (list: Nation[]) => myStore.set(nationsListAtom, list);
 
+export const getNationsCount = async () => {
+  const stats = myStore.get(statsAtom);
+  myStore.set(loadingAtom, true);
+  getNationsCountFetch()
+    .then((response) => {
+      myStore.set(loadingAtom, false);
+      const updatedStats = { ...stats };
+      updatedStats.counts.nations = response;
+      myStore.set(statsAtom, updatedStats);
+    })
+    .catch((error) => {
+      myStore.set(loadingAtom, false);
+      myStore.set(loadingAtom, false);
+      myStore.set(infoModalAtom, error.message);
+    });
+};
+
 export const createNation = (payload: NewNationPayload) => {
   myStore.set(loadingAtom, true);
   createNationFetch(payload)
-  .then((data) => {
-    myStore.set(loadingAtom, false);
-    if (data.nation) {
-      myStore.set(nationsListAtom, [...nationsList, data.nation]);
-      myStore.set(sessionAtom, {...session, nation: data.nation})
-      if (data.user){
-        myStore.set(sessionAtom, {...session, user: data.user})
-      }
-    } else {
-      myStore.set(loadingAtom, false);
-      myStore.set(infoModalAtom, "création impossible : " + data.message);
-    }
-  })
-  .catch((error) => {
-    myStore.set(loadingAtom, false);
-    myStore.set(infoModalAtom, error.message);
-  });
-}
-
-export const getNation = (id: string) => {
-  
-  myStore.set(loadingAtom, true);
-  const nation = findElementOfAtomArray(id, nationsList)
-  if (nation === undefined || nation === null) {
-    getOneNationFetch(id)
     .then((data) => {
       myStore.set(loadingAtom, false);
-      myStore.set(nationFetchedAtom, data.nation)
+      if (data.nation) {
+        myStore.set(nationsListAtom, [...nationsList, data.nation]);
+        myStore.set(sessionAtom, { ...session, nation: data.nation });
+        if (data.user) {
+          myStore.set(sessionAtom, { ...session, user: data.user });
+        }
+      } else {
         myStore.set(loadingAtom, false);
-        return nation
+        myStore.set(infoModalAtom, "création impossible : " + data.message);
+      }
     })
     .catch((error) => {
-      myStore.set(nationFetchedAtom, EmptyNation)
       myStore.set(loadingAtom, false);
       myStore.set(infoModalAtom, error.message);
-      return nation
     });
+};
+
+export const getNation = (id: string) => {
+  myStore.set(loadingAtom, true);
+  const nation = findElementOfAtomArray(id, nationsList);
+  if (nation === undefined || nation === null) {
+    getOneNationFetch(id)
+      .then((data) => {
+        myStore.set(loadingAtom, false);
+        myStore.set(nationFetchedAtom, data.nation);
+        myStore.set(loadingAtom, false);
+        return nation;
+      })
+      .catch((error) => {
+        myStore.set(nationFetchedAtom, EmptyNation);
+        myStore.set(loadingAtom, false);
+        myStore.set(infoModalAtom, error.message);
+        return nation;
+      });
   } else {
     myStore.set(loadingAtom, false);
-    myStore.set(nationFetchedAtom, EmptyNation)
+    myStore.set(nationFetchedAtom, EmptyNation);
   }
 };
 
@@ -94,8 +112,10 @@ export const updateNation = (payload: Nation) => {
     .then((resp) => {
       myStore.set(loadingAtom, false);
       if (resp.nation) {
-        myStore.set(sessionAtom, {...session, nation: resp.nation})
-        updateElementOfAtomArray(resp.nation, nationsList, setNationsList);
+        myStore.set(nationFetchedAtom, resp.nation);
+        myStore.set(sessionAtom, { ...session, nation: resp.nation });
+        myStore.set(nationsListAtom, []);
+        // updateElementOfAtomArray(resp.nation, nationsList, setNationsList);
       } else {
         myStore.set(infoModalAtom, resp.message);
       }
@@ -112,12 +132,16 @@ export const deleteSelfNation = () => {
     .then((resp) => {
       myStore.set(loadingAtom, false);
       if (session.nation) {
-        deleteElementOfAtomArray(session.nation.officialId, nationsList, setNationsList);
+        deleteElementOfAtomArray(
+          session.nation.officialId,
+          nationsList,
+          setNationsList,
+        );
       }
       myStore.set(infoModalAtom, resp.message);
-      myStore.set(sessionAtom, {...session, nation: EmptyNation})
+      myStore.set(sessionAtom, { ...session, nation: EmptyNation });
       if (resp.user) {
-        myStore.set(sessionAtom, {...session, user: resp.user})
+        myStore.set(sessionAtom, { ...session, user: resp.user });
       }
     })
     .catch((error) => {

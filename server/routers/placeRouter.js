@@ -6,11 +6,13 @@ import {
   getAllPlaces,
   getOne,
   updatePlace,
+  placesCount,
 } from "../controllers/placeController.js";
 import { verifyJwt } from "../middlewares/authMiddleware.js";
 
 const placeRouter = express.Router();
 
+placeRouter.get("/count", placesCount);
 placeRouter.get("/getall", getAllPlaces);
 placeRouter.get("/:id", getOne);
 placeRouter.get("/bynation/:id", getPlaces);

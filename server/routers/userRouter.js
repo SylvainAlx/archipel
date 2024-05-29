@@ -10,10 +10,12 @@ import {
   getOneUser,
   getSelfUser,
   getUsersByNation,
+  usersCount,
 } from "../controllers/userController.js";
 
 const userRouter = express.Router();
 
+userRouter.get("/count", usersCount);
 userRouter.post("/signup", register);
 userRouter.post("/signin", login);
 userRouter.post("/forgetpassword", forgetPassword);

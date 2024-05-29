@@ -2,6 +2,12 @@ import { SERVER_URL } from "../../settings/consts";
 import { AuthPayload, RecoveryPayload } from "../../types/typUser";
 import { GET_JWT } from "../../utils/functions";
 
+export const getCitizensCountFetch = async () => {
+  const resp = await fetch(`${SERVER_URL}/user/count`);
+  const result = await resp.json();
+  return result;
+};
+
 export const registerFetch = async (payload: AuthPayload) => {
   const resp = await fetch(`${SERVER_URL}/user/signup`, {
     method: "POST",
