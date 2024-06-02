@@ -9,7 +9,7 @@ export default function IdTag({ label }: customTagProps) {
     <Tag
       text={label.toString().toUpperCase()}
       hover={t("components.hoverInfos.tags.id")}
-      bgColor="bg-[rgba(255,255,255,0.3)]"
+      bgColor="bg-complementary3"
       // textStyle="uppercase"
       children={<TbWorld />}
     />

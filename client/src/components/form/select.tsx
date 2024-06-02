@@ -33,7 +33,7 @@ export default function Select({
   }, []);
 
   return (
-    <label className="w-full">
+    <label className="w-full max-w-[300px]">
       {title}
       <select
         required={required}

@@ -11,7 +11,7 @@ export default function DashTile({
 }: DashTileProps) {
   return (
     <fieldset
-      className={`min-w-[300px] animate-fadeIn rounded p-2 flex flex-col items-center flex-grow gap-3 bg-complementary2 ${className && className}`}
+      className={`min-w-[300px] animate-fadeIn rounded p-2 flex flex-col items-center flex-grow gap-3 border-[1px] border-solid border-complementary2 ${className && className}`}
     >
       {title != "" && (
         <legend className="px-2 text-center text-light">{title}</legend>

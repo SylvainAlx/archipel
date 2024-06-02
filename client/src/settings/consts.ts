@@ -26,12 +26,10 @@ export const NEW_PLACE_COST = 100;
 export const searchSortOptions: StandardOption[] = [
   { id: 0, label: "Alphabetique croissant" },
   { id: 1, label: "Alphabetique décroissant" },
-  { id: 2, label: "Succès croissant" },
-  { id: 3, label: "Succès décroissant" },
-  { id: 4, label: "Nombre de lieux croissant" },
-  { id: 5, label: "Nombre de lieux décroissant" },
-  { id: 6, label: "Nombre de citoyens croissant" },
-  { id: 7, label: "Nombre de citoyens décroissant" },
+  { id: 2, label: "Nombre de lieux croissant" },
+  { id: 3, label: "Nombre de lieux décroissant" },
+  { id: 4, label: "Nombre de citoyens croissant" },
+  { id: 5, label: "Nombre de citoyens décroissant" },
 ];
 
 export const comOptions: StandardOption[] = [
@@ -273,7 +271,7 @@ export const buildList: BuildCategory[] = [
 // onglets
 
 export const nationTabs: StandardOption[] = [
-  { id: 1, label: "LISTE DES NATIONS" },
+  { id: 1, label: "Liste des nations" },
   // { id: 2, label: "ACTUALITES" },
-  { id: 3, label: "STATISTIQUES" },
+  { id: 3, label: "Statistiques" },
 ];

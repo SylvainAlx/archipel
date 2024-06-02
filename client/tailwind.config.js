@@ -11,6 +11,7 @@ export default {
         light: "var(--color-light)",
         complementary: "var(--color-complementary)",
         complementary2: "var(--color-complementary2)",
+        complementary3: "var(--color-complementary3)",
         info: "var(--color-info)",
         black_alpha: "var(--color-black-alpha)",
         success: "var(--color-success)",

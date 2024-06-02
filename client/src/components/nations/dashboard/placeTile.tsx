@@ -6,7 +6,6 @@ import {
   session,
 } from "../../../settings/store";
 import { useAtom } from "jotai";
-import PointTag from "../../tags/pointTag";
 import PopulationTag from "../../tags/populationTag";
 import { GiCapitol } from "react-icons/gi";
 import { useNavigate } from "react-router-dom";
@@ -87,7 +86,6 @@ export default function PlaceTile({ place, owner }: PlaceTileProp) {
         <div className="max-w-[90%] flex flex-wrap items-center self-end justify-end gap-1">
           {place.officialId && <IdTag label={place.officialId} />}
           <PlaceTag label={getPlaceTypeLabel(place.type)} />
-          <PointTag label={(childrenStats.points + place.points).toString()} />
           {place.type != 2 && (
             <TreeTag label={childrenStats.children.toString()} />
           )}

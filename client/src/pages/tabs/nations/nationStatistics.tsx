@@ -1,7 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useAtom } from "jotai";
 import DashTile from "../../../components/dashTile";
-import TileContainer from "../../../components/tileContainer";
 import H1 from "../../../components/titles/h1";
 import { statsAtom } from "../../../settings/store";
 import { StringProps } from "../../../types/typProp";
@@ -27,29 +26,25 @@ export default function NationStatistics({ text }: StringProps) {
   }, []);
 
   return (
-    <>
+    <section className="w-full flex gap-1 flex-wrap items-center flex-col ">
       <H1 text={text} />
-
-      <TileContainer
-        children={
-          <>
-            <DashTile
-              title="Nombre total de nations virtuelles"
-              children={<H3 text={stats.counts.nations.toString()} />}
-            />
-
-            <DashTile
-              title="Nombre total de lieux"
-              children={<H3 text={stats.counts.places.toString()} />}
-            />
-
-            <DashTile
-              title="Nombre total de citoyens"
-              children={<H3 text={stats.counts.citizens.toString()} />}
-            />
-          </>
-        }
-      />
-    </>
+      <div className="flex flex-wrap items-center justify-center gap-2">
+        <DashTile
+          title="Nations virtuelles"
+          children={<H3 text={stats.counts.nations.toString()} />}
+          className="max-w-[100px]"
+        />
+        <DashTile
+          title="Lieux"
+          children={<H3 text={stats.counts.places.toString()} />}
+          className="max-w-[100px]"
+        />
+        <DashTile
+          title="Citoyens"
+          children={<H3 text={stats.counts.citizens.toString()} />}
+          className="max-w-[100px]"
+        />
+      </div>
+    </section>
   );
 }

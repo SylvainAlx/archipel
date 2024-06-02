@@ -1,7 +1,6 @@
 import { Nation } from "../../types/typNation";
 import { GiBlackFlag } from "react-icons/gi";
 import IdTag from "../tags/idTag";
-import PointTag from "../tags/pointTag";
 import PopulationTag from "../tags/populationTag";
 import EyeButton from "../buttons/eyeButton";
 import { useNavigate } from "react-router-dom";
@@ -37,7 +36,6 @@ export default function PublicNationTile(nation: Nation) {
       <div className="max-w-[80%] flex gap-1 self-end flex-wrap justify-end">
         <IdTag label={nation.officialId} />
         <RegimeTag selectedNation={nation} />
-        <PointTag label={nation.data.roleplay.points} />
         <PlaceTag label={nation.data.roleplay.places} />
         <PopulationTag label={nation.data.roleplay.citizens} />
       </div>

@@ -4,14 +4,21 @@
 @tailwind utilities;
 
 #root {
-  --color-primary: #081825;
+  /* --color-secondary: #00818a; */
+  /* --color-complementary: rgb(34, 34, 34); */
+  /* --color-complementary2: rgb(54, 54, 54); */
+  /* --color-success: rgb(0, 148, 32); */
+  /* --color-info: rgb(0, 156, 218); */
+
+  --color-primary: rgb(8, 24, 37);
   --color-light: #ffffff;
-  --color-secondary: #00818a;
-  --color-complementary: rgb(34, 34, 34);
-  --color-complementary2: rgb(54, 54, 54);
+  --color-secondary: rgb(15 118 110); /* teal-700 */
+  --color-complementary: rgb(30 41 59); /* slate-800 */
+  --color-complementary2: rgb(51 65 85); /* slate-700 */
+  --color-complementary3: rgb(100 116 139); /* slate-500 */
   --color-black-alpha: rgba(0, 0, 0, 0.747);
-  --color-info: rgb(0, 156, 218);
-  --color-success: rgb(0, 148, 32);
+  --color-info: rgb(2 132 199); /* sky-600 */
+  --color-success: rgb(101 163 13); /* lime-600 */
   --color-danger: rgb(124, 27, 27);
   --color-wait: rgb(112, 77, 0);
 
