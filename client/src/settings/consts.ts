@@ -23,13 +23,13 @@ export const NEW_PLACE_COST = 100;
 
 // listes
 
-export const searchSortOptions: StandardOption[] = [
-  { id: 0, label: "Alphabetique croissant" },
-  { id: 1, label: "Alphabetique décroissant" },
-  { id: 2, label: "Nombre de lieux croissant" },
-  { id: 3, label: "Nombre de lieux décroissant" },
-  { id: 4, label: "Nombre de citoyens croissant" },
-  { id: 5, label: "Nombre de citoyens décroissant" },
+export const nationSearchSortOptions: StandardOption[] = [
+  { id: 0, label: i18n.t("listes.sortNations.ascAlpha") },
+  { id: 1, label: i18n.t("listes.sortNations.descAlpha") },
+  { id: 2, label: i18n.t("listes.sortNations.ascLoc") },
+  { id: 3, label: i18n.t("listes.sortNations.descLoc") },
+  { id: 4, label: i18n.t("listes.sortNations.ascCtz") },
+  { id: 5, label: i18n.t("listes.sortNations.descCtz") },
 ];
 
 export const comOptions: StandardOption[] = [
@@ -269,9 +269,3 @@ export const buildList: BuildCategory[] = [
 ];
 
 // onglets
-
-export const nationTabs: StandardOption[] = [
-  { id: 1, label: "Liste des nations" },
-  // { id: 2, label: "ACTUALITES" },
-  { id: 3, label: "Statistiques" },
-];

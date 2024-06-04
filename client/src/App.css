@@ -4,7 +4,6 @@
 @tailwind utilities;
 
 #root {
-  /* --color-secondary: #00818a; */
   /* --color-complementary: rgb(34, 34, 34); */
   /* --color-complementary2: rgb(54, 54, 54); */
   /* --color-success: rgb(0, 148, 32); */
@@ -12,7 +11,7 @@
 
   --color-primary: rgb(8, 24, 37);
   --color-light: #ffffff;
-  --color-secondary: rgb(15 118 110); /* teal-700 */
+  --color-secondary: rgb(0, 129, 138);
   --color-complementary: rgb(30 41 59); /* slate-800 */
   --color-complementary2: rgb(51 65 85); /* slate-700 */
   --color-complementary3: rgb(100 116 139); /* slate-500 */

@@ -6,13 +6,15 @@ import {
   useEffect,
   useState,
 } from "react";
-import { searchSortOptions } from "../settings/consts";
+
 import { getNations } from "../api/nation/nationAPI";
 import Input from "./form/input";
 import Button from "./buttons/button";
 import Select from "./form/select";
 import { Nation } from "../types/typNation";
 import { SetAtom } from "../settings/store";
+import { nationSearchSortOptions } from "../settings/consts";
+import { useTranslation } from "react-i18next";
 
 export interface SearchBarProps {
   type: string;
@@ -20,9 +22,17 @@ export interface SearchBarProps {
   setList: SetAtom<[SetStateAction<any>], void>;
 }
 
-export default function SearchBar({ type, list, setList }: SearchBarProps) {
-  const [selectOption, setSelectOption] = useState(searchSortOptions[0].label);
+export default function NationSearchBar({
+  type,
+  list,
+  setList,
+}: SearchBarProps) {
+  const [selectOption, setSelectOption] = useState(
+    nationSearchSortOptions[0].id.toString(),
+  );
+  const { t } = useTranslation();
   const [searchName, setSearchName] = useState("");
+
   useEffect(() => {
     const tempList = [...list];
     if (type === "nation") {
@@ -47,34 +57,22 @@ export default function SearchBar({ type, list, setList }: SearchBarProps) {
     } else if (selectOption === "2") {
       setList(
         tempList.sort(function (a, b) {
-          return a.data.roleplay.points - b.data.roleplay.points;
+          return a.data.roleplay.places - b.data.roleplay.places;
         }),
       );
     } else if (selectOption === "3") {
       setList(
         tempList.sort(function (a, b) {
-          return b.data.roleplay.points - a.data.roleplay.points;
+          return b.data.roleplay.places - a.data.roleplay.places;
         }),
       );
     } else if (selectOption === "4") {
       setList(
         tempList.sort(function (a, b) {
-          return a.data.roleplay.places - b.data.roleplay.places;
-        }),
-      );
-    } else if (selectOption === "5") {
-      setList(
-        tempList.sort(function (a, b) {
-          return b.data.roleplay.places - a.data.roleplay.places;
-        }),
-      );
-    } else if (selectOption === "6") {
-      setList(
-        tempList.sort(function (a, b) {
           return a.data.roleplay.citizens - b.data.roleplay.citizens;
         }),
       );
-    } else if (selectOption === "7") {
+    } else if (selectOption === "5") {
       setList(
         tempList.sort(function (a, b) {
           return b.data.roleplay.citizens - a.data.roleplay.citizens;
@@ -94,7 +92,7 @@ export default function SearchBar({ type, list, setList }: SearchBarProps) {
 
   return (
     <form
-      className={`w-full p-4 flex flex-wrap items-center justify-center gap-4`}
+      className={`w-full p-4 flex flex-wrap items-end justify-center gap-4`}
       onSubmit={handleSubmit}
     >
       <Input
@@ -102,25 +100,29 @@ export default function SearchBar({ type, list, setList }: SearchBarProps) {
         onChange={handleSearch}
         type="text"
         name="name"
-        placeholder="nom de la nation"
+        placeholder={t("pages.nation.nationIdentity.title")}
         value={searchName}
       />
       <Select
         onChange={(e: ChangeEvent<HTMLSelectElement>) =>
           setSelectOption(e.target.value)
         }
-        options={searchSortOptions}
+        options={nationSearchSortOptions}
       />
 
-      <div className="flex flex-wrap gap-2 items-center justify-center md:justify-end">
+      <div className="pb-2 flex flex-wrap gap-2 items-center justify-center md:justify-end">
         <div className="w-[150px] flex justify-center">
-          <Button type="submit" disabled={false} text="RECHERCHER" />
+          <Button
+            type="submit"
+            disabled={false}
+            text={t("components.buttons.search")}
+          />
         </div>
         <div className="w-[150px] flex justify-center">
           <Button
             type="button"
             disabled={false}
-            text="RÉINITIALISER"
+            text={t("components.buttons.reset")}
             click={() => getNations(searchName)}
           />
         </div>

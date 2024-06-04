@@ -23,6 +23,17 @@
         "noCitizens": "la nation n'a aucun citoyen"
       }
     },
+    "nations": {
+      "nationsList": {
+        "title": "Liste des nations"
+      },
+      "stats": {
+        "title": "Statistiques",
+        "nations": "Nations virtuelles",
+        "locations": "Lieux",
+        "citizens": "Citoyens"
+      }
+    },
     "citizen": {
       "virtualCitizenship": "citoyenneté virtuelle",
       "settings": "paramètre du compte"
@@ -76,6 +87,8 @@
       "joinNation": "REJOINDRE UNE NATION",
       "deleteNation": "SUPPRIMER VOTRE NATION",
       "deleteAccount": "SUPPRIMER VOTRE COMPTE",
+      "search": "RECHERCHER",
+      "reset": "RÉINITIALISER",
       "access": "voir",
       "delete": "supprimer",
       "back": "retour",
@@ -93,7 +106,7 @@
       "missingField": "Champ(s) manquant(s)"
     },
     "logo": {
-      "title": "ARCHIPEL",
+      "title": "ARCHIPEL PROJECT",
       "subtitle": "RÉSEAU DES NATIONS VIRTUELLES"
     },
     "modals": {
@@ -170,6 +183,14 @@
         "noGovernment": "pas de gouvernement",
         "other": "autre"
       }
+    },
+    "sortNations": {
+      "ascAlpha": "Alphabetique croissant",
+      "descAlpha": "Alphabetique décroissant",
+      "ascLoc": "Nombre de lieux croissant",
+      "descLoc": "Nombre de lieux décroissant",
+      "ascCtz": "Nombre de citoyens croissant",
+      "descCtz": "Nombre de citoyens décroissant"
     }
   },
   "toasts": {

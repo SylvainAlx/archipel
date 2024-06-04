@@ -4,10 +4,10 @@ import DashTile from "../../dashTile";
 import { lazy, Suspense, useEffect, useState } from "react";
 import { getNationCitizens } from "../../../api/user/userAPI";
 import { SelectedNationProps } from "../../../types/typProp";
-import Spinner from "../../loading/spinner";
 import { nationCitizenListAtom } from "../../../settings/store";
 import { useAtom } from "jotai";
 import { User } from "../../../types/typUser";
+import BarreLoader from "../../loading/barreLoader";
 
 export default function Citizens({ selectedNation }: SelectedNationProps) {
   const [nationCitizenList] = useAtom(nationCitizenListAtom);
@@ -40,7 +40,7 @@ export default function Citizens({ selectedNation }: SelectedNationProps) {
               {citizens.length > 0 ? (
                 citizens.map((citizen, i) => {
                   return (
-                    <Suspense key={i} fallback={<Spinner />}>
+                    <Suspense key={i} fallback={<BarreLoader />}>
                       <div className="relative w-full">
                         <CitizenTile citizen={citizen} />
                       </div>

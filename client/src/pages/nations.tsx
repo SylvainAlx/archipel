@@ -1,18 +1,23 @@
 import { useState } from "react";
 import NationList from "./tabs/nations/nationList";
 import NationStatistics from "./tabs/nations/nationStatistics";
-// import NationComs from "./tabs/nations/nationComs";
-import { nationTabs } from "../settings/consts";
 import TabNav from "../components/tabNav";
 import { session } from "../settings/store";
-// import AdBanner from "../components/ads/adBanner";
+import { useTranslation } from "react-i18next";
+import { StandardOption } from "../types/typAtom";
 
 export default function Nations() {
+  const { t } = useTranslation();
+
+  const nationTabs: StandardOption[] = [
+    { id: 1, label: t("pages.nations.nationsList.title") },
+    { id: 2, label: t("pages.nations.stats.title") },
+  ];
+
   const [tab, setTab] = useState(nationTabs[0]);
 
   return (
     <>
-      {/* <AdBanner /> */}
       <div className="flex items-center">
         <TabNav
           tabs={nationTabs}
@@ -24,9 +29,8 @@ export default function Nations() {
           }
         />
       </div>
-      {tab.id === 1 && <NationList text={tab.label} />}
-      {/* {tab.id === 2 && <NationComs text={tab.label} />} */}
-      {tab.id === 3 && <NationStatistics text={tab.label} />}
+      {tab.id === 1 && <NationList />}
+      {tab.id === 2 && <NationStatistics />}
     </>
   );
 }

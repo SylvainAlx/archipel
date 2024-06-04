@@ -2,9 +2,10 @@ import { FaCoins } from "react-icons/fa6";
 import { NEW_PLACE_COST, placesTypeList } from "../../settings/consts";
 import Button from "./button";
 import { Place, emptyPlace } from "../../types/typPlace";
-import { myStore, newPlaceAtom, session } from "../../settings/store";
+import { myStore, newPlaceAtom, sessionAtom } from "../../settings/store";
 import { addCredits } from "../../utils/functions";
 import { useTranslation } from "react-i18next";
+import { useAtom } from "jotai";
 
 export interface newPlaceProps {
   parentId: string;
@@ -13,6 +14,7 @@ export interface newPlaceProps {
 
 export default function NewPlaceButton({ parentId, owner }: newPlaceProps) {
   const { t } = useTranslation();
+  const [session] = useAtom(sessionAtom);
 
   const handleClick = () => {
     const newPlace: Place = {
@@ -28,6 +30,7 @@ export default function NewPlaceButton({ parentId, owner }: newPlaceProps) {
       image: emptyPlace.image,
       builds: emptyPlace.builds,
     };
+
     myStore.set(newPlaceAtom, newPlace);
   };
 

@@ -23,6 +23,17 @@
         "noCitizens": "no citizen to display"
       }
     },
+    "nations": {
+      "nationsList": {
+        "title": "Nations List"
+      },
+      "stats": {
+        "title": "Statistics",
+        "nations": "Virtual nations",
+        "locations": "Locations",
+        "citizens": "Citizens"
+      }
+    },
     "citizen": {
       "virtualCitizenship": "virtual citizenship",
       "settings": "settings"
@@ -76,6 +87,8 @@
       "joinNation": "JOIN A NATION",
       "deleteNation": "DELETE YOUR NATION",
       "deleteAccount": "DELETE YOUR ACCOUNT",
+      "search": "SEARCH",
+      "reset": "RESET",
       "access": "access",
       "delete": "delete",
       "back": "back",
@@ -93,7 +106,7 @@
       "missingField": "Missing field(s)"
     },
     "logo": {
-      "title": "ARCHIPEL",
+      "title": "ARCHIPEL PROJECT",
       "subtitle": "VIRTUAL NATIONS NETWORK"
     },
     "modals": {
@@ -170,6 +183,14 @@
         "noGovernment": "no gouvernment",
         "other": "other"
       }
+    },
+    "sortNations": {
+      "ascAlpha": "Ascending alphabetical",
+      "descAlpha": "Descending alphabetical",
+      "ascLoc": "Growing number of locations",
+      "descLoc": "Decreasing number of locations",
+      "ascCtz": "Growing number of citizens",
+      "descCtz": "Decreasing number of citizens"
     }
   },
   "toasts": {

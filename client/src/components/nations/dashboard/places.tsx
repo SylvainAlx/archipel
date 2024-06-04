@@ -4,11 +4,11 @@ import TileContainer from "../../tileContainer";
 import { nationPlacesListAtom } from "../../../settings/store";
 import { useAtom } from "jotai";
 import { getNationPlaces } from "../../../api/place/placeAPI";
-import Spinner from "../../loading/spinner";
 import NewPlaceButton from "../../buttons/newPlaceButton";
 import { useTranslation } from "react-i18next";
 import DashTile from "../../dashTile";
 import { Place } from "../../../types/typPlace";
+import BarreLoader from "../../loading/barreLoader";
 
 export default function Places({ selectedNation, owner }: SelectedNationProps) {
   const { t } = useTranslation();
@@ -44,7 +44,7 @@ export default function Places({ selectedNation, owner }: SelectedNationProps) {
                 {places.length > 0 ? (
                   places.map((place, i) => {
                     return (
-                      <Suspense key={i} fallback={<Spinner />}>
+                      <Suspense key={i} fallback={<BarreLoader />}>
                         <div className="relative w-full">
                           <PlaceTile owner={owner} place={place} />
                         </div>

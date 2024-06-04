@@ -1,6 +1,4 @@
-import { nationTabs } from "../settings/consts";
 import { StandardOption } from "../types/typAtom";
-import Notification from "./notification";
 
 export interface TabNavProps {
   tabs: Array<StandardOption>;
@@ -11,10 +9,9 @@ export interface TabNavProps {
   owner: boolean;
 }
 
-export default function TabNav({ tabs, tabId, setTab, owner }: TabNavProps) {
+export default function TabNav({ tabs, tabId, setTab }: TabNavProps) {
   return (
     <nav className="w-max flex flex-col md:flex-row justify-center items-center gap-[2px] rounded overflow-hidden">
-      {owner && tabs != nationTabs && <Notification text="!" />}
       {tabs.map((tab, i) => {
         return (
           <div
