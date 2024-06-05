@@ -23,9 +23,15 @@
         "noCitizens": "no citizen to display"
       }
     },
-    "nations": {
+    "explore": {
       "nationsList": {
-        "title": "Nations List"
+        "title": "Nations"
+      },
+      "citizensList": {
+        "title": "Citizens"
+      },
+      "placesList": {
+        "title": "Locations"
       },
       "stats": {
         "title": "Statistics",
@@ -157,6 +163,33 @@
         "regime": "regime",
         "tree": "kinship",
         "languages": "languages"
+      }
+    },
+    "searchBars": {
+      "nationsList": {
+        "input": "Nation name",
+        "sortNations": {
+          "ascAlpha": "Ascending alphabetical",
+          "descAlpha": "Descending alphabetical",
+          "ascLoc": "Growing number of locations",
+          "descLoc": "Decreasing number of locations",
+          "ascCtz": "Growing number of citizens",
+          "descCtz": "Decreasing number of citizens"
+        }
+      },
+      "citizensList": {
+        "input": "Citizen name",
+        "sortCitizens": {
+          "ascAlpha": "Ascending alphabetical",
+          "descAlpha": "Descending alphabetical"
+        }
+      },
+      "placesList": {
+        "input": "Location name",
+        "sortCitizens": {
+          "ascAlpha": "Ascending alphabetical",
+          "descAlpha": "Descending alphabetical"
+        }
       }
     },
     "requiredStar": "* : required field"

@@ -1,7 +1,6 @@
 import {
   dataCheckedAtom,
   editPlaceAtom,
-  infoModalAtom,
   loadingAtom,
   myStore,
   nationPlacesListAtom,
@@ -21,6 +20,7 @@ import {
   findElementOfAtomArray,
   updateElementOfAtomArray,
 } from "../../utils/functions";
+import { errorMessage, successMessage } from "../../utils/toasts";
 import {
   createPlaceFetch,
   deletePlaceFetch,
@@ -54,7 +54,7 @@ export const getPlacesCount = async () => {
     .catch((error) => {
       myStore.set(loadingAtom, false);
       myStore.set(loadingAtom, false);
-      myStore.set(infoModalAtom, error.message);
+      errorMessage(error.message);
     });
 };
 
@@ -77,12 +77,12 @@ export const createNewPlace = (newPlace: PlacePayload) => {
         );
         updateElementOfAtomArray(data.nation, nationsList, setNationsList);
         myStore.set(sessionAtom, { ...session, nation: data.nation });
-        myStore.set(infoModalAtom, data.message);
+        errorMessage(data.message);
       }
     })
     .catch((error) => {
       myStore.set(loadingAtom, false);
-      myStore.set(infoModalAtom, error.message);
+      errorMessage(error.message);
     });
 };
 
@@ -97,7 +97,7 @@ export const getPlace = (id: string) => {
       })
       .catch((error) => {
         myStore.set(loadingAtom, false);
-        myStore.set(infoModalAtom, error.message);
+        errorMessage(error.message);
       });
   } else {
     myStore.set(placeFetchedAtom, emptyPlace);
@@ -107,7 +107,7 @@ export const getPlace = (id: string) => {
 
 export const getAllPlaces = () => {
   myStore.set(loadingAtom, true);
-  getAllPlacesFetch()
+  getAllPlacesFetch("")
     .then((data) => {
       myStore.set(loadingAtom, false);
       if (data != undefined) {
@@ -116,7 +116,22 @@ export const getAllPlaces = () => {
     })
     .catch((error) => {
       myStore.set(loadingAtom, false);
-      myStore.set(infoModalAtom, error.message);
+      errorMessage(error.message);
+    });
+};
+
+export const getPlaces = (searchName: string) => {
+  myStore.set(loadingAtom, true);
+  getAllPlacesFetch(searchName)
+    .then((data) => {
+      myStore.set(loadingAtom, false);
+      if (data != undefined) {
+        myStore.set(placesListAtom, data);
+      }
+    })
+    .catch((error) => {
+      myStore.set(loadingAtom, false);
+      errorMessage(error.message);
     });
 };
 
@@ -143,7 +158,7 @@ export const getNationPlaces = (id: string) => {
       })
       .catch((error) => {
         myStore.set(loadingAtom, false);
-        myStore.set(infoModalAtom, error.message);
+        errorMessage(error.message);
       });
   }
 };
@@ -166,11 +181,11 @@ export const deletePlace = (id: string) => {
         setPlacesList,
       );
       myStore.set(loadingAtom, false);
-      myStore.set(infoModalAtom, resp.message);
+      successMessage(resp.message);
     })
     .catch((error) => {
       myStore.set(loadingAtom, false);
-      myStore.set(infoModalAtom, error.message);
+      errorMessage(error.message);
     });
 };
 
@@ -189,11 +204,11 @@ export const updatePlace = (payload: Place) => {
         const data = myStore.get(editPlaceAtom);
         myStore.set(editPlaceAtom, { ...data, place: resp.place });
       } else {
-        myStore.set(infoModalAtom, resp.message);
+        successMessage(resp.message);
       }
     })
     .catch((error) => {
       myStore.set(loadingAtom, false);
-      myStore.set(infoModalAtom, error);
+      errorMessage(error.message);
     });
 };

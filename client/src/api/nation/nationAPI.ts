@@ -1,5 +1,4 @@
 import {
-  infoModalAtom,
   loadingAtom,
   myStore,
   nationFetchedAtom,
@@ -16,6 +15,7 @@ import {
   findElementOfAtomArray,
   // updateElementOfAtomArray,
 } from "../../utils/functions";
+import { errorMessage, successMessage } from "../../utils/toasts";
 import {
   createNationFetch,
   DeleteSelfFetch,
@@ -42,7 +42,7 @@ export const getNationsCount = async () => {
     .catch((error) => {
       myStore.set(loadingAtom, false);
       myStore.set(loadingAtom, false);
-      myStore.set(infoModalAtom, error.message);
+      errorMessage(error.message);
     });
 };
 
@@ -59,12 +59,12 @@ export const createNation = (payload: NewNationPayload) => {
         }
       } else {
         myStore.set(loadingAtom, false);
-        myStore.set(infoModalAtom, "création impossible : " + data.message);
+        errorMessage("création impossible : " + data.message);
       }
     })
     .catch((error) => {
       myStore.set(loadingAtom, false);
-      myStore.set(infoModalAtom, error.message);
+      errorMessage(error.message);
     });
 };
 
@@ -82,7 +82,7 @@ export const getNation = (id: string) => {
       .catch((error) => {
         myStore.set(nationFetchedAtom, EmptyNation);
         myStore.set(loadingAtom, false);
-        myStore.set(infoModalAtom, error.message);
+        errorMessage(error.message);
         return nation;
       });
   } else {
@@ -102,7 +102,7 @@ export const getNations = (searchName: string) => {
     })
     .catch((error) => {
       myStore.set(loadingAtom, false);
-      myStore.set(infoModalAtom, error.message);
+      errorMessage(error.message);
     });
 };
 
@@ -117,12 +117,12 @@ export const updateNation = (payload: Nation) => {
         myStore.set(nationsListAtom, []);
         // updateElementOfAtomArray(resp.nation, nationsList, setNationsList);
       } else {
-        myStore.set(infoModalAtom, resp.message);
+        successMessage(resp.message);
       }
     })
     .catch((error) => {
       myStore.set(loadingAtom, false);
-      myStore.set(infoModalAtom, error);
+      errorMessage(error.message);
     });
 };
 
@@ -138,7 +138,7 @@ export const deleteSelfNation = () => {
           setNationsList,
         );
       }
-      myStore.set(infoModalAtom, resp.message);
+      successMessage(resp.message);
       myStore.set(sessionAtom, { ...session, nation: EmptyNation });
       if (resp.user) {
         myStore.set(sessionAtom, { ...session, user: resp.user });
@@ -146,7 +146,7 @@ export const deleteSelfNation = () => {
     })
     .catch((error) => {
       myStore.set(loadingAtom, false);
-      myStore.set(infoModalAtom, error);
+      errorMessage(error.message);
     });
 };
 
@@ -167,6 +167,6 @@ export const getRoleplayData = (selectedNation: Nation) => {
     })
     .catch((error) => {
       myStore.set(loadingAtom, false);
-      myStore.set(infoModalAtom, error.message);
+      errorMessage(error.message);
     });
 };

@@ -7,13 +7,13 @@ import { useNavigate } from "react-router-dom";
 import RegimeTag from "../tags/regimeTag";
 import PlaceTag from "../tags/placeTag";
 
-export default function PublicNationTile(nation: Nation) {
+export default function NationTile(nation: Nation) {
   const navigate = useNavigate();
   const handleClick = () => {
     navigate(`/nation/${nation.officialId}`);
   };
   return (
-    <div className="bg-slate-800 flex flex-col items-center p-2 gap-4 rounded transition-all">
+    <div className="bg-complementary flex flex-col items-center p-2 gap-3 rounded transition-all">
       <div className="w-full flex justify-between">
         <div className="w-full flex items-center">
           <div className="w-[50px] h-[50px] bg-complementary rounded-full flex items-center justify-center overflow-hidden">
@@ -29,7 +29,7 @@ export default function PublicNationTile(nation: Nation) {
               </div>
             )}
           </div>
-          <h2 className="text-light text-xl pl-4 pr-6">{nation.name}</h2>
+          <h3 className="text-light text-xl pl-4 pr-6">{nation.name}</h3>
         </div>
         <EyeButton click={handleClick} />
       </div>

@@ -48,10 +48,18 @@ export const getOne = async (req, res) => {
 
 export const getAllPlaces = async (req, res) => {
   try {
-    const places = await Place.find({});
-    res.status(200).json(places);
+    const searchText = req.query.texteRecherche;
+    if (searchText) {
+      const places = await Place.find({
+        name: { $regex: searchText, $options: "i" },
+      });
+      res.status(200).json(places);
+    } else {
+      const places = await Place.find({});
+      res.status(200).json(places);
+    }
   } catch (error) {
-    res.status(400).json({ message: error.message });
+    res.status(404).json({ message: "aucun lieux" });
   }
 };
 

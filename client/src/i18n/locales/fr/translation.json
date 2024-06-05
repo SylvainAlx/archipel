@@ -23,9 +23,15 @@
         "noCitizens": "la nation n'a aucun citoyen"
       }
     },
-    "nations": {
+    "explore": {
       "nationsList": {
-        "title": "Liste des nations"
+        "title": "Nations"
+      },
+      "citizensList": {
+        "title": "Citoyens"
+      },
+      "placesList": {
+        "title": "Lieux"
       },
       "stats": {
         "title": "Statistiques",
@@ -159,6 +165,33 @@
         "languages": "langues"
       }
     },
+    "searchBars": {
+      "nationsList": {
+        "input": "Nom de la nation",
+        "sortNations": {
+          "ascAlpha": "Alphabetique croissant",
+          "descAlpha": "Alphabetique décroissant",
+          "ascLoc": "Nombre de lieux croissant",
+          "descLoc": "Nombre de lieux décroissant",
+          "ascCtz": "Nombre de citoyens croissant",
+          "descCtz": "Nombre de citoyens décroissant"
+        }
+      },
+      "citizensList": {
+        "input": "Citoyen.ne",
+        "sortCitizens": {
+          "ascAlpha": "Alphabetique croissant",
+          "descAlpha": "Alphabetique décroissant"
+        }
+      },
+      "placesList": {
+        "input": "Nom du lieu",
+        "sortCitizens": {
+          "ascAlpha": "Ascending alphabetical",
+          "descAlpha": "Descending alphabetical"
+        }
+      }
+    },
     "requiredStar": "* : champ requis"
   },
   "listes": {
@@ -183,14 +216,6 @@
         "noGovernment": "pas de gouvernement",
         "other": "autre"
       }
-    },
-    "sortNations": {
-      "ascAlpha": "Alphabetique croissant",
-      "descAlpha": "Alphabetique décroissant",
-      "ascLoc": "Nombre de lieux croissant",
-      "descLoc": "Nombre de lieux décroissant",
-      "ascCtz": "Nombre de citoyens croissant",
-      "descCtz": "Nombre de citoyens décroissant"
     }
   },
   "toasts": {

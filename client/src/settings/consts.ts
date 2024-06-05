@@ -24,12 +24,41 @@ export const NEW_PLACE_COST = 100;
 // listes
 
 export const nationSearchSortOptions: StandardOption[] = [
-  { id: 0, label: i18n.t("listes.sortNations.ascAlpha") },
-  { id: 1, label: i18n.t("listes.sortNations.descAlpha") },
-  { id: 2, label: i18n.t("listes.sortNations.ascLoc") },
-  { id: 3, label: i18n.t("listes.sortNations.descLoc") },
-  { id: 4, label: i18n.t("listes.sortNations.ascCtz") },
-  { id: 5, label: i18n.t("listes.sortNations.descCtz") },
+  {
+    id: 0,
+    label: i18n.t("components.searchBars.nationsList.sortNations.ascAlpha"),
+  },
+  {
+    id: 1,
+    label: i18n.t("components.searchBars.nationsList.sortNations.descAlpha"),
+  },
+  {
+    id: 2,
+    label: i18n.t("components.searchBars.nationsList.sortNations.ascLoc"),
+  },
+  {
+    id: 3,
+    label: i18n.t("components.searchBars.nationsList.sortNations.descLoc"),
+  },
+  {
+    id: 4,
+    label: i18n.t("components.searchBars.nationsList.sortNations.ascCtz"),
+  },
+  {
+    id: 5,
+    label: i18n.t("components.searchBars.nationsList.sortNations.descCtz"),
+  },
+];
+
+export const citizenSearchSortOptions: StandardOption[] = [
+  {
+    id: 0,
+    label: i18n.t("components.searchBars.citizensList.sortCitizens.ascAlpha"),
+  },
+  {
+    id: 1,
+    label: i18n.t("components.searchBars.citizensList.sortCitizens.descAlpha"),
+  },
 ];
 
 export const comOptions: StandardOption[] = [

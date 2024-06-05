@@ -1,8 +1,8 @@
 import { useTranslation } from "react-i18next";
-import { SelectedNationProps } from "../../../types/typProp";
-import EditIcon from "../../editIcon";
-import ExternalLink from "../../externalLink";
 import { FaDiscord, FaInstagram, FaLink, FaWikipediaW } from "react-icons/fa6";
+import { SelectedNationProps } from "../../types/typProp";
+import ExternalLink from "../externalLink";
+import EditIcon from "../editIcon";
 
 export default function Links({ selectedNation, owner }: SelectedNationProps) {
   const { t } = useTranslation();

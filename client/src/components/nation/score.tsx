@@ -1,7 +1,7 @@
-import { SelectedNationProps } from "../../../types/typProp";
-import CreditTag from "../../tags/creditTag";
-import PlaceTag from "../../tags/placeTag";
-import PopulationTag from "../../tags/populationTag";
+import { SelectedNationProps } from "../../types/typProp";
+import CreditTag from "../tags/creditTag";
+import PlaceTag from "../tags/placeTag";
+import PopulationTag from "../tags/populationTag";
 
 export default function Score({ selectedNation, owner }: SelectedNationProps) {
   return (

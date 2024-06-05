@@ -18,9 +18,9 @@ export default function Nav() {
         action={() => navigate(`/`)}
       />
       <IconLink
-        destination="nations"
+        destination="explore"
         text={t("components.buttons.explore")}
-        action={() => navigate(`/nations`)}
+        action={() => navigate(`/explore`)}
       />
       {session.user.name === "" || session.user.name === undefined ? (
         <>

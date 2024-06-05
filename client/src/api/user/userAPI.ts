@@ -3,7 +3,6 @@ import {
   citizenFetchAtom,
   citizenListAtom,
   emptySession,
-  infoModalAtom,
   loadingAtom,
   myStore,
   nationCitizenListAtom,
@@ -26,10 +25,11 @@ import {
   GET_JWT,
   updateElementOfAtomArray,
 } from "../../utils/functions";
-import { successMessage } from "../../utils/toasts";
+import { errorMessage, successMessage } from "../../utils/toasts";
 import {
   authGet,
   DeleteUserFetch,
+  getAllCitizensFetch,
   getCitizensCountFetch,
   getNationCitizensFetch,
   getOneUserFetch,
@@ -54,7 +54,7 @@ export const getCitizensCount = async () => {
     .catch((error) => {
       myStore.set(loadingAtom, false);
       myStore.set(loadingAtom, false);
-      myStore.set(infoModalAtom, error.message);
+      errorMessage(error.message);
     });
 };
 
@@ -189,7 +189,7 @@ export const getOneUser = (id: string) => {
       .catch((error) => {
         myStore.set(loadingAtom, false);
         myStore.set(citizenFetchAtom, emptyUser);
-        myStore.set(infoModalAtom, error.message);
+        errorMessage(error.message);
       });
   }
 };
@@ -210,4 +210,19 @@ export const getNationCitizens = (nationId: string) => {
   }
 
   myStore.set(loadingAtom, false);
+};
+
+export const getCitizens = (searchName: string) => {
+  myStore.set(loadingAtom, true);
+  getAllCitizensFetch(searchName)
+    .then((data) => {
+      myStore.set(loadingAtom, false);
+      if (data != undefined) {
+        myStore.set(citizenListAtom, data);
+      }
+    })
+    .catch((error) => {
+      myStore.set(loadingAtom, false);
+      errorMessage(error.message);
+    });
 };

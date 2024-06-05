@@ -73,3 +73,11 @@ export const getNationCitizensFetch = async (id: string) => {
   const result = await resp.json();
   return result;
 };
+
+export const getAllCitizensFetch = async (searchText: string) => {
+  const resp = await fetch(
+    `${SERVER_URL}/user/getall?texteRecherche=${encodeURIComponent(searchText)}`,
+  );
+  const result = await resp.json();
+  return result;
+};

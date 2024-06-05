@@ -1,10 +1,6 @@
-import {
-  infoModalAtom,
-  loadingAtom,
-  myStore,
-  paramsListAtom,
-} from "../../settings/store";
+import { loadingAtom, myStore, paramsListAtom } from "../../settings/store";
 import { Param } from "../../types/typAtom";
+import { errorMessage, successMessage } from "../../utils/toasts";
 import { createParamFetch, getAllParamsFetch } from "./paramFetch";
 
 export const createNewParam = (param: Param) => {
@@ -13,12 +9,12 @@ export const createNewParam = (param: Param) => {
     .then((data) => {
       myStore.set(loadingAtom, false);
       if (data.param) {
-        myStore.set(infoModalAtom, data.message);
+        successMessage(data.message);
       }
     })
     .catch((error) => {
       myStore.set(loadingAtom, false);
-      myStore.set(infoModalAtom, error.message);
+      errorMessage(error.message);
     });
 };
 
@@ -31,6 +27,6 @@ export const getAllParams = () => {
     })
     .catch((error) => {
       myStore.set(loadingAtom, false);
-      myStore.set(infoModalAtom, error.message);
+      errorMessage(error.message);
     });
 };

@@ -35,9 +35,7 @@ export default function Place() {
   const param = useParams();
   const [refresh, setRefresh] = useState(false);
   const [haveChildren, setHaveChildren] = useState(false);
-  const PlaceTile = lazy(
-    () => import("../components/nations/dashboard/placeTile"),
-  );
+  const PlaceTile = lazy(() => import("../components/tiles/placeTile"));
 
   useEffect(() => {
     if (data.place.officialId != param.id && param.id != undefined) {

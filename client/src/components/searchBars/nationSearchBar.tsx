@@ -7,14 +7,14 @@ import {
   useState,
 } from "react";
 
-import { getNations } from "../api/nation/nationAPI";
-import Input from "./form/input";
-import Button from "./buttons/button";
-import Select from "./form/select";
-import { Nation } from "../types/typNation";
-import { SetAtom } from "../settings/store";
-import { nationSearchSortOptions } from "../settings/consts";
+import { getNations } from "../../api/nation/nationAPI";
+import Input from "../form/input";
+import Button from "../buttons/button";
+import Select from "../form/select";
+import { SetAtom, nationsListAtom } from "../../settings/store";
+import { nationSearchSortOptions } from "../../settings/consts";
 import { useTranslation } from "react-i18next";
+import { useAtom } from "jotai";
 
 export interface SearchBarProps {
   type: string;
@@ -22,59 +22,66 @@ export interface SearchBarProps {
   setList: SetAtom<[SetStateAction<any>], void>;
 }
 
-export default function NationSearchBar({
-  type,
-  list,
-  setList,
-}: SearchBarProps) {
-  const [selectOption, setSelectOption] = useState(
-    nationSearchSortOptions[0].id.toString(),
-  );
+export default function NationSearchBar({ list, setList }: SearchBarProps) {
+  const [selectOption, setSelectOption] = useState("0");
   const { t } = useTranslation();
   const [searchName, setSearchName] = useState("");
+  const [nationsList] = useAtom(nationsListAtom);
 
   useEffect(() => {
-    const tempList = [...list];
-    if (type === "nation") {
-      nationsSorting(tempList);
+    if (nationsList.length === 0) {
+      getNations("");
+    } else if (nationsList.length > 0) {
+      if (nationsList[0]._id === "") {
+        getNations("");
+      }
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectOption]);
+  }, []);
 
-  const nationsSorting = (tempList: Nation[]) => {
+  useEffect(() => {
+    nationsSorting();
+  }, [selectOption, nationsList]);
+
+  const reset = () => {
+    getNations("");
+    setSelectOption("0");
+  };
+
+  const nationsSorting = () => {
+    list = [...nationsList];
     if (selectOption === "0") {
       setList(
-        tempList.sort(function (a, b) {
+        list.sort(function (a, b) {
           return a.name.localeCompare(b.name);
         }),
       );
     } else if (selectOption === "1") {
       setList(
-        tempList.sort(function (a, b) {
+        list.sort(function (a, b) {
           return b.name.localeCompare(a.name);
         }),
       );
     } else if (selectOption === "2") {
       setList(
-        tempList.sort(function (a, b) {
+        list.sort(function (a, b) {
           return a.data.roleplay.places - b.data.roleplay.places;
         }),
       );
     } else if (selectOption === "3") {
       setList(
-        tempList.sort(function (a, b) {
+        list.sort(function (a, b) {
           return b.data.roleplay.places - a.data.roleplay.places;
         }),
       );
     } else if (selectOption === "4") {
       setList(
-        tempList.sort(function (a, b) {
+        list.sort(function (a, b) {
           return a.data.roleplay.citizens - b.data.roleplay.citizens;
         }),
       );
     } else if (selectOption === "5") {
       setList(
-        tempList.sort(function (a, b) {
+        list.sort(function (a, b) {
           return b.data.roleplay.citizens - a.data.roleplay.citizens;
         }),
       );
@@ -100,7 +107,7 @@ export default function NationSearchBar({
         onChange={handleSearch}
         type="text"
         name="name"
-        placeholder={t("pages.nation.nationIdentity.title")}
+        placeholder={t("components.searchBars.nationsList.input")}
         value={searchName}
       />
       <Select
@@ -108,6 +115,7 @@ export default function NationSearchBar({
           setSelectOption(e.target.value)
         }
         options={nationSearchSortOptions}
+        value={selectOption}
       />
 
       <div className="pb-2 flex flex-wrap gap-2 items-center justify-center md:justify-end">
@@ -123,7 +131,7 @@ export default function NationSearchBar({
             type="button"
             disabled={false}
             text={t("components.buttons.reset")}
-            click={() => getNations(searchName)}
+            click={reset}
           />
         </div>
       </div>

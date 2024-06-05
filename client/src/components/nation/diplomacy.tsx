@@ -1,7 +1,7 @@
-import TileContainer from "../../tileContainer";
-import DevFlag from "../../devFlag";
 import { useTranslation } from "react-i18next";
-import DashTile from "../../dashTile";
+import TileContainer from "../tileContainer";
+import DashTile from "../dashTile";
+import DevFlag from "../devFlag";
 
 export default function Diplomacy() {
   const { t } = useTranslation();

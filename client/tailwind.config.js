@@ -26,6 +26,7 @@ export default {
         fadeIn: "fadeIn 0.3s ease-in-out",
         slideInFromTop: "slideInFromTop 0.3s ease-in-out",
         slideInFromBottom: "slideInFromBottom 0.3s ease-in-out",
+        spinSlow: "spin 3s linear infinite",
       },
 
       keyframes: {

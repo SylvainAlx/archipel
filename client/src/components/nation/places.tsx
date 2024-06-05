@@ -1,20 +1,20 @@
 import { Suspense, lazy, useEffect, useState } from "react";
-import { SelectedNationProps } from "../../../types/typProp";
-import TileContainer from "../../tileContainer";
-import { nationPlacesListAtom } from "../../../settings/store";
+import { SelectedNationProps } from "../../types/typProp";
+import TileContainer from "../tileContainer";
+import { nationPlacesListAtom } from "../../settings/store";
 import { useAtom } from "jotai";
-import { getNationPlaces } from "../../../api/place/placeAPI";
-import NewPlaceButton from "../../buttons/newPlaceButton";
+import { getNationPlaces } from "../../api/place/placeAPI";
+import NewPlaceButton from "../buttons/newPlaceButton";
 import { useTranslation } from "react-i18next";
-import DashTile from "../../dashTile";
-import { Place } from "../../../types/typPlace";
-import BarreLoader from "../../loading/barreLoader";
+import DashTile from "../dashTile";
+import { Place } from "../../types/typPlace";
+import BarreLoader from "../loading/barreLoader";
 
 export default function Places({ selectedNation, owner }: SelectedNationProps) {
   const { t } = useTranslation();
   const [nationPlacesList] = useAtom(nationPlacesListAtom);
   const [places, setPlaces] = useState<Place[]>([]);
-  const PlaceTile = lazy(() => import("./placeTile"));
+  const PlaceTile = lazy(() => import("../tiles/placeTile"));
 
   useEffect(() => {
     if (selectedNation.officialId !== "") {

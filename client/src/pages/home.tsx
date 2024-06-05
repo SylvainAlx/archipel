@@ -30,7 +30,7 @@ export default function Home() {
           <Button
             text={t("components.buttons.explore")}
             type="button"
-            click={() => navigate("/nations")}
+            click={() => navigate("/explore")}
           />
         </div>
       ) : (
@@ -43,7 +43,7 @@ export default function Home() {
           <Button
             text={t("components.buttons.explore")}
             type="button"
-            click={() => navigate("/nations")}
+            click={() => navigate("/explore")}
           />
         </div>
       )}

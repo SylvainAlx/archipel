@@ -9,16 +9,15 @@ export interface User {
   role: string;
   citizenship: {
     nationId: string;
-    nationName: string;
-    nationOwner: boolean
-  },
+    nationOwner: boolean;
+  };
   createdAt: Date;
 }
 
 export interface AuthPayload {
   name: string;
   password: string;
-  language?: string
+  language?: string;
 }
 
 export interface RecoveryPayload {
@@ -39,9 +38,7 @@ export const emptyUser: User = {
   role: "",
   citizenship: {
     nationId: "",
-    nationName: "",
-    nationOwner: false
+    nationOwner: false,
   },
-  createdAt: new Date()
-}
-
+  createdAt: new Date(),
+};

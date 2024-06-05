@@ -1,25 +1,21 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import DashTile from "../../dashTile";
-import TileContainer from "../../tileContainer";
-import H3 from "../../titles/h3";
-import { SelectedNationProps } from "../../../types/typProp";
-import EditIcon from "../../editIcon";
 import { Suspense, lazy, useEffect, useState } from "react";
-import {
-  imageAtom,
-  myStore,
-  nationPlacesListAtom,
-} from "../../../settings/store";
-import { LabelId } from "../../../types/typNation";
+import { imageAtom, myStore, nationPlacesListAtom } from "../../settings/store";
+import { LabelId } from "../../types/typNation";
 import { useAtom } from "jotai";
-import RegimeTag from "../../tags/regimeTag";
-import IdTag from "../../tags/idTag";
-import CapitalTag from "../../tags/capitalTag";
+import RegimeTag from "../tags/regimeTag";
+import IdTag from "../tags/idTag";
+import CapitalTag from "../tags/capitalTag";
 import { useTranslation } from "react-i18next";
-import { regimeList } from "../../../settings/consts";
-import Spinner from "../../loading/spinner";
+import { regimeList } from "../../settings/consts";
+import Spinner from "../loading/spinner";
 import { BsShieldShaded } from "react-icons/bs";
 import { GiBlackFlag } from "react-icons/gi";
+import { SelectedNationProps } from "../../types/typProp";
+import TileContainer from "../tileContainer";
+import DashTile from "../dashTile";
+import EditIcon from "../editIcon";
+import H3 from "../titles/h3";
 
 export default function NationIdentity({
   selectedNation,
@@ -29,7 +25,7 @@ export default function NationIdentity({
   const [placesList, setPlacesList] = useState<LabelId[]>([]);
   const [nationPlaceList] = useAtom(nationPlacesListAtom);
 
-  const LazyImage = lazy(() => import("../../lazy/lazyImage"));
+  const LazyImage = lazy(() => import("../lazy/lazyImage"));
 
   useEffect(() => {
     const updatedPlaces: LabelId[] = [];

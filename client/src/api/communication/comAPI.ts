@@ -2,7 +2,6 @@
 import {
   comsListAtom,
   confirmBox,
-  infoModalAtom,
   loadingAtom,
   myStore,
 } from "../../settings/store";
@@ -11,6 +10,7 @@ import {
   createElementOfAtomArray,
   deleteElementOfAtomArray,
 } from "../../utils/functions";
+import { errorMessage, successMessage } from "../../utils/toasts";
 import { createComFetch, deleteComFetch, getAllComs } from "./comFetch";
 
 const confirm = myStore.get(confirmBox);
@@ -28,7 +28,7 @@ export const getComs = () => {
     })
     .catch((error) => {
       myStore.set(loadingAtom, false);
-      myStore.set(infoModalAtom, error.message);
+      errorMessage(error.message);
     });
 };
 
@@ -38,11 +38,11 @@ export const createNewCom = (payload: any) => {
     .then((resp) => {
       myStore.set(loadingAtom, false);
       createElementOfAtomArray(resp.com, comsList, setComsList);
-      myStore.set(infoModalAtom, resp.message);
+      successMessage(resp.message);
     })
     .catch((error) => {
       myStore.set(loadingAtom, false);
-      myStore.set(infoModalAtom, error);
+      errorMessage(error.message);
     });
 };
 
@@ -52,10 +52,10 @@ export const deleteCom = () => {
     .then((resp) => {
       myStore.set(loadingAtom, false);
       deleteElementOfAtomArray(confirm.target, comsList, setComsList);
-      myStore.set(infoModalAtom, resp.message);
+      successMessage(resp.message);
     })
     .catch((error) => {
       myStore.set(loadingAtom, false);
-      myStore.set(infoModalAtom, error);
+      errorMessage(error.message);
     });
 };

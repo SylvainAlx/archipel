@@ -27,7 +27,7 @@ export default function IconLink({ destination, text, action }: IconLinkProps) {
       onClick={action}
     >
       {destination === "home" && <IoMdHome />}
-      {destination === "nations" && <IoMdGlobe />}
+      {destination === "explore" && <IoMdGlobe />}
       {destination === "login" && <IoMdLogIn />}
       {destination === "register" && <IoMdAddCircleOutline />}
       {destination === "user" &&
@@ -50,7 +50,12 @@ export default function IconLink({ destination, text, action }: IconLinkProps) {
         ) : (
           <GiBlackFlag />
         ))}
-      {destination === "admin" && <IoMdSettings />}
+      {destination === "admin" && (
+        <div className="md:hover:animate-spinSlow">
+          {" "}
+          <IoMdSettings />
+        </div>
+      )}
       <h2 className="hidden md:block text-[10px]">{text}</h2>
     </div>
   );

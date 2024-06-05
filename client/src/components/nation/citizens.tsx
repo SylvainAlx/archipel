@@ -1,19 +1,19 @@
 import { useTranslation } from "react-i18next";
-import TileContainer from "../../tileContainer";
-import DashTile from "../../dashTile";
+import TileContainer from "../tileContainer";
+import DashTile from "../dashTile";
 import { lazy, Suspense, useEffect, useState } from "react";
-import { getNationCitizens } from "../../../api/user/userAPI";
-import { SelectedNationProps } from "../../../types/typProp";
-import { nationCitizenListAtom } from "../../../settings/store";
+import { getNationCitizens } from "../../api/user/userAPI";
+import { SelectedNationProps } from "../../types/typProp";
+import { nationCitizenListAtom } from "../../settings/store";
 import { useAtom } from "jotai";
-import { User } from "../../../types/typUser";
-import BarreLoader from "../../loading/barreLoader";
+import { User } from "../../types/typUser";
+import BarreLoader from "../loading/barreLoader";
 
 export default function Citizens({ selectedNation }: SelectedNationProps) {
   const [nationCitizenList] = useAtom(nationCitizenListAtom);
   const [citizens, setCitizens] = useState<User[]>([]);
   const { t } = useTranslation();
-  const CitizenTile = lazy(() => import("./citizenTile"));
+  const CitizenTile = lazy(() => import("../tiles/citizenTile"));
 
   useEffect(() => {
     if (selectedNation.officialId !== "") {

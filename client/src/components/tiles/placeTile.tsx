@@ -4,20 +4,20 @@ import {
   myStore,
   nationPlacesListAtom,
   session,
-} from "../../../settings/store";
+} from "../../settings/store";
 import { useAtom } from "jotai";
-import PopulationTag from "../../tags/populationTag";
+import PopulationTag from "../tags/populationTag";
 import { GiCapitol } from "react-icons/gi";
 import { useNavigate } from "react-router-dom";
-import EyeButton from "../../buttons/eyeButton";
-import IdTag from "../../tags/idTag";
-import { getPlaceTypeLabel } from "../../../utils/functions";
-import PlaceTag from "../../tags/placeTag";
-import CrossButton from "../../buttons/crossButton";
+import EyeButton from "../buttons/eyeButton";
+import IdTag from "../tags/idTag";
+import { getPlaceTypeLabel } from "../../utils/functions";
+import PlaceTag from "../tags/placeTag";
+import CrossButton from "../buttons/crossButton";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import TreeTag from "../../tags/treeTag";
-import { Place } from "../../../types/typPlace";
+import TreeTag from "../tags/treeTag";
+import { Place } from "../../types/typPlace";
 
 export interface PlaceTileProp {
   owner?: boolean;

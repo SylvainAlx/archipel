@@ -4,7 +4,7 @@ import Nation from "../pages/nation";
 import Home from "../pages/home";
 import LegalNotice from "../pages/legalNotice";
 import Login from "../pages/login";
-import Nations from "../pages/nations";
+import Explore from "../pages/explore";
 import Place from "../pages/place";
 import Recovery from "../pages/recovery";
 import Register from "../pages/register";
@@ -21,7 +21,7 @@ export const publicRoutes: ArchipelRoute[] = [
   { path: "/", page: <Home /> },
   { path: "/recovery", page: <Recovery /> },
   { path: "/citizen/:id", page: <Citizen /> },
-  { path: "/nations", page: <Nations /> },
+  { path: "/explore", page: <Explore /> },
   { path: "/nation/:id", page: <Nation /> },
   { path: "/place/:id", page: <Place /> },
   { path: "/legalnotice", page: <LegalNotice /> },

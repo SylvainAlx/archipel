@@ -1,5 +1,5 @@
 import H1 from "../components/titles/h1";
-import NationIdentity from "../components/nations/dashboard/nationIdentity";
+import NationIdentity from "../components/nation/nationIdentity";
 import {
   confirmBox,
   myStore,
@@ -7,16 +7,16 @@ import {
   sessionAtom,
 } from "../settings/store";
 import { useAtom } from "jotai";
-import Places from "../components/nations/dashboard/places";
+import Places from "../components/nation/places";
 import { useTranslation } from "react-i18next";
-import Score from "../components/nations/dashboard/score";
-import Diplomacy from "../components/nations/dashboard/diplomacy";
-import Links from "../components/nations/dashboard/links";
+import Score from "../components/nation/score";
+import Diplomacy from "../components/nation/diplomacy";
+import Links from "../components/nation/links";
 import { useEffect, useState } from "react";
 import Button from "../components/buttons/button";
 import { useNavigate, useParams } from "react-router-dom";
 import { getNation } from "../api/nation/nationAPI";
-import Citizens from "../components/nations/dashboard/citizens";
+import Citizens from "../components/nation/citizens";
 
 export default function Nation() {
   const [nation] = useAtom(nationFetchedAtom);
