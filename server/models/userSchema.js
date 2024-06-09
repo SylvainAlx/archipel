@@ -18,6 +18,10 @@ const UserSchema = mongoose.Schema(
       type: String,
       default: "",
     },
+    gender: {
+      type: Number,
+      default: 0,
+    },
     avatar: {
       type: String,
       default: "",

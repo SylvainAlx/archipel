@@ -7,7 +7,7 @@ import Form from "../components/form/form";
 import { useTranslation } from "react-i18next";
 import { register } from "../api/user/userAPI";
 import Select from "../components/form/select";
-import { languageList } from "../settings/consts";
+import { genderList, languageList } from "../settings/consts";
 import { errorMessage } from "../utils/toasts";
 import RequiredStar from "../components/form/requiredStar";
 
@@ -15,6 +15,7 @@ export default function Register() {
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [language, setLanguage] = useState("");
+  const [gender, setGender] = useState(0);
   const [acceptCGU, setAcceptCGU] = useState(false);
   const { t } = useTranslation();
 
@@ -28,7 +29,7 @@ export default function Register() {
     }
   };
 
-  const handleSelectChange = (e: ChangeEvent<HTMLSelectElement>) => {
+  const handleLanguageChange = (e: ChangeEvent<HTMLSelectElement>) => {
     if (e.target.value != "-1") {
       setLanguage(e.target.value);
     } else {
@@ -36,10 +37,14 @@ export default function Register() {
     }
   };
 
+  const handleGenerChange = (e: ChangeEvent<HTMLSelectElement>) => {
+    setGender(Number(e.target.value));
+  };
+
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     if (name != "" && password != "") {
-      register({ name, password, language });
+      register({ name, password, gender, language });
     } else {
       errorMessage(t("components.form.missingField"));
     }
@@ -68,10 +73,16 @@ export default function Register() {
               value={password}
             />
             <Select
+              title="Genre"
+              options={genderList}
+              onChange={handleGenerChange}
+            />
+            <Select
               title={t("components.form.select.language")}
               options={languageList}
-              onChange={handleSelectChange}
+              onChange={handleLanguageChange}
             />
+
             <div className="flex justify-center text-sm gap-2">
               <span>{t("pages.register.ownAccount")}</span>
               <span

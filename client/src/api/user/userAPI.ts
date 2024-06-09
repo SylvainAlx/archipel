@@ -58,9 +58,9 @@ export const getCitizensCount = async () => {
     });
 };
 
-export const register = ({ name, password, language }: AuthPayload) => {
+export const register = ({ name, password, gender, language }: AuthPayload) => {
   myStore.set(loadingAtom, true);
-  registerFetch({ name, password, language })
+  registerFetch({ name, password, gender, language })
     .then((data) => {
       myStore.set(loadingAtom, false);
       if (data.user) {

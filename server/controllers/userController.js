@@ -9,7 +9,7 @@ import { createOfficialId } from "../utils/functions.js";
 
 export const register = async (req, res) => {
   try {
-    const { name, password, language } = req.body;
+    const { name, password, gender, language } = req.body;
 
     if (!name || !password) {
       return res
@@ -39,6 +39,7 @@ export const register = async (req, res) => {
       name,
       password,
       recovery,
+      gender,
       language,
       role,
     });
@@ -73,7 +74,7 @@ export const login = async (req, res) => {
 
     const user = await User.findOne(
       { name },
-      "officialId name surname avatar language password role citizenship createdAt",
+      "officialId name surname gender avatar language password role citizenship createdAt",
     );
     if (!user) {
       return res.status(404).json({ infoType: "user" });
@@ -105,7 +106,7 @@ export const verify = async (req, res) => {
 
     const user = await User.findOne(
       { name: decoded.name },
-      "officialId name surname avatar language role citizenship createdAt",
+      "officialId name surname gender avatar language role citizenship createdAt",
     );
 
     if (user) {
@@ -160,13 +161,13 @@ export const getAllUsers = async (req, res) => {
     if (searchText) {
       const users = await User.find(
         { name: { $regex: searchText, $options: "i" } },
-        "officialId name surname avatar language role citizenship createdAt",
+        "officialId name surname gender avatar language role citizenship createdAt",
       );
       res.status(200).json(users);
     } else {
       const users = await User.find(
         {},
-        "officialId name surname avatar language role citizenship createdAt",
+        "officialId name surname gender avatar language role citizenship createdAt",
       );
       res.status(200).json(users);
     }
@@ -180,7 +181,7 @@ export const getOneUser = async (req, res) => {
   try {
     const user = await User.findOne(
       { officialId: userId },
-      "officialId name surname avatar language role citizenship createdAt",
+      "officialId name surname gender avatar language role citizenship createdAt",
     );
     res.status(200).json({
       user,
