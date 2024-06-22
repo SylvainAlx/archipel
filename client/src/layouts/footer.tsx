@@ -1,10 +1,11 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import FooterNav from "../components/footerNav";
 import { VERSION } from "../settings/consts";
 import { useTranslation } from "react-i18next";
 
 export default function Footer() {
   const { t } = useTranslation();
+  const navigate = useNavigate();
   return (
     <footer className="animate-slideInFromBottom flex flex-col items-center">
       <FooterNav />
@@ -12,7 +13,12 @@ export default function Footer() {
         <div>
           {t("components.logo.title")} - {new Date().getFullYear()}
         </div>
-        <div className="text-[12px]">VERSION {VERSION}</div>
+        <div
+          className="text-[12px] cursor-pointer hover:text-secondary"
+          onClick={() => navigate("/releasenotes")}
+        >
+          V-{VERSION.major + "." + VERSION.minor + "." + VERSION.fix}
+        </div>
         <div className=" pb-1 flex gap-2 text-[10px] md:text-[12px] opacity-30 md:opacity-100">
           <Link to="/legalnotice">{t("pages.legalNotice.title")}</Link>
           <span>-</span>

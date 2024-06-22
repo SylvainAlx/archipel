@@ -20,6 +20,10 @@ export default function MenuModal() {
           text={t("pages.termsOfService.title")}
           click={() => navigate("/termsofservice")}
         />
+        <Button
+          text={t("pages.releaseNotes.title")}
+          click={() => navigate("/releasenotes")}
+        />
       </nav>
       <Button
         text={t("components.buttons.close")}
