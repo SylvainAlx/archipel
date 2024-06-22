@@ -2,6 +2,7 @@ export interface User {
   officialId: string;
   name: string;
   surname: string;
+  gender: number;
   avatar: string;
   language: string;
   password?: string;
@@ -17,6 +18,7 @@ export interface User {
 export interface AuthPayload {
   name: string;
   password: string;
+  gender?: number;
   language?: string;
 }
 
@@ -31,6 +33,7 @@ export const emptyUser: User = {
   officialId: "",
   name: "",
   surname: "",
+  gender: 0,
   avatar: "",
   language: "",
   password: "",

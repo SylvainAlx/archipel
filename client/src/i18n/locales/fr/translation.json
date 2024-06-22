@@ -71,6 +71,9 @@
       "acceptTerms": "En cochant cette case vous acceptez les",
       "termsOfService": "CGU"
     },
+    "releaseNotes": {
+      "title": "notes de versions"
+    },
     "termsOfService": {
       "title": "conditions générales d'utilisation"
     }
@@ -112,7 +115,7 @@
       "missingField": "Champ(s) manquant(s)"
     },
     "logo": {
-      "title": "ARCHIPEL PROJECT",
+      "title": "PROJET ARCHIPEL",
       "subtitle": "RÉSEAU DES NATIONS VIRTUELLES"
     },
     "modals": {

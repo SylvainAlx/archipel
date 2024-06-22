@@ -71,6 +71,9 @@
       "acceptTerms": "By ticking this box, you agree to the",
       "termsOfService": "TOS"
     },
+    "releaseNotes": {
+      "title": "release notes"
+    },
     "termsOfService": {
       "title": "terms of service"
     }
@@ -112,7 +115,7 @@
       "missingField": "Missing field(s)"
     },
     "logo": {
-      "title": "ARCHIPEL PROJECT",
+      "title": "PROJET ARCHIPEL",
       "subtitle": "VIRTUAL NATIONS NETWORK"
     },
     "modals": {

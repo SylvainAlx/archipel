@@ -40,6 +40,7 @@ export default function NationSearchBar({ list, setList }: SearchBarProps) {
 
   useEffect(() => {
     nationsSorting();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectOption, nationsList]);
 
   const reset = () => {

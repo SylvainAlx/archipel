@@ -20,7 +20,7 @@ export default function Select({
   options,
   value,
   id,
-  label,
+  title,
   onChange,
 }: SelectProps) {
   const { t } = useTranslation();
@@ -35,7 +35,7 @@ export default function Select({
 
   return (
     <label className="w-full max-w-[300px]">
-      {label ? label : t("components.form.select.choose")}
+      {title ? title : t("components.form.select.choose")}
       <select
         required={required}
         onChange={onChange}
