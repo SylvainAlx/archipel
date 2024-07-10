@@ -37,7 +37,8 @@
         "title": "Statistiques",
         "nations": "Nations virtuelles",
         "locations": "Lieux",
-        "citizens": "Citoyens"
+        "citizens": "Citoyens",
+        "tags": "Mots clés"
       }
     },
     "citizen": {

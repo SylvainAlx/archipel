@@ -38,6 +38,14 @@ export default function NationTile(nation: Nation) {
         <RegimeTag selectedNation={nation} />
         <PlaceTag label={nation.data.roleplay.places} />
         <PopulationTag label={nation.data.roleplay.citizens} />
+        {/* {nation.data.general.tags.length > 0 &&
+          nation.data.general.tags.map((tag, i) => {
+            return (
+              <div key={i}>
+                <IdTag label={tag} />
+              </div>
+            );
+          })} */}
       </div>
     </div>
   );
