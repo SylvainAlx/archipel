@@ -14,10 +14,9 @@ import { errorMessage, successMessage } from "./toasts";
 import { User } from "../types/typUser";
 
 export const GET_JWT = () => {
-  const jwt = localStorage.getItem("jwt")
-  return jwt
-
-}
+  const jwt = localStorage.getItem("jwt");
+  return jwt;
+};
 
 export const dateToString = (date: Date) => {
   const createdAtDate: Date = new Date(date);
@@ -25,20 +24,19 @@ export const dateToString = (date: Date) => {
 };
 
 export const findNationCitizens = (nationId: string, citizenList: User[]) => {
-  const elements: User[] = []
-  citizenList.forEach((citizen)=> {
+  const elements: User[] = [];
+  citizenList.forEach((citizen) => {
     if (citizen.citizenship.nationId === nationId) {
-      elements.push(citizen)
+      elements.push(citizen);
     }
-  })
-  return elements
-}
+  });
+  return elements;
+};
 
-export const findElementOfAtomArray = (id: string,
-  atom: any[]) => {
-    const element = atom.find(objet => objet.officialId === id);
-    return element
-}
+export const findElementOfAtomArray = (id: string, atom: any[]) => {
+  const element = atom.find((objet) => objet.officialId === id);
+  return element;
+};
 
 export const deleteElementOfAtomArray = (
   id: string,
@@ -73,12 +71,11 @@ export const updateElementOfAtomArray = (
   const tempArray = atom.map((objet) =>
     objet.officialId === payload.officialId ? payload : objet,
   );
-  if (tempArray.length === 0){
-    createElementOfAtomArray(payload, atom, setAtom)
+  if (tempArray.length === 0) {
+    createElementOfAtomArray(payload, atom, setAtom);
   } else {
     setAtom(tempArray);
   }
-  
 };
 
 export const getPoliticalSide = (value: number) => {
@@ -203,57 +200,69 @@ export const createTagRegime = (id: number) => {
 export const displayUserInfoByType = (type: string) => {
   switch (type) {
     case "signin":
-      successMessage(i18n.t("toasts.user.signIn"))
+      successMessage(i18n.t("toasts.user.signIn"));
       break;
     case "signup":
-      successMessage(i18n.t("toasts.user.signUp"))
+      successMessage(i18n.t("toasts.user.signUp"));
       break;
     case "verify":
-      successMessage(i18n.t("toasts.user.verify"))
+      successMessage(i18n.t("toasts.user.verify"));
       break;
     case "newPassword":
-      successMessage(i18n.t("toasts.user.newPassword"))
+      successMessage(i18n.t("toasts.user.newPassword"));
       break;
     case "delete":
-      successMessage(i18n.t("toasts.user.delete"))
+      successMessage(i18n.t("toasts.user.delete"));
       break;
     case "deleteKO":
-      errorMessage(i18n.t("toasts.user.deleteKO"))
+      errorMessage(i18n.t("toasts.user.deleteKO"));
       break;
     case "error":
-      errorMessage(i18n.t("toasts.user.error"))
+      errorMessage(i18n.t("toasts.user.error"));
       break;
     case "badRecovery":
-      errorMessage(i18n.t("toasts.user.badRecovery"))
+      errorMessage(i18n.t("toasts.user.badRecovery"));
       break;
     case "user":
-      errorMessage(i18n.t("toasts.user.badUser"))
+      errorMessage(i18n.t("toasts.user.badUser"));
       break;
     case "password":
-      errorMessage(i18n.t("toasts.user.badPassword"))
+      errorMessage(i18n.t("toasts.user.badPassword"));
       break;
     case "11000":
-      errorMessage(i18n.t("toasts.user.11000"))
+      errorMessage(i18n.t("toasts.user.11000"));
       break;
     case "serverError":
-      errorMessage(i18n.t("toasts.user.serverError"))
-    break;
+      errorMessage(i18n.t("toasts.user.serverError"));
+      break;
     default:
       break;
   }
-}
+};
 
+export const displayNationInfoByType = (type: string) => {
+  switch (type) {
+    case "new":
+      successMessage(i18n.t("toasts.nation.create"));
+      break;
+    case "delete":
+      successMessage(i18n.t("toasts.nation.delete"));
+      break;
+    default:
+      break;
+  }
+};
 
 export const removeDuplicates = (array: any[]) => {
   const uniqueArray: any[] = [];
   const seen = new Set();
 
-  array.forEach(item => {
-      const key = `${item.name}-${item.symbol}`;
-      if (!seen.has(key)) {
-          seen.add(key);
-          uniqueArray.push(item);
-      }
+  array.forEach((item) => {
+    const key = `${item.name}-${item.symbol}`;
+    if (!seen.has(key)) {
+      seen.add(key);
+      uniqueArray.push(item);
+    }
   });
 
   return uniqueArray;
@@ -262,8 +271,8 @@ export const removeDuplicates = (array: any[]) => {
 export const sortObjectKeys = (obj: any): any => {
   const sortedKeys = Object.keys(obj).sort();
   const sortedObj: any = {};
-  sortedKeys.forEach(key => {
-      sortedObj[key] = obj[key];
+  sortedKeys.forEach((key) => {
+    sortedObj[key] = obj[key];
   });
   return sortedObj;
 };

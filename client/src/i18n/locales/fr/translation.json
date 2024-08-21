@@ -2,7 +2,7 @@
   "pages": {
     "home": {
       "title": "Bienvenue",
-      "presentation": "Découvrez le monde fascinant des Nations Virtuelles avec Archipel, l'appli qui donne vie à votre propre nation numérique. Suivez son évolution, interagissez avec d'autres nations et forgez des alliances dans un univers virtuel où l'imagination rencontre la réalité et où le pouvoir de la communauté façonne l'avenir de votre nation !"
+      "presentation": "Bienvenue sur Projet Archipel ! Ici, vous pouvez créer votre propre identité virtuelle et bâtir votre propre nation virtuelle, ou rejoindre celles existantes qui correspondent le mieux à votre vision de la société. Grâce à un système de tags intuitif, trouvez facilement les nations virtuelles qui partagent vos idéaux et vos aspirations. Mais ce n'est pas tout! Les nations virtuelles peuvent également s'unir pour former des organisations puissantes, toutes créées par nos citoyens virtuels. Que ce soit pour le plaisir ou pour donner vie à des projets plus sérieux, notre application offre une plateforme unique pour explorer, interagir et innover dans un monde virtuel sans limites. Rejoignez-nous dès aujourd'hui et commencez à construire votre utopie !"
     },
     "nation": {
       "title": "nation",
@@ -37,7 +37,8 @@
         "title": "Statistiques",
         "nations": "Nations virtuelles",
         "locations": "Lieux",
-        "citizens": "Citoyens"
+        "citizens": "Citoyens",
+        "tags": "Mots clés"
       }
     },
     "citizen": {
@@ -71,6 +72,9 @@
       "acceptTerms": "En cochant cette case vous acceptez les",
       "termsOfService": "CGU"
     },
+    "releaseNotes": {
+      "title": "notes de versions"
+    },
     "termsOfService": {
       "title": "conditions générales d'utilisation"
     }
@@ -93,6 +97,7 @@
       "joinNation": "REJOINDRE UNE NATION",
       "deleteNation": "SUPPRIMER VOTRE NATION",
       "deleteAccount": "SUPPRIMER VOTRE COMPTE",
+      "changePassword": "CHANGER LE MOT DE PASSE",
       "search": "RECHERCHER",
       "reset": "RÉINITIALISER",
       "access": "voir",
@@ -112,7 +117,7 @@
       "missingField": "Champ(s) manquant(s)"
     },
     "logo": {
-      "title": "ARCHIPEL PROJECT",
+      "title": "PROJET ARCHIPEL",
       "subtitle": "RÉSEAU DES NATIONS VIRTUELLES"
     },
     "modals": {
@@ -136,6 +141,11 @@
         "motto": "Devise",
         "currency": "Monnaie",
         "regime": "Regime *"
+      },
+      "editModal": {
+        "title": "MODIFIER LA VALEUR",
+        "noValue": "aucune valeur",
+        "newValue": "nouvelle valeur"
       }
     },
     "hoverInfos": {
@@ -186,9 +196,11 @@
       },
       "placesList": {
         "input": "Nom du lieu",
-        "sortCitizens": {
-          "ascAlpha": "Ascending alphabetical",
-          "descAlpha": "Descending alphabetical"
+        "sortPlaces": {
+          "ascAlpha": "Alphabetique croissant",
+          "descAlpha": "Alphabetique décroissant",
+          "ascCtz": "Nombre de citoyens croissant",
+          "descCtz": "Nombre de citoyens décroissant"
         }
       }
     },
@@ -236,6 +248,10 @@
       "deleteKO": "impossible de supprimer l'utilisateur",
       "error": "Certaines informations sont erronées ou manquantes",
       "serverError": "Erreur serveur"
+    },
+    "nation": {
+      "create": "Nouvelle nation créée",
+      "delete": "Nation supprimée"
     }
   }
 }

@@ -70,6 +70,10 @@ const nationSchema = mongoose.Schema(
           type: String,
           default: "",
         },
+        tags: {
+          type: Array,
+          default: [],
+        },
       },
       roleplay: {
         lastUpdated: {

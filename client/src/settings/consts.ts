@@ -7,7 +7,12 @@ import { BuildCategory } from "../types/typPlace";
 
 export const MDP_LOBBY = import.meta.env.VITE_MDP_LOBBY;
 export const SERVER_URL = import.meta.env.VITE_SERVER_URL;
-export const VERSION = "0.1";
+
+export const VERSION = {
+  major: 1,
+  minor: 0,
+  fix: 0,
+};
 
 //  Colors
 
@@ -58,6 +63,25 @@ export const citizenSearchSortOptions: StandardOption[] = [
   {
     id: 1,
     label: i18n.t("components.searchBars.citizensList.sortCitizens.descAlpha"),
+  },
+];
+
+export const placeSearchSortOptions: StandardOption[] = [
+  {
+    id: 0,
+    label: i18n.t("components.searchBars.placesList.sortPlaces.ascAlpha"),
+  },
+  {
+    id: 1,
+    label: i18n.t("components.searchBars.placesList.sortPlaces.descAlpha"),
+  },
+  {
+    id: 2,
+    label: i18n.t("components.searchBars.placesList.sortPlaces.ascCtz"),
+  },
+  {
+    id: 3,
+    label: i18n.t("components.searchBars.placesList.sortPlaces.descCtz"),
   },
 ];
 
@@ -173,8 +197,8 @@ export const genderList: StandardOption[] = [
   { id: 0, label: "ne souhaite pas l'indiquer" },
   { id: 1, label: "femme" },
   { id: 2, label: "homme" },
-  { id: 3, label: "autre" }
-]
+  { id: 3, label: "autre" },
+];
 
 export const politicalSideList: PoliticalSide[] = [
   { id: -90, label: "Extrême gauche" },

@@ -18,8 +18,8 @@
   --color-black-alpha: rgba(0, 0, 0, 0.747);
   --color-info: rgb(2 132 199); /* sky-600 */
   --color-success: rgb(101 163 13); /* lime-600 */
-  --color-danger: rgb(124, 27, 27);
-  --color-wait: rgb(112, 77, 0);
+  --color-danger: rgb(102, 17, 17);
+  --color-wait: rgb(177, 65, 0);
 
   --color-regime-0: rgb(124, 27, 27);
   --color-regime-1: rgb(16, 133, 94);
@@ -61,4 +61,13 @@ em {
   position: absolute;
   top: -15px;
   right: 50;
+}
+
+.customGradient {
+  background: linear-gradient(
+    to right,
+    rgba(0, 0, 0, 0),
+    var(--color-complementary2),
+    rgba(0, 0, 0, 0)
+  );
 }
