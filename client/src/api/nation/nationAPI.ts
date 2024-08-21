@@ -12,6 +12,7 @@ import { EmptyNation, Nation, NewNationPayload } from "../../types/typNation";
 
 import {
   deleteElementOfAtomArray,
+  displayNationInfoByType,
   findElementOfAtomArray,
   // updateElementOfAtomArray,
 } from "../../utils/functions";
@@ -56,6 +57,7 @@ export const createNation = (payload: NewNationPayload) => {
         myStore.set(sessionAtom, { ...session, nation: data.nation });
         if (data.user) {
           myStore.set(sessionAtom, { ...session, user: data.user });
+          displayNationInfoByType("new");
         }
       } else {
         myStore.set(loadingAtom, false);
@@ -138,7 +140,7 @@ export const deleteSelfNation = () => {
           setNationsList,
         );
       }
-      successMessage(resp.message);
+      displayNationInfoByType("delete");
       myStore.set(sessionAtom, { ...session, nation: EmptyNation });
       if (resp.user) {
         myStore.set(sessionAtom, { ...session, user: resp.user });

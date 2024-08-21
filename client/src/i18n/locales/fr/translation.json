@@ -248,6 +248,10 @@
       "deleteKO": "impossible de supprimer l'utilisateur",
       "error": "Certaines informations sont erronées ou manquantes",
       "serverError": "Erreur serveur"
+    },
+    "nation": {
+      "create": "Nouvelle nation créée",
+      "delete": "Nation supprimée"
     }
   }
 }

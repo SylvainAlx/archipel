@@ -256,6 +256,10 @@
       "deleteKO": "Unable to delete the user",
       "error": "Some information is wrong or missing",
       "serverError": "Server error"
+    },
+    "nation": {
+      "create": "New nation created",
+      "delete": "Nation deleted"
     }
   }
 }
