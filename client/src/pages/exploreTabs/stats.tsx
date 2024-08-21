@@ -57,7 +57,8 @@ export default function Stats({ text }: StringProps) {
                 return (
                   <div key={i}>
                     <span>
-                      {i18n.language === "fr" ? tag.label.fr : tag._id}
+                      {i18n.language === "fr" && tag.label.fr}
+                      {i18n.language === "en" && tag.label.en}
                     </span>
                   </div>
                 );

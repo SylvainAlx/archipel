@@ -58,7 +58,7 @@
       "newUser": "Create account"
     },
     "recovery": {
-      "title": "password reset",
+      "title": "reset password",
       "placeholderName": "User name",
       "recoveryKey": "Recovery key",
       "newPassword": "New password",
@@ -97,6 +97,7 @@
       "joinNation": "JOIN A NATION",
       "deleteNation": "DELETE YOUR NATION",
       "deleteAccount": "DELETE YOUR ACCOUNT",
+      "changePassword": "CHANGE PASSWORD",
       "search": "SEARCH",
       "reset": "RESET",
       "access": "access",
@@ -140,6 +141,11 @@
         "motto": "Motto",
         "currency": "Currency",
         "regime": "Regime"
+      },
+      "editModal": {
+        "title": "EDIT VALUE",
+        "noValue": "no value",
+        "newValue": "new value"
       }
     },
     "hoverInfos": {
@@ -190,9 +196,11 @@
       },
       "placesList": {
         "input": "Location name",
-        "sortCitizens": {
+        "sortPlaces": {
           "ascAlpha": "Ascending alphabetical",
-          "descAlpha": "Descending alphabetical"
+          "descAlpha": "Descending alphabetical",
+          "ascCtz": "Growing number of citizens",
+          "descCtz": "Decreasing number of citizens"
         }
       }
     },

@@ -99,7 +99,7 @@ export default function Citizen() {
                     />
                   ) : (
                     <>
-                      {session.user.officialId && (
+                      {session.user.officialId === citizen.officialId && (
                         <>
                           <Button
                             text={t("components.buttons.createNation")}
@@ -116,11 +116,15 @@ export default function Citizen() {
                 </>
               }
             />
-            {session.user.officialId ? (
+            {session.user.officialId === citizen.officialId ? (
               <DashTile
                 title={t("pages.citizen.settings")}
                 children={
                   <>
+                    <Button
+                      text={t("components.buttons.changePassword")}
+                      click={() => console.log("password")}
+                    />
                     <Button
                       text={t("components.buttons.logout")}
                       bgColor="bg-wait"

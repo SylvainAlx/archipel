@@ -10,10 +10,10 @@ import {
 import Input from "../form/input";
 import Button from "../buttons/button";
 import Select from "../form/select";
-import { SetAtom, placesListAtom } from "../../settings/store";
+import { SetAtom, placesListAtom, statsAtom } from "../../settings/store";
 import { useTranslation } from "react-i18next";
 import { useAtom } from "jotai";
-import { citizenSearchSortOptions } from "../../settings/consts";
+import { placeSearchSortOptions } from "../../settings/consts";
 import { getPlaces } from "../../api/place/placeAPI";
 
 export interface SearchBarProps {
@@ -23,18 +23,15 @@ export interface SearchBarProps {
 }
 
 export default function PlaceSearchBar({ list, setList }: SearchBarProps) {
-  const [selectOption, setSelectOption] = useState("0");
+  const [selectOption, setSelectOption] = useState("3");
   const { t } = useTranslation();
   const [searchName, setSearchName] = useState("");
   const [placeList] = useAtom(placesListAtom);
+  const [stats] = useAtom(statsAtom);
 
   useEffect(() => {
-    if (placeList.length === 0) {
+    if (placeList.length != stats.counts.places) {
       getPlaces("");
-    } else if (placeList.length > 0) {
-      if (placeList[0].officialId === "") {
-        getPlaces("");
-      }
     }
   }, []);
 
@@ -61,6 +58,10 @@ export default function PlaceSearchBar({ list, setList }: SearchBarProps) {
           return b.name.localeCompare(a.name);
         }),
       );
+    } else if (selectOption === "2") {
+      setList(list.sort((a, b) => a.population - b.population));
+    } else if (selectOption === "3") {
+      setList(list.sort((a, b) => a.population - b.population));
     }
   };
 
@@ -90,7 +91,7 @@ export default function PlaceSearchBar({ list, setList }: SearchBarProps) {
         onChange={(e: ChangeEvent<HTMLSelectElement>) =>
           setSelectOption(e.target.value)
         }
-        options={citizenSearchSortOptions}
+        options={placeSearchSortOptions}
         value={selectOption}
       />
 

@@ -97,6 +97,7 @@
       "joinNation": "REJOINDRE UNE NATION",
       "deleteNation": "SUPPRIMER VOTRE NATION",
       "deleteAccount": "SUPPRIMER VOTRE COMPTE",
+      "changePassword": "CHANGER LE MOT DE PASSE",
       "search": "RECHERCHER",
       "reset": "RÉINITIALISER",
       "access": "voir",
@@ -140,6 +141,11 @@
         "motto": "Devise",
         "currency": "Monnaie",
         "regime": "Regime *"
+      },
+      "editModal": {
+        "title": "MODIFIER LA VALEUR",
+        "noValue": "aucune valeur",
+        "newValue": "nouvelle valeur"
       }
     },
     "hoverInfos": {
@@ -190,9 +196,11 @@
       },
       "placesList": {
         "input": "Nom du lieu",
-        "sortCitizens": {
-          "ascAlpha": "Ascending alphabetical",
-          "descAlpha": "Descending alphabetical"
+        "sortPlaces": {
+          "ascAlpha": "Alphabetique croissant",
+          "descAlpha": "Alphabetique décroissant",
+          "ascCtz": "Nombre de citoyens croissant",
+          "descCtz": "Nombre de citoyens décroissant"
         }
       }
     },
