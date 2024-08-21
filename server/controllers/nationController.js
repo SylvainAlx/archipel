@@ -38,7 +38,7 @@ export const createNation = async (req, res) => {
       lat: (Math.random() * (90 - -90) + -90).toFixed(2),
       lng: (Math.random() * 360).toFixed(2),
     };
-    let data = { general: coords };
+    let data = { general: coords, roleplay: { citizens: 0 } };
     data.general.coords = coords;
     data.general.motto = motto;
     data.general.regime = regime;

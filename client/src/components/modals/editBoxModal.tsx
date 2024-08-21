@@ -12,11 +12,13 @@ import Button from "../buttons/button";
 import Input from "../form/input";
 import Select from "../form/select";
 import { ChangeEvent, FormEvent } from "react";
+import { useTranslation } from "react-i18next";
 
 export default function EditBoxModal() {
   const [editBox, setEditBox] = useAtom(editbox);
   const [placeData] = useAtom(editPlaceAtom);
   const [, setConfirm] = useAtom(confirmBox);
+  const { t } = useTranslation();
 
   const handleSubmit = (e: FormEvent) => {
     const session = myStore.get(sessionAtom);
@@ -100,12 +102,15 @@ export default function EditBoxModal() {
 
   return (
     <>
-      <h2 className="text-2xl text-center p-4">ENTREZ UNE NOUVELLE VALEUR</h2>
+      <h2 className="text-2xl text-center p-4">
+        {t("components.modals.editModal.title")}
+      </h2>
       <b
         className={`w-full text-center text-2xl ${editBox.original.toString().length > 30 && typeof editBox.original != "object" && "overflow-x-scroll"} ${editBox.original.toString() === "" && "text-danger"}`}
       >
         {typeof editBox.original != "object" && editBox.original.toString()}
-        {editBox.original.toString() === "" && "aucune valeur"}
+        {editBox.original.toString() === "" &&
+          t("components.modals.editModal.noValue")}
         {/* {typeof editBox.original == "object" &&
           editBox.indice &&
           editBox.original[editBox.indice].label} */}
@@ -118,7 +123,7 @@ export default function EditBoxModal() {
           <Input
             required
             type="text"
-            placeholder="NOUVELLE VALEUR"
+            placeholder={t("components.modals.editModal.newValue")}
             onChange={handleInputChange}
             value={editBox.new.toString()}
             name=""
@@ -128,7 +133,7 @@ export default function EditBoxModal() {
           <Input
             required
             type="number"
-            placeholder="NOUVELLE VALEUR"
+            placeholder={t("components.modals.editModal.newValue")}
             onChange={handleInputChange}
             value={editBox.new.toString()}
             name=""
@@ -143,13 +148,13 @@ export default function EditBoxModal() {
         )}
 
         <Button
-          text="ANNULER"
+          text={t("components.buttons.cancel")}
           click={() =>
             setEditBox({ target: "", original: -1, new: -1, path: "" })
           }
         />
         {editBox.new != -1 && editBox.new != "" && (
-          <Button type="submit" text="VALIDER" />
+          <Button type="submit" text={t("components.buttons.validate")} />
         )}
       </form>
     </>

@@ -6,12 +6,10 @@ import {
   useEffect,
   useState,
 } from "react";
-
-import { getNations } from "../../api/nation/nationAPI";
 import Input from "../form/input";
 import Button from "../buttons/button";
 import Select from "../form/select";
-import { SetAtom, citizenListAtom } from "../../settings/store";
+import { SetAtom, citizenListAtom, statsAtom } from "../../settings/store";
 import { useTranslation } from "react-i18next";
 import { useAtom } from "jotai";
 import { getCitizens } from "../../api/user/userAPI";
@@ -28,14 +26,11 @@ export default function CitizenSearchBar({ list, setList }: SearchBarProps) {
   const { t } = useTranslation();
   const [searchName, setSearchName] = useState("");
   const [citizenList] = useAtom(citizenListAtom);
+  const [stats] = useAtom(statsAtom);
 
   useEffect(() => {
-    if (citizenList.length === 0) {
+    if (citizenList.length != stats.counts.citizens) {
       getCitizens("");
-    } else if (citizenList.length > 0) {
-      if (citizenList[0].officialId === "") {
-        getCitizens("");
-      }
     }
   }, []);
 
@@ -44,7 +39,7 @@ export default function CitizenSearchBar({ list, setList }: SearchBarProps) {
   }, [selectOption, citizenList]);
 
   const reset = () => {
-    getNations("");
+    getCitizens("");
     setSelectOption("0");
   };
 
@@ -71,7 +66,7 @@ export default function CitizenSearchBar({ list, setList }: SearchBarProps) {
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    getNations(searchName);
+    getCitizens(searchName);
   };
 
   return (

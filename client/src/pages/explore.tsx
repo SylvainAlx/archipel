@@ -12,10 +12,10 @@ export default function Explore() {
   const { t } = useTranslation();
 
   const nationTabs: StandardOption[] = [
-    { id: 1, label: t("pages.explore.nationsList.title") },
-    { id: 2, label: t("pages.explore.citizensList.title") },
-    { id: 3, label: t("pages.explore.placesList.title") },
-    { id: 4, label: t("pages.explore.stats.title") },
+    { id: 1, label: t("pages.explore.stats.title") },
+    { id: 2, label: t("pages.explore.nationsList.title") },
+    { id: 3, label: t("pages.explore.citizensList.title") },
+    { id: 4, label: t("pages.explore.placesList.title") },
   ];
 
   const [tab, setTab] = useState(nationTabs[0]);
@@ -33,10 +33,10 @@ export default function Explore() {
           }
         />
       </div>
-      {tab.id === 1 && <NationList text={tab.label} />}
-      {tab.id === 2 && <CitizenList text={tab.label} />}
-      {tab.id === 3 && <PlaceList text={tab.label} />}
-      {tab.id === 4 && <Stats text={tab.label} />}
+      {tab.id === 1 && <Stats text={tab.label} />}
+      {tab.id === 2 && <NationList text={tab.label} />}
+      {tab.id === 3 && <CitizenList text={tab.label} />}
+      {tab.id === 4 && <PlaceList text={tab.label} />}
     </>
   );
 }

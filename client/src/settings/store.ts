@@ -18,6 +18,7 @@ import {
 import { Place, emptyPlace } from "../types/typPlace";
 import i18n from "../i18n/i18n";
 import { emptyUser, User } from "../types/typUser";
+import { Tag } from "../types/typTag";
 
 export const myStore = createStore();
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -39,6 +40,7 @@ interface Counts {
   nations: number;
   citizens: number;
   places: number;
+  tags: number;
 }
 
 type Stats = {
@@ -46,7 +48,7 @@ type Stats = {
 };
 
 export const statsAtom = atom<Stats>({
-  counts: { nations: 0, citizens: 0, places: 0 },
+  counts: { nations: 0, citizens: 0, places: 0, tags: 0 },
 });
 
 // Citizen
@@ -73,6 +75,10 @@ export const editPlaceAtom = atom<EditPlaceParam>({ place: emptyPlace });
 // com
 
 export const comsListAtom = atom<Com[]>([]);
+
+// tag
+
+export const tagListAtom = atom<Tag[]>([]);
 
 // Param
 

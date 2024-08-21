@@ -29,7 +29,8 @@ export interface Nation {
       motto: string;
       nationalDay: string;
       regime: number;
-      currency: string
+      currency: string;
+      tags: string[];
     };
     roleplay: {
       lastUpdated: Date;
@@ -65,7 +66,8 @@ export const EmptyNation: Nation = {
       motto: "",
       nationalDay: "",
       regime: 0,
-      currency: ""
+      currency: "",
+      tags: [],
     },
     roleplay: {
       lastUpdated: new Date(),
@@ -121,5 +123,5 @@ export const emptyNewNationPayload: NewNationPayload = {
   owner: "",
   motto: "",
   regime: 0,
-  currency: ""
-}
+  currency: "",
+};
