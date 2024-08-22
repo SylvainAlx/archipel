@@ -9,6 +9,7 @@ export const MDP_LOBBY = import.meta.env.VITE_MDP_LOBBY;
 export const SERVER_URL = import.meta.env.VITE_SERVER_URL;
 
 export const VERSION = {
+  rc: true,
   major: 1,
   minor: 0,
   fix: 0,

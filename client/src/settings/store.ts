@@ -89,6 +89,7 @@ export const recoveryKey = atom("");
 export const confirmBox = atom(ConfirmBoxDefault);
 export const editbox = atom(EditBoxDefault);
 export const infoModalAtom = atom("");
+export const changePasswordModalAtom = atom(false);
 export const showApp = atom(false);
 
 export const dataCheckedAtom = atom(false);

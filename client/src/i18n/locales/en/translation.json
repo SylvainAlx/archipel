@@ -59,11 +59,11 @@
     },
     "recovery": {
       "title": "reset password",
-      "placeholderName": "User name",
-      "recoveryKey": "Recovery key",
-      "newPassword": "New password",
-      "confirmPassword": "Confirm new password",
-      "changePassword": "Change password"
+      "placeholderName": "User name *",
+      "recoveryKey": "Recovery key *",
+      "newPassword": "New password *",
+      "confirmPassword": "Confirm new password *",
+      "changePassword": "CHANGE PASSWORD"
     },
     "register": {
       "title": "create account",
@@ -146,6 +146,12 @@
         "title": "EDIT VALUE",
         "noValue": "no value",
         "newValue": "new value"
+      },
+      "changePasswordModal": {
+        "title": "Change password",
+        "oldPassword": "Old password",
+        "newPassword": "New password",
+        "confirmPassword": "Confirm password"
       }
     },
     "hoverInfos": {
@@ -172,7 +178,8 @@
         "population": "citizens",
         "regime": "regime",
         "tree": "kinship",
-        "languages": "languages"
+        "languages": "languages",
+        "hash": "hash tag"
       }
     },
     "searchBars": {

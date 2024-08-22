@@ -1,6 +1,7 @@
 import { useAtom } from "jotai";
 import H1 from "../components/titles/h1";
 import {
+  changePasswordModalAtom,
   citizenFetchAtom,
   confirmBox,
   myStore,
@@ -123,7 +124,7 @@ export default function Citizen() {
                   <>
                     <Button
                       text={t("components.buttons.changePassword")}
-                      click={() => console.log("password")}
+                      click={() => myStore.set(changePasswordModalAtom, true)}
                     />
                     <Button
                       text={t("components.buttons.logout")}

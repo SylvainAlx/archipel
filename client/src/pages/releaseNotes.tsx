@@ -17,7 +17,7 @@ export default function ReleaseNotes() {
             title=""
             children={
               <>
-                <H2 text="1.0.0" />
+                <H2 text="RC1.0.0" />
                 <ul>
                   <li>
                     Parcourir la liste des nations, des citoyens et des lieux
