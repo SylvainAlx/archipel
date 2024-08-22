@@ -29,6 +29,11 @@ export interface RecoveryPayload {
   newPassword?: string;
 }
 
+export interface ChangePasswordPayload {
+  oldPassword: string;
+  newPassword: string;
+}
+
 export const emptyUser: User = {
   officialId: "",
   name: "",

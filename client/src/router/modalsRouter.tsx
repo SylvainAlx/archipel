@@ -1,5 +1,6 @@
 import { useAtom } from "jotai";
 import {
+  changePasswordModalAtom,
   confirmBox,
   // editPlaceAtom,
   editbox,
@@ -23,6 +24,8 @@ import LangModal from "../components/modals/langModal";
 import ImageModal from "../components/modals/imageModal";
 import MenuModal from "../components/modals/menuModal";
 import NewNationModal from "../components/modals/newNationModal";
+import { useEffect, useState } from "react";
+import { ChangePasswordModal } from "../components/modals/changePasswordModal";
 
 export default function ModalsRouter() {
   const [recovery] = useAtom(recoveryKey);
@@ -36,24 +39,39 @@ export default function ModalsRouter() {
   const [image] = useAtom(imageAtom);
   const [menu] = useAtom(showMenuAtom);
   const [newNation] = useAtom(newNationAtom);
+  const [changePassword] = useAtom(changePasswordModalAtom);
+
+  const [afficherLoading, setAfficherLoading] = useState<boolean>(false);
+
+  useEffect(() => {
+    let timer: NodeJS.Timeout | undefined;
+
+    if (loading) {
+      setAfficherLoading(true);
+      timer = setTimeout(() => {
+        setAfficherLoading(false);
+      }, 1000);
+    }
+  }, [loading]);
 
   if (
     recovery != "" ||
     confirm.text != "" ||
     info != "" ||
-    loading ||
+    afficherLoading ||
     editBox.original != -1 ||
     newPlace.nation != "" ||
     // editPlace.update != undefined ||
     lang ||
     image != "" ||
     menu ||
-    newNation.owner != ""
+    newNation.owner != "" ||
+    changePassword
   ) {
     return (
       <div className="animate-in fade-in z-20 fixed top-0 w-[100%] h-[100%] backdrop-blur-sm bg-black_alpha flex items-center justify-center">
         <div className="min-w-[350px] max-w-[90%] bg-slate-800 rounded-md p-6 flex flex-col items-center gap-4">
-          {loading ? (
+          {afficherLoading ? (
             <LoadingSpinner />
           ) : (
             <>
@@ -70,6 +88,7 @@ export default function ModalsRouter() {
                   {image != "" && <ImageModal />}
                   {menu && <MenuModal />}
                   {newNation.owner != "" && <NewNationModal />}
+                  {changePassword && <ChangePasswordModal />}
                 </>
               )}
             </>

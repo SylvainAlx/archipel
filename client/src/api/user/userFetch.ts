@@ -1,5 +1,9 @@
 import { SERVER_URL } from "../../settings/consts";
-import { AuthPayload, RecoveryPayload } from "../../types/typUser";
+import {
+  AuthPayload,
+  ChangePasswordPayload,
+  RecoveryPayload,
+} from "../../types/typUser";
 import { GET_JWT } from "../../utils/functions";
 
 export const getCitizensCountFetch = async () => {
@@ -32,11 +36,25 @@ export const loginFetch = async (payload: AuthPayload) => {
   return result;
 };
 
-export const RecoveryFetch = async (payload: RecoveryPayload) => {
+export const recoveryFetch = async (payload: RecoveryPayload) => {
   const resp = await fetch(`${SERVER_URL}/user/forgetpassword`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+    },
+    body: JSON.stringify(payload),
+  });
+  const result = await resp.json();
+  return result;
+};
+
+export const changePasswordFetch = async (payload: ChangePasswordPayload) => {
+  const jwt = GET_JWT();
+  const resp = await fetch(`${SERVER_URL}/user/changepassword`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      authorization: "Bearer " + jwt,
     },
     body: JSON.stringify(payload),
   });
@@ -52,7 +70,7 @@ export const authGet = async (token: string) => {
   return result;
 };
 
-export const DeleteUserFetch = async () => {
+export const deleteUserFetch = async () => {
   const jwt = GET_JWT();
   const resp = await fetch(`${SERVER_URL}/user/delete`, {
     method: "DELETE",
