@@ -5,7 +5,7 @@ import {
   loadingAtom,
   myStore,
 } from "../../settings/store";
-import { Com } from "../../types/typAtom";
+import { Com } from "../../types/typCom";
 import {
   createElementOfAtomArray,
   deleteElementOfAtomArray,

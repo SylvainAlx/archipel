@@ -67,6 +67,17 @@ export const citizenSearchSortOptions: StandardOption[] = [
   },
 ];
 
+export const comSearchSortOptions: StandardOption[] = [
+  {
+    id: 0,
+    label: i18n.t("components.searchBars.comsList.SortComs.ascDate"),
+  },
+  {
+    id: 1,
+    label: i18n.t("components.searchBars.comsList.SortComs.descDate"),
+  },
+];
+
 export const placeSearchSortOptions: StandardOption[] = [
   {
     id: 0,

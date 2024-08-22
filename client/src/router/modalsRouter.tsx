@@ -44,11 +44,9 @@ export default function ModalsRouter() {
   const [afficherLoading, setAfficherLoading] = useState<boolean>(false);
 
   useEffect(() => {
-    let timer: NodeJS.Timeout | undefined;
-
     if (loading) {
       setAfficherLoading(true);
-      timer = setTimeout(() => {
+      setTimeout(() => {
         setAfficherLoading(false);
       }, 1000);
     }

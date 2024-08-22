@@ -14,9 +14,9 @@ import ListTile from "../../../components/listTile";
 import Tag from "../../../components/tags/tag";
 import { IoMdTrash } from "react-icons/io";
 import { dateToString } from "../../../utils/functions";
-import { EmptyCom } from "../../../types/typAtom";
 import { getComs } from "../../../api/communication/comAPI";
 import { useTranslation } from "react-i18next";
+import { EmptyCom } from "../../../types/typCom";
 
 export default function DashboardCom({ text }: StringProps) {
   const [newCom, setNewCom] = useState(EmptyCom);

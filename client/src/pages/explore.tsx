@@ -7,6 +7,7 @@ import NationList from "./exploreTabs/nationList";
 import Stats from "./exploreTabs/stats";
 import CitizenList from "./exploreTabs/citizenList";
 import PlaceList from "./exploreTabs/placeList";
+import ComList from "./exploreTabs/comList";
 
 export default function Explore() {
   const { t } = useTranslation();
@@ -16,6 +17,7 @@ export default function Explore() {
     { id: 2, label: t("pages.explore.nationsList.title") },
     { id: 3, label: t("pages.explore.citizensList.title") },
     { id: 4, label: t("pages.explore.placesList.title") },
+    { id: 5, label: t("pages.explore.comsList.title") },
   ];
 
   const [tab, setTab] = useState(nationTabs[0]);
@@ -37,6 +39,7 @@ export default function Explore() {
       {tab.id === 2 && <NationList text={tab.label} />}
       {tab.id === 3 && <CitizenList text={tab.label} />}
       {tab.id === 4 && <PlaceList text={tab.label} />}
+      {tab.id === 5 && <ComList text={tab.label} />}
     </>
   );
 }

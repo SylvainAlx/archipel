@@ -33,6 +33,9 @@
       "placesList": {
         "title": "Lieux"
       },
+      "comsList": {
+        "title": "Communications"
+      },
       "stats": {
         "title": "Statistiques",
         "nations": "Nations virtuelles",
@@ -103,7 +106,8 @@
       "access": "voir",
       "delete": "supprimer",
       "back": "retour",
-      "newPlace": "nouveau lieu"
+      "newPlace": "nouveau lieu",
+      "showMore": "VOIR PLUS"
     },
     "form": {
       "input": {
@@ -208,6 +212,13 @@
           "descAlpha": "Alphabetique décroissant",
           "ascCtz": "Nombre de citoyens croissant",
           "descCtz": "Nombre de citoyens décroissant"
+        }
+      },
+      "comsList": {
+        "input": "Titre",
+        "SortComs": {
+          "ascDate": "Du plus ancien au plus récent",
+          "descDate": "Du plus récent au plus ancien"
         }
       }
     },
