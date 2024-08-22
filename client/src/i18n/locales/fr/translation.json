@@ -34,13 +34,14 @@
         "title": "Lieux"
       },
       "comsList": {
-        "title": "Communications"
+        "title": "Communiqués"
       },
       "stats": {
         "title": "Statistiques",
         "nations": "Nations virtuelles",
         "locations": "Lieux",
         "citizens": "Citoyens",
+        "coms": "Communiqués",
         "tags": "Mots clés"
       }
     },
@@ -249,6 +250,9 @@
     }
   },
   "toasts": {
+    "errors": {
+      "404": "Page non trouvée"
+    },
     "user": {
       "signIn": "Connexion réussie",
       "signUp": "Inscription réussie",

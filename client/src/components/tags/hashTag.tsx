@@ -8,7 +8,7 @@ export default function HashTag({ label }: customTagProps) {
     <Tag
       text={"#" + label.toString()}
       hover={t("components.hoverInfos.tags.hash")}
-      bgColor="bg-info"
+      bgColor="bg-complementary3"
     />
   );
 }

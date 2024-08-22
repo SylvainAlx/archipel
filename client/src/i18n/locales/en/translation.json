@@ -34,13 +34,14 @@
         "title": "Locations"
       },
       "comsList": {
-        "title": "Communications"
+        "title": "Press releases"
       },
       "stats": {
         "title": "Statistics",
         "nations": "Virtual nations",
         "locations": "Locations",
         "citizens": "Citizens",
+        "coms": "Press releases",
         "tags": "hashtags"
       }
     },
@@ -257,6 +258,9 @@
     }
   },
   "toasts": {
+    "errors": {
+      "404": "Page not found"
+    },
     "user": {
       "signIn": "Sign In successful",
       "signUp": "Sign Up Successful",

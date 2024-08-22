@@ -29,6 +29,9 @@ export default function Stats({ text }: StringProps) {
     if (stats.counts.citizens === 0) {
       getCitizensCount();
     }
+    if (stats.counts.coms === 0) {
+      // getComsCount
+    }
     if (tagList.length === 0) {
       getAllTags();
     }
@@ -49,6 +52,10 @@ export default function Stats({ text }: StringProps) {
         <DashTile
           title={t("pages.explore.stats.citizens")}
           children={<H3 text={stats.counts.citizens.toString()} />}
+        />
+        <DashTile
+          title={t("pages.explore.stats.coms")}
+          children={<H3 text={stats.counts.coms.toString()} />}
         />
         <DashTile
           title={t("pages.explore.stats.tags")}

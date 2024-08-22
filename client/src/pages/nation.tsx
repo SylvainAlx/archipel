@@ -17,6 +17,7 @@ import Button from "../components/buttons/button";
 import { useNavigate, useParams } from "react-router-dom";
 import { getNation } from "../api/nation/nationAPI";
 import Citizens from "../components/nation/citizens";
+import { errorMessage } from "../utils/toasts";
 
 export default function Nation() {
   const [nation] = useAtom(nationFetchedAtom);
@@ -36,6 +37,10 @@ export default function Nation() {
   }, [session.user, nation, param.id]);
 
   useEffect(() => {
+    if (nation === null) {
+      navigate(`/`);
+      errorMessage(t("toasts.errors.404"));
+    }
     if (
       nation != undefined &&
       nation.officialId != param.id &&
