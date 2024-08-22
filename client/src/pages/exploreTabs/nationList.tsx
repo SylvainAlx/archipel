@@ -7,11 +7,12 @@ import NationSearchBar from "../../components/searchBars/nationSearchBar";
 import BarreLoader from "../../components/loading/barreLoader";
 import { StringProps } from "../../types/typProp";
 import { Nation } from "../../types/typNation";
+import { useTranslation } from "react-i18next";
 
 export default function NationList({ text }: StringProps) {
   const [nationsList, setNationsList] = useState<Nation[]>([]);
   const [displayedNations, setDisplayedNations] = useState(10);
-
+  const { t } = useTranslation();
   const NationTile = lazy(() => import("../../components/tiles/nationTile"));
 
   return (
@@ -47,7 +48,7 @@ export default function NationList({ text }: StringProps) {
         {displayedNations < nationsList.length && (
           <Button
             click={() => setDisplayedNations(displayedNations + 5)}
-            text="VOIR PLUS"
+            text={t("components.buttons.showMore")}
           />
         )}
       </section>

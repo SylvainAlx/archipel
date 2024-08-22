@@ -7,10 +7,12 @@ import BarreLoader from "../../components/loading/barreLoader";
 import { StringProps } from "../../types/typProp";
 import { Place } from "../../types/typPlace";
 import PlaceSearchBar from "../../components/searchBars/placeSearchBar";
+import { useTranslation } from "react-i18next";
 
 export default function PlaceList({ text }: StringProps) {
   const [placesList, setPlacesList] = useState<Place[]>([]);
   const [displayedPlaces, setDisplayedPlaces] = useState(10);
+  const { t } = useTranslation();
 
   const PlaceTile = lazy(() => import("../../components/tiles/placeTile"));
 
@@ -36,7 +38,7 @@ export default function PlaceList({ text }: StringProps) {
         {displayedPlaces < placesList.length && (
           <Button
             click={() => setDisplayedPlaces(displayedPlaces + 5)}
-            text="VOIR PLUS"
+            text={t("components.buttons.showMore")}
           />
         )}
       </section>

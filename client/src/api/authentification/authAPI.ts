@@ -12,15 +12,15 @@ import { GET_JWT } from "../../utils/functions";
 import { RecoveryFetch, authGet, loginFetch, registerFetch } from "./authFetch";
 
 import { createComFetch } from "../communication/comFetch";
-import { EmptyCom } from "../../types/typAtom";
 import { AuthPayload, RecoveryPayload } from "../../types/typUser";
+import { EmptyCom } from "../../types/typCom";
 
 export const register = ({ name, password }: AuthPayload) => {
   myStore.set(loadingAtom, true);
   registerFetch({ name, password })
     .then((data) => {
       myStore.set(loadingAtom, false);
-      if (data.nation && typeof comOptions[1].id === "number" ) {
+      if (data.nation && typeof comOptions[1].id === "number") {
         createComFetch({
           originId: data.nation._id,
           originName: data.nation.name,
