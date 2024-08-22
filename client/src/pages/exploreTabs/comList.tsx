@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import Button from "../../components/buttons/button";
-import { useState, Suspense, lazy, useEffect } from "react";
+import { useState, Suspense, lazy } from "react";
 import H1 from "../../components/titles/h1";
 import IndexTag from "../../components/tags/indexTag";
 import BarreLoader from "../../components/loading/barreLoader";
@@ -14,10 +14,6 @@ export default function ComList({ text }: StringProps) {
   const [displayedComs, setDisplayedComs] = useState(10);
   const { t } = useTranslation();
   const ComTile = lazy(() => import("../../components/tiles/comTile"));
-
-  useEffect(() => {
-    console.log(comList);
-  }, [comList]);
 
   return (
     <>
