@@ -11,8 +11,7 @@
     "format": "prettier --write \"src/**/*.{ts,tsx}\""
   },
   "dependencies": {
-    "@uploadcare/blocks": "0.30.6",
-    "@uploadcare/upload-client": "^6.12.0",
+    "@uploadcare/react-uploader": "^1.0.0",
     "i18next": "^23.10.1",
     "i18next-browser-languagedetector": "^7.2.0",
     "jotai": "^2.6.0",

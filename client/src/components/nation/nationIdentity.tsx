@@ -16,6 +16,7 @@ import TileContainer from "../tileContainer";
 import DashTile from "../dashTile";
 import EditIcon from "../editIcon";
 import H3 from "../titles/h3";
+import Upploader from "../uploader";
 
 export default function NationIdentity({
   selectedNation,
@@ -85,11 +86,15 @@ export default function NationIdentity({
                           </div>
                         )}
                         {owner && (
-                          <EditIcon
-                            target="nation"
-                            param={selectedNation.data.url.flag}
+                          <Upploader
                             path="data.url.flag"
+                            destination="nation"
                           />
+                          // <EditIcon
+                          //   target="nation"
+                          //   param={selectedNation.data.url.flag}
+                          //   path="data.url.flag"
+                          // />
                         )}
                       </div>
                     </div>
