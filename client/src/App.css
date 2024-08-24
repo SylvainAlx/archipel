@@ -71,3 +71,8 @@ em {
     rgba(0, 0, 0, 0)
   );
 }
+
+.my-config {
+  --uc-primary-oklch-dark: 69% 0.1768 258.4;
+  --uc-primary-oklch-light: 59% 0.22 264;
+}

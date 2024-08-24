@@ -3,6 +3,7 @@ import {
   AuthPayload,
   ChangePasswordPayload,
   RecoveryPayload,
+  User,
 } from "../../types/typUser";
 import { GET_JWT } from "../../utils/functions";
 
@@ -79,6 +80,21 @@ export const deleteUserFetch = async () => {
   const result = await resp.json();
   return result;
 };
+
+export const updateUserFetch = async (payload: User) => {
+  const jwt = GET_JWT();
+  const resp = await fetch(`${SERVER_URL}/user/update`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      authorization: "Bearer " + jwt,
+    },
+    body: JSON.stringify(payload),
+  });
+  const result = await resp.json();
+
+  return result;
+}
 
 export const getOneUserFetch = async (id: string) => {
   const resp = await fetch(`${SERVER_URL}/user/${id}`);

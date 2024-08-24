@@ -21,6 +21,7 @@ import { emptyNewNationPayload } from "../types/typNation";
 import { getNation } from "../api/nation/nationAPI";
 import IdTag from "../components/tags/idTag";
 import RoleTag from "../components/tags/roleTag";
+import Upploader from "../components/uploader";
 
 export default function Citizen() {
   const { t } = useTranslation();
@@ -43,9 +44,10 @@ export default function Citizen() {
   }, [param.id, session.user]);
 
   useEffect(() => {
-    if (citizen.citizenship.nationId != "") {
+    if (citizen.citizenship.nationId != "" && nation.officialId === "") {
       getNation(citizen.citizenship.nationId);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [citizen]);
 
   const handleClick = (dest: string) => {
@@ -82,6 +84,9 @@ export default function Citizen() {
     <>
       <H1 text={citizen.name} />
       <Avatar url={citizen.avatar} />
+      {session.user.officialId === citizen.officialId && (
+        <Upploader path="avatar" destination="citizen" />
+      )}
       <TileContainer
         children={
           <>

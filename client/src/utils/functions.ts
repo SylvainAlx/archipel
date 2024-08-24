@@ -211,6 +211,9 @@ export const displayUserInfoByType = (type: string) => {
     case "newPassword":
       successMessage(i18n.t("toasts.user.newPassword"));
       break;
+      case "update":
+        successMessage(i18n.t("toasts.user.update"));
+        break;
     case "delete":
       successMessage(i18n.t("toasts.user.delete"));
       break;

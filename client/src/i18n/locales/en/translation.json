@@ -185,7 +185,8 @@
         "tree": "kinship",
         "languages": "languages",
         "hash": "hash tag"
-      }
+      },
+      "avatar": "avatar"
     },
     "searchBars": {
       "nationsList": {
@@ -277,7 +278,8 @@
       "11000": "Information already existing in the database",
       "deleteKO": "Unable to delete the user",
       "error": "Some information is wrong or missing",
-      "serverError": "Server error"
+      "serverError": "Server error",
+      "update": "Update successful"
     },
     "nation": {
       "create": "New nation created",

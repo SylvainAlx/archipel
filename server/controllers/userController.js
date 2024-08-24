@@ -293,3 +293,36 @@ export const usersCount = async (req, res) => {
     res.status(400).json({ message: error.message });
   }
 };
+
+export const updateUser = async (req, res) => {
+  try {
+    const { officialId, name, gender, avatar, language, role, citizenship } = req.body;
+    if (req.userId === officialId) {
+      const user = await User.findOne(
+        { officialId },
+        "officialId name surname gender avatar language role citizenship createdAt",
+      );
+      user.name = name;
+      user.gender = gender;
+      user.avatar = avatar;
+      user.language = language;
+      user.role = role;
+      user.citizenship = citizenship
+      user
+        .save()
+        .then((user) => {
+          res.status(200).json({ user, message: "mise à jour réussie" });
+        })
+        .catch((error) => {
+          res.status(400).json({
+            message: `certaines informations sont erronées ou manquantes`,
+            erreur: error.message,
+          });
+        });
+    } else {
+      res.sendStatus(403).json({ message: "modification interdite" });
+    }
+  } catch (error) {
+    res.status(400).json({ message: error });
+  }
+}

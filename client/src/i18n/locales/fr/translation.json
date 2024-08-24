@@ -185,7 +185,8 @@
         "tree": "parenté",
         "languages": "langues",
         "hash": "mot clé"
-      }
+      },
+      "avatar": "avatar"
     },
     "searchBars": {
       "nationsList": {
@@ -269,7 +270,8 @@
       "11000": "Informations déjà existantes dans la base de données",
       "deleteKO": "impossible de supprimer l'utilisateur",
       "error": "Certaines informations sont erronées ou manquantes",
-      "serverError": "Erreur serveur"
+      "serverError": "Erreur serveur",
+      "update": "Mise à jour réussie"
     },
     "nation": {
       "create": "Nouvelle nation créée",

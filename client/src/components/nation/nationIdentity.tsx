@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Suspense, lazy, useEffect, useState } from "react";
-import { imageAtom, myStore, nationPlacesListAtom } from "../../settings/store";
+import { nationPlacesListAtom } from "../../settings/store";
 import { LabelId } from "../../types/typNation";
 import { useAtom } from "jotai";
 import RegimeTag from "../tags/regimeTag";
@@ -39,10 +39,6 @@ export default function NationIdentity({
     setPlacesList(updatedPlaces);
   }, [nationPlaceList]);
 
-  const handleClick = (image: string) => {
-    myStore.set(imageAtom, image);
-  };
-
   return (
     <TileContainer
       children={
@@ -64,12 +60,9 @@ export default function NationIdentity({
                     )}
                   </div>
                   <div className="flex flex-col sm:flex-row justify-center items-center sm:flex-wrap gap-6">
-                    <div
-                      onClick={() => handleClick(selectedNation.data.url.flag)}
-                      className="relative"
-                    >
+                    <div className="relative">
                       <div
-                        className={`w-[200px] h-[140px] flex items-center justify-center gap-2`}
+                        className={`w-[140px] flex flex-col items-center justify-end gap-2`}
                       >
                         {selectedNation.data.url.flag ? (
                           <Suspense fallback={<Spinner />}>
@@ -90,27 +83,20 @@ export default function NationIdentity({
                             path="data.url.flag"
                             destination="nation"
                           />
-                          // <EditIcon
-                          //   target="nation"
-                          //   param={selectedNation.data.url.flag}
-                          //   path="data.url.flag"
-                          // />
                         )}
                       </div>
                     </div>
-                    <div
-                      onClick={() =>
-                        handleClick(selectedNation.data.url.coatOfArms)
-                      }
-                      className="relative"
-                    >
+                    <div className="relative">
                       <div
-                        className={`w-[140px] h-[140px] flex items-center justify-center gap-2`}
+                        className={`w-[140px] h-full flex flex-col items-center justify-end gap-2`}
                       >
                         {selectedNation.data.url.coatOfArms ? (
                           <Suspense fallback={<Spinner />}>
                             <LazyImage
-                              src={selectedNation.data.url.coatOfArms}
+                              src={
+                                selectedNation.data.url.coatOfArms +
+                                "-/preview/"
+                              }
                               alt={`coatOfArms of ${selectedNation.name}`}
                               className="object-contain w-full h-full cursor-zoom-in"
                               hover={t("components.hoverInfos.coatOfArms")}
@@ -122,10 +108,9 @@ export default function NationIdentity({
                           </div>
                         )}
                         {owner && (
-                          <EditIcon
-                            target="nation"
-                            param={selectedNation.data.url.coatOfArms}
+                          <Upploader
                             path="data.url.coatOfArms"
+                            destination="nation"
                           />
                         )}
                       </div>
