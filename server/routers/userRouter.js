@@ -12,6 +12,7 @@ import {
   getUsersByNation,
   usersCount,
   changePassword,
+  updateUser
 } from "../controllers/userController.js";
 
 const userRouter = express.Router();
@@ -21,6 +22,7 @@ userRouter.post("/signup", register);
 userRouter.post("/signin", login);
 userRouter.post("/forgetpassword", forgetPassword);
 userRouter.post("/changepassword", [verifyJwt], changePassword);
+userRouter.post("/update", [verifyJwt], updateUser);
 userRouter.get("/verify", verify);
 userRouter.get("/getall", getAllUsers);
 userRouter.get("/self", [verifyJwt], getSelfUser);

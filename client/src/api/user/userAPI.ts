@@ -38,6 +38,7 @@ import {
   loginFetch,
   recoveryFetch,
   registerFetch,
+  updateUserFetch,
 } from "./userFetch";
 
 const citizenList = myStore.get(citizenListAtom);
@@ -245,3 +246,23 @@ export const getCitizens = (searchName: string) => {
       errorMessage(error.message);
     });
 };
+
+export const updateUser = (payload: User) => {
+  myStore.set(loadingAtom, true);
+  updateUserFetch(payload)
+    .then((resp) => {
+      myStore.set(loadingAtom, false);
+      if (resp.user) {
+        myStore.set(citizenFetchAtom, resp.user);
+        myStore.set(sessionAtom, { ...session, user:  resp.user });
+        myStore.set(citizenListAtom, []);
+        displayUserInfoByType("update");
+      } else {
+        displayUserInfoByType("error");
+      }
+    })
+    .catch((error) => {
+      myStore.set(loadingAtom, false);
+      errorMessage(error.message);
+    });
+}
