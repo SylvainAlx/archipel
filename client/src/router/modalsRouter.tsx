@@ -24,7 +24,6 @@ import LangModal from "../components/modals/langModal";
 import ImageModal from "../components/modals/imageModal";
 import MenuModal from "../components/modals/menuModal";
 import NewNationModal from "../components/modals/newNationModal";
-import { useEffect, useState } from "react";
 import { ChangePasswordModal } from "../components/modals/changePasswordModal";
 
 export default function ModalsRouter() {
@@ -41,22 +40,11 @@ export default function ModalsRouter() {
   const [newNation] = useAtom(newNationAtom);
   const [changePassword] = useAtom(changePasswordModalAtom);
 
-  const [afficherLoading, setAfficherLoading] = useState<boolean>(false);
-
-  useEffect(() => {
-    if (loading) {
-      setAfficherLoading(true);
-      setTimeout(() => {
-        setAfficherLoading(false);
-      }, 1000);
-    }
-  }, [loading]);
-
   if (
     recovery != "" ||
     confirm.text != "" ||
     info != "" ||
-    afficherLoading ||
+    loading ||
     editBox.original != -1 ||
     newPlace.nation != "" ||
     // editPlace.update != undefined ||
@@ -68,8 +56,10 @@ export default function ModalsRouter() {
   ) {
     return (
       <div className="animate-in fade-in z-20 fixed top-0 w-[100%] h-[100%] backdrop-blur-sm bg-black_alpha flex items-center justify-center">
-        <div className="min-w-[350px] max-w-[90%] bg-slate-800 rounded-md p-6 flex flex-col items-center gap-4">
-          {afficherLoading ? (
+        <div
+          className={`min-w-[350px] max-w-[90%] ${!loading && "bg-slate-800"} rounded-md p-6 flex flex-col items-center gap-4`}
+        >
+          {loading ? (
             <LoadingSpinner />
           ) : (
             <>
