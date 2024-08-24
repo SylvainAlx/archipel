@@ -8,7 +8,7 @@ export default function Spinner() {
       {/* <div className="absolute top-[5px] left-[5px] flex items-center justify-center">
         <Logo />
       </div> */}
-      <ClockLoader color="rgb(0, 129, 138)" />
+      <ClockLoader size={150} color="rgb(0, 129, 138)" />
       {/* <svg
         aria-hidden="true"
         className="w-[60px] h-[60px] animate-[spin_2s_linear_infinite] text-gray-600 fill-secondary"
