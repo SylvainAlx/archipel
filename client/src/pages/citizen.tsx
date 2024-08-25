@@ -22,6 +22,7 @@ import { getNation } from "../api/nation/nationAPI";
 import IdTag from "../components/tags/idTag";
 import RoleTag from "../components/tags/roleTag";
 import Upploader from "../components/uploader";
+import { deleteUploadedFile } from "../api/files/fileAPI";
 
 export default function Citizen() {
   const { t } = useTranslation();
@@ -80,13 +81,23 @@ export default function Citizen() {
     navigate("/");
   };
 
+  const handleDeleteAvatar = () => {
+    if (window.confirm("supprimer avatar ?")) {
+      deleteUploadedFile(citizen.avatar);
+      console.log("fichier supprimé");
+    }
+  };
+
   return (
     <>
       <H1 text={citizen.name} />
       <Avatar url={citizen.avatar} />
-      {session.user.officialId === citizen.officialId && (
-        <Upploader path="avatar" destination="citizen" />
-      )}
+      {session.user.officialId === citizen.officialId &&
+        (citizen.avatar != "" ? (
+          <Button text="supprimer avatar" click={handleDeleteAvatar} />
+        ) : (
+          <Upploader path="avatar" destination="citizen" />
+        ))}
       <TileContainer
         children={
           <>

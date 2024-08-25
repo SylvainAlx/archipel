@@ -8,6 +8,7 @@ import { BuildCategory } from "../types/typPlace";
 export const MDP_LOBBY = import.meta.env.VITE_MDP_LOBBY;
 export const SERVER_URL = import.meta.env.VITE_SERVER_URL;
 export const UPLOADCARE_PUBLIC_KEY = import.meta.env.VITE_UPLOADCARE_PUBLIC_KEY;
+export const UPLOADCARE_SECRET_KEY = import.meta.env.VITE_UPLOADCARE_SECRET_KEY;
 
 export const VERSION = {
   rc: true,
