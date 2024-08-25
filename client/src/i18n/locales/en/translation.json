@@ -131,7 +131,8 @@
         "logout": "Do you want to log out ?",
         "deleteNation": "Do you confirm the definitive suppression of your nation ?",
         "deletePlace": "Do you confirm the definitive suppression of your location ?",
-        "deleteUser": "Do you confirm the definitive suppression of your account ?"
+        "deleteUser": "Do you confirm the definitive suppression of your account ?",
+        "deleteFile": "Do you confirm the definitive suppression of this file ?"
       },
       "langModal": {
         "title": "LANGUAGE"

@@ -3,20 +3,29 @@ import { ClickProps } from "../../types/typProp";
 import Button from "./button";
 import { useTranslation } from "react-i18next";
 
-export default function CrossButton({ click }: ClickProps) {
+export default function CrossButton({ click, small }: ClickProps) {
   const { t } = useTranslation();
   return (
-    <div className="cursor-pointer overflow-hidden">
-      <Button
-        text={t("components.buttons.delete")}
-        bgColor="bg-danger"
-        click={click}
-        children={
-          <div className="hover:animate-ping text-xl">
-            <IoMdCloseCircle />
-          </div>
-        }
-      />
-    </div>
+    <>
+      {!small ? (
+        <Button
+          text={t("components.buttons.delete")}
+          bgColor="bg-danger"
+          click={click}
+          children={
+            <div className="hover:animate-ping text-xl cursor-pointer overflow-hidden">
+              <IoMdCloseCircle />
+            </div>
+          }
+        />
+      ) : (
+        <div
+          onClick={click}
+          className="absolute cursor-pointer text-xl hover:animate-pulse rounded-full bg-danger transition-all top-2 right-2"
+        >
+          <IoMdCloseCircle />
+        </div>
+      )}
+    </>
   );
 }

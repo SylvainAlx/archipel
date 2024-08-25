@@ -131,7 +131,8 @@
         "logout": "Souhaitez-vous vous déconnecter ?",
         "deleteNation": "Confirmez-vous la suppression définitive de votre nation ?",
         "deletePlace": "Confirmez-vous la suppression définitive du lieu ?",
-        "deleteUser": "Confirmez vous la suppression définitive de votre compte ?"
+        "deleteUser": "Confirmez-vous la suppression définitive de votre compte ?",
+        "deleteFile": "Confirmez-vous la suppression du fichier ?"
       },
       "langModal": {
         "title": "CHOIX DE LA LANGUE"

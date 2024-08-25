@@ -22,7 +22,7 @@ import { getNation } from "../api/nation/nationAPI";
 import IdTag from "../components/tags/idTag";
 import RoleTag from "../components/tags/roleTag";
 import Upploader from "../components/uploader";
-import { deleteUploadedFile } from "../api/files/fileAPI";
+import CrossButton from "../components/buttons/crossButton";
 
 export default function Citizen() {
   const { t } = useTranslation();
@@ -82,22 +82,28 @@ export default function Citizen() {
   };
 
   const handleDeleteAvatar = () => {
-    if (window.confirm("supprimer avatar ?")) {
-      deleteUploadedFile(citizen.avatar);
-      console.log("fichier supprimé");
-    }
+    myStore.set(confirmBox, {
+      action: "deleteFile",
+      text: t("components.modals.confirmModal.deleteFile"),
+      payload: citizen.avatar,
+      result: "",
+      target: "avatar",
+    });
   };
 
   return (
     <>
       <H1 text={citizen.name} />
-      <Avatar url={citizen.avatar} />
-      {session.user.officialId === citizen.officialId &&
-        (citizen.avatar != "" ? (
-          <Button text="supprimer avatar" click={handleDeleteAvatar} />
-        ) : (
-          <Upploader path="avatar" destination="citizen" />
-        ))}
+      <div className="relative">
+        <Avatar url={citizen.avatar} />
+        {session.user.officialId === citizen.officialId &&
+          (citizen.avatar != "" ? (
+            <CrossButton small={true} click={handleDeleteAvatar} />
+          ) : (
+            <Upploader path="avatar" destination="citizen" />
+          ))}
+      </div>
+
       <TileContainer
         children={
           <>

@@ -7,6 +7,7 @@ import { createNewCom, deleteCom } from "../../api/communication/comAPI";
 import { deletePlace, updatePlace } from "../../api/place/placeAPI";
 import { useTranslation } from "react-i18next";
 import { deleteUser, logout } from "../../api/user/userAPI";
+import { deleteUploadedFile } from "../../api/files/fileAPI";
 
 export default function ConfirmModal() {
   const { t } = useTranslation();
@@ -46,6 +47,12 @@ export default function ConfirmModal() {
             }
             if (confirm.action === "updatePlace") {
               updatePlace(confirm.payload);
+            }
+            if (confirm.action === "deleteFile") {
+              deleteUploadedFile({
+                url: confirm.payload,
+                type: confirm.target,
+              });
             }
           }}
         />

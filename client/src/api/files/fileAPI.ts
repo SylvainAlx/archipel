@@ -1,19 +1,43 @@
 import { SERVER_URL } from "../../settings/consts";
-import { citizenFetchAtom, loadingAtom, myStore } from "../../settings/store";
+import {
+  citizenFetchAtom,
+  loadingAtom,
+  myStore,
+  nationFetchedAtom,
+} from "../../settings/store";
 import { GET_JWT } from "../../utils/functions";
 import { errorMessage } from "../../utils/toasts";
+import { updateNation } from "../nation/nationAPI";
+import { updateUser } from "../user/userAPI";
 
-export const deleteUploadedFile = (url: string) => {
+export interface deleteFileAPIProps {
+  url: string;
+  type: string;
+}
+
+export const deleteUploadedFile = ({ url, type }: deleteFileAPIProps) => {
   const uuid: string = url.replace("https://ucarecdn.com/", "");
   myStore.set(loadingAtom, true);
   deleteUploadedFileFetch(uuid)
     .then((resp) => {
       myStore.set(loadingAtom, false);
       if (resp.statut === 200) {
-        const citizen = myStore.get(citizenFetchAtom);
-        const citizenUpdated = { ...citizen };
-        citizenUpdated.avatar = "";
-        myStore.set(citizenFetchAtom, citizenUpdated);
+        if (type === "avatar") {
+          const citizen = myStore.get(citizenFetchAtom);
+          const citizenUpdated = { ...citizen };
+          citizenUpdated.avatar = "";
+          updateUser(citizenUpdated);
+        } else if (type === "flag") {
+          const nation = myStore.get(nationFetchedAtom);
+          const nationUpdated = { ...nation };
+          nationUpdated.data.url.flag = "";
+          updateNation(nationUpdated);
+        } else if (type === "coatOfArms") {
+          const nation = myStore.get(nationFetchedAtom);
+          const nationUpdated = { ...nation };
+          nationUpdated.data.url.coatOfArms = "";
+          updateNation(nationUpdated);
+        }
       }
     })
     .catch((error) => {
