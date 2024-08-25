@@ -33,11 +33,15 @@
       "placesList": {
         "title": "Locations"
       },
+      "comsList": {
+        "title": "Press releases"
+      },
       "stats": {
         "title": "Statistics",
         "nations": "Virtual nations",
         "locations": "Locations",
         "citizens": "Citizens",
+        "coms": "Press releases",
         "tags": "hashtags"
       }
     },
@@ -59,11 +63,11 @@
     },
     "recovery": {
       "title": "reset password",
-      "placeholderName": "User name",
-      "recoveryKey": "Recovery key",
-      "newPassword": "New password",
-      "confirmPassword": "Confirm new password",
-      "changePassword": "Change password"
+      "placeholderName": "User name *",
+      "recoveryKey": "Recovery key *",
+      "newPassword": "New password *",
+      "confirmPassword": "Confirm new password *",
+      "changePassword": "CHANGE PASSWORD"
     },
     "register": {
       "title": "create account",
@@ -103,7 +107,8 @@
       "access": "access",
       "delete": "delete",
       "back": "back",
-      "newPlace": "new location"
+      "newPlace": "new location",
+      "showMore": "SHOW MORE"
     },
     "form": {
       "input": {
@@ -126,7 +131,8 @@
         "logout": "Do you want to log out ?",
         "deleteNation": "Do you confirm the definitive suppression of your nation ?",
         "deletePlace": "Do you confirm the definitive suppression of your location ?",
-        "deleteUser": "Do you confirm the definitive suppression of your account ?"
+        "deleteUser": "Do you confirm the definitive suppression of your account ?",
+        "deleteFile": "Do you confirm the definitive suppression of this file ?"
       },
       "langModal": {
         "title": "LANGUAGE"
@@ -146,6 +152,12 @@
         "title": "EDIT VALUE",
         "noValue": "no value",
         "newValue": "new value"
+      },
+      "changePasswordModal": {
+        "title": "Change password",
+        "oldPassword": "Old password",
+        "newPassword": "New password",
+        "confirmPassword": "Confirm password"
       }
     },
     "hoverInfos": {
@@ -172,8 +184,10 @@
         "population": "citizens",
         "regime": "regime",
         "tree": "kinship",
-        "languages": "languages"
-      }
+        "languages": "languages",
+        "hash": "hash tag"
+      },
+      "avatar": "avatar"
     },
     "searchBars": {
       "nationsList": {
@@ -201,6 +215,13 @@
           "descAlpha": "Descending alphabetical",
           "ascCtz": "Growing number of citizens",
           "descCtz": "Decreasing number of citizens"
+        }
+      },
+      "comsList": {
+        "input": "Title",
+        "SortComs": {
+          "ascDate": "From oldest to newest",
+          "descDate": "From newest to oldest"
         }
       }
     },
@@ -239,6 +260,9 @@
     }
   },
   "toasts": {
+    "errors": {
+      "404": "Page not found"
+    },
     "user": {
       "signIn": "Sign In successful",
       "signUp": "Sign Up Successful",
@@ -255,7 +279,8 @@
       "11000": "Information already existing in the database",
       "deleteKO": "Unable to delete the user",
       "error": "Some information is wrong or missing",
-      "serverError": "Server error"
+      "serverError": "Server error",
+      "update": "Update successful"
     },
     "nation": {
       "create": "New nation created",

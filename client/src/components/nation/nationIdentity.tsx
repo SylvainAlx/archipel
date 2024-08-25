@@ -1,6 +1,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Suspense, lazy, useEffect, useState } from "react";
-import { imageAtom, myStore, nationPlacesListAtom } from "../../settings/store";
+import {
+  confirmBox,
+  myStore,
+  nationPlacesListAtom,
+} from "../../settings/store";
 import { LabelId } from "../../types/typNation";
 import { useAtom } from "jotai";
 import RegimeTag from "../tags/regimeTag";
@@ -16,6 +20,9 @@ import TileContainer from "../tileContainer";
 import DashTile from "../dashTile";
 import EditIcon from "../editIcon";
 import H3 from "../titles/h3";
+import Upploader from "../uploader";
+import CrossButton from "../buttons/crossButton";
+import { deleteFileAPIProps } from "../../api/files/fileAPI";
 
 export default function NationIdentity({
   selectedNation,
@@ -38,8 +45,14 @@ export default function NationIdentity({
     setPlacesList(updatedPlaces);
   }, [nationPlaceList]);
 
-  const handleClick = (image: string) => {
-    myStore.set(imageAtom, image);
+  const handleDeleteImage = ({ url, type }: deleteFileAPIProps) => {
+    myStore.set(confirmBox, {
+      action: "deleteFile",
+      text: t("components.modals.confirmModal.deleteFile"),
+      payload: url,
+      result: "",
+      target: type,
+    });
   };
 
   return (
@@ -63,65 +76,84 @@ export default function NationIdentity({
                     )}
                   </div>
                   <div className="flex flex-col sm:flex-row justify-center items-center sm:flex-wrap gap-6">
-                    <div
-                      onClick={() => handleClick(selectedNation.data.url.flag)}
-                      className="relative"
-                    >
+                    <div className="relative">
                       <div
-                        className={`w-[200px] h-[140px] flex items-center justify-center gap-2`}
+                        className={`w-[140px] h-full flex flex-col items-center justify-end gap-2`}
                       >
                         {selectedNation.data.url.flag ? (
-                          <Suspense fallback={<Spinner />}>
-                            <LazyImage
-                              src={selectedNation.data.url.flag}
-                              alt={`flag of ${selectedNation.name}`}
-                              className="object-cover w-full h-full rounded cursor-zoom-in"
-                              hover={t("components.hoverInfos.flag")}
+                          <div className="relative">
+                            <Suspense fallback={<Spinner />}>
+                              <LazyImage
+                                src={selectedNation.data.url.flag}
+                                alt={`flag of ${selectedNation.name}`}
+                                className="object-contain w-full h-full rounded cursor-zoom-in"
+                                hover={t("components.hoverInfos.flag")}
+                              />
+                            </Suspense>
+                            <CrossButton
+                              small={true}
+                              click={() =>
+                                handleDeleteImage({
+                                  url: selectedNation.data.url.flag,
+                                  type: "flag",
+                                })
+                              }
                             />
-                          </Suspense>
-                        ) : (
-                          <div className="text-9xl">
-                            <GiBlackFlag />
                           </div>
-                        )}
-                        {owner && (
-                          <EditIcon
-                            target="nation"
-                            param={selectedNation.data.url.flag}
-                            path="data.url.flag"
-                          />
+                        ) : (
+                          <>
+                            <div className="text-9xl">
+                              <GiBlackFlag />
+                            </div>
+                            {owner && (
+                              <Upploader
+                                path="data.url.flag"
+                                destination="nation"
+                              />
+                            )}
+                          </>
                         )}
                       </div>
                     </div>
-                    <div
-                      onClick={() =>
-                        handleClick(selectedNation.data.url.coatOfArms)
-                      }
-                      className="relative"
-                    >
+                    <div className="relative">
                       <div
-                        className={`w-[140px] h-[140px] flex items-center justify-center gap-2`}
+                        className={`w-[140px] h-full flex flex-col items-center justify-end gap-2`}
                       >
                         {selectedNation.data.url.coatOfArms ? (
-                          <Suspense fallback={<Spinner />}>
-                            <LazyImage
-                              src={selectedNation.data.url.coatOfArms}
-                              alt={`coatOfArms of ${selectedNation.name}`}
-                              className="object-contain w-full h-full cursor-zoom-in"
-                              hover={t("components.hoverInfos.coatOfArms")}
+                          <>
+                            <Suspense fallback={<Spinner />}>
+                              <LazyImage
+                                src={
+                                  selectedNation.data.url.coatOfArms +
+                                  "-/preview/"
+                                }
+                                alt={`coatOfArms of ${selectedNation.name}`}
+                                className="object-contain w-full h-full cursor-zoom-in"
+                                hover={t("components.hoverInfos.coatOfArms")}
+                              />
+                            </Suspense>
+                            <CrossButton
+                              small={true}
+                              click={() =>
+                                handleDeleteImage({
+                                  url: selectedNation.data.url.coatOfArms,
+                                  type: "coatOfArms",
+                                })
+                              }
                             />
-                          </Suspense>
+                          </>
                         ) : (
-                          <div className="text-9xl">
-                            <BsShieldShaded />
-                          </div>
-                        )}
-                        {owner && (
-                          <EditIcon
-                            target="nation"
-                            param={selectedNation.data.url.coatOfArms}
-                            path="data.url.coatOfArms"
-                          />
+                          <>
+                            <div className="text-9xl">
+                              <BsShieldShaded />
+                            </div>
+                            {owner && (
+                              <Upploader
+                                path="data.url.coatOfArms"
+                                destination="nation"
+                              />
+                            )}
+                          </>
                         )}
                       </div>
                     </div>

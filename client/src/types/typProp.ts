@@ -24,7 +24,8 @@ export interface Props {
 
 export interface ClickProps {
   text?: string;
-  click: MouseEventHandler<HTMLButtonElement>;
+  click: MouseEventHandler<HTMLButtonElement | HTMLDivElement>;
+  small?: boolean;
 }
 
 export interface SelectedNationProps {

@@ -45,7 +45,10 @@ export default function App() {
   }, [session.user]);
 
   useEffect(() => {
-    if (nation.officialId === session.user.citizenship.nationId) {
+    if (
+      nation != null &&
+      nation.officialId === session.user.citizenship.nationId
+    ) {
       setSession({ ...session, nation });
     }
   }, [nation]);

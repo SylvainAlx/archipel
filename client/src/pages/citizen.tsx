@@ -1,6 +1,7 @@
 import { useAtom } from "jotai";
 import H1 from "../components/titles/h1";
 import {
+  changePasswordModalAtom,
   citizenFetchAtom,
   confirmBox,
   myStore,
@@ -20,6 +21,8 @@ import { emptyNewNationPayload } from "../types/typNation";
 import { getNation } from "../api/nation/nationAPI";
 import IdTag from "../components/tags/idTag";
 import RoleTag from "../components/tags/roleTag";
+import Upploader from "../components/uploader";
+import CrossButton from "../components/buttons/crossButton";
 
 export default function Citizen() {
   const { t } = useTranslation();
@@ -42,9 +45,10 @@ export default function Citizen() {
   }, [param.id, session.user]);
 
   useEffect(() => {
-    if (citizen.citizenship.nationId != "") {
+    if (citizen.citizenship.nationId != "" && nation.officialId === "") {
       getNation(citizen.citizenship.nationId);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [citizen]);
 
   const handleClick = (dest: string) => {
@@ -77,10 +81,29 @@ export default function Citizen() {
     navigate("/");
   };
 
+  const handleDeleteAvatar = () => {
+    myStore.set(confirmBox, {
+      action: "deleteFile",
+      text: t("components.modals.confirmModal.deleteFile"),
+      payload: citizen.avatar,
+      result: "",
+      target: "avatar",
+    });
+  };
+
   return (
     <>
       <H1 text={citizen.name} />
-      <Avatar url={citizen.avatar} />
+      <div className="relative">
+        <Avatar url={citizen.avatar} />
+        {session.user.officialId === citizen.officialId &&
+          (citizen.avatar != "" ? (
+            <CrossButton small={true} click={handleDeleteAvatar} />
+          ) : (
+            <Upploader path="avatar" destination="citizen" />
+          ))}
+      </div>
+
       <TileContainer
         children={
           <>
@@ -123,7 +146,7 @@ export default function Citizen() {
                   <>
                     <Button
                       text={t("components.buttons.changePassword")}
-                      click={() => console.log("password")}
+                      click={() => myStore.set(changePasswordModalAtom, true)}
                     />
                     <Button
                       text={t("components.buttons.logout")}

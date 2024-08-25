@@ -155,6 +155,40 @@ export const forgetPassword = async (req, res) => {
   }
 };
 
+export const changePassword = async (req, res) => {
+  try {
+    const { oldPassword, newPassword } = req.body;
+    const userId = req.userId;
+    const user = await User.findOne({ officialId: userId });
+    if (!user) {
+      return res.status(404).json({ infoType: "user" });
+    }
+    user.comparePassword(oldPassword, async (error, isMatch) => {
+      if (error) {
+        return res
+          .status(500)
+          .json({ infoType: "serverError", error: error.message });
+      }
+      if (isMatch) {
+        user.password = newPassword;
+        await user.save();
+        return res.status(200).json({
+          infoType: "newPassword",
+        });
+      } else {
+        return res.status(401).json({
+          infoType: "error",
+        });
+      }
+    });
+  } catch (error) {
+    res.status(400).json({
+      infoType: "error",
+      error: error.message,
+    });
+  }
+};
+
 export const getAllUsers = async (req, res) => {
   try {
     const searchText = req.query.texteRecherche;
@@ -259,3 +293,36 @@ export const usersCount = async (req, res) => {
     res.status(400).json({ message: error.message });
   }
 };
+
+export const updateUser = async (req, res) => {
+  try {
+    const { officialId, name, gender, avatar, language, role, citizenship } = req.body;
+    if (req.userId === officialId) {
+      const user = await User.findOne(
+        { officialId },
+        "officialId name surname gender avatar language role citizenship createdAt",
+      );
+      user.name = name;
+      user.gender = gender;
+      user.avatar = avatar;
+      user.language = language;
+      user.role = role;
+      user.citizenship = citizenship
+      user
+        .save()
+        .then((user) => {
+          res.status(200).json({ user, message: "mise à jour réussie" });
+        })
+        .catch((error) => {
+          res.status(400).json({
+            message: `certaines informations sont erronées ou manquantes`,
+            erreur: error.message,
+          });
+        });
+    } else {
+      res.sendStatus(403).json({ message: "modification interdite" });
+    }
+  } catch (error) {
+    res.status(400).json({ message: error });
+  }
+}

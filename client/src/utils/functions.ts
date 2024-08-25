@@ -211,6 +211,9 @@ export const displayUserInfoByType = (type: string) => {
     case "newPassword":
       successMessage(i18n.t("toasts.user.newPassword"));
       break;
+    case "update":
+      successMessage(i18n.t("toasts.user.update"));
+      break;
     case "delete":
       successMessage(i18n.t("toasts.user.delete"));
       break;
@@ -276,3 +279,33 @@ export const sortObjectKeys = (obj: any): any => {
   });
   return sortedObj;
 };
+
+export async function getCachedImage(url: string): Promise<string | null> {
+  const cached = localStorage.getItem(url);
+
+  if (cached) {
+    return cached;
+  } else {
+    try {
+      const response = await fetch(url);
+      const blob = await response.blob();
+      const reader = new FileReader();
+
+      return new Promise((resolve, reject) => {
+        reader.onloadend = () => {
+          if (reader.result) {
+            localStorage.setItem(url, reader.result as string);
+            resolve(reader.result as string);
+          } else {
+            reject("Failed to read the image data");
+          }
+        };
+        reader.onerror = () => reject(reader.error);
+        reader.readAsDataURL(blob);
+      });
+    } catch (error) {
+      console.error("Failed to fetch image:", error);
+      return null;
+    }
+  }
+}

@@ -8,7 +8,6 @@ import {
   NewNationPayload,
 } from "../types/typNation";
 import {
-  Com,
   ConfirmBoxDefault,
   EditBoxDefault,
   EditPlaceParam,
@@ -19,6 +18,7 @@ import { Place, emptyPlace } from "../types/typPlace";
 import i18n from "../i18n/i18n";
 import { emptyUser, User } from "../types/typUser";
 import { Tag } from "../types/typTag";
+import { Com } from "../types/typCom";
 
 export const myStore = createStore();
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -41,6 +41,7 @@ interface Counts {
   citizens: number;
   places: number;
   tags: number;
+  coms: number;
 }
 
 type Stats = {
@@ -48,7 +49,7 @@ type Stats = {
 };
 
 export const statsAtom = atom<Stats>({
-  counts: { nations: 0, citizens: 0, places: 0, tags: 0 },
+  counts: { nations: 0, citizens: 0, places: 0, tags: 0, coms: 0 },
 });
 
 // Citizen
@@ -74,6 +75,7 @@ export const editPlaceAtom = atom<EditPlaceParam>({ place: emptyPlace });
 
 // com
 
+export const comFetchedListAtom = atom<Com[]>([]);
 export const comsListAtom = atom<Com[]>([]);
 
 // tag
@@ -89,6 +91,7 @@ export const recoveryKey = atom("");
 export const confirmBox = atom(ConfirmBoxDefault);
 export const editbox = atom(EditBoxDefault);
 export const infoModalAtom = atom("");
+export const changePasswordModalAtom = atom(false);
 export const showApp = atom(false);
 
 export const dataCheckedAtom = atom(false);

@@ -1,5 +1,7 @@
 import {
+  confirmBox,
   editPlaceAtom,
+  myStore,
   nationFetchedAtom,
   nationPlacesListAtom,
   placeFetchedAtom,
@@ -23,6 +25,7 @@ import ParentButton from "../components/buttons/parentButton";
 import { useTranslation } from "react-i18next";
 import TreeTag from "../components/tags/treeTag";
 import { getNation } from "../api/nation/nationAPI";
+import CrossButton from "../components/buttons/crossButton";
 
 export default function Place() {
   const navigate = useNavigate();
@@ -73,10 +76,22 @@ export default function Place() {
     }
   };
 
+  const handleDelete = () => {
+    myStore.set(confirmBox, {
+      action: "deletePlace",
+      text: t("components.modals.confirmModal.deletePlace"),
+      result: "",
+      target: data.place,
+    });
+  };
+
   return (
     <>
       <section className="w-full pb-2 flex flex-col items-center gap-2">
-        <ParentButton click={handleClick} />
+        <div className="w-full flex items-center justify-center flex-wrap gap-1">
+          <ParentButton click={handleClick} />
+          {data.owner && <CrossButton click={handleDelete} />}
+        </div>
         <div className="flex items-center gap-2">
           <H2 text={data.place.name} />
           {data.owner && (

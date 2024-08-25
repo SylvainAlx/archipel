@@ -13,6 +13,7 @@ import {
 } from "../../settings/store";
 import {
   AuthPayload,
+  ChangePasswordPayload,
   emptyUser,
   RecoveryPayload,
   User,
@@ -28,14 +29,16 @@ import {
 import { errorMessage, successMessage } from "../../utils/toasts";
 import {
   authGet,
-  DeleteUserFetch,
+  changePasswordFetch,
+  deleteUserFetch,
   getAllCitizensFetch,
   getCitizensCountFetch,
   getNationCitizensFetch,
   getOneUserFetch,
   loginFetch,
-  RecoveryFetch,
+  recoveryFetch,
   registerFetch,
+  updateUserFetch,
 } from "./userFetch";
 
 const citizenList = myStore.get(citizenListAtom);
@@ -146,7 +149,24 @@ export const recoveryUser = ({ name, recovery, password }: RecoveryPayload) => {
     recovery,
     newPassword: password,
   };
-  RecoveryFetch(dataToSend)
+  recoveryFetch(dataToSend)
+    .then((data) => {
+      myStore.set(loadingAtom, false);
+      displayUserInfoByType(data.infoType);
+    })
+    .catch((error) => {
+      myStore.set(loadingAtom, false);
+      displayUserInfoByType("error");
+      console.log(error);
+    });
+};
+
+export const changePassword = ({
+  oldPassword,
+  newPassword,
+}: ChangePasswordPayload) => {
+  myStore.set(loadingAtom, true);
+  changePasswordFetch({ oldPassword, newPassword })
     .then((data) => {
       myStore.set(loadingAtom, false);
       displayUserInfoByType(data.infoType);
@@ -160,7 +180,7 @@ export const recoveryUser = ({ name, recovery, password }: RecoveryPayload) => {
 
 export const deleteUser = () => {
   myStore.set(loadingAtom, true);
-  DeleteUserFetch()
+  deleteUserFetch()
     .then((resp) => {
       myStore.set(loadingAtom, false);
       myStore.set(sessionAtom, emptySession);
@@ -226,3 +246,23 @@ export const getCitizens = (searchName: string) => {
       errorMessage(error.message);
     });
 };
+
+export const updateUser = (payload: User) => {
+  myStore.set(loadingAtom, true);
+  updateUserFetch(payload)
+    .then((resp) => {
+      myStore.set(loadingAtom, false);
+      if (resp.user) {
+        myStore.set(citizenFetchAtom, resp.user);
+        myStore.set(sessionAtom, { ...session, user:  resp.user });
+        myStore.set(citizenListAtom, []);
+        displayUserInfoByType("update");
+      } else {
+        displayUserInfoByType("error");
+      }
+    })
+    .catch((error) => {
+      myStore.set(loadingAtom, false);
+      errorMessage(error.message);
+    });
+}

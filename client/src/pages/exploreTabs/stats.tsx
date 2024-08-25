@@ -12,6 +12,7 @@ import { useTranslation } from "react-i18next";
 import { StringProps } from "../../types/typProp";
 import { getAllTags } from "../../api/tag/tagAPI";
 import i18n from "../../i18n/i18n";
+import HashTag from "../../components/tags/hashTag";
 
 export default function Stats({ text }: StringProps) {
   const [stats] = useAtom(statsAtom);
@@ -27,6 +28,9 @@ export default function Stats({ text }: StringProps) {
     }
     if (stats.counts.citizens === 0) {
       getCitizensCount();
+    }
+    if (stats.counts.coms === 0) {
+      // getComsCount
     }
     if (tagList.length === 0) {
       getAllTags();
@@ -50,16 +54,18 @@ export default function Stats({ text }: StringProps) {
           children={<H3 text={stats.counts.citizens.toString()} />}
         />
         <DashTile
+          title={t("pages.explore.stats.coms")}
+          children={<H3 text={stats.counts.coms.toString()} />}
+        />
+        <DashTile
           title={t("pages.explore.stats.tags")}
           children={
             <div>
               {tagList.map((tag, i) => {
                 return (
                   <div key={i}>
-                    <span>
-                      {i18n.language === "fr" && tag.label.fr}
-                      {i18n.language === "en" && tag.label.en}
-                    </span>
+                    {i18n.language === "fr" && <HashTag label={tag.label.fr} />}
+                    {i18n.language === "en" && <HashTag label={tag.label.en} />}
                   </div>
                 );
               })}

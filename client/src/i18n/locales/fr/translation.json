@@ -33,11 +33,15 @@
       "placesList": {
         "title": "Lieux"
       },
+      "comsList": {
+        "title": "Communiqués"
+      },
       "stats": {
         "title": "Statistiques",
         "nations": "Nations virtuelles",
         "locations": "Lieux",
         "citizens": "Citoyens",
+        "coms": "Communiqués",
         "tags": "Mots clés"
       }
     },
@@ -59,11 +63,11 @@
     },
     "recovery": {
       "title": "réinitialisation du mot de passe",
-      "placeholderName": "Nom d'utilisateur",
-      "recoveryKey": "Phrase de récupération",
-      "newPassword": "Nouveau mot de passe",
-      "confirmPassword": "Confirmez le mot de passe",
-      "changePassword": "Changer le mot de passe"
+      "placeholderName": "Nom d'utilisateur *",
+      "recoveryKey": "Phrase de récupération *",
+      "newPassword": "Nouveau mot de passe *",
+      "confirmPassword": "Confirmez le mot de passe *",
+      "changePassword": "CHANGER LE MOT DE PASSE"
     },
     "register": {
       "title": "créer un compte",
@@ -103,7 +107,8 @@
       "access": "voir",
       "delete": "supprimer",
       "back": "retour",
-      "newPlace": "nouveau lieu"
+      "newPlace": "nouveau lieu",
+      "showMore": "VOIR PLUS"
     },
     "form": {
       "input": {
@@ -126,7 +131,8 @@
         "logout": "Souhaitez-vous vous déconnecter ?",
         "deleteNation": "Confirmez-vous la suppression définitive de votre nation ?",
         "deletePlace": "Confirmez-vous la suppression définitive du lieu ?",
-        "deleteUser": "Confirmez vous la suppression définitive de votre compte ?"
+        "deleteUser": "Confirmez-vous la suppression définitive de votre compte ?",
+        "deleteFile": "Confirmez-vous la suppression du fichier ?"
       },
       "langModal": {
         "title": "CHOIX DE LA LANGUE"
@@ -146,6 +152,12 @@
         "title": "MODIFIER LA VALEUR",
         "noValue": "aucune valeur",
         "newValue": "nouvelle valeur"
+      },
+      "changePasswordModal": {
+        "title": "Changer le mot de passe",
+        "oldPassword": "Ancien mot de passe",
+        "newPassword": "Nouveau mot de passe",
+        "confirmPassword": "Confirmer le mot de passe"
       }
     },
     "hoverInfos": {
@@ -172,8 +184,10 @@
         "population": "citoyens",
         "regime": "regime de la nation",
         "tree": "parenté",
-        "languages": "langues"
-      }
+        "languages": "langues",
+        "hash": "mot clé"
+      },
+      "avatar": "avatar"
     },
     "searchBars": {
       "nationsList": {
@@ -201,6 +215,13 @@
           "descAlpha": "Alphabetique décroissant",
           "ascCtz": "Nombre de citoyens croissant",
           "descCtz": "Nombre de citoyens décroissant"
+        }
+      },
+      "comsList": {
+        "input": "Titre",
+        "SortComs": {
+          "ascDate": "Du plus ancien au plus récent",
+          "descDate": "Du plus récent au plus ancien"
         }
       }
     },
@@ -231,6 +252,9 @@
     }
   },
   "toasts": {
+    "errors": {
+      "404": "Page non trouvée"
+    },
     "user": {
       "signIn": "Connexion réussie",
       "signUp": "Inscription réussie",
@@ -247,7 +271,8 @@
       "11000": "Informations déjà existantes dans la base de données",
       "deleteKO": "impossible de supprimer l'utilisateur",
       "error": "Certaines informations sont erronées ou manquantes",
-      "serverError": "Erreur serveur"
+      "serverError": "Erreur serveur",
+      "update": "Mise à jour réussie"
     },
     "nation": {
       "create": "Nouvelle nation créée",

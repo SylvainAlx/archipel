@@ -89,7 +89,8 @@ export const getNation = (id: string) => {
       });
   } else {
     myStore.set(loadingAtom, false);
-    myStore.set(nationFetchedAtom, EmptyNation);
+    myStore.set(nationFetchedAtom, nation);
+    return nation;
   }
 };
 
