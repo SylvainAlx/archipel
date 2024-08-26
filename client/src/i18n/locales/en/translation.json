@@ -158,6 +158,17 @@
         "oldPassword": "Old password",
         "newPassword": "New password",
         "confirmPassword": "Confirm password"
+      },
+      "newPlaceModal": {
+        "title": "New location",
+        "placeName": "Location name",
+        "placeDescription": "Location description"
+      },
+      "recoveryModal": {
+        "title": "IMPORTANT INFORMATION",
+        "info": "Please keep your recovery phrase safe",
+        "boldInfo": "IT WILL NOT BE COMMUNICATED TO YOU AFTERWARDS !",
+        "confirm": "I have read this information"
       }
     },
     "hoverInfos": {

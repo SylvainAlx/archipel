@@ -11,9 +11,11 @@ import { createNewPlace } from "../../api/place/placeAPI";
 import Select from "../form/select";
 import { placesTypeList } from "../../settings/consts";
 import PointTag from "../tags/pointTag";
+import { useTranslation } from "react-i18next";
 
 export default function NewPlaceModal() {
   const [newPlace, setNewPlace] = useAtom(newPlaceAtom);
+  const { t } = useTranslation();
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
@@ -36,7 +38,9 @@ export default function NewPlaceModal() {
 
   return (
     <div>
-      <h2 className="text-2xl text-center p-4">NOUVEAU LIEU</h2>
+      <h2 className="text-2xl text-center p-4">
+        {t("components.modals.newPlaceModal.title")}
+      </h2>
       <div className="w-full px-2 flex items-center justify-center gap-4">
         <PointTag label={newPlace.points} />
       </div>
@@ -50,22 +54,24 @@ export default function NewPlaceModal() {
               name="name"
               value={newPlace.name}
               onChange={handleChange}
-              placeholder="NOM DU LIEU"
+              placeholder={t("components.modals.newPlaceModal.placeName")}
             />
             <Select options={placesTypeList} onChange={handleSelectChange} />
             <TextArea
               required
               onChange={handleChange}
               name="description"
-              placeholder="DESCRIPTION"
+              placeholder={t(
+                "components.modals.newPlaceModal.placeDescription",
+              )}
               value={newPlace.description}
               maxLength={500}
               rows={10}
             />
-            <Button type="submit" text="VALIDER" />
+            <Button type="submit" text={t("components.buttons.validate")} />
             <Button
               type="button"
-              text="ANNULER"
+              text={t("components.buttons.cancel")}
               click={() => setNewPlace(emptyPlace)}
             />
           </>

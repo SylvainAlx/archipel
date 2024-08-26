@@ -2,16 +2,20 @@ import { useAtom } from "jotai";
 import { recoveryKey } from "../../settings/store";
 import Button from "../buttons/button";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 export function RecoveryModal() {
   const [recovery, setRecovery] = useAtom(recoveryKey);
   const [checked, setChecked] = useState(false);
+  const { t } = useTranslation();
   return (
     <>
-      <h2 className="text-2xl text-center p-4">INFORMATION IMPORTANTE</h2>
-      <p>Merci de conserver précieusement votre phrase de récupération.</p>
+      <h2 className="text-2xl text-center p-4">
+        {t("components.modals.recoveryModal.title")}
+      </h2>
+      <p>{t("components.modals.recoveryModal.info")}</p>
       <p className="underline">
-        ELLE NE VOUS SERA PLUS COMMUNIQUÉE PAR LA SUITE !
+        {t("components.modals.recoveryModal.boldInfo")}
       </p>
       <div className="my-4 p-4 bg-black">
         <code>{recovery}</code>
@@ -23,12 +27,12 @@ export function RecoveryModal() {
           defaultChecked={checked}
         />
         <span className="ml-4">
-          J'ai pris connaissance de cette information
+          {t("components.modals.recoveryModal.confirm")}
         </span>
       </div>
       {checked && (
         <div className="my-4" onClick={() => setRecovery("")}>
-          <Button text="J'AI COMPRIS" />
+          <Button text={t("components.buttons.validate")} />
         </div>
       )}
     </>
