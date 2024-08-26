@@ -63,7 +63,7 @@ export default function Nation() {
   return (
     <>
       <H1 text={t("pages.nation.title")} />
-      {nation != undefined ? (
+      {nation != undefined && (
         <>
           <section className="w-full flex flex-wrap gap-8 items-start justify-between">
             <Score selectedNation={nation} owner={owner} />
@@ -83,8 +83,6 @@ export default function Nation() {
             )}
           </section>
         </>
-      ) : (
-        <div>Aucune nation à afficher</div>
       )}
     </>
   );
