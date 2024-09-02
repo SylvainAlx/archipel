@@ -42,13 +42,6 @@ export default function Nav() {
             text={t("components.buttons.user")}
             action={() => navigate(`/citizen/${session.user.officialId}`)}
           />
-          {session.user.role === "admin" && (
-            <IconLink
-              destination="admin"
-              text={t("components.buttons.admin")}
-              action={() => navigate(`/admin`)}
-            />
-          )}
         </>
       )}
       {session.user.citizenship.nationId != "" && (

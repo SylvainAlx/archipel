@@ -20,10 +20,10 @@ export default function ImageModal() {
   return (
     <>
       <div
-        className={`max-w-[60%] bg-complementary flex flex-col items-center justify-center overflow-hidden rounded`}
+        className={`max-w-[40%] bg-complementary flex flex-col items-center justify-center overflow-hidden rounded`}
       >
         {image ? (
-          cachedImage ? (
+          cachedImage != null ? (
             <img
               src={cachedImage}
               alt={image}

@@ -90,15 +90,17 @@ export default function NationIdentity({
                                 hover={t("components.hoverInfos.flag")}
                               />
                             </Suspense>
-                            <CrossButton
-                              small={true}
-                              click={() =>
-                                handleDeleteImage({
-                                  url: selectedNation.data.url.flag,
-                                  type: "flag",
-                                })
-                              }
-                            />
+                            {owner && (
+                              <CrossButton
+                                small={true}
+                                click={() =>
+                                  handleDeleteImage({
+                                    url: selectedNation.data.url.flag,
+                                    type: "flag",
+                                  })
+                                }
+                              />
+                            )}
                           </div>
                         ) : (
                           <>
@@ -123,24 +125,23 @@ export default function NationIdentity({
                           <>
                             <Suspense fallback={<Spinner />}>
                               <LazyImage
-                                src={
-                                  selectedNation.data.url.coatOfArms +
-                                  "-/preview/"
-                                }
+                                src={selectedNation.data.url.coatOfArms}
                                 alt={`coatOfArms of ${selectedNation.name}`}
                                 className="object-contain w-full h-full cursor-zoom-in"
                                 hover={t("components.hoverInfos.coatOfArms")}
                               />
                             </Suspense>
-                            <CrossButton
-                              small={true}
-                              click={() =>
-                                handleDeleteImage({
-                                  url: selectedNation.data.url.coatOfArms,
-                                  type: "coatOfArms",
-                                })
-                              }
-                            />
+                            {owner && (
+                              <CrossButton
+                                small={true}
+                                click={() =>
+                                  handleDeleteImage({
+                                    url: selectedNation.data.url.coatOfArms,
+                                    type: "coatOfArms",
+                                  })
+                                }
+                              />
+                            )}
                           </>
                         ) : (
                           <>

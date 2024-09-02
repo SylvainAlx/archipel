@@ -1,7 +1,6 @@
 import {
   IoMdLogIn,
   IoMdAddCircleOutline,
-  IoMdSettings,
   IoMdGlobe,
   IoMdHome,
 } from "react-icons/io";
@@ -50,12 +49,6 @@ export default function IconLink({ destination, text, action }: IconLinkProps) {
         ) : (
           <GiBlackFlag />
         ))}
-      {destination === "admin" && (
-        <div className="md:hover:animate-spinSlow">
-          {" "}
-          <IoMdSettings />
-        </div>
-      )}
       <h2 className="hidden md:block text-[10px]">{text}</h2>
     </div>
   );
