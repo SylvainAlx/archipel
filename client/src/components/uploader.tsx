@@ -95,13 +95,14 @@ export default function Upploader({ path, destination }: UploaderProps) {
       <FileUploaderRegular
         onChange={handleChangeEvent}
         pubkey={UPLOADCARE_PUBLIC_KEY}
-        maxLocalFileSizeBytes={500000}
+        maxLocalFileSizeBytes={200000}
         multiple={false}
         imgOnly={true}
         sourceList="local, url, gdrive, instagram"
         useCloudImageEditor={false}
         classNameUploader="my-config uc-dark"
         confirmUpload={true}
+        useLocalImageEditor={true}
       />
     </div>
   );

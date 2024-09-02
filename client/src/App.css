@@ -76,3 +76,8 @@ em {
   --uc-primary-oklch-dark: 69% 0.1768 258.4;
   --uc-primary-oklch-light: 59% 0.22 264;
 }
+
+.bold {
+  color: var(--color-secondary);
+  font-weight: 700;
+}

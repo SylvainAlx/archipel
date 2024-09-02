@@ -22,6 +22,12 @@
       "options": {
         "parser": "css"
       }
+    },
+    {
+      "files": ["*.json"],
+      "options": {
+        "parser": "json"
+      }
     }
   ]
 }
