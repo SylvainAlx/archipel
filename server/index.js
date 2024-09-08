@@ -22,7 +22,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
-// connection à la base de données
 try {
   mongoose.set("strictQuery", false);
   mongoose.connect(process.env.MONGO_DB_URI);
@@ -35,8 +34,6 @@ try {
 } catch (error) {
   console.log(error);
 }
-
-// écouteur du port
 
 try {
   app.listen(PORT, () => {

@@ -2,6 +2,7 @@ import { SERVER_URL } from "../../settings/consts";
 import {
   AuthPayload,
   ChangePasswordPayload,
+  changeStatusPayload,
   RecoveryPayload,
   User,
 } from "../../types/typUser";
@@ -94,7 +95,7 @@ export const updateUserFetch = async (payload: User) => {
   const result = await resp.json();
 
   return result;
-}
+};
 
 export const getOneUserFetch = async (id: string) => {
   const resp = await fetch(`${SERVER_URL}/user/${id}`);
@@ -113,5 +114,20 @@ export const getAllCitizensFetch = async (searchText: string) => {
     `${SERVER_URL}/user/getall?texteRecherche=${encodeURIComponent(searchText)}`,
   );
   const result = await resp.json();
+  return result;
+};
+
+export const changeStatusFetch = async (payload: changeStatusPayload) => {
+  const jwt = GET_JWT();
+  const resp = await fetch(`${SERVER_URL}/user/changestatus`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      authorization: "Bearer " + jwt,
+    },
+    body: JSON.stringify(payload),
+  });
+  const result = await resp.json();
+
   return result;
 };

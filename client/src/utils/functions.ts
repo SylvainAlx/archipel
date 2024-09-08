@@ -217,6 +217,9 @@ export const displayUserInfoByType = (type: string) => {
     case "delete":
       successMessage(i18n.t("toasts.user.delete"));
       break;
+    case "changeStatus":
+      successMessage("Demande traitée");
+      break;
     case "deleteKO":
       errorMessage(i18n.t("toasts.user.deleteKO"));
       break;
