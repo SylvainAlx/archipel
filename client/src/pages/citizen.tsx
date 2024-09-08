@@ -23,6 +23,7 @@ import IdTag from "../components/tags/idTag";
 import RoleTag from "../components/tags/roleTag";
 import Upploader from "../components/uploader";
 import CrossButton from "../components/buttons/crossButton";
+import { FaPassport } from "react-icons/fa";
 
 export default function Citizen() {
   const { t } = useTranslation();
@@ -60,7 +61,7 @@ export default function Citizen() {
         owner: citizen.officialId,
       });
     } else if (dest === "join") {
-      navigate(`/nations`);
+      navigate(`/explore`);
     }
   };
 
@@ -119,6 +120,7 @@ export default function Citizen() {
                     <Button
                       text={nation.name}
                       click={() => handleClick("nation")}
+                      children={<FaPassport />}
                     />
                   ) : (
                     <>

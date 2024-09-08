@@ -44,15 +44,16 @@ export default function Nav() {
           />
         </>
       )}
-      {session.user.citizenship.nationId != "" && (
-        <IconLink
-          destination="nation"
-          text={t("components.buttons.nation")}
-          action={() =>
-            navigate(`/nation/${session.user.citizenship.nationId}`)
-          }
-        />
-      )}
+      {session.user.citizenship.nationId != "" &&
+        session.user.citizenship.status > 0 && (
+          <IconLink
+            destination="nation"
+            text={t("components.buttons.nation")}
+            action={() =>
+              navigate(`/nation/${session.user.citizenship.nationId}`)
+            }
+          />
+        )}
     </>
   );
 }

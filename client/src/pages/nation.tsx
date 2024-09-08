@@ -68,6 +68,7 @@ export default function Nation() {
           <section className="w-full flex flex-wrap gap-8 items-start justify-between">
             <Score selectedNation={nation} owner={owner} />
             <Links selectedNation={nation} owner={owner} />
+
             <NationIdentity selectedNation={nation} owner={owner} />
             <Diplomacy />
             <Places selectedNation={nation} owner={owner} />

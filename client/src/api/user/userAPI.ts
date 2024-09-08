@@ -14,6 +14,7 @@ import {
 import {
   AuthPayload,
   ChangePasswordPayload,
+  changeStatusPayload,
   emptyUser,
   RecoveryPayload,
   User,
@@ -30,6 +31,7 @@ import { errorMessage, successMessage } from "../../utils/toasts";
 import {
   authGet,
   changePasswordFetch,
+  changeStatusFetch,
   deleteUserFetch,
   getAllCitizensFetch,
   getCitizensCountFetch,
@@ -138,6 +140,7 @@ export const login = ({ name, password }: AuthPayload) => {
 
 export const logout = () => {
   myStore.set(sessionAtom, emptySession);
+  myStore.set(citizenFetchAtom, emptyUser);
   localStorage.removeItem("jwt");
   successMessage(i18n.t("toasts.user.logout"));
 };
@@ -254,7 +257,7 @@ export const updateUser = (payload: User) => {
       myStore.set(loadingAtom, false);
       if (resp.user) {
         myStore.set(citizenFetchAtom, resp.user);
-        myStore.set(sessionAtom, { ...session, user:  resp.user });
+        myStore.set(sessionAtom, { ...session, user: resp.user });
         myStore.set(citizenListAtom, []);
         displayUserInfoByType("update");
       } else {
@@ -265,4 +268,23 @@ export const updateUser = (payload: User) => {
       myStore.set(loadingAtom, false);
       errorMessage(error.message);
     });
-}
+};
+
+export const changeStatus = (payload: changeStatusPayload) => {
+  myStore.set(loadingAtom, true);
+  changeStatusFetch(payload)
+    .then((resp) => {
+      myStore.set(loadingAtom, false);
+      if (resp.user) {
+        myStore.set(citizenFetchAtom, resp.user);
+        myStore.set(citizenListAtom, []);
+        displayUserInfoByType("update");
+      } else {
+        displayUserInfoByType("error");
+      }
+    })
+    .catch((error) => {
+      myStore.set(loadingAtom, false);
+      errorMessage(error.message);
+    });
+};

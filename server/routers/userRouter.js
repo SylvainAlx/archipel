@@ -12,7 +12,8 @@ import {
   getUsersByNation,
   usersCount,
   changePassword,
-  updateUser
+  updateUser,
+  changeStatus
 } from "../controllers/userController.js";
 
 const userRouter = express.Router();
@@ -23,6 +24,7 @@ userRouter.post("/signin", login);
 userRouter.post("/forgetpassword", forgetPassword);
 userRouter.post("/changepassword", [verifyJwt], changePassword);
 userRouter.post("/update", [verifyJwt], updateUser);
+userRouter.post("/changestatus", [verifyJwt], changeStatus);
 userRouter.get("/verify", verify);
 userRouter.get("/getall", getAllUsers);
 userRouter.get("/self", [verifyJwt], getSelfUser);
