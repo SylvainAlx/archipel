@@ -32,7 +32,8 @@ export default function Citizen() {
 
   const [citizen, setCitizen] = useAtom(citizenFetchAtom);
   const [nation] = useAtom(nationFetchedAtom);
-  const [session] = useAtom(sessionAtom);
+  const [session, setSession] = useAtom(sessionAtom);
+  const [, setConfirmModal] = useAtom(confirmBox);
 
   useEffect(() => {
     if (param.id) {
@@ -92,6 +93,25 @@ export default function Citizen() {
     });
   };
 
+  const leaveNation = () => {
+    const payload = {
+      officialId: citizen.officialId,
+      nationId: citizen.citizenship.nationId,
+      status: -1,
+    };
+    setConfirmModal({
+      action: "changeStatus",
+      text: "Quitter la nation ?",
+      result: "",
+      payload,
+    });
+
+    const newSession = { ...session };
+    newSession.user.citizenship.nationId = "";
+    newSession.user.citizenship.status = -1;
+    setSession(newSession);
+  };
+
   return (
     <>
       <H1 text={citizen.name} />
@@ -117,11 +137,16 @@ export default function Citizen() {
                     {citizen.role === "admin" && <RoleTag label="admin" />}
                   </div>
                   {nation != undefined && nation.officialId != "" ? (
-                    <Button
-                      text={nation.name}
-                      click={() => handleClick("nation")}
-                      children={<FaPassport />}
-                    />
+                    <div className="relative flex items-center gap-2">
+                      {!session.user.citizenship.nationOwner && (
+                        <CrossButton text="" small={true} click={leaveNation} />
+                      )}
+                      <Button
+                        text={nation.name}
+                        click={() => handleClick("nation")}
+                        children={<FaPassport />}
+                      />
+                    </div>
                   ) : (
                     <>
                       {session.user.officialId === citizen.officialId && (

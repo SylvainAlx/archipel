@@ -2,10 +2,9 @@ import Tag from "./tag";
 import { FaPassport } from "react-icons/fa";
 import { User } from "../../types/typUser";
 import { useAtom } from "jotai";
-import { sessionAtom } from "../../settings/store";
+import { confirmBox, sessionAtom } from "../../settings/store";
 import { IoMdCloseCircle } from "react-icons/io";
 import { MdCheckCircle } from "react-icons/md";
-import { changeStatus } from "../../api/user/userAPI";
 // import { useTranslation } from "react-i18next";
 
 export interface CitizenTagProps {
@@ -16,20 +15,33 @@ export interface CitizenTagProps {
 export default function CitizenTag({ label, citizen }: CitizenTagProps) {
   //   const { t } = useTranslation();
   const [session] = useAtom(sessionAtom);
+  const [, setConfirmModal] = useAtom(confirmBox);
 
   const declineCitizenship = () => {
-    changeStatus({
+    const payload = {
       officialId: citizen.officialId,
       nationId: citizen.citizenship.nationId,
       status: -1,
+    };
+    setConfirmModal({
+      action: "changeStatus",
+      text: "confirmer le refus",
+      result: "",
+      payload,
     });
   };
 
   const approveCitizenship = () => {
-    changeStatus({
+    const payload = {
       officialId: citizen.officialId,
       nationId: citizen.citizenship.nationId,
       status: 1,
+    };
+    setConfirmModal({
+      action: "changeStatus",
+      text: "confirmer l'approbation",
+      result: "",
+      payload,
     });
   };
 

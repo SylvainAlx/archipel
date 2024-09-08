@@ -54,6 +54,7 @@ export const createNation = async (req, res) => {
     try {
       const savedNation = await nation.save();
       const user = await User.findOne({ officialId: owner });
+      user.citizenship.status = 1;
       user.citizenship.nationId = savedNation.officialId;
       user.citizenship.nationName = savedNation.name;
       user.citizenship.nationOwner = true;

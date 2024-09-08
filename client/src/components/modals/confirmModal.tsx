@@ -6,7 +6,7 @@ import { deleteSelfNation, updateNation } from "../../api/nation/nationAPI";
 import { createNewCom, deleteCom } from "../../api/communication/comAPI";
 import { deletePlace, updatePlace } from "../../api/place/placeAPI";
 import { useTranslation } from "react-i18next";
-import { deleteUser, logout } from "../../api/user/userAPI";
+import { changeStatus, deleteUser, logout } from "../../api/user/userAPI";
 import { deleteUploadedFile } from "../../api/files/fileAPI";
 
 export default function ConfirmModal() {
@@ -53,6 +53,9 @@ export default function ConfirmModal() {
                 url: confirm.payload,
                 type: confirm.target,
               });
+            }
+            if (confirm.action === "changeStatus") {
+              changeStatus(confirm.payload);
             }
           }}
         />

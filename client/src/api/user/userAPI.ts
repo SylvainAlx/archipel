@@ -6,11 +6,13 @@ import {
   loadingAtom,
   myStore,
   nationCitizenListAtom,
+  nationFetchedAtom,
   recoveryKey,
   session,
   sessionAtom,
   statsAtom,
 } from "../../settings/store";
+import { EmptyNation } from "../../types/typNation";
 import {
   AuthPayload,
   ChangePasswordPayload,
@@ -23,7 +25,6 @@ import {
   createElementOfAtomArray,
   displayUserInfoByType,
   findElementOfAtomArray,
-  findNationCitizens,
   GET_JWT,
   updateElementOfAtomArray,
 } from "../../utils/functions";
@@ -73,6 +74,8 @@ export const register = ({ name, password, gender, language }: AuthPayload) => {
         myStore.set(recoveryKey, data.recovery);
         // myStore.set(nationsListAtom, [EmptyNation]);
         createElementOfAtomArray(data.user, citizenList, setCitizenList);
+        myStore.set(citizenFetchAtom, emptyUser);
+        myStore.set(nationFetchedAtom, EmptyNation);
         myStore.set(sessionAtom, {
           ...session,
           user: data.user,
@@ -95,6 +98,8 @@ export const authentification = () => {
     authGet(jwt)
       .then((data) => {
         myStore.set(loadingAtom, false);
+        myStore.set(citizenFetchAtom, emptyUser);
+        myStore.set(nationFetchedAtom, EmptyNation);
         if (data.user != undefined) {
           updateElementOfAtomArray(data.user, citizenList, setCitizenList);
           myStore.set(sessionAtom, { ...session, user: data.user, jwt });
@@ -123,6 +128,8 @@ export const login = ({ name, password }: AuthPayload) => {
       myStore.set(loadingAtom, false);
       if (data.user != undefined) {
         localStorage.setItem("jwt", data.jwt);
+        myStore.set(citizenFetchAtom, emptyUser);
+        myStore.set(nationFetchedAtom, EmptyNation);
         myStore.set(sessionAtom, {
           ...session,
           user: data.user,
@@ -141,6 +148,7 @@ export const login = ({ name, password }: AuthPayload) => {
 export const logout = () => {
   myStore.set(sessionAtom, emptySession);
   myStore.set(citizenFetchAtom, emptyUser);
+  myStore.set(nationFetchedAtom, EmptyNation);
   localStorage.removeItem("jwt");
   successMessage(i18n.t("toasts.user.logout"));
 };
@@ -219,18 +227,17 @@ export const getOneUser = (id: string) => {
 
 export const getNationCitizens = (nationId: string) => {
   myStore.set(loadingAtom, true);
-  let citizens = findNationCitizens(nationId, citizenList);
+  // const citizens = findNationCitizens(nationId, citizenList);
 
-  if (citizens.length === 0) {
-    getNationCitizensFetch(nationId).then((data) => {
-      if (data.name != "") {
-        citizens = data.users;
-        myStore.set(nationCitizenListAtom, data);
-      }
-    });
-  } else {
-    myStore.set(nationCitizenListAtom, citizens);
-  }
+  // if (citizens.length === 0) {
+  getNationCitizensFetch(nationId).then((data) => {
+    if (data.length > 0) {
+      myStore.set(nationCitizenListAtom, data);
+    }
+  });
+  // } else {
+  //   myStore.set(nationCitizenListAtom, citizens);
+  // }
 
   myStore.set(loadingAtom, false);
 };
@@ -278,7 +285,8 @@ export const changeStatus = (payload: changeStatusPayload) => {
       if (resp.user) {
         myStore.set(citizenFetchAtom, resp.user);
         myStore.set(citizenListAtom, []);
-        displayUserInfoByType("update");
+        getNationCitizens(payload.nationId);
+        displayUserInfoByType("changeStatus");
       } else {
         displayUserInfoByType("error");
       }

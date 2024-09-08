@@ -2,22 +2,25 @@ import { useTranslation } from "react-i18next";
 import TileContainer from "../tileContainer";
 import DashTile from "../dashTile";
 import { lazy, Suspense, useEffect, useState } from "react";
-import { changeStatus, getNationCitizens } from "../../api/user/userAPI";
+import { getNationCitizens } from "../../api/user/userAPI";
 import { SelectedNationProps } from "../../types/typProp";
-import { nationCitizenListAtom, sessionAtom } from "../../settings/store";
+import {
+  confirmBox,
+  nationCitizenListAtom,
+  sessionAtom,
+} from "../../settings/store";
 import { useAtom } from "jotai";
 import { User } from "../../types/typUser";
 import BarreLoader from "../loading/barreLoader";
 import Button from "../buttons/button";
 import { FaPassport } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
 
 export default function Citizens({ selectedNation }: SelectedNationProps) {
   const [nationCitizenList] = useAtom(nationCitizenListAtom);
   const [citizens, setCitizens] = useState<User[]>([]);
   const [session] = useAtom(sessionAtom);
+  const [, setConfirmModal] = useAtom(confirmBox);
   const { t } = useTranslation();
-  const navigate = useNavigate();
   const CitizenTile = lazy(() => import("../tiles/citizenTile"));
 
   useEffect(() => {
@@ -35,12 +38,17 @@ export default function Citizens({ selectedNation }: SelectedNationProps) {
   }, [nationCitizenList, selectedNation.officialId]);
 
   const askCtz = () => {
-    changeStatus({
+    const payload = {
       officialId: session.user.officialId,
       nationId: selectedNation.officialId,
       status: 0,
+    };
+    setConfirmModal({
+      action: "changeStatus",
+      text: "Rejoindre la nation ?",
+      result: "",
+      payload,
     });
-    navigate("/explore");
   };
 
   return (
