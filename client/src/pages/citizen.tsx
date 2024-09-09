@@ -37,7 +37,10 @@ export default function Citizen() {
 
   useEffect(() => {
     if (param.id) {
-      if (session.user.officialId === param.id) {
+      if (
+        session.user.officialId === param.id &&
+        citizen.officialId != session.user.officialId
+      ) {
         setCitizen(session.user);
       } else {
         getOneUser(param.id);
@@ -136,11 +139,18 @@ export default function Citizen() {
                     <IdTag label={citizen.officialId} />
                     {citizen.role === "admin" && <RoleTag label="admin" />}
                   </div>
-                  {nation != undefined && nation.officialId != "" ? (
+                  {nation != undefined &&
+                  nation.officialId != "" &&
+                  citizen.citizenship.nationId != "" ? (
                     <div className="relative flex items-center gap-2">
-                      {!session.user.citizenship.nationOwner && (
-                        <CrossButton text="" small={true} click={leaveNation} />
-                      )}
+                      {session.user.officialId === citizen.officialId &&
+                        !session.user.citizenship.nationOwner && (
+                          <CrossButton
+                            text=""
+                            small={true}
+                            click={leaveNation}
+                          />
+                        )}
                       <Button
                         text={nation.name}
                         click={() => handleClick("nation")}

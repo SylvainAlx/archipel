@@ -59,13 +59,14 @@ export default function Citizens({ selectedNation }: SelectedNationProps) {
           className="w-full my-2"
           children={
             <>
-              {session.user.citizenship.status === -1 && (
-                <Button
-                  text="Demander la citoyenneté"
-                  click={askCtz}
-                  children={<FaPassport />}
-                />
-              )}
+              {session.user.citizenship.status === -1 &&
+                session.user.officialId != "" && (
+                  <Button
+                    text="Demander la citoyenneté"
+                    click={askCtz}
+                    children={<FaPassport />}
+                  />
+                )}
               <div className="w-full flex flex-col-reverse gap-2 items-center">
                 {citizens.length > 0 ? (
                   citizens.map((citizen, i) => {

@@ -329,6 +329,8 @@ export const updateUser = async (req, res) => {
 export const changeStatus = async (req, res) => {
   try {
     const { officialId, nationId, status } = req.body;
+    console.log(req.body);
+    
     if (req.userId === officialId || status != 0) {
       const user = await User.findOne(
         { officialId },
