@@ -94,8 +94,6 @@ export const createPlace = async (req, res) => {
             ) {
               nation.data.roleplay.capital = place.officialId;
             }
-            nation.data.roleplay.credits -= 100;
-            nation.data.roleplay.points += 1;
             nation.data.roleplay.places += 1;
             nation.save();
             res.status(201).json({ place, nation, message: "lieu créé" });
@@ -142,7 +140,6 @@ export const deletePlace = async (req, res) => {
       nation.data.roleplay.capital = "";
     }
     nation.data.roleplay.population -= place.population;
-    nation.data.roleplay.points -= place.points;
     nation.data.roleplay.places -= 1;
     await nation.save();
     const children = await Place.updateMany(

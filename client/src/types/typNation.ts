@@ -22,10 +22,6 @@ export interface Nation {
       discord: string;
     };
     general: {
-      coords: {
-        lat: number;
-        lng: number;
-      };
       motto: string;
       nationalDay: string;
       regime: number;
@@ -33,13 +29,9 @@ export interface Nation {
       tags: string[];
     };
     roleplay: {
-      lastUpdated: Date;
-      points: number;
-      credits: number;
       capital: string;
       citizens: number;
       places: number;
-      politicalSide: number;
     };
   };
   createdAt: Date;
@@ -59,10 +51,6 @@ export const EmptyNation: Nation = {
       discord: "",
     },
     general: {
-      coords: {
-        lat: 0,
-        lng: 0,
-      },
       motto: "",
       nationalDay: "",
       regime: 0,
@@ -70,13 +58,9 @@ export const EmptyNation: Nation = {
       tags: [],
     },
     roleplay: {
-      lastUpdated: new Date(),
-      points: 0,
-      credits: 100,
       capital: "",
       citizens: 0,
       places: 0,
-      politicalSide: 0,
     },
   },
   createdAt: new Date(0),

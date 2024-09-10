@@ -1,9 +1,8 @@
-import { FaCoins } from "react-icons/fa6";
-import { NEW_PLACE_COST, placesTypeList } from "../../settings/consts";
+// import { FaCoins } from "react-icons/fa6";
+import { placesTypeList } from "../../settings/consts";
 import Button from "./button";
 import { Place, emptyPlace } from "../../types/typPlace";
 import { myStore, newPlaceAtom, sessionAtom } from "../../settings/store";
-import { addCredits } from "../../utils/functions";
 import { useTranslation } from "react-i18next";
 import { useAtom } from "jotai";
 
@@ -36,37 +35,22 @@ export default function NewPlaceButton({ parentId, owner }: newPlaceProps) {
 
   return (
     <>
-      {session.nation.data.roleplay.credits >= NEW_PLACE_COST
-        ? owner && (
-            <Button
-              text=""
-              type="button"
-              click={handleClick}
-              children={
-                <div className="w-full flex justify-center items-center gap-2 flex-wrap">
-                  <span>{t("components.buttons.newPlace")}</span>
-                  <span className="flex gap-1 items-center">
-                    <FaCoins />
-                    {NEW_PLACE_COST}
-                  </span>
-                </div>
-              }
-            />
-          )
-        : owner && (
-            <Button
-              text="CRÉDITS INSUFFISANTS"
-              type="button"
-              bgColor="bg-danger"
-              click={addCredits}
-              children={
-                <div className="pl-2 flex gap-1 items-center">
-                  <FaCoins />
-                  {NEW_PLACE_COST}
-                </div>
-              }
-            />
-          )}
+      {owner && (
+        <Button
+          text=""
+          type="button"
+          click={handleClick}
+          children={
+            <div className="w-full flex justify-center items-center gap-2 flex-wrap">
+              <span>{t("components.buttons.newPlace")}</span>
+              {/* <span className="flex gap-1 items-center">
+                <FaCoins />
+                {NEW_PLACE_COST}
+              </span> */}
+            </div>
+          }
+        />
+      )}
     </>
   );
 }

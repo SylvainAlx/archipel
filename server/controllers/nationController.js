@@ -34,12 +34,7 @@ export const createNation = async (req, res) => {
 
     const officialId = createOfficialId("n");
 
-    const coords = {
-      lat: (Math.random() * (90 - -90) + -90).toFixed(2),
-      lng: (Math.random() * 360).toFixed(2),
-    };
-    let data = { general: coords, roleplay: { citizens: 0 } };
-    data.general.coords = coords;
+    let data = { roleplay: { citizens: 0 } };
     data.general.motto = motto;
     data.general.regime = regime;
     data.general.currency = currency;
@@ -172,6 +167,20 @@ export const deleteSelfNation = async (req, res) => {
     user.citizenship.nationOwner = false;
     const savedUser = await user.save();
 
+    const update = {
+      $set: {
+        "citizenship.status": -1,
+        "citizenship.nationId": "",
+        "citizenship.nationName": "",
+        "citizenship.nationOwner": false,
+      },
+    };
+
+    const updatedUsers = await User.updateMany(
+      { "citizenship.nationId": nation.officialId },
+      update,
+    );
+
     // await Com.deleteMany({ originId: id });
     res.status(200).json({
       message: `Votre nation a été supprimée`,
@@ -189,9 +198,25 @@ export const deleteOneNation = async (req, res) => {
   try {
     const nationId = req.params.id;
     const user = await User.findOne({ "citizenship.nationId": nationId });
+    user.citizenship.status = -1;
     user.citizenship.nationId = "";
     user.citizenship.nationName = "";
     user.citizenship.nationOwner = false;
+
+    const update = {
+      $set: {
+        "citizenship.status": -1,
+        "citizenship.nationId": "",
+        "citizenship.nationName": "",
+        "citizenship.nationOwner": false,
+      },
+    };
+
+    const updatedUsers = await User.updateMany(
+      { "citizenship.nationId": nation.officialId },
+      update,
+    );
+
     const savedUser = await user.save();
     const nation = await Nation.findByIdAndDelete(nationId);
     res.status(200).json({
