@@ -9,7 +9,7 @@ import {
 } from "../settings/consts";
 import { LabelId, Nation } from "../types/typNation";
 import { Place } from "../types/typPlace";
-import { SetAtom } from "../settings/store";
+import { confirmBox, myStore, SetAtom } from "../settings/store";
 import { errorMessage, successMessage } from "./toasts";
 import { User } from "../types/typUser";
 
@@ -218,7 +218,7 @@ export const displayUserInfoByType = (type: string) => {
       successMessage(i18n.t("toasts.user.delete"));
       break;
     case "changeStatus":
-      successMessage("Demande traitée");
+      successMessage(i18n.t("toasts.user.update"));
       break;
     case "deleteKO":
       errorMessage(i18n.t("toasts.user.deleteKO"));
@@ -312,3 +312,31 @@ export async function getCachedImage(url: string): Promise<string | null> {
     }
   }
 }
+
+export const approveCitizenship = (citizen: User) => {
+  const payload = {
+    officialId: citizen.officialId,
+    nationId: citizen.citizenship.nationId,
+    status: 1,
+  };
+  myStore.set(confirmBox, {
+    action: "changeStatus",
+    text: i18n.t("components.modals.confirmModal.approveCitizenship"),
+    result: "",
+    payload,
+  });
+};
+
+export const declineCitizenship = (citizen: User) => {
+  const payload = {
+    officialId: citizen.officialId,
+    nationId: citizen.citizenship.nationId,
+    status: -1,
+  };
+  myStore.set(confirmBox, {
+    action: "changeStatus",
+    text: i18n.t("components.modals.confirmModal.declineCitizenship"),
+    result: "",
+    payload,
+  });
+};

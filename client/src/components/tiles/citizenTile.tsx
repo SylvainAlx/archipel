@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { User } from "../../types/typUser";
 import EyeButton from "../buttons/eyeButton";
 import IdTag from "../tags/idTag";
@@ -9,8 +9,13 @@ import {
   citizenFetchAtom,
   myStore,
   nationFetchedAtom,
+  sessionAtom,
 } from "../../settings/store";
 import { EmptyNation } from "../../types/typNation";
+import { declineCitizenship } from "../../utils/functions";
+import CrossButton from "../buttons/crossButton";
+import { useAtom } from "jotai";
+import { useTranslation } from "react-i18next";
 
 export interface CitizenTileProps {
   citizen: User;
@@ -18,6 +23,9 @@ export interface CitizenTileProps {
 
 export default function CitizenTile({ citizen }: CitizenTileProps) {
   const navigate = useNavigate();
+  const emplacement = useLocation();
+  const { t } = useTranslation();
+  const [session] = useAtom(sessionAtom);
   const handleClick = () => {
     myStore.set(citizenFetchAtom, citizen);
     myStore.set(nationFetchedAtom, EmptyNation);
@@ -37,10 +45,21 @@ export default function CitizenTile({ citizen }: CitizenTileProps) {
         </div>
         <EyeButton click={handleClick} />
       </div>
+      {session.user.citizenship.nationOwner &&
+        session.user.citizenship.nationId === citizen.citizenship.nationId &&
+        session.user.officialId != citizen.officialId &&
+        emplacement.pathname != "/explore" && (
+          <div className="w-max self-end">
+            <CrossButton click={() => declineCitizenship(citizen)} />
+          </div>
+        )}
 
       <div className="max-w-[90%] flex flex-wrap items-center self-end justify-end gap-1">
         {citizen.citizenship.status === 0 && (
-          <CitizenTag label="Citoyenneté en attente" citizen={citizen} />
+          <CitizenTag
+            label={t("components.hoverInfos.tags.pendingCitizenship")}
+            citizen={citizen}
+          />
         )}
         {citizen.officialId && <IdTag label={citizen.officialId} />}
         {citizen.role === "admin" && <RoleTag label="admin" />}

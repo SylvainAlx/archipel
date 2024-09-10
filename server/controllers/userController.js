@@ -329,6 +329,7 @@ export const updateUser = async (req, res) => {
 export const changeStatus = async (req, res) => {
   try {
     const { officialId, nationId, status } = req.body;
+    
     if (req.userId === officialId || status != 0) {
       const user = await User.findOne(
         { officialId },
@@ -337,22 +338,41 @@ export const changeStatus = async (req, res) => {
       
       const nation = await Nation.findOne(
         { officialId: nationId },
-        "officialId name",
+        "officialId name data",
       );
       
-      user.citizenship.status = status;
+      
       if (status === 0 || status === 1) {
         user.citizenship.nationId = nation.officialId;
         user.citizenship.nationName = nation.name;
+        if (status === 1) {
+          nation.data.roleplay.citizens += 1;
+          nation.save()
+          .catch((error) => {
+            res.status(400).json({
+              erreur: error.message,
+            });
+          });
+        }
       } else {
         user.citizenship.nationId = "";
         user.citizenship.nationName = "";
+        if (user.citizenship.status === 1) {
+          nation.data.roleplay.citizens -= 1;
+        nation.save()
+        .catch((error) => {
+          res.status(400).json({
+            erreur: error.message,
+          });
+        });
+        }
+        
       }
-
+      user.citizenship.status = status;
       user
         .save()
         .then((user) => {
-          res.status(200).json({ user, message: "mise à jour réussie" });
+          res.status(200).json({ user, nation, message: "mise à jour réussie" });
         })
         .catch((error) => {
           res.status(400).json({

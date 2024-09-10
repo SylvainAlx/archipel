@@ -2,7 +2,7 @@
   "pages": {
     "home": {
       "title": "Bienvenue",
-      "presentation": "Bienvenue sur Projet Archipel ! Ici, vous pouvez créer votre propre identité virtuelle et bâtir votre propre nation virtuelle, ou rejoindre celles existantes qui correspondent le mieux à votre vision de la société. Grâce à un système de tags intuitif, trouvez facilement les nations virtuelles qui partagent vos idéaux et vos aspirations. Mais ce n'est pas tout! Les nations virtuelles peuvent également s'unir pour former des organisations puissantes, toutes créées par nos citoyens virtuels. Que ce soit pour le plaisir ou pour donner vie à des projets plus sérieux, notre application offre une plateforme unique pour explorer, interagir et innover dans un monde virtuel sans limites. Rejoignez-nous dès aujourd'hui et commencez à construire votre utopie !"
+      "presentation": "Bienvenue sur le Réseau Archipel ! Ici, vous pouvez créer votre propre identité virtuelle et bâtir votre propre nation virtuelle, ou rejoindre celles existantes qui correspondent le mieux à votre vision de la société. Grâce à un système de tags intuitif, trouvez facilement les nations virtuelles qui partagent vos idéaux et vos aspirations. Mais ce n'est pas tout! Les nations virtuelles peuvent également s'unir pour former des organisations puissantes, toutes créées par nos citoyens virtuels. Que ce soit pour le plaisir ou pour donner vie à des projets plus sérieux, notre application offre une plateforme unique pour explorer, interagir et innover dans un monde virtuel sans limites. Rejoignez-nous dès aujourd'hui et commencez à construire votre utopie !"
     },
     "nation": {
       "title": "nation",
@@ -108,7 +108,8 @@
       "delete": "supprimer",
       "back": "retour",
       "newPlace": "nouveau lieu",
-      "showMore": "VOIR PLUS"
+      "showMore": "VOIR PLUS",
+      "askCitizenship": "DEMANDER LA NATIONNALITÉ"
     },
     "form": {
       "input": {
@@ -122,8 +123,8 @@
       "missingField": "Champ(s) manquant(s)"
     },
     "logo": {
-      "title": "PROJET ARCHIPEL",
-      "subtitle": "RÉSEAU DES NATIONS VIRTUELLES"
+      "title": "RÉSEAU ARCHIPEL",
+      "subtitle": "CITOYENS DES MICRONATIONS & NATIONS VIRTUELLES"
     },
     "modals": {
       "confirmModal": {
@@ -132,7 +133,12 @@
         "deleteNation": "Confirmez-vous la suppression définitive de votre nation ?",
         "deletePlace": "Confirmez-vous la suppression définitive du lieu ?",
         "deleteUser": "Confirmez-vous la suppression définitive de votre compte ?",
-        "deleteFile": "Confirmez-vous la suppression du fichier ?"
+        "deleteFile": "Confirmez-vous la suppression du fichier ?",
+        "approveCitizenship": "Accorder la citoyenneté ?",
+        "declineCitizenship": "Rejeter la citoyenneté ?",
+        "askCitizenship": "Demander la nationnalité ?",
+        "leaveNation": "Quitter la nation ?",
+        "cancelCitizenship": "Annuler la demande de citoyenneté ?"
       },
       "langModal": {
         "title": "CHOIX DE LA LANGUE"
@@ -196,7 +202,8 @@
         "regime": "regime de la nation",
         "tree": "parenté",
         "languages": "langues",
-        "hash": "mot clé"
+        "hash": "mot clé",
+        "pendingCitizenship": "citoyenneté non validée"
       },
       "avatar": "avatar"
     },

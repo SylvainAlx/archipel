@@ -8,9 +8,11 @@ import { deletePlace, updatePlace } from "../../api/place/placeAPI";
 import { useTranslation } from "react-i18next";
 import { changeStatus, deleteUser, logout } from "../../api/user/userAPI";
 import { deleteUploadedFile } from "../../api/files/fileAPI";
+import { useNavigate } from "react-router-dom";
 
 export default function ConfirmModal() {
   const { t } = useTranslation();
+  const navigate = useNavigate();
   const [confirm, setConfirm] = useAtom(confirmBox);
 
   return (
@@ -26,6 +28,7 @@ export default function ConfirmModal() {
             setConfirm({ action: confirm.action, text: "", result: "OK" });
             if (confirm.action === "logout") {
               logout();
+              navigate("/");
             }
             if (confirm.action === "deleteSelfNation") {
               deleteSelfNation();
