@@ -45,7 +45,7 @@ export default function Citizens({ selectedNation }: SelectedNationProps) {
     };
     setConfirmModal({
       action: "changeStatus",
-      text: "Rejoindre la nation ?",
+      text: t("components.modals.confirmModal.askCitizenship"),
       result: "",
       payload,
     });
@@ -62,7 +62,7 @@ export default function Citizens({ selectedNation }: SelectedNationProps) {
               {session.user.citizenship.status === -1 &&
                 session.user.officialId != "" && (
                   <Button
-                    text="Demander la citoyenneté"
+                    text={t("components.buttons.askCitizenship")}
                     click={askCtz}
                     children={<FaPassport />}
                   />

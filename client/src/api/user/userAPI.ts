@@ -7,6 +7,7 @@ import {
   myStore,
   nationCitizenListAtom,
   nationFetchedAtom,
+  nationsListAtom,
   recoveryKey,
   session,
   sessionAtom,
@@ -212,17 +213,16 @@ export const getOneUser = (id: string) => {
   if (user === undefined || user === null) {
     getOneUserFetch(id)
       .then((data) => {
-        myStore.set(loadingAtom, false);
         if (data.user) {
           myStore.set(citizenFetchAtom, data.user);
         }
       })
       .catch((error) => {
-        myStore.set(loadingAtom, false);
         myStore.set(citizenFetchAtom, emptyUser);
         errorMessage(error.message);
       });
   }
+  myStore.set(loadingAtom, false);
 };
 
 export const getNationCitizens = (nationId: string) => {
@@ -233,6 +233,8 @@ export const getNationCitizens = (nationId: string) => {
   getNationCitizensFetch(nationId).then((data) => {
     if (data.length > 0) {
       myStore.set(nationCitizenListAtom, data);
+    } else {
+      myStore.set(nationCitizenListAtom, []);
     }
   });
   // } else {
@@ -284,6 +286,8 @@ export const changeStatus = (payload: changeStatusPayload) => {
       myStore.set(loadingAtom, false);
       if (resp.user) {
         myStore.set(citizenFetchAtom, resp.user);
+        myStore.set(nationFetchedAtom, resp.nation);
+        myStore.set(nationsListAtom, []);
         myStore.set(citizenListAtom, []);
         getNationCitizens(payload.nationId);
         displayUserInfoByType("changeStatus");

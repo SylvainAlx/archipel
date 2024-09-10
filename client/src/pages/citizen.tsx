@@ -13,7 +13,7 @@ import Button from "../components/buttons/button";
 import { useNavigate, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import Avatar from "../components/avatar";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { getOneUser } from "../api/user/userAPI";
 import DashTile from "../components/dashTile";
 import TileContainer from "../components/tileContainer";
@@ -34,6 +34,7 @@ export default function Citizen() {
   const [nation] = useAtom(nationFetchedAtom);
   const [session, setSession] = useAtom(sessionAtom);
   const [, setConfirmModal] = useAtom(confirmBox);
+  const [enableLeaving, setEnableLeaving] = useState(false);
 
   useEffect(() => {
     if (param.id) {
@@ -50,9 +51,18 @@ export default function Citizen() {
   }, [param.id, session.user]);
 
   useEffect(() => {
+    if (
+      session.user.officialId === citizen.officialId &&
+      !session.user.citizenship.nationOwner
+    ) {
+      setEnableLeaving(true);
+    } else {
+      setEnableLeaving(false);
+    }
     if (citizen.citizenship.nationId != "" && nation.officialId === "") {
       getNation(citizen.citizenship.nationId);
     }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [citizen]);
 
@@ -104,7 +114,10 @@ export default function Citizen() {
     };
     setConfirmModal({
       action: "changeStatus",
-      text: "Quitter la nation ?",
+      text:
+        session.user.citizenship.status > 0
+          ? t("components.modals.confirmModal.leaveNation")
+          : t("components.modals.confirmModal.cancelCitizenship"),
       result: "",
       payload,
     });
@@ -142,20 +155,30 @@ export default function Citizen() {
                   {nation != undefined &&
                   nation.officialId != "" &&
                   citizen.citizenship.nationId != "" ? (
-                    <div className="relative flex items-center gap-2">
-                      {session.user.officialId === citizen.officialId &&
-                        !session.user.citizenship.nationOwner && (
+                    <div className=" flex items-center gap-2">
+                      <Button
+                        text={nation.name}
+                        click={() => handleClick("nation")}
+                        children={
+                          <div className="relative">
+                            <FaPassport />
+                          </div>
+                        }
+                        bgColor={
+                          session.user.citizenship.status === 0
+                            ? "bg-black_alpha"
+                            : ""
+                        }
+                      />
+                      {enableLeaving && (
+                        <div className="relative w-[10px] self-start">
                           <CrossButton
                             text=""
                             small={true}
                             click={leaveNation}
                           />
-                        )}
-                      <Button
-                        text={nation.name}
-                        click={() => handleClick("nation")}
-                        children={<FaPassport />}
-                      />
+                        </div>
+                      )}
                     </div>
                   ) : (
                     <>
