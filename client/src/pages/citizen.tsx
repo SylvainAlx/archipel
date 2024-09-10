@@ -23,6 +23,7 @@ import IdTag from "../components/tags/idTag";
 import RoleTag from "../components/tags/roleTag";
 import Upploader from "../components/uploader";
 import CrossButton from "../components/buttons/crossButton";
+import { GiBlackFlag } from "react-icons/gi";
 import { FaPassport } from "react-icons/fa";
 
 export default function Citizen() {
@@ -155,19 +156,14 @@ export default function Citizen() {
                   {nation != undefined &&
                   nation.officialId != "" &&
                   citizen.citizenship.nationId != "" ? (
-                    <div className=" flex items-center gap-2">
+                    <div className="w-full flex flex-col justify-center items-center gap-2">
                       <Button
                         text={nation.name}
                         click={() => handleClick("nation")}
                         children={
                           <div className="relative">
-                            <FaPassport />
+                            <GiBlackFlag />
                           </div>
-                        }
-                        bgColor={
-                          session.user.citizenship.status === 0
-                            ? "bg-black_alpha"
-                            : ""
                         }
                       />
                       {enableLeaving && (
@@ -179,6 +175,12 @@ export default function Citizen() {
                           />
                         </div>
                       )}
+                      <Button
+                        text="VOIR CARTE D'IDENTITÉ"
+                        click={() => console.log("ID")}
+                        children={<FaPassport />}
+                        disabled
+                      />
                     </div>
                   ) : (
                     <>

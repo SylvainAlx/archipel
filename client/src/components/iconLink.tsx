@@ -4,7 +4,6 @@ import {
   IoMdGlobe,
   IoMdHome,
 } from "react-icons/io";
-// import { GiBlackFlag } from "react-icons/gi";
 import { RxAvatar } from "react-icons/rx";
 import { sessionAtom } from "../settings/store";
 import { useAtom } from "jotai";

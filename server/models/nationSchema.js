@@ -16,6 +16,14 @@ const nationSchema = mongoose.Schema(
       type: String,
       default: "",
     },
+    reported: {
+      type: Boolean,
+      default: false
+    },
+    banished: {
+      type: Boolean,
+      default: false
+    },
     data: {
       url: {
         flag: {
@@ -44,16 +52,6 @@ const nationSchema = mongoose.Schema(
         },
       },
       general: {
-        coords: {
-          lat: {
-            type: Number,
-            required: true,
-          },
-          lng: {
-            type: Number,
-            required: true,
-          },
-        },
         motto: {
           type: String,
           default: "",
@@ -76,18 +74,6 @@ const nationSchema = mongoose.Schema(
         },
       },
       roleplay: {
-        lastUpdated: {
-          type: Date,
-          default: new Date(),
-        },
-        points: {
-          type: Number,
-          default: 0,
-        },
-        credits: {
-          type: Number,
-          default: 100,
-        },
         capital: {
           type: String,
           default: "",
@@ -99,11 +85,7 @@ const nationSchema = mongoose.Schema(
         places: {
           type: Number,
           default: 0,
-        },
-        politicalSide: {
-          type: Number,
-          default: 0,
-        },
+        }
       },
     },
   },
