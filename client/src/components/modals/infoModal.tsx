@@ -13,7 +13,6 @@ export default function InfoModal() {
 
   const handlePress = (e: React.KeyboardEvent) => {
     const { key } = e;
-    console.log(key);
     if (key === "Enter") {
       myStore.set(infoModalAtom, "");
     }

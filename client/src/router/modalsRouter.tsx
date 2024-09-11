@@ -4,6 +4,7 @@ import {
   confirmBox,
   // editPlaceAtom,
   editbox,
+  idModalAtom,
   imageAtom,
   infoModalAtom,
   loadingAtom,
@@ -25,6 +26,7 @@ import ImageModal from "../components/modals/imageModal";
 import MenuModal from "../components/modals/menuModal";
 import NewNationModal from "../components/modals/newNationModal";
 import { ChangePasswordModal } from "../components/modals/changePasswordModal";
+import IdModal from "../components/modals/idModal";
 
 export default function ModalsRouter() {
   const [recovery] = useAtom(recoveryKey);
@@ -39,6 +41,7 @@ export default function ModalsRouter() {
   const [menu] = useAtom(showMenuAtom);
   const [newNation] = useAtom(newNationAtom);
   const [changePassword] = useAtom(changePasswordModalAtom);
+  const [idModal] = useAtom(idModalAtom);
 
   if (
     recovery != "" ||
@@ -52,10 +55,11 @@ export default function ModalsRouter() {
     image != "" ||
     menu ||
     newNation.owner != "" ||
-    changePassword
+    changePassword ||
+    idModal.show
   ) {
     return (
-      <div className="animate-in fade-in z-20 fixed top-0 w-[100%] h-[100%] backdrop-blur-sm bg-black_alpha flex items-center justify-center">
+      <div className="animate-in fade-in z-20 fixed top-0 w-screen h-screen backdrop-blur-sm bg-black_alpha flex items-center justify-center">
         <div
           className={`min-w-[350px] max-w-[90%] ${!loading && "bg-slate-800"} rounded-md p-6 flex flex-col items-center gap-4`}
         >
@@ -77,6 +81,7 @@ export default function ModalsRouter() {
                   {menu && <MenuModal />}
                   {newNation.owner != "" && <NewNationModal />}
                   {changePassword && <ChangePasswordModal />}
+                  {idModal.show && <IdModal />}
                 </>
               )}
             </>

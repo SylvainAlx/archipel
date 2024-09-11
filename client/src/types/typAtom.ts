@@ -63,3 +63,9 @@ export interface StandardOption {
   id: number | string;
   label: string;
 }
+
+export interface IdModal {
+  show: boolean;
+  citizen: User;
+  nation: Nation;
+}

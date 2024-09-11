@@ -51,10 +51,6 @@ const UserSchema = mongoose.Schema(
         type: String,
         default: "",
       },
-      nationName: {
-        type: String,
-        default: "",
-      },
       nationOwner: {
         type: Boolean,
         default: false,
