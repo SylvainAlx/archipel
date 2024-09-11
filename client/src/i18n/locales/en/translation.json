@@ -109,7 +109,8 @@
       "back": "back",
       "newPlace": "new location",
       "showMore": "SHOW MORE",
-      "askCitizenship": "ASK CITIZENSHIP"
+      "askCitizenship": "ASK CITIZENSHIP",
+      "showIdCard": "SHOW ID CARD"
     },
     "form": {
       "input": {

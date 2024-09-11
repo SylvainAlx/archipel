@@ -109,7 +109,8 @@
       "back": "retour",
       "newPlace": "nouveau lieu",
       "showMore": "VOIR PLUS",
-      "askCitizenship": "DEMANDER LA NATIONNALITÉ"
+      "askCitizenship": "DEMANDER LA NATIONNALITÉ",
+      "showIdCard": "VOIR LA CARTE D'IDENTITÉ"
     },
     "form": {
       "input": {

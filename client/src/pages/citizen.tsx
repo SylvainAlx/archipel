@@ -4,6 +4,7 @@ import {
   changePasswordModalAtom,
   citizenFetchAtom,
   confirmBox,
+  idModalAtom,
   myStore,
   nationFetchedAtom,
   newNationAtom,
@@ -157,30 +158,33 @@ export default function Citizen() {
                   nation.officialId != "" &&
                   citizen.citizenship.nationId != "" ? (
                     <div className="w-full flex flex-col justify-center items-center gap-2">
-                      <Button
-                        text={nation.name}
-                        click={() => handleClick("nation")}
-                        children={
-                          <div className="relative">
-                            <GiBlackFlag />
-                          </div>
-                        }
-                      />
-                      {enableLeaving && (
-                        <div className="relative w-[10px] self-start">
+                      <div className="w-[300px] relative flex gap-2 items-center justify-center">
+                        <Button
+                          text={nation.name}
+                          click={() => handleClick("nation")}
+                          children={<GiBlackFlag />}
+                        />
+                        {enableLeaving && (
                           <CrossButton
                             text=""
                             small={true}
                             click={leaveNation}
                           />
-                        </div>
+                        )}
+                      </div>
+                      {session.user.officialId === citizen.officialId && (
+                        <Button
+                          text={t("components.buttons.showIdCard")}
+                          click={() =>
+                            myStore.set(idModalAtom, {
+                              show: true,
+                              citizen,
+                              nation,
+                            })
+                          }
+                          children={<FaPassport />}
+                        />
                       )}
-                      <Button
-                        text="VOIR CARTE D'IDENTITÉ"
-                        click={() => console.log("ID")}
-                        children={<FaPassport />}
-                        disabled
-                      />
                     </div>
                   ) : (
                     <>

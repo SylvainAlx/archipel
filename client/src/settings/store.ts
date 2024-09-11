@@ -11,6 +11,7 @@ import {
   ConfirmBoxDefault,
   EditBoxDefault,
   EditPlaceParam,
+  IdModal,
   Param,
   Session,
 } from "../types/typAtom";
@@ -91,6 +92,11 @@ export const recoveryKey = atom("");
 export const confirmBox = atom(ConfirmBoxDefault);
 export const editbox = atom(EditBoxDefault);
 export const infoModalAtom = atom("");
+export const idModalAtom = atom<IdModal>({
+  show: false,
+  citizen: emptyUser,
+  nation: EmptyNation,
+});
 export const changePasswordModalAtom = atom(false);
 export const showApp = atom(false);
 
