@@ -27,7 +27,7 @@ export default function CitizenTag({ label, citizen }: CitizenTagProps) {
         <div className="flex gap-2 items-center">
           {session.user.citizenship.nationId === citizen.citizenship.nationId &&
             session.user.citizenship.nationOwner && (
-              <div className="flex items-center">
+              <div className="flex items-center bg-light rounded-full px-1">
                 <div
                   onClick={() => approveCitizenship(citizen)}
                   className="cursor-pointer text-xl text-success"

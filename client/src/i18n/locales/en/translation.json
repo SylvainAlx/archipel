@@ -109,8 +109,7 @@
       "back": "back",
       "newPlace": "new location",
       "showMore": "SHOW MORE",
-      "askCitizenship": "ASK CITIZENSHIP",
-      "showIdCard": "SHOW ID CARD"
+      "askCitizenship": "ASK CITIZENSHIP"
     },
     "form": {
       "input": {
@@ -204,7 +203,8 @@
         "tree": "kinship",
         "languages": "languages",
         "hash": "hash tag",
-        "pendingCitizenship": "citizenship not validated"
+        "pendingCitizenship": "citizenship not validated",
+        "founder": "founder"
       },
       "avatar": "avatar"
     },

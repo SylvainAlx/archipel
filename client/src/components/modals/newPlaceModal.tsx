@@ -10,7 +10,6 @@ import { emptyPlace } from "../../types/typPlace";
 import { createNewPlace } from "../../api/place/placeAPI";
 import Select from "../form/select";
 import { placesTypeList } from "../../settings/consts";
-import PointTag from "../tags/pointTag";
 import { useTranslation } from "react-i18next";
 
 export default function NewPlaceModal() {
@@ -41,9 +40,6 @@ export default function NewPlaceModal() {
       <h2 className="text-2xl text-center p-4">
         {t("components.modals.newPlaceModal.title")}
       </h2>
-      <div className="w-full px-2 flex items-center justify-center gap-4">
-        <PointTag label={newPlace.points} />
-      </div>
       <Form
         submit={handleSubmit}
         children={

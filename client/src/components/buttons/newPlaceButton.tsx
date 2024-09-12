@@ -5,6 +5,7 @@ import { Place, emptyPlace } from "../../types/typPlace";
 import { myStore, newPlaceAtom, sessionAtom } from "../../settings/store";
 import { useTranslation } from "react-i18next";
 import { useAtom } from "jotai";
+import { MdLandscape } from "react-icons/md";
 
 export interface newPlaceProps {
   parentId: string;
@@ -37,18 +38,10 @@ export default function NewPlaceButton({ parentId, owner }: newPlaceProps) {
     <>
       {owner && (
         <Button
-          text=""
+          text={t("components.buttons.newPlace")}
           type="button"
           click={handleClick}
-          children={
-            <div className="w-full flex justify-center items-center gap-2 flex-wrap">
-              <span>{t("components.buttons.newPlace")}</span>
-              {/* <span className="flex gap-1 items-center">
-                <FaCoins />
-                {NEW_PLACE_COST}
-              </span> */}
-            </div>
-          }
+          children={<MdLandscape />}
         />
       )}
     </>

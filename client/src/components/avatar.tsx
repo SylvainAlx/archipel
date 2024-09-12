@@ -3,6 +3,7 @@ import { RxAvatar } from "react-icons/rx";
 import Spinner from "./loading/spinner";
 import { useTranslation } from "react-i18next";
 import { getCachedImage } from "../utils/functions";
+import { imageAtom, myStore } from "../settings/store";
 
 export interface AvatarProps {
   url: string;
@@ -19,6 +20,10 @@ export default function Avatar({ url }: AvatarProps) {
     }
   }, [url]);
 
+  const handleClick = (image: string) => {
+    myStore.set(imageAtom, image);
+  };
+
   return (
     <div className="animate-fadeIn h-[80px] w-[80px] flex flex-col justify-center rounded-full overflow-hidden">
       {cachedImage ? (
@@ -27,6 +32,7 @@ export default function Avatar({ url }: AvatarProps) {
           alt="avatar"
           className="object-cover w-full h-full rounded cursor-zoom-in"
           title={t("components.hoverInfos.avatar")}
+          onClick={() => handleClick(cachedImage)}
         />
       ) : url ? (
         <Suspense fallback={<Spinner />}>
