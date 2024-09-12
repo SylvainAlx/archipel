@@ -4,7 +4,6 @@ import {
   changePasswordModalAtom,
   citizenFetchAtom,
   confirmBox,
-  idModalAtom,
   myStore,
   nationFetchedAtom,
   newNationAtom,
@@ -25,7 +24,7 @@ import RoleTag from "../components/tags/roleTag";
 import Upploader from "../components/uploader";
 import CrossButton from "../components/buttons/crossButton";
 import { GiBlackFlag } from "react-icons/gi";
-import { FaPassport } from "react-icons/fa";
+import FounderTag from "../components/tags/founderTag";
 
 export default function Citizen() {
   const { t } = useTranslation();
@@ -153,6 +152,7 @@ export default function Citizen() {
                   <div className="max-w-[90%] flex flex-wrap items-center justify-center gap-1">
                     <IdTag label={citizen.officialId} />
                     {citizen.role === "admin" && <RoleTag label="admin" />}
+                    {citizen.citizenship.nationOwner && <FounderTag />}
                   </div>
                   {nation != undefined &&
                   nation.officialId != "" &&
@@ -172,19 +172,6 @@ export default function Citizen() {
                           />
                         )}
                       </div>
-                      {session.user.officialId === citizen.officialId && (
-                        <Button
-                          text={t("components.buttons.showIdCard")}
-                          click={() =>
-                            myStore.set(idModalAtom, {
-                              show: true,
-                              citizen,
-                              nation,
-                            })
-                          }
-                          children={<FaPassport />}
-                        />
-                      )}
                     </div>
                   ) : (
                     <>

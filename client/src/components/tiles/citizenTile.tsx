@@ -16,6 +16,7 @@ import { declineCitizenship } from "../../utils/functions";
 import CrossButton from "../buttons/crossButton";
 import { useAtom } from "jotai";
 import { useTranslation } from "react-i18next";
+import FounderTag from "../tags/founderTag";
 
 export interface CitizenTileProps {
   citizen: User;
@@ -63,6 +64,7 @@ export default function CitizenTile({ citizen }: CitizenTileProps) {
         )}
         {citizen.officialId && <IdTag label={citizen.officialId} />}
         {citizen.role === "admin" && <RoleTag label="admin" />}
+        {citizen.citizenship.nationOwner && <FounderTag />}
       </div>
     </div>
   );

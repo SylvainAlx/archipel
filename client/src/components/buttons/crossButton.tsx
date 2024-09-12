@@ -3,13 +3,13 @@ import { ClickProps } from "../../types/typProp";
 import Button from "./button";
 import { useTranslation } from "react-i18next";
 
-export default function CrossButton({ click, small }: ClickProps) {
+export default function CrossButton({ click, small, text }: ClickProps) {
   const { t } = useTranslation();
   return (
     <>
       {!small ? (
         <Button
-          text={t("components.buttons.delete")}
+          text={text ? text : t("components.buttons.delete")}
           bgColor="bg-danger"
           click={click}
           children={

@@ -109,8 +109,7 @@
       "back": "retour",
       "newPlace": "nouveau lieu",
       "showMore": "VOIR PLUS",
-      "askCitizenship": "DEMANDER LA NATIONNALITÉ",
-      "showIdCard": "VOIR LA CARTE D'IDENTITÉ"
+      "askCitizenship": "DEMANDER LA NATIONNALITÉ"
     },
     "form": {
       "input": {
@@ -204,7 +203,8 @@
         "tree": "parenté",
         "languages": "langues",
         "hash": "mot clé",
-        "pendingCitizenship": "citoyenneté non validée"
+        "pendingCitizenship": "citoyenneté non validée",
+        "founder": "fondateur"
       },
       "avatar": "avatar"
     },
