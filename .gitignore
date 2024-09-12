@@ -4,8 +4,3 @@
 /client/.env
 /client/node_modules
 /client/dist
-
-/server-nest/dist
-/server-nest/.env
-/server-nest/node_modules
-/server-nest/test

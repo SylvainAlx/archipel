@@ -9,7 +9,7 @@ import {
 } from "../settings/consts";
 import { LabelId, Nation } from "../types/typNation";
 import { Place } from "../types/typPlace";
-import { SetAtom } from "../settings/store";
+import { confirmBox, myStore, SetAtom } from "../settings/store";
 import { errorMessage, successMessage } from "./toasts";
 import { User } from "../types/typUser";
 
@@ -211,11 +211,14 @@ export const displayUserInfoByType = (type: string) => {
     case "newPassword":
       successMessage(i18n.t("toasts.user.newPassword"));
       break;
-      case "update":
-        successMessage(i18n.t("toasts.user.update"));
-        break;
+    case "update":
+      successMessage(i18n.t("toasts.user.update"));
+      break;
     case "delete":
       successMessage(i18n.t("toasts.user.delete"));
+      break;
+    case "changeStatus":
+      successMessage(i18n.t("toasts.user.update"));
       break;
     case "deleteKO":
       errorMessage(i18n.t("toasts.user.deleteKO"));
@@ -278,4 +281,62 @@ export const sortObjectKeys = (obj: any): any => {
     sortedObj[key] = obj[key];
   });
   return sortedObj;
+};
+
+export async function getCachedImage(url: string): Promise<string | null> {
+  const cached = localStorage.getItem(url);
+
+  if (cached) {
+    return cached;
+  } else {
+    try {
+      const response = await fetch(url);
+      const blob = await response.blob();
+      const reader = new FileReader();
+
+      return new Promise((resolve, reject) => {
+        reader.onloadend = () => {
+          if (reader.result) {
+            localStorage.setItem(url, reader.result as string);
+            resolve(reader.result as string);
+          } else {
+            reject("Failed to read the image data");
+          }
+        };
+        reader.onerror = () => reject(reader.error);
+        reader.readAsDataURL(blob);
+      });
+    } catch (error) {
+      console.error("Failed to fetch image:", error);
+      return null;
+    }
+  }
+}
+
+export const approveCitizenship = (citizen: User) => {
+  const payload = {
+    officialId: citizen.officialId,
+    nationId: citizen.citizenship.nationId,
+    status: 1,
+  };
+  myStore.set(confirmBox, {
+    action: "changeStatus",
+    text: i18n.t("components.modals.confirmModal.approveCitizenship"),
+    result: "",
+    payload,
+  });
+};
+
+export const declineCitizenship = (citizen: User) => {
+  const payload = {
+    officialId: citizen.officialId,
+    nationId: citizen.citizenship.nationId,
+    status: -1,
+  };
+  myStore.set(confirmBox, {
+    action: "changeStatus",
+    text: i18n.t("components.modals.confirmModal.declineCitizenship"),
+    result: "",
+    payload,
+  });
 };

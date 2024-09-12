@@ -9,6 +9,7 @@ export interface User {
   recovery?: string;
   role: string;
   citizenship: {
+    status: number;
     nationId: string;
     nationOwner: boolean;
   };
@@ -34,6 +35,12 @@ export interface ChangePasswordPayload {
   newPassword: string;
 }
 
+export interface changeStatusPayload {
+  officialId: string;
+  nationId: string;
+  status: number;
+}
+
 export const emptyUser: User = {
   officialId: "",
   name: "",
@@ -45,6 +52,7 @@ export const emptyUser: User = {
   recovery: "",
   role: "",
   citizenship: {
+    status: -1,
     nationId: "",
     nationOwner: false,
   },

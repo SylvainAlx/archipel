@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import HoverInfo from "../hoverInfo";
 import { imageAtom, myStore } from "../../settings/store";
+import { getCachedImage } from "../../utils/functions";
 
 export interface LazyImageProps {
   src: string;
@@ -16,6 +17,13 @@ export default function LazyImage({
   hover,
 }: LazyImageProps) {
   const [showInfo, setShowInfo] = useState(false);
+  const [cachedImage, setCachedImage] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (src) {
+      getCachedImage(src).then(setCachedImage);
+    }
+  }, [src]);
 
   const handleClick = (image: string) => {
     myStore.set(imageAtom, image);
@@ -23,14 +31,16 @@ export default function LazyImage({
 
   return (
     <>
-      <img
-        onClick={() => handleClick(src)}
-        onMouseEnter={() => setShowInfo(true)}
-        onMouseLeave={() => setShowInfo(false)}
-        src={src + "-/preview/"}
-        alt={alt}
-        className={className}
-      />
+      {cachedImage != null && (
+        <img
+          onClick={() => handleClick(src)}
+          onMouseEnter={() => setShowInfo(true)}
+          onMouseLeave={() => setShowInfo(false)}
+          src={cachedImage}
+          alt={alt}
+          className={className}
+        />
+      )}
       {showInfo && <HoverInfo text={hover} />}
     </>
   );

@@ -11,7 +11,7 @@ export default function DashTile({
 }: DashTileProps) {
   return (
     <fieldset
-      className={`relative min-w-[300px] animate-fadeIn rounded px-2 py-4 flex flex-col items-center flex-grow gap-3 ${className && className}`}
+      className={`relative min-w-[300px] animate-fadeIn rounded px-2 pt-4 pb-6 flex flex-col items-center flex-grow gap-3 ${className && className}`}
     >
       <div className="absolute h-1 inset-0 pointer-events-none border-t border-b border-transparent customGradient"></div>
       {title != "" && (

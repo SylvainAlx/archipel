@@ -6,10 +6,13 @@ import { deleteSelfNation, updateNation } from "../../api/nation/nationAPI";
 import { createNewCom, deleteCom } from "../../api/communication/comAPI";
 import { deletePlace, updatePlace } from "../../api/place/placeAPI";
 import { useTranslation } from "react-i18next";
-import { deleteUser, logout } from "../../api/user/userAPI";
+import { changeStatus, deleteUser, logout } from "../../api/user/userAPI";
+import { deleteUploadedFile } from "../../api/files/fileAPI";
+import { useNavigate } from "react-router-dom";
 
 export default function ConfirmModal() {
   const { t } = useTranslation();
+  const navigate = useNavigate();
   const [confirm, setConfirm] = useAtom(confirmBox);
 
   return (
@@ -25,6 +28,7 @@ export default function ConfirmModal() {
             setConfirm({ action: confirm.action, text: "", result: "OK" });
             if (confirm.action === "logout") {
               logout();
+              navigate("/");
             }
             if (confirm.action === "deleteSelfNation") {
               deleteSelfNation();
@@ -46,6 +50,15 @@ export default function ConfirmModal() {
             }
             if (confirm.action === "updatePlace") {
               updatePlace(confirm.payload);
+            }
+            if (confirm.action === "deleteFile") {
+              deleteUploadedFile({
+                url: confirm.payload,
+                type: confirm.target,
+              });
+            }
+            if (confirm.action === "changeStatus") {
+              changeStatus(confirm.payload);
             }
           }}
         />

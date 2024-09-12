@@ -13,11 +13,11 @@ import Score from "../components/nation/score";
 import Diplomacy from "../components/nation/diplomacy";
 import Links from "../components/nation/links";
 import { useEffect, useState } from "react";
-import Button from "../components/buttons/button";
 import { useNavigate, useParams } from "react-router-dom";
 import { getNation } from "../api/nation/nationAPI";
 import Citizens from "../components/nation/citizens";
 import { errorMessage } from "../utils/toasts";
+import CrossButton from "../components/buttons/crossButton";
 
 export default function Nation() {
   const [nation] = useAtom(nationFetchedAtom);
@@ -63,11 +63,12 @@ export default function Nation() {
   return (
     <>
       <H1 text={t("pages.nation.title")} />
-      {nation != undefined ? (
+      {nation != undefined && (
         <>
           <section className="w-full flex flex-wrap gap-8 items-start justify-between">
             <Score selectedNation={nation} owner={owner} />
             <Links selectedNation={nation} owner={owner} />
+
             <NationIdentity selectedNation={nation} owner={owner} />
             <Diplomacy />
             <Places selectedNation={nation} owner={owner} />
@@ -75,16 +76,18 @@ export default function Nation() {
           </section>
           <section className="pt-10 flex flex-col items-center gap-4">
             {owner && (
-              <Button
+              <CrossButton
                 text={t("components.buttons.deleteNation")}
-                bgColor="bg-danger"
                 click={handleDelete}
               />
+              // <Button
+              //   text={t("components.buttons.deleteNation")}
+              //   bgColor="bg-danger"
+              //   click={handleDelete}
+              // />
             )}
           </section>
         </>
-      ) : (
-        <div>Aucune nation à afficher</div>
       )}
     </>
   );

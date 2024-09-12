@@ -10,6 +10,8 @@ import placeRouter from "./routers/placeRouter.js";
 import paramRouter from "./routers/paramRouter.js";
 import userRouter from "./routers/userRouter.js";
 import tagRouter from "./routers/tagRouter.js";
+import { verifyJwt } from "./middlewares/authMiddleware.js";
+import { deleteUploadedFile } from "./controllers/files.js";
 
 // config serveur
 const app = express();
@@ -20,7 +22,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
-// connection à la base de données
 try {
   mongoose.set("strictQuery", false);
   mongoose.connect(process.env.MONGO_DB_URI);
@@ -34,8 +35,6 @@ try {
   console.log(error);
 }
 
-// écouteur du port
-
 try {
   app.listen(PORT, () => {
     console.log(`server running at PORT : ${PORT}`);
@@ -46,7 +45,10 @@ try {
     app.use("/place", placeRouter);
     app.use("/param", paramRouter);
     app.use("/tag", tagRouter);
+    app.delete("/file/delete/:id", [verifyJwt], deleteUploadedFile)
     app.use("/", home);
+
+    
   });
 } catch (error) {
   console.log(error);

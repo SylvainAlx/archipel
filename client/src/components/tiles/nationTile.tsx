@@ -6,9 +6,19 @@ import EyeButton from "../buttons/eyeButton";
 import { useNavigate } from "react-router-dom";
 import RegimeTag from "../tags/regimeTag";
 import PlaceTag from "../tags/placeTag";
+import { useEffect, useState } from "react";
+import { getCachedImage } from "../../utils/functions";
 
 export default function NationTile(nation: Nation) {
+  const [cachedImage, setCachedImage] = useState<string | null>(null);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (nation.data.url.flag) {
+      getCachedImage(nation.data.url.flag).then(setCachedImage);
+    }
+  }, [nation.data.url.flag]);
+
   const handleClick = () => {
     navigate(`/nation/${nation.officialId}`);
   };
@@ -18,11 +28,19 @@ export default function NationTile(nation: Nation) {
         <div className="w-full flex items-center">
           <div className="w-[50px] h-[50px] bg-complementary rounded-full flex items-center justify-center overflow-hidden">
             {nation.data.url.flag != "" ? (
-              <img
-                src={nation.data.url.flag}
-                alt={`flag of ${nation.name}`}
-                className="w-full h-full"
-              />
+              cachedImage ? (
+                <img
+                  src={cachedImage}
+                  alt={`flag of ${nation.name}`}
+                  className="w-full h-full"
+                />
+              ) : (
+                <img
+                  src={nation.data.url.flag}
+                  alt={`flag of ${nation.name}`}
+                  className="w-full h-full"
+                />
+              )
             ) : (
               <div className="text-[3.1rem]">
                 <GiBlackFlag />

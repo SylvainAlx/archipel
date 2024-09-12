@@ -42,24 +42,18 @@ export default function Nav() {
             text={t("components.buttons.user")}
             action={() => navigate(`/citizen/${session.user.officialId}`)}
           />
-          {session.user.role === "admin" && (
-            <IconLink
-              destination="admin"
-              text={t("components.buttons.admin")}
-              action={() => navigate(`/admin`)}
-            />
-          )}
         </>
       )}
-      {session.user.citizenship.nationId != "" && (
-        <IconLink
-          destination="nation"
-          text={t("components.buttons.nation")}
-          action={() =>
-            navigate(`/nation/${session.user.citizenship.nationId}`)
-          }
-        />
-      )}
+      {session.user.citizenship.nationId != "" &&
+        session.user.citizenship.status > 0 && (
+          <IconLink
+            destination="nation"
+            text={t("components.buttons.nation")}
+            action={() =>
+              navigate(`/nation/${session.user.citizenship.nationId}`)
+            }
+          />
+        )}
     </>
   );
 }

@@ -10,9 +10,11 @@ import Button from "../buttons/button";
 // import { FaArrowUpRightDots, FaCoins } from "react-icons/fa6";
 import DashTile from "../dashTile";
 import IdTag from "../tags/idTag";
+import { useTranslation } from "react-i18next";
 
 export default function PlaceModal() {
   const [data, setData] = useAtom(editPlaceAtom);
+  const { t } = useTranslation();
   // const selectedNation = myStore.get(selectedNationAtom);
 
   const handleClose = () => {
@@ -70,7 +72,7 @@ export default function PlaceModal() {
           }
         />
       )} */}
-      <Button text="FERMER" click={handleClose} />
+      <Button text={t("components.buttons.close")} click={handleClose} />
     </>
   );
 }

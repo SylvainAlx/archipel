@@ -13,7 +13,7 @@ import Button from "../components/buttons/button";
 import { useNavigate, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import Avatar from "../components/avatar";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { getOneUser } from "../api/user/userAPI";
 import DashTile from "../components/dashTile";
 import TileContainer from "../components/tileContainer";
@@ -22,6 +22,9 @@ import { getNation } from "../api/nation/nationAPI";
 import IdTag from "../components/tags/idTag";
 import RoleTag from "../components/tags/roleTag";
 import Upploader from "../components/uploader";
+import CrossButton from "../components/buttons/crossButton";
+import { GiBlackFlag } from "react-icons/gi";
+import FounderTag from "../components/tags/founderTag";
 
 export default function Citizen() {
   const { t } = useTranslation();
@@ -30,11 +33,16 @@ export default function Citizen() {
 
   const [citizen, setCitizen] = useAtom(citizenFetchAtom);
   const [nation] = useAtom(nationFetchedAtom);
-  const [session] = useAtom(sessionAtom);
+  const [session, setSession] = useAtom(sessionAtom);
+  const [, setConfirmModal] = useAtom(confirmBox);
+  const [enableLeaving, setEnableLeaving] = useState(false);
 
   useEffect(() => {
     if (param.id) {
-      if (session.user.officialId === param.id) {
+      if (
+        session.user.officialId === param.id &&
+        citizen.officialId != session.user.officialId
+      ) {
         setCitizen(session.user);
       } else {
         getOneUser(param.id);
@@ -44,9 +52,18 @@ export default function Citizen() {
   }, [param.id, session.user]);
 
   useEffect(() => {
+    if (
+      session.user.officialId === citizen.officialId &&
+      !session.user.citizenship.nationOwner
+    ) {
+      setEnableLeaving(true);
+    } else {
+      setEnableLeaving(false);
+    }
     if (citizen.citizenship.nationId != "" && nation.officialId === "") {
       getNation(citizen.citizenship.nationId);
     }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [citizen]);
 
@@ -59,7 +76,7 @@ export default function Citizen() {
         owner: citizen.officialId,
       });
     } else if (dest === "join") {
-      navigate(`/nations`);
+      navigate(`/explore`);
     }
   };
 
@@ -80,13 +97,51 @@ export default function Citizen() {
     navigate("/");
   };
 
+  const handleDeleteAvatar = () => {
+    myStore.set(confirmBox, {
+      action: "deleteFile",
+      text: t("components.modals.confirmModal.deleteFile"),
+      payload: citizen.avatar,
+      result: "",
+      target: "avatar",
+    });
+  };
+
+  const leaveNation = () => {
+    const payload = {
+      officialId: citizen.officialId,
+      nationId: citizen.citizenship.nationId,
+      status: -1,
+    };
+    setConfirmModal({
+      action: "changeStatus",
+      text:
+        session.user.citizenship.status > 0
+          ? t("components.modals.confirmModal.leaveNation")
+          : t("components.modals.confirmModal.cancelCitizenship"),
+      result: "",
+      payload,
+    });
+
+    const newSession = { ...session };
+    newSession.user.citizenship.nationId = "";
+    newSession.user.citizenship.status = -1;
+    setSession(newSession);
+  };
+
   return (
     <>
       <H1 text={citizen.name} />
-      <Avatar url={citizen.avatar} />
-      {session.user.officialId === citizen.officialId && (
-        <Upploader path="avatar" destination="citizen" />
-      )}
+      <div className="relative">
+        <Avatar url={citizen.avatar} />
+        {session.user.officialId === citizen.officialId &&
+          (citizen.avatar != "" ? (
+            <CrossButton small={true} click={handleDeleteAvatar} />
+          ) : (
+            <Upploader path="avatar" destination="citizen" />
+          ))}
+      </div>
+
       <TileContainer
         children={
           <>
@@ -97,12 +152,27 @@ export default function Citizen() {
                   <div className="max-w-[90%] flex flex-wrap items-center justify-center gap-1">
                     <IdTag label={citizen.officialId} />
                     {citizen.role === "admin" && <RoleTag label="admin" />}
+                    {citizen.citizenship.nationOwner && <FounderTag />}
                   </div>
-                  {nation != undefined && nation.officialId != "" ? (
-                    <Button
-                      text={nation.name}
-                      click={() => handleClick("nation")}
-                    />
+                  {nation != undefined &&
+                  nation.officialId != "" &&
+                  citizen.citizenship.nationId != "" ? (
+                    <div className="w-full flex flex-col justify-center items-center gap-2">
+                      <div className="w-[300px] relative flex gap-2 items-center justify-center">
+                        <Button
+                          text={nation.name}
+                          click={() => handleClick("nation")}
+                          children={<GiBlackFlag />}
+                        />
+                        {enableLeaving && (
+                          <CrossButton
+                            text=""
+                            small={true}
+                            click={leaveNation}
+                          />
+                        )}
+                      </div>
+                    </div>
                   ) : (
                     <>
                       {session.user.officialId === citizen.officialId && (

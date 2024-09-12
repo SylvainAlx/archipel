@@ -43,11 +43,11 @@ const UserSchema = mongoose.Schema(
       required: true,
     },
     citizenship: {
-      nationId: {
-        type: String,
-        default: "",
+      status: {
+        type: Number,
+        default: -1,
       },
-      nationName: {
+      nationId: {
         type: String,
         default: "",
       },

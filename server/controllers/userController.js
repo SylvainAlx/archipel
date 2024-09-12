@@ -1,8 +1,6 @@
 import User from "../models/userSchema.js";
-import Place from "../models/placeSchema.js";
 import Nation from "../models/nationSchema.js";
 import Param from "../models/paramSchema.js";
-import Com from "../models/comSchema.js";
 import jwt from "jsonwebtoken";
 import { LoremIpsum } from "lorem-ipsum";
 import { createOfficialId } from "../utils/functions.js";
@@ -296,7 +294,8 @@ export const usersCount = async (req, res) => {
 
 export const updateUser = async (req, res) => {
   try {
-    const { officialId, name, gender, avatar, language, role, citizenship } = req.body;
+    const { officialId, name, gender, avatar, language, role, citizenship } =
+      req.body;
     if (req.userId === officialId) {
       const user = await User.findOne(
         { officialId },
@@ -307,7 +306,7 @@ export const updateUser = async (req, res) => {
       user.avatar = avatar;
       user.language = language;
       user.role = role;
-      user.citizenship = citizenship
+      user.citizenship = citizenship;
       user
         .save()
         .then((user) => {
@@ -325,4 +324,66 @@ export const updateUser = async (req, res) => {
   } catch (error) {
     res.status(400).json({ message: error });
   }
-}
+};
+
+export const changeStatus = async (req, res) => {
+  try {
+    const { officialId, nationId, status } = req.body;
+    
+    if (req.userId === officialId || status != 0) {
+      const user = await User.findOne(
+        { officialId },
+        "officialId nofficialIdame surname gender avatar language role citizenship createdAt",
+      );
+      
+      const nation = await Nation.findOne(
+        { officialId: nationId },
+        "officialId name data",
+      );
+      
+      
+      if (status === 0 || status === 1) {
+        user.citizenship.nationId = nation.officialId;
+        user.citizenship.nationName = nation.name;
+        if (status === 1) {
+          nation.data.roleplay.citizens += 1;
+          nation.save()
+          .catch((error) => {
+            res.status(400).json({
+              erreur: error.message,
+            });
+          });
+        }
+      } else {
+        user.citizenship.nationId = "";
+        user.citizenship.nationName = "";
+        if (user.citizenship.status === 1) {
+          nation.data.roleplay.citizens -= 1;
+        nation.save()
+        .catch((error) => {
+          res.status(400).json({
+            erreur: error.message,
+          });
+        });
+        }
+        
+      }
+      user.citizenship.status = status;
+      user
+        .save()
+        .then((user) => {
+          res.status(200).json({ user, nation, message: "mise à jour réussie" });
+        })
+        .catch((error) => {
+          res.status(400).json({
+            message: `certaines informations sont erronées ou manquantes`,
+            erreur: error.message,
+          });
+        });
+    } else {
+      res.sendStatus(403).json({ message: "modification interdite" });
+    }
+  } catch (error) {
+    res.status(400).json({ message: error });
+  }
+};

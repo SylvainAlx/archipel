@@ -1,5 +1,4 @@
 import {
-  confirmBox,
   editPlaceAtom,
   myStore,
   nationPlacesListAtom,
@@ -13,9 +12,7 @@ import EyeButton from "../buttons/eyeButton";
 import IdTag from "../tags/idTag";
 import { getPlaceTypeLabel } from "../../utils/functions";
 import PlaceTag from "../tags/placeTag";
-import CrossButton from "../buttons/crossButton";
 import { useEffect, useState } from "react";
-import { useTranslation } from "react-i18next";
 import TreeTag from "../tags/treeTag";
 import { Place } from "../../types/typPlace";
 
@@ -26,7 +23,6 @@ export interface PlaceTileProp {
 }
 
 export default function PlaceTile({ place, owner }: PlaceTileProp) {
-  const { t } = useTranslation();
   const [nationPlacesList] = useAtom(nationPlacesListAtom);
   const [childrenStats, setChildrenStats] = useState({
     points: 0,
@@ -35,15 +31,6 @@ export default function PlaceTile({ place, owner }: PlaceTileProp) {
   });
 
   const navigate = useNavigate();
-
-  const handleDelete = () => {
-    myStore.set(confirmBox, {
-      action: "deletePlace",
-      text: t("components.modals.confirmModal.deletePlace"),
-      result: "",
-      target: place,
-    });
-  };
 
   const handleClick = () => {
     myStore.set(editPlaceAtom, { place, owner });
@@ -79,7 +66,6 @@ export default function PlaceTile({ place, owner }: PlaceTileProp) {
           </div>
           <div className="flex gap-2 flex-wrap self-end justify-end">
             <EyeButton click={handleClick} />
-            {owner && <CrossButton click={handleDelete} />}
           </div>
         </h3>
         <p className="w-full flex-grow">{place.description}</p>

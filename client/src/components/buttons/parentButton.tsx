@@ -6,16 +6,14 @@ import { IoReturnUpBackSharp } from "react-icons/io5";
 export default function ParentButton({ click }: ClickProps) {
   const { t } = useTranslation();
   return (
-    <div className="cursor-pointer overflow-hidden">
-      <Button
-        text={t("components.hoverInfos.tags.tree")}
-        click={click}
-        children={
-          <div className="hover:animate-ping text-xl">
-            <IoReturnUpBackSharp />
-          </div>
-        }
-      />
-    </div>
+    <Button
+      text={t("components.hoverInfos.tags.tree")}
+      click={click}
+      children={
+        <div className="hover:animate-ping text-xl cursor-pointer overflow-hidden">
+          <IoReturnUpBackSharp />
+        </div>
+      }
+    />
   );
 }
