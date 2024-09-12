@@ -85,7 +85,7 @@ const nationSchema = mongoose.Schema(
         places: {
           type: Number,
           default: 0,
-        }
+        },
       },
     },
   },

@@ -49,7 +49,8 @@ export default function CitizenTile({ citizen }: CitizenTileProps) {
       {session.user.citizenship.nationOwner &&
         session.user.citizenship.nationId === citizen.citizenship.nationId &&
         session.user.officialId != citizen.officialId &&
-        emplacement.pathname != "/explore" && (
+        emplacement.pathname != "/explore" &&
+        citizen.citizenship.status > 0 && (
           <div className="w-max self-end">
             <CrossButton click={() => declineCitizenship(citizen)} />
           </div>
