@@ -1,20 +1,22 @@
-interface NationDiplomacyInfo {
+export interface NationDiplomacyInfo {
   OfficialId: string;
   AmbassadorId: string;
   accepted: boolean;
+}
+
+export interface RelationKind {
+  business: boolean;
+  economic: boolean;
+  cultural: boolean;
+  scientific: boolean;
+  coop: boolean;
 }
 
 export interface DiplomaticRelationship {
   officialId: string;
   name: string;
   nations: NationDiplomacyInfo[];
-  kind: {
-    business: boolean;
-    economic: boolean;
-    cultural: boolean;
-    scientific: boolean;
-    coop: boolean;
-  };
+  kind: RelationKind;
   createdAt: Date;
 }
 

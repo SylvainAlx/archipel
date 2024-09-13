@@ -1,4 +1,5 @@
 import Relation from "../models/relationSchema.js";
+import { createOfficialId } from "../utils/functions.js";
 
 export const createRelation = async (req, res) => {
   try {
@@ -39,7 +40,7 @@ export const getAllRelation = async (req, res) => {
     const searchText = req.query.texteRecherche;
     if (searchText) {
       const relations = await Relation.find({
-        name: { $regex: searchText, $options: "i" },
+        "nations.OfficialId": { $regex: searchText, $options: "i" },
       });
       res.status(200).json(relations);
     } else {
@@ -48,5 +49,36 @@ export const getAllRelation = async (req, res) => {
     }
   } catch (error) {
     res.status(404).json({ error: error.message, infoType: "noRelation" });
+  }
+};
+
+export const updateRelation = async (req, res) => {
+  const { officialId, name, nations, kind } = req.body;
+  try {
+    const relation = await Relation.findOne({
+      officialId,
+    });
+
+    if (relation != undefined && relation != null) {
+      relation.name = name;
+      relation.nations = nations;
+      relation.kind = kind;
+
+      relation
+        .save()
+        .then((relation) => {
+          res.status(200).json({ relation, message: "mise à jour réussie" });
+        })
+        .catch((error) => {
+          res.status(400).json({
+            message: `certaines informations sont erronées ou manquantes`,
+            erreur: error.message,
+          });
+        });
+    } else {
+      res.status(400).json({ message: error });
+    }
+  } catch (error) {
+    res.status(400).json({ message: error });
   }
 };
