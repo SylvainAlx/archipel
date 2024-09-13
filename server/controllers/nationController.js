@@ -1,7 +1,6 @@
 import Nation from "../models/nationSchema.js";
 import User from "../models/userSchema.js";
 import Place from "../models/placeSchema.js";
-import Com from "../models/comSchema.js";
 import { createOfficialId } from "../utils/functions.js";
 
 export const nationsCount = async (req, res) => {

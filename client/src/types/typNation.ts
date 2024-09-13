@@ -27,6 +27,7 @@ export interface Nation {
       regime: number;
       currency: string;
       tags: string[];
+      description: string;
     };
     roleplay: {
       capital: string;
@@ -56,6 +57,7 @@ export const EmptyNation: Nation = {
       regime: 0,
       currency: "",
       tags: [],
+      description: "",
     },
     roleplay: {
       capital: "",

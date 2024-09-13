@@ -33,6 +33,8 @@ export default function Nation() {
       session.user.citizenship.nationId === param.id
     ) {
       setOwner(true);
+    } else {
+      setOwner(false);
     }
   }, [session.user, nation, param.id]);
 
@@ -70,7 +72,7 @@ export default function Nation() {
             <Links selectedNation={nation} owner={owner} />
 
             <NationIdentity selectedNation={nation} owner={owner} />
-            <Diplomacy />
+            <Diplomacy selectedNation={nation} />
             <Places selectedNation={nation} owner={owner} />
             <Citizens selectedNation={nation} owner={owner} />
           </section>

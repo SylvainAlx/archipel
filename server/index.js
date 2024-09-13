@@ -12,6 +12,7 @@ import userRouter from "./routers/userRouter.js";
 import tagRouter from "./routers/tagRouter.js";
 import { verifyJwt } from "./middlewares/authMiddleware.js";
 import { deleteUploadedFile } from "./controllers/files.js";
+import relationRouter from "./routers/relationRouter.js";
 
 // config serveur
 const app = express();
@@ -45,6 +46,7 @@ try {
     app.use("/place", placeRouter);
     app.use("/param", paramRouter);
     app.use("/tag", tagRouter);
+    app.use("/relation", relationRouter)
     app.delete("/file/delete/:id", [verifyJwt], deleteUploadedFile)
     app.use("/", home);
 

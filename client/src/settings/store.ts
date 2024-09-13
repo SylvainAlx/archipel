@@ -19,6 +19,10 @@ import i18n from "../i18n/i18n";
 import { emptyUser, User } from "../types/typUser";
 import { Tag } from "../types/typTag";
 import { Com } from "../types/typCom";
+import {
+  DiplomaticRelationship,
+  emptyDiplomaticRelationship,
+} from "../types/typRelation";
 
 export const myStore = createStore();
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -72,6 +76,13 @@ export const placesListAtom = atom<Place[]>([]);
 export const nationPlacesListAtom = atom<Place[]>([]);
 export const newPlaceAtom = atom<Place>(emptyPlace);
 export const editPlaceAtom = atom<EditPlaceParam>({ place: emptyPlace });
+
+// Relation
+
+export const relationFetchedAtom = atom<DiplomaticRelationship>(
+  emptyDiplomaticRelationship,
+);
+export const relationListAtom = atom<DiplomaticRelationship[]>([]);
 
 // com
 
