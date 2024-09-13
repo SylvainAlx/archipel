@@ -60,7 +60,7 @@ export default function Citizen() {
     } else {
       setEnableLeaving(false);
     }
-    if (citizen.citizenship.nationId != "" && nation.officialId === "") {
+    if (citizen.citizenship.nationId != "") {
       getNation(citizen.citizenship.nationId);
     }
 

@@ -29,21 +29,16 @@ export default function Diplomacy({ selectedNation }: SelectedNationProps) {
                 relationList.map((relation, i) => {
                   return (
                     <Suspense key={i} fallback={<BarreLoader />}>
-                      <div className="relative w-full">
-                        <RelationTile
-                          officialId={relation.officialId}
-                          name={relation.name}
-                          nations={relation.nations}
-                          kind={relation.kind}
-                          createdAt={relation.createdAt}
-                        />
-                      </div>
+                      <RelationTile
+                        relation={relation}
+                        selectedNation={selectedNation}
+                      />
                     </Suspense>
                   );
                 })
               ) : (
                 <em className="text-center">
-                  {t("pages.nation.simulation.noCitizens")}
+                  AT: Pas de relation diplomatique
                 </em>
               )}
             </div>

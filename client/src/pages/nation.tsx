@@ -33,6 +33,8 @@ export default function Nation() {
       session.user.citizenship.nationId === param.id
     ) {
       setOwner(true);
+    } else {
+      setOwner(false);
     }
   }, [session.user, nation, param.id]);
 
