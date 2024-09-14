@@ -4,7 +4,6 @@ import {
   nationFetchedAtom,
   nationsListAtom,
   nationsRoleplayDataAtom,
-  session,
   sessionAtom,
   statsAtom,
 } from "../../settings/store";
@@ -53,6 +52,7 @@ export const createNation = (payload: NewNationPayload) => {
     .then((data) => {
       myStore.set(loadingAtom, false);
       if (data.nation) {
+        const session = myStore.get(sessionAtom);
         myStore.set(nationsListAtom, [...nationsList, data.nation]);
         myStore.set(sessionAtom, { ...session, nation: data.nation });
         if (data.user) {
@@ -116,6 +116,7 @@ export const updateNation = (payload: Nation) => {
       myStore.set(loadingAtom, false);
       if (resp.nation) {
         myStore.set(nationFetchedAtom, resp.nation);
+        const session = myStore.get(sessionAtom);
         myStore.set(sessionAtom, { ...session, nation: resp.nation });
         myStore.set(nationsListAtom, []);
         // updateElementOfAtomArray(resp.nation, nationsList, setNationsList);
@@ -133,6 +134,7 @@ export const deleteSelfNation = () => {
   myStore.set(loadingAtom, true);
   DeleteSelfFetch()
     .then((resp) => {
+      const session = myStore.get(sessionAtom);
       myStore.set(loadingAtom, false);
       if (session.nation) {
         deleteElementOfAtomArray(
