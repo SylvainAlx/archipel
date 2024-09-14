@@ -204,16 +204,18 @@ export default function NationIdentity({
                       )}
                     </div>
                   </div>
-                  <div className="w-[90%] text-center">
+                  <div className="w-full mt-4 text-center flex gap-2">
                     {selectedNation.data.general.description ? (
                       <p
-                        className="mt-4 text-md text-justify"
+                        className="text-md text-justify"
                         dangerouslySetInnerHTML={{
                           __html: selectedNation.data.general.description,
                         }}
                       />
                     ) : (
-                      <em>AT: pas de description</em>
+                      <em className="text-center">
+                        {t("pages.nation.simulation.noRelations")}
+                      </em>
                     )}
 
                     {owner && (

@@ -24,7 +24,7 @@ import RoleTag from "../components/tags/roleTag";
 import Upploader from "../components/uploader";
 import CrossButton from "../components/buttons/crossButton";
 import { GiBlackFlag } from "react-icons/gi";
-import FounderTag from "../components/tags/founderTag";
+import FounderTag from "../components/tags/nationTag";
 
 export default function Citizen() {
   const { t } = useTranslation();
@@ -152,7 +152,12 @@ export default function Citizen() {
                   <div className="max-w-[90%] flex flex-wrap items-center justify-center gap-1">
                     <IdTag label={citizen.officialId} />
                     {citizen.role === "admin" && <RoleTag label="admin" />}
-                    {citizen.citizenship.nationOwner && <FounderTag />}
+                    {citizen.citizenship.nationId != "" && (
+                      <FounderTag
+                        label={citizen.citizenship.nationId}
+                        founder={citizen.citizenship.nationOwner}
+                      />
+                    )}
                   </div>
                   {nation != undefined &&
                   nation.officialId != "" &&
