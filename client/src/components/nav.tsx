@@ -3,6 +3,8 @@ import { sessionAtom } from "../settings/store";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { useAtom } from "jotai";
+import MenuButton from "./buttons/menuButton";
+import LangButton from "./buttons/langButton";
 
 export default function Nav() {
   // const user = myStore.get(userAtom);
@@ -54,6 +56,10 @@ export default function Nav() {
             }
           />
         )}
+      <div className="flex flex-col gap-1 self-center">
+        <LangButton />
+        <MenuButton />
+      </div>
     </>
   );
 }

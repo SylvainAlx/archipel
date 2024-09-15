@@ -110,7 +110,8 @@
       "back": "back",
       "newPlace": "new location",
       "showMore": "SHOW MORE",
-      "askCitizenship": "ASK CITIZENSHIP"
+      "askCitizenship": "ASK CITIZENSHIP",
+      "createRelation": "CREATE DIPLOMATIC RELATIONSHIP"
     },
     "form": {
       "input": {

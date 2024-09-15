@@ -41,6 +41,12 @@ export default function Places({ selectedNation, owner }: SelectedNationProps) {
             className="w-full min-w-[300px] flex-grow"
             children={
               <div className="w-full flex flex-col gap-2 items-center">
+                {owner && (
+                  <NewPlaceButton
+                    owner={owner}
+                    parentId={selectedNation.officialId}
+                  />
+                )}
                 {places.length > 0 ? (
                   places.map((place, i) => {
                     return (
@@ -55,12 +61,6 @@ export default function Places({ selectedNation, owner }: SelectedNationProps) {
                   <em className="text-center">
                     {t("pages.nation.simulation.noPlaces")}
                   </em>
-                )}
-                {owner && (
-                  <NewPlaceButton
-                    owner={owner}
-                    parentId={selectedNation.officialId}
-                  />
                 )}
               </div>
             }

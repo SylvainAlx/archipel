@@ -87,22 +87,22 @@
   "components": {
     "buttons": {
       "home": "ACCUEIL",
-      "login": "SE CONNECTER",
-      "logout": "SE DÉCONNECTER",
-      "register": "S'ENREGISTRER",
-      "explore": "EXPLORER",
-      "dashboard": "TABLEAU DE BORD",
+      "login": "se connecter",
+      "logout": "se déconnecter",
+      "register": "s'enregistrer",
+      "explore": "explorer",
+      "dashboard": "tableau de bord",
       "close": "FERMER",
       "cancel": "ANNULER",
       "nation": "NATION",
       "user": "MON COMPTE",
       "admin": "ADMINISTRATION",
       "validate": "VALIDER",
-      "createNation": "CRÉEZ VOTRE NATION",
-      "joinNation": "REJOINDRE UNE NATION",
-      "deleteNation": "SUPPRIMER VOTRE NATION",
-      "deleteAccount": "SUPPRIMER VOTRE COMPTE",
-      "changePassword": "CHANGER LE MOT DE PASSE",
+      "createNation": "créer une nation",
+      "joinNation": "rejoindre une nation",
+      "deleteNation": "supprimer votre nation",
+      "deleteAccount": "supprimer votre compte",
+      "changePassword": "changer le mot de passe",
       "search": "RECHERCHER",
       "reset": "RÉINITIALISER",
       "access": "voir",
@@ -110,7 +110,8 @@
       "back": "retour",
       "newPlace": "nouveau lieu",
       "showMore": "VOIR PLUS",
-      "askCitizenship": "DEMANDER LA NATIONNALITÉ"
+      "askCitizenship": "demander la nationnalité",
+      "createRelation": "créer une relation diplomatique"
     },
     "form": {
       "input": {

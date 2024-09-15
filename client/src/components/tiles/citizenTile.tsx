@@ -38,7 +38,7 @@ export default function CitizenTile({ citizen }: CitizenTileProps) {
       className={`p-2 rounded flex flex-col items-center gap-3 bg-complementary shadow-xl`}
     >
       <div className="w-full flex justify-between">
-        <div className="w-full flex items-center">
+        <div className="flex items-center">
           <div className="w-[50px] h-[50px] rounded-full flex items-center justify-center overflow-hidden">
             <Avatar url={citizen.avatar} />
           </div>

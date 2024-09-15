@@ -1,6 +1,4 @@
 import { useTranslation } from "react-i18next";
-import LangButton from "../components/buttons/langButton";
-import MenuButton from "../components/buttons/menuButton";
 import HeaderNav from "../components/headerNav";
 import Logo from "../components/logo";
 
@@ -19,10 +17,6 @@ export default function Header() {
       </div>
 
       <HeaderNav />
-      <div className="fixed z-10 right-[10px] top-[10px] flex items-center gap-2">
-        <MenuButton />
-        <LangButton />
-      </div>
     </header>
   );
 }

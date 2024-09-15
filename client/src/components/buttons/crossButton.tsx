@@ -12,11 +12,7 @@ export default function CrossButton({ click, small, text }: ClickProps) {
           text={text ? text : t("components.buttons.delete")}
           bgColor="bg-danger"
           click={click}
-          children={
-            <div className="hover:animate-ping text-xl cursor-pointer overflow-hidden">
-              <IoMdCloseCircle />
-            </div>
-          }
+          children={<IoMdCloseCircle />}
         />
       ) : (
         <div
