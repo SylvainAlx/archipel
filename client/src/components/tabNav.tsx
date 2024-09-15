@@ -17,7 +17,7 @@ export default function TabNav({ tabs, tabId, setTab }: TabNavProps) {
           <div
             className={`${
               tab.id === tabId
-                ? "bg-secondary"
+                ? "bg-gradient-to-r from-secondary2 to-secondary"
                 : "bg-complementary cursor-pointer"
             } w-full min-w-[300px] md:min-w-max p-2 flex items-center justify-center hover:bg-secondary transition-all duration-300`}
             key={i}

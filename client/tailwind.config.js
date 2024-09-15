@@ -8,6 +8,7 @@ export default {
       colors: {
         primary: "var(--color-primary)",
         secondary: "var(--color-secondary)",
+        secondary2: "var(--color-secondary2)",
         light: "var(--color-light)",
         complementary: "var(--color-complementary)",
         complementary2: "var(--color-complementary2)",
@@ -45,5 +46,5 @@ export default {
       },
     },
   },
-  plugins: [],
+  plugins: [require("tailwindcss-animated")],
 };

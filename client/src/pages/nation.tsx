@@ -72,7 +72,7 @@ export default function Nation() {
             <Links selectedNation={nation} owner={owner} />
 
             <NationIdentity selectedNation={nation} owner={owner} />
-            <Diplomacy selectedNation={nation} />
+            <Diplomacy selectedNation={nation} owner={owner} />
             <Places selectedNation={nation} owner={owner} />
             <Citizens selectedNation={nation} owner={owner} />
           </section>

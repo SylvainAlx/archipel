@@ -168,6 +168,7 @@ export default function Citizen() {
                           text={nation.name}
                           click={() => handleClick("nation")}
                           children={<GiBlackFlag />}
+                          widthFull={true}
                         />
                         {enableLeaving && (
                           <CrossButton
@@ -185,10 +186,12 @@ export default function Citizen() {
                           <Button
                             text={t("components.buttons.createNation")}
                             click={() => handleClick("new")}
+                            widthFull={true}
                           />
                           <Button
                             text={t("components.buttons.joinNation")}
                             click={() => handleClick("join")}
+                            widthFull={true}
                           />
                         </>
                       )}
@@ -205,16 +208,19 @@ export default function Citizen() {
                     <Button
                       text={t("components.buttons.changePassword")}
                       click={() => myStore.set(changePasswordModalAtom, true)}
+                      widthFull={true}
                     />
                     <Button
                       text={t("components.buttons.logout")}
                       bgColor="bg-wait"
                       click={logout}
+                      widthFull={true}
                     />
                     <Button
                       text={t("components.buttons.deleteAccount")}
                       bgColor="bg-danger"
                       click={handleDelete}
+                      widthFull={true}
                     />
                   </>
                 }

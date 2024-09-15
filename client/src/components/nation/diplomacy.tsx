@@ -7,8 +7,13 @@ import { relationListAtom } from "../../settings/store";
 import { lazy, Suspense, useEffect } from "react";
 import { getRelations } from "../../api/relation/relationAPI";
 import BarreLoader from "../loading/barreLoader";
+import Button from "../buttons/button";
+import { FaHandshakeSimple } from "react-icons/fa6";
 
-export default function Diplomacy({ selectedNation }: SelectedNationProps) {
+export default function Diplomacy({
+  selectedNation,
+  owner,
+}: SelectedNationProps) {
   const { t } = useTranslation();
   const [relationList] = useAtom(relationListAtom);
   const RelationTile = lazy(() => import("../tiles/relationTile"));
@@ -38,8 +43,14 @@ export default function Diplomacy({ selectedNation }: SelectedNationProps) {
                 })
               ) : (
                 <em className="text-center">
-                  AT: Pas de relation diplomatique
+                  {t("pages.nation.simulation.noRelations")}
                 </em>
+              )}
+              {owner && (
+                <Button
+                  text={t("components.buttons.createRelation")}
+                  children={<FaHandshakeSimple />}
+                />
               )}
             </div>
           }
