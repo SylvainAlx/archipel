@@ -30,6 +30,7 @@ import {
   updateElementOfAtomArray,
 } from "../../utils/functions";
 import { errorMessage, successMessage } from "../../utils/toasts";
+import { nationsList, setNationsList } from "../nation/nationAPI";
 import {
   authGet,
   changePasswordFetch,
@@ -45,8 +46,9 @@ import {
   updateUserFetch,
 } from "./userFetch";
 
-const citizenList = myStore.get(citizenListAtom);
-const setCitizenList = (list: User[]) => myStore.set(citizenListAtom, list);
+export const citizenList = myStore.get(citizenListAtom);
+export const setCitizenList = (list: User[]) =>
+  myStore.set(citizenListAtom, list);
 
 export const getCitizensCount = async () => {
   const stats = myStore.get(statsAtom);
@@ -198,6 +200,9 @@ export const deleteUser = () => {
       myStore.set(sessionAtom, emptySession);
       localStorage.removeItem("jwt");
       displayUserInfoByType(resp.infoType);
+      if (resp.nation != null) {
+        updateElementOfAtomArray(resp.nation, nationsList, setNationsList);
+      }
     })
     .catch((error) => {
       myStore.set(loadingAtom, false);

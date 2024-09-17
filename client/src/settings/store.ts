@@ -83,6 +83,11 @@ export const relationFetchedAtom = atom<DiplomaticRelationship>(
   emptyDiplomaticRelationship,
 );
 export const relationListAtom = atom<DiplomaticRelationship[]>([]);
+export const newRelationAtom = atom({
+  update: false,
+  show: false,
+  relation: emptyDiplomaticRelationship,
+});
 
 // com
 

@@ -17,7 +17,7 @@ export interface DiplomaticRelationship {
   name: string;
   nations: NationDiplomacyInfo[];
   kind: RelationKind;
-  createdAt: Date;
+  createdAt?: Date;
 }
 
 export const emptyDiplomaticRelationship: DiplomaticRelationship = {
@@ -31,5 +31,4 @@ export const emptyDiplomaticRelationship: DiplomaticRelationship = {
     scientific: false,
     coop: false,
   },
-  createdAt: new Date(),
 };

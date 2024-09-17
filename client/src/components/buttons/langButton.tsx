@@ -7,7 +7,7 @@ export default function LangButton() {
 
   return (
     <>
-      <div className={`h-full`}>
+      <div className={`h-full hover:text-secondary`}>
         <Button
           text=""
           children={

@@ -5,7 +5,7 @@ import { myStore, showMenuAtom } from "../../settings/store";
 export default function MenuButton() {
   return (
     <>
-      <div className={`md:hidden h-full`}>
+      <div className={`md:hidden h-full hover:text-secondary`}>
         <Button
           text=""
           children={

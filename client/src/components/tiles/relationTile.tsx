@@ -11,6 +11,10 @@ import {
   FaPerson,
   FaPersonMilitaryPointing,
 } from "react-icons/fa6";
+import CrossButton from "../buttons/crossButton";
+import { useEffect, useState } from "react";
+import { useAtom } from "jotai";
+import { sessionAtom } from "../../settings/store";
 
 export interface RelationTileProps {
   relation: DiplomaticRelationship;
@@ -22,6 +26,25 @@ export default function RelationTile({
   selectedNation,
 }: RelationTileProps) {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
+
+  const [nationIndex, setNationIndex] = useState(-1);
+  const [session] = useAtom(sessionAtom);
+
+  useEffect(() => {
+    relation.nations.forEach((rel, i) => {
+      if (
+        rel.OfficialId === session.user.citizenship.nationId &&
+        session.user.citizenship.nationOwner
+      ) {
+        setNationIndex(i);
+      }
+    });
+  }, [relation, session.user.citizenship]);
+
+  const handleLeave = () => {
+    const updatedRelation: DiplomaticRelationship = { ...relation };
+    updatedRelation.nations.splice(nationIndex, 1);
+  };
 
   return (
     <div
@@ -61,6 +84,9 @@ export default function RelationTile({
               }
             })}
           </div>
+          {nationIndex != -1 && (
+            <CrossButton click={handleLeave} text="rompre la relation" />
+          )}
         </div>
       </div>
     </div>
