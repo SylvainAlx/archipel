@@ -14,7 +14,7 @@
     "@uploadcare/react-uploader": "^1.0.0",
     "i18next": "^23.10.1",
     "i18next-browser-languagedetector": "^7.2.0",
-    "jotai": "^2.6.0",
+    "jotai": "^2.9.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-globe.gl": "^2.27.2",

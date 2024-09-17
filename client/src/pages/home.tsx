@@ -21,16 +21,19 @@ export default function Home() {
             text={t("components.buttons.login")}
             type="button"
             click={() => navigate("/login")}
+            widthFull={true}
           />
           <Button
             text={t("components.buttons.register")}
             type="button"
             click={() => navigate("/register")}
+            widthFull={true}
           />
           <Button
             text={t("components.buttons.explore")}
             type="button"
             click={() => navigate("/explore")}
+            widthFull={true}
           />
         </div>
       ) : (
@@ -39,11 +42,13 @@ export default function Home() {
             text={t("components.buttons.user")}
             type="button"
             click={() => navigate(`/citizen/${session.user.officialId}`)}
+            widthFull={true}
           />
           <Button
             text={t("components.buttons.explore")}
             type="button"
             click={() => navigate("/explore")}
+            widthFull={true}
           />
         </div>
       )}
