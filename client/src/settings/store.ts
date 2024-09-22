@@ -32,6 +32,10 @@ export type SetAtom<Args extends any[], Result> = (...args: Args) => Result;
 
 export const loadingAtom = atom(false);
 
+// Lobby
+
+export const lobbyAtom = atom(false);
+
 // Session
 
 export const emptySession = { user: emptyUser, nation: EmptyNation, jwt: "" };
@@ -104,7 +108,6 @@ export const editbox = atom(EditBoxDefault);
 export const infoModalAtom = atom("");
 
 export const changePasswordModalAtom = atom(false);
-export const showApp = atom(false);
 
 export const dataCheckedAtom = atom(false);
 

@@ -2,13 +2,16 @@ import { Link, useNavigate } from "react-router-dom";
 import FooterNav from "../components/footerNav";
 import { VERSION } from "../settings/consts";
 import { useTranslation } from "react-i18next";
+import { lobbyAtom } from "../settings/store";
+import { useAtom } from "jotai";
 
 export default function Footer() {
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const [access] = useAtom(lobbyAtom);
   return (
     <footer className="animate-slideInFromBottom flex flex-col items-center">
-      <FooterNav />
+      {access && <FooterNav />}
       <div className="hidden z-10 md:flex flex-col items-center gap-1">
         <div>
           {t("components.logo.title")} - {new Date().getFullYear()}
