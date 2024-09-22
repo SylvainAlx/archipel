@@ -5,8 +5,9 @@ export interface InputProps {
   onChange: (event: ChangeEvent<HTMLInputElement>) => void;
   type: string;
   name: string;
-  placeholder: string;
-  value: string | number;
+  placeholder?: string;
+  value?: string | number;
+  checked?: boolean;
   id?: string;
   maxLength?: number;
 }
@@ -17,6 +18,7 @@ export default function Input({
   type,
   placeholder,
   value,
+  checked,
   name,
   id,
   maxLength,
@@ -31,6 +33,7 @@ export default function Input({
       className="w-full max-w-[300px] rounded-lg p-4 pe-12 text-sm shadow-sm text-primary"
       placeholder={placeholder}
       value={value}
+      checked={checked != undefined && checked}
       maxLength={maxLength}
     />
   );

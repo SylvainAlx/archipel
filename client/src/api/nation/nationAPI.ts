@@ -26,8 +26,9 @@ import {
   updateNationFetch,
 } from "./nationFetch";
 
-const nationsList = myStore.get(nationsListAtom);
-const setNationsList = (list: Nation[]) => myStore.set(nationsListAtom, list);
+export const nationsList = myStore.get(nationsListAtom);
+export const setNationsList = (list: Nation[]) =>
+  myStore.set(nationsListAtom, list);
 
 export const getNationsCount = async () => {
   const stats = myStore.get(statsAtom);

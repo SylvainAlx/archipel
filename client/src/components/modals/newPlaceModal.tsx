@@ -64,11 +64,16 @@ export default function NewPlaceModal() {
               maxLength={500}
               rows={10}
             />
-            <Button type="submit" text={t("components.buttons.validate")} />
+            <Button
+              type="submit"
+              text={t("components.buttons.validate")}
+              widthFull={true}
+            />
             <Button
               type="button"
               text={t("components.buttons.cancel")}
               click={() => setNewPlace(emptyPlace)}
+              widthFull={true}
             />
           </>
         }

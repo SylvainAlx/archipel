@@ -56,7 +56,7 @@ export default function Nav() {
             }
           />
         )}
-      <div className="flex flex-col gap-1 self-center">
+      <div className="flex flex-col gap-1 self-start">
         <LangButton />
         <MenuButton />
       </div>

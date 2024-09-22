@@ -244,16 +244,19 @@ export const deleteSelfUser = async (req, res) => {
     const id = req.userId;
     User.findOneAndDelete({ officialId: id }).then(async (user) => {
       // await Place.deleteMany({ nation: id });
-      const nation = await Nation.findOne({ owner: id });
+      const nation = await Nation.findOne({
+        officialId: user.citizenship.nationId,
+      });
       if (nation != null) {
-        nation.owner = "";
+        if (nation.owner === user.officialId) {
+          nation.owner = "";
+        }
+        nation.data.roleplay.citizens -= 1;
         nation.save();
       }
 
       // await Com.deleteMany({ originId: id });
-      res.status(200).json({
-        infoType: "delete",
-      });
+      res.status(200).json({ nation, infoType: "delete" });
     });
   } catch (error) {
     res.status(400).json({
@@ -329,26 +332,24 @@ export const updateUser = async (req, res) => {
 export const changeStatus = async (req, res) => {
   try {
     const { officialId, nationId, status } = req.body;
-    
+
     if (req.userId === officialId || status != 0) {
       const user = await User.findOne(
         { officialId },
         "officialId nofficialIdame surname gender avatar language role citizenship createdAt",
       );
-      
+
       const nation = await Nation.findOne(
         { officialId: nationId },
         "officialId name data",
       );
-      
-      
+
       if (status === 0 || status === 1) {
         user.citizenship.nationId = nation.officialId;
         user.citizenship.nationName = nation.name;
         if (status === 1) {
           nation.data.roleplay.citizens += 1;
-          nation.save()
-          .catch((error) => {
+          nation.save().catch((error) => {
             res.status(400).json({
               erreur: error.message,
             });
@@ -359,20 +360,20 @@ export const changeStatus = async (req, res) => {
         user.citizenship.nationName = "";
         if (user.citizenship.status === 1) {
           nation.data.roleplay.citizens -= 1;
-        nation.save()
-        .catch((error) => {
-          res.status(400).json({
-            erreur: error.message,
+          nation.save().catch((error) => {
+            res.status(400).json({
+              erreur: error.message,
+            });
           });
-        });
         }
-        
       }
       user.citizenship.status = status;
       user
         .save()
         .then((user) => {
-          res.status(200).json({ user, nation, message: "mise à jour réussie" });
+          res
+            .status(200)
+            .json({ user, nation, message: "mise à jour réussie" });
         })
         .catch((error) => {
           res.status(400).json({
