@@ -6,6 +6,7 @@ import { useAtom } from "jotai";
 // import { useTranslation } from "react-i18next";
 import { lobbyAtom } from "../settings/store";
 import Form from "../components/form/form";
+import { errorMessage, successMessage } from "../utils/toasts";
 
 export default function Lobby() {
   // const { t } = useTranslation();
@@ -18,8 +19,11 @@ export default function Lobby() {
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     if (password === MDP_LOBBY) {
+      successMessage("accès autorisé");
       setAccess(true);
       localStorage.setItem("lobbyToken", password);
+    } else {
+      errorMessage("accès reffusé");
     }
   };
   return (
