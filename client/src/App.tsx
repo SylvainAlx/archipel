@@ -34,14 +34,14 @@ export default function App() {
   useEffect(() => {
     i18n.init();
     const lobbyToken = localStorage.getItem("lobby");
-    if (lobbyToken && lobbyToken === MDP_LOBBY) {
+    if (!access && lobbyToken && lobbyToken === MDP_LOBBY) {
       setAccess(true);
       authentification();
-    } else {
+    } else if (lobbyToken) {
       setAccess(false);
       errorMessage("mot de passe d'accès anticipé erroné");
     }
-  }, []);
+  }, [access]);
 
   useEffect(() => {
     if (session.user.officialId != "") {

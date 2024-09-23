@@ -8,10 +8,10 @@ import {
   statsAtom,
 } from "../../settings/store";
 import { EmptyNation, Nation, NewNationPayload } from "../../types/typNation";
+import { displayNationInfoByType } from "../../utils/displayInfos";
 
 import {
   deleteElementOfAtomArray,
-  displayNationInfoByType,
   findElementOfAtomArray,
   // updateElementOfAtomArray,
 } from "../../utils/functions";

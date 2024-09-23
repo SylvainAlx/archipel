@@ -19,7 +19,7 @@
         "places": "locations",
         "noPlaces": "no location to display",
         "diplomacy": "diplomacy",
-        "noRelationS": "no diplomatic relationship",
+        "noRelations": "no diplomatic relationship",
         "citizens": "citizens",
         "noCitizens": "no citizen to display"
       }
@@ -140,7 +140,8 @@
         "declineCitizenship": "Decline citizenship ?",
         "askCitizenship": "Ask citizenship ?",
         "leaveNation": "Leave the nation ?",
-        "cancelCitizenship": "Cancel citizenship application ?"
+        "cancelCitizenship": "Cancel citizenship application ?",
+        "leaveRelation": "Leave relation ?"
       },
       "langModal": {
         "title": "LANGUAGE"
@@ -282,7 +283,9 @@
   },
   "toasts": {
     "errors": {
-      "404": "Page not found"
+      "400": "Unknown error",
+      "404": "Page not found",
+      "serverError": "Server error"
     },
     "user": {
       "signIn": "Sign In successful",
@@ -300,12 +303,15 @@
       "11000": "Information already existing in the database",
       "deleteKO": "Unable to delete the user",
       "error": "Some information is wrong or missing",
-      "serverError": "Server error",
       "update": "Update successful"
     },
     "nation": {
       "create": "New nation created",
       "delete": "Nation deleted"
+    },
+    "relation": {
+      "create": "New diplomatic relationship created",
+      "update": "Change of diplomatic relationship made"
     }
   }
 }

@@ -26,12 +26,12 @@ export const createRelation = async (req, res) => {
       } else {
         return res.status(400).json({
           error: error.message,
-          infoType: "error",
+          infoType: "400",
         });
       }
     }
   } catch (error) {
-    res.status(400).json({ error: error.message, infoType: "error" });
+    res.status(400).json({ error: error.message, infoType: "400" });
   }
 };
 
@@ -55,30 +55,41 @@ export const getAllRelation = async (req, res) => {
 export const updateRelation = async (req, res) => {
   const { officialId, name, nations, kind } = req.body;
   try {
-    const relation = await Relation.findOne({
-      officialId,
-    });
+    if (nations.length >= 2) {
+      const relation = await Relation.findOne({
+        officialId,
+      });
+      if (relation != undefined && relation != null) {
+        relation.name = name;
+        relation.nations = nations;
+        relation.kind = kind;
 
-    if (relation != undefined && relation != null) {
-      relation.name = name;
-      relation.nations = nations;
-      relation.kind = kind;
-
-      relation
-        .save()
-        .then((relation) => {
-          res.status(200).json({ relation, message: "mise à jour réussie" });
-        })
-        .catch((error) => {
-          res.status(400).json({
-            message: `certaines informations sont erronées ou manquantes`,
-            erreur: error.message,
+        relation
+          .save()
+          .then((relation) => {
+            res.status(200).json({
+              relation,
+              message: "mise à jour réussie",
+              infoType: "update",
+            });
+          })
+          .catch((error) => {
+            res.status(400).json({
+              message: `certaines informations sont erronées ou manquantes`,
+              erreur: error.message,
+            });
           });
-        });
+      } else {
+        res.status(400).json({ message: error, infoType: "400" });
+      }
     } else {
-      res.status(400).json({ message: error });
+      const relation = await Relation.findOneAndDelete({ officialId });
+      relation.nations = [];
+      res
+        .status(200)
+        .json({ relation, message: "mise à jour réussie", infoType: "update" });
     }
   } catch (error) {
-    res.status(400).json({ message: error });
+    res.status(400).json({ message: error, infoType: "400" });
   }
 };
