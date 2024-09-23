@@ -20,8 +20,9 @@ export default function Footer() {
           className="text-[12px] cursor-pointer hover:text-secondary"
           onClick={() => navigate("/releasenotes")}
         >
-          {VERSION.rc ? "RC" : "V"}
-          {VERSION.major + "." + VERSION.minor + "." + VERSION.fix}
+          {VERSION.beta != "" && VERSION.beta}
+          {VERSION.rc != "" && VERSION.rc}
+          {VERSION.release != "" && VERSION.release}
         </div>
         <div className=" pb-1 flex gap-2 text-[10px] md:text-[12px] opacity-30 md:opacity-100">
           <Link to="/legalnotice">{t("pages.legalNotice.title")}</Link>

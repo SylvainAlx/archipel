@@ -13,7 +13,10 @@ export default function Home() {
   return (
     <>
       <H1 text={t("pages.home.title")} />
-      <p className="text-xl px-4">{t("pages.home.presentation")}</p>
+      <p
+        className="text-xl px-4"
+        dangerouslySetInnerHTML={{ __html: t("pages.home.presentation") }}
+      />
       {session.user.officialId === undefined ||
       session.user.officialId === "" ? (
         <div className="w-full py-4 flex justify-center gap-2 flex-wrap">

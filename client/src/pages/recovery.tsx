@@ -84,11 +84,14 @@ export default function Recovery() {
         >
           CHANGER DE MOT DE PASSE
         </button> */}
-            <div className={`${!passwordsMatch && "cursor-not-allowed"}`}>
+            <div
+              className={`${!passwordsMatch && "cursor-not-allowed"} w-full`}
+            >
               <Button
                 text={t("pages.recovery.changePassword")}
                 type="submit"
                 disabled={!passwordsMatch}
+                widthFull={true}
               />
             </div>
           </>

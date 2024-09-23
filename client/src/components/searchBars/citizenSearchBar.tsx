@@ -32,10 +32,12 @@ export default function CitizenSearchBar({ list, setList }: SearchBarProps) {
     if (citizenList.length != stats.counts.citizens) {
       getCitizens("");
     }
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [stats.counts.citizens]);
 
   useEffect(() => {
     citizensSorting();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectOption, citizenList]);
 
   const reset = () => {

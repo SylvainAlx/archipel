@@ -11,10 +11,9 @@ export const UPLOADCARE_PUBLIC_KEY = import.meta.env.VITE_UPLOADCARE_PUBLIC_KEY;
 export const UPLOADCARE_SECRET_KEY = import.meta.env.VITE_UPLOADCARE_SECRET_KEY;
 
 export const VERSION = {
-  rc: true,
-  major: 1,
-  minor: 0,
-  fix: 0,
+  beta: "BETA-0.1",
+  rc: "",
+  release: "",
 };
 
 //  Colors
