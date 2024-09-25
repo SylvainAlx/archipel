@@ -22,6 +22,7 @@ import { getNation } from "./api/nation/nationAPI";
 import { errorMessage } from "./utils/toasts";
 import { MDP_LOBBY } from "./settings/consts";
 import Lobby from "./pages/lobby";
+import CookiesModal from "./components/modals/cookiesModal";
 
 export default function App() {
   const [session, setSession] = useAtom(sessionAtom);
@@ -89,8 +90,8 @@ export default function App() {
         ) : (
           <Lobby />
         )}
-
         <ModalsRouter />
+        <CookiesModal />
       </main>
       <Footer />
     </>
