@@ -12,25 +12,37 @@ import Header from "./layouts/header";
 import Footer from "./layouts/footer";
 import "./App.css";
 import { useAtom } from "jotai";
-import { nationFetchedAtom, sessionAtom } from "./settings/store";
+import { lobbyAtom, nationFetchedAtom, sessionAtom } from "./settings/store";
 import { useEffect, useState } from "react";
 import ModalsRouter from "./router/modalsRouter";
 import { ArchipelRoute } from "./types/typReact";
 import i18n from "./i18n/i18n";
 import { authentification } from "./api/user/userAPI";
 import { getNation } from "./api/nation/nationAPI";
+import { errorMessage } from "./utils/toasts";
+import { MDP_LOBBY } from "./settings/consts";
+import Lobby from "./pages/lobby";
+import CookiesModal from "./components/modals/cookiesModal";
 
 export default function App() {
   const [session, setSession] = useAtom(sessionAtom);
   const [nation] = useAtom(nationFetchedAtom);
   const [openPrivateRoads, setOpenPrivateRoads] = useState(false);
+  const [access, setAccess] = useAtom(lobbyAtom);
 
   const navigate = useNavigate();
 
   useEffect(() => {
     i18n.init();
-    authentification();
-  }, []);
+    const lobbyToken = localStorage.getItem("lobby");
+    if (!access && lobbyToken && lobbyToken === MDP_LOBBY) {
+      setAccess(true);
+      authentification();
+    } else if (lobbyToken) {
+      setAccess(false);
+      errorMessage("mot de passe d'accès anticipé erroné");
+    }
+  }, [access]);
 
   useEffect(() => {
     if (session.user.officialId != "") {
@@ -58,23 +70,28 @@ export default function App() {
       <Header />
 
       <main className="animate-fadeIn flex flex-grow flex-col items-center gap-2 self-center pt-10 pb-[100px] sm:pt-20 px-1 md:px-4 w-full min-w-[300px] max-w-[1280px]">
-        <Routes>
-          {publicRoutes.map((route: ArchipelRoute, i: number) => (
-            <Route path={route.path} element={route.page} key={i} />
-          ))}
-          {openPrivateRoads
-            ? privateRoutes.map((route: ArchipelRoute, i: number) => (
-                <Route path={route.path} element={route.page} key={i} />
-              ))
-            : authRoutes.map((route: ArchipelRoute, i: number) => (
-                <Route path={route.path} element={route.page} key={i} />
-              ))}
-          {session.user.role === "admin" &&
-            adminRoutes.map((route: ArchipelRoute, i: number) => (
+        {access ? (
+          <Routes>
+            {publicRoutes.map((route: ArchipelRoute, i: number) => (
               <Route path={route.path} element={route.page} key={i} />
             ))}
-        </Routes>
+            {openPrivateRoads
+              ? privateRoutes.map((route: ArchipelRoute, i: number) => (
+                  <Route path={route.path} element={route.page} key={i} />
+                ))
+              : authRoutes.map((route: ArchipelRoute, i: number) => (
+                  <Route path={route.path} element={route.page} key={i} />
+                ))}
+            {session.user.role === "admin" &&
+              adminRoutes.map((route: ArchipelRoute, i: number) => (
+                <Route path={route.path} element={route.page} key={i} />
+              ))}
+          </Routes>
+        ) : (
+          <Lobby />
+        )}
         <ModalsRouter />
+        <CookiesModal />
       </main>
       <Footer />
     </>

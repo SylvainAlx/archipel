@@ -31,10 +31,12 @@ export default function ComSearchBar({ setList }: SearchBarProps) {
     if (comList.length != stats.counts.coms) {
       getComs();
     }
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [stats.counts.coms]);
 
   useEffect(() => {
     comSorting();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectOption, comList]);
 
   const reset = () => {

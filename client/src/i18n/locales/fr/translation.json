@@ -2,7 +2,7 @@
   "pages": {
     "home": {
       "title": "Bienvenue",
-      "presentation": "Bienvenue sur le Réseau Archipel ! Ici, vous pouvez créer votre propre identité virtuelle et bâtir votre propre nation virtuelle, ou rejoindre celles existantes qui correspondent le mieux à votre vision de la société. Grâce à un système de tags intuitif, trouvez facilement les nations virtuelles qui partagent vos idéaux et vos aspirations. Mais ce n'est pas tout! Les nations virtuelles peuvent également s'unir pour former des organisations puissantes, toutes créées par nos citoyens virtuels. Que ce soit pour le plaisir ou pour donner vie à des projets plus sérieux, notre application offre une plateforme unique pour explorer, interagir et innover dans un monde virtuel sans limites. Rejoignez-nous dès aujourd'hui et commencez à construire votre utopie !"
+      "presentation": "Bienvenue sur le <b>Réseau Archipel</b> ! Ici, vous pouvez créer votre propre identité virtuelle et bâtir votre propre <b>nation virtuelle</b>, ou rejoindre celles existantes qui correspondent le mieux à votre vision de la société. Grâce à un système de tags intuitif, trouvez facilement les nations virtuelles qui partagent vos idéaux et vos aspirations. Mais ce n'est pas tout! Les nations virtuelles peuvent également s'unir pour former des organisations puissantes, toutes créées par nos <b>citoyens virtuels</b>. Que ce soit pour le plaisir ou pour donner vie à des projets plus sérieux, notre application offre une plateforme unique pour explorer, interagir et innover dans un monde virtuel sans limites. Rejoignez-nous dès aujourd'hui et commencez à construire votre utopie !"
     },
     "nation": {
       "title": "nation",
@@ -19,7 +19,7 @@
         "places": "lieux",
         "noPlaces": "aucun lieu à afficher",
         "diplomacy": "diplomatie",
-        "noRelationS": "aucune relation diplomatique",
+        "noRelations": "aucune relation diplomatique",
         "citizens": "citoyens",
         "noCitizens": "la nation n'a aucun citoyen"
       }
@@ -140,7 +140,8 @@
         "declineCitizenship": "Rejeter la citoyenneté ?",
         "askCitizenship": "Demander la nationnalité ?",
         "leaveNation": "Quitter la nation ?",
-        "cancelCitizenship": "Annuler la demande de citoyenneté ?"
+        "cancelCitizenship": "Annuler la demande de citoyenneté ?",
+        "leaveRelation": "Rompre la relation ?"
       },
       "langModal": {
         "title": "CHOIX DE LA LANGUE"
@@ -274,7 +275,9 @@
   },
   "toasts": {
     "errors": {
-      "404": "Page non trouvée"
+      "400": "Erreur inconnue",
+      "404": "Page non trouvée",
+      "serverError": "Erreur serveur"
     },
     "user": {
       "signIn": "Connexion réussie",
@@ -292,12 +295,15 @@
       "11000": "Informations déjà existantes dans la base de données",
       "deleteKO": "impossible de supprimer l'utilisateur",
       "error": "Certaines informations sont erronées ou manquantes",
-      "serverError": "Erreur serveur",
       "update": "Mise à jour réussie"
     },
     "nation": {
       "create": "Nouvelle nation créée",
       "delete": "Nation supprimée"
+    },
+    "relation": {
+      "create": "Nouvelle relation diplomatique créée",
+      "update": "Modification de la relation diplomatique effectuée"
     }
   }
 }

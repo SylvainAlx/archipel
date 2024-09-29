@@ -1,5 +1,6 @@
 import { loadingAtom, myStore, relationListAtom } from "../../settings/store";
 import { DiplomaticRelationship } from "../../types/typRelation";
+import { displayRelationInfoByType } from "../../utils/displayInfos";
 import {
   createElementOfAtomArray,
   updateElementOfAtomArray,
@@ -22,11 +23,12 @@ export const createRelation = (payload: DiplomaticRelationship) => {
       myStore.set(loadingAtom, false);
       if (data.relation) {
         createElementOfAtomArray(data.relation, relationList, setRelationList);
-        console.log(data.infoType);
+        displayRelationInfoByType(data.infoType);
       }
     })
     .catch((error) => {
       myStore.set(loadingAtom, false);
+      displayRelationInfoByType(error.infoType);
       errorMessage(error.message);
     });
 };
@@ -38,11 +40,12 @@ export const updateRelation = (payload: DiplomaticRelationship) => {
       myStore.set(loadingAtom, false);
       if (data.relation) {
         updateElementOfAtomArray(data.relation, relationList, setRelationList);
-        console.log(data.infoType);
+        displayRelationInfoByType(data.infoType);
       }
     })
     .catch((error) => {
       myStore.set(loadingAtom, false);
+      displayRelationInfoByType(error.infoType);
       errorMessage(error.message);
     });
 };
@@ -58,6 +61,7 @@ export const getRelations = (searchText: string) => {
     })
     .catch((error) => {
       myStore.set(loadingAtom, false);
+      displayRelationInfoByType(error.infoType);
       errorMessage(error.message);
     });
 };

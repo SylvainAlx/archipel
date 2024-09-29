@@ -33,10 +33,12 @@ export default function PlaceSearchBar({ list, setList }: SearchBarProps) {
     if (placeList.length != stats.counts.places) {
       getPlaces("");
     }
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [stats.counts.places]);
 
   useEffect(() => {
     placesSorting();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectOption, placeList]);
 
   const reset = () => {

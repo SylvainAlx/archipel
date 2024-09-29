@@ -110,6 +110,7 @@ export default function Register() {
               text={t("components.buttons.register")}
               type="submit"
               disabled={!acceptCGU}
+              widthFull={true}
             />
             <RequiredStar />
           </>

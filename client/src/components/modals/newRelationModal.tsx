@@ -89,10 +89,10 @@ export default function NewRelationModal({ update }: NewRelationModalProps) {
               name="name"
               value={newRelation.relation.name}
               onChange={handleChange}
-              placeholder="Nom de la relation diplomatique"
+              placeholder="Titre de la relation"
               maxLength={100}
             />
-            <fieldset className="p-2 flex flex-wrap justify-center items-center gap-2 bg-complementary2 text-2xl">
+            <fieldset className="w-full p-2 flex flex-wrap justify-center items-center gap-2 bg-complementary2 text-2xl">
               <label className="flex gap-1">
                 <FaBriefcase />
                 <Input

@@ -22,9 +22,9 @@ import {
   RecoveryPayload,
   User,
 } from "../../types/typUser";
+import { displayUserInfoByType } from "../../utils/displayInfos";
 import {
   createElementOfAtomArray,
-  displayUserInfoByType,
   findElementOfAtomArray,
   GET_JWT,
   updateElementOfAtomArray,

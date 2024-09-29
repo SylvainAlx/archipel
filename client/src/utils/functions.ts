@@ -10,7 +10,6 @@ import {
 import { LabelId, Nation } from "../types/typNation";
 import { Place } from "../types/typPlace";
 import { confirmBox, myStore, SetAtom } from "../settings/store";
-import { errorMessage, successMessage } from "./toasts";
 import { User } from "../types/typUser";
 
 export const GET_JWT = () => {
@@ -195,68 +194,6 @@ export const createTagRegime = (id: number) => {
     }
   });
   return tagRegime;
-};
-
-export const displayUserInfoByType = (type: string) => {
-  switch (type) {
-    case "signin":
-      successMessage(i18n.t("toasts.user.signIn"));
-      break;
-    case "signup":
-      successMessage(i18n.t("toasts.user.signUp"));
-      break;
-    case "verify":
-      successMessage(i18n.t("toasts.user.verify"));
-      break;
-    case "newPassword":
-      successMessage(i18n.t("toasts.user.newPassword"));
-      break;
-    case "update":
-      successMessage(i18n.t("toasts.user.update"));
-      break;
-    case "delete":
-      successMessage(i18n.t("toasts.user.delete"));
-      break;
-    case "changeStatus":
-      successMessage(i18n.t("toasts.user.update"));
-      break;
-    case "deleteKO":
-      errorMessage(i18n.t("toasts.user.deleteKO"));
-      break;
-    case "error":
-      errorMessage(i18n.t("toasts.user.error"));
-      break;
-    case "badRecovery":
-      errorMessage(i18n.t("toasts.user.badRecovery"));
-      break;
-    case "user":
-      errorMessage(i18n.t("toasts.user.badUser"));
-      break;
-    case "password":
-      errorMessage(i18n.t("toasts.user.badPassword"));
-      break;
-    case "11000":
-      errorMessage(i18n.t("toasts.user.11000"));
-      break;
-    case "serverError":
-      errorMessage(i18n.t("toasts.user.serverError"));
-      break;
-    default:
-      break;
-  }
-};
-
-export const displayNationInfoByType = (type: string) => {
-  switch (type) {
-    case "new":
-      successMessage(i18n.t("toasts.nation.create"));
-      break;
-    case "delete":
-      successMessage(i18n.t("toasts.nation.delete"));
-      break;
-    default:
-      break;
-  }
 };
 
 export const removeDuplicates = (array: any[]) => {

@@ -67,14 +67,16 @@ export default function Diplomacy({
             <div className="w-full flex flex-col-reverse gap-2 items-center">
               {relationList.length > 0 ? (
                 relationList.map((relation, i) => {
-                  return (
-                    <Suspense key={i} fallback={<BarreLoader />}>
-                      <RelationTile
-                        relation={relation}
-                        selectedNation={selectedNation}
-                      />
-                    </Suspense>
-                  );
+                  if (relation.nations.length > 1) {
+                    return (
+                      <Suspense key={i} fallback={<BarreLoader />}>
+                        <RelationTile
+                          relation={relation}
+                          selectedNation={selectedNation}
+                        />
+                      </Suspense>
+                    );
+                  }
                 })
               ) : (
                 <em className="text-center">

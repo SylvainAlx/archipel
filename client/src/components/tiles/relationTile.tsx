@@ -14,7 +14,8 @@ import {
 import CrossButton from "../buttons/crossButton";
 import { useEffect, useState } from "react";
 import { useAtom } from "jotai";
-import { sessionAtom } from "../../settings/store";
+import { confirmBox, myStore, sessionAtom } from "../../settings/store";
+import { useTranslation } from "react-i18next";
 
 export interface RelationTileProps {
   relation: DiplomaticRelationship;
@@ -29,6 +30,7 @@ export default function RelationTile({
 
   const [nationIndex, setNationIndex] = useState(-1);
   const [session] = useAtom(sessionAtom);
+  const { t } = useTranslation();
 
   useEffect(() => {
     relation.nations.forEach((rel, i) => {
@@ -44,6 +46,12 @@ export default function RelationTile({
   const handleLeave = () => {
     const updatedRelation: DiplomaticRelationship = { ...relation };
     updatedRelation.nations.splice(nationIndex, 1);
+    myStore.set(confirmBox, {
+      action: "leave",
+      text: t("components.modals.confirmModal.leaveRelation"),
+      payload: updatedRelation,
+      result: "",
+    });
   };
 
   return (

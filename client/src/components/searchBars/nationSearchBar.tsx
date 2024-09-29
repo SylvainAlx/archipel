@@ -33,7 +33,8 @@ export default function NationSearchBar({ list, setList }: SearchBarProps) {
     if (nationsList.length != stats.counts.nations) {
       getNations("");
     }
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [stats.counts.nations]);
 
   useEffect(() => {
     nationsSorting();
