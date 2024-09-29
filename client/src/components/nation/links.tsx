@@ -7,7 +7,7 @@ import EditIcon from "../editIcon";
 export default function Links({ selectedNation, owner }: SelectedNationProps) {
   const { t } = useTranslation();
   return (
-    <div className="w-full flex items-center justify-center gap-6">
+    <div className="flex items-center justify-center gap-6">
       <span className="flex items-center gap-2">
         <ExternalLink
           url={selectedNation.data.url.website}

@@ -6,6 +6,7 @@ import {
   nationsRoleplayDataAtom,
   sessionAtom,
   statsAtom,
+  tagListAtom,
 } from "../../settings/store";
 import { EmptyNation, Nation, NewNationPayload } from "../../types/typNation";
 import { displayNationInfoByType } from "../../utils/displayInfos";
@@ -20,6 +21,7 @@ import {
   createNationFetch,
   DeleteSelfFetch,
   getAllNations,
+  getAllNationTagsFetch,
   getNationsCountFetch,
   getOneNationFetch,
   getRoleplayDataFetch,
@@ -170,6 +172,21 @@ export const getRoleplayData = (selectedNation: Nation) => {
           places: data.places,
         },
       ]);
+    })
+    .catch((error) => {
+      myStore.set(loadingAtom, false);
+      errorMessage(error.message);
+    });
+};
+
+export const getAllNationTags = async () => {
+  myStore.set(loadingAtom, true);
+  getAllNationTagsFetch()
+    .then((data) => {
+      myStore.set(loadingAtom, false);
+      if (data != undefined) {
+        myStore.set(tagListAtom, data);
+      }
     })
     .catch((error) => {
       myStore.set(loadingAtom, false);

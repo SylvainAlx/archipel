@@ -17,7 +17,6 @@ import {
 import { Place, emptyPlace } from "../types/typPlace";
 import i18n from "../i18n/i18n";
 import { emptyUser, User } from "../types/typUser";
-import { Tag } from "../types/typTag";
 import { Com } from "../types/typCom";
 import {
   DiplomaticRelationship,
@@ -100,7 +99,7 @@ export const comsListAtom = atom<Com[]>([]);
 
 // tag
 
-export const tagListAtom = atom<Tag[]>([]);
+export const tagListAtom = atom<string[]>([]);
 
 // Param
 

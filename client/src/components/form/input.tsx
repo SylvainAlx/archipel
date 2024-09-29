@@ -10,6 +10,7 @@ export interface InputProps {
   checked?: boolean;
   id?: string;
   maxLength?: number;
+  disabled?: boolean;
 }
 
 export default function Input({
@@ -22,6 +23,7 @@ export default function Input({
   name,
   id,
   maxLength,
+  disabled,
 }: InputProps) {
   return (
     <input
@@ -35,6 +37,7 @@ export default function Input({
       value={value}
       checked={checked != undefined && checked}
       maxLength={maxLength}
+      disabled={disabled}
     />
   );
 }

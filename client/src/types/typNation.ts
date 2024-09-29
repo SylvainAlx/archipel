@@ -102,6 +102,7 @@ export interface NewNationPayload {
   motto: string;
   regime: number;
   currency: string;
+  tags: string[];
 }
 
 export const emptyNewNationPayload: NewNationPayload = {
@@ -110,4 +111,5 @@ export const emptyNewNationPayload: NewNationPayload = {
   motto: "",
   regime: 0,
   currency: "",
+  tags: [],
 };

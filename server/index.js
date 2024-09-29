@@ -9,7 +9,6 @@ import comRouter from "./routers/comRouter.js";
 import placeRouter from "./routers/placeRouter.js";
 import paramRouter from "./routers/paramRouter.js";
 import userRouter from "./routers/userRouter.js";
-import tagRouter from "./routers/tagRouter.js";
 import { verifyJwt } from "./middlewares/authMiddleware.js";
 import { deleteUploadedFile } from "./controllers/files.js";
 import relationRouter from "./routers/relationRouter.js";
@@ -45,12 +44,9 @@ try {
     app.use("/com", comRouter);
     app.use("/place", placeRouter);
     app.use("/param", paramRouter);
-    app.use("/tag", tagRouter);
-    app.use("/relation", relationRouter)
-    app.delete("/file/delete/:id", [verifyJwt], deleteUploadedFile)
+    app.use("/relation", relationRouter);
+    app.delete("/file/delete/:id", [verifyJwt], deleteUploadedFile);
     app.use("/", home);
-
-    
   });
 } catch (error) {
   console.log(error);

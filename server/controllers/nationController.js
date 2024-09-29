@@ -19,7 +19,7 @@ export const nationsCount = async (req, res) => {
 
 export const createNation = async (req, res) => {
   try {
-    const { name, owner, motto, regime, currency } = req.body;
+    const { name, owner, motto, regime, currency, tags } = req.body;
 
     if (!name || !owner) {
       return res
@@ -33,10 +33,11 @@ export const createNation = async (req, res) => {
 
     const officialId = createOfficialId("n");
 
-    let data = { roleplay: { citizens: 0 } };
+    let data = { roleplay: { citizens: 0 }, general: {} };
     data.general.motto = motto;
     data.general.regime = regime;
     data.general.currency = currency;
+    data.general.tags = tags;
     data.roleplay.citizens += 1;
     const nation = new Nation({
       officialId,
@@ -255,5 +256,37 @@ export const updateNation = async (req, res) => {
     }
   } catch (error) {
     res.status(400).json({ message: error });
+  }
+};
+
+export const getTags = async (req, res) => {
+  try {
+    const tags = await Nation.aggregate([
+      {
+        // Extraire uniquement la propriété data.general.tags de chaque document
+        $project: {
+          tags: "$data.general.tags",
+        },
+      },
+      {
+        // Aplatir les tableaux de tags en un seul tableau
+        $unwind: "$tags",
+      },
+      {
+        // Regrouper tous les tags en un seul tableau
+        $group: {
+          _id: null,
+          tousLesTags: { $addToSet: "$tags" },
+        },
+      },
+      {
+        // Optionnel: On peut aussi trier les tags (par exemple par ordre alphabétique)
+        $sort: { tousLesTags: 1 },
+      },
+    ]);
+
+    res.status(200).json(tags[0].tousLesTags);
+  } catch (error) {
+    res.status(400).json({ message: "aucuns tags", erreur: error.message });
   }
 };
