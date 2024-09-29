@@ -37,8 +37,22 @@ export const ConfirmBoxDefault: ConfirmBox = {
 
 export interface EditBox {
   target: string;
-  original: string | number | boolean | Regime[] | PoliticalSide[] | LabelId[];
-  new: string | number | boolean | Regime[] | PoliticalSide[] | LabelId[];
+  original:
+    | string
+    | number
+    | boolean
+    | Regime[]
+    | PoliticalSide[]
+    | LabelId[]
+    | any[];
+  new:
+    | string
+    | number
+    | boolean
+    | Regime[]
+    | PoliticalSide[]
+    | LabelId[]
+    | any[];
   path: string;
   indice?: number;
 }

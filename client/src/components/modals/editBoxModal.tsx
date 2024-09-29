@@ -11,15 +11,26 @@ import {
 import Button from "../buttons/button";
 import Input from "../form/input";
 import Select from "../form/select";
-import { ChangeEvent, FormEvent } from "react";
+import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import TextArea from "../form/textArea";
+import { IoMdCloseCircle } from "react-icons/io";
+import { MdCheckCircle } from "react-icons/md";
 
 export default function EditBoxModal() {
   const [editBox, setEditBox] = useAtom(editbox);
+  const [newElement, setNewElement] = useState("");
   const [placeData] = useAtom(editPlaceAtom);
   const [, setConfirm] = useAtom(confirmBox);
   const { t } = useTranslation();
+
+  useEffect(() => {
+    if (Array.isArray(editBox.original)) {
+      setEditBox({ ...editBox, new: [] });
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [editBox.original]);
 
   const handleSubmit = (e: FormEvent) => {
     const session = myStore.get(sessionAtom);
@@ -91,6 +102,17 @@ export default function EditBoxModal() {
     setEditBox({ ...editBox, new: e.target.value });
   };
 
+  const handleInputChangeArray = (
+    e: ChangeEvent<HTMLInputElement>,
+    i: number,
+  ) => {
+    const newArray = editBox.original;
+    if (Array.isArray(newArray)) {
+      newArray[i] = e.target.value;
+      setEditBox({ ...editBox, new: newArray });
+    }
+  };
+
   const handleTextChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setEditBox({ ...editBox, new: e.target.value });
   };
@@ -102,6 +124,14 @@ export default function EditBoxModal() {
       setEditBox({ ...editBox, new: e.target.value });
     } else {
       setEditBox({ ...editBox, new: Number(e.target.value) });
+    }
+  };
+
+  const handleDelete = (i: number) => {
+    const newArray = editBox.original;
+    if (Array.isArray(newArray)) {
+      newArray.splice(i, 1);
+      setEditBox({ ...editBox, new: newArray });
     }
   };
 
@@ -133,14 +163,6 @@ export default function EditBoxModal() {
             value={editBox.new.toString()}
             name=""
           />
-          // <Input
-          //   required
-          //   type="text"
-          //   placeholder={t("components.modals.editModal.newValue")}
-          //   onChange={handleInputChange}
-          //   value={editBox.new.toString()}
-          //   name=""
-          // />
         )}
         {typeof editBox.original == "number" && (
           <Input
@@ -152,12 +174,67 @@ export default function EditBoxModal() {
             name=""
           />
         )}
-        {typeof editBox.original == "object" && (
-          <Select
-            required
-            options={editBox.original}
-            onChange={handleSelectChange}
-          />
+        {Array.isArray(editBox.original) &&
+        typeof editBox.original[0] == "string" ? (
+          <div className="flex flex-wrap justify-center items-center gap-2">
+            {editBox.original.map((_element, i) => {
+              return (
+                <div
+                  className="w-full flex items-center gap-1 justify-center"
+                  key={i}
+                >
+                  <Input
+                    required
+                    type="string"
+                    placeholder={t("components.modals.editModal.newValue")}
+                    onChange={(e) => handleInputChangeArray(e, i)}
+                    value={
+                      Array.isArray(editBox.new)
+                        ? editBox.new[i]
+                        : Array.isArray(editBox.original) && editBox.original[i]
+                    }
+                    name=""
+                  />
+                  <div
+                    onClick={() => handleDelete(i)}
+                    className="cursor-pointer text-xl hover:animate-pulse rounded-full transition-all"
+                  >
+                    <IoMdCloseCircle />
+                  </div>
+                </div>
+              );
+            })}
+            <div className="w-full flex items-center gap-1 justify-center">
+              <Input
+                type="string"
+                placeholder={t("components.modals.editModal.newValue")}
+                onChange={(e) => setNewElement(e.target.value)}
+                value={newElement}
+                name=""
+              />
+              <div
+                className="cursor-pointer text-xl hover:animate-pulse rounded-full transition-all"
+                onClick={() => {
+                  const newArray = editBox.original;
+                  if (Array.isArray(newArray)) {
+                    newArray.push(newElement);
+                    setEditBox({ ...editBox, new: newArray });
+                    setNewElement("");
+                  }
+                }}
+              >
+                <MdCheckCircle />
+              </div>
+            </div>
+          </div>
+        ) : (
+          typeof editBox.original == "object" && (
+            <Select
+              required
+              options={editBox.original}
+              onChange={handleSelectChange}
+            />
+          )
         )}
 
         <Button
@@ -165,9 +242,14 @@ export default function EditBoxModal() {
           click={() =>
             setEditBox({ target: "", original: -1, new: -1, path: "" })
           }
+          widthFull={true}
         />
         {editBox.new != -1 && editBox.new != "" && (
-          <Button type="submit" text={t("components.buttons.validate")} />
+          <Button
+            type="submit"
+            text={t("components.buttons.validate")}
+            widthFull={true}
+          />
         )}
       </form>
     </div>
