@@ -204,6 +204,32 @@ export default function NationIdentity({
                       )}
                     </div>
                   </div>
+                  <div className="w-full mt-4 text-center flex gap-2">
+                    {selectedNation.data.general.description ? (
+                      <p
+                        className="text-md text-justify"
+                        dangerouslySetInnerHTML={{
+                          __html: selectedNation.data.general.description,
+                        }}
+                      />
+                    ) : (
+                      <em className="text-center">
+                        {t("pages.nation.simulation.noRelations")}
+                      </em>
+                    )}
+
+                    {owner && (
+                      <EditIcon
+                        target="nation"
+                        param={
+                          selectedNation.data.general.description
+                            ? selectedNation.data.general.description
+                            : ""
+                        }
+                        path="data.general.description"
+                      />
+                    )}
+                  </div>
                 </div>
               </>
             }

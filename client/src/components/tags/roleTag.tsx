@@ -9,7 +9,7 @@ export default function RoleTag({ label }: customTagProps) {
     <Tag
       text={label.toString()}
       hover={t("components.hoverInfos.tags.role")}
-      bgColor="bg-success"
+      bgColor="bg-info"
       children={<MdGrade />}
     />
   );

@@ -5,13 +5,11 @@ import H1 from "../../components/titles/h1";
 import { statsAtom, tagListAtom } from "../../settings/store";
 import { useEffect } from "react";
 import H3 from "../../components/titles/h3";
-import { getNationsCount } from "../../api/nation/nationAPI";
+import { getAllNationTags, getNationsCount } from "../../api/nation/nationAPI";
 import { getPlacesCount } from "../../api/place/placeAPI";
 import { getCitizensCount } from "../../api/user/userAPI";
 import { useTranslation } from "react-i18next";
 import { StringProps } from "../../types/typProp";
-import { getAllTags } from "../../api/tag/tagAPI";
-import i18n from "../../i18n/i18n";
 import HashTag from "../../components/tags/hashTag";
 
 export default function Stats({ text }: StringProps) {
@@ -33,7 +31,7 @@ export default function Stats({ text }: StringProps) {
       // getComsCount
     }
     if (tagList.length === 0) {
-      getAllTags();
+      getAllNationTags();
     }
   }, []);
 
@@ -60,14 +58,9 @@ export default function Stats({ text }: StringProps) {
         <DashTile
           title={t("pages.explore.stats.tags")}
           children={
-            <div>
+            <div className="w-full px-2 flex flex-wrap items-center justify-center gap-1">
               {tagList.map((tag, i) => {
-                return (
-                  <div key={i}>
-                    {i18n.language === "fr" && <HashTag label={tag.label.fr} />}
-                    {i18n.language === "en" && <HashTag label={tag.label.en} />}
-                  </div>
-                );
+                return <HashTag label={tag} key={i} />;
               })}
             </div>
           }

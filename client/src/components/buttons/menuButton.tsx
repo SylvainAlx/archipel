@@ -5,7 +5,7 @@ import { myStore, showMenuAtom } from "../../settings/store";
 export default function MenuButton() {
   return (
     <>
-      <div className={`md:hidden w-[30px] h-full`}>
+      <div className={`md:hidden h-full hover:text-secondary`}>
         <Button
           text=""
           children={
@@ -14,6 +14,7 @@ export default function MenuButton() {
             </div>
           }
           click={() => myStore.set(showMenuAtom, true)}
+          bgColor="bg-invisible"
         />
       </div>
     </>

@@ -10,11 +10,7 @@ export default function EyeButton({ click }: ClickProps) {
       <Button
         text={t("components.buttons.access")}
         click={click}
-        children={
-          <div className="hover:animate-ping text-xl">
-            <IoMdEye />
-          </div>
-        }
+        children={<IoMdEye />}
       />
     </div>
   );

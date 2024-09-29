@@ -20,24 +20,29 @@ export default function MenuModal() {
             text={t("components.buttons.admin")}
             click={() => navigate("/admin")}
             children={<IoMdSettings />}
+            widthFull={true}
           />
         )}
         <Button
           text={t("pages.legalNotice.title")}
           click={() => navigate("/legalnotice")}
+          widthFull={true}
         />
         <Button
           text={t("pages.termsOfService.title")}
           click={() => navigate("/termsofservice")}
+          widthFull={true}
         />
         <Button
           text={t("pages.releaseNotes.title")}
           click={() => navigate("/releasenotes")}
+          widthFull={true}
         />
       </nav>
       <Button
         text={t("components.buttons.close")}
         click={() => myStore.set(showMenuAtom, false)}
+        widthFull={true}
       />
     </>
   );

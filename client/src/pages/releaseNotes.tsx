@@ -13,11 +13,10 @@ export default function ReleaseNotes() {
       <ul className="flex flex-col-reverse gap-2">
         <li>
           <DashTile
-            className="bg-complementary"
             title=""
             children={
               <>
-                <H2 text="RC1.0.0" />
+                <H2 text="BETA-0.1 (actuelle)" />
                 <ul>
                   <li>
                     Parcourir la liste des nations, des citoyens et des lieux
@@ -26,6 +25,7 @@ export default function ReleaseNotes() {
                   <li>Créer un compte de citoyen virtuel</li>
                   <li>Créer une nation virtuelles</li>
                   <li>Créer des lieux pour sa nation virtuelle</li>
+                  <li>Rejoindre une nation virtuelles</li>
                 </ul>
               </>
             }
@@ -40,11 +40,8 @@ export default function ReleaseNotes() {
                   <ImLab />
                   <H2 text="Développements en cours" />
                 </div>
-
                 <ul>
-                  <li>Créer une organisation</li>
-                  <li>Rejoindre une organisation</li>
-                  <li>Rejoindre une nation virtuelles</li>
+                  <li>Créer des relations diplomatiques entre nations</li>
                 </ul>
               </>
             }
@@ -59,11 +56,9 @@ export default function ReleaseNotes() {
                   <IoBulb />
                   <H2 text="Développements à venir" />
                 </div>
-
                 <ul>
-                  <li>
-                    <em>Pas de nouveaux développements programmés</em>
-                  </li>
+                  <li>Créer une organisation</li>
+                  <li>Rejoindre une organisation</li>
                 </ul>
               </>
             }

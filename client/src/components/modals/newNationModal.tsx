@@ -2,7 +2,7 @@
 import { useAtom } from "jotai";
 import { newNationAtom } from "../../settings/store";
 import Button from "../buttons/button";
-import { ChangeEvent, FormEvent } from "react";
+import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import Form from "../form/form";
 import Input from "../form/input";
 // import Select from "../form/select";
@@ -13,10 +13,19 @@ import { regimeList } from "../../settings/consts";
 import { useTranslation } from "react-i18next";
 import RequiredStar from "../form/requiredStar";
 import { errorMessage } from "../../utils/toasts";
+import HashTag from "../tags/hashTag";
 
 export default function NewNationModal() {
   const [newNation, setNewNation] = useAtom(newNationAtom);
+  const [tagString, setTagString] = useState<string>("");
+  const [tags, setTags] = useState<string[]>([]);
   const { t } = useTranslation();
+
+  useEffect(() => {
+    const updateNewNation = { ...newNation };
+    updateNewNation.tags = tags;
+    setNewNation(updateNewNation);
+  }, [tags]);
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
@@ -39,6 +48,22 @@ export default function NewNationModal() {
   const handleSelectChange = (e: ChangeEvent<HTMLSelectElement>) => {
     const value = Number(e.target.value);
     setNewNation({ ...newNation, regime: value });
+  };
+
+  const handleChangeTag = (e: ChangeEvent<HTMLInputElement>) => {
+    const valeur = e.target.value;
+    setTagString(valeur);
+
+    if (valeur.includes(" ")) {
+      const mots = valeur.trim().split(/\s+/); // Séparer par des espaces multiples
+      setTags([...tags, ...mots]); // Ajouter les mots au tableau de mots-clés
+      setTagString("");
+    }
+  };
+
+  const deleteTag = (value: string) => {
+    const updatedTags = tags.filter((tag) => tag !== value);
+    setTags(updatedTags);
   };
 
   return (
@@ -66,6 +91,28 @@ export default function NewNationModal() {
               placeholder={t("components.modals.newNationModal.motto")}
               value={newNation.motto}
             />
+            <div className="flex flex-wrap gap-1">
+              {tags.map((tag, i) => {
+                return (
+                  <span
+                    onClick={() => deleteTag(tag)}
+                    key={i}
+                    className="hover:text-danger"
+                  >
+                    <HashTag label={tag} />
+                  </span>
+                );
+              })}
+            </div>
+            <Input
+              onChange={handleChangeTag}
+              type="text"
+              name="tag"
+              placeholder={t("components.hoverInfos.tags.hash")}
+              value={tagString}
+              disabled={tags.length > 5}
+            />
+
             <Input
               onChange={handleChange}
               type="text"
@@ -82,11 +129,16 @@ export default function NewNationModal() {
                 options={regimeList}
               />
             </label>
-            <Button type="submit" text={t("components.buttons.validate")} />
+            <Button
+              type="submit"
+              text={t("components.buttons.validate")}
+              widthFull={true}
+            />
             <Button
               type="button"
               text={t("components.buttons.cancel")}
               click={() => setNewNation(emptyNewNationPayload)}
+              widthFull={true}
             />
             <RequiredStar />
           </>

@@ -7,7 +7,7 @@ export default function LangButton() {
 
   return (
     <>
-      <div className={`w-[35px] h-full`}>
+      <div className={`h-full hover:text-secondary`}>
         <Button
           text=""
           children={
@@ -17,6 +17,7 @@ export default function LangButton() {
             </div>
           }
           click={() => myStore.set(showLangModalAtom, true)}
+          bgColor="bg-invisible"
         />
       </div>
     </>

@@ -13,6 +13,7 @@ import Input from "../form/input";
 import Select from "../form/select";
 import { ChangeEvent, FormEvent } from "react";
 import { useTranslation } from "react-i18next";
+import TextArea from "../form/textArea";
 
 export default function EditBoxModal() {
   const [editBox, setEditBox] = useAtom(editbox);
@@ -90,6 +91,10 @@ export default function EditBoxModal() {
     setEditBox({ ...editBox, new: e.target.value });
   };
 
+  const handleTextChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
+    setEditBox({ ...editBox, new: e.target.value });
+  };
+
   const handleSelectChange = (e: ChangeEvent<HTMLSelectElement>) => {
     if (editBox.path === "data.roleplay.capital") {
       setEditBox({ ...editBox, new: e.target.value });
@@ -101,12 +106,12 @@ export default function EditBoxModal() {
   };
 
   return (
-    <>
+    <div className="max-w-[600px] flex flex-col justify-center items-center gap-2">
       <h2 className="text-2xl text-center p-4">
         {t("components.modals.editModal.title")}
       </h2>
-      <b
-        className={`w-full text-center text-2xl ${editBox.original.toString().length > 30 && typeof editBox.original != "object" && "overflow-x-scroll"} ${editBox.original.toString() === "" && "text-danger"}`}
+      <div
+        className={`w-full max-h-[300px] overflow-y-auto text-center text-lg ${editBox.original.toString() === "" && "text-danger"}`}
       >
         {typeof editBox.original != "object" && editBox.original.toString()}
         {editBox.original.toString() === "" &&
@@ -114,20 +119,28 @@ export default function EditBoxModal() {
         {/* {typeof editBox.original == "object" &&
           editBox.indice &&
           editBox.original[editBox.indice].label} */}
-      </b>
+      </div>
       <form
-        className="flex flex-col gap-2 items-center"
+        className="w-full flex flex-col gap-2 items-center"
         onSubmit={handleSubmit}
       >
         {typeof editBox.original == "string" && (
-          <Input
+          <TextArea
             required
-            type="text"
+            maxLength={2000}
             placeholder={t("components.modals.editModal.newValue")}
-            onChange={handleInputChange}
+            onChange={handleTextChange}
             value={editBox.new.toString()}
             name=""
           />
+          // <Input
+          //   required
+          //   type="text"
+          //   placeholder={t("components.modals.editModal.newValue")}
+          //   onChange={handleInputChange}
+          //   value={editBox.new.toString()}
+          //   name=""
+          // />
         )}
         {typeof editBox.original == "number" && (
           <Input
@@ -157,6 +170,6 @@ export default function EditBoxModal() {
           <Button type="submit" text={t("components.buttons.validate")} />
         )}
       </form>
-    </>
+    </div>
   );
 }

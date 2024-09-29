@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { MouseEventHandler } from "react";
+import { MouseEventHandler, useState } from "react";
 
 export interface ButtonProps {
   type?: "button" | "submit";
@@ -7,6 +7,7 @@ export interface ButtonProps {
   bgColor?: string;
   disabled?: boolean;
   children?: JSX.Element;
+  widthFull?: boolean;
   click?: MouseEventHandler<HTMLButtonElement>;
   keyDown?: React.KeyboardEventHandler;
 }
@@ -17,19 +18,23 @@ export default function Button({
   bgColor,
   disabled,
   children,
+  widthFull,
   click,
   keyDown,
 }: ButtonProps) {
+  const [hover, setHover] = useState(false);
   return (
     <button
       disabled={disabled != undefined && disabled && disabled}
       type={type != undefined ? type : "button"}
-      className={`overflow-hidden ${disabled ? "bg-complementary2" : bgColor ? bgColor : "bg-secondary"} ${!disabled && "hover:text-primary hover:bg-light"} animate-fadeIn w-full max-w-[300px] min-h-[30px] flex justify-center items-center gap-2 rounded shadow-md py-2 px-4 transition-all duration-300`}
+      className={`overflow-hidden ${disabled ? "bg-complementary2" : bgColor ? bgColor : "bg-gradient-to-r from-secondary2 to-secondary"} ${!disabled && "hover:bg-gradient-to-br"} bold animate-fadeIn ${widthFull && "w-full"} max-w-[300px] min-h-[20px] flex justify-center items-center gap-2 shadow-md py-1 px-4 transition-all duration-300 rounded`}
       onClick={click && click}
+      onMouseEnter={() => setHover(true)}
+      onMouseLeave={() => setHover(false)}
       onKeyDown={keyDown && keyDown}
     >
-      {children}
-      {text != "" && <span>{text}</span>}
+      <div className={`text-xl ${hover && "animate-jump"}`}>{children}</div>
+      {text != "" && <span>{text.toLowerCase()}</span>}
     </button>
   );
 }

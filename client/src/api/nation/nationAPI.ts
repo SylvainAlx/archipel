@@ -4,15 +4,15 @@ import {
   nationFetchedAtom,
   nationsListAtom,
   nationsRoleplayDataAtom,
-  session,
   sessionAtom,
   statsAtom,
+  tagListAtom,
 } from "../../settings/store";
 import { EmptyNation, Nation, NewNationPayload } from "../../types/typNation";
+import { displayNationInfoByType } from "../../utils/displayInfos";
 
 import {
   deleteElementOfAtomArray,
-  displayNationInfoByType,
   findElementOfAtomArray,
   // updateElementOfAtomArray,
 } from "../../utils/functions";
@@ -21,14 +21,16 @@ import {
   createNationFetch,
   DeleteSelfFetch,
   getAllNations,
+  getAllNationTagsFetch,
   getNationsCountFetch,
   getOneNationFetch,
   getRoleplayDataFetch,
   updateNationFetch,
 } from "./nationFetch";
 
-const nationsList = myStore.get(nationsListAtom);
-const setNationsList = (list: Nation[]) => myStore.set(nationsListAtom, list);
+export const nationsList = myStore.get(nationsListAtom);
+export const setNationsList = (list: Nation[]) =>
+  myStore.set(nationsListAtom, list);
 
 export const getNationsCount = async () => {
   const stats = myStore.get(statsAtom);
@@ -53,6 +55,7 @@ export const createNation = (payload: NewNationPayload) => {
     .then((data) => {
       myStore.set(loadingAtom, false);
       if (data.nation) {
+        const session = myStore.get(sessionAtom);
         myStore.set(nationsListAtom, [...nationsList, data.nation]);
         myStore.set(sessionAtom, { ...session, nation: data.nation });
         if (data.user) {
@@ -116,6 +119,7 @@ export const updateNation = (payload: Nation) => {
       myStore.set(loadingAtom, false);
       if (resp.nation) {
         myStore.set(nationFetchedAtom, resp.nation);
+        const session = myStore.get(sessionAtom);
         myStore.set(sessionAtom, { ...session, nation: resp.nation });
         myStore.set(nationsListAtom, []);
         // updateElementOfAtomArray(resp.nation, nationsList, setNationsList);
@@ -133,6 +137,7 @@ export const deleteSelfNation = () => {
   myStore.set(loadingAtom, true);
   DeleteSelfFetch()
     .then((resp) => {
+      const session = myStore.get(sessionAtom);
       myStore.set(loadingAtom, false);
       if (session.nation) {
         deleteElementOfAtomArray(
@@ -167,6 +172,21 @@ export const getRoleplayData = (selectedNation: Nation) => {
           places: data.places,
         },
       ]);
+    })
+    .catch((error) => {
+      myStore.set(loadingAtom, false);
+      errorMessage(error.message);
+    });
+};
+
+export const getAllNationTags = async () => {
+  myStore.set(loadingAtom, true);
+  getAllNationTagsFetch()
+    .then((data) => {
+      myStore.set(loadingAtom, false);
+      if (data != undefined) {
+        myStore.set(tagListAtom, data);
+      }
     })
     .catch((error) => {
       myStore.set(loadingAtom, false);

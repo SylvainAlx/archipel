@@ -67,3 +67,9 @@ export const getRoleplayDataFetch = async (id: string) => {
   const result = await resp.json();
   return result;
 };
+
+export const getAllNationTagsFetch = async () => {
+  const resp = await fetch(`${SERVER_URL}/nation/gettags`);
+  const result = await resp.json();
+  return result;
+};

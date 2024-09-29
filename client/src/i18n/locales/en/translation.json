@@ -2,7 +2,7 @@
   "pages": {
     "home": {
       "title": "Welcome",
-      "presentation": "Welcome to Archipel Network ! Here, you can create your own virtual identity and build your own virtual nation, or join existing ones that best match your vision of society. With an intuitive tagging system, easily find virtual nations that share your ideals and aspirations. But that's not all! Virtual nations can also unite to form powerful organizations, all created by our virtual citizens. Whether for fun or to bring serious projects to life, our application offers a unique platform to explore, interact, and innovate in a boundless virtual world. Join us today and start building your utopia !"
+      "presentation": "Welcome to <b>Archipel Network</b> ! Here, you can create your own virtual identity and build your own virtual nation, or join existing ones that best match your vision of society. With an intuitive tagging system, easily find <b>virtual nations</b> that share your ideals and aspirations. But that's not all! Virtual nations can also unite to form powerful organizations, all created by our <b>virtual citizens</b>. Whether for fun or to bring serious projects to life, our application offers a unique platform to explore, interact, and innovate in a boundless virtual world. Join us today and start building your utopia !"
     },
     "nation": {
       "title": "nation",
@@ -19,6 +19,7 @@
         "places": "locations",
         "noPlaces": "no location to display",
         "diplomacy": "diplomacy",
+        "noRelations": "no diplomatic relationship",
         "citizens": "citizens",
         "noCitizens": "no citizen to display"
       }
@@ -109,7 +110,8 @@
       "back": "back",
       "newPlace": "new location",
       "showMore": "SHOW MORE",
-      "askCitizenship": "ASK CITIZENSHIP"
+      "askCitizenship": "ASK CITIZENSHIP",
+      "createRelation": "CREATE DIPLOMATIC RELATIONSHIP"
     },
     "form": {
       "input": {
@@ -138,7 +140,8 @@
         "declineCitizenship": "Decline citizenship ?",
         "askCitizenship": "Ask citizenship ?",
         "leaveNation": "Leave the nation ?",
-        "cancelCitizenship": "Cancel citizenship application ?"
+        "cancelCitizenship": "Cancel citizenship application ?",
+        "leaveRelation": "Leave relation ?"
       },
       "langModal": {
         "title": "LANGUAGE"
@@ -204,7 +207,7 @@
         "languages": "languages",
         "hash": "hash tag",
         "pendingCitizenship": "citizenship not validated",
-        "founder": "founder"
+        "nation": "nation"
       },
       "avatar": "avatar"
     },
@@ -280,7 +283,9 @@
   },
   "toasts": {
     "errors": {
-      "404": "Page not found"
+      "400": "Unknown error",
+      "404": "Page not found",
+      "serverError": "Server error"
     },
     "user": {
       "signIn": "Sign In successful",
@@ -298,12 +303,15 @@
       "11000": "Information already existing in the database",
       "deleteKO": "Unable to delete the user",
       "error": "Some information is wrong or missing",
-      "serverError": "Server error",
       "update": "Update successful"
     },
     "nation": {
       "create": "New nation created",
       "delete": "Nation deleted"
+    },
+    "relation": {
+      "create": "New diplomatic relationship created",
+      "update": "Change of diplomatic relationship made"
     }
   }
 }

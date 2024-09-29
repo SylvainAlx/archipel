@@ -25,7 +25,7 @@ export default function NationTile(nation: Nation) {
   return (
     <div className="bg-complementary flex flex-col items-center p-2 gap-3 rounded transition-all">
       <div className="w-full flex justify-between">
-        <div className="w-full flex items-center">
+        <div className="flex items-center">
           <div className="w-[50px] h-[50px] bg-complementary rounded-full flex items-center justify-center overflow-hidden">
             {nation.data.url.flag != "" ? (
               cachedImage ? (

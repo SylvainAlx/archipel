@@ -1,10 +1,62 @@
 import { useTranslation } from "react-i18next";
 import TileContainer from "../tileContainer";
 import DashTile from "../dashTile";
-import DevFlag from "../devFlag";
+import { SelectedNationProps } from "../../types/typProp";
+import { useAtom } from "jotai";
+import {
+  myStore,
+  newRelationAtom,
+  relationListAtom,
+  sessionAtom,
+} from "../../settings/store";
+import { lazy, Suspense, useEffect } from "react";
+import { getRelations } from "../../api/relation/relationAPI";
+import BarreLoader from "../loading/barreLoader";
+import Button from "../buttons/button";
+import { FaHandshakeSimple } from "react-icons/fa6";
+import {
+  DiplomaticRelationship,
+  emptyDiplomaticRelationship,
+  NationDiplomacyInfo,
+} from "../../types/typRelation";
 
-export default function Diplomacy() {
+export default function Diplomacy({
+  selectedNation,
+  owner,
+}: SelectedNationProps) {
   const { t } = useTranslation();
+  const [relationList] = useAtom<DiplomaticRelationship[]>(relationListAtom);
+  const [session] = useAtom(sessionAtom);
+  const RelationTile = lazy(() => import("../tiles/relationTile"));
+
+  useEffect(() => {
+    getRelations(selectedNation.officialId);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const handleClick = () => {
+    const newRelationPayload: DiplomaticRelationship =
+      emptyDiplomaticRelationship;
+    const nation1: NationDiplomacyInfo = {
+      OfficialId: session.user.citizenship.nationId,
+      AmbassadorId: "",
+      accepted: true,
+    };
+    const nation2: NationDiplomacyInfo = {
+      OfficialId: selectedNation.officialId,
+      AmbassadorId: "",
+      accepted: false,
+    };
+    newRelationPayload.name = `${selectedNation.name} & ${session.nation.name}`;
+    newRelationPayload.nations = [];
+    newRelationPayload.nations.push(nation1);
+    newRelationPayload.nations.push(nation2);
+    myStore.set(newRelationAtom, {
+      relation: newRelationPayload,
+      show: true,
+      update: false,
+    });
+  };
 
   return (
     <TileContainer
@@ -12,9 +64,33 @@ export default function Diplomacy() {
         <DashTile
           title={t("pages.nation.simulation.diplomacy")}
           children={
-            <section className="flex flex-col items-center gap-4">
-              <DevFlag />
-            </section>
+            <div className="w-full flex flex-col-reverse gap-2 items-center">
+              {relationList.length > 0 ? (
+                relationList.map((relation, i) => {
+                  if (relation.nations.length > 1) {
+                    return (
+                      <Suspense key={i} fallback={<BarreLoader />}>
+                        <RelationTile
+                          relation={relation}
+                          selectedNation={selectedNation}
+                        />
+                      </Suspense>
+                    );
+                  }
+                })
+              ) : (
+                <em className="text-center">
+                  {t("pages.nation.simulation.noRelations")}
+                </em>
+              )}
+              {!owner && session.user.citizenship.nationOwner && (
+                <Button
+                  text={t("components.buttons.createRelation")}
+                  children={<FaHandshakeSimple />}
+                  click={handleClick}
+                />
+              )}
+            </div>
           }
         />
       }

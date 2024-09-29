@@ -1,7 +1,20 @@
-@import url("https://fonts.googleapis.com/css2?family=Montserrat&display=swap");
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@font-face {
+  font-family: "Montserrat";
+  src: url("./assets/fonts/Montserrat-VariableFont_wght.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Montserrat Bold";
+  src: url("./assets/fonts/Montserrat-VariableFont_wght.ttf") format("truetype");
+  font-weight: 500;
+  font-style: normal;
+}
 
 #root {
   /* --color-complementary: rgb(34, 34, 34); */
@@ -12,6 +25,7 @@
   --color-primary: rgb(8, 24, 37);
   --color-light: #ffffff;
   --color-secondary: rgb(0, 129, 138);
+  --color-secondary2: rgb(0, 99, 138);
   --color-complementary: rgb(30 41 59); /* slate-800 */
   --color-complementary2: rgb(51 65 85); /* slate-700 */
   --color-complementary3: rgb(100 116 139); /* slate-500 */
@@ -27,6 +41,7 @@
   --color-regime-200: rgb(199, 137, 3);
 
   --main-font: "Montserrat", sans-serif;
+  --secondary-font: "Montserrat Bold", sans-serif;
 
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -44,11 +59,16 @@
 
 b {
   color: var(--color-secondary);
+  font-family: var(--secondary-font);
 }
 
 em {
   font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
   font-style: italic;
+}
+
+h5 {
+  font-family: var(--secondary-font);
 }
 
 .shape01 {
@@ -78,6 +98,6 @@ em {
 }
 
 .bold {
-  color: var(--color-secondary);
-  font-weight: 700;
+  /* color: var(--color-secondary); */
+  font-family: var(--secondary-font);
 }

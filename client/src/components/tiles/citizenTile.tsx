@@ -16,7 +16,7 @@ import { declineCitizenship } from "../../utils/functions";
 import CrossButton from "../buttons/crossButton";
 import { useAtom } from "jotai";
 import { useTranslation } from "react-i18next";
-import FounderTag from "../tags/founderTag";
+import NationTag from "../tags/nationTag";
 
 export interface CitizenTileProps {
   citizen: User;
@@ -38,7 +38,7 @@ export default function CitizenTile({ citizen }: CitizenTileProps) {
       className={`p-2 rounded flex flex-col items-center gap-3 bg-complementary shadow-xl`}
     >
       <div className="w-full flex justify-between">
-        <div className="w-full flex items-center">
+        <div className="flex items-center">
           <div className="w-[50px] h-[50px] rounded-full flex items-center justify-center overflow-hidden">
             <Avatar url={citizen.avatar} />
           </div>
@@ -49,7 +49,8 @@ export default function CitizenTile({ citizen }: CitizenTileProps) {
       {session.user.citizenship.nationOwner &&
         session.user.citizenship.nationId === citizen.citizenship.nationId &&
         session.user.officialId != citizen.officialId &&
-        emplacement.pathname != "/explore" && (
+        emplacement.pathname != "/explore" &&
+        citizen.citizenship.status > 0 && (
           <div className="w-max self-end">
             <CrossButton click={() => declineCitizenship(citizen)} />
           </div>
@@ -62,9 +63,14 @@ export default function CitizenTile({ citizen }: CitizenTileProps) {
             citizen={citizen}
           />
         )}
-        {citizen.officialId && <IdTag label={citizen.officialId} />}
         {citizen.role === "admin" && <RoleTag label="admin" />}
-        {citizen.citizenship.nationOwner && <FounderTag />}
+        {citizen.officialId && <IdTag label={citizen.officialId} />}
+        {citizen.citizenship.nationId != "" && (
+          <NationTag
+            label={citizen.citizenship.nationId}
+            founder={citizen.citizenship.nationOwner}
+          />
+        )}
       </div>
     </div>
   );

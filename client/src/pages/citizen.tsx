@@ -24,7 +24,7 @@ import RoleTag from "../components/tags/roleTag";
 import Upploader from "../components/uploader";
 import CrossButton from "../components/buttons/crossButton";
 import { GiBlackFlag } from "react-icons/gi";
-import FounderTag from "../components/tags/founderTag";
+import FounderTag from "../components/tags/nationTag";
 
 export default function Citizen() {
   const { t } = useTranslation();
@@ -60,7 +60,7 @@ export default function Citizen() {
     } else {
       setEnableLeaving(false);
     }
-    if (citizen.citizenship.nationId != "" && nation.officialId === "") {
+    if (citizen.citizenship.nationId != "") {
       getNation(citizen.citizenship.nationId);
     }
 
@@ -152,7 +152,12 @@ export default function Citizen() {
                   <div className="max-w-[90%] flex flex-wrap items-center justify-center gap-1">
                     <IdTag label={citizen.officialId} />
                     {citizen.role === "admin" && <RoleTag label="admin" />}
-                    {citizen.citizenship.nationOwner && <FounderTag />}
+                    {citizen.citizenship.nationId != "" && (
+                      <FounderTag
+                        label={citizen.citizenship.nationId}
+                        founder={citizen.citizenship.nationOwner}
+                      />
+                    )}
                   </div>
                   {nation != undefined &&
                   nation.officialId != "" &&
@@ -163,6 +168,7 @@ export default function Citizen() {
                           text={nation.name}
                           click={() => handleClick("nation")}
                           children={<GiBlackFlag />}
+                          widthFull={true}
                         />
                         {enableLeaving && (
                           <CrossButton
@@ -180,10 +186,12 @@ export default function Citizen() {
                           <Button
                             text={t("components.buttons.createNation")}
                             click={() => handleClick("new")}
+                            widthFull={true}
                           />
                           <Button
                             text={t("components.buttons.joinNation")}
                             click={() => handleClick("join")}
+                            widthFull={true}
                           />
                         </>
                       )}
@@ -200,16 +208,19 @@ export default function Citizen() {
                     <Button
                       text={t("components.buttons.changePassword")}
                       click={() => myStore.set(changePasswordModalAtom, true)}
+                      widthFull={true}
                     />
                     <Button
                       text={t("components.buttons.logout")}
                       bgColor="bg-wait"
                       click={logout}
+                      widthFull={true}
                     />
                     <Button
                       text={t("components.buttons.deleteAccount")}
                       bgColor="bg-danger"
                       click={handleDelete}
+                      widthFull={true}
                     />
                   </>
                 }

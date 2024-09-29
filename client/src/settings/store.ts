@@ -17,8 +17,11 @@ import {
 import { Place, emptyPlace } from "../types/typPlace";
 import i18n from "../i18n/i18n";
 import { emptyUser, User } from "../types/typUser";
-import { Tag } from "../types/typTag";
 import { Com } from "../types/typCom";
+import {
+  DiplomaticRelationship,
+  emptyDiplomaticRelationship,
+} from "../types/typRelation";
 
 export const myStore = createStore();
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -27,6 +30,10 @@ export type SetAtom<Args extends any[], Result> = (...args: Args) => Result;
 // Loading
 
 export const loadingAtom = atom(false);
+
+// Lobby
+
+export const lobbyAtom = atom(true);
 
 // Session
 
@@ -73,6 +80,18 @@ export const nationPlacesListAtom = atom<Place[]>([]);
 export const newPlaceAtom = atom<Place>(emptyPlace);
 export const editPlaceAtom = atom<EditPlaceParam>({ place: emptyPlace });
 
+// Relation
+
+export const relationFetchedAtom = atom<DiplomaticRelationship>(
+  emptyDiplomaticRelationship,
+);
+export const relationListAtom = atom<DiplomaticRelationship[]>([]);
+export const newRelationAtom = atom({
+  update: false,
+  show: false,
+  relation: emptyDiplomaticRelationship,
+});
+
 // com
 
 export const comFetchedListAtom = atom<Com[]>([]);
@@ -80,7 +99,7 @@ export const comsListAtom = atom<Com[]>([]);
 
 // tag
 
-export const tagListAtom = atom<Tag[]>([]);
+export const tagListAtom = atom<string[]>([]);
 
 // Param
 
@@ -93,7 +112,6 @@ export const editbox = atom(EditBoxDefault);
 export const infoModalAtom = atom("");
 
 export const changePasswordModalAtom = atom(false);
-export const showApp = atom(false);
 
 export const dataCheckedAtom = atom(false);
 

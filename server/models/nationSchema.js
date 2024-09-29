@@ -18,11 +18,11 @@ const nationSchema = mongoose.Schema(
     },
     reported: {
       type: Boolean,
-      default: false
+      default: false,
     },
     banished: {
       type: Boolean,
-      default: false
+      default: false,
     },
     data: {
       url: {
@@ -72,6 +72,10 @@ const nationSchema = mongoose.Schema(
           type: Array,
           default: [],
         },
+        description: {
+          type: String,
+          default: "",
+        },
       },
       roleplay: {
         capital: {
@@ -85,7 +89,7 @@ const nationSchema = mongoose.Schema(
         places: {
           type: Number,
           default: 0,
-        }
+        },
       },
     },
   },
