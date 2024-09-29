@@ -9,7 +9,6 @@ import PopulationTag from "../tags/populationTag";
 import { GiCapitol } from "react-icons/gi";
 import { useNavigate } from "react-router-dom";
 import EyeButton from "../buttons/eyeButton";
-import IdTag from "../tags/idTag";
 import { getPlaceTypeLabel } from "../../utils/functions";
 import PlaceTag from "../tags/placeTag";
 import { useEffect, useState } from "react";
@@ -70,7 +69,6 @@ export default function PlaceTile({ place, owner }: PlaceTileProp) {
         </h3>
         <p className="w-full flex-grow">{place.description}</p>
         <div className="max-w-[90%] flex flex-wrap items-center self-end justify-end gap-1">
-          {place.officialId && <IdTag label={place.officialId} />}
           <PlaceTag label={getPlaceTypeLabel(place.type)} />
           {place.type != 2 && (
             <TreeTag label={childrenStats.children.toString()} />
