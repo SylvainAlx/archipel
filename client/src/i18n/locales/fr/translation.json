@@ -11,7 +11,8 @@
         "generalInformations": "informations générales",
         "noCapital": "aucune capitale",
         "noMotto": "pas de devise",
-        "externalLinks": "liens externes"
+        "externalLinks": "liens externes",
+        "noDescription": "pas de description"
       },
       "simulation": {
         "title": "simulation",
@@ -155,7 +156,8 @@
         "nationName": "Nom de la nation *",
         "motto": "Devise",
         "currency": "Monnaie",
-        "regime": "Regime *"
+        "regime": "Regime",
+        "tagsInfos": "Espace pour valider, cliquer pour supprimer"
       },
       "editModal": {
         "title": "MODIFIER LA VALEUR",

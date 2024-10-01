@@ -11,7 +11,8 @@
         "generalInformations": "general informations",
         "noCapital": "no capital",
         "noMotto": "no motto",
-        "externalLinks": "external links"
+        "externalLinks": "external links",
+        "noDescription": "no description"
       },
       "simulation": {
         "title": "simulation",
@@ -155,7 +156,8 @@
         "nationName": "Nation name",
         "motto": "Motto",
         "currency": "Currency",
-        "regime": "Regime"
+        "regime": "Regime",
+        "tagsInfos": "Space to apply, click to delete"
       },
       "editModal": {
         "title": "EDIT VALUE",
