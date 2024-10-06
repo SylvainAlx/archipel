@@ -1,8 +1,27 @@
+import { useEffect } from "react";
 import DashTile from "../dashTile";
 import TileContainer from "../tileContainer";
 import FreeTile from "../tiles/freeTile";
+import { getNationTile } from "../../api/tile/tileAPI";
+import { SelectedNationProps } from "../../types/typProp";
+import { useAtom } from "jotai";
+import { tileListAtom } from "../../settings/store";
 
-export default function FreeTiles() {
+export default function FreeTiles({ selectedNation }: SelectedNationProps) {
+  const [tileList] = useAtom(tileListAtom);
+
+  useEffect(() => {
+    if (selectedNation.officialId != "") {
+      getNationTile(selectedNation.officialId);
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedNation.officialId]);
+
+  useEffect(() => {
+    console.log(tileList);
+  }, [tileList]);
+
   return (
     <TileContainer
       children={
@@ -10,22 +29,18 @@ export default function FreeTiles() {
           title="Tuiles libres"
           children={
             <div className="flex flex-wrap items-stretch justify-center gap-4">
-              <FreeTile title="Superficie" description="" value="12 km²" />
-              <FreeTile
-                title="Population maximum"
-                description="Nombre d'habitants pouvant être accueillis en fonction du nombre de logement"
-                value="429 habitants"
-              />
-              <FreeTile
-                title="Dernière assemblée de l'Agora"
-                description=""
-                value="01/10/2024"
-              />
-              <FreeTile
-                title="Total lignes maritimes"
-                description=""
-                value="8"
-              />
+              {tileList.map((tile, i) => {
+                return (
+                  <FreeTile
+                    key={i}
+                    nationOfficialId={tile.nationOfficialId}
+                    title={tile.title}
+                    description={tile.description ? tile.description : ""}
+                    value={tile.value}
+                    updatedAt={tile.updatedAt}
+                  />
+                );
+              })}
             </div>
           }
         />

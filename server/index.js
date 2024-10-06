@@ -14,6 +14,7 @@ import userRouter from "./routers/userRouter.js";
 import { verifyJwt } from "./middlewares/authMiddleware.js";
 import { deleteUploadedFile } from "./controllers/files.js";
 import relationRouter from "./routers/relationRouter.js";
+import tileRouter from "./routers/tileRouter.js";
 
 // config serveur
 const app = express();
@@ -49,6 +50,7 @@ app.use("/com", comRouter);
 app.use("/place", placeRouter);
 app.use("/param", paramRouter);
 app.use("/relation", relationRouter);
+app.use("/tile", tileRouter);
 app.delete("/file/delete/:id", [verifyJwt], deleteUploadedFile);
 app.use("/", home);
 

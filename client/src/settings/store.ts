@@ -22,6 +22,7 @@ import {
   DiplomaticRelationship,
   emptyDiplomaticRelationship,
 } from "../types/typRelation";
+import { Tile } from "../types/typTile";
 
 export const myStore = createStore();
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -100,6 +101,10 @@ export const comsListAtom = atom<Com[]>([]);
 // tag
 
 export const tagListAtom = atom<string[]>([]);
+
+// tile
+
+export const tileListAtom = atom<Tile[]>([]);
 
 // Param
 
