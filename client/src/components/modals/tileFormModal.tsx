@@ -3,7 +3,7 @@ import Form from "../form/form";
 import Input from "../form/input";
 import { emptyTile } from "../../types/typTile";
 import Button from "../buttons/button";
-import { editTileAtom } from "../../settings/store";
+import { confirmBox, editTileAtom, myStore } from "../../settings/store";
 import { useAtom } from "jotai";
 import { useTranslation } from "react-i18next";
 
@@ -31,9 +31,17 @@ export default function TileFormModal() {
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     if (newTile) {
-      console.log("nouvelle tuile pour " + updatedTile.nationOfficialId);
+      updatedTile.nationOfficialId = tile.nationOfficialId;
+      myStore.set(confirmBox, {
+        action: "createTile",
+        text: "confirmer la création de la tuile ?",
+        payload: updatedTile,
+        result: "",
+      });
+      setTile(emptyTile);
     } else {
       console.log("mise à jour de " + updatedTile.title);
+      setTile(emptyTile);
     }
   };
   return (

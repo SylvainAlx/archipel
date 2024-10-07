@@ -26,7 +26,7 @@ export default function FreeTile({ tile, owner }: FreeTileProps) {
     myStore.set(confirmBox, {
       action: "deleteTile",
       text: "confirmer la suppression de la tuile ?",
-      payload: tile,
+      payload: tile._id,
       result: "",
     });
   };

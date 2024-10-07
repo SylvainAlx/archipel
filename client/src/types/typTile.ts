@@ -1,4 +1,5 @@
 export interface Tile {
+  _id: string;
   nationOfficialId: string;
   title: string;
   description?: string;
@@ -7,6 +8,7 @@ export interface Tile {
 }
 
 export const emptyTile: Tile = {
+  _id: "",
   nationOfficialId: "",
   title: "",
   description: "",

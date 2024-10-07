@@ -1,12 +1,30 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { loadingAtom, myStore, tileListAtom } from "../../settings/store";
 import { Tile } from "../../types/typTile";
-import { deleteElementOfAtomArray } from "../../utils/functions";
+import { getTempArray } from "../../utils/functions";
 import { errorMessage } from "../../utils/toasts";
-import { deleteTileFetch, getNationTileFetch } from "./tileFetch";
+import {
+  createTileFetch,
+  deleteTileFetch,
+  getNationTileFetch,
+} from "./tileFetch";
 
-const tileList = myStore.get(tileListAtom);
-const setTileList = (list: Tile[]) => myStore.set(tileListAtom, list);
+export const createTile = async (tile: Tile) => {
+  myStore.set(loadingAtom, true);
+  createTileFetch(tile)
+    .then((data) => {
+      myStore.set(loadingAtom, false);
+      if (data.tile) {
+        const tempArray = [...myStore.get(tileListAtom)];
+        tempArray.push(data.tile);
+        myStore.set(tileListAtom, tempArray);
+      }
+    })
+    .catch((error) => {
+      myStore.set(loadingAtom, false);
+      console.log(error);
+    });
+};
 
 export const getNationTile = async (nationOfficialId: string) => {
   myStore.set(loadingAtom, true);
@@ -21,11 +39,16 @@ export const getNationTile = async (nationOfficialId: string) => {
     });
 };
 
-export const deleteTile = async (title: string) => {
+export const deleteTile = async (id: string) => {
   myStore.set(loadingAtom, true);
-  deleteTileFetch(title)
+  deleteTileFetch(id)
     .then((resp) => {
-      deleteElementOfAtomArray(resp.tile.officialId, tileList, setTileList);
+      const tempArray = getTempArray(
+        resp.tile.nationOfficialId,
+        myStore.get(tileListAtom),
+      );
+      console.log(tempArray);
+      myStore.set(tileListAtom, tempArray);
       myStore.set(loadingAtom, false);
     })
     .catch((error) => {
