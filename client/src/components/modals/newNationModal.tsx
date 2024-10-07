@@ -104,6 +104,7 @@ export default function NewNationModal() {
                 );
               })}
             </div>
+
             <Input
               onChange={handleChangeTag}
               type="text"
@@ -112,7 +113,9 @@ export default function NewNationModal() {
               value={tagString}
               disabled={tags.length > 5}
             />
-
+            <em className="text-sm">
+              {t("components.modals.newNationModal.tagsInfos")}
+            </em>
             <Input
               onChange={handleChange}
               type="text"
@@ -121,14 +124,13 @@ export default function NewNationModal() {
               value={newNation.currency}
             />
 
-            <label htmlFor="regime">
-              {t("components.modals.newNationModal.regime")}
-              <Select
-                id="regime"
-                onChange={handleSelectChange}
-                options={regimeList}
-              />
-            </label>
+            <Select
+              id="regime"
+              onChange={handleSelectChange}
+              options={regimeList}
+              title={t("components.modals.newNationModal.regime")}
+            />
+
             <Button
               type="submit"
               text={t("components.buttons.validate")}

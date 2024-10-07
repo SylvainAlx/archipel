@@ -1,6 +1,5 @@
 import { Nation } from "../../types/typNation";
 import { GiBlackFlag } from "react-icons/gi";
-import IdTag from "../tags/idTag";
 import PopulationTag from "../tags/populationTag";
 import EyeButton from "../buttons/eyeButton";
 import { useNavigate } from "react-router-dom";
@@ -8,6 +7,7 @@ import RegimeTag from "../tags/regimeTag";
 import PlaceTag from "../tags/placeTag";
 import { useEffect, useState } from "react";
 import { getCachedImage } from "../../utils/functions";
+import HashTag from "../tags/hashTag";
 
 export default function NationTile(nation: Nation) {
   const [cachedImage, setCachedImage] = useState<string | null>(null);
@@ -52,18 +52,17 @@ export default function NationTile(nation: Nation) {
         <EyeButton click={handleClick} />
       </div>
       <div className="max-w-[80%] flex gap-1 self-end flex-wrap justify-end">
-        <IdTag label={nation.officialId} />
-        <RegimeTag selectedNation={nation} />
         <PlaceTag label={nation.data.roleplay.places} />
         <PopulationTag label={nation.data.roleplay.citizens} />
-        {/* {nation.data.general.tags.length > 0 &&
+        <RegimeTag selectedNation={nation} />
+        {nation.data.general.tags.length > 0 &&
           nation.data.general.tags.map((tag, i) => {
             return (
               <div key={i}>
-                <IdTag label={tag} />
+                <HashTag label={tag} />
               </div>
             );
-          })} */}
+          })}
       </div>
     </div>
   );

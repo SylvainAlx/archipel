@@ -1,7 +1,6 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import { User } from "../../types/typUser";
 import EyeButton from "../buttons/eyeButton";
-import IdTag from "../tags/idTag";
 import RoleTag from "../tags/roleTag";
 import Avatar from "../avatar";
 import CitizenTag from "../tags/citizenTag";
@@ -64,7 +63,6 @@ export default function CitizenTile({ citizen }: CitizenTileProps) {
           />
         )}
         {citizen.role === "admin" && <RoleTag label="admin" />}
-        {citizen.officialId && <IdTag label={citizen.officialId} />}
         {citizen.citizenship.nationId != "" && (
           <NationTag
             label={citizen.citizenship.nationId}

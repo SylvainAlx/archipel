@@ -8,7 +8,7 @@ export default function Links({ selectedNation, owner }: SelectedNationProps) {
   const { t } = useTranslation();
   return (
     <div className="flex items-center justify-center gap-6">
-      <span className="flex items-center gap-2">
+      <span className="flex items-center gap-1">
         <ExternalLink
           url={selectedNation.data.url.website}
           children={<FaLink />}
@@ -22,7 +22,7 @@ export default function Links({ selectedNation, owner }: SelectedNationProps) {
           />
         )}
       </span>
-      <span className="flex items-center gap-2">
+      <span className="flex items-center gap-1">
         <ExternalLink
           url={selectedNation.data.url.instagram}
           children={<FaInstagram />}
@@ -36,7 +36,7 @@ export default function Links({ selectedNation, owner }: SelectedNationProps) {
           />
         )}
       </span>
-      <span className="flex items-center gap-2">
+      <span className="flex items-center gap-1">
         <ExternalLink
           url={selectedNation.data.url.wiki}
           children={<FaWikipediaW />}
@@ -50,7 +50,7 @@ export default function Links({ selectedNation, owner }: SelectedNationProps) {
           />
         )}
       </span>
-      <span className="flex items-center gap-2">
+      <span className="flex items-center gap-1">
         <ExternalLink
           url={selectedNation.data.url.discord}
           children={<FaDiscord />}

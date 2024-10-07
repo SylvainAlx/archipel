@@ -23,6 +23,7 @@ import H3 from "../titles/h3";
 import Upploader from "../uploader";
 import CrossButton from "../buttons/crossButton";
 import { deleteFileAPIProps } from "../../api/files/fileAPI";
+import TagList from "./tagList";
 
 export default function NationIdentity({
   selectedNation,
@@ -204,7 +205,8 @@ export default function NationIdentity({
                       )}
                     </div>
                   </div>
-                  <div className="w-full mt-4 text-center flex gap-2">
+                  <TagList selectedNation={selectedNation} owner={owner} />
+                  <div className="w-full mt-4 justify-center flex gap-2">
                     {selectedNation.data.general.description ? (
                       <p
                         className="text-md text-justify"
@@ -214,7 +216,7 @@ export default function NationIdentity({
                       />
                     ) : (
                       <em className="text-center">
-                        {t("pages.nation.simulation.noRelations")}
+                        {t("pages.nation.nationIdentity.noDescription")}
                       </em>
                     )}
 
