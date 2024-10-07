@@ -3,7 +3,7 @@ export interface Tile {
   title: string;
   description?: string;
   value: string | number;
-  updatedAt?: Date;
+  updatedAt: string;
 }
 
 export const emptyTile: Tile = {
@@ -11,5 +11,5 @@ export const emptyTile: Tile = {
   title: "",
   description: "",
   value: "",
-  updatedAt: new Date(),
+  updatedAt: "",
 };

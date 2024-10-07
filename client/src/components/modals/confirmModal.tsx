@@ -64,6 +64,9 @@ export default function ConfirmModal() {
             if (confirm.action === "leave") {
               updateRelation(confirm.payload);
             }
+            if (confirm.action === "deleteTile") {
+              console.log("suppression de la tuile");
+            }
           }}
         />
         <Button

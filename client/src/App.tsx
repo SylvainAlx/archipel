@@ -19,8 +19,8 @@ import { ArchipelRoute } from "./types/typReact";
 import i18n from "./i18n/i18n";
 import { authentification } from "./api/user/userAPI";
 import { getNation } from "./api/nation/nationAPI";
-import { errorMessage } from "./utils/toasts";
-import { MDP_LOBBY } from "./settings/consts";
+// import { errorMessage } from "./utils/toasts";
+// import { MDP_LOBBY } from "./settings/consts";
 import Lobby from "./pages/lobby";
 import CookiesModal from "./components/modals/cookiesModal";
 
@@ -34,14 +34,14 @@ export default function App() {
 
   useEffect(() => {
     i18n.init();
-    const lobbyToken = localStorage.getItem("lobby");
-    if (!access && lobbyToken && lobbyToken === MDP_LOBBY) {
-      setAccess(true);
-      authentification();
-    } else if (lobbyToken) {
-      setAccess(false);
-      errorMessage("mot de passe d'accès anticipé erroné");
-    }
+    // const lobbyToken = localStorage.getItem("lobby");
+    // if (!access && lobbyToken && lobbyToken === MDP_LOBBY) {
+    setAccess(true);
+    authentification();
+    // } else if (lobbyToken) {
+    //   setAccess(false);
+    //   errorMessage("mot de passe d'accès anticipé erroné");
+    // }
   }, [access]);
 
   useEffect(() => {

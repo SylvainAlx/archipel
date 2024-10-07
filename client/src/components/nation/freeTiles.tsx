@@ -5,10 +5,17 @@ import FreeTile from "../tiles/freeTile";
 import { getNationTile } from "../../api/tile/tileAPI";
 import { SelectedNationProps } from "../../types/typProp";
 import { useAtom } from "jotai";
-import { tileListAtom } from "../../settings/store";
+import { editTileAtom, tileListAtom } from "../../settings/store";
+import Button from "../buttons/button";
+import { emptyTile } from "../../types/typTile";
+import { GiSBrick } from "react-icons/gi";
 
-export default function FreeTiles({ selectedNation }: SelectedNationProps) {
+export default function FreeTiles({
+  selectedNation,
+  owner,
+}: SelectedNationProps) {
   const [tileList] = useAtom(tileListAtom);
+  const [, setEditTile] = useAtom(editTileAtom);
 
   useEffect(() => {
     if (selectedNation.officialId != "") {
@@ -18,9 +25,11 @@ export default function FreeTiles({ selectedNation }: SelectedNationProps) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedNation.officialId]);
 
-  useEffect(() => {
-    console.log(tileList);
-  }, [tileList]);
+  const handleClick = () => {
+    const newTile = { ...emptyTile };
+    newTile.nationOfficialId = selectedNation.officialId;
+    setEditTile(newTile);
+  };
 
   return (
     <TileContainer
@@ -28,20 +37,26 @@ export default function FreeTiles({ selectedNation }: SelectedNationProps) {
         <DashTile
           title="Tuiles libres"
           children={
-            <div className="flex flex-wrap items-stretch justify-center gap-4">
-              {tileList.map((tile, i) => {
-                return (
-                  <FreeTile
-                    key={i}
-                    nationOfficialId={tile.nationOfficialId}
-                    title={tile.title}
-                    description={tile.description ? tile.description : ""}
-                    value={tile.value}
-                    updatedAt={tile.updatedAt}
-                  />
-                );
-              })}
-            </div>
+            <section className="flex flex-col items-center justify-center gap-2">
+              <div className="flex flex-wrap items-stretch justify-center gap-4">
+                {tileList.map((tile, i) => {
+                  return (
+                    <FreeTile
+                      key={i}
+                      tile={tile}
+                      owner={owner ? owner : false}
+                    />
+                  );
+                })}
+              </div>
+              {owner && (
+                <Button
+                  text="ajouter une tuile"
+                  children={<GiSBrick />}
+                  click={handleClick}
+                />
+              )}
+            </section>
           }
         />
       }

@@ -4,6 +4,7 @@ import {
   confirmBox,
   // editPlaceAtom,
   editbox,
+  editTileAtom,
   imageAtom,
   infoModalAtom,
   loadingAtom,
@@ -27,6 +28,7 @@ import MenuModal from "../components/modals/menuModal";
 import NewNationModal from "../components/modals/newNationModal";
 import { ChangePasswordModal } from "../components/modals/changePasswordModal";
 import NewRelationModal from "../components/modals/newRelationModal";
+import TileFormModal from "../components/modals/tileFormModal";
 
 export default function ModalsRouter() {
   const [recovery] = useAtom(recoveryKey);
@@ -42,6 +44,7 @@ export default function ModalsRouter() {
   const [newNation] = useAtom(newNationAtom);
   const [changePassword] = useAtom(changePasswordModalAtom);
   const [newRelation] = useAtom(newRelationAtom);
+  const [tile] = useAtom(editTileAtom);
 
   if (
     recovery != "" ||
@@ -56,7 +59,8 @@ export default function ModalsRouter() {
     menu ||
     newNation.owner != "" ||
     changePassword ||
-    newRelation.show
+    newRelation.show ||
+    tile.nationOfficialId != ""
   ) {
     return (
       <div className="animate-in fade-in z-20 fixed top-0 w-screen h-screen backdrop-blur-sm bg-black_alpha flex items-center justify-center">
@@ -84,6 +88,7 @@ export default function ModalsRouter() {
                   {newRelation.show && (
                     <NewRelationModal update={newRelation.update} />
                   )}
+                  {tile.nationOfficialId != "" && <TileFormModal />}
                 </>
               )}
             </>
