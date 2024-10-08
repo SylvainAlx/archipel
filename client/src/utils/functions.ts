@@ -52,17 +52,6 @@ export const deleteElementOfAtomArray = (
   setAtom(tempArray);
 };
 
-export const getTempArray = (id: string, atom: any[]) => {
-  const tempArray: any[] = [...atom];
-  for (let i = 0; i < atom.length; i++) {
-    if (atom[i].nationOfficialId === id) {
-      tempArray.splice(i, 1);
-      break;
-    }
-  }
-  return tempArray;
-};
-
 export const createElementOfAtomArray = (
   payload: any,
   atom: any[],

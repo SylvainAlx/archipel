@@ -38,3 +38,18 @@ export const deleteTileFetch = async (id: string) => {
   const result = await resp.json();
   return result;
 };
+
+export const updateTileFetch = async (payload: Tile) => {
+  const jwt = GET_JWT();
+  const resp = await fetch(`${SERVER_URL}/tile/update`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      authorization: "Bearer " + jwt,
+    },
+    body: JSON.stringify(payload),
+  });
+  const result = await resp.json();
+
+  return result;
+};

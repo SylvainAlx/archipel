@@ -6,6 +6,7 @@ import Button from "../buttons/button";
 import { confirmBox, editTileAtom, myStore } from "../../settings/store";
 import { useAtom } from "jotai";
 import { useTranslation } from "react-i18next";
+import TextArea from "../form/textArea";
 
 export default function TileFormModal() {
   const [newTile, setNewTile] = useState(false);
@@ -22,7 +23,9 @@ export default function TileFormModal() {
     }
   }, [tile]);
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => {
     const name = e.target.name;
     const value = e.target.value;
     setUpdatedTile({ ...updatedTile, [name]: value });
@@ -34,20 +37,27 @@ export default function TileFormModal() {
       updatedTile.nationOfficialId = tile.nationOfficialId;
       myStore.set(confirmBox, {
         action: "createTile",
-        text: "confirmer la création de la tuile ?",
+        text: t("components.modals.confirmModal.createTile"),
         payload: updatedTile,
         result: "",
       });
       setTile(emptyTile);
     } else {
-      console.log("mise à jour de " + updatedTile.title);
+      myStore.set(confirmBox, {
+        action: "updateTile",
+        text: t("components.modals.confirmModal.updateTile"),
+        payload: updatedTile,
+        result: "",
+      });
       setTile(emptyTile);
     }
   };
   return (
     <div>
       <h2 className="text-2xl text-center p-4">
-        {newTile ? "Nouvelle tuile" : "Modifier la tuile"}
+        {newTile
+          ? t("components.modals.tileModal.new")
+          : t("components.modals.tileModal.update")}
       </h2>
       <Form
         submit={handleSubmit}
@@ -59,23 +69,26 @@ export default function TileFormModal() {
               name="title"
               value={updatedTile.title}
               onChange={handleChange}
-              placeholder="titre"
+              placeholder={t("components.modals.tileModal.title")}
               maxLength={60}
             />
-            <Input
-              onChange={handleChange}
-              type="text"
+            <TextArea
               name="description"
-              placeholder="description"
-              value={updatedTile.description}
+              placeholder={t("components.modals.tileModal.description")}
+              value={
+                updatedTile.description != undefined
+                  ? updatedTile.description
+                  : ""
+              }
+              onChange={handleChange}
+              maxLength={200}
             />
-
             <Input
               required
               onChange={handleChange}
               type="text"
               name="value"
-              placeholder="valeur"
+              placeholder={t("components.modals.tileModal.value")}
               value={updatedTile.value}
             />
             <Button
