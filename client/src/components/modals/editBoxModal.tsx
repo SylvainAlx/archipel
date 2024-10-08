@@ -28,6 +28,9 @@ export default function EditBoxModal() {
     if (Array.isArray(editBox.original)) {
       setEditBox({ ...editBox, new: [] });
     }
+    if (typeof editBox.original == "string") {
+      setEditBox({ ...editBox, new: editBox.original });
+    }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [editBox.original]);
@@ -127,7 +130,7 @@ export default function EditBoxModal() {
     }
   };
 
-  const handleDelete = (i: number) => {
+  const handleDeleteItem = (i: number) => {
     const newArray = editBox.original;
     if (Array.isArray(newArray)) {
       newArray.splice(i, 1);
@@ -140,33 +143,24 @@ export default function EditBoxModal() {
       <h2 className="text-2xl text-center p-4">
         {t("components.modals.editModal.title")}
       </h2>
-      <div
-        className={`w-full max-h-[300px] overflow-y-auto text-center text-lg ${editBox.original.toString() === "" && "text-danger"}`}
-      >
-        {typeof editBox.original != "object" && editBox.original.toString()}
-        {editBox.original.toString() === "" &&
-          t("components.modals.editModal.noValue")}
-        {/* {typeof editBox.original == "object" &&
-          editBox.indice &&
-          editBox.original[editBox.indice].label} */}
-      </div>
       <form
         className="w-full flex flex-col gap-2 items-center"
         onSubmit={handleSubmit}
       >
         {typeof editBox.original == "string" && (
           <TextArea
-            required
-            maxLength={2000}
+            required={!editBox.canBeEmpty}
+            maxLength={editBox.path === "data.general.description" ? 2000 : 60}
             placeholder={t("components.modals.editModal.newValue")}
             onChange={handleTextChange}
             value={editBox.new.toString()}
             name=""
+            rows={editBox.path === "data.general.description" ? 10 : 1}
           />
         )}
         {typeof editBox.original == "number" && (
           <Input
-            required
+            required={!editBox.canBeEmpty}
             type="number"
             placeholder={t("components.modals.editModal.newValue")}
             onChange={handleInputChange}
@@ -196,7 +190,7 @@ export default function EditBoxModal() {
                     name=""
                   />
                   <div
-                    onClick={() => handleDelete(i)}
+                    onClick={() => handleDeleteItem(i)}
                     className="cursor-pointer text-xl hover:animate-pulse rounded-full transition-all"
                   >
                     <IoMdCloseCircle />
@@ -244,13 +238,12 @@ export default function EditBoxModal() {
           }
           widthFull={true}
         />
-        {editBox.new != -1 && editBox.new != "" && (
-          <Button
-            type="submit"
-            text={t("components.buttons.validate")}
-            widthFull={true}
-          />
-        )}
+
+        <Button
+          type="submit"
+          text={t("components.buttons.validate")}
+          widthFull={true}
+        />
       </form>
     </div>
   );

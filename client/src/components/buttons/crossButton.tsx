@@ -1,9 +1,22 @@
 import { IoMdCloseCircle } from "react-icons/io";
-import { ClickProps } from "../../types/typProp";
 import Button from "./button";
 import { useTranslation } from "react-i18next";
+import { MouseEventHandler } from "react";
 
-export default function CrossButton({ click, small, text }: ClickProps) {
+interface CrossButtonProps {
+  text?: string;
+  click: MouseEventHandler<HTMLButtonElement | HTMLDivElement>;
+  small?: boolean;
+  absolute?: boolean;
+  widthFull?: boolean;
+}
+
+export default function CrossButton({
+  click,
+  small,
+  text,
+  widthFull,
+}: CrossButtonProps) {
   const { t } = useTranslation();
   return (
     <>
@@ -13,6 +26,7 @@ export default function CrossButton({ click, small, text }: ClickProps) {
           bgColor="bg-danger"
           click={click}
           children={<IoMdCloseCircle />}
+          widthFull={widthFull && widthFull}
         />
       ) : (
         <div
