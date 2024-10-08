@@ -74,7 +74,7 @@ export default function Nation() {
               <Links selectedNation={nation} owner={owner} />
             </div>
             <NationIdentity selectedNation={nation} owner={owner} />
-            <FreeTiles />
+            <FreeTiles selectedNation={nation} owner={owner} />
             <Diplomacy selectedNation={nation} owner={owner} />
             <Places selectedNation={nation} owner={owner} />
             <Citizens selectedNation={nation} owner={owner} />

@@ -142,7 +142,10 @@
         "askCitizenship": "Demander la nationnalité ?",
         "leaveNation": "Quitter la nation ?",
         "cancelCitizenship": "Annuler la demande de citoyenneté ?",
-        "leaveRelation": "Rompre la relation ?"
+        "leaveRelation": "Rompre la relation ?",
+        "createTile": "Confirmez-vous la création de la tuile ?",
+        "updateTile": "Confirmez-vous la mise à jour de la tuile ?",
+        "deleteTile": "Confirmez-vous la suppression de la tuile ?"
       },
       "langModal": {
         "title": "CHOIX DE LA LANGUE"
@@ -180,6 +183,13 @@
         "info": "Merci de conserver précieusement votre phrase de récupération",
         "boldInfo": "ELLE NE VOUS SERA PLUS COMMUNIQUÉE PAR LA SUITE !",
         "confirm": "J'ai pris connaissance de cette information"
+      },
+      "tileModal": {
+        "new": "Nouvelle tuile",
+        "update": "Modifier la tuile",
+        "inputTitle": "Titre",
+        "inputDescription": "Description",
+        "inputValue": "Valeur"
       }
     },
     "hoverInfos": {
@@ -306,6 +316,12 @@
     "relation": {
       "create": "Nouvelle relation diplomatique créée",
       "update": "Modification de la relation diplomatique effectuée"
+    },
+    "tile": {
+      "new": "tuile créée",
+      "update": "tuite mise à jour",
+      "delete": "tuile supprimée",
+      "forbidden": "suppression interdite"
     }
   }
 }

@@ -10,6 +10,7 @@ import { changeStatus, deleteUser, logout } from "../../api/user/userAPI";
 import { deleteUploadedFile } from "../../api/files/fileAPI";
 import { useNavigate } from "react-router-dom";
 import { updateRelation } from "../../api/relation/relationAPI";
+import { createTile, deleteTile, updateTile } from "../../api/tile/tileAPI";
 
 export default function ConfirmModal() {
   const { t } = useTranslation();
@@ -63,6 +64,15 @@ export default function ConfirmModal() {
             }
             if (confirm.action === "leave") {
               updateRelation(confirm.payload);
+            }
+            if (confirm.action === "deleteTile") {
+              deleteTile(confirm.payload);
+            }
+            if (confirm.action === "createTile") {
+              createTile(confirm.payload);
+            }
+            if (confirm.action === "updateTile") {
+              updateTile(confirm.payload);
             }
           }}
         />

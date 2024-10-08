@@ -73,6 +73,7 @@ export default function NationIdentity({
                         target="nation"
                         param={selectedNation.name}
                         path="name"
+                        canBeEmpty={false}
                       />
                     )}
                   </div>
