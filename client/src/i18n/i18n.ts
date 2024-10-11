@@ -35,7 +35,7 @@ export const langOptions = [
     label: "English",
   },
   {
-    id: "fr",
+    id: "fr-FR",
     label: "Français",
   },
 ];

@@ -16,6 +16,7 @@ export interface EditIconProps {
     | any[];
   path: string;
   indice?: number;
+  canBeEmpty?: boolean;
 }
 
 export default function EditIcon({
@@ -23,12 +24,20 @@ export default function EditIcon({
   param,
   indice,
   path,
+  canBeEmpty,
 }: EditIconProps) {
   const [, setEditBox] = useAtom(editbox);
   const handleClick = () => {
     // console.log({ original: param, new: "", indice, path });
 
-    setEditBox({ target, original: param, new: "", indice, path });
+    setEditBox({
+      target,
+      original: param,
+      new: "",
+      indice,
+      path,
+      canBeEmpty: canBeEmpty != undefined ? canBeEmpty : true,
+    });
   };
   return (
     <div

@@ -85,8 +85,12 @@ export default function RelationTile({
                   >
                     <GiBlackFlag />
                     <IdTag label={nation.OfficialId} />
-                    <FaPerson />
-                    <IdTag label={nation.AmbassadorId} />
+                    {nation.AmbassadorId != "" && (
+                      <>
+                        <FaPerson />
+                        <IdTag label={nation.AmbassadorId} />
+                      </>
+                    )}
                   </div>
                 );
               }

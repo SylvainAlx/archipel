@@ -18,7 +18,7 @@ import { getNation } from "../api/nation/nationAPI";
 import Citizens from "../components/nation/citizens";
 import { errorMessage } from "../utils/toasts";
 import CrossButton from "../components/buttons/crossButton";
-import TagList from "../components/nation/tagList";
+import FreeTiles from "../components/nation/freeTiles";
 
 export default function Nation() {
   const [nation] = useAtom(nationFetchedAtom);
@@ -69,12 +69,12 @@ export default function Nation() {
       {nation != undefined && (
         <>
           <section className="w-full flex flex-wrap gap-8 items-start justify-between">
-            <div className="w-full flex flex-wrap gap-3 items-center justify-center">
+            <div className="w-full flex flex-col gap-3 items-center justify-center">
               <Score selectedNation={nation} owner={owner} />
               <Links selectedNation={nation} owner={owner} />
             </div>
-            <TagList selectedNation={nation} owner={owner} />
             <NationIdentity selectedNation={nation} owner={owner} />
+            <FreeTiles selectedNation={nation} owner={owner} />
             <Diplomacy selectedNation={nation} owner={owner} />
             <Places selectedNation={nation} owner={owner} />
             <Citizens selectedNation={nation} owner={owner} />

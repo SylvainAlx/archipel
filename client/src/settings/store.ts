@@ -22,6 +22,7 @@ import {
   DiplomaticRelationship,
   emptyDiplomaticRelationship,
 } from "../types/typRelation";
+import { emptyTile, Tile } from "../types/typTile";
 
 export const myStore = createStore();
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -101,6 +102,10 @@ export const comsListAtom = atom<Com[]>([]);
 
 export const tagListAtom = atom<string[]>([]);
 
+// tile
+
+export const tileListAtom = atom<Tile[]>([]);
+
 // Param
 
 export const paramsListAtom = atom<Param[]>([]);
@@ -120,3 +125,5 @@ export const langAtom = atom(i18n.language);
 export const imageAtom = atom("");
 
 export const showMenuAtom = atom(false);
+
+export const editTileAtom = atom(emptyTile);

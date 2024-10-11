@@ -81,3 +81,25 @@ export const displayRelationInfoByType = (type: string) => {
       break;
   }
 };
+
+export const displayTileInfoByType = (type: string) => {
+  switch (type) {
+    case "new":
+      successMessage(i18n.t("toasts.tile.new"));
+      break;
+    case "update":
+      successMessage(i18n.t("toasts.tile.update"));
+      break;
+    case "delete":
+      successMessage(i18n.t("toasts.tile.delete"));
+      break;
+    case "forbidden":
+      errorMessage(i18n.t("toasts.tile.forbidden"));
+      break;
+    case "serverError":
+      errorMessage(i18n.t("toasts.errors.sererError"));
+      break;
+    default:
+      break;
+  }
+};
