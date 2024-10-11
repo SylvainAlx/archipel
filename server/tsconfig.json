@@ -2,8 +2,8 @@
   "compilerOptions": {
     "target": "ESNext",
     "module": "ESNext",
-    "outDir": "dist",
-    "rootDir": "./",
+    "outDir": "./dist",
+    "rootDir": "./src",
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
@@ -15,7 +15,10 @@
     "paths": {
       "@/*": ["./*"]
     },
-    "typeRoots": ["./node_modules/@types", "./@types"]
+    "typeRoots": ["./node_modules/@types", "./@types"],
+    "allowJs": true, // Permet l'importation de fichiers .js
+    "checkJs": false, // (facultatif) Désactiver les vérifications pour les fichiers .js
+    "noImplicitAny": false // Evite de forcer le typage si les fichiers n'ont pas de types
   },
   "include": [
     "src/**/*",

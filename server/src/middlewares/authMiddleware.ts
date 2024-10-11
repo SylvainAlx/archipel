@@ -3,6 +3,7 @@ import { Request, Response, NextFunction } from "express";
 
 interface JwtPayload {
   id: string;
+  name: string;
   role?: string;
 }
 
@@ -19,6 +20,12 @@ export const verifyJwt = (
     }
 
     const token = authHeader.split(" ")[1];
+
+    if (!token) {
+      res.status(401).json({ error: "Bad token" });
+      return; // Retourner ici pour éviter l'exécution du code suivant
+    }
+
     const secret = process.env.JWT_SECRET as string;
 
     const decoded = jwt.verify(token, secret) as JwtPayload;
@@ -49,6 +56,12 @@ export const isAdmin = (
     }
 
     const token = authHeader.split(" ")[1];
+
+    if (!token) {
+      res.status(401).json({ error: "Bad token" });
+      return; // Retourner ici pour éviter l'exécution du code suivant
+    }
+
     const secret = process.env.JWT_SECRET as string;
 
     const decoded = jwt.verify(token, secret) as JwtPayload;

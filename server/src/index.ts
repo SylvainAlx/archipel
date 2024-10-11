@@ -6,15 +6,16 @@ import express from "express";
 import cors from "cors";
 import { home } from "./views/serverHome";
 
-// import authRouter from "./routers/authRouter.js";
-// import nationRouter from "./routers/nationRouter.js";
-// import comRouter from "./routers/comRouter.js";
-// import placeRouter from "./routers/placeRouter.js";
-// import paramRouter from "./routers/paramRouter.js";
-// import userRouter from "./routers/userRouter.js";
+import authRouter from "./routers/authRouter.js";
+import nationRouter from "./routers/nationRouter.js";
+import comRouter from "./routers/comRouter.js";
+import placeRouter from "./routers/placeRouter.js";
+import paramRouter from "./routers/paramRouter.js";
+import userRouter from "./routers/userRouter.js";
 import { verifyJwt } from "./middlewares/authMiddleware";
 import { deleteUploadedFile } from "./controllers/files";
-// import relationRouter from "./routers/relationRouter.js";
+import relationRouter from "./routers/relationRouter.js";
+import tileRouter from "./routers/tileRouter.js";
 
 // config serveur
 const app: express.Application = express();
@@ -43,15 +44,16 @@ const connectToDatabase = async (): Promise<void> => {
 connectToDatabase();
 
 // Définition des routes
-// app.use("/user", userRouter);
-// app.use("/auth", authRouter);
-// app.use("/nation", nationRouter);
-// app.use("/com", comRouter);
-// app.use("/place", placeRouter);
-// app.use("/param", paramRouter);
-// app.use("/relation", relationRouter);
-app.delete("/file/delete/:id", [verifyJwt], deleteUploadedFile);
 app.use("/", home);
+app.use("/user", userRouter);
+app.use("/auth", authRouter);
+app.use("/nation", nationRouter);
+app.use("/com", comRouter);
+app.use("/place", placeRouter);
+app.use("/param", paramRouter);
+app.use("/relation", relationRouter);
+app.use("/tile", tileRouter);
+app.delete("/file/delete/:id", [verifyJwt], deleteUploadedFile);
 
 // Démarrage du serveur
 app.listen(PORT, () => {
