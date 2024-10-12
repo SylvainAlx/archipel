@@ -24,6 +24,8 @@ import Upploader from "../uploader";
 import CrossButton from "../buttons/crossButton";
 import { deleteFileAPIProps } from "../../api/files/fileAPI";
 import TagList from "./tagList";
+import CurrencyTag from "../tags/currencyTag";
+import NationalDayTag from "../tags/nationalDayTag";
 
 export default function NationIdentity({
   selectedNation,
@@ -182,7 +184,7 @@ export default function NationIdentity({
 
                   <div className="flex gap-1 flex-wrap items-center justify-center">
                     <IdTag label={selectedNation.officialId} />
-                    <span className="flex items-center gap-2">
+                    <div className="flex items-center gap-2">
                       {selectedNation.data != undefined && (
                         <RegimeTag selectedNation={selectedNation} />
                       )}
@@ -194,7 +196,43 @@ export default function NationIdentity({
                           indice={selectedNation.data.general.regime}
                         />
                       )}
-                    </span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      {selectedNation.data.general.nationalDay != undefined && (
+                        <NationalDayTag
+                          label={selectedNation.data.general.nationalDay}
+                        />
+                      )}
+                      {owner && (
+                        <EditIcon
+                          target="nation"
+                          param={
+                            selectedNation.data.general.nationalDay
+                              ? selectedNation.data.general.nationalDay
+                              : ""
+                          }
+                          path="data.general.nationalDay"
+                        />
+                      )}
+                    </div>
+                    <div className="flex items-center gap-2">
+                      {selectedNation.data.general.currency != undefined && (
+                        <CurrencyTag
+                          label={selectedNation.data.general.currency}
+                        />
+                      )}
+                      {owner && (
+                        <EditIcon
+                          target="nation"
+                          param={
+                            selectedNation.data.general.currency
+                              ? selectedNation.data.general.currency
+                              : ""
+                          }
+                          path="data.general.currency"
+                        />
+                      )}
+                    </div>
                     <div className="flex items-center gap-2">
                       <CapitalTag selectedNation={selectedNation} />
                       {owner && (

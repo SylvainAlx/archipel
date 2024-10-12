@@ -219,7 +219,9 @@
         "languages": "languages",
         "hash": "hash tag",
         "pendingCitizenship": "citizenship not validated",
-        "nation": "nation"
+        "nation": "nation",
+        "currency": "currency",
+        "nationalDay": "national day"
       },
       "avatar": "avatar"
     },
