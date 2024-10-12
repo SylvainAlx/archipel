@@ -4,6 +4,8 @@ import Button from "../buttons/button";
 import { useTranslation } from "react-i18next";
 import { useAtom } from "jotai";
 import { IoMdSettings } from "react-icons/io";
+import { BsFillEnvelopeAtFill } from "react-icons/bs";
+import { ADMIN_EMAIL } from "../../settings/consts";
 
 export default function MenuModal() {
   const { t } = useTranslation();
@@ -37,6 +39,15 @@ export default function MenuModal() {
           text={t("pages.releaseNotes.title")}
           click={() => navigate("/releasenotes")}
           widthFull={true}
+        />
+        <Button
+          text=""
+          type="button"
+          children={
+            <a className="w-full h-full" href={`mailto:${ADMIN_EMAIL}`}>
+              <BsFillEnvelopeAtFill />
+            </a>
+          }
         />
       </nav>
       <Button

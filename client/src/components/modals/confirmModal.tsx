@@ -6,7 +6,12 @@ import { deleteSelfNation, updateNation } from "../../api/nation/nationAPI";
 import { createNewCom, deleteCom } from "../../api/communication/comAPI";
 import { deletePlace, updatePlace } from "../../api/place/placeAPI";
 import { useTranslation } from "react-i18next";
-import { changeStatus, deleteUser, logout } from "../../api/user/userAPI";
+import {
+  changeStatus,
+  deleteUser,
+  logout,
+  updateUser,
+} from "../../api/user/userAPI";
 import { deleteUploadedFile } from "../../api/files/fileAPI";
 import { useNavigate } from "react-router-dom";
 import { updateRelation } from "../../api/relation/relationAPI";
@@ -73,6 +78,9 @@ export default function ConfirmModal() {
             }
             if (confirm.action === "updateTile") {
               updateTile(confirm.payload);
+            }
+            if (confirm.action === "updateUser") {
+              updateUser(confirm.payload);
             }
           }}
         />

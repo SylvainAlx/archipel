@@ -202,7 +202,8 @@
         "website": "site internet",
         "instagram": "compte Instagram",
         "wiki": "page Wikipedia",
-        "discord": "serveur Discord"
+        "discord": "serveur Discord",
+        "email": "courriel"
       },
       "tags": {
         "role": "rôle du citoyen",

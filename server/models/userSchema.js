@@ -38,6 +38,14 @@ const UserSchema = mongoose.Schema(
       type: String,
       required: true,
     },
+    email: {
+      type: String,
+      default: "",
+    },
+    link: {
+      type: String,
+      default: "",
+    },
     role: {
       type: String,
       required: true,

@@ -69,6 +69,31 @@ export default function EditBoxModal() {
           payload: updatedNation,
         });
         break;
+      case "citizen":
+        const updatedCitizen: any = { ...session.user };
+        objetCourant = updatedCitizen;
+        for (let i = 0; i < parties.length - 1; i++) {
+          if (typeof objetCourant === "object" && objetCourant !== null) {
+            objetCourant = objetCourant[parties[i]];
+          } else {
+            console.error(
+              `Chemin incorrect. Propriété ${parties[i]} non trouvée.`,
+            );
+            break;
+          }
+        }
+        dernierePartie = parties[parties.length - 1];
+        if (typeof objetCourant === "object" && objetCourant !== null) {
+          objetCourant[dernierePartie] = editBox.new;
+        }
+        setConfirm({
+          action: "updateUser",
+          text: "Mettre à jour votre profil ?",
+          result: "",
+          target: "",
+          payload: updatedCitizen,
+        });
+        break;
       case "place":
         const updatedPlace: any = { ...placeData.place };
         objetCourant = updatedPlace;

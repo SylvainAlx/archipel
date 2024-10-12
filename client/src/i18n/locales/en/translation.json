@@ -202,7 +202,8 @@
         "website": "website",
         "instagram": "Instagram account",
         "wiki": "Wikipedia",
-        "discord": "Discord server"
+        "discord": "Discord server",
+        "email": "email"
       },
       "tags": {
         "role": "citizen role",
