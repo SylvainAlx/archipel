@@ -55,6 +55,7 @@ export interface EditBox {
     | any[];
   path: string;
   indice?: number;
+  canBeEmpty?: boolean;
 }
 
 export const EditBoxDefault: EditBox = {
@@ -62,6 +63,7 @@ export const EditBoxDefault: EditBox = {
   original: -1,
   new: -1,
   path: "",
+  canBeEmpty: true,
 };
 
 // Param

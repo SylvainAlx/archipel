@@ -104,18 +104,19 @@ export default function NewNationModal() {
                 );
               })}
             </div>
-
-            <Input
-              onChange={handleChangeTag}
-              type="text"
-              name="tag"
-              placeholder={t("components.hoverInfos.tags.hash")}
-              value={tagString}
-              disabled={tags.length > 5}
-            />
-            <em className="text-sm">
-              {t("components.modals.newNationModal.tagsInfos")}
-            </em>
+            <div>
+              <Input
+                onChange={handleChangeTag}
+                type="text"
+                name="tag"
+                placeholder={t("components.hoverInfos.tags.hash")}
+                value={tagString}
+                disabled={tags.length > 5}
+              />
+              <em className="text-sm">
+                {t("components.modals.newNationModal.tagsInfos")}
+              </em>
+            </div>
             <Input
               onChange={handleChange}
               type="text"
@@ -123,7 +124,16 @@ export default function NewNationModal() {
               placeholder={t("components.modals.newNationModal.currency")}
               value={newNation.currency}
             />
-
+            <label>
+              {t("components.hoverInfos.tags.nationalDay").toLocaleUpperCase()}
+              <Input
+                onChange={handleChange}
+                type="date"
+                name="nationalDay"
+                placeholder="Fête nationale"
+                value={newNation.nationalDay}
+              />
+            </label>
             <Select
               id="regime"
               onChange={handleSelectChange}

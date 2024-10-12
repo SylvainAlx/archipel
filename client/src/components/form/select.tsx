@@ -35,7 +35,7 @@ export default function Select({
 
   return (
     <label className="w-full max-w-[300px]">
-      {title ? title : t("components.form.select.choose")}
+      {title ? title.toLocaleUpperCase() : t("components.form.select.choose")}
       <select
         required={required}
         onChange={onChange}

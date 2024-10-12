@@ -1,24 +1,27 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { loadingAtom, myStore, tileListAtom } from "../../settings/store";
 import { Tile } from "../../types/typTile";
-import { getTempArray } from "../../utils/functions";
+import { spliceByDBId, updateByDBId } from "../../utils/atomArrayFunctions";
+import { displayTileInfoByType } from "../../utils/displayInfos";
 import { errorMessage } from "../../utils/toasts";
 import {
   createTileFetch,
   deleteTileFetch,
   getNationTileFetch,
+  updateTileFetch,
 } from "./tileFetch";
 
 export const createTile = async (tile: Tile) => {
   myStore.set(loadingAtom, true);
   createTileFetch(tile)
-    .then((data) => {
-      myStore.set(loadingAtom, false);
-      if (data.tile) {
+    .then((resp) => {
+      if (resp.tile) {
         const tempArray = [...myStore.get(tileListAtom)];
-        tempArray.push(data.tile);
+        tempArray.push(resp.tile);
         myStore.set(tileListAtom, tempArray);
       }
+      displayTileInfoByType(resp.infoType);
+      myStore.set(loadingAtom, false);
     })
     .catch((error) => {
       myStore.set(loadingAtom, false);
@@ -43,12 +46,31 @@ export const deleteTile = async (id: string) => {
   myStore.set(loadingAtom, true);
   deleteTileFetch(id)
     .then((resp) => {
-      const tempArray = getTempArray(
-        resp.tile.nationOfficialId,
-        myStore.get(tileListAtom),
-      );
-      console.log(tempArray);
-      myStore.set(tileListAtom, tempArray);
+      if (resp.tile) {
+        const tempArray = spliceByDBId(
+          resp.tile._id,
+          myStore.get(tileListAtom),
+        );
+        myStore.set(tileListAtom, tempArray);
+      }
+      displayTileInfoByType(resp.infoType);
+      myStore.set(loadingAtom, false);
+    })
+    .catch((error) => {
+      myStore.set(loadingAtom, false);
+      errorMessage(error.message);
+    });
+};
+
+export const updateTile = (payload: Tile) => {
+  myStore.set(loadingAtom, true);
+  updateTileFetch(payload)
+    .then((resp) => {
+      if (resp.tile) {
+        const tempArray = updateByDBId(resp.tile, myStore.get(tileListAtom));
+        myStore.set(tileListAtom, tempArray);
+      }
+      displayTileInfoByType(resp.infoType);
       myStore.set(loadingAtom, false);
     })
     .catch((error) => {

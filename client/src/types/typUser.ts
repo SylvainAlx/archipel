@@ -7,6 +7,8 @@ export interface User {
   language: string;
   password?: string;
   recovery?: string;
+  email: string;
+  link: string;
   role: string;
   citizenship: {
     status: number;
@@ -50,6 +52,8 @@ export const emptyUser: User = {
   language: "",
   password: "",
   recovery: "",
+  email: "",
+  link: "",
   role: "",
   citizenship: {
     status: -1,
