@@ -219,7 +219,9 @@
         "languages": "langues",
         "hash": "mot clé",
         "pendingCitizenship": "citoyenneté non validée",
-        "nation": "nation"
+        "nation": "nation",
+        "currency": "monnaie",
+        "nationalDay": "fête nationale"
       },
       "avatar": "avatar"
     },

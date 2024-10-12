@@ -102,6 +102,7 @@ export interface NewNationPayload {
   motto: string;
   regime: number;
   currency: string;
+  nationalDay: string;
   tags: string[];
 }
 
@@ -111,5 +112,6 @@ export const emptyNewNationPayload: NewNationPayload = {
   motto: "",
   regime: 0,
   currency: "",
+  nationalDay: "",
   tags: [],
 };
