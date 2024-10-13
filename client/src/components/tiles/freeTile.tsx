@@ -36,7 +36,7 @@ export default function FreeTile({ tile, owner }: FreeTileProps) {
 
   return (
     <div
-      className={`relative max-w-[300px] p-4 pt-6 rounded flex flex-col flex-grow items-center justify-between gap-2 bg-complementary shadow-xl`}
+      className={`relative p-4 pt-6 rounded flex flex-col flex-grow items-center justify-between gap-2 bg-complementary shadow-xl`}
     >
       <h4 className="bold text-xl text-center text-secondary">{title}</h4>
       <em className="text-[13px] text-center text-secondary2">{description}</em>
