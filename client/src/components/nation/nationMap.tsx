@@ -6,13 +6,13 @@ import Upploader from "../uploader";
 import Spinner from "../loading/spinner";
 import CrossButton from "../buttons/crossButton";
 import { handleDeleteImage } from "../../utils/functions";
-// import { useTranslation } from "react-i18next";
+import { useTranslation } from "react-i18next";
 
 export default function NationMap({
   selectedNation,
   owner,
 }: SelectedNationProps) {
-  //   const { t } = useTranslation();
+  const { t } = useTranslation();
 
   const LazyImage = lazy(() => import("../lazy/lazyImage"));
 
@@ -20,12 +20,12 @@ export default function NationMap({
     <TileContainer
       children={
         <DashTile
-          title="[A TRADUIRE] Carte"
+          title={t("pages.nation.simulation.map")}
           children={
             <section className="flex flex-col items-center rounded">
               {selectedNation.data.url.map != undefined &&
               selectedNation.data.url.map != "" ? (
-                <div className="relative max-w-[300px]">
+                <div className="relative max-w-[300px] sm:max-w-[500px]">
                   <Suspense fallback={<Spinner />}>
                     <LazyImage
                       src={selectedNation.data.url.map}

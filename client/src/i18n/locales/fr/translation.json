@@ -22,7 +22,9 @@
         "diplomacy": "diplomatie",
         "noRelations": "aucune relation diplomatique",
         "citizens": "citoyens",
-        "noCitizens": "la nation n'a aucun citoyen"
+        "noCitizens": "la nation n'a aucun citoyen",
+        "map": "carte de la nation",
+        "freeTiles": "tuiles libres"
       }
     },
     "explore": {
