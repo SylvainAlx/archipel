@@ -77,7 +77,7 @@ export const createNewPlace = (newPlace: PlacePayload) => {
         );
         updateElementOfAtomArray(data.nation, nationsList, setNationsList);
         myStore.set(sessionAtom, { ...session, nation: data.nation });
-        errorMessage(data.message);
+        successMessage(data.message);
       }
     })
     .catch((error) => {

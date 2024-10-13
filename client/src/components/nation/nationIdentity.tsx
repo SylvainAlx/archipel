@@ -1,10 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Suspense, lazy, useEffect, useState } from "react";
-import {
-  confirmBox,
-  myStore,
-  nationPlacesListAtom,
-} from "../../settings/store";
+import { nationPlacesListAtom } from "../../settings/store";
 import { LabelId } from "../../types/typNation";
 import { useAtom } from "jotai";
 import RegimeTag from "../tags/regimeTag";
@@ -22,10 +18,10 @@ import EditIcon from "../editIcon";
 import H3 from "../titles/h3";
 import Upploader from "../uploader";
 import CrossButton from "../buttons/crossButton";
-import { deleteFileAPIProps } from "../../api/files/fileAPI";
 import TagList from "./tagList";
 import CurrencyTag from "../tags/currencyTag";
 import NationalDayTag from "../tags/nationalDayTag";
+import { handleDeleteImage } from "../../utils/functions";
 
 export default function NationIdentity({
   selectedNation,
@@ -47,16 +43,6 @@ export default function NationIdentity({
     });
     setPlacesList(updatedPlaces);
   }, [nationPlaceList]);
-
-  const handleDeleteImage = ({ url, type }: deleteFileAPIProps) => {
-    myStore.set(confirmBox, {
-      action: "deleteFile",
-      text: t("components.modals.confirmModal.deleteFile"),
-      payload: url,
-      result: "",
-      target: type,
-    });
-  };
 
   return (
     <TileContainer

@@ -19,21 +19,23 @@ export default function ImageModal() {
 
   return (
     <>
-      <div
-        className={`max-w-[40%] bg-complementary flex flex-col items-center justify-center overflow-hidden rounded`}
+      <a
+        className={`max-w-screen-sm bg-complementary flex flex-col items-center justify-center overflow-hidden rounded cursor-zoom-in`}
+        href={image}
+        target="_blank"
       >
         {image ? (
           cachedImage != null ? (
             <img
               src={cachedImage}
               alt={image}
-              className="object-cover w-full h-full"
+              className="object-contain w-full h-full"
             />
           ) : (
             <img
               src={image}
               alt={image}
-              className="object-cover w-full h-full"
+              className="object-contain w-full h-full"
             />
           )
         ) : (
@@ -41,7 +43,7 @@ export default function ImageModal() {
             <GiBlackFlag />
           </div>
         )}
-      </div>
+      </a>
       <Button text={t("components.buttons.close")} click={() => setImage("")} />
     </>
   );

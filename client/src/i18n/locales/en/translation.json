@@ -22,7 +22,9 @@
         "diplomacy": "diplomacy",
         "noRelations": "no diplomatic relationship",
         "citizens": "citizens",
-        "noCitizens": "no citizen to display"
+        "noCitizens": "no citizen to display",
+        "map": "nation map",
+        "freeTiles": "free tiles"
       }
     },
     "explore": {
@@ -112,7 +114,8 @@
       "newPlace": "new location",
       "showMore": "SHOW MORE",
       "askCitizenship": "ASK CITIZENSHIP",
-      "createRelation": "CREATE DIPLOMATIC RELATIONSHIP"
+      "createRelation": "CREATE DIPLOMATIC RELATIONSHIP",
+      "parent": "parent"
     },
     "form": {
       "input": {
@@ -202,7 +205,8 @@
         "website": "website",
         "instagram": "Instagram account",
         "wiki": "Wikipedia",
-        "discord": "Discord server"
+        "discord": "Discord server",
+        "email": "email"
       },
       "tags": {
         "role": "citizen role",
@@ -215,13 +219,14 @@
         "points": "success",
         "population": "citizens",
         "regime": "regime",
-        "tree": "kinship",
+        "tree": "childrens",
         "languages": "languages",
         "hash": "hash tag",
         "pendingCitizenship": "citizenship not validated",
         "nation": "nation",
         "currency": "currency",
-        "nationalDay": "national day"
+        "nationalDay": "national day",
+        "nationOwner": "Nation founder"
       },
       "avatar": "avatar"
     },

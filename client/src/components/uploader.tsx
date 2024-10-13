@@ -95,7 +95,7 @@ export default function Upploader({ path, destination }: UploaderProps) {
       <FileUploaderRegular
         onChange={handleChangeEvent}
         pubkey={UPLOADCARE_PUBLIC_KEY}
-        maxLocalFileSizeBytes={200000}
+        maxLocalFileSizeBytes={500000}
         multiple={false}
         imgOnly={true}
         sourceList="local, url, gdrive, instagram"

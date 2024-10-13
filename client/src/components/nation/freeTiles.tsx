@@ -9,11 +9,13 @@ import { editTileAtom, tileListAtom } from "../../settings/store";
 import Button from "../buttons/button";
 import { emptyTile } from "../../types/typTile";
 import { GiSBrick } from "react-icons/gi";
+import { useTranslation } from "react-i18next";
 
 export default function FreeTiles({
   selectedNation,
   owner,
 }: SelectedNationProps) {
+  const { t } = useTranslation();
   const [tileList] = useAtom(tileListAtom);
   const [, setEditTile] = useAtom(editTileAtom);
 
@@ -35,7 +37,7 @@ export default function FreeTiles({
     <TileContainer
       children={
         <DashTile
-          title="Tuiles libres"
+          title={t("pages.nation.simulation.freeTiles")}
           children={
             <section className="flex flex-col items-center justify-center gap-2">
               <div className="flex flex-wrap items-stretch justify-center gap-4">

@@ -11,6 +11,7 @@ import { LabelId, Nation } from "../types/typNation";
 import { Place } from "../types/typPlace";
 import { confirmBox, myStore, SetAtom } from "../settings/store";
 import { User } from "../types/typUser";
+import { deleteFileAPIProps } from "../api/files/fileAPI";
 
 export const GET_JWT = () => {
   const jwt = localStorage.getItem("jwt");
@@ -275,5 +276,15 @@ export const declineCitizenship = (citizen: User) => {
     text: i18n.t("components.modals.confirmModal.declineCitizenship"),
     result: "",
     payload,
+  });
+};
+
+export const handleDeleteImage = ({ url, type }: deleteFileAPIProps) => {
+  myStore.set(confirmBox, {
+    action: "deleteFile",
+    text: i18n.t("components.modals.confirmModal.deleteFile"),
+    payload: url,
+    result: "",
+    target: type,
   });
 };

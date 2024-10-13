@@ -3,12 +3,11 @@
 import i18n from "../i18n/i18n";
 import { StandardOption } from "../types/typAtom";
 import { PoliticalSide, Regime, RegimeType } from "../types/typNation";
-import { BuildCategory } from "../types/typPlace";
 
 export const MDP_LOBBY = import.meta.env.VITE_MDP_LOBBY;
 export const SERVER_URL = import.meta.env.VITE_SERVER_URL;
 export const UPLOADCARE_PUBLIC_KEY = import.meta.env.VITE_UPLOADCARE_PUBLIC_KEY;
-export const UPLOADCARE_SECRET_KEY = import.meta.env.VITE_UPLOADCARE_SECRET_KEY;
+export const ADMIN_EMAIL = import.meta.env.VITE_ADMIN_EMAIL;
 
 export const VERSION = {
   beta: "BETA-0.1",
@@ -239,106 +238,6 @@ export const placesTypeList = [
   {
     id: 3,
     label: "Environnement",
-  },
-];
-
-export const buildList: BuildCategory[] = [
-  {
-    id: 0,
-    label: {
-      fr: "logements",
-      en: "homes",
-    },
-    builds: [
-      {
-        id: 0,
-        label: {
-          fr: "maison individuelle",
-          en: "individual house",
-        },
-        level: 1,
-        count: 0,
-        max: -1,
-      },
-      {
-        id: 1,
-        label: {
-          fr: "immeuble",
-          en: "building",
-        },
-        level: 1,
-        count: 0,
-        max: -1,
-      },
-    ],
-  },
-  {
-    id: 1,
-    label: {
-      fr: "services publics",
-      en: "public services",
-    },
-    builds: [
-      {
-        id: 0,
-        label: {
-          fr: "lieu administratif",
-          en: "administration",
-        },
-        level: 1,
-        count: 0,
-        max: -1,
-      },
-      {
-        id: 1,
-        label: {
-          fr: "embassade",
-          en: "embassy",
-        },
-        level: 1,
-        count: 0,
-        max: -1,
-      },
-    ],
-  },
-  {
-    id: 2,
-    label: {
-      fr: "entreprises",
-      en: "companies",
-    },
-    builds: [
-      {
-        id: 0,
-        label: {
-          fr: "secteur primaire",
-          en: "primary sector",
-        },
-        level: 1,
-        count: 0,
-        max: -1,
-      },
-      {
-        id: 1,
-        label: {
-          fr: "secteur secondaire",
-          en: "secondary sector",
-        },
-        level: 1,
-        count: 0,
-        max: -1,
-      },
-      {
-        id: 1,
-        label: {
-          fr: "secteur tertiaire",
-          en: "tertiary sector",
-        },
-        level: 1,
-        count: 0,
-        max: -1,
-      },
-    ],
   },
 ];
 

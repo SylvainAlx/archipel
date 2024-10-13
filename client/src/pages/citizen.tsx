@@ -24,7 +24,10 @@ import RoleTag from "../components/tags/roleTag";
 import Upploader from "../components/uploader";
 import CrossButton from "../components/buttons/crossButton";
 import { GiBlackFlag } from "react-icons/gi";
-import FounderTag from "../components/tags/nationTag";
+import ExternalLink from "../components/externalLink";
+import { FaLink } from "react-icons/fa";
+import EditIcon from "../components/editIcon";
+import { BsFillEnvelopeAtFill } from "react-icons/bs";
 
 export default function Citizen() {
   const { t } = useTranslation();
@@ -149,15 +152,41 @@ export default function Citizen() {
               title={t("pages.citizen.virtualCitizenship")}
               children={
                 <>
+                  <div className="flex items-center justify-center gap-6">
+                    <span className="flex items-center gap-1">
+                      <ExternalLink
+                        url={citizen.link}
+                        children={<FaLink />}
+                        hover={t("components.hoverInfos.links.website")}
+                      />
+                      {session.user.officialId === citizen.officialId && (
+                        <EditIcon
+                          target="citizen"
+                          param={citizen.link}
+                          path="link"
+                        />
+                      )}
+                    </span>
+                    <span className="flex items-center gap-1">
+                      <ExternalLink
+                        url={
+                          citizen.email != "" ? "mailto:" + citizen.email : ""
+                        }
+                        children={<BsFillEnvelopeAtFill />}
+                        hover={t("components.hoverInfos.links.email")}
+                      />
+                      {session.user.officialId === citizen.officialId && (
+                        <EditIcon
+                          target="citizen"
+                          param={citizen.email}
+                          path="email"
+                        />
+                      )}
+                    </span>
+                  </div>
                   <div className="max-w-[90%] flex flex-wrap items-center justify-center gap-1">
                     <IdTag label={citizen.officialId} />
                     {citizen.role === "admin" && <RoleTag label="admin" />}
-                    {citizen.citizenship.nationId != "" && (
-                      <FounderTag
-                        label={citizen.citizenship.nationId}
-                        founder={citizen.citizenship.nationOwner}
-                      />
-                    )}
                   </div>
                   {nation != undefined &&
                   nation.officialId != "" &&
