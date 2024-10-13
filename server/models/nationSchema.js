@@ -36,6 +36,11 @@ const nationSchema = mongoose.Schema(
           default: "",
           unique: true,
         },
+        map: {
+          type: String,
+          default: "",
+          unique: true,
+        },
         website: {
           type: String,
           default: "",
