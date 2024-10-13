@@ -65,7 +65,7 @@ export default function NationIdentity({
                       />
                     )}
                   </div>
-                  <div className="flex flex-col sm:flex-row justify-center items-center sm:flex-wrap gap-6">
+                  <div className="flex flex-row justify-center items-center flex-wrap gap-6">
                     <div className="relative">
                       <div
                         className={`w-[140px] h-full flex flex-col items-center justify-end gap-2`}

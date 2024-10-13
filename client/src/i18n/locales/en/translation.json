@@ -22,7 +22,9 @@
         "diplomacy": "diplomacy",
         "noRelations": "no diplomatic relationship",
         "citizens": "citizens",
-        "noCitizens": "no citizen to display"
+        "noCitizens": "no citizen to display",
+        "map": "nation map",
+        "freeTiles": "free tiles"
       }
     },
     "explore": {
