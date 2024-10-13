@@ -48,7 +48,9 @@ export default function IconLink({ destination, text, action }: IconLinkProps) {
         ) : (
           <GiBlackFlag />
         ))}
-      <h2 className="hidden md:block text-[10px]">{text}</h2>
+      <h2 className="hidden md:block text-[10px]">
+        {text.toLocaleUpperCase()}
+      </h2>
     </div>
   );
 }

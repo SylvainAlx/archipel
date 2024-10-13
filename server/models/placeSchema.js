@@ -19,14 +19,6 @@ const PlaceSchema = mongoose.Schema(
       type: Number,
       required: true,
     },
-    slots: {
-      type: Number,
-      required: true,
-    },
-    points: {
-      type: Number,
-      required: true,
-    },
     population: {
       type: Number,
       required: true,
@@ -34,6 +26,7 @@ const PlaceSchema = mongoose.Schema(
     name: {
       type: String,
       required: true,
+      unique: true,
     },
     description: {
       type: String,
@@ -42,10 +35,6 @@ const PlaceSchema = mongoose.Schema(
     image: {
       type: String,
       default: "",
-    },
-    builds: {
-      type: Array,
-      default: [],
     },
   },
   {

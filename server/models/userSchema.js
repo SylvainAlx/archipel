@@ -25,6 +25,7 @@ const UserSchema = mongoose.Schema(
     avatar: {
       type: String,
       default: "",
+      unique: true,
     },
     language: {
       type: String,
@@ -41,6 +42,8 @@ const UserSchema = mongoose.Schema(
     email: {
       type: String,
       default: "",
+      match: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+      unique: true,
     },
     link: {
       type: String,

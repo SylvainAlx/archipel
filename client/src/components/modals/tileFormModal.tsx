@@ -69,12 +69,12 @@ export default function TileFormModal() {
               name="title"
               value={updatedTile.title}
               onChange={handleChange}
-              placeholder={t("components.modals.tileModal.title")}
+              placeholder={t("components.modals.tileModal.inputTitle")}
               maxLength={60}
             />
             <TextArea
               name="description"
-              placeholder={t("components.modals.tileModal.description")}
+              placeholder={t("components.modals.tileModal.inputDescription")}
               value={
                 updatedTile.description != undefined
                   ? updatedTile.description
@@ -88,7 +88,7 @@ export default function TileFormModal() {
               onChange={handleChange}
               type="text"
               name="value"
-              placeholder={t("components.modals.tileModal.value")}
+              placeholder={t("components.modals.tileModal.inputValue")}
               value={updatedTile.value}
             />
             <Button

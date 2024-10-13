@@ -1,8 +1,4 @@
-import { BuildCategory } from "./typPlace";
-
 /* eslint-disable @typescript-eslint/no-explicit-any */
-
-
 
 export interface ComPayload {
   originId: string;
@@ -17,5 +13,4 @@ export interface PlacePayload {
   name: string;
   description: string;
   image: string;
-  builds: BuildCategory[]
 }

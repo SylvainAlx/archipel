@@ -65,8 +65,7 @@ export const getAllPlaces = async (req, res) => {
 
 export const createPlace = async (req, res) => {
   try {
-    const { nation, parentId, name, type, description, image, builds } =
-      req.body;
+    const { nation, parentId, name, type, description, image } = req.body;
 
     const officialId = createOfficialId("p");
 
@@ -75,13 +74,10 @@ export const createPlace = async (req, res) => {
       officialId,
       parentId,
       type,
-      slots: 10,
-      points: 1,
       population: 0,
       name,
       description,
       image,
-      builds,
     });
     place
       .save()
@@ -158,25 +154,24 @@ export const deletePlace = async (req, res) => {
 };
 
 export const updatePlace = async (req, res) => {
-  const nation = await Nation.findOne({ _id: req.nationId });
+  const nation = await Nation.findOne({ owner: req.userId });
   try {
     if (req.body.nation === nation.officialId) {
       const place = await Place.findOne({ _id: req.body._id });
       place.nation = req.body.nation;
       place.parentId = req.body.parentId;
       place.type = req.body.type;
-      place.slot = req.body.slot;
-      place.points = req.body.points;
       place.population = req.body.population;
       place.name = req.body.name;
       place.description = req.body.description;
-      place.builds = req.body.builds;
       place
         .save()
         .then((place) => {
           res.status(200).json({ place, message: "mise à jour réussie" });
         })
         .catch((error) => {
+          console.error(error);
+
           res.status(400).json({
             message: `certaines informations sont erronées ou manquantes`,
             erreur: error,
@@ -186,6 +181,7 @@ export const updatePlace = async (req, res) => {
       res.sendStatus(403).json({ message: "modification interdite" });
     }
   } catch (error) {
+    console.error(error);
     res.status(400).json({ message: error });
   }
 };

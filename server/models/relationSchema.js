@@ -9,6 +9,7 @@ const RelationSchema = mongoose.Schema(
     name: {
       type: String,
       default: "",
+      unique: true,
     },
     nations: {
       type: Array,

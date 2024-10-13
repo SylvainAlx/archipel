@@ -21,14 +21,11 @@ export default function NewPlaceButton({ parentId, owner }: newPlaceProps) {
       officialId: emptyPlace.officialId,
       parentId,
       nation: session.nation.officialId,
-      points: emptyPlace.points,
       type: placesTypeList[0].id,
-      slots: emptyPlace.slots,
       population: emptyPlace.population,
       name: emptyPlace.name,
       description: emptyPlace.description,
       image: emptyPlace.image,
-      builds: emptyPlace.builds,
     };
 
     myStore.set(newPlaceAtom, newPlace);

@@ -24,7 +24,6 @@ export interface PlaceTileProp {
 export default function PlaceTile({ place, owner }: PlaceTileProp) {
   const [nationPlacesList] = useAtom(nationPlacesListAtom);
   const [childrenStats, setChildrenStats] = useState({
-    points: 0,
     population: 0,
     children: 0,
   });
@@ -40,7 +39,6 @@ export default function PlaceTile({ place, owner }: PlaceTileProp) {
     const stats = { ...childrenStats };
     nationPlacesList.forEach((e) => {
       if (e.parentId === place.officialId) {
-        stats.points += e.points;
         stats.population += e.population;
         stats.children += 1;
       }
