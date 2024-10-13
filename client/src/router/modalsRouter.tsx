@@ -2,7 +2,6 @@ import { useAtom } from "jotai";
 import {
   changePasswordModalAtom,
   confirmBox,
-  // editPlaceAtom,
   editbox,
   editTileAtom,
   imageAtom,
@@ -21,7 +20,6 @@ import InfoModal from "../components/modals/infoModal";
 import LoadingSpinner from "../components/modals/loadingSpinner";
 import EditBoxModal from "../components/modals/editBoxModal";
 import NewPlaceModal from "../components/modals/newPlaceModal";
-// import PlaceModal from "../components/modals/placeModal";
 import LangModal from "../components/modals/langModal";
 import ImageModal from "../components/modals/imageModal";
 import MenuModal from "../components/modals/menuModal";
@@ -37,7 +35,6 @@ export default function ModalsRouter() {
   const [loading] = useAtom(loadingAtom);
   const [editBox] = useAtom(editbox);
   const [newPlace] = useAtom(newPlaceAtom);
-  // const [editPlace] = useAtom(editPlaceAtom);
   const [lang] = useAtom(showLangModalAtom);
   const [image] = useAtom(imageAtom);
   const [menu] = useAtom(showMenuAtom);
@@ -53,7 +50,6 @@ export default function ModalsRouter() {
     loading ||
     editBox.original != -1 ||
     newPlace.nation != "" ||
-    // editPlace.update != undefined ||
     lang ||
     image != "" ||
     menu ||
@@ -79,7 +75,6 @@ export default function ModalsRouter() {
                   {info != "" && <InfoModal />}
                   {editBox.original != -1 && <EditBoxModal />}
                   {newPlace.nation != "" && <NewPlaceModal />}
-                  {/* {editPlace.update != undefined && <PlaceModal />} */}
                   {lang && <LangModal />}
                   {image != "" && <ImageModal />}
                   {menu && <MenuModal />}

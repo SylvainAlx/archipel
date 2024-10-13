@@ -112,7 +112,8 @@
       "newPlace": "nouveau lieu",
       "showMore": "VOIR PLUS",
       "askCitizenship": "demander la nationnalité",
-      "createRelation": "créer une relation diplomatique"
+      "createRelation": "créer une relation diplomatique",
+      "parent": "parent"
     },
     "form": {
       "input": {
@@ -216,13 +217,14 @@
         "points": "succès",
         "population": "citoyens",
         "regime": "regime de la nation",
-        "tree": "parenté",
+        "tree": "enfants",
         "languages": "langues",
         "hash": "mot clé",
         "pendingCitizenship": "citoyenneté non validée",
         "nation": "nation",
         "currency": "monnaie",
-        "nationalDay": "fête nationale"
+        "nationalDay": "fête nationale",
+        "nationOwner": "Fondateur de la nation"
       },
       "avatar": "avatar"
     },

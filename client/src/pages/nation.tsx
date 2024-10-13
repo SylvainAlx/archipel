@@ -19,6 +19,7 @@ import Citizens from "../components/nation/citizens";
 import { errorMessage } from "../utils/toasts";
 import CrossButton from "../components/buttons/crossButton";
 import FreeTiles from "../components/nation/freeTiles";
+import NationMap from "../components/nation/nationMap";
 
 export default function Nation() {
   const [nation] = useAtom(nationFetchedAtom);
@@ -74,6 +75,7 @@ export default function Nation() {
               <Links selectedNation={nation} owner={owner} />
             </div>
             <NationIdentity selectedNation={nation} owner={owner} />
+            <NationMap selectedNation={nation} owner={owner} />
             <FreeTiles selectedNation={nation} owner={owner} />
             <Diplomacy selectedNation={nation} owner={owner} />
             <Places selectedNation={nation} owner={owner} />

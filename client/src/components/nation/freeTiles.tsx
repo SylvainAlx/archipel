@@ -35,7 +35,7 @@ export default function FreeTiles({
     <TileContainer
       children={
         <DashTile
-          title="Tuiles libres"
+          title="[A TRADUIRE] Tuiles libres"
           children={
             <section className="flex flex-col items-center justify-center gap-2">
               <div className="flex flex-wrap items-stretch justify-center gap-4">
