@@ -7,13 +7,14 @@ import {
 import { useAtom } from "jotai";
 import PopulationTag from "../tags/populationTag";
 import { GiCapitol } from "react-icons/gi";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import EyeButton from "../buttons/eyeButton";
 import { getPlaceTypeLabel } from "../../utils/functions";
 import PlaceTag from "../tags/placeTag";
 import { useEffect, useState } from "react";
 import TreeTag from "../tags/treeTag";
 import { Place } from "../../types/typPlace";
+import NationTag from "../tags/nationTag";
 
 export interface PlaceTileProp {
   owner?: boolean;
@@ -27,7 +28,7 @@ export default function PlaceTile({ place, owner }: PlaceTileProp) {
     population: 0,
     children: 0,
   });
-
+  const emplacement = useLocation();
   const navigate = useNavigate();
 
   const handleClick = () => {
@@ -72,6 +73,9 @@ export default function PlaceTile({ place, owner }: PlaceTileProp) {
             <TreeTag label={childrenStats.children.toString()} />
           )}
           <PopulationTag label={childrenStats.population.toString()} />
+          {emplacement.pathname != `/nation/${place.nation}` && (
+            <NationTag label={place.nation} />
+          )}
         </div>
       </div>
     </div>

@@ -74,6 +74,7 @@ export function ChangePasswordModal() {
                   text={t("components.buttons.validate")}
                   type="submit"
                   disabled={!passwordsMatch}
+                  widthFull={true}
                 />
               </div>
               <Button

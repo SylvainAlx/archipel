@@ -22,16 +22,16 @@ export default function NationMap({
         <DashTile
           title={t("pages.nation.simulation.map")}
           children={
-            <section className="flex flex-col items-center rounded">
+            <section className="w-full flex flex-col items-center rounded">
               {selectedNation.data.url.map != undefined &&
               selectedNation.data.url.map != "" ? (
-                <div className="relative max-w-[300px] sm:max-w-[500px]">
+                <div className="relative w-full">
                   <Suspense fallback={<Spinner />}>
                     <LazyImage
                       src={selectedNation.data.url.map}
                       alt={`map of ${selectedNation.name}`}
                       className="object-contain w-full h-full rounded cursor-zoom-in"
-                      hover="[A TRADUIRE] carte de la nation"
+                      hover={t("pages.nation.simulation.map")}
                     />
                   </Suspense>
                   {owner && (
@@ -39,8 +39,8 @@ export default function NationMap({
                       small={true}
                       click={() =>
                         handleDeleteImage({
-                          url: selectedNation.data.url.flag,
-                          type: "flag",
+                          url: selectedNation.data.url.map,
+                          type: "map",
                         })
                       }
                     />

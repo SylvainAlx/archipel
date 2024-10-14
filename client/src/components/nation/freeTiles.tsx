@@ -40,6 +40,13 @@ export default function FreeTiles({
           title={t("pages.nation.simulation.freeTiles")}
           children={
             <section className="flex flex-col items-center justify-center gap-2">
+              {owner && (
+                <Button
+                  text="ajouter une tuile"
+                  children={<GiSBrick />}
+                  click={handleClick}
+                />
+              )}
               <div className="flex flex-wrap items-stretch justify-center gap-4">
                 {tileList.map((tile, i) => {
                   return (
@@ -51,13 +58,6 @@ export default function FreeTiles({
                   );
                 })}
               </div>
-              {owner && (
-                <Button
-                  text="ajouter une tuile"
-                  children={<GiSBrick />}
-                  click={handleClick}
-                />
-              )}
             </section>
           }
         />
