@@ -7,6 +7,7 @@ import Spinner from "../loading/spinner";
 import CrossButton from "../buttons/crossButton";
 import { handleDeleteImage } from "../../utils/functions";
 import { useTranslation } from "react-i18next";
+import { FaMapLocationDot } from "react-icons/fa6";
 
 export default function NationMap({
   selectedNation,
@@ -25,7 +26,7 @@ export default function NationMap({
             <section className="w-full flex flex-col items-center rounded">
               {selectedNation.data.url.map != undefined &&
               selectedNation.data.url.map != "" ? (
-                <div className="relative w-full">
+                <div className="relative w-full max-w-[600px]">
                   <Suspense fallback={<Spinner />}>
                     <LazyImage
                       src={selectedNation.data.url.map}
@@ -48,16 +49,11 @@ export default function NationMap({
                 </div>
               ) : (
                 <>
-                  <div className="w-full max-w-[300px]">
-                    <img
-                      className="object-cover w-full h-full opacity-20"
-                      src="/emptyMap.webp"
-                      alt="empty map"
-                    ></img>
-                  </div>
+                  <FaMapLocationDot className="text-9xl" />
                   {owner && (
                     <Upploader path="data.url.map" destination="nation" />
                   )}
+                  <em>[A TRADUIRE] Pas de carte de la nation</em>
                 </>
               )}
             </section>

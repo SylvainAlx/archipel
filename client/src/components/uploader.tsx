@@ -7,19 +7,20 @@ import { myStore, sessionAtom } from "../settings/store";
 import { updateNation } from "../api/nation/nationAPI";
 import { updateUser } from "../api/user/userAPI";
 import { UPLOADCARE_PUBLIC_KEY } from "../settings/consts";
+import { Place } from "../types/typPlace";
+import { updatePlace } from "../api/place/placeAPI";
 
 export interface UploaderProps {
   path: string;
   destination: string;
+  place?: Place;
 }
 
-export default function Upploader({ path, destination }: UploaderProps) {
+export default function Upploader({ path, destination, place }: UploaderProps) {
   const [files, setFiles] = useState<any[]>([]);
 
   useEffect(() => {
     if (files.length > 0) {
-      console.log(files[0].cdnUrl);
-      console.log(path, destination);
       handleSubmit();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -84,6 +85,31 @@ export default function Upploader({ path, destination }: UploaderProps) {
 
         if (isOk) {
           updateUser(updatedUser);
+        }
+
+        break;
+      case "place":
+        // eslint-disable-next-line no-case-declarations
+        const updatedPlace: any = { ...place };
+        objetCourant = updatedPlace;
+        for (let i = 0; i < parties.length - 1; i++) {
+          if (typeof objetCourant === "object" && objetCourant !== null) {
+            objetCourant = objetCourant[parties[i]];
+          } else {
+            isOk = false;
+            console.error(
+              `Chemin incorrect. Propriété ${parties[i]} non trouvée.`,
+            );
+            break;
+          }
+        }
+        dernierePartie = parties[parties.length - 1];
+        if (typeof objetCourant === "object" && objetCourant !== null) {
+          objetCourant[dernierePartie] = files[0].cdnUrl;
+        }
+
+        if (isOk) {
+          updatePlace(updatedPlace);
         }
 
         break;

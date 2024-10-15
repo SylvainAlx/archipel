@@ -9,7 +9,6 @@ import {
 import { useAtom } from "jotai";
 import Places from "../components/nation/places";
 import { useTranslation } from "react-i18next";
-import Score from "../components/nation/score";
 import Diplomacy from "../components/nation/diplomacy";
 import Links from "../components/nation/links";
 import { useEffect, useState } from "react";
@@ -71,7 +70,6 @@ export default function Nation() {
         <>
           <section className="w-full flex flex-wrap gap-8 items-start justify-between">
             <div className="w-full flex flex-col gap-3 items-center justify-center">
-              <Score selectedNation={nation} owner={owner} />
               <Links selectedNation={nation} owner={owner} />
             </div>
             <NationIdentity selectedNation={nation} owner={owner} />
