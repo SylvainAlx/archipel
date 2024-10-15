@@ -28,6 +28,7 @@ import ExternalLink from "../components/externalLink";
 import { FaLink } from "react-icons/fa";
 import EditIcon from "../components/editIcon";
 import { BsFillEnvelopeAtFill } from "react-icons/bs";
+import NationOwnerTag from "../components/tags/nationOwnerTag";
 
 export default function Citizen() {
   const { t } = useTranslation();
@@ -79,7 +80,7 @@ export default function Citizen() {
         owner: citizen.officialId,
       });
     } else if (dest === "join") {
-      navigate(`/explore`);
+      navigate(`/explore/2`);
     }
   };
 
@@ -186,6 +187,7 @@ export default function Citizen() {
                   </div>
                   <div className="max-w-[90%] flex flex-wrap items-center justify-center gap-1">
                     <IdTag label={citizen.officialId} />
+                    {citizen.citizenship.nationOwner && <NationOwnerTag />}
                     {citizen.role === "admin" && <RoleTag label="admin" />}
                   </div>
                   {nation != undefined &&

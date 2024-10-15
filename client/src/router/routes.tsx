@@ -23,6 +23,8 @@ export const publicRoutes: ArchipelRoute[] = [
   { path: "/recovery", page: <Recovery /> },
   { path: "/citizen/:id", page: <Citizen /> },
   { path: "/explore", page: <Explore /> },
+  { path: "/explore/:id", page: <Explore /> },
+  { path: "/nation", page: <Nation /> },
   { path: "/nation/:id", page: <Nation /> },
   { path: "/place/:id", page: <Place /> },
   { path: "/legalnotice", page: <LegalNotice /> },

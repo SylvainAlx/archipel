@@ -164,6 +164,7 @@ export const updatePlace = async (req, res) => {
       place.population = req.body.population;
       place.name = req.body.name;
       place.description = req.body.description;
+      place.image = req.body.image;
       place
         .save()
         .then((place) => {

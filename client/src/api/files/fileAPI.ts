@@ -4,10 +4,12 @@ import {
   loadingAtom,
   myStore,
   nationFetchedAtom,
+  placeFetchedAtom,
 } from "../../settings/store";
 import { GET_JWT } from "../../utils/functions";
 import { errorMessage } from "../../utils/toasts";
 import { updateNation } from "../nation/nationAPI";
+import { updatePlace } from "../place/placeAPI";
 import { updateUser } from "../user/userAPI";
 
 export interface deleteFileAPIProps {
@@ -37,6 +39,16 @@ export const deleteUploadedFile = ({ url, type }: deleteFileAPIProps) => {
           const nationUpdated = { ...nation };
           nationUpdated.data.url.coatOfArms = "";
           updateNation(nationUpdated);
+        } else if (type === "map") {
+          const nation = myStore.get(nationFetchedAtom);
+          const nationUpdated = { ...nation };
+          nationUpdated.data.url.map = "";
+          updateNation(nationUpdated);
+        } else if (type === "placeImage") {
+          const place = myStore.get(placeFetchedAtom);
+          const placeUpdated = { ...place };
+          placeUpdated.image = "";
+          updatePlace(placeUpdated);
         }
       }
     })

@@ -22,6 +22,8 @@ import TagList from "./tagList";
 import CurrencyTag from "../tags/currencyTag";
 import NationalDayTag from "../tags/nationalDayTag";
 import { handleDeleteImage } from "../../utils/functions";
+import PopulationTag from "../tags/populationTag";
+import PlaceTag from "../tags/placeTag";
 
 export default function NationIdentity({
   selectedNation,
@@ -183,6 +185,11 @@ export default function NationIdentity({
                         />
                       )}
                     </div>
+
+                    <PopulationTag
+                      label={selectedNation.data.roleplay.citizens}
+                    />
+                    <PlaceTag label={selectedNation.data.roleplay.places} />
                     <div className="flex items-center gap-2">
                       {selectedNation.data.general.nationalDay != undefined && (
                         <NationalDayTag
@@ -229,8 +236,9 @@ export default function NationIdentity({
                         />
                       )}
                     </div>
+                    <TagList selectedNation={selectedNation} owner={owner} />
                   </div>
-                  <TagList selectedNation={selectedNation} owner={owner} />
+
                   <div className="w-full mt-4 justify-center flex gap-2">
                     {selectedNation.data.general.description ? (
                       <p

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import TabNav from "../components/tabNav";
 import { session } from "../settings/store";
 import { useTranslation } from "react-i18next";
@@ -8,10 +8,10 @@ import Stats from "./exploreTabs/stats";
 import CitizenList from "./exploreTabs/citizenList";
 import PlaceList from "./exploreTabs/placeList";
 import ComList from "./exploreTabs/comList";
+import { useParams } from "react-router-dom";
 
 export default function Explore() {
   const { t } = useTranslation();
-
   const nationTabs: StandardOption[] = [
     { id: 1, label: t("pages.explore.stats.title") },
     { id: 2, label: t("pages.explore.nationsList.title") },
@@ -21,6 +21,13 @@ export default function Explore() {
   ];
 
   const [tab, setTab] = useState(nationTabs[0]);
+  const param = useParams();
+
+  useEffect(() => {
+    if (param.id != undefined) {
+      setTab(nationTabs[Number(param.id) - 1]);
+    }
+  }, [param.id]);
 
   return (
     <>
@@ -28,7 +35,6 @@ export default function Explore() {
         <TabNav
           tabs={nationTabs}
           tabId={tab.id}
-          setTab={setTab}
           owner={
             session.nation != undefined &&
             session.nation.owner === session.user.officialId

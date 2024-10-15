@@ -18,7 +18,7 @@
         "title": "simulation",
         "score": "score",
         "places": "lieux",
-        "noPlaces": "aucun lieu à afficher",
+        "noPlaces": "aucun lieu enfant à afficher",
         "diplomacy": "diplomatie",
         "noRelations": "aucune relation diplomatique",
         "citizens": "citoyens",

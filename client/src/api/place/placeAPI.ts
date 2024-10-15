@@ -92,7 +92,7 @@ export const getPlace = (id: string) => {
   if (place === undefined || place === null) {
     getPlaceFetch(id)
       .then((data) => {
-        myStore.set(placeFetchedAtom, data);
+        myStore.set(placeFetchedAtom, data.place);
         myStore.set(loadingAtom, false);
       })
       .catch((error) => {
