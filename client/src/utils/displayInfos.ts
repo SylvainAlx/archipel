@@ -103,3 +103,22 @@ export const displayTileInfoByType = (type: string) => {
       break;
   }
 };
+
+export const displayPlaceInfoByType = (type: string) => {
+  switch (type) {
+    case "new":
+      successMessage("[A TRADUIRE] Lieu créé");
+      break;
+    case "update":
+      successMessage("[A TRADUIRE] Lieu mis à jour");
+      break;
+    case "delete":
+      successMessage("[A TRADUIRE] Lieu supprimé");
+      break;
+    case "serverError":
+      errorMessage(i18n.t("toasts.errors.sererError"));
+      break;
+    default:
+      break;
+  }
+};
