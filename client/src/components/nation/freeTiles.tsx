@@ -37,26 +37,30 @@ export default function FreeTiles({
     <TileContainer
       children={
         <DashTile
-          title={t("pages.nation.simulation.freeTiles")}
+          title={t("pages.nation.freeTiles.title")}
           children={
             <section className="flex flex-col items-center justify-center gap-2">
               {owner && (
                 <Button
-                  text="ajouter une tuile"
+                  text={t("components.buttons.createFreeTile")}
                   children={<GiSBrick />}
                   click={handleClick}
                 />
               )}
               <div className="flex flex-wrap items-stretch justify-center gap-4">
-                {tileList.map((tile, i) => {
-                  return (
-                    <FreeTile
-                      key={i}
-                      tile={tile}
-                      owner={owner ? owner : false}
-                    />
-                  );
-                })}
+                {tileList.length > 0 ? (
+                  tileList.map((tile, i) => {
+                    return (
+                      <FreeTile
+                        key={i}
+                        tile={tile}
+                        owner={owner ? owner : false}
+                      />
+                    );
+                  })
+                ) : (
+                  <em>{t("pages.nation.freeTiles.noFreeTiles")}</em>
+                )}
               </div>
             </section>
           }

@@ -15,6 +15,7 @@ import { useEffect, useState } from "react";
 import TreeTag from "../tags/treeTag";
 import { Place } from "../../types/typPlace";
 import NationTag from "../tags/nationTag";
+import Avatar from "../avatar";
 
 export interface PlaceTileProp {
   owner?: boolean;
@@ -50,33 +51,31 @@ export default function PlaceTile({ place, owner }: PlaceTileProp) {
 
   return (
     <div
-      className={`p-2 rounded flex flex-col items-center gap-3 bg-complementary shadow-xl min-h-[150px]`}
+      className={`min-h-[100px] p-2 rounded flex flex-col flex-grow items-center justify-between gap-3 bg-complementary shadow-xl`}
     >
-      <div className="w-full flex flex-col flex-grow items-center gap-2">
-        <h3 className="w-full flex justify-between flex-wrap">
-          <div className="text-xl flex items-center gap-2">
-            <span className="text-lg text-info">
-              {place.officialId === session.nation.data.roleplay.capital && (
-                <GiCapitol />
-              )}
-            </span>
-            <span>{place.name}</span>
+      <h3 className="w-full flex justify-between flex-wrap">
+        <div className="text-xl flex items-center gap-2">
+          <div className="w-[50px] h-[50px] rounded-full flex items-center justify-center overflow-hidden">
+            <Avatar url={place.image} isUser={false} />
           </div>
-          <div className="flex gap-2 flex-wrap self-end justify-end">
-            <EyeButton click={handleClick} />
-          </div>
-        </h3>
-        <p className="w-full flex-grow">{place.description}</p>
-        <div className="max-w-[90%] flex flex-wrap items-center self-end justify-end gap-1">
-          <PlaceTag label={getPlaceTypeLabel(place.type)} />
-          {place.type != 2 && (
-            <TreeTag label={childrenStats.children.toString()} />
-          )}
-          <PopulationTag label={childrenStats.population.toString()} />
-          {emplacement.pathname != `/nation/${place.nation}` && (
-            <NationTag label={place.nation} />
-          )}
+          <span className="text-lg text-info">
+            {place.officialId === session.nation.data.roleplay.capital && (
+              <GiCapitol />
+            )}
+          </span>
+          <span>{place.name}</span>
         </div>
+        <EyeButton click={handleClick} />
+      </h3>
+      <div className="max-w-[90%] flex flex-wrap items-center self-end justify-end gap-1">
+        <PlaceTag label={getPlaceTypeLabel(place.type)} />
+        {place.type != 2 && (
+          <TreeTag label={childrenStats.children.toString()} />
+        )}
+        <PopulationTag label={childrenStats.population.toString()} />
+        {emplacement.pathname != `/nation/${place.nation}` && (
+          <NationTag label={place.nation} />
+        )}
       </div>
     </div>
   );

@@ -10,7 +10,7 @@ export default function ParentButton({ click }: ClickProps) {
       text={t("components.buttons.parent")}
       click={click}
       children={
-        <div className="hover:animate-ping text-xl cursor-pointer overflow-hidden">
+        <div className="text-xl cursor-pointer overflow-hidden">
           <IoReturnUpBackSharp />
         </div>
       }

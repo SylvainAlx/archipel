@@ -23,3 +23,27 @@ export const updateByDBId = (atom: any, atoms: any[]) => {
   }
   return tempArray;
 };
+
+// officialId
+
+export const spliceByOfficialId = (id: string, atoms: any[]) => {
+  const tempArray: any[] = [...atoms];
+  for (let i = 0; i < atoms.length; i++) {
+    if (atoms[i].officialId === id) {
+      tempArray.splice(i, 1);
+      break;
+    }
+  }
+  return tempArray;
+};
+
+export const updateByOfficialId = (atom: any, atoms: any[]) => {
+  const tempArray: any[] = [...atoms];
+  for (let i = 0; i < atoms.length; i++) {
+    if (atoms[i].officialId === atom._id) {
+      tempArray[i] = atom;
+      break;
+    }
+  }
+  return tempArray;
+};

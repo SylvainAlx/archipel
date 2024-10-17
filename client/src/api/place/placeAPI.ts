@@ -2,24 +2,23 @@ import {
   dataCheckedAtom,
   loadingAtom,
   myStore,
+  nationFetchedAtom,
   nationPlacesListAtom,
   nationsListAtom,
   placeFetchedAtom,
   placesListAtom,
-  session,
-  sessionAtom,
   statsAtom,
 } from "../../settings/store";
 import { Nation } from "../../types/typNation";
 import { PlacePayload } from "../../types/typPayload";
-import { emptyPlace, Place } from "../../types/typPlace";
-import { updateByDBId } from "../../utils/atomArrayFunctions";
-import { displayPlaceInfoByType } from "../../utils/displayInfos";
+import { Place } from "../../types/typPlace";
 import {
-  deleteElementOfAtomArray,
-  findElementOfAtomArray,
-  updateElementOfAtomArray,
-} from "../../utils/functions";
+  spliceByOfficialId,
+  updateByDBId,
+  updateByOfficialId,
+} from "../../utils/atomArrayFunctions";
+import { displayPlaceInfoByType } from "../../utils/displayInfos";
+import { findElementOfAtomArray } from "../../utils/functions";
 import { errorMessage, successMessage } from "../../utils/toasts";
 import {
   createPlaceFetch,
@@ -30,16 +29,6 @@ import {
   getPlacesCountFetch,
   updatePlaceFetch,
 } from "./placeFetch";
-
-const nationsList = myStore.get(nationsListAtom);
-const setNationsList = (list: Nation[]) => myStore.set(nationsListAtom, list);
-
-const nationPlacesList = myStore.get(nationPlacesListAtom);
-const setNationPlacesList = (list: Place[]) =>
-  myStore.set(nationPlacesListAtom, list);
-
-const placesList = myStore.get(placesListAtom);
-const setPlacesList = (list: Place[]) => myStore.set(placesListAtom, list);
 
 export const getPlacesCount = async () => {
   const stats = myStore.get(statsAtom);
@@ -74,7 +63,7 @@ export const createNewPlace = (newPlace: PlacePayload) => {
           myStore.get(nationsListAtom),
         );
         myStore.set(nationsListAtom, tempNationArray);
-        myStore.set(sessionAtom, { ...session, nation: data.nation });
+        myStore.set(nationFetchedAtom, data.nation);
         displayPlaceInfoByType(data.infoType);
       }
     })
@@ -87,7 +76,7 @@ export const createNewPlace = (newPlace: PlacePayload) => {
 
 export const getPlace = (id: string) => {
   myStore.set(loadingAtom, true);
-  const place = findElementOfAtomArray(id, placesList);
+  const place = findElementOfAtomArray(id, myStore.get(placesListAtom));
   if (place === undefined || place === null) {
     getPlaceFetch(id)
       .then((data) => {
@@ -99,7 +88,7 @@ export const getPlace = (id: string) => {
         errorMessage(error.message);
       });
   } else {
-    myStore.set(placeFetchedAtom, emptyPlace);
+    myStore.set(placeFetchedAtom, place);
     myStore.set(loadingAtom, false);
   }
 };
@@ -136,23 +125,23 @@ export const getPlaces = (searchName: string) => {
 
 export const getNationPlaces = (id: string) => {
   const savedNationPlacesList: Place[] = [];
-  placesList.forEach((place) => {
+  myStore.get(placesListAtom).forEach((place) => {
     if (place.nation === id) {
       savedNationPlacesList.push(place);
     }
   });
   if (savedNationPlacesList.length > 0) {
-    setNationPlacesList(savedNationPlacesList);
+    myStore.set(nationPlacesListAtom, savedNationPlacesList);
   } else {
     myStore.set(loadingAtom, true);
     getNationPlacesFetch(id)
       .then((resp: Place[]) => {
         myStore.set(loadingAtom, false);
-        setNationPlacesList(resp);
+        myStore.set(nationPlacesListAtom, resp);
         if (resp.length > 0) {
-          const copyPlacesList: Place[] = [...placesList];
+          const copyPlacesList: Place[] = [...myStore.get(placesListAtom)];
           copyPlacesList.push(...resp);
-          setPlacesList(copyPlacesList);
+          myStore.set(placesListAtom, copyPlacesList);
         }
       })
       .catch((error) => {
@@ -167,18 +156,23 @@ export const deletePlace = (id: string) => {
   deletePlaceFetch(id)
     .then((resp: { place: Place; nation: Nation; message: string }) => {
       myStore.set(dataCheckedAtom, false);
-      myStore.set(sessionAtom, { ...session, nation: resp.nation });
-      updateElementOfAtomArray(resp.nation, nationsList, setNationsList);
-      deleteElementOfAtomArray(
-        resp.place.officialId,
-        nationPlacesList,
-        setNationPlacesList,
+      myStore.set(nationFetchedAtom, resp.nation);
+      let tempPlaceArray = updateByOfficialId(
+        resp.nation,
+        myStore.get(nationsListAtom),
       );
-      deleteElementOfAtomArray(
+      myStore.set(nationsListAtom, tempPlaceArray);
+      const tempNationPlacesArray = spliceByOfficialId(
         resp.place.officialId,
-        placesList,
-        setPlacesList,
+        myStore.get(nationPlacesListAtom),
       );
+      myStore.set(nationPlacesListAtom, tempNationPlacesArray);
+      const tempPlacesListArray = spliceByOfficialId(
+        resp.place.officialId,
+        myStore.get(placesListAtom),
+      );
+      myStore.set(placesListAtom, tempPlacesListArray);
+
       myStore.set(loadingAtom, false);
       successMessage(resp.message);
     })
@@ -194,19 +188,18 @@ export const updatePlace = (payload: Place) => {
     .then((resp: { place: Place; infoType: string }) => {
       myStore.set(loadingAtom, false);
       if (resp.place) {
-        let tempPlaceArray = updateByDBId(
+        let tempPlaceArray = updateByOfficialId(
           resp.place,
           myStore.get(placesListAtom),
         );
         myStore.set(placesListAtom, tempPlaceArray);
-        tempPlaceArray = updateByDBId(
+        tempPlaceArray = updateByOfficialId(
           resp.place,
           myStore.get(nationPlacesListAtom),
         );
         myStore.set(nationPlacesListAtom, tempPlaceArray);
+        myStore.set(placeFetchedAtom, resp.place);
         displayPlaceInfoByType(resp.infoType);
-        // const data = myStore.get(editPlaceAtom);
-        // myStore.set(editPlaceAtom, { ...data, place: resp.place });
       }
     })
     .catch((error) => {

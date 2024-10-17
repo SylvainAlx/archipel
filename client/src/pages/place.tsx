@@ -1,6 +1,5 @@
 import {
   confirmBox,
-  myStore,
   nationFetchedAtom,
   nationPlacesListAtom,
   placeFetchedAtom,
@@ -28,6 +27,7 @@ import { getNation } from "../api/nation/nationAPI";
 import CrossButton from "../components/buttons/crossButton";
 import Upploader from "../components/uploader";
 import { AiOutlinePicture } from "react-icons/ai";
+import { ConfirmBoxDefault } from "../types/typAtom";
 
 export default function Place() {
   const navigate = useNavigate();
@@ -37,6 +37,7 @@ export default function Place() {
   const [nation] = useAtom(nationFetchedAtom);
   const [place] = useAtom(placeFetchedAtom);
   const [nationPlacesList] = useAtom(nationPlacesListAtom);
+  const [confirm, setConfirm] = useAtom(confirmBox);
   const param = useParams();
   const [refresh, setRefresh] = useState(false);
   const [haveChildren, setHaveChildren] = useState(false);
@@ -81,6 +82,13 @@ export default function Place() {
     }
   }, [nationPlacesList, place, nation]);
 
+  useEffect(() => {
+    if (confirm.action === "deletePlace" && confirm.result === "OK") {
+      navigate(`/nation/${place.nation}`);
+      setConfirm(ConfirmBoxDefault);
+    }
+  }, [confirm]);
+
   const handleClick = () => {
     if (place.nation === place.parentId) {
       navigate(`/nation/${place.nation}`);
@@ -95,7 +103,7 @@ export default function Place() {
   };
 
   const handleDelete = () => {
-    myStore.set(confirmBox, {
+    setConfirm({
       action: "deletePlace",
       text: t("components.modals.confirmModal.deletePlace"),
       result: "",
@@ -145,7 +153,7 @@ export default function Place() {
               {owner && (
                 <Upploader path="image" destination="place" place={place} />
               )}
-              <em>[A TRADUIRE] Pas d'illustration du lieu</em>
+              <em>{t("pages.place.noImage")}</em>
             </>
           )}
         </section>
@@ -198,9 +206,7 @@ export default function Place() {
               }
             })}
           {!haveChildren && (
-            <em className="text-center">
-              {t("pages.nation.simulation.noPlaces")}
-            </em>
+            <em className="text-center">{t("pages.place.noChildrenPlaces")}</em>
           )}
         </div>
         {owner && place.type != 2 && (

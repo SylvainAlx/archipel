@@ -137,7 +137,7 @@ export default function Citizen() {
     <>
       <H1 text={citizen.name} />
       <div className="relative">
-        <Avatar url={citizen.avatar} />
+        <Avatar url={citizen.avatar} isUser={true} />
         {session.user.officialId === citizen.officialId &&
           (citizen.avatar != "" ? (
             <CrossButton small={true} click={handleDeleteAvatar} />

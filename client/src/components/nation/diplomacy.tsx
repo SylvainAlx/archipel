@@ -62,7 +62,7 @@ export default function Diplomacy({
     <TileContainer
       children={
         <DashTile
-          title={t("pages.nation.simulation.diplomacy")}
+          title={t("pages.nation.relations.title")}
           children={
             <div className="w-full flex flex-col-reverse gap-2 items-center">
               {relationList.length > 0 ? (
@@ -80,7 +80,7 @@ export default function Diplomacy({
                 })
               ) : (
                 <em className="text-center">
-                  {t("pages.nation.simulation.noRelations")}
+                  {t("pages.nation.relations.noRelations")}
                 </em>
               )}
               {!owner && session.user.citizenship.nationOwner && (

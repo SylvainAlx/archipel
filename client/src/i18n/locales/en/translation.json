@@ -14,17 +14,25 @@
         "externalLinks": "external links",
         "noDescription": "no description"
       },
-      "simulation": {
-        "title": "simulation",
-        "score": "score",
-        "places": "locations",
-        "noPlaces": "no children location to display",
-        "diplomacy": "diplomacy",
-        "noRelations": "no diplomatic relationship",
-        "citizens": "citizens",
-        "noCitizens": "no citizen to display",
-        "map": "nation map",
-        "freeTiles": "free tiles"
+      "map": {
+        "title": "nation map",
+        "noMap": "no nation map"
+      },
+      "freeTiles": {
+        "title": "free tiles",
+        "noFreeTiles": "no free tiles"
+      },
+      "relations": {
+        "title": "diplomacy",
+        "noRelations": "no diplomatic relationship"
+      },
+      "citizens": {
+        "title": "citizens",
+        "noCitizens": "no citizen to display"
+      },
+      "places": {
+        "title": "locations",
+        "noPlaces": "no locations to display"
       }
     },
     "explore": {
@@ -64,6 +72,10 @@
       "forgottenPassword": "Forgotten password ?",
       "firstVisit": "First visit ?",
       "newUser": "Create account"
+    },
+    "place": {
+      "noChildrenPlaces": "no children locations to display",
+      "noImage": "no location image"
     },
     "recovery": {
       "title": "reset password",
@@ -111,11 +123,12 @@
       "access": "access",
       "delete": "delete",
       "back": "back",
-      "newPlace": "new location",
+      "newPlace": "create new location",
       "showMore": "SHOW MORE",
       "askCitizenship": "ASK CITIZENSHIP",
       "createRelation": "CREATE DIPLOMATIC RELATIONSHIP",
-      "parent": "parent"
+      "parent": "parent",
+      "createFreeTile": "create free tile"
     },
     "form": {
       "input": {

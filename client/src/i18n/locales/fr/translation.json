@@ -14,17 +14,25 @@
         "externalLinks": "liens externes",
         "noDescription": "pas de description"
       },
-      "simulation": {
-        "title": "simulation",
-        "score": "score",
-        "places": "lieux",
-        "noPlaces": "aucun lieu enfant à afficher",
-        "diplomacy": "diplomatie",
-        "noRelations": "aucune relation diplomatique",
-        "citizens": "citoyens",
-        "noCitizens": "la nation n'a aucun citoyen",
-        "map": "carte de la nation",
-        "freeTiles": "tuiles libres"
+      "map": {
+        "title": "carte de la nation",
+        "noMap": "aucune carte de la nation"
+      },
+      "freeTiles": {
+        "title": "tuiles libres",
+        "noFreeTiles": "aucune tuiles libres"
+      },
+      "relations": {
+        "title": "diplomatie",
+        "noRelations": "aucune relation diplomatique"
+      },
+      "citizens": {
+        "title": "citoyens",
+        "noCitizens": "la nation n'a aucun citoyen"
+      },
+      "places": {
+        "title": "lieux",
+        "noPlaces": "aucun lieu à afficher"
       }
     },
     "explore": {
@@ -64,6 +72,10 @@
       "forgottenPassword": "Mot de passe oublié ?",
       "firstVisit": "Première visite ?",
       "newUser": "Créez un compte utilisateur"
+    },
+    "place": {
+      "noChildrenPlaces": "aucun lieu enfant à afficher",
+      "noImage": "aucune illustration du lieu"
     },
     "recovery": {
       "title": "réinitialisation du mot de passe",
@@ -115,7 +127,8 @@
       "showMore": "VOIR PLUS",
       "askCitizenship": "demander la nationnalité",
       "createRelation": "créer une relation diplomatique",
-      "parent": "parent"
+      "parent": "parent",
+      "createFreeTile": "ajouter une tuile libre"
     },
     "form": {
       "input": {

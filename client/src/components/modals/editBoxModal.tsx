@@ -26,7 +26,9 @@ export default function EditBoxModal() {
 
   useEffect(() => {
     if (Array.isArray(editBox.original)) {
-      setEditBox({ ...editBox, new: [] });
+      if (editBox.path === "data.roleplay.capital") {
+        setEditBox({ ...editBox, new: editBox.original[0].id });
+      } else setEditBox({ ...editBox, new: [] });
     }
     if (typeof editBox.original == "string") {
       setEditBox({ ...editBox, new: editBox.original });
@@ -50,7 +52,7 @@ export default function EditBoxModal() {
             objetCourant = objetCourant[parties[i]];
           } else {
             console.error(
-              `Chemin incorrect. Propriété ${parties[i]} non trouvée.`,
+              `[A TRADUIRE] Chemin incorrect. Propriété ${parties[i]} non trouvée.`,
             );
             break;
           }
@@ -63,7 +65,7 @@ export default function EditBoxModal() {
 
         setConfirm({
           action: "updateNation",
-          text: "Mettre à jour votre nation ?",
+          text: "[A TRADUIRE] Mettre à jour votre nation ?",
           result: "",
           target: "",
           payload: updatedNation,
@@ -77,7 +79,7 @@ export default function EditBoxModal() {
             objetCourant = objetCourant[parties[i]];
           } else {
             console.error(
-              `Chemin incorrect. Propriété ${parties[i]} non trouvée.`,
+              `[A TRADUIRE] Chemin incorrect. Propriété ${parties[i]} non trouvée.`,
             );
             break;
           }
@@ -88,7 +90,7 @@ export default function EditBoxModal() {
         }
         setConfirm({
           action: "updateUser",
-          text: "Mettre à jour votre profil ?",
+          text: "[A TRADUIRE] Mettre à jour votre profil ?",
           result: "",
           target: "",
           payload: updatedCitizen,
@@ -102,7 +104,7 @@ export default function EditBoxModal() {
             objetCourant = objetCourant[parties[i]];
           } else {
             console.error(
-              `Chemin incorrect. Propriété ${parties[i]} non trouvée.`,
+              `[A TRADUIRE] Chemin incorrect. Propriété ${parties[i]} non trouvée.`,
             );
             break;
           }
@@ -113,7 +115,7 @@ export default function EditBoxModal() {
         }
         setConfirm({
           action: "updatePlace",
-          text: "Mettre à jour votre lieu ?",
+          text: "[A TRADUIRE] Mettre à jour votre lieu ?",
           result: "",
           target: "",
           payload: updatedPlace,

@@ -55,8 +55,8 @@ export default function Citizens({ selectedNation }: SelectedNationProps) {
     <TileContainer
       children={
         <DashTile
-          title={t("pages.nation.simulation.citizens")}
-          className="w-full my-2"
+          title={t("pages.nation.citizens.title")}
+          className="w-full min-w-[300px] flex-grow"
           children={
             <>
               {session.user.citizenship.status === -1 &&
@@ -80,7 +80,7 @@ export default function Citizens({ selectedNation }: SelectedNationProps) {
                   })
                 ) : (
                   <em className="text-center">
-                    {t("pages.nation.simulation.noCitizens")}
+                    {t("pages.nation.citizens.noCitizens")}
                   </em>
                 )}
               </div>
