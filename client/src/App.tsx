@@ -63,6 +63,7 @@ export default function App() {
       nation.officialId === session.user.citizenship.nationId
     ) {
       setSession({ ...session, nation });
+      // getNationPlaces(nation.officialId);
     }
   }, [nation]);
 

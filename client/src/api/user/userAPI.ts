@@ -30,7 +30,7 @@ import {
   updateElementOfAtomArray,
 } from "../../utils/functions";
 import { errorMessage, successMessage } from "../../utils/toasts";
-import { nationsList, setNationsList } from "../nation/nationAPI";
+import { setNationsList } from "../nation/nationAPI";
 import {
   authGet,
   changePasswordFetch,
@@ -201,7 +201,11 @@ export const deleteUser = () => {
       localStorage.removeItem("jwt");
       displayUserInfoByType(resp.infoType);
       if (resp.nation != null) {
-        updateElementOfAtomArray(resp.nation, nationsList, setNationsList);
+        updateElementOfAtomArray(
+          resp.nation,
+          myStore.get(nationsListAtom),
+          setNationsList,
+        );
       }
     })
     .catch((error) => {

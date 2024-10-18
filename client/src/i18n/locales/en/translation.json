@@ -59,7 +59,8 @@
     },
     "citizen": {
       "virtualCitizenship": "virtual citizenship",
-      "settings": "settings"
+      "settings": "settings",
+      "noResidence": "no residence"
     },
     "coms": {
       "title": "communications"
@@ -75,7 +76,8 @@
     },
     "place": {
       "noChildrenPlaces": "no children locations to display",
-      "noImage": "no location image"
+      "image": "image of the location",
+      "noImage": "no image of the location"
     },
     "recovery": {
       "title": "reset password",
@@ -159,9 +161,17 @@
         "leaveNation": "Leave the nation ?",
         "cancelCitizenship": "Cancel citizenship application ?",
         "leaveRelation": "Leave relation ?",
-        "createTile": "confirm new tile ?",
-        "updateTile": "update tile ?",
-        "deleteTile": "delete tile ?"
+        "createTile": "Confirm new tile ?",
+        "updateTile": "Update tile ?",
+        "deleteTile": "Delete tile ?",
+        "updateNation": "Update nation ?",
+        "updatePlace": "Update place ?",
+        "updateCitizen": "Update profile ?"
+      },
+      "cookiesModal": {
+        "text": "This site uses cookies to improve your user experience",
+        "accept": "ACCEPT",
+        "decline": "DECLINE"
       },
       "langModal": {
         "title": "LANGUAGE"
@@ -239,7 +249,8 @@
         "nation": "nation",
         "currency": "currency",
         "nationalDay": "national day",
-        "nationOwner": "Nation founder"
+        "nationOwner": "Nation founder",
+        "residence": "residence"
       },
       "avatar": "avatar"
     },
@@ -346,10 +357,15 @@
       "update": "Change of diplomatic relationship made"
     },
     "tile": {
-      "new": "tile created",
-      "update": "tile updated",
-      "delete": "tile deleted",
-      "forbidden": "delete forbidden"
+      "new": "Tile created",
+      "update": "Tile updated",
+      "delete": "Tile deleted",
+      "forbidden": "Delete forbidden"
+    },
+    "place": {
+      "new": "Place created",
+      "update": "Place updated",
+      "delete": "Place deleted"
     }
   }
 }

@@ -12,7 +12,7 @@ import { getNationPlaces, getPlace } from "../api/place/placeAPI";
 import IdTag from "../components/tags/idTag";
 import PlaceTag from "../components/tags/placeTag";
 import {
-  getPlaceListByType,
+  // getPlaceListByType,
   getPlaceName,
   getPlaceTypeLabel,
   handleDeleteImage,
@@ -119,10 +119,18 @@ export default function Place() {
           {owner && <CrossButton click={handleDelete} />}
         </div>
         <div className="flex items-center gap-2">
-          <H2
-            text={`${place.name} (${parentName}${nation.name != parentName ? ", " + nation.name : ""})`}
-          />
+          <H2 text={`${place.name}`} />
           {owner && <EditIcon target="place" param={place.name} path="name" />}
+        </div>
+        <div className="flex items-center gap-2">
+          <div>{parentName}</div>
+          {/* {owner && (
+            <EditIcon
+              target="place"
+              param={getPlaceListByType(nation, nationPlacesList, [0, 1])}
+              path="parentId"
+            />
+          )} */}
         </div>
         <section className="w-full flex flex-col items-center rounded">
           {place.image != undefined && place.image != "" ? (
@@ -132,7 +140,7 @@ export default function Place() {
                   src={place.image}
                   alt={`image of ${place.name}`}
                   className="object-contain w-full h-full rounded cursor-zoom-in"
-                  hover="[A TRADUIRE] illustration du lieu"
+                  hover={t("pages.place.image")}
                 />
               </Suspense>
               {owner && (
@@ -160,17 +168,6 @@ export default function Place() {
 
         <div className="flex items-center justify-center flex-wrap gap-1">
           {place.officialId && <IdTag label={place.officialId} />}
-
-          <div className="flex items-center gap-2">
-            {owner && (
-              <EditIcon
-                target="place"
-                param={getPlaceListByType(nation, nationPlacesList, [0, 1])}
-                path="parentId"
-              />
-            )}
-          </div>
-
           <PlaceTag label={getPlaceTypeLabel(place.type)} />
         </div>
         <div className="flex items-center gap-2">

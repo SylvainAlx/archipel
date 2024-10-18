@@ -66,6 +66,10 @@ const UserSchema = mongoose.Schema(
         type: Boolean,
         default: false,
       },
+      residence: {
+        type: String,
+        default: "",
+      },
     },
   },
   {

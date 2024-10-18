@@ -59,7 +59,8 @@
     },
     "citizen": {
       "virtualCitizenship": "citoyenneté virtuelle",
-      "settings": "paramètre du compte"
+      "settings": "paramètre du compte",
+      "noResidence": "aucun lieu de résidence défini"
     },
     "coms": {
       "title": "communications"
@@ -75,6 +76,7 @@
     },
     "place": {
       "noChildrenPlaces": "aucun lieu enfant à afficher",
+      "image": "illustration du lieu",
       "noImage": "aucune illustration du lieu"
     },
     "recovery": {
@@ -161,7 +163,15 @@
         "leaveRelation": "Rompre la relation ?",
         "createTile": "Confirmez-vous la création de la tuile ?",
         "updateTile": "Confirmez-vous la mise à jour de la tuile ?",
-        "deleteTile": "Confirmez-vous la suppression de la tuile ?"
+        "deleteTile": "Confirmez-vous la suppression de la tuile ?",
+        "updateNation": "Confirmez-vous la mise à jour de la nation ?",
+        "updatePlace": "Confirmez-vous la mise à jour du lieu ?",
+        "updateCitizen": "Confirmez-vous la mise à jour de votre profil ?"
+      },
+      "cookiesModal": {
+        "text": "Ce site utilise des cookies pour améliorer votre expérience utilisateur",
+        "accept": "ACCEPTER",
+        "decline": "REFFUSER"
       },
       "langModal": {
         "title": "CHOIX DE LA LANGUE"
@@ -239,7 +249,8 @@
         "nation": "nation",
         "currency": "monnaie",
         "nationalDay": "fête nationale",
-        "nationOwner": "Fondateur de la nation"
+        "nationOwner": "Fondateur de la nation",
+        "residence": "résidence"
       },
       "avatar": "avatar"
     },
@@ -338,10 +349,15 @@
       "update": "Modification de la relation diplomatique effectuée"
     },
     "tile": {
-      "new": "tuile créée",
-      "update": "tuite mise à jour",
-      "delete": "tuile supprimée",
-      "forbidden": "suppression interdite"
+      "new": "Tuile créée",
+      "update": "Tuite mise à jour",
+      "delete": "Tuile supprimée",
+      "forbidden": "Suppression interdite"
+    },
+    "place": {
+      "new": "Lieu créé",
+      "update": "Lieu mis à jour",
+      "delete": "Lieu supprimé"
     }
   }
 }

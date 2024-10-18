@@ -28,7 +28,6 @@ import {
   updateNationFetch,
 } from "./nationFetch";
 
-export const nationsList = myStore.get(nationsListAtom);
 export const setNationsList = (list: Nation[]) =>
   myStore.set(nationsListAtom, list);
 
@@ -56,7 +55,10 @@ export const createNation = (payload: NewNationPayload) => {
       myStore.set(loadingAtom, false);
       if (data.nation) {
         const session = myStore.get(sessionAtom);
-        myStore.set(nationsListAtom, [...nationsList, data.nation]);
+        myStore.set(nationsListAtom, [
+          ...myStore.get(nationsListAtom),
+          data.nation,
+        ]);
         myStore.set(sessionAtom, { ...session, nation: data.nation });
         if (data.user) {
           myStore.set(sessionAtom, { ...session, user: data.user });
@@ -75,12 +77,16 @@ export const createNation = (payload: NewNationPayload) => {
 
 export const getNation = (id: string) => {
   myStore.set(loadingAtom, true);
-  const nation = findElementOfAtomArray(id, nationsList);
+  const nation = findElementOfAtomArray(id, myStore.get(nationsListAtom));
+
   if (nation === undefined || nation === null) {
     getOneNationFetch(id)
       .then((data) => {
         myStore.set(loadingAtom, false);
         myStore.set(nationFetchedAtom, data.nation);
+        const tempArray = [...myStore.get(nationsListAtom)];
+        tempArray.push(data.nation);
+        myStore.set(nationsListAtom, tempArray);
         myStore.set(loadingAtom, false);
         return nation;
       })
@@ -142,7 +148,7 @@ export const deleteSelfNation = () => {
       if (session.nation) {
         deleteElementOfAtomArray(
           session.nation.officialId,
-          nationsList,
+          myStore.get(nationsListAtom),
           setNationsList,
         );
       }
