@@ -6,6 +6,7 @@ import {
   confirmBox,
   myStore,
   nationFetchedAtom,
+  nationPlacesListAtom,
   newNationAtom,
   sessionAtom,
 } from "../settings/store";
@@ -17,7 +18,7 @@ import { useEffect, useState } from "react";
 import { getOneUser } from "../api/user/userAPI";
 import DashTile from "../components/dashTile";
 import TileContainer from "../components/tileContainer";
-import { emptyNewNationPayload } from "../types/typNation";
+import { emptyNewNationPayload, LabelId } from "../types/typNation";
 import { getNation } from "../api/nation/nationAPI";
 import IdTag from "../components/tags/idTag";
 import RoleTag from "../components/tags/roleTag";
@@ -29,6 +30,9 @@ import { FaLink } from "react-icons/fa";
 import EditIcon from "../components/editIcon";
 import { BsFillEnvelopeAtFill } from "react-icons/bs";
 import NationOwnerTag from "../components/tags/nationOwnerTag";
+import ResidenceTag from "../components/tags/residenceTag";
+import { getLabelIdArrayFromNationPlaceList } from "../utils/functions";
+import { getNationPlaces } from "../api/place/placeAPI";
 
 export default function Citizen() {
   const { t } = useTranslation();
@@ -38,6 +42,8 @@ export default function Citizen() {
   const [citizen, setCitizen] = useAtom(citizenFetchAtom);
   const [nation] = useAtom(nationFetchedAtom);
   const [session, setSession] = useAtom(sessionAtom);
+  const [nationPlaces] = useAtom(nationPlacesListAtom);
+  const [placesList, setPlacesList] = useState<LabelId[]>([]);
   const [, setConfirmModal] = useAtom(confirmBox);
   const [enableLeaving, setEnableLeaving] = useState(false);
 
@@ -70,6 +76,23 @@ export default function Citizen() {
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [citizen]);
+
+  useEffect(() => {
+    if (nation.officialId != undefined && nation.officialId !== "") {
+      getNationPlaces(nation.officialId);
+    }
+  }, [nation]);
+
+  useEffect(() => {
+    if (
+      nationPlaces.length > 0 &&
+      nation.officialId != undefined &&
+      nation.officialId !== ""
+    ) {
+      const list = getLabelIdArrayFromNationPlaceList();
+      setPlacesList(list);
+    }
+  }, [nationPlaces]);
 
   const handleClick = (dest: string) => {
     if (dest === "nation") {
@@ -137,7 +160,7 @@ export default function Citizen() {
     <>
       <H1 text={citizen.name} />
       <div className="relative">
-        <Avatar url={citizen.avatar} />
+        <Avatar url={citizen.avatar} isUser={true} />
         {session.user.officialId === citizen.officialId &&
           (citizen.avatar != "" ? (
             <CrossButton small={true} click={handleDeleteAvatar} />
@@ -188,6 +211,15 @@ export default function Citizen() {
                   <div className="max-w-[90%] flex flex-wrap items-center justify-center gap-1">
                     <IdTag label={citizen.officialId} />
                     {citizen.citizenship.nationOwner && <NationOwnerTag />}
+                    <ResidenceTag residenceId={citizen.citizenship.residence} />
+                    {placesList.length > 0 &&
+                      session.user.officialId === citizen.officialId && (
+                        <EditIcon
+                          target="citizen"
+                          param={placesList}
+                          path="citizenship.residence"
+                        />
+                      )}
                     {citizen.role === "admin" && <RoleTag label="admin" />}
                   </div>
                   {nation != undefined &&

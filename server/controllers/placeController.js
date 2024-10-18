@@ -92,7 +92,7 @@ export const createPlace = async (req, res) => {
             }
             nation.data.roleplay.places += 1;
             nation.save();
-            res.status(201).json({ place, nation, message: "lieu créé" });
+            res.status(201).json({ place, nation, infoType: "new" });
           })
           .catch((error) => {
             res.status(400).json({
@@ -168,7 +168,7 @@ export const updatePlace = async (req, res) => {
       place
         .save()
         .then((place) => {
-          res.status(200).json({ place, message: "mise à jour réussie" });
+          res.status(200).json({ place, infoType: "update" });
         })
         .catch((error) => {
           console.error(error);

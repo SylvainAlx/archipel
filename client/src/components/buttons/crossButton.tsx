@@ -31,7 +31,7 @@ export default function CrossButton({
       ) : (
         <div
           onClick={click}
-          className="absolute cursor-pointer text-xl hover:text-danger rounded-full transition-all top-2 right-2"
+          className="absolute cursor-pointer text-xl text-danger hover:text-wait rounded-full transition-all top-2 right-2"
         >
           <IoMdCloseCircle />
         </div>

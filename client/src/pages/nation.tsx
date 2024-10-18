@@ -76,8 +76,8 @@ export default function Nation() {
             <NationMap selectedNation={nation} owner={owner} />
             <FreeTiles selectedNation={nation} owner={owner} />
             <Diplomacy selectedNation={nation} owner={owner} />
-            <Places selectedNation={nation} owner={owner} />
             <Citizens selectedNation={nation} owner={owner} />
+            <Places selectedNation={nation} owner={owner} />
           </section>
           <section className="pt-10 flex flex-col items-center gap-4">
             {owner && (

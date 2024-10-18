@@ -37,7 +37,7 @@ export default function Places({ selectedNation, owner }: SelectedNationProps) {
       children={
         <section className="flex flex-col items-center gap-4">
           <DashTile
-            title={t("pages.nation.simulation.places")}
+            title={t("pages.nation.places.title")}
             className="w-full min-w-[300px] flex-grow"
             children={
               <div className="w-full flex flex-col gap-2 items-center">
@@ -59,7 +59,7 @@ export default function Places({ selectedNation, owner }: SelectedNationProps) {
                   })
                 ) : (
                   <em className="text-center">
-                    {t("pages.nation.simulation.noPlaces")}
+                    {t("pages.nation.places.noPlaces")}
                   </em>
                 )}
               </div>

@@ -1,6 +1,5 @@
 import {
   confirmBox,
-  myStore,
   nationFetchedAtom,
   nationPlacesListAtom,
   placeFetchedAtom,
@@ -13,7 +12,7 @@ import { getNationPlaces, getPlace } from "../api/place/placeAPI";
 import IdTag from "../components/tags/idTag";
 import PlaceTag from "../components/tags/placeTag";
 import {
-  getPlaceListByType,
+  // getPlaceListByType,
   getPlaceName,
   getPlaceTypeLabel,
   handleDeleteImage,
@@ -28,6 +27,7 @@ import { getNation } from "../api/nation/nationAPI";
 import CrossButton from "../components/buttons/crossButton";
 import Upploader from "../components/uploader";
 import { AiOutlinePicture } from "react-icons/ai";
+import { ConfirmBoxDefault } from "../types/typAtom";
 
 export default function Place() {
   const navigate = useNavigate();
@@ -37,6 +37,7 @@ export default function Place() {
   const [nation] = useAtom(nationFetchedAtom);
   const [place] = useAtom(placeFetchedAtom);
   const [nationPlacesList] = useAtom(nationPlacesListAtom);
+  const [confirm, setConfirm] = useAtom(confirmBox);
   const param = useParams();
   const [refresh, setRefresh] = useState(false);
   const [haveChildren, setHaveChildren] = useState(false);
@@ -81,6 +82,13 @@ export default function Place() {
     }
   }, [nationPlacesList, place, nation]);
 
+  useEffect(() => {
+    if (confirm.action === "deletePlace" && confirm.result === "OK") {
+      navigate(`/nation/${place.nation}`);
+      setConfirm(ConfirmBoxDefault);
+    }
+  }, [confirm]);
+
   const handleClick = () => {
     if (place.nation === place.parentId) {
       navigate(`/nation/${place.nation}`);
@@ -95,7 +103,7 @@ export default function Place() {
   };
 
   const handleDelete = () => {
-    myStore.set(confirmBox, {
+    setConfirm({
       action: "deletePlace",
       text: t("components.modals.confirmModal.deletePlace"),
       result: "",
@@ -111,10 +119,18 @@ export default function Place() {
           {owner && <CrossButton click={handleDelete} />}
         </div>
         <div className="flex items-center gap-2">
-          <H2
-            text={`${place.name} (${parentName}${nation.name != parentName ? ", " + nation.name : ""})`}
-          />
+          <H2 text={`${place.name}`} />
           {owner && <EditIcon target="place" param={place.name} path="name" />}
+        </div>
+        <div className="flex items-center gap-2">
+          <div>{parentName}</div>
+          {/* {owner && (
+            <EditIcon
+              target="place"
+              param={getPlaceListByType(nation, nationPlacesList, [0, 1])}
+              path="parentId"
+            />
+          )} */}
         </div>
         <section className="w-full flex flex-col items-center rounded">
           {place.image != undefined && place.image != "" ? (
@@ -124,7 +140,7 @@ export default function Place() {
                   src={place.image}
                   alt={`image of ${place.name}`}
                   className="object-contain w-full h-full rounded cursor-zoom-in"
-                  hover="[A TRADUIRE] illustration du lieu"
+                  hover={t("pages.place.image")}
                 />
               </Suspense>
               {owner && (
@@ -145,24 +161,13 @@ export default function Place() {
               {owner && (
                 <Upploader path="image" destination="place" place={place} />
               )}
-              <em>[A TRADUIRE] Pas d'illustration du lieu</em>
+              <em>{t("pages.place.noImage")}</em>
             </>
           )}
         </section>
 
         <div className="flex items-center justify-center flex-wrap gap-1">
           {place.officialId && <IdTag label={place.officialId} />}
-
-          <div className="flex items-center gap-2">
-            {owner && (
-              <EditIcon
-                target="place"
-                param={getPlaceListByType(nation, nationPlacesList, [0, 1])}
-                path="parentId"
-              />
-            )}
-          </div>
-
           <PlaceTag label={getPlaceTypeLabel(place.type)} />
         </div>
         <div className="flex items-center gap-2">
@@ -198,9 +203,7 @@ export default function Place() {
               }
             })}
           {!haveChildren && (
-            <em className="text-center">
-              {t("pages.nation.simulation.noPlaces")}
-            </em>
+            <em className="text-center">{t("pages.place.noChildrenPlaces")}</em>
           )}
         </div>
         {owner && place.type != 2 && (

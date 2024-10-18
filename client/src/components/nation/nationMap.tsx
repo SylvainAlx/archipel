@@ -21,7 +21,7 @@ export default function NationMap({
     <TileContainer
       children={
         <DashTile
-          title={t("pages.nation.simulation.map")}
+          title={t("pages.nation.map.title")}
           children={
             <section className="w-full flex flex-col items-center rounded">
               {selectedNation.data.url.map != undefined &&
@@ -32,7 +32,7 @@ export default function NationMap({
                       src={selectedNation.data.url.map}
                       alt={`map of ${selectedNation.name}`}
                       className="object-contain w-full h-full rounded cursor-zoom-in"
-                      hover={t("pages.nation.simulation.map")}
+                      hover={t("pages.nation.map.title")}
                     />
                   </Suspense>
                   {owner && (
@@ -53,7 +53,7 @@ export default function NationMap({
                   {owner && (
                     <Upploader path="data.url.map" destination="nation" />
                   )}
-                  <em>[A TRADUIRE] Pas de carte de la nation</em>
+                  <em>{t("pages.nation.map.noMap")}</em>
                 </>
               )}
             </section>

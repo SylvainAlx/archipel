@@ -26,7 +26,11 @@ export default function EditBoxModal() {
 
   useEffect(() => {
     if (Array.isArray(editBox.original)) {
-      setEditBox({ ...editBox, new: [] });
+      if (editBox.path === "data.roleplay.capital") {
+        setEditBox({ ...editBox, new: editBox.original[0].id });
+      } else if (editBox.path === "citizenship.residence") {
+        setEditBox({ ...editBox, new: editBox.original[0].id });
+      } else setEditBox({ ...editBox, new: [] });
     }
     if (typeof editBox.original == "string") {
       setEditBox({ ...editBox, new: editBox.original });
@@ -63,7 +67,7 @@ export default function EditBoxModal() {
 
         setConfirm({
           action: "updateNation",
-          text: "Mettre à jour votre nation ?",
+          text: t("components.modals.confirmModal.updateNation"),
           result: "",
           target: "",
           payload: updatedNation,
@@ -88,7 +92,7 @@ export default function EditBoxModal() {
         }
         setConfirm({
           action: "updateUser",
-          text: "Mettre à jour votre profil ?",
+          text: t("components.modals.confirmModal.updateCitizen"),
           result: "",
           target: "",
           payload: updatedCitizen,
@@ -113,7 +117,7 @@ export default function EditBoxModal() {
         }
         setConfirm({
           action: "updatePlace",
-          text: "Mettre à jour votre lieu ?",
+          text: t("components.modals.confirmModal.updatePlace"),
           result: "",
           target: "",
           payload: updatedPlace,
@@ -150,6 +154,8 @@ export default function EditBoxModal() {
       setEditBox({ ...editBox, new: e.target.value });
     } else if (editBox.path === "parentId") {
       setEditBox({ ...editBox, new: e.target.value });
+    } else if (editBox.path === "citizenship.residence") {
+      setEditBox({ ...editBox, new: e.target.value });
     } else {
       setEditBox({ ...editBox, new: Number(e.target.value) });
     }
@@ -175,12 +181,22 @@ export default function EditBoxModal() {
         {typeof editBox.original == "string" && (
           <TextArea
             required={!editBox.canBeEmpty}
-            maxLength={editBox.path === "data.general.description" ? 2000 : 60}
+            maxLength={
+              editBox.path === "data.general.description" ||
+              editBox.path === "description"
+                ? 2000
+                : 60
+            }
             placeholder={t("components.modals.editModal.newValue")}
             onChange={handleTextChange}
             value={editBox.new.toString()}
             name=""
-            rows={editBox.path === "data.general.description" ? 10 : 1}
+            rows={
+              editBox.path === "data.general.description" ||
+              editBox.path === "description"
+                ? 10
+                : 1
+            }
           />
         )}
         {typeof editBox.original == "number" && (

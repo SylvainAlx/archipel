@@ -9,7 +9,12 @@ import {
 } from "../settings/consts";
 import { LabelId, Nation } from "../types/typNation";
 import { Place } from "../types/typPlace";
-import { confirmBox, myStore, SetAtom } from "../settings/store";
+import {
+  confirmBox,
+  myStore,
+  nationPlacesListAtom,
+  SetAtom,
+} from "../settings/store";
 import { User } from "../types/typUser";
 import { deleteFileAPIProps } from "../api/files/fileAPI";
 
@@ -287,4 +292,17 @@ export const handleDeleteImage = ({ url, type }: deleteFileAPIProps) => {
     result: "",
     target: type,
   });
+};
+
+export const getLabelIdArrayFromNationPlaceList = () => {
+  const updatedPlaces: LabelId[] = [];
+  const nationPlaces = myStore.get(nationPlacesListAtom);
+
+  nationPlaces.forEach((place) => {
+    if (place.type === 2) {
+      const newPlace: LabelId = { id: place.officialId, label: place.name };
+      updatedPlaces.push(newPlace);
+    }
+  });
+  return updatedPlaces;
 };
