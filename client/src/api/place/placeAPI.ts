@@ -16,6 +16,7 @@ import {
   spliceByOfficialId,
   updateByDBId,
   updateByOfficialId,
+  updateOrCreatePlaceInMemory,
 } from "../../utils/atomArrayFunctions";
 import { displayPlaceInfoByType } from "../../utils/displayInfos";
 import { findElementOfAtomArray } from "../../utils/functions";
@@ -139,9 +140,9 @@ export const getNationPlaces = (id: string) => {
         myStore.set(loadingAtom, false);
         myStore.set(nationPlacesListAtom, resp);
         if (resp.length > 0) {
-          const copyPlacesList: Place[] = [...myStore.get(placesListAtom)];
-          copyPlacesList.push(...resp);
-          myStore.set(placesListAtom, copyPlacesList);
+          resp.forEach((place) => {
+            updateOrCreatePlaceInMemory(place);
+          });
         }
       })
       .catch((error) => {
@@ -157,7 +158,7 @@ export const deletePlace = (id: string) => {
     .then((resp: { place: Place; nation: Nation; message: string }) => {
       myStore.set(dataCheckedAtom, false);
       myStore.set(nationFetchedAtom, resp.nation);
-      let tempPlaceArray = updateByOfficialId(
+      const tempPlaceArray = updateByOfficialId(
         resp.nation,
         myStore.get(nationsListAtom),
       );
@@ -188,12 +189,8 @@ export const updatePlace = (payload: Place) => {
     .then((resp: { place: Place; infoType: string }) => {
       myStore.set(loadingAtom, false);
       if (resp.place) {
-        let tempPlaceArray = updateByOfficialId(
-          resp.place,
-          myStore.get(placesListAtom),
-        );
-        myStore.set(placesListAtom, tempPlaceArray);
-        tempPlaceArray = updateByOfficialId(
+        updateOrCreatePlaceInMemory(resp.place);
+        const tempPlaceArray = updateByOfficialId(
           resp.place,
           myStore.get(nationPlacesListAtom),
         );

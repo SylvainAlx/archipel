@@ -28,6 +28,7 @@ import CrossButton from "../components/buttons/crossButton";
 import Upploader from "../components/uploader";
 import { AiOutlinePicture } from "react-icons/ai";
 import { ConfirmBoxDefault } from "../types/typAtom";
+import MDEditor from "@uiw/react-md-editor";
 
 export default function Place() {
   const navigate = useNavigate();
@@ -66,6 +67,7 @@ export default function Place() {
     ) {
       getNation(place.nation);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [place]);
 
   useEffect(() => {
@@ -87,6 +89,7 @@ export default function Place() {
       navigate(`/nation/${place.nation}`);
       setConfirm(ConfirmBoxDefault);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [confirm]);
 
   const handleClick = () => {
@@ -171,11 +174,10 @@ export default function Place() {
           <PlaceTag label={getPlaceTypeLabel(place.type)} />
         </div>
         <div className="flex items-center gap-2">
-          <p
-            className="text-md text-justify"
-            dangerouslySetInnerHTML={{
-              __html: place.description,
-            }}
+          <MDEditor.Markdown
+            className="bg-transparent text-light text-justify"
+            source={place.description}
+            style={{ whiteSpace: "pre-wrap" }}
           />
           {owner && (
             <EditIcon

@@ -16,6 +16,7 @@ import { useTranslation } from "react-i18next";
 import TextArea from "../form/textArea";
 import { IoMdCloseCircle } from "react-icons/io";
 import { MdCheckCircle } from "react-icons/md";
+import MDEditor from "@uiw/react-md-editor";
 
 export default function EditBoxModal() {
   const [editBox, setEditBox] = useAtom(editbox);
@@ -170,7 +171,7 @@ export default function EditBoxModal() {
   };
 
   return (
-    <div className="max-w-[600px] flex flex-col justify-center items-center gap-2">
+    <div className="flex flex-col justify-center items-center gap-2">
       <h2 className="text-2xl text-center p-4">
         {t("components.modals.editModal.title")}
       </h2>
@@ -178,27 +179,26 @@ export default function EditBoxModal() {
         className="w-full flex flex-col gap-2 items-center"
         onSubmit={handleSubmit}
       >
-        {typeof editBox.original == "string" && (
-          <TextArea
-            required={!editBox.canBeEmpty}
-            maxLength={
-              editBox.path === "data.general.description" ||
-              editBox.path === "description"
-                ? 2000
-                : 60
-            }
-            placeholder={t("components.modals.editModal.newValue")}
-            onChange={handleTextChange}
-            value={editBox.new.toString()}
-            name=""
-            rows={
-              editBox.path === "data.general.description" ||
-              editBox.path === "description"
-                ? 10
-                : 1
-            }
-          />
-        )}
+        {typeof editBox.original == "string" &&
+          (editBox.path != "data.general.description" &&
+          editBox.path != "description" ? (
+            <TextArea
+              required={!editBox.canBeEmpty}
+              maxLength={60}
+              placeholder={t("components.modals.editModal.newValue")}
+              onChange={handleTextChange}
+              value={editBox.new.toString()}
+              name=""
+              rows={1}
+            />
+          ) : (
+            <div className="container">
+              <MDEditor
+                value={editBox.new.toString()}
+                onChange={(e: any) => setEditBox({ ...editBox, new: e })}
+              />
+            </div>
+          ))}
         {typeof editBox.original == "number" && (
           <Input
             required={!editBox.canBeEmpty}

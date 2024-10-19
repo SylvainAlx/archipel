@@ -25,6 +25,7 @@ import {
 } from "../../utils/functions";
 import PopulationTag from "../tags/populationTag";
 import PlaceTag from "../tags/placeTag";
+import MDEditor from "@uiw/react-md-editor";
 
 export default function NationIdentity({
   selectedNation,
@@ -235,11 +236,10 @@ export default function NationIdentity({
 
                   <div className="w-full mt-4 justify-center flex gap-2">
                     {selectedNation.data.general.description ? (
-                      <p
-                        className="text-md text-justify"
-                        dangerouslySetInnerHTML={{
-                          __html: selectedNation.data.general.description,
-                        }}
+                      <MDEditor.Markdown
+                        className="bg-transparent text-light text-justify"
+                        source={selectedNation.data.general.description}
+                        style={{ whiteSpace: "pre-wrap" }}
                       />
                     ) : (
                       <em className="text-center">

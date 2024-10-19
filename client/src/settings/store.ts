@@ -83,9 +83,6 @@ export const editPlaceAtom = atom<EditPlaceParam>({ place: emptyPlace });
 
 // Relation
 
-export const relationFetchedAtom = atom<DiplomaticRelationship>(
-  emptyDiplomaticRelationship,
-);
 export const relationListAtom = atom<DiplomaticRelationship[]>([]);
 export const newRelationAtom = atom({
   update: false,
