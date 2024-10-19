@@ -11,6 +11,7 @@
     "format": "prettier --write \"src/**/*.{ts,tsx}\""
   },
   "dependencies": {
+    "@uiw/react-md-editor": "^4.0.4",
     "@uploadcare/react-uploader": "^1.0.0",
     "@vercel/speed-insights": "^1.0.12",
     "i18next": "^23.10.1",

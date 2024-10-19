@@ -9,13 +9,13 @@ import {
   tagListAtom,
 } from "../../settings/store";
 import { EmptyNation, Nation, NewNationPayload } from "../../types/typNation";
+import {
+  spliceByOfficialId,
+  updateOrCreateNationInMemory,
+} from "../../utils/atomArrayFunctions";
 import { displayNationInfoByType } from "../../utils/displayInfos";
 
-import {
-  deleteElementOfAtomArray,
-  findElementOfAtomArray,
-  // updateElementOfAtomArray,
-} from "../../utils/functions";
+import { findElementOfAtomArray } from "../../utils/functions";
 import { errorMessage, successMessage } from "../../utils/toasts";
 import {
   createNationFetch,
@@ -27,9 +27,6 @@ import {
   getRoleplayDataFetch,
   updateNationFetch,
 } from "./nationFetch";
-
-export const setNationsList = (list: Nation[]) =>
-  myStore.set(nationsListAtom, list);
 
 export const getNationsCount = async () => {
   const stats = myStore.get(statsAtom);
@@ -84,9 +81,7 @@ export const getNation = (id: string) => {
       .then((data) => {
         myStore.set(loadingAtom, false);
         myStore.set(nationFetchedAtom, data.nation);
-        const tempArray = [...myStore.get(nationsListAtom)];
-        tempArray.push(data.nation);
-        myStore.set(nationsListAtom, tempArray);
+        updateOrCreateNationInMemory(data.nation);
         myStore.set(loadingAtom, false);
         return nation;
       })
@@ -127,8 +122,7 @@ export const updateNation = (payload: Nation) => {
         myStore.set(nationFetchedAtom, resp.nation);
         const session = myStore.get(sessionAtom);
         myStore.set(sessionAtom, { ...session, nation: resp.nation });
-        myStore.set(nationsListAtom, []);
-        // updateElementOfAtomArray(resp.nation, nationsList, setNationsList);
+        updateOrCreateNationInMemory(resp.nation);
       } else {
         successMessage(resp.message);
       }
@@ -146,11 +140,11 @@ export const deleteSelfNation = () => {
       const session = myStore.get(sessionAtom);
       myStore.set(loadingAtom, false);
       if (session.nation) {
-        deleteElementOfAtomArray(
+        const updatedNations = spliceByOfficialId(
           session.nation.officialId,
           myStore.get(nationsListAtom),
-          setNationsList,
         );
+        myStore.set(nationsListAtom, updatedNations);
       }
       displayNationInfoByType("delete");
       myStore.set(sessionAtom, { ...session, nation: EmptyNation });

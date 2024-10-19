@@ -31,15 +31,26 @@ export const createTile = async (tile: Tile) => {
 
 export const getNationTile = async (nationOfficialId: string) => {
   myStore.set(loadingAtom, true);
-  getNationTileFetch(nationOfficialId)
-    .then((data: any) => {
-      myStore.set(loadingAtom, false);
-      myStore.set(tileListAtom, data);
-    })
-    .catch((error) => {
-      myStore.set(loadingAtom, true);
-      console.log(error);
-    });
+  const savedTileList: Tile[] = [];
+  myStore.get(tileListAtom).forEach((tile) => {
+    if (tile.nationOfficialId === nationOfficialId) {
+      savedTileList.push(tile);
+    }
+  });
+  if (savedTileList.length > 0) {
+    myStore.set(tileListAtom, savedTileList);
+    myStore.set(loadingAtom, false);
+  } else {
+    getNationTileFetch(nationOfficialId)
+      .then((data: any) => {
+        myStore.set(loadingAtom, false);
+        myStore.set(tileListAtom, data);
+      })
+      .catch((error) => {
+        myStore.set(loadingAtom, true);
+        console.log(error);
+      });
+  }
 };
 
 export const deleteTile = async (id: string) => {
