@@ -9,6 +9,10 @@ const UserSchema = mongoose.Schema(
       required: true,
       unique: true,
     },
+    ip: {
+      type: String,
+      required: true,
+    },
     name: {
       type: String,
       required: true,

@@ -8,6 +8,7 @@ import { createOfficialId } from "../utils/functions.js";
 export const register = async (req, res) => {
   try {
     const { name, password, gender, language } = req.body;
+    const userIp = req.clientIp;
 
     if (!name || !password) {
       return res
@@ -34,6 +35,7 @@ export const register = async (req, res) => {
 
     const user = new User({
       officialId,
+      ip: userIp,
       name,
       password,
       recovery,
@@ -68,6 +70,7 @@ export const register = async (req, res) => {
 
 export const login = async (req, res) => {
   try {
+    const userIp = req.clientIp;
     const { name, password } = req.body;
 
     const user = await User.findOne(
@@ -88,6 +91,7 @@ export const login = async (req, res) => {
         return res.status(401).json({ infoType: "password" });
       }
       const jwt = user.createJWT();
+      updateUserIpAddress(user.officialId, userIp);
       res.status(200).json({ user, jwt, infoType: "signin" });
     });
   } catch (error) {
@@ -97,6 +101,8 @@ export const login = async (req, res) => {
 
 export const verify = async (req, res) => {
   try {
+    const userIp = req.clientIp;
+
     const token = req.headers.authorization.split(" ")[1];
     const secret = process.env.JWT_SECRET;
 
@@ -108,6 +114,7 @@ export const verify = async (req, res) => {
     );
 
     if (user) {
+      updateUserIpAddress(user.officialId, userIp);
       return res.status(200).json({ user, infoType: "verify" });
     } else {
       return res.status(404).json({ infoType: "user" });
@@ -397,5 +404,17 @@ export const changeStatus = async (req, res) => {
     }
   } catch (error) {
     res.status(400).json({ message: error });
+  }
+};
+
+const updateUserIpAddress = async (userOfficialId, ip) => {
+  try {
+    const user = await User.findOne({ officialId: userOfficialId });
+    user.ip = ip;
+    user.save().catch((error) => {
+      console.error(error);
+    });
+  } catch (error) {
+    console.error(error);
   }
 };

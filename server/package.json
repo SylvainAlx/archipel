@@ -13,7 +13,8 @@
     "lorem-ipsum": "^2.0.8",
     "mongodb": "^6.9.0",
     "mongoose": "^8.5.3",
-    "nodemon": "^3.0.1"
+    "nodemon": "^3.0.1",
+    "request-ip": "^3.3.0"
   },
   "name": "server-archipel",
   "version": "1.0.0",
