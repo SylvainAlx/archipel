@@ -10,8 +10,8 @@ const UserSchema = mongoose.Schema(
       unique: true,
     },
     ip: {
-      type: String,
-      required: true,
+      type: [{ value: String, lastVisit: Date }],
+      default: [],
     },
     name: {
       type: String,

@@ -12,7 +12,7 @@ const RelationSchema = mongoose.Schema(
       unique: true,
     },
     nations: {
-      type: Array,
+      type: [{ OfficialId: String, AmbassadorId: String, accepted: Boolean }],
       default: [],
     },
     kind: {

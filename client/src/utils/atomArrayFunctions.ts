@@ -103,6 +103,22 @@ export const updateOrCreatePlaceInMemory = (place: Place) => {
   }
 };
 
+export const updateOrCreateRelationInMemory = (
+  relation: DiplomaticRelationship,
+) => {
+  const savedRelation = findElementOfAtomArray(
+    relation.officialId,
+    myStore.get(relationListAtom),
+  );
+  if (savedRelation === undefined) {
+    const tempArray = [...myStore.get(relationListAtom)];
+    tempArray.push(relation);
+    myStore.set(relationListAtom, tempArray);
+  } else {
+    updateByOfficialId(relation, myStore.get(relationListAtom));
+  }
+};
+
 export const getNationRelationListFromMemory = (nationId: string) => {
   const relations: DiplomaticRelationship[] = [];
   myStore.get(relationListAtom).forEach((relation) => {

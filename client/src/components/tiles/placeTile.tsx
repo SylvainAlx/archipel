@@ -5,7 +5,7 @@ import {
   session,
 } from "../../settings/store";
 import { useAtom } from "jotai";
-import PopulationTag from "../tags/populationTag";
+// import PopulationTag from "../tags/populationTag";
 import { GiCapitol } from "react-icons/gi";
 import { useLocation, useNavigate } from "react-router-dom";
 import EyeButton from "../buttons/eyeButton";
@@ -72,7 +72,7 @@ export default function PlaceTile({ place, owner }: PlaceTileProp) {
         {place.type != 2 && (
           <TreeTag label={childrenStats.children.toString()} />
         )}
-        <PopulationTag label={childrenStats.population.toString()} />
+        {/* <PopulationTag label={childrenStats.population.toString()} /> */}
         {emplacement.pathname != `/nation/${place.nation}` && (
           <NationTag label={place.nation} />
         )}

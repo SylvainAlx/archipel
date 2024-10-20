@@ -12,7 +12,7 @@ import { getNationPlaces, getPlace } from "../api/place/placeAPI";
 import IdTag from "../components/tags/idTag";
 import PlaceTag from "../components/tags/placeTag";
 import {
-  // getPlaceListByType,
+  getPlaceListByType,
   getPlaceName,
   getPlaceTypeLabel,
   handleDeleteImage,
@@ -122,19 +122,20 @@ export default function Place() {
           {owner && <CrossButton click={handleDelete} />}
         </div>
         <div className="flex items-center gap-2">
-          <H2 text={`${place.name}`} />
-          {owner && <EditIcon target="place" param={place.name} path="name" />}
-        </div>
-        <div className="flex items-center gap-2">
-          <div>{parentName}</div>
-          {/* {owner && (
+          <b>{`${nation.name != parentName ? nation.name + " > " + parentName : nation.name}`}</b>
+          {owner && (
             <EditIcon
               target="place"
               param={getPlaceListByType(nation, nationPlacesList, [0, 1])}
               path="parentId"
             />
-          )} */}
+          )}
         </div>
+        <div className="flex items-center gap-2">
+          <H2 text={`${place.name}`} />
+          {owner && <EditIcon target="place" param={place.name} path="name" />}
+        </div>
+
         <section className="w-full flex flex-col items-center rounded">
           {place.image != undefined && place.image != "" ? (
             <div className="relative max-w-[800px]">

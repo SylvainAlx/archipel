@@ -35,7 +35,7 @@ export const register = async (req, res) => {
 
     const user = new User({
       officialId,
-      ip: userIp,
+      ip: [{ value: userIp, lastVisit: new Date() }],
       name,
       password,
       recovery,
@@ -409,11 +409,18 @@ export const changeStatus = async (req, res) => {
 
 const updateUserIpAddress = async (userOfficialId, ip) => {
   try {
+    let isFind = false;
     const user = await User.findOne({ officialId: userOfficialId });
-    user.ip = ip;
-    user.save().catch((error) => {
-      console.error(error);
-    });
+    for (const address of user.ip) {
+      if (address.value === ip) {
+        isFind = true;
+        address.lastVisit = new Date();
+      }
+    }
+    if (!isFind) {
+      user.ip.push({ value: ip, lastVisit: new Date() });
+    }
+    const updatedUser = await user.save();
   } catch (error) {
     console.error(error);
   }

@@ -190,11 +190,17 @@ export const updatePlace = (payload: Place) => {
       myStore.set(loadingAtom, false);
       if (resp.place) {
         updateOrCreatePlaceInMemory(resp.place);
-        const tempPlaceArray = updateByOfficialId(
+        const tempNationPlaceArray = updateByOfficialId(
           resp.place,
           myStore.get(nationPlacesListAtom),
         );
-        myStore.set(nationPlacesListAtom, tempPlaceArray);
+        myStore.set(nationPlacesListAtom, tempNationPlaceArray);
+        updateOrCreatePlaceInMemory(resp.place);
+        const tempPlaceArray = updateByOfficialId(
+          resp.place,
+          myStore.get(placesListAtom),
+        );
+        myStore.set(placesListAtom, tempPlaceArray);
         myStore.set(placeFetchedAtom, resp.place);
         displayPlaceInfoByType(resp.infoType);
       }
