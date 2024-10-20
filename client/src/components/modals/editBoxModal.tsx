@@ -16,7 +16,7 @@ import { useTranslation } from "react-i18next";
 import TextArea from "../form/textArea";
 import { IoMdCloseCircle } from "react-icons/io";
 import { MdCheckCircle } from "react-icons/md";
-import MDEditor from "@uiw/react-md-editor";
+import MarkdownEditor from "../markdownEditor";
 
 export default function EditBoxModal() {
   const [editBox, setEditBox] = useAtom(editbox);
@@ -30,6 +30,8 @@ export default function EditBoxModal() {
       if (editBox.path === "data.roleplay.capital") {
         setEditBox({ ...editBox, new: editBox.original[0].id });
       } else if (editBox.path === "citizenship.residence") {
+        setEditBox({ ...editBox, new: editBox.original[0].id });
+      } else if (editBox.path === "parentId") {
         setEditBox({ ...editBox, new: editBox.original[0].id });
       } else setEditBox({ ...editBox, new: [] });
     }
@@ -171,7 +173,7 @@ export default function EditBoxModal() {
   };
 
   return (
-    <div className="flex flex-col justify-center items-center gap-2">
+    <div className="max-w-[600px] flex flex-col justify-center items-center gap-2">
       <h2 className="text-2xl text-center p-4">
         {t("components.modals.editModal.title")}
       </h2>
@@ -192,12 +194,10 @@ export default function EditBoxModal() {
               rows={1}
             />
           ) : (
-            <div className="container">
-              <MDEditor
-                value={editBox.new.toString()}
-                onChange={(e: any) => setEditBox({ ...editBox, new: e })}
-              />
-            </div>
+            <MarkdownEditor
+              value={editBox.new.toString()}
+              onChange={(e: any) => setEditBox({ ...editBox, new: e })}
+            />
           ))}
         {typeof editBox.original == "number" && (
           <Input

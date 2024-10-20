@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { getPlaceName } from "../../utils/functions";
 import { Nation } from "../../types/typNation";
+import { useNavigate } from "react-router-dom";
 
 export interface CapitalTagProps {
   selectedNation: Nation;
@@ -13,6 +14,7 @@ export interface CapitalTagProps {
 
 export default function CapitalTag({ selectedNation }: CapitalTagProps) {
   const { t } = useTranslation();
+  const navigate = useNavigate();
   const [nationPlaceList] = useAtom(nationPlacesListAtom);
   const [capital, setCapital] = useState<string>(
     t("pages.nation.nationIdentity.noCapital"),
@@ -32,6 +34,12 @@ export default function CapitalTag({ selectedNation }: CapitalTagProps) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [nationPlaceList, selectedNation]);
 
+  const handleClick = () => {
+    if (typeof selectedNation.data.roleplay.capital === "string") {
+      navigate("/place/" + selectedNation.data.roleplay.capital);
+    }
+  };
+
   return (
     <Tag
       hover={t("components.hoverInfos.tags.capital")}
@@ -42,6 +50,7 @@ export default function CapitalTag({ selectedNation }: CapitalTagProps) {
           <GiCapitol />
         </>
       }
+      click={handleClick}
     />
   );
 }

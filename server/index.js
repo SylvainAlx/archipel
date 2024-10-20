@@ -4,8 +4,8 @@ dotenv.config(); // Charger les variables d'environnement dès le début
 import mongoose from "mongoose";
 import express from "express";
 import cors from "cors";
+import requestIp from "request-ip";
 import { home } from "./views/serverHome.js";
-import authRouter from "./routers/authRouter.js";
 import nationRouter from "./routers/nationRouter.js";
 import comRouter from "./routers/comRouter.js";
 import placeRouter from "./routers/placeRouter.js";
@@ -21,6 +21,9 @@ const app = express();
 const PORT = process.env.PORT ? process.env.PORT : 3000;
 
 app.use(cors());
+
+app.use(requestIp.mw());
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
@@ -44,7 +47,6 @@ connectToDatabase();
 
 // Définition des routes
 app.use("/user", userRouter);
-app.use("/auth", authRouter);
 app.use("/nation", nationRouter);
 app.use("/com", comRouter);
 app.use("/place", placeRouter);
