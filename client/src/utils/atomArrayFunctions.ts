@@ -6,10 +6,12 @@ import {
   nationsListAtom,
   placesListAtom,
   relationListAtom,
+  tileListAtom,
 } from "../settings/store";
 import { Nation } from "../types/typNation";
 import { Place } from "../types/typPlace";
 import { DiplomaticRelationship } from "../types/typRelation";
+import { Tile } from "../types/typTile";
 import { User } from "../types/typUser";
 import { findElementOfAtomArray } from "./functions";
 
@@ -100,6 +102,20 @@ export const updateOrCreatePlaceInMemory = (place: Place) => {
     myStore.set(placesListAtom, tempArray);
   } else {
     updateByOfficialId(place, myStore.get(placesListAtom));
+  }
+};
+
+export const updateOrCreateTileInMemory = (tile: Tile) => {
+  const savedTile = findElementOfAtomArray(
+    tile.nationOfficialId,
+    myStore.get(tileListAtom),
+  );
+  if (savedTile === undefined) {
+    const tempArray = [...myStore.get(tileListAtom)];
+    tempArray.push(tile);
+    myStore.set(tileListAtom, tempArray);
+  } else {
+    updateByOfficialId(tile, myStore.get(tileListAtom));
   }
 };
 

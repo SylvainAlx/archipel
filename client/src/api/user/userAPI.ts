@@ -43,6 +43,7 @@ import {
   recoveryFetch,
   registerFetch,
   updateUserFetch,
+  verifyCaptchaFetch,
 } from "./userFetch";
 
 export const getCitizensCount = async () => {
@@ -230,26 +231,30 @@ export const getOneUser = (id: string) => {
 };
 
 export const getNationCitizens = (nationId: string) => {
-  myStore.set(loadingAtom, true);
   const savedNationCitizenList: User[] = [];
-  myStore.get(nationCitizenListAtom).forEach((citizen) => {
+  myStore.get(citizenListAtom).forEach((citizen) => {
     if (citizen.citizenship.nationId === nationId) {
       savedNationCitizenList.push(citizen);
     }
   });
   if (savedNationCitizenList.length > 0) {
     myStore.set(nationCitizenListAtom, savedNationCitizenList);
-    myStore.set(loadingAtom, false);
   } else {
-    getNationCitizensFetch(nationId).then((data) => {
-      if (data.length > 0) {
-        myStore.set(nationCitizenListAtom, data);
-      } else {
-        myStore.set(nationCitizenListAtom, []);
-      }
-    });
-
-    myStore.set(loadingAtom, false);
+    myStore.set(loadingAtom, true);
+    getNationCitizensFetch(nationId)
+      .then((resp: User[]) => {
+        myStore.set(loadingAtom, false);
+        myStore.set(nationCitizenListAtom, resp);
+        if (resp.length > 0) {
+          resp.forEach((place) => {
+            updateOrCreateCitizenInMemory(place);
+          });
+        }
+      })
+      .catch((error) => {
+        myStore.set(loadingAtom, false);
+        errorMessage(error.message);
+      });
   }
 };
 
@@ -308,4 +313,20 @@ export const changeStatus = (payload: changeStatusPayload) => {
       myStore.set(loadingAtom, false);
       errorMessage(error.message);
     });
+};
+
+export const verifyCaptcha = async (token: string | null): Promise<boolean> => {
+  let result = false;
+  myStore.set(loadingAtom, true);
+
+  try {
+    const resp = await verifyCaptchaFetch(token);
+    result = resp.success;
+  } catch (error) {
+    console.error(error);
+  } finally {
+    myStore.set(loadingAtom, false);
+  }
+
+  return result;
 };

@@ -5,10 +5,12 @@ import {
   nationsListAtom,
   nationsRoleplayDataAtom,
   sessionAtom,
+  Stats,
   statsAtom,
   tagListAtom,
 } from "../../settings/store";
 import { EmptyNation, Nation, NewNationPayload } from "../../types/typNation";
+import { User } from "../../types/typUser";
 import {
   spliceByOfficialId,
   updateOrCreateNationInMemory,
@@ -32,50 +34,48 @@ export const getNationsCount = async () => {
   const stats = myStore.get(statsAtom);
   myStore.set(loadingAtom, true);
   getNationsCountFetch()
-    .then((response) => {
+    .then((response: number) => {
       myStore.set(loadingAtom, false);
-      const updatedStats = { ...stats };
+      const updatedStats: Stats = { ...stats };
       updatedStats.counts.nations = response;
       myStore.set(statsAtom, updatedStats);
     })
-    .catch((error) => {
+    .catch((error: { infoType: string }) => {
       myStore.set(loadingAtom, false);
-      myStore.set(loadingAtom, false);
-      errorMessage(error.message);
+      displayNationInfoByType(error.infoType);
     });
 };
 
 export const createNation = (payload: NewNationPayload) => {
   myStore.set(loadingAtom, true);
   createNationFetch(payload)
-    .then((data) => {
+    .then((resp: { nation: Nation; user: User; infoType: string }) => {
       myStore.set(loadingAtom, false);
-      if (data.nation) {
+      if (resp.nation) {
         const session = myStore.get(sessionAtom);
         myStore.set(nationsListAtom, [
           ...myStore.get(nationsListAtom),
-          data.nation,
+          resp.nation,
         ]);
-        myStore.set(sessionAtom, { ...session, nation: data.nation });
-        if (data.user) {
-          myStore.set(sessionAtom, { ...session, user: data.user });
-          displayNationInfoByType("new");
+        myStore.set(sessionAtom, { ...session, nation: resp.nation });
+        if (resp.user) {
+          myStore.set(sessionAtom, { ...session, user: resp.user });
+          displayNationInfoByType(resp.infoType);
         }
       } else {
         myStore.set(loadingAtom, false);
-        errorMessage("création impossible : " + data.message);
+        displayNationInfoByType(resp.infoType);
       }
     })
-    .catch((error) => {
+    .catch((error: { infoType: string }) => {
       myStore.set(loadingAtom, false);
-      errorMessage(error.message);
+      displayNationInfoByType(error.infoType);
     });
 };
 
 export const getNation = (id: string) => {
   myStore.set(loadingAtom, true);
   const nation = findElementOfAtomArray(id, myStore.get(nationsListAtom));
-
   if (nation === undefined || nation === null) {
     getOneNationFetch(id)
       .then((data) => {

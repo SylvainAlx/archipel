@@ -5,11 +5,16 @@ import Input from "../components/form/input";
 import Button from "../components/buttons/button";
 import Form from "../components/form/form";
 import { useTranslation } from "react-i18next";
-import { register } from "../api/user/userAPI";
+import { register, verifyCaptcha } from "../api/user/userAPI";
 import Select from "../components/form/select";
-import { genderList, languageList } from "../settings/consts";
+import {
+  CAPTCHA_PUBLIC_KEY,
+  genderList,
+  languageList,
+} from "../settings/consts";
 import { errorMessage } from "../utils/toasts";
 import RequiredStar from "../components/form/requiredStar";
+import ReCAPTCHA from "react-google-recaptcha";
 
 export default function Register() {
   const [name, setName] = useState("");
@@ -17,6 +22,7 @@ export default function Register() {
   const [language, setLanguage] = useState("");
   const [gender, setGender] = useState(0);
   const [acceptCGU, setAcceptCGU] = useState(false);
+  const [captchaOk, setCaptchaOk] = useState(false);
   const { t } = useTranslation();
 
   const navigate = useNavigate();
@@ -39,6 +45,11 @@ export default function Register() {
 
   const handleGenerChange = (e: ChangeEvent<HTMLSelectElement>) => {
     setGender(Number(e.target.value));
+  };
+
+  const verifyToken = async (e: string | null) => {
+    const response = await verifyCaptcha(e);
+    setCaptchaOk(response);
   };
 
   const handleSubmit = (e: FormEvent) => {
@@ -105,11 +116,11 @@ export default function Register() {
                 </Link>
               </p>
             </div>
-
+            <ReCAPTCHA sitekey={CAPTCHA_PUBLIC_KEY} onChange={verifyToken} />
             <Button
               text={t("components.buttons.register")}
               type="submit"
-              disabled={!acceptCGU}
+              disabled={!acceptCGU || !captchaOk}
               widthFull={true}
             />
             <RequiredStar />

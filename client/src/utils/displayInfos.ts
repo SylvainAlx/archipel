@@ -55,6 +55,23 @@ export const displayNationInfoByType = (type: string) => {
     case "new":
       successMessage(i18n.t("toasts.nation.create"));
       break;
+    case "miss":
+      errorMessage(
+        "[A TRADUIRE] Certaines informations sont erronées ou manquantes",
+      );
+      break;
+    case "unknown":
+      errorMessage(i18n.t("toasts.errors.400"));
+      break;
+    case "forbidden":
+      errorMessage("[A TRADUIRE] Action interdite");
+      break;
+    case "11000":
+      errorMessage("[A TRADUIRE] Informations déjà existantes");
+      break;
+    case "serverError":
+      errorMessage(i18n.t("toasts.errors.sererError"));
+      break;
     case "delete":
       successMessage(i18n.t("toasts.nation.delete"));
       break;

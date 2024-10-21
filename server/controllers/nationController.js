@@ -10,10 +10,12 @@ export const nationsCount = async (req, res) => {
         res.status(200).json(count);
       })
       .catch((error) => {
-        res.status(400).json({ message: error.message });
+        console.error(error.message);
+        res.status(400).json({ infoType: "serverError" });
       });
   } catch (error) {
-    res.status(400).json({ message: error.message });
+    console.error(error.message);
+    res.status(400).json({ infoType: "serverError" });
   }
 };
 
@@ -22,13 +24,11 @@ export const createNation = async (req, res) => {
     const { name, owner, motto, regime, currency, tags } = req.body;
 
     if (!name || !owner) {
-      return res
-        .status(400)
-        .json({ message: "Certains champs sont manquants" });
+      return res.status(400).json({ infoType: "miss" });
     }
 
     if (owner != req.userId) {
-      return res.status(403).json({ message: "Pas d'autorisation" });
+      return res.status(403).json({ infoType: "forbidden" });
     }
 
     const officialId = createOfficialId("n");
@@ -57,19 +57,20 @@ export const createNation = async (req, res) => {
       res.status(201).json({ nation: savedNation, user: savedUser });
     } catch (error) {
       if (error.code === 11000) {
+        console.error(error.message, error.keyValue);
         return res.status(400).json({
-          message: "Informations déjà existantes dans la base de données",
-          erreur: error.keyValue,
+          infoType: "11000",
         });
       } else {
+        console.error(error.message);
         return res.status(400).json({
-          message: "Certaines informations sont erronées ou manquantes",
-          error,
+          infoType: "miss",
         });
       }
     }
   } catch (error) {
-    res.status(400).json({ erreur: error.message });
+    res.status(400).json({ infoType: "serverError" });
+    console.error(error.message);
   }
 };
 
@@ -90,7 +91,7 @@ export const getAllNations = async (req, res) => {
       res.status(200).json(nations);
     }
   } catch (error) {
-    res.status(404).json({ message: "aucune nations" });
+    res.status(404).json({ message: "[A TRADUIRE] aucune nations" });
   }
 };
 
@@ -102,7 +103,7 @@ export const getTop100Nations = async (req, res) => {
     ).limit(100);
     res.status(200).json(nations);
   } catch (error) {
-    res.status(404).json({ message: "Aucune nation trouvée" });
+    res.status(404).json({ message: "[A TRADUIRE] Aucune nation trouvée" });
   }
 };
 
@@ -118,7 +119,7 @@ export const getOneNation = async (req, res) => {
     });
   } catch (error) {
     res.status(404).json({
-      message: "aucune nation à afficher",
+      message: "[A TRADUIRE] aucune nation à afficher",
       erreur: error.message,
     });
   }
@@ -134,7 +135,7 @@ export const getSelfNation = async (req, res) => {
     res.status(200).json({ nation });
   } catch (error) {
     res.status(404).json({
-      message: "nation impossible à récupérer",
+      message: "[A TRADUIRE] nation impossible à récupérer",
       erreur: error.message,
     });
   }
@@ -148,7 +149,7 @@ export const getRoleplayData = async (req, res) => {
     res.status(200).json({ users, places });
   } catch (error) {
     res.status(404).json({
-      message: "données impossible à récupérer",
+      message: "[A TRADUIRE] données impossible à récupérer",
       erreur: error.message,
     });
   }
@@ -183,12 +184,12 @@ export const deleteSelfNation = async (req, res) => {
 
     // await Com.deleteMany({ originId: id });
     res.status(200).json({
-      message: `Votre nation a été supprimée`,
+      message: `[A TRADUIRE] Votre nation a été supprimée`,
       user: savedUser,
     });
   } catch (error) {
     res.status(400).json({
-      message: "impossible de supprimer la nation",
+      message: "[A TRADUIRE] impossible de supprimer la nation",
       erreur: error.message,
     });
   }
@@ -220,11 +221,11 @@ export const deleteOneNation = async (req, res) => {
     const savedUser = await user.save();
     const nation = await Nation.findByIdAndDelete(nationId);
     res.status(200).json({
-      message: `nation supprimée`,
+      message: `[A TRADUIRE] nation supprimée`,
     });
   } catch (error) {
     res.status(400).json({
-      message: "impossible de supprimer la nation",
+      message: "[A TRADUIRE] impossible de supprimer la nation",
       erreur: error.message,
     });
   }
@@ -243,16 +244,20 @@ export const updateNation = async (req, res) => {
       nation
         .save()
         .then((nation) => {
-          res.status(200).json({ nation, message: "mise à jour réussie" });
+          res
+            .status(200)
+            .json({ nation, message: "[A TRADUIRE] mise à jour réussie" });
         })
         .catch((error) => {
           res.status(400).json({
-            message: `certaines informations sont erronées ou manquantes`,
+            message: `[A TRADUIRE] certaines informations sont erronées ou manquantes`,
             erreur: error.message,
           });
         });
     } else {
-      res.sendStatus(403).json({ message: "modification interdite" });
+      res
+        .sendStatus(403)
+        .json({ message: "[A TRADUIRE] modification interdite" });
     }
   } catch (error) {
     res.status(400).json({ message: error });
@@ -287,6 +292,8 @@ export const getTags = async (req, res) => {
 
     res.status(200).json(tags[0].tousLesTags);
   } catch (error) {
-    res.status(400).json({ message: "aucuns tags", erreur: error.message });
+    res
+      .status(400)
+      .json({ message: "[A TRADUIRE] aucuns tags", erreur: error.message });
   }
 };

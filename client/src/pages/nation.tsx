@@ -72,12 +72,16 @@ export default function Nation() {
             <div className="w-full flex flex-col gap-3 items-center justify-center">
               <Links selectedNation={nation} owner={owner} />
             </div>
-            <NationIdentity selectedNation={nation} owner={owner} />
-            <NationMap selectedNation={nation} owner={owner} />
-            <FreeTiles selectedNation={nation} owner={owner} />
-            <Diplomacy selectedNation={nation} owner={owner} />
-            <Citizens selectedNation={nation} owner={owner} />
-            <Places selectedNation={nation} owner={owner} />
+            {nation.officialId === param.id && (
+              <>
+                <NationIdentity selectedNation={nation} owner={owner} />
+                <NationMap selectedNation={nation} owner={owner} />
+                <FreeTiles selectedNation={nation} owner={owner} />
+                <Diplomacy selectedNation={nation} owner={owner} />
+                <Citizens selectedNation={nation} owner={owner} />
+                <Places selectedNation={nation} owner={owner} />
+              </>
+            )}
           </section>
           <section className="pt-10 flex flex-col items-center gap-4">
             {owner && (

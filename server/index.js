@@ -15,6 +15,8 @@ import { verifyJwt } from "./middlewares/authMiddleware.js";
 import { deleteUploadedFile } from "./controllers/files.js";
 import relationRouter from "./routers/relationRouter.js";
 import tileRouter from "./routers/tileRouter.js";
+import bodyParser from "body-parser";
+import { verifyCaptcha } from "./controllers/captchaController.js";
 
 // config serveur
 const app = express();
@@ -27,9 +29,10 @@ app.use(requestIp.mw());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
+app.use(bodyParser.json());
 
 if (!process.env.MONGO_DB_URI) {
-  console.error("MONGO_DB_URI n'est pas défini dans le fichier .env");
+  console.error("MONGO_DB_URI missing in .env");
   process.exit(1); // Quitte l'application avec un code d'erreur
 }
 
@@ -37,9 +40,9 @@ const connectToDatabase = async () => {
   try {
     mongoose.set("strictQuery", false);
     await mongoose.connect(process.env.MONGO_DB_URI);
-    console.log("connexion à la base de données");
+    console.log("Database connection OK");
   } catch (error) {
-    console.log("Erreur lors de la connexion à la base de données :", error);
+    console.log("Database connection KO :", error);
   }
 };
 
@@ -54,6 +57,7 @@ app.use("/param", paramRouter);
 app.use("/relation", relationRouter);
 app.use("/tile", tileRouter);
 app.delete("/file/delete/:id", [verifyJwt], deleteUploadedFile);
+app.post("/captcha", verifyCaptcha);
 app.use("/", home);
 
 // Démarrage du serveur

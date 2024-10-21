@@ -13,7 +13,7 @@ export const register = async (req, res) => {
     if (!name || !password) {
       return res
         .status(400)
-        .json({ message: "Certains champs sont manquants" });
+        .json({ message: "[A TRADUIRE] Certains champs sont manquants" });
     }
 
     const random = new LoremIpsum({
@@ -331,16 +331,20 @@ export const updateUser = async (req, res) => {
       user
         .save()
         .then((user) => {
-          res.status(200).json({ user, message: "mise à jour réussie" });
+          res
+            .status(200)
+            .json({ user, message: "[A TRADUIRE] mise à jour réussie" });
         })
         .catch((error) => {
           res.status(400).json({
-            message: `certaines informations sont erronées ou manquantes`,
+            message: `[A TRADUIRE] certaines informations sont erronées ou manquantes`,
             erreur: error.message,
           });
         });
     } else {
-      res.sendStatus(403).json({ message: "modification interdite" });
+      res
+        .sendStatus(403)
+        .json({ message: "[A TRADUIRE] modification interdite" });
     }
   } catch (error) {
     res.status(400).json({ message: error });
@@ -391,16 +395,22 @@ export const changeStatus = async (req, res) => {
         .then((user) => {
           res
             .status(200)
-            .json({ user, nation, message: "mise à jour réussie" });
+            .json({
+              user,
+              nation,
+              message: "[A TRADUIRE] mise à jour réussie",
+            });
         })
         .catch((error) => {
           res.status(400).json({
-            message: `certaines informations sont erronées ou manquantes`,
+            message: `[A TRADUIRE] certaines informations sont erronées ou manquantes`,
             erreur: error.message,
           });
         });
     } else {
-      res.sendStatus(403).json({ message: "modification interdite" });
+      res
+        .sendStatus(403)
+        .json({ message: "[A TRADUIRE] modification interdite" });
     }
   } catch (error) {
     res.status(400).json({ message: error });

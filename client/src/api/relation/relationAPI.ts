@@ -1,9 +1,5 @@
 import { loadingAtom, myStore, relationListAtom } from "../../settings/store";
 import { DiplomaticRelationship } from "../../types/typRelation";
-import {
-  getNationRelationListFromMemory,
-  updateOrCreateRelationInMemory,
-} from "../../utils/atomArrayFunctions";
 import { displayRelationInfoByType } from "../../utils/displayInfos";
 import {
   createElementOfAtomArray,
@@ -54,24 +50,15 @@ export const updateRelation = (payload: DiplomaticRelationship) => {
     });
 };
 
-export const getRelations = (nationId: string) => {
-  myStore.set(loadingAtom, true);
-  const relations = getNationRelationListFromMemory(nationId);
-  if (relations.length > 0) {
-    relations.forEach((element) => {
-      updateOrCreateRelationInMemory(element);
-    });
-    // myStore.set(relationListAtom, relations);
-    myStore.set(loadingAtom, false);
-  } else {
-    getAllRelationsFetch(nationId)
+export const getRelations = () => {
+  const relations = myStore.get(relationListAtom);
+  if (relations.length === 0) {
+    myStore.set(loadingAtom, true);
+    getAllRelationsFetch("")
       .then((data: DiplomaticRelationship[]) => {
         myStore.set(loadingAtom, false);
         if (data != undefined) {
-          data.forEach((element) => {
-            updateOrCreateRelationInMemory(element);
-          });
-          // myStore.set(relationListAtom, data);
+          myStore.set(relationListAtom, data);
         }
       })
       .catch((error) => {

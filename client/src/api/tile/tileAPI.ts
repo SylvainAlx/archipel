@@ -1,7 +1,16 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { loadingAtom, myStore, tileListAtom } from "../../settings/store";
+import {
+  loadingAtom,
+  myStore,
+  nationTileListAtom,
+  tileListAtom,
+} from "../../settings/store";
 import { Tile } from "../../types/typTile";
-import { spliceByDBId, updateByDBId } from "../../utils/atomArrayFunctions";
+import {
+  spliceByDBId,
+  updateByDBId,
+  updateOrCreateTileInMemory,
+} from "../../utils/atomArrayFunctions";
 import { displayTileInfoByType } from "../../utils/displayInfos";
 import { errorMessage } from "../../utils/toasts";
 import {
@@ -29,25 +38,29 @@ export const createTile = async (tile: Tile) => {
     });
 };
 
-export const getNationTile = async (nationOfficialId: string) => {
-  myStore.set(loadingAtom, true);
-  const savedTileList: Tile[] = [];
+export const getNationTiles = async (nationOfficialId: string) => {
+  const savedNationTileList: Tile[] = [];
   myStore.get(tileListAtom).forEach((tile) => {
     if (tile.nationOfficialId === nationOfficialId) {
-      savedTileList.push(tile);
+      savedNationTileList.push(tile);
     }
   });
-  if (savedTileList.length > 0) {
-    myStore.set(tileListAtom, savedTileList);
-    myStore.set(loadingAtom, false);
+  if (savedNationTileList.length > 0) {
+    myStore.set(nationTileListAtom, savedNationTileList);
   } else {
+    myStore.set(loadingAtom, true);
     getNationTileFetch(nationOfficialId)
-      .then((data: any) => {
+      .then((resp: Tile[]) => {
         myStore.set(loadingAtom, false);
-        myStore.set(tileListAtom, data);
+        myStore.set(nationTileListAtom, resp);
+        if (resp.length > 0) {
+          resp.forEach((tile) => {
+            updateOrCreateTileInMemory(tile);
+          });
+        }
       })
       .catch((error) => {
-        myStore.set(loadingAtom, true);
+        myStore.set(loadingAtom, false);
         console.log(error);
       });
   }
