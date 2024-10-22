@@ -1,7 +1,9 @@
 import Nation from "../models/nationSchema.js";
 import User from "../models/userSchema.js";
 import Place from "../models/placeSchema.js";
-import { createOfficialId } from "../utils/functions.js";
+import Tile from "../models/tileSchema.js";
+import Relation from "../models/relationSchema.js";
+import { createOfficialId, deleteFile } from "../utils/functions.js";
 
 export const nationsCount = async (req, res) => {
   try {
@@ -159,71 +161,84 @@ export const deleteSelfNation = async (req, res) => {
   try {
     const userId = req.userId;
     const user = await User.findOne({ officialId: userId });
+
+    // suppression de la nation
     const nation = await Nation.findOneAndDelete({
       officialId: user.citizenship.nationId,
     });
-    const places = await Place.deleteMany({ nation: nation.officialId });
-    user.citizenship.nationId = "";
-    user.citizenship.nationName = "";
-    user.citizenship.nationOwner = false;
-    const savedUser = await user.save();
+    if (nation.officialId != undefined) {
+      // suppression des images uploadées pour la nation
+      if (nation.data.url.flag != "") {
+        const uuid = nation.data.url.flag.replace("https://ucarecdn.com/", "");
+        await deleteFile(uuid);
+      }
+      if (nation.data.url.coatOfArms != "") {
+        const uuid = nation.data.url.coatOfArms.replace(
+          "https://ucarecdn.com/",
+          "",
+        );
+        await deleteFile(uuid);
+      }
+      if (nation.data.url.map != "") {
+        const uuid = nation.data.url.map.replace("https://ucarecdn.com/", "");
+        await deleteFile(uuid);
+      }
 
-    const update = {
-      $set: {
-        "citizenship.status": -1,
-        "citizenship.nationId": "",
-        "citizenship.nationName": "",
-        "citizenship.nationOwner": false,
-      },
-    };
+      // suppression des lieux de la nation
+      const places = await Place.deleteMany({ nation: nation.officialId });
+      // suppression des images uploadées pour les lieux
+      places.forEach((place) => {
+        if (place.image != "") {
+          const uuid = place.image.replace("https://ucarecdn.com/", "");
+          deleteFile(uuid);
+        }
+      });
 
-    const updatedUsers = await User.updateMany(
-      { "citizenship.nationId": nation.officialId },
-      update,
-    );
+      // suppression de l'appartenance à la nation pour le gérant
+      user.citizenship.nationId = "";
+      user.citizenship.nationName = "";
+      user.citizenship.nationOwner = false;
+      const savedUser = await user.save();
 
-    // await Com.deleteMany({ originId: id });
-    res.status(200).json({
-      message: `[A TRADUIRE] Votre nation a été supprimée`,
-      user: savedUser,
-    });
+      // suppression de l'appartenance à la nation pour tous les citoyens
+      const update = {
+        $set: {
+          "citizenship.status": -1,
+          "citizenship.nationId": "",
+          "citizenship.nationName": "",
+          "citizenship.nationOwner": false,
+        },
+      };
+      await User.updateMany(
+        { "citizenship.nationId": nation.officialId },
+        update,
+      );
+
+      // suppression des tuiles libres de la nation
+      await Tile.deleteMany({
+        nationOfficialId: nation.officialId,
+      });
+
+      // retrait de la nation des relations liées
+      await Relation.updateMany(
+        {
+          "nations.OfficialId": nation.officialId, // Filtrer les documents où "OfficialId" est présent dans le tableau "nations"
+        },
+        {
+          $pull: {
+            nations: { OfficialId: nation.officialId }, // Retirer les objets dans "nations" où "OfficialId" correspond
+          },
+        },
+      );
+
+      res.status(200).json({
+        message: `[A TRADUIRE] Votre nation a été supprimée`,
+        user: savedUser,
+      });
+    }
   } catch (error) {
-    res.status(400).json({
-      message: "[A TRADUIRE] impossible de supprimer la nation",
-      erreur: error.message,
-    });
-  }
-};
+    console.error(error);
 
-export const deleteOneNation = async (req, res) => {
-  try {
-    const nationId = req.params.id;
-    const user = await User.findOne({ "citizenship.nationId": nationId });
-    user.citizenship.status = -1;
-    user.citizenship.nationId = "";
-    user.citizenship.nationName = "";
-    user.citizenship.nationOwner = false;
-
-    const update = {
-      $set: {
-        "citizenship.status": -1,
-        "citizenship.nationId": "",
-        "citizenship.nationName": "",
-        "citizenship.nationOwner": false,
-      },
-    };
-
-    const updatedUsers = await User.updateMany(
-      { "citizenship.nationId": nation.officialId },
-      update,
-    );
-
-    const savedUser = await user.save();
-    const nation = await Nation.findByIdAndDelete(nationId);
-    res.status(200).json({
-      message: `[A TRADUIRE] nation supprimée`,
-    });
-  } catch (error) {
     res.status(400).json({
       message: "[A TRADUIRE] impossible de supprimer la nation",
       erreur: error.message,
