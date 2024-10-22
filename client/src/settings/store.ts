@@ -52,7 +52,7 @@ interface Counts {
   coms: number;
 }
 
-type Stats = {
+export type Stats = {
   counts: Counts;
 };
 
@@ -101,6 +101,7 @@ export const tagListAtom = atom<string[]>([]);
 
 // tile
 
+export const nationTileListAtom = atom<Tile[]>([]);
 export const tileListAtom = atom<Tile[]>([]);
 
 // Param

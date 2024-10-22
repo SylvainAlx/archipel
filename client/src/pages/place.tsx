@@ -116,7 +116,7 @@ export default function Place() {
 
   return (
     <>
-      <section className="w-full pb-2 flex flex-col items-center gap-2">
+      <section className="w-full px-2 pb-2 flex flex-col items-center gap-2">
         <div className="w-full flex items-center justify-center flex-wrap gap-1">
           <ParentButton click={handleClick} />
           {owner && <CrossButton click={handleDelete} />}
@@ -163,7 +163,12 @@ export default function Place() {
             <>
               <AiOutlinePicture className="text-9xl" />
               {owner && (
-                <Upploader path="image" destination="place" place={place} />
+                <Upploader
+                  path="image"
+                  destination="place"
+                  place={place}
+                  maxSize={2000000}
+                />
               )}
               <em>{t("pages.place.noImage")}</em>
             </>
@@ -189,7 +194,7 @@ export default function Place() {
           )}
         </div>
       </section>
-      <section className="w-full flex flex-wrap justify-center gap-2">
+      <section className="w-full px-2 flex flex-wrap justify-center gap-2">
         <div className="w-full py-4 flex flex-col gap-2">
           {nationPlacesList != undefined &&
             nationPlacesList.length > 0 &&

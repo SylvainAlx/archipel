@@ -69,13 +69,13 @@ export const updateRelation = async (req, res) => {
           .then((relation) => {
             res.status(200).json({
               relation,
-              message: "mise à jour réussie",
+              message: "[A TRADUIRE] mise à jour réussie",
               infoType: "update",
             });
           })
           .catch((error) => {
             res.status(400).json({
-              message: `certaines informations sont erronées ou manquantes`,
+              message: `[A TRADUIRE] certaines informations sont erronées ou manquantes`,
               erreur: error.message,
             });
           });
@@ -87,7 +87,11 @@ export const updateRelation = async (req, res) => {
       relation.nations = [];
       res
         .status(200)
-        .json({ relation, message: "mise à jour réussie", infoType: "update" });
+        .json({
+          relation,
+          message: "[A TRADUIRE] mise à jour réussie",
+          infoType: "update",
+        });
     }
   } catch (error) {
     res.status(400).json({ message: error, infoType: "400" });

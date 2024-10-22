@@ -51,7 +51,11 @@ export default function NationMap({
                 <>
                   <FaMapLocationDot className="text-9xl" />
                   {owner && (
-                    <Upploader path="data.url.map" destination="nation" />
+                    <Upploader
+                      path="data.url.map"
+                      destination="nation"
+                      maxSize={2000000}
+                    />
                   )}
                   <em>{t("pages.nation.map.noMap")}</em>
                 </>

@@ -31,7 +31,7 @@ import {
   updatePlaceFetch,
 } from "./placeFetch";
 
-export const getPlacesCount = async () => {
+export const getPlacesCount = () => {
   const stats = myStore.get(statsAtom);
   myStore.set(loadingAtom, true);
   getPlacesCountFetch()
@@ -53,17 +53,18 @@ export const createNewPlace = (newPlace: PlacePayload) => {
     .then((data: { place: Place; nation: Nation; infoType: string }) => {
       myStore.set(loadingAtom, false);
       if (data.place) {
-        let tempPlaceArray = [...myStore.get(nationPlacesListAtom)];
-        tempPlaceArray.push(data.place);
-        myStore.set(nationPlacesListAtom, tempPlaceArray);
-        tempPlaceArray = [...myStore.get(placesListAtom)];
-        tempPlaceArray.push(data.place);
-        myStore.set(placesListAtom, tempPlaceArray);
-        const tempNationArray = updateByDBId(
-          data.nation,
-          myStore.get(nationsListAtom),
+        myStore.set(nationPlacesListAtom, [
+          ...myStore.get(nationPlacesListAtom),
+          data.place,
+        ]);
+        myStore.set(placesListAtom, [
+          ...myStore.get(placesListAtom),
+          data.place,
+        ]);
+        myStore.set(
+          nationsListAtom,
+          updateByDBId(data.nation, myStore.get(nationsListAtom)),
         );
-        myStore.set(nationsListAtom, tempNationArray);
         myStore.set(nationFetchedAtom, data.nation);
         displayPlaceInfoByType(data.infoType);
       }

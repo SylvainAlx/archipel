@@ -13,10 +13,16 @@ import { updatePlace } from "../api/place/placeAPI";
 export interface UploaderProps {
   path: string;
   destination: string;
+  maxSize: number;
   place?: Place;
 }
 
-export default function Upploader({ path, destination, place }: UploaderProps) {
+export default function Upploader({
+  path,
+  destination,
+  maxSize,
+  place,
+}: UploaderProps) {
   const [files, setFiles] = useState<any[]>([]);
 
   useEffect(() => {
@@ -121,7 +127,7 @@ export default function Upploader({ path, destination, place }: UploaderProps) {
       <FileUploaderRegular
         onChange={handleChangeEvent}
         pubkey={UPLOADCARE_PUBLIC_KEY}
-        maxLocalFileSizeBytes={500000}
+        maxLocalFileSizeBytes={maxSize}
         multiple={false}
         imgOnly={true}
         sourceList="local, url, gdrive, instagram"

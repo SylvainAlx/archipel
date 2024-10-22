@@ -1,29 +1,30 @@
-import { useEffect } from "react";
+import { lazy, Suspense, useEffect } from "react";
 import DashTile from "../dashTile";
 import TileContainer from "../tileContainer";
-import FreeTile from "../tiles/freeTile";
-import { getNationTile } from "../../api/tile/tileAPI";
+import { getNationTiles } from "../../api/tile/tileAPI";
 import { SelectedNationProps } from "../../types/typProp";
 import { useAtom } from "jotai";
-import { editTileAtom, tileListAtom } from "../../settings/store";
+import { editTileAtom, nationTileListAtom } from "../../settings/store";
 import Button from "../buttons/button";
 import { emptyTile } from "../../types/typTile";
 import { GiSBrick } from "react-icons/gi";
 import { useTranslation } from "react-i18next";
+import BarreLoader from "../loading/barreLoader";
 
 export default function FreeTiles({
   selectedNation,
   owner,
 }: SelectedNationProps) {
   const { t } = useTranslation();
-  const [tileList] = useAtom(tileListAtom);
+  const [nationTileList] = useAtom(nationTileListAtom);
   const [, setEditTile] = useAtom(editTileAtom);
+
+  const FreeTile = lazy(() => import("../tiles/freeTile"));
 
   useEffect(() => {
     if (selectedNation.officialId != "") {
-      getNationTile(selectedNation.officialId);
+      getNationTiles(selectedNation.officialId);
     }
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedNation.officialId]);
 
@@ -48,14 +49,16 @@ export default function FreeTiles({
                 />
               )}
               <div className="flex flex-wrap items-stretch justify-center gap-4">
-                {tileList.length > 0 ? (
-                  tileList.map((tile, i) => {
+                {nationTileList.length > 0 ? (
+                  nationTileList.map((tile, i) => {
                     return (
-                      <FreeTile
-                        key={i}
-                        tile={tile}
-                        owner={owner ? owner : false}
-                      />
+                      <Suspense key={i} fallback={<BarreLoader />}>
+                        <FreeTile
+                          key={i}
+                          tile={tile}
+                          owner={owner ? owner : false}
+                        />
+                      </Suspense>
                     );
                   })
                 ) : (

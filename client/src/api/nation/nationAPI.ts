@@ -3,12 +3,13 @@ import {
   myStore,
   nationFetchedAtom,
   nationsListAtom,
-  nationsRoleplayDataAtom,
   sessionAtom,
+  Stats,
   statsAtom,
   tagListAtom,
 } from "../../settings/store";
 import { EmptyNation, Nation, NewNationPayload } from "../../types/typNation";
+import { User } from "../../types/typUser";
 import {
   spliceByOfficialId,
   updateOrCreateNationInMemory,
@@ -24,88 +25,79 @@ import {
   getAllNationTagsFetch,
   getNationsCountFetch,
   getOneNationFetch,
-  getRoleplayDataFetch,
   updateNationFetch,
 } from "./nationFetch";
 
-export const getNationsCount = async () => {
-  const stats = myStore.get(statsAtom);
+export const getNationsCount = () => {
   myStore.set(loadingAtom, true);
   getNationsCountFetch()
-    .then((response) => {
-      myStore.set(loadingAtom, false);
-      const updatedStats = { ...stats };
+    .then((response: number) => {
+      const updatedStats: Stats = { ...myStore.get(statsAtom) };
       updatedStats.counts.nations = response;
       myStore.set(statsAtom, updatedStats);
+      myStore.set(loadingAtom, false);
     })
-    .catch((error) => {
+    .catch((error: { infoType: string }) => {
       myStore.set(loadingAtom, false);
-      myStore.set(loadingAtom, false);
-      errorMessage(error.message);
+      displayNationInfoByType(error.infoType);
     });
 };
 
 export const createNation = (payload: NewNationPayload) => {
   myStore.set(loadingAtom, true);
   createNationFetch(payload)
-    .then((data) => {
-      myStore.set(loadingAtom, false);
-      if (data.nation) {
-        const session = myStore.get(sessionAtom);
+    .then((resp: { nation: Nation; user: User; infoType: string }) => {
+      if (resp.nation && resp.user && resp.infoType) {
         myStore.set(nationsListAtom, [
           ...myStore.get(nationsListAtom),
-          data.nation,
+          resp.nation,
         ]);
-        myStore.set(sessionAtom, { ...session, nation: data.nation });
-        if (data.user) {
-          myStore.set(sessionAtom, { ...session, user: data.user });
-          displayNationInfoByType("new");
-        }
-      } else {
-        myStore.set(loadingAtom, false);
-        errorMessage("création impossible : " + data.message);
+        myStore.set(nationFetchedAtom, resp.nation);
+        myStore.set(sessionAtom, {
+          ...myStore.get(sessionAtom),
+          nation: resp.nation,
+          user: resp.user,
+        });
       }
-    })
-    .catch((error) => {
       myStore.set(loadingAtom, false);
-      errorMessage(error.message);
+      displayNationInfoByType(resp.infoType);
+    })
+    .catch((error: { infoType: string }) => {
+      myStore.set(loadingAtom, false);
+      displayNationInfoByType(error.infoType);
     });
 };
 
 export const getNation = (id: string) => {
   myStore.set(loadingAtom, true);
   const nation = findElementOfAtomArray(id, myStore.get(nationsListAtom));
-
   if (nation === undefined || nation === null) {
     getOneNationFetch(id)
-      .then((data) => {
+      .then((resp: Nation) => {
         myStore.set(loadingAtom, false);
-        myStore.set(nationFetchedAtom, data.nation);
-        updateOrCreateNationInMemory(data.nation);
+        myStore.set(nationFetchedAtom, resp);
+        updateOrCreateNationInMemory(resp);
         myStore.set(loadingAtom, false);
-        return nation;
       })
       .catch((error) => {
         myStore.set(nationFetchedAtom, EmptyNation);
         myStore.set(loadingAtom, false);
         errorMessage(error.message);
-        return nation;
       });
   } else {
     myStore.set(loadingAtom, false);
     myStore.set(nationFetchedAtom, nation);
-    return nation;
   }
 };
 
 export const getNations = (searchName: string) => {
   myStore.set(loadingAtom, true);
   getAllNations(searchName)
-    .then((data) => {
-      myStore.set(loadingAtom, false);
-      if (data != undefined) {
-        myStore.set(nationsListAtom, data);
+    .then((resp: Nation[]) => {
+      if (resp != undefined) {
+        myStore.set(nationsListAtom, resp);
       }
+      myStore.set(loadingAtom, false);
     })
     .catch((error) => {
       myStore.set(loadingAtom, false);
@@ -136,7 +128,7 @@ export const updateNation = (payload: Nation) => {
 export const deleteSelfNation = () => {
   myStore.set(loadingAtom, true);
   DeleteSelfFetch()
-    .then((resp) => {
+    .then((resp: { user: User }) => {
       const session = myStore.get(sessionAtom);
       myStore.set(loadingAtom, false);
       if (session.nation) {
@@ -147,10 +139,11 @@ export const deleteSelfNation = () => {
         myStore.set(nationsListAtom, updatedNations);
       }
       displayNationInfoByType("delete");
-      myStore.set(sessionAtom, { ...session, nation: EmptyNation });
-      if (resp.user) {
-        myStore.set(sessionAtom, { ...session, user: resp.user });
-      }
+      myStore.set(sessionAtom, {
+        ...session,
+        nation: EmptyNation,
+        user: resp.user,
+      });
     })
     .catch((error) => {
       myStore.set(loadingAtom, false);
@@ -158,28 +151,7 @@ export const deleteSelfNation = () => {
     });
 };
 
-export const getRoleplayData = (selectedNation: Nation) => {
-  const nationsRoleplayData = myStore.get(nationsRoleplayDataAtom);
-  myStore.set(loadingAtom, true);
-  getRoleplayDataFetch(selectedNation.officialId)
-    .then((data) => {
-      myStore.set(loadingAtom, false);
-      myStore.set(nationsRoleplayDataAtom, [
-        ...nationsRoleplayData,
-        {
-          nationId: selectedNation.officialId,
-          citizens: data.citizens,
-          places: data.places,
-        },
-      ]);
-    })
-    .catch((error) => {
-      myStore.set(loadingAtom, false);
-      errorMessage(error.message);
-    });
-};
-
-export const getAllNationTags = async () => {
+export const getAllNationTags = () => {
   myStore.set(loadingAtom, true);
   getAllNationTagsFetch()
     .then((data) => {

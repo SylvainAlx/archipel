@@ -252,7 +252,14 @@
         "nationOwner": "Fondateur de la nation",
         "residence": "résidence"
       },
-      "avatar": "avatar"
+      "avatar": "avatar",
+      "relations": {
+        "business": "libre échange",
+        "economic": "économie",
+        "cultural": "culture",
+        "scientific": "scientifique",
+        "coop": "militaire"
+      }
     },
     "searchBars": {
       "nationsList": {
@@ -320,7 +327,10 @@
     "errors": {
       "400": "Erreur inconnue",
       "404": "Page non trouvée",
-      "serverError": "Erreur serveur"
+      "serverError": "Erreur serveur",
+      "miss": "Certaines informations sont erronées ou manquantes",
+      "forbidden": "Action interdite",
+      "11000": "Information déjà existante"
     },
     "user": {
       "signIn": "Connexion réussie",
@@ -335,9 +345,7 @@
       "badPassword": "Mot de passe erroné",
       "newPassword": "Nouveau mot de passe pris en compte",
       "badRecovery": "Clé de récupération erronée",
-      "11000": "Informations déjà existantes dans la base de données",
       "deleteKO": "impossible de supprimer l'utilisateur",
-      "error": "Certaines informations sont erronées ou manquantes",
       "update": "Mise à jour réussie"
     },
     "nation": {
@@ -351,13 +359,16 @@
     "tile": {
       "new": "Tuile créée",
       "update": "Tuite mise à jour",
-      "delete": "Tuile supprimée",
-      "forbidden": "Suppression interdite"
+      "delete": "Tuile supprimée"
     },
     "place": {
       "new": "Lieu créé",
       "update": "Lieu mis à jour",
       "delete": "Lieu supprimé"
+    },
+    "file": {
+      "import": "Fichier importé avec succès",
+      "delete": "Fichier supprimé avec succès"
     }
   }
 }

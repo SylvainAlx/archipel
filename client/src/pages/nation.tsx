@@ -19,10 +19,12 @@ import { errorMessage } from "../utils/toasts";
 import CrossButton from "../components/buttons/crossButton";
 import FreeTiles from "../components/nation/freeTiles";
 import NationMap from "../components/nation/nationMap";
+import { ConfirmBoxDefault } from "../types/typAtom";
 
 export default function Nation() {
   const [nation] = useAtom(nationFetchedAtom);
   const [session] = useAtom(sessionAtom);
+  const [confirm, setConfirm] = useAtom(confirmBox);
   const [owner, setOwner] = useState(false);
   const { t } = useTranslation();
   const navigate = useNavigate();
@@ -54,13 +56,20 @@ export default function Nation() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [param.id, owner]);
 
+  useEffect(() => {
+    if (confirm.action === "deleteSelfNation" && confirm.result === "OK") {
+      navigate(`/citizen/${session.user.officialId}`);
+      setConfirm(ConfirmBoxDefault);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [confirm]);
+
   const handleDelete = () => {
     myStore.set(confirmBox, {
       action: "deleteSelfNation",
       text: t("components.modals.confirmModal.deleteNation"),
       result: "",
     });
-    navigate(`/citizen/${session.user.officialId}`);
   };
 
   return (
@@ -72,12 +81,16 @@ export default function Nation() {
             <div className="w-full flex flex-col gap-3 items-center justify-center">
               <Links selectedNation={nation} owner={owner} />
             </div>
-            <NationIdentity selectedNation={nation} owner={owner} />
-            <NationMap selectedNation={nation} owner={owner} />
-            <FreeTiles selectedNation={nation} owner={owner} />
-            <Diplomacy selectedNation={nation} owner={owner} />
-            <Citizens selectedNation={nation} owner={owner} />
-            <Places selectedNation={nation} owner={owner} />
+            {nation.officialId === param.id && (
+              <>
+                <NationIdentity selectedNation={nation} owner={owner} />
+                <NationMap selectedNation={nation} owner={owner} />
+                <FreeTiles selectedNation={nation} owner={owner} />
+                <Diplomacy selectedNation={nation} owner={owner} />
+                <Citizens selectedNation={nation} owner={owner} />
+                <Places selectedNation={nation} owner={owner} />
+              </>
+            )}
           </section>
           <section className="pt-10 flex flex-col items-center gap-4">
             {owner && (
@@ -85,11 +98,6 @@ export default function Nation() {
                 text={t("components.buttons.deleteNation")}
                 click={handleDelete}
               />
-              // <Button
-              //   text={t("components.buttons.deleteNation")}
-              //   bgColor="bg-danger"
-              //   click={handleDelete}
-              // />
             )}
           </section>
         </>

@@ -19,6 +19,7 @@ import {
   emptyDiplomaticRelationship,
   NationDiplomacyInfo,
 } from "../../types/typRelation";
+import { getNationRelationListFromMemory } from "../../utils/atomArrayFunctions";
 
 export default function Diplomacy({
   selectedNation,
@@ -33,21 +34,24 @@ export default function Diplomacy({
   const RelationTile = lazy(() => import("../tiles/relationTile"));
 
   useEffect(() => {
-    getRelations(selectedNation.officialId);
-  }, [selectedNation.officialId]);
+    getRelations();
+  }, []);
 
   useEffect(() => {
-    const tempRelations: DiplomaticRelationship[] = [];
-    relationList.forEach((relation) => {
-      relation.nations.forEach((element) => {
-        if (element.OfficialId === selectedNation.officialId) {
-          tempRelations.push(relation);
-        }
-      });
-    });
+    const tempRelations = getNationRelationListFromMemory(
+      selectedNation.officialId,
+    );
     setNationRelationList(tempRelations);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [relationList]);
+    // const tempRelations: DiplomaticRelationship[] = [];
+    // relationList.forEach((relation) => {
+    //   relation.nations.forEach((element) => {
+    //     if (element.OfficialId === selectedNation.officialId) {
+    //       tempRelations.push(relation);
+    //     }
+    //   });
+    // });
+    // setNationRelationList(tempRelations);
+  }, [relationList, selectedNation.officialId]);
 
   const handleClick = () => {
     const newRelationPayload: DiplomaticRelationship =
