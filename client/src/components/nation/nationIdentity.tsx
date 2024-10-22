@@ -98,6 +98,7 @@ export default function NationIdentity({
                               <Upploader
                                 path="data.url.flag"
                                 destination="nation"
+                                maxSize={500000}
                               />
                             )}
                           </>
@@ -139,6 +140,7 @@ export default function NationIdentity({
                               <Upploader
                                 path="data.url.coatOfArms"
                                 destination="nation"
+                                maxSize={500000}
                               />
                             )}
                           </>

@@ -16,6 +16,7 @@ import { deleteUploadedFile } from "../../api/files/fileAPI";
 import { useNavigate } from "react-router-dom";
 import { updateRelation } from "../../api/relation/relationAPI";
 import { createTile, deleteTile, updateTile } from "../../api/tile/tileAPI";
+import { ConfirmBoxDefault } from "../../types/typAtom";
 
 export default function ConfirmModal() {
   const { t } = useTranslation();
@@ -82,8 +83,11 @@ export default function ConfirmModal() {
       </h2>
       <p className="text-center">{confirm.text}</p>
       <div className="flex gap-4 justify-center my-4">
-        <Button text={t("components.buttons.validate")} click={() => {}} />
-        <Button text={t("components.buttons.cancel")} click={handleClick} />
+        <Button text={t("components.buttons.validate")} click={handleClick} />
+        <Button
+          text={t("components.buttons.cancel")}
+          click={() => setConfirm(ConfirmBoxDefault)}
+        />
       </div>
     </>
   );

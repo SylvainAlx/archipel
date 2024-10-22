@@ -365,6 +365,10 @@
       "new": "Lieu créé",
       "update": "Lieu mis à jour",
       "delete": "Lieu supprimé"
+    },
+    "file": {
+      "import": "Fichier importé avec succès",
+      "delete": "Fichier supprimé avec succès"
     }
   }
 }

@@ -373,6 +373,10 @@
       "new": "Place created",
       "update": "Place updated",
       "delete": "Place deleted"
+    },
+    "file": {
+      "import": "File uploaded successful",
+      "delete": "File deleted successful"
     }
   }
 }
