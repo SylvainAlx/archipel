@@ -1,4 +1,4 @@
-import { ChangeEvent, useEffect } from "react";
+import { ChangeEvent } from "react";
 import { useTranslation } from "react-i18next";
 
 export interface SelectProps {
@@ -24,14 +24,6 @@ export default function Select({
   onChange,
 }: SelectProps) {
   const { t } = useTranslation();
-  // const [updatedOptions, setUpdatedOptions] = useState(options);
-
-  useEffect(() => {
-    // const update = [...updatedOptions];
-    // update.unshift({ id: -1, label: t("components.form.select.choose") });
-    // setUpdatedOptions(update);
-    // // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   return (
     <label className="w-full max-w-[300px]">

@@ -40,7 +40,7 @@ export const getOne = async (req, res) => {
     });
   } catch (error) {
     res.status(404).json({
-      message: "aucun lieu à afficher",
+      message: "[A TRADUIRE] aucun lieu à afficher",
       erreur: error.message,
     });
   }
@@ -59,7 +59,7 @@ export const getAllPlaces = async (req, res) => {
       res.status(200).json(places);
     }
   } catch (error) {
-    res.status(404).json({ message: "aucun lieux" });
+    res.status(404).json({ message: "[A TRADUIRE] aucun lieux" });
   }
 };
 
@@ -92,11 +92,11 @@ export const createPlace = async (req, res) => {
             }
             nation.data.roleplay.places += 1;
             nation.save();
-            res.status(201).json({ place, nation, message: "lieu créé" });
+            res.status(201).json({ place, nation, infoType: "new" });
           })
           .catch((error) => {
             res.status(400).json({
-              message: `certaines informations sont erronées ou manquantes`,
+              message: `[A TRADUIRE] certaines informations sont erronées ou manquantes`,
               erreur: error,
             });
           });
@@ -104,12 +104,13 @@ export const createPlace = async (req, res) => {
       .catch((error) => {
         if (error.code === 11000) {
           res.status(400).json({
-            message: "informations déjà existantes dans la base de données",
+            message:
+              "[A TRADUIRE] informations déjà existantes dans la base de données",
             erreur: error.keyValue,
           });
         } else {
           res.status(400).json({
-            message: `certaines informations sont erronées ou manquantes`,
+            message: `[A TRADUIRE] certaines informations sont erronées ou manquantes`,
             erreur: error,
           });
           console.log(error);
@@ -125,12 +126,14 @@ export const deletePlace = async (req, res) => {
     const id = req.params.id;
     const place = await Place.findOne({ officialId: id });
     if (!place) {
-      return res.status(404).json({ message: "Lieu non trouvé" });
+      return res.status(404).json({ message: "[A TRADUIRE] Lieu non trouvé" });
     }
 
     const nation = await Nation.findOne({ officialId: place.nation });
     if (!nation) {
-      return res.status(404).json({ message: "Nation non trouvée" });
+      return res
+        .status(404)
+        .json({ message: "[A TRADUIRE] Nation non trouvée" });
     }
     if (nation.data.roleplay.capital === place.officialId) {
       nation.data.roleplay.capital = "";
@@ -143,11 +146,13 @@ export const deletePlace = async (req, res) => {
       { $set: { parentId: place.parentId } },
     );
     await Place.findByIdAndDelete(place._id);
-    res.status(200).json({ place, nation, message: `Lieu supprimé` });
+    res
+      .status(200)
+      .json({ place, nation, message: `[A TRADUIRE] Lieu supprimé` });
   } catch (error) {
     console.log(error);
     res.status(400).json({
-      message: "Impossible de supprimer le lieu",
+      message: "[A TRADUIRE] Impossible de supprimer le lieu",
       erreur: error.message,
     });
   }
@@ -164,21 +169,24 @@ export const updatePlace = async (req, res) => {
       place.population = req.body.population;
       place.name = req.body.name;
       place.description = req.body.description;
+      place.image = req.body.image;
       place
         .save()
         .then((place) => {
-          res.status(200).json({ place, message: "mise à jour réussie" });
+          res.status(200).json({ place, infoType: "update" });
         })
         .catch((error) => {
           console.error(error);
 
           res.status(400).json({
-            message: `certaines informations sont erronées ou manquantes`,
+            message: `[A TRADUIRE] certaines informations sont erronées ou manquantes`,
             erreur: error,
           });
         });
     } else {
-      res.sendStatus(403).json({ message: "modification interdite" });
+      res
+        .sendStatus(403)
+        .json({ message: "[A TRADUIRE] modification interdite" });
     }
   } catch (error) {
     console.error(error);

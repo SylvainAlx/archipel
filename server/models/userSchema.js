@@ -9,6 +9,10 @@ const UserSchema = mongoose.Schema(
       required: true,
       unique: true,
     },
+    ip: {
+      type: [{ value: String, lastVisit: Date }],
+      default: [],
+    },
     name: {
       type: String,
       required: true,
@@ -65,6 +69,10 @@ const UserSchema = mongoose.Schema(
       nationOwner: {
         type: Boolean,
         default: false,
+      },
+      residence: {
+        type: String,
+        default: "",
       },
     },
   },

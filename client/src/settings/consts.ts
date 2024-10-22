@@ -8,6 +8,7 @@ export const MDP_LOBBY = import.meta.env.VITE_MDP_LOBBY;
 export const SERVER_URL = import.meta.env.VITE_SERVER_URL;
 export const UPLOADCARE_PUBLIC_KEY = import.meta.env.VITE_UPLOADCARE_PUBLIC_KEY;
 export const ADMIN_EMAIL = import.meta.env.VITE_ADMIN_EMAIL;
+export const CAPTCHA_PUBLIC_KEY = import.meta.env.VITE_CAPTCHA_PUBLIC_KEY;
 
 export const VERSION = {
   beta: "BETA-0.1",

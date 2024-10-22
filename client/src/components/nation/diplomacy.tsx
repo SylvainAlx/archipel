@@ -9,7 +9,7 @@ import {
   relationListAtom,
   sessionAtom,
 } from "../../settings/store";
-import { lazy, Suspense, useEffect } from "react";
+import { lazy, Suspense, useEffect, useState } from "react";
 import { getRelations } from "../../api/relation/relationAPI";
 import BarreLoader from "../loading/barreLoader";
 import Button from "../buttons/button";
@@ -19,6 +19,7 @@ import {
   emptyDiplomaticRelationship,
   NationDiplomacyInfo,
 } from "../../types/typRelation";
+import { getNationRelationListFromMemory } from "../../utils/atomArrayFunctions";
 
 export default function Diplomacy({
   selectedNation,
@@ -26,13 +27,31 @@ export default function Diplomacy({
 }: SelectedNationProps) {
   const { t } = useTranslation();
   const [relationList] = useAtom<DiplomaticRelationship[]>(relationListAtom);
+  const [nationRelationList, setNationRelationList] = useState<
+    DiplomaticRelationship[]
+  >([]);
   const [session] = useAtom(sessionAtom);
   const RelationTile = lazy(() => import("../tiles/relationTile"));
 
   useEffect(() => {
-    getRelations(selectedNation.officialId);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    getRelations();
   }, []);
+
+  useEffect(() => {
+    const tempRelations = getNationRelationListFromMemory(
+      selectedNation.officialId,
+    );
+    setNationRelationList(tempRelations);
+    // const tempRelations: DiplomaticRelationship[] = [];
+    // relationList.forEach((relation) => {
+    //   relation.nations.forEach((element) => {
+    //     if (element.OfficialId === selectedNation.officialId) {
+    //       tempRelations.push(relation);
+    //     }
+    //   });
+    // });
+    // setNationRelationList(tempRelations);
+  }, [relationList, selectedNation.officialId]);
 
   const handleClick = () => {
     const newRelationPayload: DiplomaticRelationship =
@@ -62,25 +81,22 @@ export default function Diplomacy({
     <TileContainer
       children={
         <DashTile
-          title={t("pages.nation.simulation.diplomacy")}
+          title={t("pages.nation.relations.title")}
           children={
             <div className="w-full flex flex-col-reverse gap-2 items-center">
-              {relationList.length > 0 ? (
-                relationList.map((relation, i) => {
+              {nationRelationList.length > 0 ? (
+                nationRelationList.map((relation, i) => {
                   if (relation.nations.length > 1) {
                     return (
                       <Suspense key={i} fallback={<BarreLoader />}>
-                        <RelationTile
-                          relation={relation}
-                          selectedNation={selectedNation}
-                        />
+                        <RelationTile relation={relation} />
                       </Suspense>
                     );
                   }
                 })
               ) : (
                 <em className="text-center">
-                  {t("pages.nation.simulation.noRelations")}
+                  {t("pages.nation.relations.noRelations")}
                 </em>
               )}
               {!owner && session.user.citizenship.nationOwner && (

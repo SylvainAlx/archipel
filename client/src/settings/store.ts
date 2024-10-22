@@ -52,7 +52,7 @@ interface Counts {
   coms: number;
 }
 
-type Stats = {
+export type Stats = {
   counts: Counts;
 };
 
@@ -83,9 +83,6 @@ export const editPlaceAtom = atom<EditPlaceParam>({ place: emptyPlace });
 
 // Relation
 
-export const relationFetchedAtom = atom<DiplomaticRelationship>(
-  emptyDiplomaticRelationship,
-);
 export const relationListAtom = atom<DiplomaticRelationship[]>([]);
 export const newRelationAtom = atom({
   update: false,
@@ -104,6 +101,7 @@ export const tagListAtom = atom<string[]>([]);
 
 // tile
 
+export const nationTileListAtom = atom<Tile[]>([]);
 export const tileListAtom = atom<Tile[]>([]);
 
 // Param

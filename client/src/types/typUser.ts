@@ -14,6 +14,7 @@ export interface User {
     status: number;
     nationId: string;
     nationOwner: boolean;
+    residence: string;
   };
   createdAt: Date;
 }
@@ -59,6 +60,7 @@ export const emptyUser: User = {
     status: -1,
     nationId: "",
     nationOwner: false,
+    residence: "",
   },
   createdAt: new Date(),
 };

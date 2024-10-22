@@ -29,37 +29,30 @@ const nationSchema = mongoose.Schema(
         flag: {
           type: String,
           default: "",
-          unique: true,
         },
         coatOfArms: {
           type: String,
           default: "",
-          unique: true,
         },
         map: {
           type: String,
           default: "",
-          unique: true,
         },
         website: {
           type: String,
           default: "",
-          unique: true,
         },
         wiki: {
           type: String,
           default: "",
-          unique: true,
         },
         instagram: {
           type: String,
           default: "",
-          unique: true,
         },
         discord: {
           type: String,
           default: "",
-          unique: true,
         },
       },
       general: {
@@ -80,7 +73,7 @@ const nationSchema = mongoose.Schema(
           default: "",
         },
         tags: {
-          type: Array,
+          type: [String],
           default: [],
         },
         description: {

@@ -22,6 +22,59 @@ export default function ConfirmModal() {
   const navigate = useNavigate();
   const [confirm, setConfirm] = useAtom(confirmBox);
 
+  const handleClick = () => {
+    setConfirm({ action: confirm.action, text: "", result: "OK" });
+    if (confirm.action === "logout") {
+      logout();
+      navigate("/");
+    }
+    if (confirm.action === "deleteSelfNation") {
+      deleteSelfNation();
+    }
+    if (confirm.action === "deleteUser") {
+      deleteUser();
+    }
+    if (confirm.action === "deleteCom") {
+      deleteCom();
+    }
+    if (confirm.action === "createCom") {
+      createNewCom(confirm.payload);
+    }
+    if (confirm.action === "updateNation") {
+      updateNation(confirm.payload);
+    }
+    if (confirm.action === "deletePlace") {
+      deletePlace(confirm.target.officialId);
+    }
+    if (confirm.action === "updatePlace") {
+      updatePlace(confirm.payload);
+    }
+    if (confirm.action === "deleteFile") {
+      deleteUploadedFile({
+        url: confirm.payload,
+        type: confirm.target,
+      });
+    }
+    if (confirm.action === "changeStatus") {
+      changeStatus(confirm.payload);
+    }
+    if (confirm.action === "leave") {
+      updateRelation(confirm.payload);
+    }
+    if (confirm.action === "deleteTile") {
+      deleteTile(confirm.payload);
+    }
+    if (confirm.action === "createTile") {
+      createTile(confirm.payload);
+    }
+    if (confirm.action === "updateTile") {
+      updateTile(confirm.payload);
+    }
+    if (confirm.action === "updateUser") {
+      updateUser(confirm.payload);
+    }
+  };
+
   return (
     <>
       <h2 className="text-2xl text-center p-4">
@@ -29,67 +82,8 @@ export default function ConfirmModal() {
       </h2>
       <p className="text-center">{confirm.text}</p>
       <div className="flex gap-4 justify-center my-4">
-        <Button
-          text={t("components.buttons.validate")}
-          click={() => {
-            setConfirm({ action: confirm.action, text: "", result: "OK" });
-            if (confirm.action === "logout") {
-              logout();
-              navigate("/");
-            }
-            if (confirm.action === "deleteSelfNation") {
-              deleteSelfNation();
-            }
-            if (confirm.action === "deleteUser") {
-              deleteUser();
-            }
-            if (confirm.action === "deleteCom") {
-              deleteCom();
-            }
-            if (confirm.action === "createCom") {
-              createNewCom(confirm.payload);
-            }
-            if (confirm.action === "updateNation") {
-              updateNation(confirm.payload);
-            }
-            if (confirm.action === "deletePlace") {
-              deletePlace(confirm.target.officialId);
-            }
-            if (confirm.action === "updatePlace") {
-              updatePlace(confirm.payload);
-            }
-            if (confirm.action === "deleteFile") {
-              deleteUploadedFile({
-                url: confirm.payload,
-                type: confirm.target,
-              });
-            }
-            if (confirm.action === "changeStatus") {
-              changeStatus(confirm.payload);
-            }
-            if (confirm.action === "leave") {
-              updateRelation(confirm.payload);
-            }
-            if (confirm.action === "deleteTile") {
-              deleteTile(confirm.payload);
-            }
-            if (confirm.action === "createTile") {
-              createTile(confirm.payload);
-            }
-            if (confirm.action === "updateTile") {
-              updateTile(confirm.payload);
-            }
-            if (confirm.action === "updateUser") {
-              updateUser(confirm.payload);
-            }
-          }}
-        />
-        <Button
-          text={t("components.buttons.cancel")}
-          click={() =>
-            setConfirm({ action: confirm.action, text: "", result: "KO" })
-          }
-        />
+        <Button text={t("components.buttons.validate")} click={() => {}} />
+        <Button text={t("components.buttons.cancel")} click={handleClick} />
       </div>
     </>
   );

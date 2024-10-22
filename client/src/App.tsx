@@ -38,7 +38,8 @@ export default function App() {
     // const lobbyToken = localStorage.getItem("lobby");
     // if (!access && lobbyToken && lobbyToken === MDP_LOBBY) {
     setAccess(true);
-    authentification();
+    session.user.officialId === "" && authentification();
+
     // } else if (lobbyToken) {
     //   setAccess(false);
     //   errorMessage("mot de passe d'accès anticipé erroné");
@@ -47,7 +48,10 @@ export default function App() {
 
   useEffect(() => {
     if (session.user.officialId != "") {
-      if (session.user.citizenship.nationId != "") {
+      if (
+        session.user.citizenship.nationId != "" &&
+        nation.officialId != session.user.citizenship.nationId
+      ) {
         getNation(session.user.citizenship.nationId);
       }
       navigate(`/citizen/${session.user.officialId}`);
@@ -63,6 +67,7 @@ export default function App() {
       nation.officialId === session.user.citizenship.nationId
     ) {
       setSession({ ...session, nation });
+      // getNationPlaces(nation.officialId);
     }
   }, [nation]);
 

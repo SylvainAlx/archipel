@@ -131,3 +131,16 @@ export const changeStatusFetch = async (payload: changeStatusPayload) => {
 
   return result;
 };
+
+export const verifyCaptchaFetch = async (token: string | null) => {
+  const resp = await fetch(`${SERVER_URL}/captcha`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ token }),
+  });
+  const result = await resp.json();
+
+  return result;
+};

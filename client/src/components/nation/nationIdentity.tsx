@@ -1,8 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Suspense, lazy, useEffect, useState } from "react";
-import { nationPlacesListAtom } from "../../settings/store";
 import { LabelId } from "../../types/typNation";
-import { useAtom } from "jotai";
 import RegimeTag from "../tags/regimeTag";
 import IdTag from "../tags/idTag";
 import CapitalTag from "../tags/capitalTag";
@@ -21,7 +19,13 @@ import CrossButton from "../buttons/crossButton";
 import TagList from "./tagList";
 import CurrencyTag from "../tags/currencyTag";
 import NationalDayTag from "../tags/nationalDayTag";
-import { handleDeleteImage } from "../../utils/functions";
+import {
+  getLabelIdArrayFromNationPlaceList,
+  handleDeleteImage,
+} from "../../utils/functions";
+import PopulationTag from "../tags/populationTag";
+import PlaceTag from "../tags/placeTag";
+import MDEditor from "@uiw/react-md-editor";
 
 export default function NationIdentity({
   selectedNation,
@@ -29,20 +33,13 @@ export default function NationIdentity({
 }: SelectedNationProps) {
   const { t } = useTranslation();
   const [placesList, setPlacesList] = useState<LabelId[]>([]);
-  const [nationPlaceList] = useAtom(nationPlacesListAtom);
 
   const LazyImage = lazy(() => import("../lazy/lazyImage"));
 
   useEffect(() => {
-    const updatedPlaces: LabelId[] = [];
-    nationPlaceList.forEach((place) => {
-      if (place._id && place.type === 2) {
-        const newPlace: LabelId = { id: place.officialId, label: place.name };
-        updatedPlaces.push(newPlace);
-      }
-    });
-    setPlacesList(updatedPlaces);
-  }, [nationPlaceList]);
+    const list = getLabelIdArrayFromNationPlaceList();
+    setPlacesList(list);
+  }, []);
 
   return (
     <TileContainer
@@ -183,6 +180,11 @@ export default function NationIdentity({
                         />
                       )}
                     </div>
+
+                    <PopulationTag
+                      label={selectedNation.data.roleplay.citizens}
+                    />
+                    <PlaceTag label={selectedNation.data.roleplay.places} />
                     <div className="flex items-center gap-2">
                       {selectedNation.data.general.nationalDay != undefined && (
                         <NationalDayTag
@@ -229,15 +231,15 @@ export default function NationIdentity({
                         />
                       )}
                     </div>
+                    <TagList selectedNation={selectedNation} owner={owner} />
                   </div>
-                  <TagList selectedNation={selectedNation} owner={owner} />
+
                   <div className="w-full mt-4 justify-center flex gap-2">
                     {selectedNation.data.general.description ? (
-                      <p
-                        className="text-md text-justify"
-                        dangerouslySetInnerHTML={{
-                          __html: selectedNation.data.general.description,
-                        }}
+                      <MDEditor.Markdown
+                        className="bg-transparent text-light text-justify"
+                        source={selectedNation.data.general.description}
+                        style={{ whiteSpace: "pre-wrap" }}
                       />
                     ) : (
                       <em className="text-center">

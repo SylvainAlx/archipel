@@ -22,6 +22,7 @@ export default function NationTile(nation: Nation) {
   const handleClick = () => {
     navigate(`/nation/${nation.officialId}`);
   };
+
   return (
     <div className="bg-complementary flex flex-col items-center p-2 gap-3 rounded transition-all">
       <div className="w-full flex justify-between">
@@ -52,9 +53,9 @@ export default function NationTile(nation: Nation) {
         <EyeButton click={handleClick} />
       </div>
       <div className="max-w-[80%] flex gap-1 self-end flex-wrap justify-end">
-        <PlaceTag label={nation.data.roleplay.places} />
-        <PopulationTag label={nation.data.roleplay.citizens} />
         <RegimeTag selectedNation={nation} />
+        <PopulationTag label={nation.data.roleplay.citizens} />
+        <PlaceTag label={nation.data.roleplay.places} />
         {nation.data.general.tags.length > 0 &&
           nation.data.general.tags.map((tag, i) => {
             return (

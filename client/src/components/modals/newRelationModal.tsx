@@ -2,7 +2,7 @@
 import { useAtom } from "jotai";
 import { newRelationAtom } from "../../settings/store";
 import Button from "../buttons/button";
-import { ChangeEvent, FormEvent } from "react";
+import { ChangeEvent, FormEvent, useState } from "react";
 import Form from "../form/form";
 import Input from "../form/input";
 import { useTranslation } from "react-i18next";
@@ -12,6 +12,7 @@ import { emptyDiplomaticRelationship } from "../../types/typRelation";
 import { FaBriefcase, FaCoins, FaFlask } from "react-icons/fa";
 import { FaMasksTheater, FaPersonMilitaryPointing } from "react-icons/fa6";
 import { createRelation, updateRelation } from "../../api/relation/relationAPI";
+import HoverInfo from "../hoverInfo";
 
 export interface NewRelationModalProps {
   update: boolean;
@@ -19,6 +20,7 @@ export interface NewRelationModalProps {
 
 export default function NewRelationModal({ update }: NewRelationModalProps) {
   const [newRelation, setNewRelation] = useAtom(newRelationAtom);
+  const [hoverInfo, setHoverInfo] = useState("");
   const { t } = useTranslation();
 
   const handleSubmit = (e: FormEvent) => {
@@ -94,7 +96,12 @@ export default function NewRelationModal({ update }: NewRelationModalProps) {
             />
             <fieldset className="w-full p-2 flex flex-wrap justify-center items-center gap-2 bg-complementary2 text-2xl">
               <label className="flex gap-1">
-                <FaBriefcase />
+                <FaBriefcase
+                  onMouseEnter={() =>
+                    setHoverInfo(t("components.hoverInfos.relations.business"))
+                  }
+                  onMouseLeave={() => setHoverInfo("")}
+                />
                 <Input
                   type="checkbox"
                   name="business"
@@ -103,7 +110,12 @@ export default function NewRelationModal({ update }: NewRelationModalProps) {
                 />
               </label>
               <label className="flex gap-1">
-                <FaCoins />
+                <FaCoins
+                  onMouseEnter={() =>
+                    setHoverInfo(t("components.hoverInfos.relations.economic"))
+                  }
+                  onMouseLeave={() => setHoverInfo("")}
+                />
                 <Input
                   type="checkbox"
                   name="economic"
@@ -112,7 +124,12 @@ export default function NewRelationModal({ update }: NewRelationModalProps) {
                 />
               </label>
               <label className="flex gap-1">
-                <FaMasksTheater />
+                <FaMasksTheater
+                  onMouseEnter={() =>
+                    setHoverInfo(t("components.hoverInfos.relations.cultural"))
+                  }
+                  onMouseLeave={() => setHoverInfo("")}
+                />
                 <Input
                   type="checkbox"
                   name="cultural"
@@ -121,7 +138,14 @@ export default function NewRelationModal({ update }: NewRelationModalProps) {
                 />
               </label>
               <label className="flex gap-1">
-                <FaFlask />
+                <FaFlask
+                  onMouseEnter={() =>
+                    setHoverInfo(
+                      t("components.hoverInfos.relations.scientific"),
+                    )
+                  }
+                  onMouseLeave={() => setHoverInfo("")}
+                />
                 <Input
                   type="checkbox"
                   name="scientific"
@@ -130,7 +154,12 @@ export default function NewRelationModal({ update }: NewRelationModalProps) {
                 />
               </label>
               <label className="flex gap-1">
-                <FaPersonMilitaryPointing />
+                <FaPersonMilitaryPointing
+                  onMouseEnter={() =>
+                    setHoverInfo(t("components.hoverInfos.relations.coop"))
+                  }
+                  onMouseLeave={() => setHoverInfo("")}
+                />
                 <Input
                   type="checkbox"
                   name="coop"
@@ -161,6 +190,7 @@ export default function NewRelationModal({ update }: NewRelationModalProps) {
           </>
         }
       />
+      {hoverInfo != "" && <HoverInfo text={hoverInfo} />}
     </div>
   );
 }

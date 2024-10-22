@@ -28,7 +28,7 @@ export const displayUserInfoByType = (type: string) => {
       errorMessage(i18n.t("toasts.user.deleteKO"));
       break;
     case "error":
-      errorMessage(i18n.t("toasts.user.error"));
+      errorMessage(i18n.t("toasts.errors.miss"));
       break;
     case "badRecovery":
       errorMessage(i18n.t("toasts.user.badRecovery"));
@@ -40,7 +40,7 @@ export const displayUserInfoByType = (type: string) => {
       errorMessage(i18n.t("toasts.user.badPassword"));
       break;
     case "11000":
-      errorMessage(i18n.t("toasts.user.11000"));
+      errorMessage(i18n.t("toasts.errors.11000"));
       break;
     case "serverError":
       errorMessage(i18n.t("toasts.user.serverError"));
@@ -54,6 +54,21 @@ export const displayNationInfoByType = (type: string) => {
   switch (type) {
     case "new":
       successMessage(i18n.t("toasts.nation.create"));
+      break;
+    case "miss":
+      errorMessage(i18n.t("toasts.errors.miss"));
+      break;
+    case "unknown":
+      errorMessage(i18n.t("toasts.errors.400"));
+      break;
+    case "forbidden":
+      errorMessage(i18n.t("toasts.errors.forbidden"));
+      break;
+    case "11000":
+      errorMessage(i18n.t("toasts.errors.11000"));
+      break;
+    case "serverError":
+      errorMessage(i18n.t("toasts.errors.sererError"));
       break;
     case "delete":
       successMessage(i18n.t("toasts.nation.delete"));
@@ -94,7 +109,26 @@ export const displayTileInfoByType = (type: string) => {
       successMessage(i18n.t("toasts.tile.delete"));
       break;
     case "forbidden":
-      errorMessage(i18n.t("toasts.tile.forbidden"));
+      errorMessage(i18n.t("toasts.errors.forbidden"));
+      break;
+    case "serverError":
+      errorMessage(i18n.t("toasts.errors.sererError"));
+      break;
+    default:
+      break;
+  }
+};
+
+export const displayPlaceInfoByType = (type: string) => {
+  switch (type) {
+    case "new":
+      successMessage(i18n.t("toasts.place.new"));
+      break;
+    case "update":
+      successMessage(i18n.t("toasts.place.update"));
+      break;
+    case "delete":
+      successMessage(i18n.t("toasts.place.delete"));
       break;
     case "serverError":
       errorMessage(i18n.t("toasts.errors.sererError"));

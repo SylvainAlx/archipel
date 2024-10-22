@@ -1,7 +1,9 @@
 import Nation from "../models/nationSchema.js";
 import User from "../models/userSchema.js";
 import Place from "../models/placeSchema.js";
-import { createOfficialId } from "../utils/functions.js";
+import Tile from "../models/tileSchema.js";
+import Relation from "../models/relationSchema.js";
+import { createOfficialId, deleteFile } from "../utils/functions.js";
 
 export const nationsCount = async (req, res) => {
   try {
@@ -10,10 +12,12 @@ export const nationsCount = async (req, res) => {
         res.status(200).json(count);
       })
       .catch((error) => {
-        res.status(400).json({ message: error.message });
+        console.error(error.message);
+        res.status(400).json({ infoType: "serverError" });
       });
   } catch (error) {
-    res.status(400).json({ message: error.message });
+    console.error(error.message);
+    res.status(400).json({ infoType: "serverError" });
   }
 };
 
@@ -22,13 +26,11 @@ export const createNation = async (req, res) => {
     const { name, owner, motto, regime, currency, tags } = req.body;
 
     if (!name || !owner) {
-      return res
-        .status(400)
-        .json({ message: "Certains champs sont manquants" });
+      return res.status(400).json({ infoType: "miss" });
     }
 
     if (owner != req.userId) {
-      return res.status(403).json({ message: "Pas d'autorisation" });
+      return res.status(403).json({ infoType: "forbidden" });
     }
 
     const officialId = createOfficialId("n");
@@ -54,22 +56,25 @@ export const createNation = async (req, res) => {
       user.citizenship.nationName = savedNation.name;
       user.citizenship.nationOwner = true;
       const savedUser = await user.save();
-      res.status(201).json({ nation: savedNation, user: savedUser });
+      res
+        .status(201)
+        .json({ nation: savedNation, user: savedUser, infoType: "new" });
     } catch (error) {
       if (error.code === 11000) {
+        console.error(error.message, error.keyValue);
         return res.status(400).json({
-          message: "Informations déjà existantes dans la base de données",
-          erreur: error.keyValue,
+          infoType: "11000",
         });
       } else {
+        console.error(error.message);
         return res.status(400).json({
-          message: "Certaines informations sont erronées ou manquantes",
-          error,
+          infoType: "miss",
         });
       }
     }
   } catch (error) {
-    res.status(400).json({ erreur: error.message });
+    res.status(400).json({ infoType: "serverError" });
+    console.error(error.message);
   }
 };
 
@@ -90,7 +95,8 @@ export const getAllNations = async (req, res) => {
       res.status(200).json(nations);
     }
   } catch (error) {
-    res.status(404).json({ message: "aucune nations" });
+    console.error(error.message);
+    res.status(404).json({ message: "[A TRADUIRE] aucune nations" });
   }
 };
 
@@ -102,7 +108,8 @@ export const getTop100Nations = async (req, res) => {
     ).limit(100);
     res.status(200).json(nations);
   } catch (error) {
-    res.status(404).json({ message: "Aucune nation trouvée" });
+    console.error(error.message);
+    res.status(404).json({ message: "[A TRADUIRE] Aucune nation trouvée" });
   }
 };
 
@@ -113,42 +120,11 @@ export const getOneNation = async (req, res) => {
       { officialId: nationId },
       "officialId name owner role data createdAt",
     );
-    res.status(200).json({
-      nation,
-    });
+    res.status(200).json(nation);
   } catch (error) {
+    console.error(error.message);
     res.status(404).json({
-      message: "aucune nation à afficher",
-      erreur: error.message,
-    });
-  }
-};
-
-export const getSelfNation = async (req, res) => {
-  const id = req.nationId;
-  try {
-    const nation = await Nation.findOne(
-      { _id: id },
-      "officialId name owner role data createdAt",
-    );
-    res.status(200).json({ nation });
-  } catch (error) {
-    res.status(404).json({
-      message: "nation impossible à récupérer",
-      erreur: error.message,
-    });
-  }
-};
-
-export const getRoleplayData = async (req, res) => {
-  try {
-    const nationId = req.params.id;
-    const users = await User.find({ nation: nationId });
-    const places = await Place.find({ nation: nationId });
-    res.status(200).json({ users, places });
-  } catch (error) {
-    res.status(404).json({
-      message: "données impossible à récupérer",
+      message: "[A TRADUIRE] aucune nation à afficher",
       erreur: error.message,
     });
   }
@@ -158,73 +134,87 @@ export const deleteSelfNation = async (req, res) => {
   try {
     const userId = req.userId;
     const user = await User.findOne({ officialId: userId });
+
+    // suppression de la nation
     const nation = await Nation.findOneAndDelete({
       officialId: user.citizenship.nationId,
     });
-    const places = await Place.deleteMany({ nation: nation.officialId });
-    user.citizenship.nationId = "";
-    user.citizenship.nationName = "";
-    user.citizenship.nationOwner = false;
-    const savedUser = await user.save();
+    if (nation != null) {
+      // suppression des images uploadées pour la nation
+      if (nation.data.url.flag != "") {
+        const uuid = nation.data.url.flag.replace("https://ucarecdn.com/", "");
+        await deleteFile(uuid);
+      }
+      if (nation.data.url.coatOfArms != "") {
+        const uuid = nation.data.url.coatOfArms.replace(
+          "https://ucarecdn.com/",
+          "",
+        );
+        await deleteFile(uuid);
+      }
+      if (nation.data.url.map != "") {
+        const uuid = nation.data.url.map.replace("https://ucarecdn.com/", "");
+        await deleteFile(uuid);
+      }
 
-    const update = {
-      $set: {
-        "citizenship.status": -1,
-        "citizenship.nationId": "",
-        "citizenship.nationName": "",
-        "citizenship.nationOwner": false,
-      },
-    };
+      // suppression des images uploadées pour les lieux
+      const places = await Place.find({ nation: nation.officialId });
+      places.forEach((place) => {
+        if (place.image != "") {
+          const uuid = place.image.replace("https://ucarecdn.com/", "");
+          deleteFile(uuid);
+        }
+      });
 
-    const updatedUsers = await User.updateMany(
-      { "citizenship.nationId": nation.officialId },
-      update,
-    );
+      // suppression des lieux de la nation
+      await Place.deleteMany({ nation: nation.officialId });
 
-    // await Com.deleteMany({ originId: id });
-    res.status(200).json({
-      message: `Votre nation a été supprimée`,
-      user: savedUser,
-    });
+      // suppression de l'appartenance à la nation pour le gérant
+      user.citizenship.nationId = "";
+      user.citizenship.nationName = "";
+      user.citizenship.nationOwner = false;
+      const savedUser = await user.save();
+
+      // suppression de l'appartenance à la nation pour tous les citoyens
+      const update = {
+        $set: {
+          "citizenship.status": -1,
+          "citizenship.nationId": "",
+          "citizenship.nationName": "",
+          "citizenship.nationOwner": false,
+        },
+      };
+      await User.updateMany(
+        { "citizenship.nationId": nation.officialId },
+        update,
+      );
+
+      // suppression des tuiles libres de la nation
+      await Tile.deleteMany({
+        nationOfficialId: nation.officialId,
+      });
+
+      // retrait de la nation des relations liées
+      await Relation.updateMany(
+        {
+          "nations.OfficialId": nation.officialId, // Filtrer les documents où "OfficialId" est présent dans le tableau "nations"
+        },
+        {
+          $pull: {
+            nations: { OfficialId: nation.officialId }, // Retirer les objets dans "nations" où "OfficialId" correspond
+          },
+        },
+      );
+
+      res.status(200).json({
+        message: `[A TRADUIRE] Votre nation a été supprimée`,
+        user: savedUser,
+      });
+    }
   } catch (error) {
+    console.error(error);
     res.status(400).json({
-      message: "impossible de supprimer la nation",
-      erreur: error.message,
-    });
-  }
-};
-
-export const deleteOneNation = async (req, res) => {
-  try {
-    const nationId = req.params.id;
-    const user = await User.findOne({ "citizenship.nationId": nationId });
-    user.citizenship.status = -1;
-    user.citizenship.nationId = "";
-    user.citizenship.nationName = "";
-    user.citizenship.nationOwner = false;
-
-    const update = {
-      $set: {
-        "citizenship.status": -1,
-        "citizenship.nationId": "",
-        "citizenship.nationName": "",
-        "citizenship.nationOwner": false,
-      },
-    };
-
-    const updatedUsers = await User.updateMany(
-      { "citizenship.nationId": nation.officialId },
-      update,
-    );
-
-    const savedUser = await user.save();
-    const nation = await Nation.findByIdAndDelete(nationId);
-    res.status(200).json({
-      message: `nation supprimée`,
-    });
-  } catch (error) {
-    res.status(400).json({
-      message: "impossible de supprimer la nation",
+      message: "[A TRADUIRE] impossible de supprimer la nation",
       erreur: error.message,
     });
   }
@@ -243,16 +233,20 @@ export const updateNation = async (req, res) => {
       nation
         .save()
         .then((nation) => {
-          res.status(200).json({ nation, message: "mise à jour réussie" });
+          res
+            .status(200)
+            .json({ nation, message: "[A TRADUIRE] mise à jour réussie" });
         })
         .catch((error) => {
           res.status(400).json({
-            message: `certaines informations sont erronées ou manquantes`,
+            message: `[A TRADUIRE] certaines informations sont erronées ou manquantes`,
             erreur: error.message,
           });
         });
     } else {
-      res.sendStatus(403).json({ message: "modification interdite" });
+      res
+        .sendStatus(403)
+        .json({ message: "[A TRADUIRE] modification interdite" });
     }
   } catch (error) {
     res.status(400).json({ message: error });
@@ -287,6 +281,8 @@ export const getTags = async (req, res) => {
 
     res.status(200).json(tags[0].tousLesTags);
   } catch (error) {
-    res.status(400).json({ message: "aucuns tags", erreur: error.message });
+    res
+      .status(400)
+      .json({ message: "[A TRADUIRE] aucuns tags", erreur: error.message });
   }
 };

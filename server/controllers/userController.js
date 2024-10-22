@@ -8,11 +8,12 @@ import { createOfficialId } from "../utils/functions.js";
 export const register = async (req, res) => {
   try {
     const { name, password, gender, language } = req.body;
+    const userIp = req.clientIp;
 
     if (!name || !password) {
       return res
         .status(400)
-        .json({ message: "Certains champs sont manquants" });
+        .json({ message: "[A TRADUIRE] Certains champs sont manquants" });
     }
 
     const random = new LoremIpsum({
@@ -34,6 +35,7 @@ export const register = async (req, res) => {
 
     const user = new User({
       officialId,
+      ip: [{ value: userIp, lastVisit: new Date() }],
       name,
       password,
       recovery,
@@ -68,6 +70,7 @@ export const register = async (req, res) => {
 
 export const login = async (req, res) => {
   try {
+    const userIp = req.clientIp;
     const { name, password } = req.body;
 
     const user = await User.findOne(
@@ -88,6 +91,7 @@ export const login = async (req, res) => {
         return res.status(401).json({ infoType: "password" });
       }
       const jwt = user.createJWT();
+      updateUserIpAddress(user.officialId, userIp);
       res.status(200).json({ user, jwt, infoType: "signin" });
     });
   } catch (error) {
@@ -97,6 +101,8 @@ export const login = async (req, res) => {
 
 export const verify = async (req, res) => {
   try {
+    const userIp = req.clientIp;
+
     const token = req.headers.authorization.split(" ")[1];
     const secret = process.env.JWT_SECRET;
 
@@ -108,6 +114,7 @@ export const verify = async (req, res) => {
     );
 
     if (user) {
+      updateUserIpAddress(user.officialId, userIp);
       return res.status(200).json({ user, infoType: "verify" });
     } else {
       return res.status(404).json({ infoType: "user" });
@@ -324,16 +331,20 @@ export const updateUser = async (req, res) => {
       user
         .save()
         .then((user) => {
-          res.status(200).json({ user, message: "mise à jour réussie" });
+          res
+            .status(200)
+            .json({ user, message: "[A TRADUIRE] mise à jour réussie" });
         })
         .catch((error) => {
           res.status(400).json({
-            message: `certaines informations sont erronées ou manquantes`,
+            message: `[A TRADUIRE] certaines informations sont erronées ou manquantes`,
             erreur: error.message,
           });
         });
     } else {
-      res.sendStatus(403).json({ message: "modification interdite" });
+      res
+        .sendStatus(403)
+        .json({ message: "[A TRADUIRE] modification interdite" });
     }
   } catch (error) {
     res.status(400).json({ message: error });
@@ -384,18 +395,43 @@ export const changeStatus = async (req, res) => {
         .then((user) => {
           res
             .status(200)
-            .json({ user, nation, message: "mise à jour réussie" });
+            .json({
+              user,
+              nation,
+              message: "[A TRADUIRE] mise à jour réussie",
+            });
         })
         .catch((error) => {
           res.status(400).json({
-            message: `certaines informations sont erronées ou manquantes`,
+            message: `[A TRADUIRE] certaines informations sont erronées ou manquantes`,
             erreur: error.message,
           });
         });
     } else {
-      res.sendStatus(403).json({ message: "modification interdite" });
+      res
+        .sendStatus(403)
+        .json({ message: "[A TRADUIRE] modification interdite" });
     }
   } catch (error) {
     res.status(400).json({ message: error });
+  }
+};
+
+const updateUserIpAddress = async (userOfficialId, ip) => {
+  try {
+    let isFind = false;
+    const user = await User.findOne({ officialId: userOfficialId });
+    for (const address of user.ip) {
+      if (address.value === ip) {
+        isFind = true;
+        address.lastVisit = new Date();
+      }
+    }
+    if (!isFind) {
+      user.ip.push({ value: ip, lastVisit: new Date() });
+    }
+    const updatedUser = await user.save();
+  } catch (error) {
+    console.error(error);
   }
 };

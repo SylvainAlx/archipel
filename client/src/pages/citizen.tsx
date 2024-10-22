@@ -6,6 +6,7 @@ import {
   confirmBox,
   myStore,
   nationFetchedAtom,
+  nationPlacesListAtom,
   newNationAtom,
   sessionAtom,
 } from "../settings/store";
@@ -14,11 +15,9 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import Avatar from "../components/avatar";
 import { useEffect, useState } from "react";
-import { getOneUser } from "../api/user/userAPI";
 import DashTile from "../components/dashTile";
 import TileContainer from "../components/tileContainer";
-import { emptyNewNationPayload } from "../types/typNation";
-import { getNation } from "../api/nation/nationAPI";
+import { emptyNewNationPayload, LabelId } from "../types/typNation";
 import IdTag from "../components/tags/idTag";
 import RoleTag from "../components/tags/roleTag";
 import Upploader from "../components/uploader";
@@ -28,6 +27,11 @@ import ExternalLink from "../components/externalLink";
 import { FaLink } from "react-icons/fa";
 import EditIcon from "../components/editIcon";
 import { BsFillEnvelopeAtFill } from "react-icons/bs";
+import NationOwnerTag from "../components/tags/nationOwnerTag";
+import ResidenceTag from "../components/tags/residenceTag";
+import { getLabelIdArrayFromNationPlaceList } from "../utils/functions";
+import { getNationPlaces } from "../api/place/placeAPI";
+import { ConfirmBoxDefault } from "../types/typAtom";
 
 export default function Citizen() {
   const { t } = useTranslation();
@@ -37,6 +41,9 @@ export default function Citizen() {
   const [citizen, setCitizen] = useAtom(citizenFetchAtom);
   const [nation] = useAtom(nationFetchedAtom);
   const [session, setSession] = useAtom(sessionAtom);
+  const [confirm, setConfirm] = useAtom(confirmBox);
+  const [nationPlaces] = useAtom(nationPlacesListAtom);
+  const [placesList, setPlacesList] = useState<LabelId[]>([]);
   const [, setConfirmModal] = useAtom(confirmBox);
   const [enableLeaving, setEnableLeaving] = useState(false);
 
@@ -47,8 +54,6 @@ export default function Citizen() {
         citizen.officialId != session.user.officialId
       ) {
         setCitizen(session.user);
-      } else {
-        getOneUser(param.id);
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -63,12 +68,39 @@ export default function Citizen() {
     } else {
       setEnableLeaving(false);
     }
-    if (citizen.citizenship.nationId != "") {
-      getNation(citizen.citizenship.nationId);
-    }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [citizen]);
+
+  useEffect(() => {
+    if (
+      nation.officialId != undefined &&
+      nation.officialId !== "" &&
+      nationPlaces.length === 0
+    ) {
+      getNationPlaces(nation.officialId);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [nation]);
+
+  useEffect(() => {
+    if (
+      nationPlaces.length > 0 &&
+      nation.officialId != undefined &&
+      nation.officialId !== ""
+    ) {
+      const list = getLabelIdArrayFromNationPlaceList();
+      setPlacesList(list);
+    }
+  }, [nation.officialId, nationPlaces]);
+
+  useEffect(() => {
+    if (confirm.action === "deleteUser" && confirm.result === "OK") {
+      navigate(`/`);
+      setConfirm(ConfirmBoxDefault);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [confirm]);
 
   const handleClick = (dest: string) => {
     if (dest === "nation") {
@@ -79,7 +111,7 @@ export default function Citizen() {
         owner: citizen.officialId,
       });
     } else if (dest === "join") {
-      navigate(`/explore`);
+      navigate(`/explore/2`);
     }
   };
 
@@ -97,7 +129,6 @@ export default function Citizen() {
       text: t("components.modals.confirmModal.deleteUser"),
       result: "",
     });
-    navigate("/");
   };
 
   const handleDeleteAvatar = () => {
@@ -134,15 +165,42 @@ export default function Citizen() {
 
   return (
     <>
-      <H1 text={citizen.name} />
+      <div className="flex items-center gap-1">
+        <H1 text={citizen.name} />
+        {session.user.officialId === citizen.officialId && (
+          <EditIcon target="citizen" param={citizen.name} path="name" />
+        )}
+      </div>
       <div className="relative">
-        <Avatar url={citizen.avatar} />
+        <Avatar url={citizen.avatar} isUser={true} />
         {session.user.officialId === citizen.officialId &&
           (citizen.avatar != "" ? (
             <CrossButton small={true} click={handleDeleteAvatar} />
           ) : (
             <Upploader path="avatar" destination="citizen" />
           ))}
+      </div>
+      <div className="flex items-center justify-center gap-6">
+        <span className="flex items-center gap-1">
+          <ExternalLink
+            url={citizen.link}
+            children={<FaLink />}
+            hover={t("components.hoverInfos.links.website")}
+          />
+          {session.user.officialId === citizen.officialId && (
+            <EditIcon target="citizen" param={citizen.link} path="link" />
+          )}
+        </span>
+        <span className="flex items-center gap-1">
+          <ExternalLink
+            url={citizen.email != "" ? "mailto:" + citizen.email : ""}
+            children={<BsFillEnvelopeAtFill />}
+            hover={t("components.hoverInfos.links.email")}
+          />
+          {session.user.officialId === citizen.officialId && (
+            <EditIcon target="citizen" param={citizen.email} path="email" />
+          )}
+        </span>
       </div>
 
       <TileContainer
@@ -152,45 +210,23 @@ export default function Citizen() {
               title={t("pages.citizen.virtualCitizenship")}
               children={
                 <>
-                  <div className="flex items-center justify-center gap-6">
-                    <span className="flex items-center gap-1">
-                      <ExternalLink
-                        url={citizen.link}
-                        children={<FaLink />}
-                        hover={t("components.hoverInfos.links.website")}
-                      />
-                      {session.user.officialId === citizen.officialId && (
-                        <EditIcon
-                          target="citizen"
-                          param={citizen.link}
-                          path="link"
-                        />
-                      )}
-                    </span>
-                    <span className="flex items-center gap-1">
-                      <ExternalLink
-                        url={
-                          citizen.email != "" ? "mailto:" + citizen.email : ""
-                        }
-                        children={<BsFillEnvelopeAtFill />}
-                        hover={t("components.hoverInfos.links.email")}
-                      />
-                      {session.user.officialId === citizen.officialId && (
-                        <EditIcon
-                          target="citizen"
-                          param={citizen.email}
-                          path="email"
-                        />
-                      )}
-                    </span>
-                  </div>
                   <div className="max-w-[90%] flex flex-wrap items-center justify-center gap-1">
                     <IdTag label={citizen.officialId} />
+                    {citizen.citizenship.nationOwner && <NationOwnerTag />}
+                    <ResidenceTag residenceId={citizen.citizenship.residence} />
+                    {placesList.length > 0 &&
+                      session.user.officialId === citizen.officialId && (
+                        <EditIcon
+                          target="citizen"
+                          param={placesList}
+                          path="citizenship.residence"
+                        />
+                      )}
                     {citizen.role === "admin" && <RoleTag label="admin" />}
                   </div>
-                  {nation != undefined &&
-                  nation.officialId != "" &&
-                  citizen.citizenship.nationId != "" ? (
+                  {session.nation != undefined &&
+                  session.nation.officialId != "" &&
+                  session.user.citizenship.nationId != "" ? (
                     <div className="w-full flex flex-col justify-center items-center gap-2">
                       <div className="w-[300px] relative flex gap-2 items-center justify-center">
                         <Button

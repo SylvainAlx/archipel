@@ -7,7 +7,10 @@ export const getAllComs = async (req, res) => {
   } catch (error) {
     res
       .status(400)
-      .json({ message: "aucune communication", erreur: error.message });
+      .json({
+        message: "[A TRADUIRE] aucune communication",
+        erreur: error.message,
+      });
   }
 };
 
@@ -27,18 +30,21 @@ export const createCom = async (req, res) => {
     com
       .save()
       .then((com) => {
-        res.status(201).json({ com, message: "communication enregistrée" });
+        res
+          .status(201)
+          .json({ com, message: "[A TRADUIRE] communication enregistrée" });
       })
 
       .catch((error) => {
         if (error.code === 11000) {
           res.status(400).json({
-            message: "informations déjà existantes dans la base de données",
+            message:
+              "[A TRADUIRE] informations déjà existantes dans la base de données",
             erreur: error.keyValue,
           });
         } else {
           res.status(400).json({
-            message: `certaines informations sont erronées ou manquantes`,
+            message: `[A TRADUIRE] certaines informations sont erronées ou manquantes`,
             erreur: error.message,
           });
         }
@@ -53,12 +59,12 @@ export const deleteCom = async (req, res) => {
     const comId = req.params.id;
     Com.findByIdAndDelete(comId).then((resp) => {
       res.status(200).json({
-        message: `communication supprimée`,
+        message: `[A TRADUIRE] communication supprimée`,
       });
     });
   } catch (error) {
     res.status(400).json({
-      message: "impossible de supprimer la communication",
+      message: "[A TRADUIRE] impossible de supprimer la communication",
       erreur: error.message,
     });
   }

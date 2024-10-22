@@ -7,6 +7,7 @@ import Spinner from "../loading/spinner";
 import CrossButton from "../buttons/crossButton";
 import { handleDeleteImage } from "../../utils/functions";
 import { useTranslation } from "react-i18next";
+import { FaMapLocationDot } from "react-icons/fa6";
 
 export default function NationMap({
   selectedNation,
@@ -20,18 +21,18 @@ export default function NationMap({
     <TileContainer
       children={
         <DashTile
-          title={t("pages.nation.simulation.map")}
+          title={t("pages.nation.map.title")}
           children={
             <section className="w-full flex flex-col items-center rounded">
               {selectedNation.data.url.map != undefined &&
               selectedNation.data.url.map != "" ? (
-                <div className="relative w-full">
+                <div className="relative w-full max-w-[600px]">
                   <Suspense fallback={<Spinner />}>
                     <LazyImage
                       src={selectedNation.data.url.map}
                       alt={`map of ${selectedNation.name}`}
                       className="object-contain w-full h-full rounded cursor-zoom-in"
-                      hover={t("pages.nation.simulation.map")}
+                      hover={t("pages.nation.map.title")}
                     />
                   </Suspense>
                   {owner && (
@@ -48,16 +49,11 @@ export default function NationMap({
                 </div>
               ) : (
                 <>
-                  <div className="w-full max-w-[300px]">
-                    <img
-                      className="object-cover w-full h-full opacity-20"
-                      src="/emptyMap.webp"
-                      alt="empty map"
-                    ></img>
-                  </div>
+                  <FaMapLocationDot className="text-9xl" />
                   {owner && (
                     <Upploader path="data.url.map" destination="nation" />
                   )}
+                  <em>{t("pages.nation.map.noMap")}</em>
                 </>
               )}
             </section>

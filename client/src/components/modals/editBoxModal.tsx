@@ -16,6 +16,7 @@ import { useTranslation } from "react-i18next";
 import TextArea from "../form/textArea";
 import { IoMdCloseCircle } from "react-icons/io";
 import { MdCheckCircle } from "react-icons/md";
+import MarkdownEditor from "../markdownEditor";
 
 export default function EditBoxModal() {
   const [editBox, setEditBox] = useAtom(editbox);
@@ -26,7 +27,13 @@ export default function EditBoxModal() {
 
   useEffect(() => {
     if (Array.isArray(editBox.original)) {
-      setEditBox({ ...editBox, new: [] });
+      if (editBox.path === "data.roleplay.capital") {
+        setEditBox({ ...editBox, new: editBox.original[0].id });
+      } else if (editBox.path === "citizenship.residence") {
+        setEditBox({ ...editBox, new: editBox.original[0].id });
+      } else if (editBox.path === "parentId") {
+        setEditBox({ ...editBox, new: editBox.original[0].id });
+      } else setEditBox({ ...editBox, new: [] });
     }
     if (typeof editBox.original == "string") {
       setEditBox({ ...editBox, new: editBox.original });
@@ -63,7 +70,7 @@ export default function EditBoxModal() {
 
         setConfirm({
           action: "updateNation",
-          text: "Mettre à jour votre nation ?",
+          text: t("components.modals.confirmModal.updateNation"),
           result: "",
           target: "",
           payload: updatedNation,
@@ -88,7 +95,7 @@ export default function EditBoxModal() {
         }
         setConfirm({
           action: "updateUser",
-          text: "Mettre à jour votre profil ?",
+          text: t("components.modals.confirmModal.updateCitizen"),
           result: "",
           target: "",
           payload: updatedCitizen,
@@ -113,7 +120,7 @@ export default function EditBoxModal() {
         }
         setConfirm({
           action: "updatePlace",
-          text: "Mettre à jour votre lieu ?",
+          text: t("components.modals.confirmModal.updatePlace"),
           result: "",
           target: "",
           payload: updatedPlace,
@@ -150,6 +157,8 @@ export default function EditBoxModal() {
       setEditBox({ ...editBox, new: e.target.value });
     } else if (editBox.path === "parentId") {
       setEditBox({ ...editBox, new: e.target.value });
+    } else if (editBox.path === "citizenship.residence") {
+      setEditBox({ ...editBox, new: e.target.value });
     } else {
       setEditBox({ ...editBox, new: Number(e.target.value) });
     }
@@ -172,17 +181,24 @@ export default function EditBoxModal() {
         className="w-full flex flex-col gap-2 items-center"
         onSubmit={handleSubmit}
       >
-        {typeof editBox.original == "string" && (
-          <TextArea
-            required={!editBox.canBeEmpty}
-            maxLength={editBox.path === "data.general.description" ? 2000 : 60}
-            placeholder={t("components.modals.editModal.newValue")}
-            onChange={handleTextChange}
-            value={editBox.new.toString()}
-            name=""
-            rows={editBox.path === "data.general.description" ? 10 : 1}
-          />
-        )}
+        {typeof editBox.original == "string" &&
+          (editBox.path != "data.general.description" &&
+          editBox.path != "description" ? (
+            <TextArea
+              required={!editBox.canBeEmpty}
+              maxLength={60}
+              placeholder={t("components.modals.editModal.newValue")}
+              onChange={handleTextChange}
+              value={editBox.new.toString()}
+              name=""
+              rows={1}
+            />
+          ) : (
+            <MarkdownEditor
+              value={editBox.new.toString()}
+              onChange={(e: any) => setEditBox({ ...editBox, new: e })}
+            />
+          ))}
         {typeof editBox.original == "number" && (
           <Input
             required={!editBox.canBeEmpty}
