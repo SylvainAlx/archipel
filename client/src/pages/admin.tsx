@@ -11,6 +11,7 @@ import { useTranslation } from "react-i18next";
 export default function Admin() {
   const [paramsList] = useAtom(paramsListAtom);
   const { t } = useTranslation();
+
   useEffect(() => {
     if (paramsList.length === 0) {
       getAllParams();

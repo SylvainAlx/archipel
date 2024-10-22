@@ -18,7 +18,6 @@ import { useEffect, useState } from "react";
 import DashTile from "../components/dashTile";
 import TileContainer from "../components/tileContainer";
 import { emptyNewNationPayload, LabelId } from "../types/typNation";
-import { getNation } from "../api/nation/nationAPI";
 import IdTag from "../components/tags/idTag";
 import RoleTag from "../components/tags/roleTag";
 import Upploader from "../components/uploader";
@@ -32,6 +31,7 @@ import NationOwnerTag from "../components/tags/nationOwnerTag";
 import ResidenceTag from "../components/tags/residenceTag";
 import { getLabelIdArrayFromNationPlaceList } from "../utils/functions";
 import { getNationPlaces } from "../api/place/placeAPI";
+import { ConfirmBoxDefault } from "../types/typAtom";
 
 export default function Citizen() {
   const { t } = useTranslation();
@@ -41,6 +41,7 @@ export default function Citizen() {
   const [citizen, setCitizen] = useAtom(citizenFetchAtom);
   const [nation] = useAtom(nationFetchedAtom);
   const [session, setSession] = useAtom(sessionAtom);
+  const [confirm, setConfirm] = useAtom(confirmBox);
   const [nationPlaces] = useAtom(nationPlacesListAtom);
   const [placesList, setPlacesList] = useState<LabelId[]>([]);
   const [, setConfirmModal] = useAtom(confirmBox);
@@ -67,12 +68,6 @@ export default function Citizen() {
     } else {
       setEnableLeaving(false);
     }
-    if (
-      citizen.citizenship.nationId != "" &&
-      nation.officialId != citizen.citizenship.nationId
-    ) {
-      getNation(citizen.citizenship.nationId);
-    }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [citizen]);
@@ -98,6 +93,14 @@ export default function Citizen() {
       setPlacesList(list);
     }
   }, [nation.officialId, nationPlaces]);
+
+  useEffect(() => {
+    if (confirm.action === "deleteUser" && confirm.result === "OK") {
+      navigate(`/`);
+      setConfirm(ConfirmBoxDefault);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [confirm]);
 
   const handleClick = (dest: string) => {
     if (dest === "nation") {
@@ -126,7 +129,6 @@ export default function Citizen() {
       text: t("components.modals.confirmModal.deleteUser"),
       result: "",
     });
-    navigate("/");
   };
 
   const handleDeleteAvatar = () => {
@@ -222,9 +224,9 @@ export default function Citizen() {
                       )}
                     {citizen.role === "admin" && <RoleTag label="admin" />}
                   </div>
-                  {nation != undefined &&
-                  nation.officialId != "" &&
-                  citizen.citizenship.nationId != "" ? (
+                  {session.nation != undefined &&
+                  session.nation.officialId != "" &&
+                  session.user.citizenship.nationId != "" ? (
                     <div className="w-full flex flex-col justify-center items-center gap-2">
                       <div className="w-[300px] relative flex gap-2 items-center justify-center">
                         <Button

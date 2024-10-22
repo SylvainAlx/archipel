@@ -46,7 +46,7 @@ import {
   verifyCaptchaFetch,
 } from "./userFetch";
 
-export const getCitizensCount = async () => {
+export const getCitizensCount = () => {
   const stats = myStore.get(statsAtom);
   myStore.set(loadingAtom, true);
   getCitizensCountFetch()

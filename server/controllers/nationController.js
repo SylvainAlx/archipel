@@ -56,7 +56,9 @@ export const createNation = async (req, res) => {
       user.citizenship.nationName = savedNation.name;
       user.citizenship.nationOwner = true;
       const savedUser = await user.save();
-      res.status(201).json({ nation: savedNation, user: savedUser });
+      res
+        .status(201)
+        .json({ nation: savedNation, user: savedUser, infoType: "new" });
     } catch (error) {
       if (error.code === 11000) {
         console.error(error.message, error.keyValue);
@@ -93,6 +95,7 @@ export const getAllNations = async (req, res) => {
       res.status(200).json(nations);
     }
   } catch (error) {
+    console.error(error.message);
     res.status(404).json({ message: "[A TRADUIRE] aucune nations" });
   }
 };
@@ -105,6 +108,7 @@ export const getTop100Nations = async (req, res) => {
     ).limit(100);
     res.status(200).json(nations);
   } catch (error) {
+    console.error(error.message);
     res.status(404).json({ message: "[A TRADUIRE] Aucune nation trouvée" });
   }
 };
@@ -116,42 +120,11 @@ export const getOneNation = async (req, res) => {
       { officialId: nationId },
       "officialId name owner role data createdAt",
     );
-    res.status(200).json({
-      nation,
-    });
+    res.status(200).json(nation);
   } catch (error) {
+    console.error(error.message);
     res.status(404).json({
       message: "[A TRADUIRE] aucune nation à afficher",
-      erreur: error.message,
-    });
-  }
-};
-
-export const getSelfNation = async (req, res) => {
-  const id = req.nationId;
-  try {
-    const nation = await Nation.findOne(
-      { _id: id },
-      "officialId name owner role data createdAt",
-    );
-    res.status(200).json({ nation });
-  } catch (error) {
-    res.status(404).json({
-      message: "[A TRADUIRE] nation impossible à récupérer",
-      erreur: error.message,
-    });
-  }
-};
-
-export const getRoleplayData = async (req, res) => {
-  try {
-    const nationId = req.params.id;
-    const users = await User.find({ nation: nationId });
-    const places = await Place.find({ nation: nationId });
-    res.status(200).json({ users, places });
-  } catch (error) {
-    res.status(404).json({
-      message: "[A TRADUIRE] données impossible à récupérer",
       erreur: error.message,
     });
   }
@@ -166,7 +139,7 @@ export const deleteSelfNation = async (req, res) => {
     const nation = await Nation.findOneAndDelete({
       officialId: user.citizenship.nationId,
     });
-    if (nation.officialId != undefined) {
+    if (nation != null) {
       // suppression des images uploadées pour la nation
       if (nation.data.url.flag != "") {
         const uuid = nation.data.url.flag.replace("https://ucarecdn.com/", "");
@@ -184,15 +157,17 @@ export const deleteSelfNation = async (req, res) => {
         await deleteFile(uuid);
       }
 
-      // suppression des lieux de la nation
-      const places = await Place.deleteMany({ nation: nation.officialId });
       // suppression des images uploadées pour les lieux
+      const places = await Place.find({ nation: nation.officialId });
       places.forEach((place) => {
         if (place.image != "") {
           const uuid = place.image.replace("https://ucarecdn.com/", "");
           deleteFile(uuid);
         }
       });
+
+      // suppression des lieux de la nation
+      await Place.deleteMany({ nation: nation.officialId });
 
       // suppression de l'appartenance à la nation pour le gérant
       user.citizenship.nationId = "";
@@ -238,7 +213,6 @@ export const deleteSelfNation = async (req, res) => {
     }
   } catch (error) {
     console.error(error);
-
     res.status(400).json({
       message: "[A TRADUIRE] impossible de supprimer la nation",
       erreur: error.message,

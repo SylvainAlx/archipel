@@ -252,7 +252,14 @@
         "nationOwner": "Nation founder",
         "residence": "residence"
       },
-      "avatar": "avatar"
+      "avatar": "avatar",
+      "relations": {
+        "business": "business",
+        "economic": "economic",
+        "cultural": "cultural",
+        "scientific": "scientific",
+        "coop": "cooperation"
+      }
     },
     "searchBars": {
       "nationsList": {
@@ -328,7 +335,10 @@
     "errors": {
       "400": "Unknown error",
       "404": "Page not found",
-      "serverError": "Server error"
+      "serverError": "Server error",
+      "miss": "Some information is wrong or missing",
+      "forbidden": "Delete action",
+      "11000": "Information already existing in the database"
     },
     "user": {
       "signIn": "Sign In successful",
@@ -343,9 +353,7 @@
       "badPassword": "Bad password",
       "newPassword": "New saved password",
       "badRecovery": "Incorrect recovery key",
-      "11000": "Information already existing in the database",
       "deleteKO": "Unable to delete the user",
-      "error": "Some information is wrong or missing",
       "update": "Update successful"
     },
     "nation": {
@@ -359,8 +367,7 @@
     "tile": {
       "new": "Tile created",
       "update": "Tile updated",
-      "delete": "Tile deleted",
-      "forbidden": "Delete forbidden"
+      "delete": "Tile deleted"
     },
     "place": {
       "new": "Place created",

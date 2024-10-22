@@ -28,7 +28,7 @@ export const displayUserInfoByType = (type: string) => {
       errorMessage(i18n.t("toasts.user.deleteKO"));
       break;
     case "error":
-      errorMessage(i18n.t("toasts.user.error"));
+      errorMessage(i18n.t("toasts.errors.miss"));
       break;
     case "badRecovery":
       errorMessage(i18n.t("toasts.user.badRecovery"));
@@ -40,7 +40,7 @@ export const displayUserInfoByType = (type: string) => {
       errorMessage(i18n.t("toasts.user.badPassword"));
       break;
     case "11000":
-      errorMessage(i18n.t("toasts.user.11000"));
+      errorMessage(i18n.t("toasts.errors.11000"));
       break;
     case "serverError":
       errorMessage(i18n.t("toasts.user.serverError"));
@@ -56,18 +56,16 @@ export const displayNationInfoByType = (type: string) => {
       successMessage(i18n.t("toasts.nation.create"));
       break;
     case "miss":
-      errorMessage(
-        "[A TRADUIRE] Certaines informations sont erronées ou manquantes",
-      );
+      errorMessage(i18n.t("toasts.errors.miss"));
       break;
     case "unknown":
       errorMessage(i18n.t("toasts.errors.400"));
       break;
     case "forbidden":
-      errorMessage("[A TRADUIRE] Action interdite");
+      errorMessage(i18n.t("toasts.errors.forbidden"));
       break;
     case "11000":
-      errorMessage("[A TRADUIRE] Informations déjà existantes");
+      errorMessage(i18n.t("toasts.errors.11000"));
       break;
     case "serverError":
       errorMessage(i18n.t("toasts.errors.sererError"));
@@ -111,7 +109,7 @@ export const displayTileInfoByType = (type: string) => {
       successMessage(i18n.t("toasts.tile.delete"));
       break;
     case "forbidden":
-      errorMessage(i18n.t("toasts.tile.forbidden"));
+      errorMessage(i18n.t("toasts.errors.forbidden"));
       break;
     case "serverError":
       errorMessage(i18n.t("toasts.errors.sererError"));

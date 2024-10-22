@@ -71,7 +71,6 @@ export const deleteFile = async (uuid) => {
         },
       },
     );
-    console.log(response);
     return response;
   } catch (error) {
     console.error(error);

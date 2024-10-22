@@ -20,7 +20,7 @@ import {
   updateTileFetch,
 } from "./tileFetch";
 
-export const createTile = async (tile: Tile) => {
+export const createTile = (tile: Tile) => {
   myStore.set(loadingAtom, true);
   createTileFetch(tile)
     .then((resp) => {
@@ -38,7 +38,7 @@ export const createTile = async (tile: Tile) => {
     });
 };
 
-export const getNationTiles = async (nationOfficialId: string) => {
+export const getNationTiles = (nationOfficialId: string) => {
   const savedNationTileList: Tile[] = [];
   myStore.get(tileListAtom).forEach((tile) => {
     if (tile.nationOfficialId === nationOfficialId) {
@@ -66,7 +66,7 @@ export const getNationTiles = async (nationOfficialId: string) => {
   }
 };
 
-export const deleteTile = async (id: string) => {
+export const deleteTile = (id: string) => {
   myStore.set(loadingAtom, true);
   deleteTileFetch(id)
     .then((resp) => {

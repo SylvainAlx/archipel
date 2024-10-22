@@ -60,7 +60,9 @@ export default function RelationTile({ relation }: RelationTileProps) {
         <div className="flex flex-wrap justify-center items-center gap-2 text-2xl text-info">
           {relation.kind.business && (
             <div
-              onMouseEnter={() => setHoverInfo("[A TRADUIRE] libre échange")}
+              onMouseEnter={() =>
+                setHoverInfo(t("components.hoverInfos.relations.business"))
+              }
               onMouseLeave={() => setHoverInfo("")}
             >
               <FaBriefcase />
@@ -68,7 +70,9 @@ export default function RelationTile({ relation }: RelationTileProps) {
           )}
           {relation.kind.coop && (
             <div
-              onMouseEnter={() => setHoverInfo("[A TRADUIRE] militaire")}
+              onMouseEnter={() =>
+                setHoverInfo(t("components.hoverInfos.relations.coop"))
+              }
               onMouseLeave={() => setHoverInfo("")}
             >
               <FaPersonMilitaryPointing />
@@ -76,7 +80,9 @@ export default function RelationTile({ relation }: RelationTileProps) {
           )}
           {relation.kind.cultural && (
             <div
-              onMouseEnter={() => setHoverInfo("[A TRADUIRE] culture")}
+              onMouseEnter={() =>
+                setHoverInfo(t("components.hoverInfos.relations.cultural"))
+              }
               onMouseLeave={() => setHoverInfo("")}
             >
               <FaMasksTheater />
@@ -84,7 +90,9 @@ export default function RelationTile({ relation }: RelationTileProps) {
           )}
           {relation.kind.economic && (
             <div
-              onMouseEnter={() => setHoverInfo("[A TRADUIRE] économie")}
+              onMouseEnter={() =>
+                setHoverInfo(t("components.hoverInfos.relations.economic"))
+              }
               onMouseLeave={() => setHoverInfo("")}
             >
               <FaCoins />
@@ -92,7 +100,9 @@ export default function RelationTile({ relation }: RelationTileProps) {
           )}
           {relation.kind.scientific && (
             <div
-              onMouseEnter={() => setHoverInfo("[A TRADUIRE] scientifique")}
+              onMouseEnter={() =>
+                setHoverInfo(t("components.hoverInfos.relations.scientific"))
+              }
               onMouseLeave={() => setHoverInfo("")}
             >
               <FaFlask />
