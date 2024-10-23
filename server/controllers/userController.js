@@ -1,6 +1,7 @@
 import User from "../models/userSchema.js";
 import Nation from "../models/nationSchema.js";
 import Param from "../models/paramSchema.js";
+import Place from "../models/placeSchema.js";
 import jwt from "jsonwebtoken";
 import { LoremIpsum } from "lorem-ipsum";
 import { createOfficialId } from "../utils/functions.js";
@@ -320,6 +321,24 @@ export const updateUser = async (req, res) => {
         { officialId },
         "officialId name surname gender avatar language email link role citizenship createdAt",
       );
+      let newResidence;
+      if (user.citizenship.residence != citizenship.residence) {
+        const oldResidence = await Place.findOne({
+          officialId: user.citizenship.residence,
+        });
+        if (oldResidence && oldResidence.population > 0) {
+          oldResidence.population -= 1;
+          await oldResidence.save();
+        }
+        newResidence = await Place.findOne({
+          officialId: citizenship.residence,
+        });
+        if (newResidence) {
+          newResidence.population += 1;
+          await newResidence.save();
+        }
+      }
+
       user.name = name;
       user.gender = gender;
       user.avatar = avatar;
@@ -331,9 +350,11 @@ export const updateUser = async (req, res) => {
       user
         .save()
         .then((user) => {
-          res
-            .status(200)
-            .json({ user, message: "[A TRADUIRE] mise à jour réussie" });
+          res.status(200).json({
+            user,
+            place: newResidence,
+            message: "[A TRADUIRE] mise à jour réussie",
+          });
         })
         .catch((error) => {
           res.status(400).json({
@@ -393,13 +414,11 @@ export const changeStatus = async (req, res) => {
       user
         .save()
         .then((user) => {
-          res
-            .status(200)
-            .json({
-              user,
-              nation,
-              message: "[A TRADUIRE] mise à jour réussie",
-            });
+          res.status(200).json({
+            user,
+            nation,
+            message: "[A TRADUIRE] mise à jour réussie",
+          });
         })
         .catch((error) => {
           res.status(400).json({

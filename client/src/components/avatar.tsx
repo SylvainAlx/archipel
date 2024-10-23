@@ -39,16 +39,16 @@ export default function Avatar({ url, isUser, isHeader }: AvatarProps) {
         <img
           src={cachedImage}
           alt="avatar"
-          className="object-cover w-full h-full rounded cursor-zoom-in"
+          className={`object-cover w-full h-full rounded ${!isHeader && "cursor-zoom-in"}`}
           title={t("components.hoverInfos.avatar")}
-          onClick={() => handleClick(cachedImage)}
+          onClick={() => !isHeader && handleClick(cachedImage)}
         />
       ) : url ? (
         <Suspense fallback={<Spinner />}>
           <LazyImage
             src={url}
             alt="avatar"
-            className="object-cover w-full h-full rounded cursor-zoom-in"
+            className={`object-cover w-full h-full rounded ${!isHeader && "cursor-zoom-in"}`}
             hover={t("components.hoverInfos.avatar")}
           />
         </Suspense>

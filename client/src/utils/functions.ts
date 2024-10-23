@@ -306,3 +306,13 @@ export const getLabelIdArrayFromNationPlaceList = () => {
   });
   return updatedPlaces;
 };
+
+export const getTotalPopulation = (place: Place): number => {
+  let total: number = 0;
+  myStore.get(nationPlacesListAtom).forEach((e) => {
+    if (e.parentId === place.officialId) {
+      total += e.population;
+    }
+  });
+  return total + place.population;
+};

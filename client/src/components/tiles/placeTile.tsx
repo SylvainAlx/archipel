@@ -5,14 +5,13 @@ import {
   session,
 } from "../../settings/store";
 import { useAtom } from "jotai";
-// import PopulationTag from "../tags/populationTag";
+import PopulationTag from "../tags/populationTag";
 import { GiCapitol } from "react-icons/gi";
 import { useLocation, useNavigate } from "react-router-dom";
 import EyeButton from "../buttons/eyeButton";
-import { getPlaceTypeLabel } from "../../utils/functions";
+import { getPlaceTypeLabel, getTotalPopulation } from "../../utils/functions";
 import PlaceTag from "../tags/placeTag";
 import { useEffect, useState } from "react";
-import TreeTag from "../tags/treeTag";
 import { Place } from "../../types/typPlace";
 import NationTag from "../tags/nationTag";
 import Avatar from "../avatar";
@@ -46,8 +45,9 @@ export default function PlaceTile({ place, owner }: PlaceTileProp) {
       }
     });
     setChildrenStats(stats);
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [nationPlacesList, place.officialId]);
 
   return (
     <div
@@ -69,10 +69,7 @@ export default function PlaceTile({ place, owner }: PlaceTileProp) {
       </h3>
       <div className="max-w-[90%] flex flex-wrap items-center self-end justify-end gap-1">
         <PlaceTag label={getPlaceTypeLabel(place.type)} />
-        {place.type != 2 && (
-          <TreeTag label={childrenStats.children.toString()} />
-        )}
-        {/* <PopulationTag label={childrenStats.population.toString()} /> */}
+        <PopulationTag label={getTotalPopulation(place)} />
         {emplacement.pathname != `/nation/${place.nation}` && (
           <NationTag label={place.nation} />
         )}

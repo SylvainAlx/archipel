@@ -282,6 +282,12 @@
       },
       "placesList": {
         "input": "Nom du lieu",
+        "checkbox": {
+          "state": "état",
+          "county": "region",
+          "city": "ville",
+          "nature": "environnement"
+        },
         "sortPlaces": {
           "ascAlpha": "Alphabetique croissant",
           "descAlpha": "Alphabetique décroissant",
