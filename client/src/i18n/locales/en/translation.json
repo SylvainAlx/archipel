@@ -282,6 +282,12 @@
       },
       "placesList": {
         "input": "Location name",
+        "checkbox": {
+          "state": "state",
+          "county": "county",
+          "city": "city",
+          "nature": "nature"
+        },
         "sortPlaces": {
           "ascAlpha": "Ascending alphabetical",
           "descAlpha": "Descending alphabetical",
@@ -373,6 +379,10 @@
       "new": "Place created",
       "update": "Place updated",
       "delete": "Place deleted"
+    },
+    "file": {
+      "import": "File uploaded successful",
+      "delete": "File deleted successful"
     }
   }
 }

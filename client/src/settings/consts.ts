@@ -226,19 +226,19 @@ export const politicalSideList: PoliticalSide[] = [
 export const placesTypeList = [
   {
     id: 0,
-    label: "État",
+    label: i18n.t("components.searchBars.placesList.checkbox.state"),
   },
   {
     id: 1,
-    label: "Région",
+    label: i18n.t("components.searchBars.placesList.checkbox.county"),
   },
   {
     id: 2,
-    label: "Ville",
+    label: i18n.t("components.searchBars.placesList.checkbox.city"),
   },
   {
     id: 3,
-    label: "Environnement",
+    label: i18n.t("components.searchBars.placesList.checkbox.nature"),
   },
 ];
 

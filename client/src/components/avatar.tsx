@@ -9,9 +9,10 @@ import { AiOutlinePicture } from "react-icons/ai";
 export interface AvatarProps {
   url: string;
   isUser: boolean;
+  isHeader?: boolean;
 }
 
-export default function Avatar({ url, isUser }: AvatarProps) {
+export default function Avatar({ url, isUser, isHeader }: AvatarProps) {
   const LazyImage = lazy(() => import("./lazy/lazyImage"));
   const { t } = useTranslation();
   const [cachedImage, setCachedImage] = useState<string | null>(null);
@@ -27,21 +28,27 @@ export default function Avatar({ url, isUser }: AvatarProps) {
   };
 
   return (
-    <div className="animate-fadeIn h-[80px] w-[80px] flex flex-col justify-center rounded-full overflow-hidden">
+    <div
+      className={
+        isHeader
+          ? "rounded-full w-[45px] h-[45px] md:w-[28px] md:h-[28px] overflow-hidden"
+          : "animate-fadeIn h-[80px] w-[80px] flex flex-col justify-center rounded-full overflow-hidden"
+      }
+    >
       {cachedImage ? (
         <img
           src={cachedImage}
           alt="avatar"
-          className="object-cover w-full h-full rounded cursor-zoom-in"
+          className={`object-cover w-full h-full rounded ${!isHeader && "cursor-zoom-in"}`}
           title={t("components.hoverInfos.avatar")}
-          onClick={() => handleClick(cachedImage)}
+          onClick={() => !isHeader && handleClick(cachedImage)}
         />
       ) : url ? (
         <Suspense fallback={<Spinner />}>
           <LazyImage
             src={url}
             alt="avatar"
-            className="object-cover w-full h-full rounded cursor-zoom-in"
+            className={`object-cover w-full h-full rounded ${!isHeader && "cursor-zoom-in"}`}
             hover={t("components.hoverInfos.avatar")}
           />
         </Suspense>

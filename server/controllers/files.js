@@ -7,8 +7,8 @@ export const deleteUploadedFile = async (req, res) => {
     if (!uuid) {
       return res.status(400).json({ message: "[A TRADUIRE] UUID is required" });
     }
-
-    if (await deleteFile(uuid).ok) {
+    const response = await deleteFile(uuid);
+    if (response.ok) {
       return res
         .status(200)
         .json({ statut: 200, message: "[A TRADUIRE] Suppression réussie" });

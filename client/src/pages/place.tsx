@@ -15,6 +15,7 @@ import {
   getPlaceListByType,
   getPlaceName,
   getPlaceTypeLabel,
+  getTotalPopulation,
   handleDeleteImage,
 } from "../utils/functions";
 import NewPlaceButton from "../components/buttons/newPlaceButton";
@@ -29,6 +30,7 @@ import Upploader from "../components/uploader";
 import { AiOutlinePicture } from "react-icons/ai";
 import { ConfirmBoxDefault } from "../types/typAtom";
 import MDEditor from "@uiw/react-md-editor";
+import PopulationTag from "../components/tags/populationTag";
 
 export default function Place() {
   const navigate = useNavigate();
@@ -82,6 +84,8 @@ export default function Place() {
         getPlaceName(nationPlacesList, place.parentId, nation.name),
       );
     }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [nationPlacesList, place, nation]);
 
   useEffect(() => {
@@ -116,7 +120,7 @@ export default function Place() {
 
   return (
     <>
-      <section className="w-full pb-2 flex flex-col items-center gap-2">
+      <section className="w-full px-2 pb-2 flex flex-col items-center gap-2">
         <div className="w-full flex items-center justify-center flex-wrap gap-1">
           <ParentButton click={handleClick} />
           {owner && <CrossButton click={handleDelete} />}
@@ -163,7 +167,12 @@ export default function Place() {
             <>
               <AiOutlinePicture className="text-9xl" />
               {owner && (
-                <Upploader path="image" destination="place" place={place} />
+                <Upploader
+                  path="image"
+                  destination="place"
+                  place={place}
+                  maxSize={2000000}
+                />
               )}
               <em>{t("pages.place.noImage")}</em>
             </>
@@ -173,6 +182,7 @@ export default function Place() {
         <div className="flex items-center justify-center flex-wrap gap-1">
           {place.officialId && <IdTag label={place.officialId} />}
           <PlaceTag label={getPlaceTypeLabel(place.type)} />
+          <PopulationTag label={getTotalPopulation(place)} />
         </div>
         <div className="flex items-center gap-2">
           <MDEditor.Markdown
@@ -189,7 +199,7 @@ export default function Place() {
           )}
         </div>
       </section>
-      <section className="w-full flex flex-wrap justify-center gap-2">
+      <section className="w-full px-2 flex flex-wrap justify-center gap-2">
         <div className="w-full py-4 flex flex-col gap-2">
           {nationPlacesList != undefined &&
             nationPlacesList.length > 0 &&

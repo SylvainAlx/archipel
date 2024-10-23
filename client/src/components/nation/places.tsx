@@ -1,9 +1,4 @@
-import {
-  Suspense,
-  lazy,
-  useEffect,
-  // useState
-} from "react";
+import { Suspense, lazy, useEffect, useState } from "react";
 import { SelectedNationProps } from "../../types/typProp";
 import TileContainer from "../tileContainer";
 import { nationPlacesListAtom } from "../../settings/store";
@@ -12,13 +7,13 @@ import { getNationPlaces } from "../../api/place/placeAPI";
 import NewPlaceButton from "../buttons/newPlaceButton";
 import { useTranslation } from "react-i18next";
 import DashTile from "../dashTile";
-// import { Place } from "../../types/typPlace";
+import { Place } from "../../types/typPlace";
 import BarreLoader from "../loading/barreLoader";
 
 export default function Places({ selectedNation, owner }: SelectedNationProps) {
   const { t } = useTranslation();
   const [nationPlacesList] = useAtom(nationPlacesListAtom);
-  // const [places] = useState<Place[]>([]);
+  const [places, setPlaces] = useState<Place[]>([]);
   const PlaceTile = lazy(() => import("../tiles/placeTile"));
 
   useEffect(() => {
@@ -27,15 +22,15 @@ export default function Places({ selectedNation, owner }: SelectedNationProps) {
     }
   }, [selectedNation.officialId]);
 
-  // useEffect(() => {
-  //   const updatedPlaces: Place[] = [];
-  //   nationPlacesList.forEach((place) => {
-  //     if (place.parentId === selectedNation.officialId) {
-  //       updatedPlaces.push(place);
-  //     }
-  //   });
-  //   setPlaces(updatedPlaces);
-  // }, [nationPlacesList, selectedNation.officialId]);
+  useEffect(() => {
+    const updatedPlaces: Place[] = [];
+    nationPlacesList.forEach((place) => {
+      if (place.parentId === selectedNation.officialId) {
+        updatedPlaces.push(place);
+      }
+    });
+    setPlaces(updatedPlaces);
+  }, [nationPlacesList, selectedNation.officialId]);
 
   return (
     <TileContainer
@@ -52,8 +47,8 @@ export default function Places({ selectedNation, owner }: SelectedNationProps) {
                     parentId={selectedNation.officialId}
                   />
                 )}
-                {nationPlacesList.length > 0 ? (
-                  nationPlacesList.map((place, i) => {
+                {places.length > 0 ? (
+                  places.map((place, i) => {
                     return (
                       <Suspense key={i} fallback={<BarreLoader />}>
                         <div className="relative w-full">

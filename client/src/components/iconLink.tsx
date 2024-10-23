@@ -4,11 +4,11 @@ import {
   IoMdGlobe,
   IoMdHome,
 } from "react-icons/io";
-import { RxAvatar } from "react-icons/rx";
 import { sessionAtom } from "../settings/store";
 import { useAtom } from "jotai";
 import { MouseEventHandler } from "react";
-import { GiBlackFlag } from "react-icons/gi";
+import Flag from "./flag";
+import Avatar from "./avatar";
 
 export interface IconLinkProps {
   destination: string;
@@ -28,26 +28,12 @@ export default function IconLink({ destination, text, action }: IconLinkProps) {
       {destination === "explore" && <IoMdGlobe />}
       {destination === "login" && <IoMdLogIn />}
       {destination === "register" && <IoMdAddCircleOutline />}
-      {destination === "user" &&
-        (session.user.avatar ? (
-          <div className="rounded-full w-[45px] h-[45px] md:w-[28px] md:h-[28px] overflow-hidden">
-            <img src={session.user.avatar} className={`w-full h-full`} />
-          </div>
-        ) : (
-          <RxAvatar />
-        ))}
-      {destination === "nation" &&
-        session.nation &&
-        (session.nation.data.url.flag != "" ? (
-          <div className="mt-[2px] rounded-full w-[43px] h-[43px] md:w-[28px] md:h-[28px] overflow-hidden">
-            <img
-              src={session.nation.data.url.flag}
-              className={`w-full h-full`}
-            />
-          </div>
-        ) : (
-          <GiBlackFlag />
-        ))}
+      {destination === "user" && session.user.avatar && (
+        <Avatar isUser={true} url={session.user.avatar} isHeader={true} />
+      )}
+      {destination === "nation" && session.nation.data.url.flag != "" && (
+        <Flag nation={session.nation} isHeader={true} />
+      )}
       <h2 className="hidden md:block text-[10px]">
         {text.toLocaleUpperCase()}
       </h2>

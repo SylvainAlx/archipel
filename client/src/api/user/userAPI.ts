@@ -26,6 +26,7 @@ import {
   updateByOfficialId,
   updateOrCreateCitizenInMemory,
   updateOrCreateNationInMemory,
+  updateOrCreatePlaceInMemory,
 } from "../../utils/atomArrayFunctions";
 import { displayUserInfoByType } from "../../utils/displayInfos";
 import { findElementOfAtomArray, GET_JWT } from "../../utils/functions";
@@ -282,6 +283,7 @@ export const updateUser = (payload: User) => {
         myStore.set(citizenFetchAtom, resp.user);
         myStore.set(sessionAtom, { ...session, user: resp.user });
         updateOrCreateCitizenInMemory(resp.user);
+        updateOrCreatePlaceInMemory(resp.place);
         displayUserInfoByType("update");
       } else {
         displayUserInfoByType("error");

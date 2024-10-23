@@ -32,6 +32,7 @@ import ResidenceTag from "../components/tags/residenceTag";
 import { getLabelIdArrayFromNationPlaceList } from "../utils/functions";
 import { getNationPlaces } from "../api/place/placeAPI";
 import { ConfirmBoxDefault } from "../types/typAtom";
+import { getNation } from "../api/nation/nationAPI";
 
 export default function Citizen() {
   const { t } = useTranslation();
@@ -67,6 +68,9 @@ export default function Citizen() {
       setEnableLeaving(true);
     } else {
       setEnableLeaving(false);
+    }
+    if (citizen.citizenship.nationId != "") {
+      getNation(citizen.citizenship.nationId);
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -177,7 +181,7 @@ export default function Citizen() {
           (citizen.avatar != "" ? (
             <CrossButton small={true} click={handleDeleteAvatar} />
           ) : (
-            <Upploader path="avatar" destination="citizen" />
+            <Upploader path="avatar" destination="citizen" maxSize={500000} />
           ))}
       </div>
       <div className="flex items-center justify-center gap-6">
@@ -224,9 +228,9 @@ export default function Citizen() {
                       )}
                     {citizen.role === "admin" && <RoleTag label="admin" />}
                   </div>
-                  {session.nation != undefined &&
-                  session.nation.officialId != "" &&
-                  session.user.citizenship.nationId != "" ? (
+                  {nation != undefined &&
+                  nation.officialId != "" &&
+                  citizen.citizenship.nationId != "" ? (
                     <div className="w-full flex flex-col justify-center items-center gap-2">
                       <div className="w-[300px] relative flex gap-2 items-center justify-center">
                         <Button

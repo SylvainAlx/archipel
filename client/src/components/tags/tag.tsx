@@ -26,7 +26,7 @@ export default function Tag({
       onMouseEnter={() => setShowInfo(true)}
       onMouseLeave={() => setShowInfo(false)}
       onClick={click && click}
-      className={`relative h-[30px] py-1 px-2 rounded-full text-sm flex items-center gap-1 ${bgColor && bgColor} ${textStyle && textStyle} ${textColor && textColor} shadow-md ${click ? "cursor-pointer" : "cursor-default"}`}
+      className={`relative h-[30px] py-1 px-2 rounded-md text-sm flex items-center gap-1 ${bgColor && bgColor} ${textStyle && textStyle} ${textColor && textColor} shadow-md ${click ? "cursor-pointer" : "cursor-default"}`}
     >
       {children}
       {showInfo && hover != "" && <HoverInfo text={hover} />}

@@ -1,3 +1,4 @@
+import i18n from "../../i18n/i18n";
 import { SERVER_URL } from "../../settings/consts";
 import {
   citizenFetchAtom,
@@ -7,7 +8,7 @@ import {
   placeFetchedAtom,
 } from "../../settings/store";
 import { GET_JWT } from "../../utils/functions";
-import { errorMessage } from "../../utils/toasts";
+import { errorMessage, successMessage } from "../../utils/toasts";
 import { updateNation } from "../nation/nationAPI";
 import { updatePlace } from "../place/placeAPI";
 import { updateUser } from "../user/userAPI";
@@ -50,6 +51,7 @@ export const deleteUploadedFile = ({ url, type }: deleteFileAPIProps) => {
           placeUpdated.image = "";
           updatePlace(placeUpdated);
         }
+        successMessage(i18n.t("toasts.file.delete"));
       }
     })
     .catch((error) => {
