@@ -15,6 +15,8 @@ import { useTranslation } from "react-i18next";
 import { useAtom } from "jotai";
 import { placeSearchSortOptions } from "../../settings/consts";
 import { getPlaces } from "../../api/place/placeAPI";
+import { getPlaceTypeLabel, getTotalPopulation } from "../../utils/functions";
+import { Place } from "../../types/typPlace";
 
 export interface SearchBarProps {
   type: string;
@@ -23,9 +25,15 @@ export interface SearchBarProps {
 }
 
 export default function PlaceSearchBar({ list, setList }: SearchBarProps) {
-  const [selectOption, setSelectOption] = useState("3");
   const { t } = useTranslation();
   const [searchName, setSearchName] = useState("");
+  const [sorting, setSorting] = useState("3");
+  const [placeType, setPlaceType] = useState({
+    type_0: true,
+    type_1: true,
+    type_2: true,
+    type_3: true,
+  });
   const [placeList] = useAtom(placesListAtom);
   const [stats] = useAtom(statsAtom);
 
@@ -37,38 +45,95 @@ export default function PlaceSearchBar({ list, setList }: SearchBarProps) {
   }, [stats.counts.places]);
 
   useEffect(() => {
-    placesSorting();
+    placesSorting(placeList, sorting);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectOption, placeList]);
+  }, [placeList]);
+
+  useEffect(() => {
+    const updatedList1 = placeList.filter(
+      (place) => place.type === 0 && placeType.type_0,
+    );
+    const updatedList2 = placeList.filter(
+      (place) => place.type === 1 && placeType.type_1,
+    );
+    const updatedList3 = placeList.filter(
+      (place) => place.type === 2 && placeType.type_2,
+    );
+    const updatedList4 = placeList.filter(
+      (place) => place.type === 3 && placeType.type_3,
+    );
+    const newList = [
+      ...updatedList1,
+      ...updatedList2,
+      ...updatedList3,
+      ...updatedList4,
+    ];
+    setList(newList);
+    placesSorting(newList, sorting);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [placeType]);
 
   const reset = () => {
     getPlaces("");
-    setSelectOption("0");
+    setPlaceType({
+      type_0: true,
+      type_1: true,
+      type_2: true,
+      type_3: true,
+    });
   };
 
-  const placesSorting = () => {
-    list = [...placeList];
+  const placesSorting = (Alist: Place[], selectOption: string) => {
+    const updatedList = [...Alist];
     if (selectOption === "0") {
       setList(
-        list.sort(function (a, b) {
+        updatedList.sort(function (a, b) {
           return a.name.localeCompare(b.name);
         }),
       );
     } else if (selectOption === "1") {
       setList(
-        list.sort(function (a, b) {
+        updatedList.sort(function (a, b) {
           return b.name.localeCompare(a.name);
         }),
       );
     } else if (selectOption === "2") {
-      setList(list.sort((a, b) => a.population - b.population));
+      setList(
+        updatedList.sort(
+          (a, b) => getTotalPopulation(a) - getTotalPopulation(b),
+        ),
+      );
     } else if (selectOption === "3") {
-      setList(list.sort((a, b) => a.population - b.population));
+      setList(
+        updatedList.sort(
+          (a, b) => getTotalPopulation(b) - getTotalPopulation(a),
+        ),
+      );
     }
+    setSorting(selectOption);
   };
 
   const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchName(e.target.value);
+  };
+
+  const handleChangeCheckbox = (e: ChangeEvent<HTMLInputElement>) => {
+    switch (e.target.id) {
+      case "0":
+        setPlaceType({ ...placeType, type_0: !placeType.type_0 });
+        break;
+      case "1":
+        setPlaceType({ ...placeType, type_1: !placeType.type_1 });
+        break;
+      case "2":
+        setPlaceType({ ...placeType, type_2: !placeType.type_2 });
+        break;
+      case "3":
+        setPlaceType({ ...placeType, type_3: !placeType.type_3 });
+        break;
+      default:
+        break;
+    }
   };
 
   const handleSubmit = (e: FormEvent) => {
@@ -91,27 +156,66 @@ export default function PlaceSearchBar({ list, setList }: SearchBarProps) {
       />
       <Select
         onChange={(e: ChangeEvent<HTMLSelectElement>) =>
-          setSelectOption(e.target.value)
+          placesSorting(list, e.target.value)
         }
         options={placeSearchSortOptions}
-        value={selectOption}
+        value={sorting}
       />
-
-      <div className="pb-2 flex flex-wrap gap-2 items-center justify-center md:justify-end">
-        <div className="w-[150px] flex justify-center">
-          <Button
-            type="submit"
-            disabled={false}
-            text={t("components.buttons.search")}
-          />
-        </div>
-        <div className="w-[150px] flex justify-center">
-          <Button
-            type="button"
-            disabled={false}
-            text={t("components.buttons.reset")}
-            click={reset}
-          />
+      <div className="flex flex-wrap flex-col md:flex-row gap-2 items-center justify-center md:justify-between">
+        <fieldset className="flex gap-3">
+          <label className="flex gap-2 items-center">
+            {getPlaceTypeLabel(0)}
+            <input
+              type="checkbox"
+              id="0"
+              checked={placeType.type_0}
+              onChange={handleChangeCheckbox}
+            />
+          </label>
+          <label className="flex gap-2 items-center">
+            {getPlaceTypeLabel(1)}
+            <input
+              type="checkbox"
+              id="1"
+              checked={placeType.type_1}
+              onChange={handleChangeCheckbox}
+            />
+          </label>
+          <label className="flex gap-2 items-center">
+            {getPlaceTypeLabel(2)}
+            <input
+              type="checkbox"
+              id="2"
+              checked={placeType.type_2}
+              onChange={handleChangeCheckbox}
+            />
+          </label>
+          <label className="flex gap-2 items-center">
+            {getPlaceTypeLabel(3)}
+            <input
+              type="checkbox"
+              id="3"
+              checked={placeType.type_3}
+              onChange={handleChangeCheckbox}
+            />
+          </label>
+        </fieldset>
+        <div className="pb-2 flex flex-wrap gap-2 items-center justify-between md:justify-end">
+          <div className="w-[150px] flex justify-center">
+            <Button
+              type="submit"
+              disabled={false}
+              text={t("components.buttons.search")}
+            />
+          </div>
+          <div className="w-[150px] flex justify-center">
+            <Button
+              type="button"
+              disabled={false}
+              text={t("components.buttons.reset")}
+              click={reset}
+            />
+          </div>
         </div>
       </div>
     </form>

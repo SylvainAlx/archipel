@@ -8,8 +8,8 @@ export default function NationOwnerTag() {
   return (
     <Tag
       text={t("components.hoverInfos.tags.nationOwner")}
-      hover={t("components.hoverInfos.tags.nationOwner")}
-      bgColor="bg-info"
+      hover={t("components.hoverInfos.tags.role")}
+      bgColor="bg-secondary2"
       children={<GiLaurelCrown />}
     />
   );

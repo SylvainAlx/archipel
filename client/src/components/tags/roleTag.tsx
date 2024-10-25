@@ -1,7 +1,7 @@
 import Tag from "./tag";
 import { customTagProps } from "../../types/typProp";
 import { useTranslation } from "react-i18next";
-import { MdGrade } from "react-icons/md";
+import { FaShieldAlt } from "react-icons/fa";
 
 export default function RoleTag({ label }: customTagProps) {
   const { t } = useTranslation();
@@ -9,8 +9,8 @@ export default function RoleTag({ label }: customTagProps) {
     <Tag
       text={label.toString()}
       hover={t("components.hoverInfos.tags.role")}
-      bgColor="bg-info"
-      children={<MdGrade />}
+      bgColor="bg-secondary2"
+      children={<FaShieldAlt />}
     />
   );
 }

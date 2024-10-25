@@ -15,6 +15,7 @@ import {
   getPlaceListByType,
   getPlaceName,
   getPlaceTypeLabel,
+  getTotalPopulation,
   handleDeleteImage,
 } from "../utils/functions";
 import NewPlaceButton from "../components/buttons/newPlaceButton";
@@ -29,6 +30,7 @@ import Upploader from "../components/uploader";
 import { AiOutlinePicture } from "react-icons/ai";
 import { ConfirmBoxDefault } from "../types/typAtom";
 import MDEditor from "@uiw/react-md-editor";
+import PopulationTag from "../components/tags/populationTag";
 
 export default function Place() {
   const navigate = useNavigate();
@@ -72,7 +74,7 @@ export default function Place() {
 
   useEffect(() => {
     if (nation != null && nation != undefined && nation.officialId != "") {
-      getNationPlaces(nation.officialId);
+      getNationPlaces(nation);
     }
   }, [nation]);
 
@@ -82,6 +84,8 @@ export default function Place() {
         getPlaceName(nationPlacesList, place.parentId, nation.name),
       );
     }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [nationPlacesList, place, nation]);
 
   useEffect(() => {
@@ -178,6 +182,7 @@ export default function Place() {
         <div className="flex items-center justify-center flex-wrap gap-1">
           {place.officialId && <IdTag label={place.officialId} />}
           <PlaceTag label={getPlaceTypeLabel(place.type)} />
+          <PopulationTag label={getTotalPopulation(place)} />
         </div>
         <div className="flex items-center gap-2">
           <MDEditor.Markdown

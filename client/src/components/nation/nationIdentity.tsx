@@ -233,7 +233,11 @@ export default function NationIdentity({
                         />
                       )}
                     </div>
-                    <TagList selectedNation={selectedNation} owner={owner} />
+                    <TagList
+                      nation={selectedNation}
+                      owner={owner}
+                      isTile={false}
+                    />
                   </div>
 
                   <div className="w-full mt-4 justify-center flex gap-2">

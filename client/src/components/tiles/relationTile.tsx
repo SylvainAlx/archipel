@@ -53,11 +53,11 @@ export default function RelationTile({ relation }: RelationTileProps) {
     <div
       className={`w-full p-2 rounded flex flex-col items-center gap-3 bg-complementary shadow-xl`}
     >
-      <div className="w-full text-xl flex items-center gap-2">
-        <div className="text-5xl">
-          <FaHandshakeSimple />
-        </div>
-        <div className="flex flex-wrap justify-center items-center gap-2 text-2xl text-info">
+      <div className="w-full text-xl flex items-center justify-between gap-2">
+        <div className="flex justify-center items-center gap-2 text-2xl text-info">
+          <div className="text-5xl text-light">
+            <FaHandshakeSimple />
+          </div>
           {relation.kind.business && (
             <div
               onMouseEnter={() =>
@@ -109,8 +109,9 @@ export default function RelationTile({ relation }: RelationTileProps) {
             </div>
           )}
         </div>
+        <div className="text-xl">{relation.name}</div>
       </div>
-      <div className="text-xl">{relation.name}</div>
+
       <div className="w-full flex flex-wrap items-center justify-end gap-1">
         {relation.nations.map((nation, i) => {
           return <NationTag key={i} label={nation.OfficialId} />;
