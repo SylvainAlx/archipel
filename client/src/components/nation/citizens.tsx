@@ -1,12 +1,7 @@
 import { useTranslation } from "react-i18next";
 import TileContainer from "../tileContainer";
 import DashTile from "../dashTile";
-import {
-  lazy,
-  Suspense,
-  useEffect,
-  // useState
-} from "react";
+import { lazy, Suspense, useEffect } from "react";
 import { getNationCitizens } from "../../api/user/userAPI";
 import { SelectedNationProps } from "../../types/typProp";
 import {
@@ -15,14 +10,12 @@ import {
   sessionAtom,
 } from "../../settings/store";
 import { useAtom } from "jotai";
-// import { User } from "../../types/typUser";
 import BarreLoader from "../loading/barreLoader";
 import Button from "../buttons/button";
 import { FaPassport } from "react-icons/fa";
 
 export default function Citizens({ selectedNation }: SelectedNationProps) {
   const [nationCitizenList] = useAtom(nationCitizenListAtom);
-  // const [citizens, setCitizens] = useState<User[]>([]);
   const [session] = useAtom(sessionAtom);
   const [, setConfirmModal] = useAtom(confirmBox);
   const { t } = useTranslation();
@@ -30,17 +23,9 @@ export default function Citizens({ selectedNation }: SelectedNationProps) {
 
   useEffect(() => {
     if (selectedNation.officialId !== "") {
-      getNationCitizens(selectedNation.officialId);
+      getNationCitizens(selectedNation);
     }
-  }, [selectedNation.officialId]);
-
-  // useEffect(() => {
-  //   const updatedCitizens: User[] = [];
-  //   nationCitizenList.forEach((citizen) => {
-  //     updatedCitizens.push(citizen);
-  //   });
-  //   setCitizens(updatedCitizens.sort());
-  // }, [nationCitizenList, selectedNation.officialId]);
+  }, [selectedNation]);
 
   const askCtz = () => {
     const payload = {

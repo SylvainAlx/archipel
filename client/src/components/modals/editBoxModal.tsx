@@ -183,7 +183,8 @@ export default function EditBoxModal() {
       >
         {typeof editBox.original == "string" &&
           (editBox.path != "data.general.description" &&
-          editBox.path != "description" ? (
+          editBox.path != "description" &&
+          editBox.path != "bio" ? (
             <TextArea
               required={!editBox.canBeEmpty}
               maxLength={60}

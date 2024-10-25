@@ -33,6 +33,7 @@ import { getLabelIdArrayFromNationPlaceList } from "../utils/functions";
 import { getNationPlaces } from "../api/place/placeAPI";
 import { ConfirmBoxDefault } from "../types/typAtom";
 import { getNation } from "../api/nation/nationAPI";
+import MDEditor from "@uiw/react-md-editor";
 
 export default function Citizen() {
   const { t } = useTranslation();
@@ -82,7 +83,7 @@ export default function Citizen() {
       nation.officialId !== "" &&
       nationPlaces.length === 0
     ) {
-      getNationPlaces(nation.officialId);
+      getNationPlaces(nation);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [nation]);
@@ -195,6 +196,7 @@ export default function Citizen() {
             <EditIcon target="citizen" param={citizen.link} path="link" />
           )}
         </span>
+
         <span className="flex items-center gap-1">
           <ExternalLink
             url={citizen.email != "" ? "mailto:" + citizen.email : ""}
@@ -205,6 +207,25 @@ export default function Citizen() {
             <EditIcon target="citizen" param={citizen.email} path="email" />
           )}
         </span>
+      </div>
+      <div className="w-full mt-4 justify-center flex gap-2">
+        {citizen.bio ? (
+          <MDEditor.Markdown
+            className="bg-transparent text-light text-justify"
+            source={citizen.bio}
+            style={{ whiteSpace: "pre-wrap" }}
+          />
+        ) : (
+          <em className="text-center">{t("pages.citizen.noBio")}</em>
+        )}
+
+        {session.user.officialId === citizen.officialId && (
+          <EditIcon
+            target="citizen"
+            param={citizen.bio ? citizen.bio : ""}
+            path="bio"
+          />
+        )}
       </div>
 
       <TileContainer
@@ -226,7 +247,9 @@ export default function Citizen() {
                           path="citizenship.residence"
                         />
                       )}
-                    {citizen.role === "admin" && <RoleTag label="admin" />}
+                    {citizen.role === "admin" && (
+                      <RoleTag label={t("pages.citizen.role.admin")} />
+                    )}
                   </div>
                   {nation != undefined &&
                   nation.officialId != "" &&

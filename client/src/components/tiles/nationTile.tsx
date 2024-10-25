@@ -4,8 +4,8 @@ import EyeButton from "../buttons/eyeButton";
 import { useNavigate } from "react-router-dom";
 import RegimeTag from "../tags/regimeTag";
 import PlaceTag from "../tags/placeTag";
-import HashTag from "../tags/hashTag";
 import Flag from "../flag";
+import TagList from "../nation/tagList";
 
 export default function NationTile(nation: Nation) {
   const navigate = useNavigate();
@@ -27,14 +27,9 @@ export default function NationTile(nation: Nation) {
         <RegimeTag selectedNation={nation} />
         <PopulationTag label={nation.data.roleplay.citizens} />
         <PlaceTag label={nation.data.roleplay.places} />
-        {nation.data.general.tags.length > 0 &&
-          nation.data.general.tags.map((tag, i) => {
-            return (
-              <div key={i}>
-                <HashTag label={tag} />
-              </div>
-            );
-          })}
+        <div className="self-end">
+          <TagList nation={nation} isTile={true} />
+        </div>
       </div>
     </div>
   );

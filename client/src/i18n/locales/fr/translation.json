@@ -58,9 +58,13 @@
       }
     },
     "citizen": {
+      "noBio": "pas de biographie",
       "virtualCitizenship": "citoyenneté virtuelle",
       "settings": "paramètre du compte",
-      "noResidence": "aucun lieu de résidence défini"
+      "noResidence": "aucun lieu de résidence défini",
+      "role": {
+        "admin": "administrateur"
+      }
     },
     "coms": {
       "title": "communications"
@@ -249,7 +253,7 @@
         "nation": "nation",
         "currency": "monnaie",
         "nationalDay": "fête nationale",
-        "nationOwner": "Fondateur de la nation",
+        "nationOwner": "leader de la nation",
         "residence": "résidence"
       },
       "avatar": "avatar",

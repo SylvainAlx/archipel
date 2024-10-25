@@ -125,18 +125,21 @@ export const getPlaces = (searchName: string) => {
     });
 };
 
-export const getNationPlaces = (id: string) => {
+export const getNationPlaces = (nation: Nation) => {
   const savedNationPlacesList: Place[] = [];
   myStore.get(placesListAtom).forEach((place) => {
-    if (place.nation === id) {
+    if (place.nation === nation.officialId) {
       savedNationPlacesList.push(place);
     }
   });
-  if (savedNationPlacesList.length > 0) {
+  if (
+    savedNationPlacesList.length > 0 &&
+    nation.data.roleplay.places === savedNationPlacesList.length
+  ) {
     myStore.set(nationPlacesListAtom, savedNationPlacesList);
   } else {
     myStore.set(loadingAtom, true);
-    getNationPlacesFetch(id)
+    getNationPlacesFetch(nation.officialId)
       .then((resp: Place[]) => {
         myStore.set(loadingAtom, false);
         myStore.set(nationPlacesListAtom, resp);

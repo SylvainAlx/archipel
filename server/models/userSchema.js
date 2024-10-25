@@ -18,7 +18,7 @@ const UserSchema = mongoose.Schema(
       required: true,
       unique: true,
     },
-    surname: {
+    bio: {
       type: String,
       default: "",
     },

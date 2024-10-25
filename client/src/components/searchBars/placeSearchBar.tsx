@@ -27,6 +27,7 @@ export interface SearchBarProps {
 export default function PlaceSearchBar({ list, setList }: SearchBarProps) {
   const { t } = useTranslation();
   const [searchName, setSearchName] = useState("");
+  const [sorting, setSorting] = useState("3");
   const [placeType, setPlaceType] = useState({
     type_0: true,
     type_1: true,
@@ -44,9 +45,9 @@ export default function PlaceSearchBar({ list, setList }: SearchBarProps) {
   }, [stats.counts.places]);
 
   useEffect(() => {
-    placesSorting(placeList, "3");
+    placesSorting(placeList, sorting);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [placeList, placeType]);
+  }, [placeList]);
 
   useEffect(() => {
     const updatedList1 = placeList.filter(
@@ -68,6 +69,7 @@ export default function PlaceSearchBar({ list, setList }: SearchBarProps) {
       ...updatedList4,
     ];
     setList(newList);
+    placesSorting(newList, sorting);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [placeType]);
 
@@ -108,6 +110,7 @@ export default function PlaceSearchBar({ list, setList }: SearchBarProps) {
         ),
       );
     }
+    setSorting(selectOption);
   };
 
   const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
@@ -156,7 +159,7 @@ export default function PlaceSearchBar({ list, setList }: SearchBarProps) {
           placesSorting(list, e.target.value)
         }
         options={placeSearchSortOptions}
-        // value={selectOption}
+        value={sorting}
       />
       <div className="flex flex-wrap flex-col md:flex-row gap-2 items-center justify-center md:justify-between">
         <fieldset className="flex gap-3">

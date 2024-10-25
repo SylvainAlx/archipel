@@ -13,7 +13,7 @@ import {
   sessionAtom,
   statsAtom,
 } from "../../settings/store";
-import { EmptyNation } from "../../types/typNation";
+import { EmptyNation, Nation } from "../../types/typNation";
 import {
   AuthPayload,
   ChangePasswordPayload,
@@ -231,18 +231,21 @@ export const getOneUser = (id: string) => {
   myStore.set(loadingAtom, false);
 };
 
-export const getNationCitizens = (nationId: string) => {
+export const getNationCitizens = (nation: Nation) => {
   const savedNationCitizenList: User[] = [];
   myStore.get(citizenListAtom).forEach((citizen) => {
-    if (citizen.citizenship.nationId === nationId) {
+    if (citizen.citizenship.nationId === nation.officialId) {
       savedNationCitizenList.push(citizen);
     }
   });
-  if (savedNationCitizenList.length > 0) {
+  if (
+    savedNationCitizenList.length > 0 &&
+    nation.data.roleplay.citizens === savedNationCitizenList.length
+  ) {
     myStore.set(nationCitizenListAtom, savedNationCitizenList);
   } else {
     myStore.set(loadingAtom, true);
-    getNationCitizensFetch(nationId)
+    getNationCitizensFetch(nation.officialId)
       .then((resp: User[]) => {
         myStore.set(loadingAtom, false);
         myStore.set(nationCitizenListAtom, resp);
@@ -305,7 +308,7 @@ export const changeStatus = (payload: changeStatusPayload) => {
         myStore.set(nationFetchedAtom, resp.nation);
         updateOrCreateNationInMemory(resp.nation);
         updateOrCreateCitizenInMemory(resp.user);
-        getNationCitizens(payload.nationId);
+        getNationCitizens(resp.nation);
         displayUserInfoByType("changeStatus");
       } else {
         displayUserInfoByType("error");
