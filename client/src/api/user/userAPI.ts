@@ -14,6 +14,7 @@ import {
   statsAtom,
 } from "../../settings/store";
 import { EmptyNation, Nation } from "../../types/typNation";
+import { Place } from "../../types/typPlace";
 import {
   AuthPayload,
   ChangePasswordPayload,
@@ -280,7 +281,7 @@ export const getCitizens = (searchName: string) => {
 export const updateUser = (payload: User) => {
   myStore.set(loadingAtom, true);
   updateUserFetch(payload)
-    .then((resp) => {
+    .then((resp: { user: User; place: Place }) => {
       myStore.set(loadingAtom, false);
       if (resp.user) {
         myStore.set(citizenFetchAtom, resp.user);
@@ -293,6 +294,8 @@ export const updateUser = (payload: User) => {
       }
     })
     .catch((error) => {
+      console.log(error);
+
       myStore.set(loadingAtom, false);
       errorMessage(error.message);
     });
