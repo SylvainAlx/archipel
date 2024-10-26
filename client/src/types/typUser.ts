@@ -1,7 +1,7 @@
 export interface User {
   officialId: string;
   name: string;
-  surname: string;
+  bio: string;
   gender: number;
   avatar: string;
   language: string;
@@ -9,7 +9,8 @@ export interface User {
   recovery?: string;
   email: string;
   link: string;
-  role: string;
+  role: "standard" | "admin";
+  plan: "free" | "premium";
   citizenship: {
     status: number;
     nationId: string;
@@ -47,7 +48,7 @@ export interface changeStatusPayload {
 export const emptyUser: User = {
   officialId: "",
   name: "",
-  surname: "",
+  bio: "",
   gender: 0,
   avatar: "",
   language: "",
@@ -55,7 +56,8 @@ export const emptyUser: User = {
   recovery: "",
   email: "",
   link: "",
-  role: "",
+  role: "standard",
+  plan: "free",
   citizenship: {
     status: -1,
     nationId: "",

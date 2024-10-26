@@ -76,7 +76,7 @@ export const login = async (req, res) => {
 
     const user = await User.findOne(
       { name },
-      "officialId name surname gender avatar language password email link role citizenship createdAt",
+      "officialId name bio gender avatar language password email link role plan citizenship createdAt",
     );
     if (!user) {
       return res.status(404).json({ infoType: "user" });
@@ -111,7 +111,7 @@ export const verify = async (req, res) => {
 
     const user = await User.findOne(
       { name: decoded.name },
-      "officialId name surname gender avatar language email link role citizenship createdAt",
+      "officialId name bio gender avatar language email link role plan citizenship createdAt",
     );
 
     if (user) {
@@ -201,13 +201,13 @@ export const getAllUsers = async (req, res) => {
     if (searchText) {
       const users = await User.find(
         { name: { $regex: searchText, $options: "i" } },
-        "officialId name surname gender avatar language email link role citizenship createdAt",
+        "officialId name bio gender avatar language email link role plan citizenship createdAt",
       );
       res.status(200).json(users);
     } else {
       const users = await User.find(
         {},
-        "officialId name surname gender avatar language email link role citizenship createdAt",
+        "officialId name bio gender avatar language email link role plan citizenship createdAt",
       );
       res.status(200).json(users);
     }
@@ -221,7 +221,7 @@ export const getOneUser = async (req, res) => {
   try {
     const user = await User.findOne(
       { officialId: userId },
-      "officialId name surname gender avatar language email link role citizenship createdAt",
+      "officialId name bio gender avatar language email link role plan citizenship createdAt",
     );
     res.status(200).json({
       user,
@@ -251,7 +251,6 @@ export const deleteSelfUser = async (req, res) => {
   try {
     const id = req.userId;
     User.findOneAndDelete({ officialId: id }).then(async (user) => {
-      // await Place.deleteMany({ nation: id });
       const nation = await Nation.findOne({
         officialId: user.citizenship.nationId,
       });
@@ -262,8 +261,6 @@ export const deleteSelfUser = async (req, res) => {
         nation.data.roleplay.citizens -= 1;
         nation.save();
       }
-
-      // await Com.deleteMany({ originId: id });
       res.status(200).json({ nation, infoType: "delete" });
     });
   } catch (error) {
@@ -308,18 +305,21 @@ export const updateUser = async (req, res) => {
     const {
       officialId,
       name,
+      bio,
       gender,
       avatar,
       language,
       email,
       link,
       role,
+      plan,
       citizenship,
     } = req.body;
+
     if (req.userId === officialId) {
       const user = await User.findOne(
         { officialId },
-        "officialId name surname gender avatar language email link role citizenship createdAt",
+        "officialId name surname gender avatar language email link role plan citizenship createdAt",
       );
       let newResidence;
       if (user.citizenship.residence != citizenship.residence) {
@@ -333,19 +333,25 @@ export const updateUser = async (req, res) => {
         newResidence = await Place.findOne({
           officialId: citizenship.residence,
         });
+
         if (newResidence) {
           newResidence.population += 1;
           await newResidence.save();
+        } else {
+          newResidence = null;
         }
+      } else {
+        newResidence = citizenship.residence;
       }
 
       user.name = name;
-      user.gender = gender;
+      (user.bio = bio), (user.gender = gender);
       user.avatar = avatar;
       user.language = language;
       user.email = email;
       user.link = link;
       user.role = role;
+      user.plan = plan;
       user.citizenship = citizenship;
       user
         .save()
@@ -368,6 +374,8 @@ export const updateUser = async (req, res) => {
         .json({ message: "[A TRADUIRE] modification interdite" });
     }
   } catch (error) {
+    console.error(error);
+
     res.status(400).json({ message: error });
   }
 };
@@ -379,7 +387,7 @@ export const changeStatus = async (req, res) => {
     if (req.userId === officialId || status != 0) {
       const user = await User.findOne(
         { officialId },
-        "officialId nofficialIdame surname gender avatar language email link role citizenship createdAt",
+        "officialId nofficialIdame bio gender avatar language email link role plan citizenship createdAt",
       );
 
       const nation = await Nation.findOne(
@@ -449,7 +457,7 @@ const updateUserIpAddress = async (userOfficialId, ip) => {
     if (!isFind) {
       user.ip.push({ value: ip, lastVisit: new Date() });
     }
-    const updatedUser = await user.save();
+    await user.save();
   } catch (error) {
     console.error(error);
   }

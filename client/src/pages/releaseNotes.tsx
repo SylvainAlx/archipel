@@ -26,6 +26,7 @@ export default function ReleaseNotes() {
                   <li>Créer une nation virtuelles</li>
                   <li>Créer des lieux pour sa nation virtuelle</li>
                   <li>Rejoindre une nation virtuelles</li>
+                  <li>Créer des relations diplomatiques entre nations</li>
                 </ul>
               </>
             }
@@ -41,7 +42,7 @@ export default function ReleaseNotes() {
                   <H2 text="Développements en cours" />
                 </div>
                 <ul>
-                  <li>Créer des relations diplomatiques entre nations</li>
+                  <li>Créer des communiqués officiels</li>
                 </ul>
               </>
             }

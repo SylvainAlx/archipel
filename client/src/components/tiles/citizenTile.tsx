@@ -65,7 +65,9 @@ export default function CitizenTile({ citizen }: CitizenTileProps) {
             citizen={citizen}
           />
         )}
-        {citizen.role === "admin" && <RoleTag label="admin" />}
+        {citizen.role === "admin" && (
+          <RoleTag label={t("pages.citizen.role.admin")} />
+        )}
         {citizen.citizenship.nationOwner && <NationOwnerTag />}
         {citizen.citizenship.nationId != "" &&
           emplacement.pathname != `/nation/${citizen.citizenship.nationId}` && (

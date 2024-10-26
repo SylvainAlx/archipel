@@ -74,7 +74,7 @@ export default function Place() {
 
   useEffect(() => {
     if (nation != null && nation != undefined && nation.officialId != "") {
-      getNationPlaces(nation.officialId);
+      getNationPlaces(nation);
     }
   }, [nation]);
 

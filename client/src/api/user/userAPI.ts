@@ -13,7 +13,8 @@ import {
   sessionAtom,
   statsAtom,
 } from "../../settings/store";
-import { EmptyNation } from "../../types/typNation";
+import { EmptyNation, Nation } from "../../types/typNation";
+import { Place } from "../../types/typPlace";
 import {
   AuthPayload,
   ChangePasswordPayload,
@@ -231,18 +232,21 @@ export const getOneUser = (id: string) => {
   myStore.set(loadingAtom, false);
 };
 
-export const getNationCitizens = (nationId: string) => {
+export const getNationCitizens = (nation: Nation) => {
   const savedNationCitizenList: User[] = [];
   myStore.get(citizenListAtom).forEach((citizen) => {
-    if (citizen.citizenship.nationId === nationId) {
+    if (citizen.citizenship.nationId === nation.officialId) {
       savedNationCitizenList.push(citizen);
     }
   });
-  if (savedNationCitizenList.length > 0) {
+  if (
+    savedNationCitizenList.length > 0 &&
+    nation.data.roleplay.citizens === savedNationCitizenList.length
+  ) {
     myStore.set(nationCitizenListAtom, savedNationCitizenList);
   } else {
     myStore.set(loadingAtom, true);
-    getNationCitizensFetch(nationId)
+    getNationCitizensFetch(nation.officialId)
       .then((resp: User[]) => {
         myStore.set(loadingAtom, false);
         myStore.set(nationCitizenListAtom, resp);
@@ -277,7 +281,7 @@ export const getCitizens = (searchName: string) => {
 export const updateUser = (payload: User) => {
   myStore.set(loadingAtom, true);
   updateUserFetch(payload)
-    .then((resp) => {
+    .then((resp: { user: User; place: Place }) => {
       myStore.set(loadingAtom, false);
       if (resp.user) {
         myStore.set(citizenFetchAtom, resp.user);
@@ -290,6 +294,8 @@ export const updateUser = (payload: User) => {
       }
     })
     .catch((error) => {
+      console.log(error);
+
       myStore.set(loadingAtom, false);
       errorMessage(error.message);
     });
@@ -305,7 +311,7 @@ export const changeStatus = (payload: changeStatusPayload) => {
         myStore.set(nationFetchedAtom, resp.nation);
         updateOrCreateNationInMemory(resp.nation);
         updateOrCreateCitizenInMemory(resp.user);
-        getNationCitizens(payload.nationId);
+        getNationCitizens(resp.nation);
         displayUserInfoByType("changeStatus");
       } else {
         displayUserInfoByType("error");

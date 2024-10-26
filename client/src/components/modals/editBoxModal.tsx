@@ -152,6 +152,10 @@ export default function EditBoxModal() {
     setEditBox({ ...editBox, new: e.target.value });
   };
 
+  const handleDateChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setEditBox({ ...editBox, new: e.target.value });
+  };
+
   const handleSelectChange = (e: ChangeEvent<HTMLSelectElement>) => {
     if (editBox.path === "data.roleplay.capital") {
       setEditBox({ ...editBox, new: e.target.value });
@@ -183,7 +187,9 @@ export default function EditBoxModal() {
       >
         {typeof editBox.original == "string" &&
           (editBox.path != "data.general.description" &&
-          editBox.path != "description" ? (
+          editBox.path != "description" &&
+          editBox.path != "bio" &&
+          editBox.path != "data.general.nationalDay" ? (
             <TextArea
               required={!editBox.canBeEmpty}
               maxLength={60}
@@ -192,6 +198,13 @@ export default function EditBoxModal() {
               value={editBox.new.toString()}
               name=""
               rows={1}
+            />
+          ) : editBox.path === "data.general.nationalDay" ? (
+            <Input
+              onChange={handleDateChange}
+              type="date"
+              name="nationalDay"
+              value={editBox.new.toString()}
             />
           ) : (
             <MarkdownEditor

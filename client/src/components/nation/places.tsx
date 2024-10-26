@@ -17,10 +17,10 @@ export default function Places({ selectedNation, owner }: SelectedNationProps) {
   const PlaceTile = lazy(() => import("../tiles/placeTile"));
 
   useEffect(() => {
-    if (selectedNation.officialId !== "") {
-      getNationPlaces(selectedNation.officialId);
+    if (selectedNation != undefined) {
+      getNationPlaces(selectedNation);
     }
-  }, [selectedNation.officialId]);
+  }, [selectedNation]);
 
   useEffect(() => {
     const updatedPlaces: Place[] = [];

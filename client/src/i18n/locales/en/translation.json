@@ -58,9 +58,13 @@
       }
     },
     "citizen": {
+      "noBio": "no biography",
       "virtualCitizenship": "virtual citizenship",
       "settings": "settings",
-      "noResidence": "no residence"
+      "noResidence": "no residence",
+      "role": {
+        "admin": "administrator"
+      }
     },
     "coms": {
       "title": "communications"
@@ -249,7 +253,7 @@
         "nation": "nation",
         "currency": "currency",
         "nationalDay": "national day",
-        "nationOwner": "Nation founder",
+        "nationOwner": "nation leader",
         "residence": "residence"
       },
       "avatar": "avatar",

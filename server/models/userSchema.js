@@ -18,7 +18,7 @@ const UserSchema = mongoose.Schema(
       required: true,
       unique: true,
     },
-    surname: {
+    bio: {
       type: String,
       default: "",
     },
@@ -56,6 +56,10 @@ const UserSchema = mongoose.Schema(
     role: {
       type: String,
       required: true,
+    },
+    plan: {
+      type: String,
+      default: "free",
     },
     citizenship: {
       status: {
