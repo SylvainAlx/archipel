@@ -14,6 +14,7 @@ export default function PopulationTag({ label }: customTagProps) {
     if (typeof label === "number" && label < 2) {
       setUpdatedLabel(t("components.hoverInfos.tags.population").slice(0, -1));
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [label]);
   return (
     <Tag

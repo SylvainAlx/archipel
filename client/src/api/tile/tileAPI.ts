@@ -91,8 +91,12 @@ export const updateTile = (payload: Tile) => {
   updateTileFetch(payload)
     .then((resp) => {
       if (resp.tile) {
-        const tempArray = updateByDBId(resp.tile, myStore.get(tileListAtom));
-        myStore.set(tileListAtom, tempArray);
+        updateOrCreateTileInMemory(resp.tile);
+        const tempNationTileArray = updateByDBId(
+          resp.tile,
+          myStore.get(nationTileListAtom),
+        );
+        myStore.set(nationTileListAtom, tempNationTileArray);
       }
       displayTileInfoByType(resp.infoType);
       myStore.set(loadingAtom, false);

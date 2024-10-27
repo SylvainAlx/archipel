@@ -322,8 +322,9 @@ export const updateUser = async (req, res) => {
         "officialId name surname gender avatar language email link role plan citizenship createdAt",
       );
       let newResidence;
+      let oldResidence;
       if (user.citizenship.residence != citizenship.residence) {
-        const oldResidence = await Place.findOne({
+        oldResidence = await Place.findOne({
           officialId: user.citizenship.residence,
         });
         if (oldResidence && oldResidence.population > 0) {
@@ -341,7 +342,8 @@ export const updateUser = async (req, res) => {
           newResidence = null;
         }
       } else {
-        newResidence = citizenship.residence;
+        newResidence = null;
+        oldResidence = null;
       }
 
       user.name = name;
@@ -359,7 +361,8 @@ export const updateUser = async (req, res) => {
           res.status(200).json({
             user,
             place: newResidence,
-            message: "[A TRADUIRE] mise à jour réussie",
+            oldPlace: oldResidence,
+            infoType: "update",
           });
         })
         .catch((error) => {
