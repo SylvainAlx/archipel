@@ -10,6 +10,7 @@ import {
 } from "../settings/store";
 import { Nation } from "../types/typNation";
 import { Place } from "../types/typPlace";
+import { UpdateByOfficialIdProps } from "../types/typProp";
 import { DiplomaticRelationship } from "../types/typRelation";
 import { Tile } from "../types/typTile";
 import { User } from "../types/typUser";
@@ -28,11 +29,11 @@ export const spliceByDBId = (id: string, atoms: any[]) => {
   return tempArray;
 };
 
-export const updateByDBId = (atom: any, atoms: any[]) => {
-  const tempArray: any[] = [...atoms];
-  for (let i = 0; i < atoms.length; i++) {
-    if (atoms[i]._id === atom._id) {
-      tempArray[i] = atom;
+export const updateByDBId = (element: Tile, array: Tile[]): Tile[] => {
+  const tempArray: any[] = [...array];
+  for (let i = 0; i < array.length; i++) {
+    if (array[i]._id === element._id) {
+      tempArray[i] = element;
       break;
     }
   }
@@ -52,10 +53,13 @@ export const spliceByOfficialId = (id: string, atoms: any[]) => {
   return tempArray;
 };
 
-export const updateByOfficialId = (element: any, atoms: any[]) => {
-  const tempArray: any[] = [...atoms];
-  for (let i = 0; i < atoms.length; i++) {
-    if (atoms[i].officialId === element.officialId) {
+export const getUpdateByOfficialId = ({
+  element,
+  array,
+}: UpdateByOfficialIdProps) => {
+  const tempArray: any[] = [...array];
+  for (let i = 0; i < array.length; i++) {
+    if (array[i].officialId === element.officialId) {
       tempArray[i] = element;
       break;
     }
@@ -73,7 +77,13 @@ export const updateOrCreateCitizenInMemory = (citizen: User) => {
     tempArray.push(citizen);
     myStore.set(citizenListAtom, tempArray);
   } else {
-    updateByOfficialId(citizen, myStore.get(citizenListAtom));
+    myStore.set(
+      citizenListAtom,
+      getUpdateByOfficialId({
+        element: citizen,
+        array: myStore.get(citizenListAtom),
+      }),
+    );
   }
 };
 
@@ -87,7 +97,13 @@ export const updateOrCreateNationInMemory = (nation: Nation) => {
     tempArray.push(nation);
     myStore.set(nationsListAtom, tempArray);
   } else {
-    updateByOfficialId(nation, myStore.get(nationsListAtom));
+    myStore.set(
+      nationsListAtom,
+      getUpdateByOfficialId({
+        element: nation,
+        array: myStore.get(nationsListAtom),
+      }),
+    );
   }
 };
 
@@ -101,7 +117,13 @@ export const updateOrCreatePlaceInMemory = (place: Place) => {
     tempArray.push(place);
     myStore.set(placesListAtom, tempArray);
   } else {
-    updateByOfficialId(place, myStore.get(placesListAtom));
+    myStore.set(
+      placesListAtom,
+      getUpdateByOfficialId({
+        element: place,
+        array: myStore.get(placesListAtom),
+      }),
+    );
   }
 };
 
@@ -115,7 +137,7 @@ export const updateOrCreateTileInMemory = (tile: Tile) => {
     tempArray.push(tile);
     myStore.set(tileListAtom, tempArray);
   } else {
-    updateByOfficialId(tile, myStore.get(tileListAtom));
+    myStore.set(tileListAtom, updateByDBId(tile, myStore.get(tileListAtom)));
   }
 };
 
@@ -131,7 +153,13 @@ export const updateOrCreateRelationInMemory = (
     tempArray.push(relation);
     myStore.set(relationListAtom, tempArray);
   } else {
-    updateByOfficialId(relation, myStore.get(relationListAtom));
+    myStore.set(
+      relationListAtom,
+      getUpdateByOfficialId({
+        element: relation,
+        array: myStore.get(relationListAtom),
+      }),
+    );
   }
 };
 

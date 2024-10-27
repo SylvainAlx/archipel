@@ -93,8 +93,8 @@ export const updateTile = async (req, res) => {
       tile.title = title;
       tile.description = description;
       tile.value = value;
-      tile.save();
-      res.status(200).json({ tile, infoType: "update" });
+      const updatedTile = await tile.save();
+      res.status(200).json({ tile: updatedTile, infoType: "update" });
     } else {
       return res.status(403).json({ infoType: "forbidden" });
     }

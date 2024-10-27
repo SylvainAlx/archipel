@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Tile } from "../../types/typTile";
 import i18n from "../../i18n/i18n";
 import CrossButton from "../buttons/crossButton";
@@ -16,10 +16,13 @@ export interface FreeTileProps {
 export default function FreeTile({ tile, owner }: FreeTileProps) {
   const { title, description, value, updatedAt } = tile;
   const { t } = useTranslation();
-  const [stringDate] = useState(
-    new Date(updatedAt).toLocaleString(i18n.language),
-  );
+  const [stringDate, setStringDate] = useState("");
   const [, setUpdatedTile] = useAtom(editTileAtom);
+
+  useEffect(() => {
+    setStringDate(new Date(updatedAt).toLocaleString(i18n.language));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [updatedAt]);
 
   const handleEdit = (tile: Tile) => {
     setUpdatedTile(tile);

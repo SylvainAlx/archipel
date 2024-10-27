@@ -182,7 +182,7 @@
       },
       "loadingModal": {
         "title": "PATIENTEZ",
-        "information": "Connexion au serveur, merci de patienter quelques instants"
+        "information": "Démarrage du serveur, merci de patienter quelques instants"
       },
       "newNationModal": {
         "title": "NOUVELLE NATION",

@@ -9,7 +9,8 @@ export interface User {
   recovery?: string;
   email: string;
   link: string;
-  role: string;
+  role: "standard" | "admin";
+  plan: "free" | "premium";
   citizenship: {
     status: number;
     nationId: string;
@@ -55,7 +56,8 @@ export const emptyUser: User = {
   recovery: "",
   email: "",
   link: "",
-  role: "",
+  role: "standard",
+  plan: "free",
   citizenship: {
     status: -1,
     nationId: "",

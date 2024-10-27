@@ -57,6 +57,10 @@ const UserSchema = mongoose.Schema(
       type: String,
       required: true,
     },
+    plan: {
+      type: String,
+      default: "free",
+    },
     citizenship: {
       status: {
         type: Number,
