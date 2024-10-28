@@ -18,6 +18,7 @@ export default {
         success: "var(--color-success)",
         danger: "var(--color-danger)",
         wait: "var(--color-wait)",
+        gold: "var(--color-gold)",
         regime_0: "var(--color-regime-0)",
         regime_1: "var(--color-regime-1)",
         regime_2: "var(--color-regime-100)",

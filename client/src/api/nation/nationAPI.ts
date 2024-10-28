@@ -16,12 +16,16 @@ import {
 } from "../../utils/atomArrayFunctions";
 import { displayNationInfoByType } from "../../utils/displayInfos";
 
-import { findElementOfAtomArray } from "../../utils/functions";
+import {
+  findElementOfAtomArray,
+  findElementsByName,
+  findNationsByTag,
+} from "../../utils/functions";
 import { errorMessage, successMessage } from "../../utils/toasts";
 import {
   createNationFetch,
   DeleteSelfFetch,
-  getAllNations,
+  getAllNationsFetch,
   getAllNationTagsFetch,
   getNationsCountFetch,
   getOneNationFetch,
@@ -90,19 +94,31 @@ export const getNation = (id: string) => {
   }
 };
 
-export const getNations = (searchName: string) => {
-  myStore.set(loadingAtom, true);
-  getAllNations(searchName)
-    .then((resp: Nation[]) => {
-      if (resp != undefined) {
-        myStore.set(nationsListAtom, resp);
-      }
-      myStore.set(loadingAtom, false);
-    })
-    .catch((error) => {
-      myStore.set(loadingAtom, false);
-      errorMessage(error.message);
-    });
+export const getNations = (searchName: string, searchTag: string) => {
+  let nations: Nation[] = [];
+  if (searchName != "") {
+    nations = findElementsByName(searchName, myStore.get(nationsListAtom));
+  }
+  if (searchTag != "") {
+    nations = findNationsByTag(searchTag, myStore.get(nationsListAtom));
+  }
+
+  if (nations.length > 0) {
+    myStore.set(nationsListAtom, nations);
+  } else {
+    myStore.set(loadingAtom, true);
+    getAllNationsFetch(searchName)
+      .then((resp: Nation[]) => {
+        if (resp != undefined) {
+          myStore.set(nationsListAtom, resp);
+        }
+        myStore.set(loadingAtom, false);
+      })
+      .catch((error) => {
+        myStore.set(loadingAtom, false);
+        errorMessage(error.message);
+      });
+  }
 };
 
 export const updateNation = (payload: Nation) => {

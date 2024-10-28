@@ -7,7 +7,6 @@ import {
   myStore,
   nationCitizenListAtom,
   nationFetchedAtom,
-  nationsListAtom,
   recoveryKey,
   session,
   sessionAtom,
@@ -24,7 +23,6 @@ import {
   User,
 } from "../../types/typUser";
 import {
-  updateByOfficialId,
   updateOrCreateCitizenInMemory,
   updateOrCreateNationInMemory,
   updateOrCreatePlaceInMemory,
@@ -198,11 +196,7 @@ export const deleteUser = () => {
       localStorage.removeItem("jwt");
       displayUserInfoByType(resp.infoType);
       if (resp.nation != null) {
-        const tempArray = updateByOfficialId(
-          resp.nation,
-          myStore.get(nationsListAtom),
-        );
-        myStore.set(nationsListAtom, tempArray);
+        updateOrCreateNationInMemory(resp.nation);
       }
     })
     .catch((error) => {
@@ -281,18 +275,31 @@ export const getCitizens = (searchName: string) => {
 export const updateUser = (payload: User) => {
   myStore.set(loadingAtom, true);
   updateUserFetch(payload)
-    .then((resp: { user: User; place: Place }) => {
-      myStore.set(loadingAtom, false);
-      if (resp.user) {
-        myStore.set(citizenFetchAtom, resp.user);
-        myStore.set(sessionAtom, { ...session, user: resp.user });
-        updateOrCreateCitizenInMemory(resp.user);
-        updateOrCreatePlaceInMemory(resp.place);
-        displayUserInfoByType("update");
-      } else {
-        displayUserInfoByType("error");
-      }
-    })
+    .then(
+      (resp: {
+        user: User;
+        place: Place;
+        oldPlace: Place;
+        infoType: string;
+      }) => {
+        myStore.set(loadingAtom, false);
+        if (resp.user) {
+          myStore.set(citizenFetchAtom, resp.user);
+          const session = myStore.get(sessionAtom);
+          myStore.set(sessionAtom, {
+            nation: session.nation,
+            user: resp.user,
+            jwt: session.jwt,
+          });
+          updateOrCreateCitizenInMemory(resp.user);
+          resp.place != null && updateOrCreatePlaceInMemory(resp.place);
+          resp.oldPlace != null && updateOrCreatePlaceInMemory(resp.oldPlace);
+          displayUserInfoByType(resp.infoType);
+        } else {
+          displayUserInfoByType("error");
+        }
+      },
+    )
     .catch((error) => {
       console.log(error);
 

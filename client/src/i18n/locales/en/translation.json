@@ -182,7 +182,7 @@
       },
       "loadingModal": {
         "title": "WAIT",
-        "information": "Connecting to the server, please wait a few moments"
+        "information": "Server starting, please wait a few moments"
       },
       "newNationModal": {
         "title": "NEW NATION",
@@ -267,7 +267,8 @@
     },
     "searchBars": {
       "nationsList": {
-        "input": "Nation name",
+        "name": "Nation name",
+        "tag": "hashtag",
         "sortNations": {
           "ascAlpha": "Ascending alphabetical",
           "descAlpha": "Descending alphabetical",

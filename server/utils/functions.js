@@ -76,3 +76,9 @@ export const deleteFile = async (uuid) => {
     console.error(error);
   }
 };
+
+export const addMonths = (months) => {
+  const result = new Date();
+  result.setMonth(result.getMonth() + months);
+  return result;
+};

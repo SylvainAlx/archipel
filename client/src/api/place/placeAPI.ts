@@ -13,9 +13,9 @@ import { Nation } from "../../types/typNation";
 import { PlacePayload } from "../../types/typPayload";
 import { Place } from "../../types/typPlace";
 import {
+  getUpdateByOfficialId,
   spliceByOfficialId,
-  updateByDBId,
-  updateByOfficialId,
+  updateOrCreateNationInMemory,
   updateOrCreatePlaceInMemory,
 } from "../../utils/atomArrayFunctions";
 import { displayPlaceInfoByType } from "../../utils/displayInfos";
@@ -61,10 +61,7 @@ export const createNewPlace = (newPlace: PlacePayload) => {
           ...myStore.get(placesListAtom),
           data.place,
         ]);
-        myStore.set(
-          nationsListAtom,
-          updateByDBId(data.nation, myStore.get(nationsListAtom)),
-        );
+        updateOrCreateNationInMemory(data.nation);
         myStore.set(nationFetchedAtom, data.nation);
         displayPlaceInfoByType(data.infoType);
       }
@@ -162,10 +159,10 @@ export const deletePlace = (id: string) => {
     .then((resp: { place: Place; nation: Nation; message: string }) => {
       myStore.set(dataCheckedAtom, false);
       myStore.set(nationFetchedAtom, resp.nation);
-      const tempPlaceArray = updateByOfficialId(
-        resp.nation,
-        myStore.get(nationsListAtom),
-      );
+      const tempPlaceArray = getUpdateByOfficialId({
+        element: resp.nation,
+        array: myStore.get(nationsListAtom),
+      });
       myStore.set(nationsListAtom, tempPlaceArray);
       const tempNationPlacesArray = spliceByOfficialId(
         resp.place.officialId,
@@ -194,17 +191,11 @@ export const updatePlace = (payload: Place) => {
       myStore.set(loadingAtom, false);
       if (resp.place) {
         updateOrCreatePlaceInMemory(resp.place);
-        const tempNationPlaceArray = updateByOfficialId(
-          resp.place,
-          myStore.get(nationPlacesListAtom),
-        );
+        const tempNationPlaceArray = getUpdateByOfficialId({
+          element: resp.place,
+          array: myStore.get(nationPlacesListAtom),
+        });
         myStore.set(nationPlacesListAtom, tempNationPlaceArray);
-        updateOrCreatePlaceInMemory(resp.place);
-        const tempPlaceArray = updateByOfficialId(
-          resp.place,
-          myStore.get(placesListAtom),
-        );
-        myStore.set(placesListAtom, tempPlaceArray);
         myStore.set(placeFetchedAtom, resp.place);
         displayPlaceInfoByType(resp.infoType);
       }

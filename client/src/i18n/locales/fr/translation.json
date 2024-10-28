@@ -182,7 +182,7 @@
       },
       "loadingModal": {
         "title": "PATIENTEZ",
-        "information": "Connexion au serveur, merci de patienter quelques instants"
+        "information": "Démarrage du serveur, merci de patienter quelques instants"
       },
       "newNationModal": {
         "title": "NOUVELLE NATION",
@@ -267,7 +267,8 @@
     },
     "searchBars": {
       "nationsList": {
-        "input": "Nom de la nation",
+        "name": "Nom de la nation",
+        "tag": "mots clés",
         "sortNations": {
           "ascAlpha": "Alphabetique croissant",
           "descAlpha": "Alphabetique décroissant",

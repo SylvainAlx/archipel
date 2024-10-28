@@ -43,6 +43,16 @@ export const findElementOfAtomArray = (id: string, atom: any[]) => {
   return element;
 };
 
+export const findElementsByName = (searchName: string, array: any[]) => {
+  return array.filter((element) => element.name.includes(searchName));
+};
+
+export const findNationsByTag = (searchTag: string, nations: Nation[]) => {
+  return nations.filter((nation) =>
+    nation.data.general.tags.some((tag) => tag.includes(searchTag)),
+  );
+};
+
 export const deleteElementOfAtomArray = (
   id: string,
   atom: any[],
@@ -315,4 +325,10 @@ export const getTotalPopulation = (place: Place): number => {
     }
   });
   return total + place.population;
+};
+
+export const dateIsExpired = (stringDate: string): boolean => {
+  const date = new Date(stringDate);
+  const now = new Date();
+  return date < now;
 };
