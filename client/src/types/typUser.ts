@@ -10,6 +10,7 @@ export interface User {
   email: string;
   link: string;
   role: "standard" | "admin";
+  credits: number;
   plan: "free" | "premium" | "elite";
   expirationDate: string;
   citizenship: {
@@ -58,6 +59,7 @@ export const emptyUser: User = {
   email: "",
   link: "",
   role: "standard",
+  credits: 0,
   plan: "free",
   expirationDate: "",
   citizenship: {

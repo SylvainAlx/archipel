@@ -38,6 +38,8 @@ import { ConfirmBoxDefault } from "../types/typAtom";
 import { getNation } from "../api/nation/nationAPI";
 import MDEditor from "@uiw/react-md-editor";
 import i18n from "../i18n/i18n";
+import CreditTag from "../components/tags/creditTag";
+import { MdOutlineUpdate } from "react-icons/md";
 
 export default function Citizen() {
   const { t } = useTranslation();
@@ -248,6 +250,9 @@ export default function Citizen() {
                 <>
                   <div className="max-w-[90%] flex flex-wrap items-center justify-center gap-1">
                     <IdTag label={citizen.officialId} />
+                    {session.user.officialId === citizen.officialId && (
+                      <CreditTag label={citizen.credits} owner={true} />
+                    )}
                     {citizen.citizenship.nationOwner && <NationOwnerTag />}
 
                     <ResidenceTag residenceId={citizen.citizenship.residence} />
@@ -310,7 +315,19 @@ export default function Citizen() {
                 children={
                   <>
                     {userPlan != "free" && (
-                      <p>{`plan ${citizen.plan} jusqu'au ${new Date(citizen.expirationDate).toLocaleDateString(i18n.language)}`}</p>
+                      <div>
+                        <span>
+                          <MdOutlineUpdate />
+                          {new Date(citizen.expirationDate).toLocaleDateString(
+                            i18n.language,
+                          )}
+                        </span>
+                        <span>
+                          {userPlan === "premium"
+                            ? t("pages.citizen.plans.premium")
+                            : t("pages.citizen.plans.elite")}
+                        </span>
+                      </div>
                     )}
                     <Button
                       text={t("components.buttons.changePassword")}

@@ -1,12 +1,14 @@
 import Tag from "./tag";
 import { customTagProps } from "../../types/typProp";
 import { FaCoins } from "react-icons/fa6";
-import { addCredits } from "../../utils/functions";
 import { useTranslation } from "react-i18next";
-// import { MdAddCircle } from "react-icons/md";
+import { MdAddCircle } from "react-icons/md";
+import { useAtom } from "jotai";
+import { infoModalAtom } from "../../settings/store";
 
 export default function CreditTag({ owner, label }: customTagProps) {
   const { t } = useTranslation();
+  const [, showInfo] = useAtom(infoModalAtom);
   return (
     <Tag
       text={label.toString()}
@@ -14,12 +16,19 @@ export default function CreditTag({ owner, label }: customTagProps) {
       bgColor="bg-info"
       children={
         <>
-          <FaCoins />
           {owner && (
-            <span className="text-2xl cursor-pointer" onClick={addCredits}>
-              {/* <MdAddCircle /> */}
+            <span
+              className="text-2xl cursor-pointer"
+              onClick={() =>
+                showInfo(
+                  "[A TRADUIRE] L'ajout de crédits n'est pas encore disponible",
+                )
+              }
+            >
+              <MdAddCircle />
             </span>
           )}
+          <FaCoins />
         </>
       }
     />

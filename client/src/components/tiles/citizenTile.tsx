@@ -18,6 +18,7 @@ import { useTranslation } from "react-i18next";
 import NationTag from "../tags/nationTag";
 import NationOwnerTag from "../tags/nationOwnerTag";
 import { useEffect, useState } from "react";
+import { IoDiamondOutline } from "react-icons/io5";
 
 export interface CitizenTileProps {
   citizen: User;
@@ -45,10 +46,19 @@ export default function CitizenTile({ citizen }: CitizenTileProps) {
 
   return (
     <fieldset
-      className={`min-h-[100px] p-2 rounded flex flex-col items-center justify-between gap-3 bg-complementary shadow-xl ${(userPlan === "premium" || userPlan === "elite") && "border-2 border-solid border-gold"}`}
+      className={`min-h-[100px] p-2 rounded flex flex-col items-center justify-between gap-3 bg-complementary shadow-xl ${(userPlan === "premium" || userPlan === "elite") && "border-2 border-solid border-secondary"}`}
     >
       {userPlan != "free" && (
-        <legend className="px-2 text-gold">{userPlan}</legend>
+        <legend className="px-2">
+          {
+            <b className="flex gap-1 items-center">
+              <IoDiamondOutline />
+              {userPlan === "premium"
+                ? t("pages.citizen.plans.premium")
+                : t("pages.citizen.plans.elite")}
+            </b>
+          }
+        </legend>
       )}
       <div className="w-full flex justify-between">
         <div className="flex items-center">

@@ -64,6 +64,11 @@
       "noResidence": "no residence",
       "role": {
         "admin": "administrator"
+      },
+      "plans": {
+        "free": "hobby",
+        "premium": "premium",
+        "elite": "elite"
       }
     },
     "coms": {

@@ -64,6 +64,11 @@
       "noResidence": "aucun lieu de résidence défini",
       "role": {
         "admin": "administrateur"
+      },
+      "plans": {
+        "free": "loisir",
+        "premium": "premium",
+        "elite": "élite"
       }
     },
     "coms": {
