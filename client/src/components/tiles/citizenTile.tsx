@@ -11,12 +11,13 @@ import {
   sessionAtom,
 } from "../../settings/store";
 import { EmptyNation } from "../../types/typNation";
-import { declineCitizenship } from "../../utils/functions";
+import { dateIsExpired, declineCitizenship } from "../../utils/functions";
 import CrossButton from "../buttons/crossButton";
 import { useAtom } from "jotai";
 import { useTranslation } from "react-i18next";
 import NationTag from "../tags/nationTag";
 import NationOwnerTag from "../tags/nationOwnerTag";
+import { useEffect, useState } from "react";
 
 export interface CitizenTileProps {
   citizen: User;
@@ -27,16 +28,28 @@ export default function CitizenTile({ citizen }: CitizenTileProps) {
   const emplacement = useLocation();
   const { t } = useTranslation();
   const [session] = useAtom(sessionAtom);
+  const [userPlan, setUserPlan] = useState("free");
   const handleClick = () => {
     myStore.set(citizenFetchAtom, citizen);
     myStore.set(nationFetchedAtom, EmptyNation);
     navigate(`/citizen/${citizen.officialId}`);
   };
 
+  useEffect(() => {
+    if (citizen.plan != "free" && !dateIsExpired(citizen.expirationDate)) {
+      setUserPlan(citizen.plan);
+    } else {
+      setUserPlan("free");
+    }
+  }, [citizen]);
+
   return (
-    <div
-      className={`min-h-[100px] p-2 rounded flex flex-col items-center justify-between gap-3 bg-complementary shadow-xl`}
+    <fieldset
+      className={`min-h-[100px] p-2 rounded flex flex-col items-center justify-between gap-3 bg-complementary shadow-xl ${(userPlan === "premium" || userPlan === "elite") && "border-2 border-solid border-gold"}`}
     >
+      {userPlan != "free" && (
+        <legend className="px-2 text-gold">{userPlan}</legend>
+      )}
       <div className="w-full flex justify-between">
         <div className="flex items-center">
           <div className="w-[50px] h-[50px] rounded-full flex items-center justify-center overflow-hidden">
@@ -74,6 +87,6 @@ export default function CitizenTile({ citizen }: CitizenTileProps) {
             <NationTag label={citizen.citizenship.nationId} />
           )}
       </div>
-    </div>
+    </fieldset>
   );
 }

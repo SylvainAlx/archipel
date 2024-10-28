@@ -29,11 +29,15 @@ import EditIcon from "../components/editIcon";
 import { BsFillEnvelopeAtFill } from "react-icons/bs";
 import NationOwnerTag from "../components/tags/nationOwnerTag";
 import ResidenceTag from "../components/tags/residenceTag";
-import { getLabelIdArrayFromNationPlaceList } from "../utils/functions";
+import {
+  dateIsExpired,
+  getLabelIdArrayFromNationPlaceList,
+} from "../utils/functions";
 import { getNationPlaces } from "../api/place/placeAPI";
 import { ConfirmBoxDefault } from "../types/typAtom";
 import { getNation } from "../api/nation/nationAPI";
 import MDEditor from "@uiw/react-md-editor";
+import i18n from "../i18n/i18n";
 
 export default function Citizen() {
   const { t } = useTranslation();
@@ -48,6 +52,7 @@ export default function Citizen() {
   const [placesList, setPlacesList] = useState<LabelId[]>([]);
   const [, setConfirmModal] = useAtom(confirmBox);
   const [enableLeaving, setEnableLeaving] = useState(false);
+  const [userPlan, setUserPlan] = useState("free");
 
   useEffect(() => {
     if (param.id) {
@@ -72,6 +77,12 @@ export default function Citizen() {
     }
     if (citizen.citizenship.nationId != "") {
       getNation(citizen.citizenship.nationId);
+    }
+
+    if (citizen.plan != "free" && !dateIsExpired(citizen.expirationDate)) {
+      setUserPlan(citizen.plan);
+    } else {
+      setUserPlan("free");
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -238,6 +249,7 @@ export default function Citizen() {
                   <div className="max-w-[90%] flex flex-wrap items-center justify-center gap-1">
                     <IdTag label={citizen.officialId} />
                     {citizen.citizenship.nationOwner && <NationOwnerTag />}
+
                     <ResidenceTag residenceId={citizen.citizenship.residence} />
                     {placesList.length > 0 &&
                       session.user.officialId === citizen.officialId && (
@@ -297,6 +309,9 @@ export default function Citizen() {
                 title={t("pages.citizen.settings")}
                 children={
                   <>
+                    {userPlan != "free" && (
+                      <p>{`plan ${citizen.plan} jusqu'au ${new Date(citizen.expirationDate).toLocaleDateString(i18n.language)}`}</p>
+                    )}
                     <Button
                       text={t("components.buttons.changePassword")}
                       click={() => myStore.set(changePasswordModalAtom, true)}

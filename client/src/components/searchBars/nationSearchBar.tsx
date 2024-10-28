@@ -26,12 +26,13 @@ export default function NationSearchBar({ list, setList }: SearchBarProps) {
   const [selectOption, setSelectOption] = useState("5");
   const { t } = useTranslation();
   const [searchName, setSearchName] = useState("");
+  const [searchTag, setSearchTag] = useState("");
   const [nationsList] = useAtom(nationsListAtom);
   const [stats] = useAtom(statsAtom);
 
   useEffect(() => {
     if (nationsList.length != stats.counts.nations) {
-      getNations("");
+      getNations("", "");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [stats.counts.nations]);
@@ -42,7 +43,7 @@ export default function NationSearchBar({ list, setList }: SearchBarProps) {
   }, [selectOption, nationsList]);
 
   const reset = () => {
-    getNations("");
+    getNations("", "");
     setSelectOption("0");
   };
 
@@ -93,7 +94,8 @@ export default function NationSearchBar({ list, setList }: SearchBarProps) {
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    getNations(searchName);
+    getNations(searchName, searchTag);
+    // console.log(searchName, searchTag);
   };
 
   return (
@@ -102,12 +104,20 @@ export default function NationSearchBar({ list, setList }: SearchBarProps) {
       onSubmit={handleSubmit}
     >
       <Input
-        required={true}
+        required={false}
         onChange={handleSearch}
         type="text"
         name="name"
-        placeholder={t("components.searchBars.nationsList.input")}
+        placeholder={t("components.searchBars.nationsList.name")}
         value={searchName}
+      />
+      <Input
+        required={false}
+        onChange={(e) => setSearchTag(e.target.value)}
+        type="text"
+        name="tag"
+        placeholder={t("components.searchBars.nationsList.tag")}
+        value={searchTag}
       />
       <Select
         onChange={(e: ChangeEvent<HTMLSelectElement>) =>

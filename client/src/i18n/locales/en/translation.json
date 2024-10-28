@@ -267,7 +267,8 @@
     },
     "searchBars": {
       "nationsList": {
-        "input": "Nation name",
+        "name": "Nation name",
+        "tag": "hashtag",
         "sortNations": {
           "ascAlpha": "Ascending alphabetical",
           "descAlpha": "Descending alphabetical",
