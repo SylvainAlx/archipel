@@ -318,6 +318,12 @@ export const changeStatus = (payload: changeStatusPayload) => {
         myStore.set(nationFetchedAtom, resp.nation);
         updateOrCreateNationInMemory(resp.nation);
         updateOrCreateCitizenInMemory(resp.user);
+        const session = myStore.get(sessionAtom);
+        myStore.set(sessionAtom, {
+          nation: session.nation,
+          user: resp.user,
+          jwt: session.jwt,
+        });
         getNationCitizens(resp.nation);
         displayUserInfoByType("changeStatus");
       } else {

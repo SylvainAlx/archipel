@@ -3,6 +3,7 @@ import {
   myStore,
   nationFetchedAtom,
   nationsListAtom,
+  nationsListFetchedAtom,
   sessionAtom,
   Stats,
   statsAtom,
@@ -105,15 +106,15 @@ export const getNations = (searchName: string, searchTag: string) => {
   if (searchName === "" && searchTag === "") {
     nations = myStore.get(nationsListAtom);
   }
-
   if (nations.length > 0) {
-    myStore.set(nationsListAtom, nations);
+    myStore.set(nationsListFetchedAtom, nations);
   } else {
     myStore.set(loadingAtom, true);
     getAllNationsFetch(searchName, searchTag)
       .then((resp: Nation[]) => {
         if (resp != undefined) {
           myStore.set(nationsListAtom, resp);
+          myStore.set(nationsListFetchedAtom, resp);
         }
         myStore.set(loadingAtom, false);
       })

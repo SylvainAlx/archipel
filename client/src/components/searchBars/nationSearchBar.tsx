@@ -11,7 +11,11 @@ import { getNations } from "../../api/nation/nationAPI";
 import Input from "../form/input";
 import Button from "../buttons/button";
 import Select from "../form/select";
-import { SetAtom, nationsListAtom, statsAtom } from "../../settings/store";
+import {
+  SetAtom,
+  nationsListFetchedAtom,
+  statsAtom,
+} from "../../settings/store";
 import { nationSearchSortOptions } from "../../settings/consts";
 import { useTranslation } from "react-i18next";
 import { useAtom } from "jotai";
@@ -27,7 +31,7 @@ export default function NationSearchBar({ list, setList }: SearchBarProps) {
   const { t } = useTranslation();
   const [searchName, setSearchName] = useState("");
   const [searchTag, setSearchTag] = useState("");
-  const [nationsList] = useAtom(nationsListAtom);
+  const [nationsList] = useAtom(nationsListFetchedAtom);
   const [stats] = useAtom(statsAtom);
 
   useEffect(() => {

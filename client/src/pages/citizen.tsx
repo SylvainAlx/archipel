@@ -257,16 +257,19 @@ export default function Citizen() {
                       <CreditTag label={citizen.credits} owner={true} />
                     )}
                     {citizen.citizenship.nationOwner && <NationOwnerTag />}
-
-                    <ResidenceTag residenceId={citizen.citizenship.residence} />
-                    {placesList.length > 0 &&
-                      session.user.officialId === citizen.officialId && (
-                        <EditIcon
-                          target="citizen"
-                          param={placesList}
-                          path="citizenship.residence"
-                        />
-                      )}
+                    <div className="flex items-center gap-1">
+                      <ResidenceTag
+                        residenceId={citizen.citizenship.residence}
+                      />
+                      {placesList.length > 0 &&
+                        session.user.officialId === citizen.officialId && (
+                          <EditIcon
+                            target="citizen"
+                            param={placesList}
+                            path="citizenship.residence"
+                          />
+                        )}
+                    </div>
                     {citizen.role === "admin" && (
                       <RoleTag label={t("pages.citizen.role.admin")} />
                     )}
