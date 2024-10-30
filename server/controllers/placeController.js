@@ -1,6 +1,8 @@
 import Place from "../models/placeSchema.js";
 import Nation from "../models/nationSchema.js";
+import User from "../models/userSchema.js";
 import { createOfficialId } from "../utils/functions.js";
+import { COSTS, QUOTAS } from "../settings/const.js";
 
 export const placesCount = async (req, res) => {
   try {
@@ -19,7 +21,7 @@ export const placesCount = async (req, res) => {
 export const getPlaces = async (req, res) => {
   const nationId = req.params.id;
   try {
-    const places = await Place.find({ nation: nationId })
+    await Place.find({ nation: nationId })
       .then((places) => {
         res.status(200).json(places);
       })
@@ -66,58 +68,49 @@ export const getAllPlaces = async (req, res) => {
 export const createPlace = async (req, res) => {
   try {
     const { nation, parentId, name, type, description, image } = req.body;
-
-    const officialId = createOfficialId("p");
-
-    const place = new Place({
-      nation,
-      officialId,
-      parentId,
-      type,
-      population: 0,
-      name,
-      description,
-      image,
-    });
-    place
-      .save()
-      .then(async (place) => {
-        const nation = await Nation.findOne({ officialId: place.nation })
-          .then((nation) => {
-            if (
-              nation.data.roleplay.capital === "" ||
-              nation.data.roleplay.capital == undefined
-            ) {
-              nation.data.roleplay.capital = place.officialId;
-            }
-            nation.data.roleplay.places += 1;
-            nation.save();
-            res.status(201).json({ place, nation, infoType: "new" });
-          })
-          .catch((error) => {
-            res.status(400).json({
-              message: `[A TRADUIRE] certaines informations sont erronées ou manquantes`,
-              erreur: error,
-            });
-          });
-      })
-      .catch((error) => {
-        if (error.code === 11000) {
-          res.status(400).json({
-            message:
-              "[A TRADUIRE] informations déjà existantes dans la base de données",
-            erreur: error.keyValue,
-          });
-        } else {
-          res.status(400).json({
-            message: `[A TRADUIRE] certaines informations sont erronées ou manquantes`,
-            erreur: error,
-          });
-          console.log(error);
-        }
+    const placeNation = await Nation.findOne({ officialId: nation });
+    const user = await User.findOne({ officialId: req.userId });
+    if (
+      placeNation.data.roleplay.places < QUOTAS.PLACES ||
+      user.credits >= COSTS.PLACES
+    ) {
+      const officialId = createOfficialId("p");
+      const place = new Place({
+        nation,
+        officialId,
+        parentId,
+        type,
+        population: 0,
+        name,
+        description,
+        image,
       });
+      await place.save();
+      if (
+        placeNation.data.roleplay.capital === "" ||
+        placeNation.data.roleplay.capital == undefined
+      ) {
+        placeNation.data.roleplay.capital = place.officialId;
+      }
+      placeNation.data.roleplay.places += 1;
+      await placeNation.save();
+      if (placeNation.data.roleplay.places > QUOTAS.PLACES) {
+        user.credits -= COSTS.PLACES;
+        await user.save();
+      }
+      res
+        .status(201)
+        .json({ place, nation: placeNation, user, infoType: "new" });
+    } else {
+      res.status(403).json({ infoType: "forbidden" });
+    }
   } catch (error) {
-    res.status(400).json({ message: error.message });
+    if (error.code === 11000) {
+      res.status(400).json({ infoType: "11000" });
+    } else {
+      res.status(400).json({ infoType: "miss" });
+      console.error(error);
+    }
   }
 };
 
@@ -128,29 +121,32 @@ export const deletePlace = async (req, res) => {
     if (!place) {
       return res.status(404).json({ message: "[A TRADUIRE] Lieu non trouvé" });
     }
-
+    const user = await User.findOne({ officialId: req.userId });
     const nation = await Nation.findOne({ officialId: place.nation });
-    if (!nation) {
+    if (!user || !nation) {
       return res
         .status(404)
-        .json({ message: "[A TRADUIRE] Nation non trouvée" });
+        .json({ message: "[A TRADUIRE] Action impossible" });
     }
+
     if (nation.data.roleplay.capital === place.officialId) {
       nation.data.roleplay.capital = "";
     }
     nation.data.roleplay.population -= place.population;
     nation.data.roleplay.places -= 1;
     await nation.save();
-    const children = await Place.updateMany(
+    user.credits += COSTS.PLACES;
+    await user.save();
+    await Place.updateMany(
       { parentId: id },
       { $set: { parentId: place.parentId } },
     );
     await Place.findByIdAndDelete(place._id);
     res
       .status(200)
-      .json({ place, nation, message: `[A TRADUIRE] Lieu supprimé` });
+      .json({ place, nation, user, message: `[A TRADUIRE] Lieu supprimé` });
   } catch (error) {
-    console.log(error);
+    console.error(error);
     res.status(400).json({
       message: "[A TRADUIRE] Impossible de supprimer le lieu",
       erreur: error.message,

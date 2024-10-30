@@ -1,9 +1,9 @@
 import Tag from "./tag";
 import { customTagProps } from "../../types/typProp";
 import { FaCoins } from "react-icons/fa6";
-import { addCredits } from "../../utils/functions";
 import { useTranslation } from "react-i18next";
-// import { MdAddCircle } from "react-icons/md";
+import { MdAddCircle } from "react-icons/md";
+import { errorMessage } from "../../utils/toasts";
 
 export default function CreditTag({ owner, label }: customTagProps) {
   const { t } = useTranslation();
@@ -14,12 +14,15 @@ export default function CreditTag({ owner, label }: customTagProps) {
       bgColor="bg-info"
       children={
         <>
-          <FaCoins />
           {owner && (
-            <span className="text-2xl cursor-pointer" onClick={addCredits}>
-              {/* <MdAddCircle /> */}
+            <span
+              className="text-2xl cursor-pointer hover:animate-jump"
+              onClick={() => errorMessage(t("toasts.user.creditsNotReady"))}
+            >
+              <MdAddCircle />
             </span>
           )}
+          <FaCoins />
         </>
       }
     />

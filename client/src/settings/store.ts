@@ -72,6 +72,7 @@ export const nationFetchedAtom = atom<Nation>(EmptyNation);
 export const nationsRoleplayDataAtom = atom<NationRoleplayData[]>([]);
 export const newNationAtom = atom<NewNationPayload>(emptyNewNationPayload);
 export const nationsListAtom = atom<Nation[]>([]);
+export const nationsListFetchedAtom = atom<Nation[]>([]);
 
 // Place
 

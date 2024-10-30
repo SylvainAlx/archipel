@@ -11,7 +11,11 @@ import { getNations } from "../../api/nation/nationAPI";
 import Input from "../form/input";
 import Button from "../buttons/button";
 import Select from "../form/select";
-import { SetAtom, nationsListAtom, statsAtom } from "../../settings/store";
+import {
+  SetAtom,
+  nationsListFetchedAtom,
+  statsAtom,
+} from "../../settings/store";
 import { nationSearchSortOptions } from "../../settings/consts";
 import { useTranslation } from "react-i18next";
 import { useAtom } from "jotai";
@@ -26,12 +30,13 @@ export default function NationSearchBar({ list, setList }: SearchBarProps) {
   const [selectOption, setSelectOption] = useState("5");
   const { t } = useTranslation();
   const [searchName, setSearchName] = useState("");
-  const [nationsList] = useAtom(nationsListAtom);
+  const [searchTag, setSearchTag] = useState("");
+  const [nationsList] = useAtom(nationsListFetchedAtom);
   const [stats] = useAtom(statsAtom);
 
   useEffect(() => {
     if (nationsList.length != stats.counts.nations) {
-      getNations("");
+      getNations("", "");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [stats.counts.nations]);
@@ -42,7 +47,7 @@ export default function NationSearchBar({ list, setList }: SearchBarProps) {
   }, [selectOption, nationsList]);
 
   const reset = () => {
-    getNations("");
+    getNations("", "");
     setSelectOption("0");
   };
 
@@ -93,7 +98,8 @@ export default function NationSearchBar({ list, setList }: SearchBarProps) {
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    getNations(searchName);
+    getNations(searchName, searchTag);
+    // console.log(searchName, searchTag);
   };
 
   return (
@@ -102,12 +108,20 @@ export default function NationSearchBar({ list, setList }: SearchBarProps) {
       onSubmit={handleSubmit}
     >
       <Input
-        required={true}
+        required={false}
         onChange={handleSearch}
         type="text"
         name="name"
-        placeholder={t("components.searchBars.nationsList.input")}
+        placeholder={t("components.searchBars.nationsList.name")}
         value={searchName}
+      />
+      <Input
+        required={false}
+        onChange={(e) => setSearchTag(e.target.value)}
+        type="text"
+        name="tag"
+        placeholder={t("components.searchBars.nationsList.tag")}
+        value={searchTag}
       />
       <Select
         onChange={(e: ChangeEvent<HTMLSelectElement>) =>

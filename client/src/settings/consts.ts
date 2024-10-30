@@ -26,7 +26,13 @@ export const color_black_alpha = "var(--color-black-alpha)";
 
 // Const
 
-export const NEW_PLACE_COST = 100;
+export const QUOTAS = {
+  PLACES: 10,
+};
+
+export const COSTS = {
+  PLACES: 10,
+};
 
 // listes
 

@@ -1,4 +1,5 @@
 import {
+  citizenFetchAtom,
   dataCheckedAtom,
   loadingAtom,
   myStore,
@@ -7,14 +8,17 @@ import {
   nationsListAtom,
   placeFetchedAtom,
   placesListAtom,
+  sessionAtom,
   statsAtom,
 } from "../../settings/store";
 import { Nation } from "../../types/typNation";
 import { PlacePayload } from "../../types/typPayload";
 import { Place } from "../../types/typPlace";
+import { User } from "../../types/typUser";
 import {
   getUpdateByOfficialId,
   spliceByOfficialId,
+  updateOrCreateCitizenInMemory,
   updateOrCreateNationInMemory,
   updateOrCreatePlaceInMemory,
 } from "../../utils/atomArrayFunctions";
@@ -50,26 +54,41 @@ export const getPlacesCount = () => {
 export const createNewPlace = (newPlace: PlacePayload) => {
   myStore.set(loadingAtom, true);
   createPlaceFetch(newPlace)
-    .then((data: { place: Place; nation: Nation; infoType: string }) => {
-      myStore.set(loadingAtom, false);
-      if (data.place) {
-        myStore.set(nationPlacesListAtom, [
-          ...myStore.get(nationPlacesListAtom),
-          data.place,
-        ]);
-        myStore.set(placesListAtom, [
-          ...myStore.get(placesListAtom),
-          data.place,
-        ]);
-        updateOrCreateNationInMemory(data.nation);
-        myStore.set(nationFetchedAtom, data.nation);
+    .then(
+      (data: {
+        place: Place;
+        nation: Nation;
+        user: User;
+        infoType: string;
+      }) => {
+        myStore.set(loadingAtom, false);
+        if (data.place && data.user && data.nation) {
+          myStore.set(nationPlacesListAtom, [
+            ...myStore.get(nationPlacesListAtom),
+            data.place,
+          ]);
+          myStore.set(placesListAtom, [
+            ...myStore.get(placesListAtom),
+            data.place,
+          ]);
+          myStore.set(citizenFetchAtom, data.user);
+          updateOrCreateCitizenInMemory(data.user);
+          const session = myStore.get(sessionAtom);
+          myStore.set(sessionAtom, {
+            nation: session.nation,
+            user: data.user,
+            jwt: session.jwt,
+          });
+          updateOrCreateNationInMemory(data.nation);
+          myStore.set(nationFetchedAtom, data.nation);
+        }
         displayPlaceInfoByType(data.infoType);
-      }
-    })
+      },
+    )
     .catch((error) => {
       myStore.set(loadingAtom, false);
-      console.log(error);
-      errorMessage(error.message);
+      console.error(error);
+      displayPlaceInfoByType(error.infoType);
     });
 };
 
@@ -156,28 +175,38 @@ export const getNationPlaces = (nation: Nation) => {
 export const deletePlace = (id: string) => {
   myStore.set(loadingAtom, true);
   deletePlaceFetch(id)
-    .then((resp: { place: Place; nation: Nation; message: string }) => {
-      myStore.set(dataCheckedAtom, false);
-      myStore.set(nationFetchedAtom, resp.nation);
-      const tempPlaceArray = getUpdateByOfficialId({
-        element: resp.nation,
-        array: myStore.get(nationsListAtom),
-      });
-      myStore.set(nationsListAtom, tempPlaceArray);
-      const tempNationPlacesArray = spliceByOfficialId(
-        resp.place.officialId,
-        myStore.get(nationPlacesListAtom),
-      );
-      myStore.set(nationPlacesListAtom, tempNationPlacesArray);
-      const tempPlacesListArray = spliceByOfficialId(
-        resp.place.officialId,
-        myStore.get(placesListAtom),
-      );
-      myStore.set(placesListAtom, tempPlacesListArray);
+    .then(
+      (resp: { place: Place; nation: Nation; user: User; message: string }) => {
+        myStore.set(dataCheckedAtom, false);
+        myStore.set(nationFetchedAtom, resp.nation);
+        const tempPlaceArray = getUpdateByOfficialId({
+          element: resp.nation,
+          array: myStore.get(nationsListAtom),
+        });
+        myStore.set(nationsListAtom, tempPlaceArray);
+        const tempNationPlacesArray = spliceByOfficialId(
+          resp.place.officialId,
+          myStore.get(nationPlacesListAtom),
+        );
+        myStore.set(nationPlacesListAtom, tempNationPlacesArray);
+        const tempPlacesListArray = spliceByOfficialId(
+          resp.place.officialId,
+          myStore.get(placesListAtom),
+        );
+        myStore.set(placesListAtom, tempPlacesListArray);
+        myStore.set(citizenFetchAtom, resp.user);
+        updateOrCreateCitizenInMemory(resp.user);
+        const session = myStore.get(sessionAtom);
+        myStore.set(sessionAtom, {
+          nation: session.nation,
+          user: resp.user,
+          jwt: session.jwt,
+        });
 
-      myStore.set(loadingAtom, false);
-      successMessage(resp.message);
-    })
+        myStore.set(loadingAtom, false);
+        successMessage(resp.message);
+      },
+    )
     .catch((error) => {
       myStore.set(loadingAtom, false);
       errorMessage(error.message);

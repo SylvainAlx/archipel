@@ -45,6 +45,7 @@ export default function Places({ selectedNation, owner }: SelectedNationProps) {
                   <NewPlaceButton
                     owner={owner}
                     parentId={selectedNation.officialId}
+                    nation={selectedNation}
                   />
                 )}
                 {places.length > 0 ? (

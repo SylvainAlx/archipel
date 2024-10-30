@@ -29,11 +29,20 @@ import EditIcon from "../components/editIcon";
 import { BsFillEnvelopeAtFill } from "react-icons/bs";
 import NationOwnerTag from "../components/tags/nationOwnerTag";
 import ResidenceTag from "../components/tags/residenceTag";
-import { getLabelIdArrayFromNationPlaceList } from "../utils/functions";
+import {
+  dateIsExpired,
+  getLabelIdArrayFromNationPlaceList,
+} from "../utils/functions";
 import { getNationPlaces } from "../api/place/placeAPI";
 import { ConfirmBoxDefault } from "../types/typAtom";
 import { getNation } from "../api/nation/nationAPI";
 import MDEditor from "@uiw/react-md-editor";
+import i18n from "../i18n/i18n";
+import CreditTag from "../components/tags/creditTag";
+import { MdOutlineUpdate } from "react-icons/md";
+import { IoDiamondOutline } from "react-icons/io5";
+import PlanButton from "../components/buttons/planButton";
+import { errorMessage } from "../utils/toasts";
 
 export default function Citizen() {
   const { t } = useTranslation();
@@ -48,6 +57,7 @@ export default function Citizen() {
   const [placesList, setPlacesList] = useState<LabelId[]>([]);
   const [, setConfirmModal] = useAtom(confirmBox);
   const [enableLeaving, setEnableLeaving] = useState(false);
+  const [userPlan, setUserPlan] = useState("free");
 
   useEffect(() => {
     if (param.id) {
@@ -72,6 +82,12 @@ export default function Citizen() {
     }
     if (citizen.citizenship.nationId != "") {
       getNation(citizen.citizenship.nationId);
+    }
+
+    if (citizen.plan != "free" && !dateIsExpired(citizen.expirationDate)) {
+      setUserPlan(citizen.plan);
+    } else {
+      setUserPlan("free");
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -237,16 +253,23 @@ export default function Citizen() {
                 <>
                   <div className="max-w-[90%] flex flex-wrap items-center justify-center gap-1">
                     <IdTag label={citizen.officialId} />
+                    {session.user.officialId === citizen.officialId && (
+                      <CreditTag label={citizen.credits} owner={true} />
+                    )}
                     {citizen.citizenship.nationOwner && <NationOwnerTag />}
-                    <ResidenceTag residenceId={citizen.citizenship.residence} />
-                    {placesList.length > 0 &&
-                      session.user.officialId === citizen.officialId && (
-                        <EditIcon
-                          target="citizen"
-                          param={placesList}
-                          path="citizenship.residence"
-                        />
-                      )}
+                    <div className="flex items-center gap-1">
+                      <ResidenceTag
+                        residenceId={citizen.citizenship.residence}
+                      />
+                      {placesList.length > 0 &&
+                        session.user.officialId === citizen.officialId && (
+                          <EditIcon
+                            target="citizen"
+                            param={placesList}
+                            path="citizenship.residence"
+                          />
+                        )}
+                    </div>
                     {citizen.role === "admin" && (
                       <RoleTag label={t("pages.citizen.role.admin")} />
                     )}
@@ -297,6 +320,31 @@ export default function Citizen() {
                 title={t("pages.citizen.settings")}
                 children={
                   <>
+                    {userPlan != "free" && (
+                      <div className="px-2 flex gap-1 items-center bg-gold rounded text-primary bold">
+                        <IoDiamondOutline />
+                        <span>
+                          {userPlan === "premium"
+                            ? t("pages.citizen.plans.premium")
+                            : t("pages.citizen.plans.elite")}
+                        </span>
+                        <span className="flex items-center gap-1">
+                          <MdOutlineUpdate />
+                          <span>
+                            {new Date(
+                              citizen.expirationDate,
+                            ).toLocaleDateString(i18n.language)}
+                          </span>
+                        </span>
+                      </div>
+                    )}
+                    {userPlan === "free" && (
+                      <PlanButton
+                        click={() =>
+                          errorMessage(t("toasts.user.subscriptionNotReady"))
+                        }
+                      />
+                    )}
                     <Button
                       text={t("components.buttons.changePassword")}
                       click={() => myStore.set(changePasswordModalAtom, true)}
@@ -304,7 +352,7 @@ export default function Citizen() {
                     />
                     <Button
                       text={t("components.buttons.logout")}
-                      bgColor="bg-wait"
+                      bgColor="bg-danger"
                       click={logout}
                       widthFull={true}
                     />

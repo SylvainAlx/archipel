@@ -57,9 +57,17 @@ const UserSchema = mongoose.Schema(
       type: String,
       required: true,
     },
+    credits: {
+      type: Number,
+      default: 0,
+    },
     plan: {
       type: String,
       default: "free",
+    },
+    expirationDate: {
+      type: String,
+      default: "",
     },
     citizenship: {
       status: {

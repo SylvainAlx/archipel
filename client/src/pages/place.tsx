@@ -220,7 +220,11 @@ export default function Place() {
           )}
         </div>
         {owner && place.type != 2 && (
-          <NewPlaceButton parentId={place.officialId} owner={owner} />
+          <NewPlaceButton
+            nation={nation}
+            parentId={place.officialId}
+            owner={owner}
+          />
         )}
       </section>
     </>

@@ -1,6 +1,6 @@
 import { toast } from "react-toastify";
 
-const duration: number = 1500;
+const duration: number = 2000;
 
 export const successMessage = (message: string) =>
   toast.success(message, {

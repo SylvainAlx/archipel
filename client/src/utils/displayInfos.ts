@@ -112,7 +112,7 @@ export const displayTileInfoByType = (type: string) => {
       errorMessage(i18n.t("toasts.errors.forbidden"));
       break;
     case "serverError":
-      errorMessage(i18n.t("toasts.errors.sererError"));
+      errorMessage(i18n.t("toasts.errors.serverError"));
       break;
     default:
       break;
@@ -130,8 +130,14 @@ export const displayPlaceInfoByType = (type: string) => {
     case "delete":
       successMessage(i18n.t("toasts.place.delete"));
       break;
+    case "forbidden":
+      errorMessage(i18n.t("toasts.errors.forbidden"));
+      break;
     case "serverError":
       errorMessage(i18n.t("toasts.errors.sererError"));
+      break;
+    case "11000":
+      errorMessage(i18n.t("toasts.errors.11000"));
       break;
     default:
       break;
