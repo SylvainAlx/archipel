@@ -64,6 +64,11 @@
       "noResidence": "no residence",
       "role": {
         "admin": "administrator"
+      },
+      "plans": {
+        "free": "hobby",
+        "premium": "premium",
+        "elite": "elite"
       }
     },
     "coms": {
@@ -134,7 +139,8 @@
       "askCitizenship": "ASK CITIZENSHIP",
       "createRelation": "CREATE DIPLOMATIC RELATIONSHIP",
       "parent": "parent",
-      "createFreeTile": "create free tile"
+      "createFreeTile": "create free tile",
+      "plan": "Choose a subscription"
     },
     "form": {
       "input": {
@@ -365,7 +371,9 @@
       "newPassword": "New saved password",
       "badRecovery": "Incorrect recovery key",
       "deleteKO": "Unable to delete the user",
-      "update": "Update successful"
+      "update": "Update successful",
+      "creditsNotReady": "Adding credits is not yet available",
+      "subscriptionNotReady": "Subscription is not yet available"
     },
     "nation": {
       "create": "New nation created",

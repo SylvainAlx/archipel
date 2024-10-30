@@ -39,9 +39,12 @@ export const getOneNationFetch = async (id: string) => {
   return result;
 };
 
-export const getAllNationsFetch = async (searchText: string) => {
+export const getAllNationsFetch = async (
+  searchText: string,
+  searchTag: string,
+) => {
   const resp = await fetch(
-    `${SERVER_URL}/nation/getall?texteRecherche=${encodeURIComponent(searchText)}`,
+    `${SERVER_URL}/nation/getall?name=${encodeURIComponent(searchText)}&tag=${encodeURIComponent(searchTag)}`,
   );
   const result = await resp.json();
   return result;

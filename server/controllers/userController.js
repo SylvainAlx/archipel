@@ -76,7 +76,7 @@ export const login = async (req, res) => {
 
     const user = await User.findOne(
       { name },
-      "officialId name bio gender avatar language password email link role plan expirationDate citizenship createdAt",
+      "officialId name bio gender avatar language password email link role credits plan expirationDate citizenship createdAt",
     );
     if (!user) {
       return res.status(404).json({ infoType: "user" });
@@ -111,7 +111,7 @@ export const verify = async (req, res) => {
 
     const user = await User.findOne(
       { name: decoded.name },
-      "officialId name bio gender avatar language email link role plan expirationDate citizenship createdAt",
+      "officialId name bio gender avatar language email link role credits plan expirationDate citizenship createdAt",
     );
 
     if (user) {
@@ -319,7 +319,7 @@ export const updateUser = async (req, res) => {
     if (req.userId === officialId) {
       const user = await User.findOne(
         { officialId },
-        "officialId name surname gender avatar language email link role plan expirationDate citizenship createdAt",
+        "officialId name surname gender avatar language email link role credits plan expirationDate citizenship createdAt",
       );
       let newResidence;
       let oldResidence;
@@ -390,7 +390,7 @@ export const changeStatus = async (req, res) => {
     if (req.userId === officialId || status != 0) {
       const user = await User.findOne(
         { officialId },
-        "officialId nofficialIdame bio gender avatar language email link role plan expirationDate citizenship createdAt",
+        "officialId nofficialIdame bio gender avatar language email link role credits plan expirationDate citizenship createdAt",
       );
 
       const nation = await Nation.findOne(

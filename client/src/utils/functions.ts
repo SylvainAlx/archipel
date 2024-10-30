@@ -44,12 +44,16 @@ export const findElementOfAtomArray = (id: string, atom: any[]) => {
 };
 
 export const findElementsByName = (searchName: string, array: any[]) => {
-  return array.filter((element) => element.name.includes(searchName));
+  return array.filter((element) =>
+    element.name.toLowerCase().includes(searchName.toLowerCase()),
+  );
 };
 
 export const findNationsByTag = (searchTag: string, nations: Nation[]) => {
   return nations.filter((nation) =>
-    nation.data.general.tags.some((tag) => tag.includes(searchTag)),
+    nation.data.general.tags.some((tag) =>
+      tag.toLowerCase().includes(searchTag.toLowerCase()),
+    ),
   );
 };
 

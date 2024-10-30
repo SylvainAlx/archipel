@@ -38,6 +38,11 @@ import { ConfirmBoxDefault } from "../types/typAtom";
 import { getNation } from "../api/nation/nationAPI";
 import MDEditor from "@uiw/react-md-editor";
 import i18n from "../i18n/i18n";
+import CreditTag from "../components/tags/creditTag";
+import { MdOutlineUpdate } from "react-icons/md";
+import { IoDiamondOutline } from "react-icons/io5";
+import PlanButton from "../components/buttons/planButton";
+import { errorMessage } from "../utils/toasts";
 
 export default function Citizen() {
   const { t } = useTranslation();
@@ -248,6 +253,9 @@ export default function Citizen() {
                 <>
                   <div className="max-w-[90%] flex flex-wrap items-center justify-center gap-1">
                     <IdTag label={citizen.officialId} />
+                    {session.user.officialId === citizen.officialId && (
+                      <CreditTag label={citizen.credits} owner={true} />
+                    )}
                     {citizen.citizenship.nationOwner && <NationOwnerTag />}
 
                     <ResidenceTag residenceId={citizen.citizenship.residence} />
@@ -310,7 +318,29 @@ export default function Citizen() {
                 children={
                   <>
                     {userPlan != "free" && (
-                      <p>{`plan ${citizen.plan} jusqu'au ${new Date(citizen.expirationDate).toLocaleDateString(i18n.language)}`}</p>
+                      <div className="px-2 flex gap-1 items-center bg-gold rounded text-primary bold">
+                        <IoDiamondOutline />
+                        <span>
+                          {userPlan === "premium"
+                            ? t("pages.citizen.plans.premium")
+                            : t("pages.citizen.plans.elite")}
+                        </span>
+                        <span className="flex items-center gap-1">
+                          <MdOutlineUpdate />
+                          <span>
+                            {new Date(
+                              citizen.expirationDate,
+                            ).toLocaleDateString(i18n.language)}
+                          </span>
+                        </span>
+                      </div>
+                    )}
+                    {userPlan === "free" && (
+                      <PlanButton
+                        click={() =>
+                          errorMessage(t("toasts.user.subscriptionNotReady"))
+                        }
+                      />
                     )}
                     <Button
                       text={t("components.buttons.changePassword")}
@@ -319,7 +349,7 @@ export default function Citizen() {
                     />
                     <Button
                       text={t("components.buttons.logout")}
-                      bgColor="bg-wait"
+                      bgColor="bg-danger"
                       click={logout}
                       widthFull={true}
                     />
