@@ -139,7 +139,8 @@
       "askCitizenship": "demander la nationnalité",
       "createRelation": "créer une relation diplomatique",
       "parent": "parent",
-      "createFreeTile": "ajouter une tuile libre"
+      "createFreeTile": "ajouter une tuile libre",
+      "plan": "choisir une souscription"
     },
     "form": {
       "input": {
@@ -362,7 +363,9 @@
       "newPassword": "Nouveau mot de passe pris en compte",
       "badRecovery": "Clé de récupération erronée",
       "deleteKO": "impossible de supprimer l'utilisateur",
-      "update": "Mise à jour réussie"
+      "update": "Mise à jour réussie",
+      "creditsNotReady": "L'ajout de crédits n'est pas encore disponible",
+      "subscriptionNotReady": "La souscription n'est pas encore disponible"
     },
     "nation": {
       "create": "Nouvelle nation créée",

@@ -102,12 +102,15 @@ export const getNations = (searchName: string, searchTag: string) => {
   if (searchTag != "") {
     nations = findNationsByTag(searchTag, myStore.get(nationsListAtom));
   }
+  if (searchName === "" && searchTag === "") {
+    nations = myStore.get(nationsListAtom);
+  }
 
   if (nations.length > 0) {
     myStore.set(nationsListAtom, nations);
   } else {
     myStore.set(loadingAtom, true);
-    getAllNationsFetch(searchName)
+    getAllNationsFetch(searchName, searchTag)
       .then((resp: Nation[]) => {
         if (resp != undefined) {
           myStore.set(nationsListAtom, resp);

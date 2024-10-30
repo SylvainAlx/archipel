@@ -3,12 +3,10 @@ import { customTagProps } from "../../types/typProp";
 import { FaCoins } from "react-icons/fa6";
 import { useTranslation } from "react-i18next";
 import { MdAddCircle } from "react-icons/md";
-import { useAtom } from "jotai";
-import { infoModalAtom } from "../../settings/store";
+import { errorMessage } from "../../utils/toasts";
 
 export default function CreditTag({ owner, label }: customTagProps) {
   const { t } = useTranslation();
-  const [, showInfo] = useAtom(infoModalAtom);
   return (
     <Tag
       text={label.toString()}
@@ -19,11 +17,7 @@ export default function CreditTag({ owner, label }: customTagProps) {
           {owner && (
             <span
               className="text-2xl cursor-pointer"
-              onClick={() =>
-                showInfo(
-                  "[A TRADUIRE] L'ajout de crédits n'est pas encore disponible",
-                )
-              }
+              onClick={() => errorMessage(t("toasts.user.creditsNotReady"))}
             >
               <MdAddCircle />
             </span>

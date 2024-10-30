@@ -80,19 +80,25 @@ export const createNation = async (req, res) => {
 
 export const getAllNations = async (req, res) => {
   try {
-    const searchText = req.query.texteRecherche;
-    if (searchText) {
+    const searchText = req.query.name;
+    const searchTag = req.query.tag;
+    if (searchText || searchTag) {
       const nations = await Nation.find(
-        { name: { $regex: searchText, $options: "i" } },
+        {
+          name: { $regex: searchText, $options: "i" },
+          "data.general.tags": { $regex: searchTag, $options: "i" },
+        },
         "officialId name owner role data createdAt",
       );
       res.status(200).json(nations);
-    } else {
+    } else if (searchText === "" && searchTag === "") {
       const nations = await Nation.find(
         {},
         "officialId name owner role data createdAt",
       );
       res.status(200).json(nations);
+    } else {
+      res.status(404).json([]);
     }
   } catch (error) {
     console.error(error.message);
