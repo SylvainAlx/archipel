@@ -55,7 +55,12 @@ export default function Register() {
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     if (name != "" && password != "") {
-      register({ name, password, gender, language });
+      register({
+        name: name.trimEnd(),
+        password: password.trimEnd(),
+        gender,
+        language,
+      });
     } else {
       errorMessage(t("components.form.missingField"));
     }

@@ -49,6 +49,8 @@ export default function NationSearchBar({ list, setList }: SearchBarProps) {
   const reset = () => {
     getNations("", "");
     setSelectOption("0");
+    setSearchName("");
+    setSearchTag("");
   };
 
   const nationsSorting = () => {

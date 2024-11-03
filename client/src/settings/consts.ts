@@ -28,10 +28,14 @@ export const color_black_alpha = "var(--color-black-alpha)";
 
 export const QUOTAS = {
   PLACES: 10,
+  TILES: 8,
+  COMS: 1, // par jour
 };
 
 export const COSTS = {
-  PLACES: 10,
+  PLACE: 10,
+  TILE: 10,
+  COM: 10,
 };
 
 // listes

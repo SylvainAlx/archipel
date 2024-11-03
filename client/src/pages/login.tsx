@@ -25,7 +25,7 @@ export default function Login() {
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    login({ name, password });
+    login({ name: name.trimEnd(), password: password.trimEnd() });
   };
 
   return (

@@ -15,7 +15,7 @@ export default function DashTile({
     >
       <div className="absolute h-1 inset-0 pointer-events-none border-t border-b border-transparent customGradient"></div>
       {title != "" && (
-        <legend className="px-2 text-center text-light">{title}</legend>
+        <legend className="px-2 text-center text-light bold">{title}</legend>
       )}
       {children}
     </fieldset>

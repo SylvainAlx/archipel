@@ -25,9 +25,10 @@ export const createTile = (tile: Tile) => {
   createTileFetch(tile)
     .then((resp) => {
       if (resp.tile) {
-        const tempArray = [...myStore.get(tileListAtom)];
+        const tempArray = [...myStore.get(nationTileListAtom)];
         tempArray.push(resp.tile);
-        myStore.set(tileListAtom, tempArray);
+        myStore.set(nationTileListAtom, tempArray);
+        updateOrCreateTileInMemory(resp.tile);
       }
       displayTileInfoByType(resp.infoType);
       myStore.set(loadingAtom, false);
@@ -71,10 +72,12 @@ export const deleteTile = (id: string) => {
   deleteTileFetch(id)
     .then((resp) => {
       if (resp.tile) {
-        const tempArray = spliceByDBId(
+        let tempArray = spliceByDBId(
           resp.tile._id,
-          myStore.get(tileListAtom),
+          myStore.get(nationTileListAtom),
         );
+        myStore.set(nationTileListAtom, tempArray);
+        tempArray = spliceByDBId(resp.tile._id, myStore.get(tileListAtom));
         myStore.set(tileListAtom, tempArray);
       }
       displayTileInfoByType(resp.infoType);

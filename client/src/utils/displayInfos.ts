@@ -27,11 +27,14 @@ export const displayUserInfoByType = (type: string) => {
     case "deleteKO":
       errorMessage(i18n.t("toasts.user.deleteKO"));
       break;
-    case "error":
+    case "miss":
       errorMessage(i18n.t("toasts.errors.miss"));
       break;
     case "badRecovery":
       errorMessage(i18n.t("toasts.user.badRecovery"));
+      break;
+    case "forbidden":
+      errorMessage(i18n.t("toasts.errors.forbidden"));
       break;
     case "user":
       errorMessage(i18n.t("toasts.user.badUser"));
