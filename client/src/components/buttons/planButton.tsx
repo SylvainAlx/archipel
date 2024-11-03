@@ -12,6 +12,7 @@ export default function PlanButton({ click }: ClickProps) {
       children={<IoDiamondOutline />}
       bgColor="bg-gold"
       widthFull={true}
+      disabled={true}
     />
   );
 }

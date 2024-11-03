@@ -263,29 +263,24 @@ export const getTags = async (req, res) => {
   try {
     const tags = await Nation.aggregate([
       {
-        // Extraire uniquement la propriété data.general.tags de chaque document
         $project: {
           tags: "$data.general.tags",
         },
       },
       {
-        // Aplatir les tableaux de tags en un seul tableau
         $unwind: "$tags",
       },
       {
-        // Regrouper tous les tags en un seul tableau
         $group: {
           _id: null,
           tousLesTags: { $addToSet: "$tags" },
         },
       },
       {
-        // Optionnel: On peut aussi trier les tags (par exemple par ordre alphabétique)
         $sort: { tousLesTags: 1 },
       },
     ]);
-
-    res.status(200).json(tags[0].tousLesTags);
+    res.status(200).json(tags.length > 0 ? tags[0].tousLesTags : []);
   } catch (error) {
     res
       .status(400)

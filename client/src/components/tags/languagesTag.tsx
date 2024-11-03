@@ -11,18 +11,27 @@ export default function LanguagesTag({ languages }: LangagesTagPros) {
 
   return (
     <>
-      {languages.map((lang, i) => {
-        return (
-          <div key={i}>
-            <Tag
-              text={lang}
-              hover={t("components.hoverInfos.tags.languages")}
-              bgColor="bg-info"
-              children={<IoLanguage />}
-            />
-          </div>
-        );
-      })}
+      {languages.length > 0 ? (
+        languages.map((lang, i) => {
+          return (
+            <div key={i}>
+              <Tag
+                text={lang.toLocaleUpperCase()}
+                hover={t("components.hoverInfos.tags.languages")}
+                bgColor="bg-info"
+                children={<IoLanguage />}
+              />
+            </div>
+          );
+        })
+      ) : (
+        <Tag
+          text="PAS DE LANGUE"
+          hover={t("components.hoverInfos.tags.languages")}
+          bgColor="bg-info"
+          children={<IoLanguage />}
+        />
+      )}
     </>
   );
 }

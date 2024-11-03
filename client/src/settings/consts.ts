@@ -26,7 +26,17 @@ export const color_black_alpha = "var(--color-black-alpha)";
 
 // Const
 
-export const NEW_PLACE_COST = 100;
+export const QUOTAS = {
+  PLACES: 10,
+  TILES: 8,
+  COMS: 1, // par jour
+};
+
+export const COSTS = {
+  PLACE: 10,
+  TILE: 10,
+  COM: 10,
+};
 
 // listes
 

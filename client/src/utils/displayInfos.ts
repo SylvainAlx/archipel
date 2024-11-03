@@ -27,11 +27,14 @@ export const displayUserInfoByType = (type: string) => {
     case "deleteKO":
       errorMessage(i18n.t("toasts.user.deleteKO"));
       break;
-    case "error":
+    case "miss":
       errorMessage(i18n.t("toasts.errors.miss"));
       break;
     case "badRecovery":
       errorMessage(i18n.t("toasts.user.badRecovery"));
+      break;
+    case "forbidden":
+      errorMessage(i18n.t("toasts.errors.forbidden"));
       break;
     case "user":
       errorMessage(i18n.t("toasts.user.badUser"));
@@ -112,7 +115,7 @@ export const displayTileInfoByType = (type: string) => {
       errorMessage(i18n.t("toasts.errors.forbidden"));
       break;
     case "serverError":
-      errorMessage(i18n.t("toasts.errors.sererError"));
+      errorMessage(i18n.t("toasts.errors.serverError"));
       break;
     default:
       break;
@@ -130,8 +133,14 @@ export const displayPlaceInfoByType = (type: string) => {
     case "delete":
       successMessage(i18n.t("toasts.place.delete"));
       break;
+    case "forbidden":
+      errorMessage(i18n.t("toasts.errors.forbidden"));
+      break;
     case "serverError":
       errorMessage(i18n.t("toasts.errors.sererError"));
+      break;
+    case "11000":
+      errorMessage(i18n.t("toasts.errors.11000"));
       break;
     default:
       break;

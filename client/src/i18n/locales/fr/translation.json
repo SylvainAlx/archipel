@@ -111,6 +111,9 @@
     }
   },
   "components": {
+    "ads": {
+      "nation": "LA PUBLICITÉ POUR VOTRE NATION ICI !"
+    },
     "buttons": {
       "home": "ACCUEIL",
       "login": "se connecter",
@@ -154,7 +157,7 @@
       "missingField": "Champ(s) manquant(s)"
     },
     "logo": {
-      "title": "RÉSEAU ARCHIPEL",
+      "title": "ARCHIPEL",
       "subtitle": "CITOYENS DES MICRONATIONS & NATIONS VIRTUELLES"
     },
     "modals": {

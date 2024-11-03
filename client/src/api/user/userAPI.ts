@@ -29,7 +29,7 @@ import {
 } from "../../utils/atomArrayFunctions";
 import { displayUserInfoByType } from "../../utils/displayInfos";
 import { findElementOfAtomArray, GET_JWT } from "../../utils/functions";
-import { errorMessage, successMessage } from "../../utils/toasts";
+import { successMessage } from "../../utils/toasts";
 import {
   authGet,
   changePasswordFetch,
@@ -59,7 +59,7 @@ export const getCitizensCount = () => {
     .catch((error) => {
       myStore.set(loadingAtom, false);
       myStore.set(loadingAtom, false);
-      errorMessage(error.message);
+      displayUserInfoByType(error.infoType);
     });
 };
 
@@ -84,8 +84,8 @@ export const register = ({ name, password, gender, language }: AuthPayload) => {
     })
     .catch((error) => {
       myStore.set(loadingAtom, false);
-      displayUserInfoByType("error");
-      console.log(error.message);
+      displayUserInfoByType(error.infoType);
+      console.error(error.message);
     });
 };
 
@@ -109,10 +109,10 @@ export const authentification = () => {
         displayUserInfoByType(data.infoType);
       })
       .catch((error) => {
+        console.error(error);
         myStore.set(sessionAtom, { ...session, user: emptyUser });
         myStore.set(loadingAtom, false);
-        displayUserInfoByType("error");
-        console.log(error);
+        displayUserInfoByType(error.infoType);
       });
   } else {
     myStore.set(sessionAtom, { ...session, user: emptyUser });
@@ -138,8 +138,8 @@ export const login = ({ name, password }: AuthPayload) => {
     })
     .catch((error) => {
       myStore.set(loadingAtom, false);
-      displayUserInfoByType("error");
-      console.log(error);
+      displayUserInfoByType(error.infoType);
+      console.error(error);
     });
 };
 
@@ -165,8 +165,8 @@ export const recoveryUser = ({ name, recovery, password }: RecoveryPayload) => {
     })
     .catch((error) => {
       myStore.set(loadingAtom, false);
-      displayUserInfoByType("error");
-      console.log(error);
+      displayUserInfoByType(error.infoType);
+      console.error(error);
     });
 };
 
@@ -182,8 +182,8 @@ export const changePassword = ({
     })
     .catch((error) => {
       myStore.set(loadingAtom, false);
-      displayUserInfoByType("error");
-      console.log(error);
+      displayUserInfoByType(error.infoType);
+      console.error(error);
     });
 };
 
@@ -201,8 +201,8 @@ export const deleteUser = () => {
     })
     .catch((error) => {
       myStore.set(loadingAtom, false);
-      displayUserInfoByType("error");
-      console.log(error);
+      displayUserInfoByType(error.infoType);
+      console.error(error);
     });
 };
 
@@ -220,7 +220,8 @@ export const getOneUser = (id: string) => {
       })
       .catch((error) => {
         myStore.set(citizenFetchAtom, emptyUser);
-        errorMessage(error.message);
+        displayUserInfoByType(error.infoType);
+        console.error(error);
       });
   }
   myStore.set(loadingAtom, false);
@@ -252,7 +253,8 @@ export const getNationCitizens = (nation: Nation) => {
       })
       .catch((error) => {
         myStore.set(loadingAtom, false);
-        errorMessage(error.message);
+        displayUserInfoByType(error.infoType);
+        console.error(error);
       });
   }
 };
@@ -268,7 +270,8 @@ export const getCitizens = (searchName: string) => {
     })
     .catch((error) => {
       myStore.set(loadingAtom, false);
-      errorMessage(error.message);
+      displayUserInfoByType(error.infoType);
+      console.error(error);
     });
 };
 
@@ -296,15 +299,14 @@ export const updateUser = (payload: User) => {
           resp.oldPlace != null && updateOrCreatePlaceInMemory(resp.oldPlace);
           displayUserInfoByType(resp.infoType);
         } else {
-          displayUserInfoByType("error");
+          displayUserInfoByType(resp.infoType);
         }
       },
     )
     .catch((error) => {
-      console.log(error);
-
+      console.error(error);
       myStore.set(loadingAtom, false);
-      errorMessage(error.message);
+      displayUserInfoByType(error.infoType);
     });
 };
 
@@ -318,15 +320,22 @@ export const changeStatus = (payload: changeStatusPayload) => {
         myStore.set(nationFetchedAtom, resp.nation);
         updateOrCreateNationInMemory(resp.nation);
         updateOrCreateCitizenInMemory(resp.user);
+        const session = myStore.get(sessionAtom);
+        myStore.set(sessionAtom, {
+          nation: session.nation,
+          user: resp.user,
+          jwt: session.jwt,
+        });
         getNationCitizens(resp.nation);
-        displayUserInfoByType("changeStatus");
+        displayUserInfoByType(resp.infoType);
       } else {
-        displayUserInfoByType("error");
+        displayUserInfoByType(resp.infoType);
       }
     })
     .catch((error) => {
       myStore.set(loadingAtom, false);
-      errorMessage(error.message);
+      displayUserInfoByType(error.infoType);
+      console.error(error);
     });
 };
 

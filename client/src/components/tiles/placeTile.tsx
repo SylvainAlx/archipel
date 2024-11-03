@@ -5,11 +5,10 @@ import {
   session,
 } from "../../settings/store";
 import { useAtom } from "jotai";
-import PopulationTag from "../tags/populationTag";
 import { GiCapitol } from "react-icons/gi";
 import { useLocation, useNavigate } from "react-router-dom";
 import EyeButton from "../buttons/eyeButton";
-import { getPlaceTypeLabel, getTotalPopulation } from "../../utils/functions";
+import { getPlaceTypeLabel } from "../../utils/functions";
 import PlaceTag from "../tags/placeTag";
 import { useEffect, useState } from "react";
 import { Place } from "../../types/typPlace";
@@ -69,7 +68,7 @@ export default function PlaceTile({ place, owner }: PlaceTileProp) {
       </h3>
       <div className="max-w-[90%] flex flex-wrap items-center self-end justify-end gap-1">
         <PlaceTag label={getPlaceTypeLabel(place.type)} />
-        <PopulationTag label={getTotalPopulation(place)} />
+        {/* <PopulationTag label={getTotalPopulation(place)} /> */}
         {emplacement.pathname != `/nation/${place.nation}` && (
           <NationTag label={place.nation} />
         )}

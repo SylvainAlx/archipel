@@ -28,7 +28,6 @@ import { FaLink } from "react-icons/fa";
 import EditIcon from "../components/editIcon";
 import { BsFillEnvelopeAtFill } from "react-icons/bs";
 import NationOwnerTag from "../components/tags/nationOwnerTag";
-import ResidenceTag from "../components/tags/residenceTag";
 import {
   dateIsExpired,
   getLabelIdArrayFromNationPlaceList,
@@ -43,6 +42,8 @@ import { MdOutlineUpdate } from "react-icons/md";
 import { IoDiamondOutline } from "react-icons/io5";
 import PlanButton from "../components/buttons/planButton";
 import { errorMessage } from "../utils/toasts";
+import LanguagesTag from "../components/tags/languagesTag";
+import { languageList } from "../settings/consts";
 
 export default function Citizen() {
   const { t } = useTranslation();
@@ -54,7 +55,7 @@ export default function Citizen() {
   const [session, setSession] = useAtom(sessionAtom);
   const [confirm, setConfirm] = useAtom(confirmBox);
   const [nationPlaces] = useAtom(nationPlacesListAtom);
-  const [placesList, setPlacesList] = useState<LabelId[]>([]);
+  const [, setPlacesList] = useState<LabelId[]>([]);
   const [, setConfirmModal] = useAtom(confirmBox);
   const [enableLeaving, setEnableLeaving] = useState(false);
   const [userPlan, setUserPlan] = useState("free");
@@ -224,7 +225,7 @@ export default function Citizen() {
           )}
         </span>
       </div>
-      <div className="w-full mt-4 justify-center flex gap-2">
+      <div className="w-full max-w-md mt-4 justify-center flex gap-2">
         {citizen.bio ? (
           <MDEditor.Markdown
             className="bg-transparent text-light text-justify"
@@ -253,20 +254,38 @@ export default function Citizen() {
                 <>
                   <div className="max-w-[90%] flex flex-wrap items-center justify-center gap-1">
                     <IdTag label={citizen.officialId} />
+                    <span className="flex items-center gap-1">
+                      <LanguagesTag
+                        languages={
+                          citizen.language != "" ? [citizen.language] : []
+                        }
+                      />
+                      {session.user.officialId === citizen.officialId && (
+                        <EditIcon
+                          target="citizen"
+                          param={languageList}
+                          path="language"
+                          indice={citizen.language}
+                        />
+                      )}
+                    </span>
                     {session.user.officialId === citizen.officialId && (
                       <CreditTag label={citizen.credits} owner={true} />
                     )}
                     {citizen.citizenship.nationOwner && <NationOwnerTag />}
-
-                    <ResidenceTag residenceId={citizen.citizenship.residence} />
-                    {placesList.length > 0 &&
-                      session.user.officialId === citizen.officialId && (
-                        <EditIcon
-                          target="citizen"
-                          param={placesList}
-                          path="citizenship.residence"
-                        />
-                      )}
+                    {/* <div className="flex items-center gap-1">
+                      <ResidenceTag
+                        residenceId={citizen.citizenship.residence}
+                      />
+                      {placesList.length > 0 &&
+                        session.user.officialId === citizen.officialId && (
+                          <EditIcon
+                            target="citizen"
+                            param={placesList}
+                            path="citizenship.residence"
+                          />
+                        )}
+                    </div> */}
                     {citizen.role === "admin" && (
                       <RoleTag label={t("pages.citizen.role.admin")} />
                     )}
