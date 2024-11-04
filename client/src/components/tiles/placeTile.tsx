@@ -14,6 +14,7 @@ import { useEffect, useState } from "react";
 import { Place } from "../../types/typPlace";
 import NationTag from "../tags/nationTag";
 import Avatar from "../avatar";
+import { placesTypeList } from "../../settings/consts";
 
 export interface PlaceTileProp {
   owner?: boolean;
@@ -55,7 +56,11 @@ export default function PlaceTile({ place, owner }: PlaceTileProp) {
       <h3 className="w-full flex justify-between flex-wrap">
         <div className="text-xl flex items-center gap-2">
           <div className="w-[50px] h-[50px] rounded-full flex items-center justify-center overflow-hidden">
-            <Avatar url={place.image} isUser={false} />
+            <Avatar
+              url={place.image}
+              isUser={false}
+              isCity={place.type === placesTypeList[2].id}
+            />
           </div>
           <span className="text-lg text-info">
             {place.officialId === session.nation.data.roleplay.capital && (

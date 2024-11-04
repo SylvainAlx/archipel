@@ -34,13 +34,13 @@ export default function ComList({ text }: StringProps) {
               );
             }
           })}
-        {displayedComs < comList.length && (
-          <Button
-            click={() => setDisplayedComs(displayedComs + 5)}
-            text={t("components.buttons.showMore")}
-          />
-        )}
       </section>
+      {displayedComs < comList.length && (
+        <Button
+          click={() => setDisplayedComs(displayedComs + 5)}
+          text={t("components.buttons.showMore")}
+        />
+      )}
     </>
   );
 }

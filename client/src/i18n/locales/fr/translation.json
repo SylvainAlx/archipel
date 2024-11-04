@@ -372,6 +372,7 @@
     },
     "nation": {
       "create": "Nouvelle nation créée",
+      "update": "Nation modifiée",
       "delete": "Nation supprimée"
     },
     "relation": {

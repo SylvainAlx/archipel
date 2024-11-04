@@ -2,31 +2,30 @@ import mongoose from "mongoose";
 
 const ComSchema = mongoose.Schema(
   {
-    originId: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Nation",
-      required: true
-    },
-    originName: {
+    origin: {
       type: String,
-      required: true
+      default: "",
+    },
+    destination: {
+      type: String,
+      default: "",
     },
     title: {
-      type: String
+      type: String,
+      required: true,
     },
     comType: {
       type: Number,
-      required: true
+      required: true,
     },
     message: {
       type: String,
+      default: "",
     },
   },
   {
     timestamps: true,
-  }
+  },
 );
-
-
 
 export default mongoose.model("Com", ComSchema);

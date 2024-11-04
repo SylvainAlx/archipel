@@ -3,6 +3,7 @@ import H1 from "../components/titles/h1";
 import {
   changePasswordModalAtom,
   citizenFetchAtom,
+  comFetchedListAtom,
   confirmBox,
   myStore,
   nationFetchedAtom,
@@ -44,6 +45,7 @@ import PlanButton from "../components/buttons/planButton";
 import { errorMessage } from "../utils/toasts";
 import LanguagesTag from "../components/tags/languagesTag";
 import { languageList } from "../settings/consts";
+import { getComsByDestination } from "../api/communication/comAPI";
 
 export default function Citizen() {
   const { t } = useTranslation();
@@ -52,6 +54,7 @@ export default function Citizen() {
 
   const [citizen, setCitizen] = useAtom(citizenFetchAtom);
   const [nation] = useAtom(nationFetchedAtom);
+  const [comList] = useAtom(comFetchedListAtom);
   const [session, setSession] = useAtom(sessionAtom);
   const [confirm, setConfirm] = useAtom(confirmBox);
   const [nationPlaces] = useAtom(nationPlacesListAtom);
@@ -91,6 +94,8 @@ export default function Citizen() {
       setUserPlan("free");
     }
 
+    citizen.officialId != "" && getComsByDestination(citizen.officialId);
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [citizen]);
 
@@ -104,6 +109,10 @@ export default function Citizen() {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [nation]);
+
+  useEffect(() => {
+    // console.log(comList);
+  }, [comList]);
 
   useEffect(() => {
     if (
@@ -194,7 +203,7 @@ export default function Citizen() {
         )}
       </div>
       <div className="relative">
-        <Avatar url={citizen.avatar} isUser={true} />
+        <Avatar url={citizen.avatar} isUser={true} bigSize={true} />
         {session.user.officialId === citizen.officialId &&
           (citizen.avatar != "" ? (
             <CrossButton small={true} click={handleDeleteAvatar} />
@@ -225,7 +234,7 @@ export default function Citizen() {
           )}
         </span>
       </div>
-      <div className="w-full max-w-md mt-4 justify-center flex gap-2">
+      <div className="w-full max-w-[300px] md:max-w-lg mt-4 justify-center flex gap-2">
         {citizen.bio ? (
           <MDEditor.Markdown
             className="bg-transparent text-light text-justify"

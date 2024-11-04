@@ -41,7 +41,7 @@ export default function IconLink({ destination, text, action }: IconLinkProps) {
         currentURL.includes("explore") && setFocus(true);
         break;
       case "user":
-        currentURL.includes("citizen") && setFocus(true);
+        currentURL === `/citizen/${session.user.officialId}` && setFocus(true);
         break;
       case "nation":
         currentURL.includes("nation") && setFocus(true);
@@ -50,7 +50,7 @@ export default function IconLink({ destination, text, action }: IconLinkProps) {
       default:
         break;
     }
-  }, [currentURL, destination]);
+  }, [currentURL, destination, session.user.officialId]);
 
   return (
     <div
@@ -61,10 +61,10 @@ export default function IconLink({ destination, text, action }: IconLinkProps) {
       {destination === "explore" && <IoMdGlobe />}
       {destination === "login" && <IoMdLogIn />}
       {destination === "register" && <IoMdAddCircleOutline />}
-      {destination === "user" && session.user.avatar && (
+      {destination === "user" && (
         <Avatar isUser={true} url={session.user.avatar} isHeader={true} />
       )}
-      {destination === "nation" && session.nation.data.url.flag != "" && (
+      {destination === "nation" && (
         <Flag nation={session.nation} isHeader={true} />
       )}
       <h2 className="hidden md:block text-[10px]">

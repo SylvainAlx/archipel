@@ -2,13 +2,15 @@ import express from "express";
 import {
   createCom,
   deleteCom,
-  getAllComs,
+  getDestinationComs,
+  getPublicComs,
 } from "../controllers/comController.js";
 import { isAdmin, verifyJwt } from "../middlewares/authMiddleware.js";
 
 const comRouter = express.Router();
 
-comRouter.get("/getall", getAllComs);
+comRouter.get("/getbydestination/:id", getDestinationComs);
+comRouter.get("/getpubliccoms", getPublicComs);
 comRouter.post("/create", [verifyJwt], createCom);
 comRouter.delete("/delete/:id", [isAdmin], deleteCom);
 

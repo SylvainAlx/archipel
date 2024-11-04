@@ -98,11 +98,12 @@ export const getAllNations = async (req, res) => {
       );
       res.status(200).json(nations);
     } else {
-      res.status(404).json([]);
+      console.error(error);
+      res.status(404).json({ infoType: "404" });
     }
   } catch (error) {
-    console.error(error.message);
-    res.status(404).json({ message: "[A TRADUIRE] aucune nations" });
+    console.error(error);
+    res.status(400).json({ infoType: "400" });
   }
 };
 
@@ -114,8 +115,8 @@ export const getTop100Nations = async (req, res) => {
     ).limit(100);
     res.status(200).json(nations);
   } catch (error) {
-    console.error(error.message);
-    res.status(404).json({ message: "[A TRADUIRE] Aucune nation trouvée" });
+    console.error(error);
+    res.status(400).json({ infoType: "400" });
   }
 };
 
@@ -128,11 +129,8 @@ export const getOneNation = async (req, res) => {
     );
     res.status(200).json(nation);
   } catch (error) {
-    console.error(error.message);
-    res.status(404).json({
-      message: "[A TRADUIRE] aucune nation à afficher",
-      erreur: error.message,
-    });
+    console.error(error);
+    res.status(400).json({ infoType: "400" });
   }
 };
 
@@ -213,16 +211,13 @@ export const deleteSelfNation = async (req, res) => {
       );
 
       res.status(200).json({
-        message: `[A TRADUIRE] Votre nation a été supprimée`,
+        infoType: "delete",
         user: savedUser,
       });
     }
   } catch (error) {
     console.error(error);
-    res.status(400).json({
-      message: "[A TRADUIRE] impossible de supprimer la nation",
-      erreur: error.message,
-    });
+    res.status(400).json({ infoType: "400" });
   }
 };
 
@@ -239,23 +234,18 @@ export const updateNation = async (req, res) => {
       nation
         .save()
         .then((nation) => {
-          res
-            .status(200)
-            .json({ nation, message: "[A TRADUIRE] mise à jour réussie" });
+          res.status(200).json({ nation, infoType: "update" });
         })
         .catch((error) => {
-          res.status(400).json({
-            message: `[A TRADUIRE] certaines informations sont erronées ou manquantes`,
-            erreur: error.message,
-          });
+          console.error(error);
+          res.status(400).json({ infoType: "miss" });
         });
     } else {
-      res
-        .sendStatus(403)
-        .json({ message: "[A TRADUIRE] modification interdite" });
+      res.sendStatus(403).json({ infoType: "forbidden" });
     }
   } catch (error) {
-    res.status(400).json({ message: error });
+    console.error(error);
+    res.status(400).json({ infoType: "400" });
   }
 };
 
@@ -282,8 +272,7 @@ export const getTags = async (req, res) => {
     ]);
     res.status(200).json(tags.length > 0 ? tags[0].tousLesTags : []);
   } catch (error) {
-    res
-      .status(400)
-      .json({ message: "[A TRADUIRE] aucuns tags", erreur: error.message });
+    console.error(error);
+    res.status(400).json({ infoType: "400" });
   }
 };
