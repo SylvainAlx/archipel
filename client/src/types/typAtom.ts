@@ -54,7 +54,7 @@ export interface EditBox {
     | LabelId[]
     | any[];
   path: string;
-  indice?: number;
+  indice?: number | string;
   canBeEmpty?: boolean;
 }
 

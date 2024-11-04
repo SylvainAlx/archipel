@@ -24,7 +24,6 @@ import {
 } from "../../utils/atomArrayFunctions";
 import { displayPlaceInfoByType } from "../../utils/displayInfos";
 import { findElementOfAtomArray } from "../../utils/functions";
-import { errorMessage, successMessage } from "../../utils/toasts";
 import {
   createPlaceFetch,
   deletePlaceFetch,
@@ -47,7 +46,8 @@ export const getPlacesCount = () => {
     })
     .catch((error) => {
       myStore.set(loadingAtom, false);
-      errorMessage(error.message);
+      console.error(error);
+      displayPlaceInfoByType(error.infoType);
     });
 };
 
@@ -103,7 +103,7 @@ export const getPlace = (id: string) => {
       })
       .catch((error) => {
         myStore.set(loadingAtom, false);
-        errorMessage(error.message);
+        displayPlaceInfoByType(error.infoType);
       });
   } else {
     myStore.set(placeFetchedAtom, place);
@@ -122,7 +122,8 @@ export const getAllPlaces = () => {
     })
     .catch((error) => {
       myStore.set(loadingAtom, false);
-      errorMessage(error.message);
+      console.error(error);
+      displayPlaceInfoByType(error.infoType);
     });
 };
 
@@ -137,7 +138,8 @@ export const getPlaces = (searchName: string) => {
     })
     .catch((error) => {
       myStore.set(loadingAtom, false);
-      errorMessage(error.message);
+      console.error(error);
+      displayPlaceInfoByType(error.infoType);
     });
 };
 
@@ -167,7 +169,8 @@ export const getNationPlaces = (nation: Nation) => {
       })
       .catch((error) => {
         myStore.set(loadingAtom, false);
-        errorMessage(error.message);
+        console.error(error);
+        displayPlaceInfoByType(error.infoType);
       });
   }
 };
@@ -176,7 +179,12 @@ export const deletePlace = (id: string) => {
   myStore.set(loadingAtom, true);
   deletePlaceFetch(id)
     .then(
-      (resp: { place: Place; nation: Nation; user: User; message: string }) => {
+      (resp: {
+        place: Place;
+        nation: Nation;
+        user: User;
+        infoType: string;
+      }) => {
         myStore.set(dataCheckedAtom, false);
         myStore.set(nationFetchedAtom, resp.nation);
         const tempPlaceArray = getUpdateByOfficialId({
@@ -204,12 +212,13 @@ export const deletePlace = (id: string) => {
         });
 
         myStore.set(loadingAtom, false);
-        successMessage(resp.message);
+        displayPlaceInfoByType(resp.infoType);
       },
     )
     .catch((error) => {
       myStore.set(loadingAtom, false);
-      errorMessage(error.message);
+      console.error(error);
+      displayPlaceInfoByType(error.infoType);
     });
 };
 
@@ -231,7 +240,7 @@ export const updatePlace = (payload: Place) => {
     })
     .catch((error) => {
       myStore.set(loadingAtom, false);
-      errorMessage(error.message);
-      console.log(error);
+      console.error(error);
+      displayPlaceInfoByType(error.infoType);
     });
 };

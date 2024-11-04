@@ -27,11 +27,14 @@ export const displayUserInfoByType = (type: string) => {
     case "deleteKO":
       errorMessage(i18n.t("toasts.user.deleteKO"));
       break;
-    case "error":
+    case "miss":
       errorMessage(i18n.t("toasts.errors.miss"));
       break;
     case "badRecovery":
       errorMessage(i18n.t("toasts.user.badRecovery"));
+      break;
+    case "forbidden":
+      errorMessage(i18n.t("toasts.errors.forbidden"));
       break;
     case "user":
       errorMessage(i18n.t("toasts.user.badUser"));
@@ -70,8 +73,17 @@ export const displayNationInfoByType = (type: string) => {
     case "serverError":
       errorMessage(i18n.t("toasts.errors.sererError"));
       break;
+    case "update":
+      successMessage(i18n.t("toasts.nation.update"));
+      break;
     case "delete":
       successMessage(i18n.t("toasts.nation.delete"));
+      break;
+    case "400":
+      errorMessage(i18n.t("toasts.errors.400"));
+      break;
+    case "404":
+      errorMessage(i18n.t("toasts.errors.404"));
       break;
     default:
       break;
@@ -139,6 +151,35 @@ export const displayPlaceInfoByType = (type: string) => {
     case "11000":
       errorMessage(i18n.t("toasts.errors.11000"));
       break;
+    case "400":
+      errorMessage(i18n.t("toasts.errors.400"));
+      break;
+    case "404":
+      errorMessage(i18n.t("toasts.errors.404"));
+      break;
+    case "miss":
+      errorMessage(i18n.t("toasts.errors.miss"));
+      break;
+    default:
+      break;
+  }
+};
+
+export const displayFileInfoByType = (type: string) => {
+  switch (type) {
+    case "delete":
+      successMessage(i18n.t("toasts.file.delete"));
+      break;
+    case "miss":
+      errorMessage(i18n.t("toasts.errors.miss"));
+      break;
+    case "serverError":
+      errorMessage(i18n.t("toasts.errors.sererError"));
+      break;
+    case "400":
+      errorMessage(i18n.t("toasts.errors.400"));
+      break;
+
     default:
       break;
   }

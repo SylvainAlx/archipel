@@ -9,11 +9,11 @@ import {
 import Input from "../form/input";
 import Button from "../buttons/button";
 import Select from "../form/select";
-import { SetAtom, comsListAtom, statsAtom } from "../../settings/store";
+import { SetAtom, comFetchedListAtom, statsAtom } from "../../settings/store";
 import { useTranslation } from "react-i18next";
 import { useAtom } from "jotai";
 import { comSearchSortOptions } from "../../settings/consts";
-import { getComs } from "../../api/communication/comAPI";
+import { getPublicComs } from "../../api/communication/comAPI";
 
 export interface SearchBarProps {
   type: string;
@@ -24,12 +24,12 @@ export default function ComSearchBar({ setList }: SearchBarProps) {
   const [selectOption, setSelectOption] = useState("1");
   const { t } = useTranslation();
   const [searchName, setSearchName] = useState("");
-  const [comList] = useAtom(comsListAtom);
+  const [comList] = useAtom(comFetchedListAtom);
   const [stats] = useAtom(statsAtom);
 
   useEffect(() => {
     if (comList.length != stats.counts.coms) {
-      getComs();
+      getPublicComs();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [stats.counts.coms]);
@@ -40,7 +40,7 @@ export default function ComSearchBar({ setList }: SearchBarProps) {
   }, [selectOption, comList]);
 
   const reset = () => {
-    getComs();
+    getPublicComs();
     setSelectOption("1");
   };
 
@@ -67,7 +67,7 @@ export default function ComSearchBar({ setList }: SearchBarProps) {
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    getComs();
+    getPublicComs();
   };
 
   return (

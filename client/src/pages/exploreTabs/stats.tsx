@@ -59,9 +59,10 @@ export default function Stats({ text }: StringProps) {
           title={t("pages.explore.stats.tags")}
           children={
             <div className="w-full px-2 flex flex-wrap items-center justify-center gap-1">
-              {tagList.map((tag, i) => {
-                return <HashTag label={tag} key={i} />;
-              })}
+              {tagList != undefined &&
+                tagList.map((tag, i) => {
+                  return <HashTag label={tag} key={i} />;
+                })}
             </div>
           }
           className="w-full"

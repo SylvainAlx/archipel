@@ -2,19 +2,21 @@
 
 import {
   citizenListAtom,
+  comsListAtom,
   myStore,
   nationsListAtom,
   placesListAtom,
   relationListAtom,
   tileListAtom,
 } from "../settings/store";
+import { Com } from "../types/typCom";
 import { Nation } from "../types/typNation";
 import { Place } from "../types/typPlace";
 import { UpdateByOfficialIdProps } from "../types/typProp";
 import { DiplomaticRelationship } from "../types/typRelation";
 import { Tile } from "../types/typTile";
 import { User } from "../types/typUser";
-import { findElementOfAtomArray } from "./functions";
+import { findElementByDBId, findElementOfAtomArray } from "./functions";
 
 // _id MongoDB
 
@@ -29,7 +31,7 @@ export const spliceByDBId = (id: string, atoms: any[]) => {
   return tempArray;
 };
 
-export const updateByDBId = (element: Tile, array: Tile[]): Tile[] => {
+export const updateByDBId = (element: any, array: any[]): any[] => {
   const tempArray: any[] = [...array];
   for (let i = 0; i < array.length; i++) {
     if (array[i]._id === element._id) {
@@ -138,6 +140,17 @@ export const updateOrCreateTileInMemory = (tile: Tile) => {
     myStore.set(tileListAtom, tempArray);
   } else {
     myStore.set(tileListAtom, updateByDBId(tile, myStore.get(tileListAtom)));
+  }
+};
+
+export const updateOrCreateComInMemory = (com: Com) => {
+  const savedCom = findElementByDBId(com._id, myStore.get(comsListAtom));
+  if (savedCom === undefined) {
+    const tempArray = [...myStore.get(comsListAtom)];
+    tempArray.push(com);
+    myStore.set(comsListAtom, tempArray);
+  } else {
+    myStore.set(comsListAtom, updateByDBId(com, myStore.get(comsListAtom)));
   }
 };
 

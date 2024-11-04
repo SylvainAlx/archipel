@@ -26,7 +26,7 @@ export default function NewPlaceButton({
 
   const handleClick = () => {
     if (
-      session.user.credits >= COSTS.PLACES ||
+      session.user.credits >= COSTS.PLACE ||
       nation.data.roleplay.places < QUOTAS.PLACES
     ) {
       const newPlace: Place = {
@@ -53,7 +53,7 @@ export default function NewPlaceButton({
           {nation.data.roleplay.places >= QUOTAS.PLACES && (
             <span className="flex items-center gap-1 text-gold">
               <FaCoins />
-              {COSTS.PLACES}
+              {COSTS.PLACE}
             </span>
           )}
           <Button

@@ -2,7 +2,6 @@ import { loadingAtom, myStore, relationListAtom } from "../../settings/store";
 import { DiplomaticRelationship } from "../../types/typRelation";
 import { updateOrCreateRelationInMemory } from "../../utils/atomArrayFunctions";
 import { displayRelationInfoByType } from "../../utils/displayInfos";
-import { errorMessage } from "../../utils/toasts";
 import {
   createRelationFetch,
   getAllRelationsFetch,
@@ -24,8 +23,8 @@ export const createRelation = (payload: DiplomaticRelationship) => {
     })
     .catch((error) => {
       myStore.set(loadingAtom, false);
+      console.error(error);
       displayRelationInfoByType(error.infoType);
-      errorMessage(error.message);
     });
 };
 
@@ -41,8 +40,8 @@ export const updateRelation = (payload: DiplomaticRelationship) => {
     })
     .catch((error) => {
       myStore.set(loadingAtom, false);
+      console.error(error);
       displayRelationInfoByType(error.infoType);
-      errorMessage(error.message);
     });
 };
 
@@ -59,8 +58,8 @@ export const getRelations = () => {
       })
       .catch((error) => {
         myStore.set(loadingAtom, false);
+        console.error(error);
         displayRelationInfoByType(error.infoType);
-        errorMessage(error.message);
       });
   }
 };

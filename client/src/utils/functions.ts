@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { SetStateAction } from "jotai";
 import i18n from "../i18n/i18n";
 import {
   placesTypeList,
@@ -9,12 +8,7 @@ import {
 } from "../settings/consts";
 import { LabelId, Nation } from "../types/typNation";
 import { Place } from "../types/typPlace";
-import {
-  confirmBox,
-  myStore,
-  nationPlacesListAtom,
-  SetAtom,
-} from "../settings/store";
+import { confirmBox, myStore, nationPlacesListAtom } from "../settings/store";
 import { User } from "../types/typUser";
 import { deleteFileAPIProps } from "../api/files/fileAPI";
 
@@ -43,6 +37,11 @@ export const findElementOfAtomArray = (id: string, atom: any[]) => {
   return element;
 };
 
+export const findElementByDBId = (id: string, array: any[]) => {
+  const element = array.find((objet) => objet._id === id);
+  return element;
+};
+
 export const findElementsByName = (searchName: string, array: any[]) => {
   return array.filter((element) =>
     element.name.toLowerCase().includes(searchName.toLowerCase()),
@@ -55,46 +54,6 @@ export const findNationsByTag = (searchTag: string, nations: Nation[]) => {
       tag.toLowerCase().includes(searchTag.toLowerCase()),
     ),
   );
-};
-
-export const deleteElementOfAtomArray = (
-  id: string,
-  atom: any[],
-  setAtom: SetAtom<[SetStateAction<any>], void>,
-) => {
-  const tempArray: any[] = [...atom];
-  for (let i = 0; i < atom.length; i++) {
-    if (atom[i].officialId === id) {
-      tempArray.splice(i, 1);
-      break;
-    }
-  }
-  setAtom(tempArray);
-};
-
-export const createElementOfAtomArray = (
-  payload: any,
-  atom: any[],
-  setAtom: SetAtom<[SetStateAction<any>], void>,
-) => {
-  const tempArray = [...atom];
-  tempArray.push(payload);
-  setAtom(tempArray);
-};
-
-export const updateElementOfAtomArray = (
-  payload: any,
-  atom: any[],
-  setAtom: SetAtom<[SetStateAction<any>], void>,
-) => {
-  const tempArray = atom.map((objet) =>
-    objet.officialId === payload.officialId ? payload : objet,
-  );
-  if (tempArray.length === 0) {
-    createElementOfAtomArray(payload, atom, setAtom);
-  } else {
-    setAtom(tempArray);
-  }
 };
 
 export const getPoliticalSide = (value: number) => {

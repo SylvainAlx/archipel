@@ -111,6 +111,9 @@
     }
   },
   "components": {
+    "ads": {
+      "nation": "YOUR NATION'S AD HERE !"
+    },
     "buttons": {
       "home": "HOME",
       "login": "SIGN IN",
@@ -154,7 +157,7 @@
       "missingField": "Missing field(s)"
     },
     "logo": {
-      "title": "ARCHIPEL NETWORK",
+      "title": "ARCHIPEL",
       "subtitle": "CITIZENS OF MICRONATIONS & VIRTUAL NATIONS"
     },
     "modals": {
@@ -377,6 +380,7 @@
     },
     "nation": {
       "create": "New nation created",
+      "update": "Nation updated",
       "delete": "Nation deleted"
     },
     "relation": {

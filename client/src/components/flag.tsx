@@ -40,7 +40,7 @@ export default function Flag({ nation, isHeader }: FlagProps) {
           />
         )
       ) : (
-        <div className="text-[3.1rem]">
+        <div className={`${!isHeader ? "text-[3.1rem]" : ""}`}>
           <GiBlackFlag />
         </div>
       )}

@@ -12,9 +12,9 @@ export const register = async (req, res) => {
     const userIp = req.clientIp;
 
     if (!name || !password) {
-      return res
-        .status(400)
-        .json({ message: "[A TRADUIRE] Certains champs sont manquants" });
+      return res.status(400).json({
+        infoType: "miss",
+      });
     }
 
     const random = new LoremIpsum({
@@ -65,7 +65,7 @@ export const register = async (req, res) => {
       }
     }
   } catch (error) {
-    res.status(400).json({ error: error.message, infoType: "error" });
+    res.status(400).json({ message: error.message, infoType: "error" });
   }
 };
 
@@ -96,7 +96,7 @@ export const login = async (req, res) => {
       res.status(200).json({ user, jwt, infoType: "signin" });
     });
   } catch (error) {
-    res.status(400).json({ error: error.message, infoType: "error" });
+    res.status(400).json({ message: error.message, infoType: "error" });
   }
 };
 
@@ -121,7 +121,7 @@ export const verify = async (req, res) => {
       return res.status(404).json({ infoType: "user" });
     }
   } catch (error) {
-    res.status(401).json({ error: error.message, infoType: "jwt" });
+    res.status(401).json({ message: error.message, infoType: "jwt" });
   }
 };
 
@@ -156,7 +156,7 @@ export const forgetPassword = async (req, res) => {
   } catch (error) {
     res.status(400).json({
       infoType: "error",
-      error: error.message,
+      message: error.message,
     });
   }
 };
@@ -190,7 +190,7 @@ export const changePassword = async (req, res) => {
   } catch (error) {
     res.status(400).json({
       infoType: "error",
-      error: error.message,
+      message: error.message,
     });
   }
 };
@@ -212,7 +212,7 @@ export const getAllUsers = async (req, res) => {
       res.status(200).json(users);
     }
   } catch (error) {
-    res.status(404).json({ error: error.message, infoType: "noUser" });
+    res.status(404).json({ message: error.message, infoType: "noUser" });
   }
 };
 
@@ -229,7 +229,7 @@ export const getOneUser = async (req, res) => {
   } catch (error) {
     res.status(404).json({
       infoType: "noUser",
-      error: error.message,
+      message: error.message,
     });
   }
 };
@@ -242,7 +242,7 @@ export const getSelfUser = async (req, res) => {
   } catch (error) {
     res.status(404).json({
       infoType: "noUser",
-      error: error.message,
+      message: error.message,
     });
   }
 };
@@ -265,7 +265,7 @@ export const deleteSelfUser = async (req, res) => {
     });
   } catch (error) {
     res.status(400).json({
-      error: error.message,
+      message: error.message,
       infoType: "deleteKO",
     });
   }
@@ -274,15 +274,15 @@ export const deleteSelfUser = async (req, res) => {
 export const getUsersByNation = async (req, res) => {
   const nationId = req.params.id;
   try {
-    const users = await User.find({ "citizenship.nationId": nationId })
+    await User.find({ "citizenship.nationId": nationId })
       .then((users) => {
         res.status(200).json(users);
       })
       .catch((error) => {
-        res.status(400).json({ error: error.message });
+        res.status(400).json({ message: error.message, infoType: "error" });
       });
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    res.status(400).json({ message: error.message, infoType: "error" });
   }
 };
 
@@ -293,10 +293,10 @@ export const usersCount = async (req, res) => {
         res.status(200).json(count);
       })
       .catch((error) => {
-        res.status(400).json({ message: error.message });
+        res.status(400).json({ message: error.message, infoType: "error" });
       });
   } catch (error) {
-    res.status(400).json({ message: error.message });
+    res.status(400).json({ message: error.message, infoType: "error" });
   }
 };
 
@@ -366,20 +366,21 @@ export const updateUser = async (req, res) => {
           });
         })
         .catch((error) => {
+          console.error(error);
           res.status(400).json({
-            message: `[A TRADUIRE] certaines informations sont erronées ou manquantes`,
-            erreur: error.message,
+            infoType: "miss",
           });
         });
     } else {
-      res
-        .sendStatus(403)
-        .json({ message: "[A TRADUIRE] modification interdite" });
+      res.status(403).json({
+        infoType: "forbidden",
+      });
     }
   } catch (error) {
     console.error(error);
-
-    res.status(400).json({ message: error });
+    res.status(400).json({
+      infoType: "serverError",
+    });
   }
 };
 
@@ -428,22 +429,20 @@ export const changeStatus = async (req, res) => {
           res.status(200).json({
             user,
             nation,
-            message: "[A TRADUIRE] mise à jour réussie",
+            infoType: "update",
           });
         })
         .catch((error) => {
+          console.error(error);
           res.status(400).json({
-            message: `[A TRADUIRE] certaines informations sont erronées ou manquantes`,
-            erreur: error.message,
+            infoType: "miss",
           });
         });
     } else {
-      res
-        .sendStatus(403)
-        .json({ message: "[A TRADUIRE] modification interdite" });
+      res.sendStatus(403).json({ infoType: "forbidden" });
     }
   } catch (error) {
-    res.status(400).json({ message: error });
+    res.status(400).json({ message: error.message, infoType: "error" });
   }
 };
 
@@ -457,13 +456,14 @@ export const changePlan = async (req, res) => {
       user.save();
       res.status(200).json({
         user,
-        message: "[A TRADUIRE] changement de plan effectué",
+        infoType: "update",
       });
     }
   } catch (error) {
     console.error(error);
     res.status(400).json({
       message: error.message,
+      infoType: "error",
     });
   }
 };

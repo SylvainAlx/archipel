@@ -1,5 +1,6 @@
 import Tile from "../models/tileSchema.js";
 import User from "../models/userSchema.js";
+import { COSTS, QUOTAS } from "../settings/const.js";
 
 const verifyNationOwner = async (userId, nationId) => {
   const user = await User.findOne({
@@ -18,8 +19,18 @@ export const createTile = async (req, res) => {
   try {
     const { nationOfficialId, title, description, value } = req.body;
     const userId = req.userId;
-    const allow = verifyNationOwner(userId, nationOfficialId);
+    const nationsTiles = await Tile.find({ nationOfficialId });
+    const user = await User.findOne({ officialId: userId });
+    const allow =
+      verifyNationOwner(userId, nationOfficialId) &&
+      (nationsTiles.length < QUOTAS.TILES || user.credits >= COSTS.TILES);
     if (allow) {
+      let updatedUser;
+      if (nationsTiles.length > QUOTAS.TILES) {
+        user.credits -= COSTS.TILES;
+        updatedUser = await user.save();
+      }
+
       const tile = new Tile({
         nationOfficialId,
         title,
@@ -28,7 +39,9 @@ export const createTile = async (req, res) => {
       });
       tile
         .save()
-        .then(() => res.status(201).json({ tile, infoType: "new" }))
+        .then(() =>
+          res.status(201).json({ tile, user: updatedUser, infoType: "new" }),
+        )
         .catch((error) => {
           console.error(error);
           res.status(400).json({

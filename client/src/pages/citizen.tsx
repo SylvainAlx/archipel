@@ -3,6 +3,7 @@ import H1 from "../components/titles/h1";
 import {
   changePasswordModalAtom,
   citizenFetchAtom,
+  comFetchedListAtom,
   confirmBox,
   myStore,
   nationFetchedAtom,
@@ -28,7 +29,6 @@ import { FaLink } from "react-icons/fa";
 import EditIcon from "../components/editIcon";
 import { BsFillEnvelopeAtFill } from "react-icons/bs";
 import NationOwnerTag from "../components/tags/nationOwnerTag";
-import ResidenceTag from "../components/tags/residenceTag";
 import {
   dateIsExpired,
   getLabelIdArrayFromNationPlaceList,
@@ -43,6 +43,9 @@ import { MdOutlineUpdate } from "react-icons/md";
 import { IoDiamondOutline } from "react-icons/io5";
 import PlanButton from "../components/buttons/planButton";
 import { errorMessage } from "../utils/toasts";
+import LanguagesTag from "../components/tags/languagesTag";
+import { languageList } from "../settings/consts";
+import { getComsByDestination } from "../api/communication/comAPI";
 
 export default function Citizen() {
   const { t } = useTranslation();
@@ -51,10 +54,11 @@ export default function Citizen() {
 
   const [citizen, setCitizen] = useAtom(citizenFetchAtom);
   const [nation] = useAtom(nationFetchedAtom);
+  const [comList] = useAtom(comFetchedListAtom);
   const [session, setSession] = useAtom(sessionAtom);
   const [confirm, setConfirm] = useAtom(confirmBox);
   const [nationPlaces] = useAtom(nationPlacesListAtom);
-  const [placesList, setPlacesList] = useState<LabelId[]>([]);
+  const [, setPlacesList] = useState<LabelId[]>([]);
   const [, setConfirmModal] = useAtom(confirmBox);
   const [enableLeaving, setEnableLeaving] = useState(false);
   const [userPlan, setUserPlan] = useState("free");
@@ -90,6 +94,8 @@ export default function Citizen() {
       setUserPlan("free");
     }
 
+    citizen.officialId != "" && getComsByDestination(citizen.officialId);
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [citizen]);
 
@@ -103,6 +109,10 @@ export default function Citizen() {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [nation]);
+
+  useEffect(() => {
+    // console.log(comList);
+  }, [comList]);
 
   useEffect(() => {
     if (
@@ -193,7 +203,7 @@ export default function Citizen() {
         )}
       </div>
       <div className="relative">
-        <Avatar url={citizen.avatar} isUser={true} />
+        <Avatar url={citizen.avatar} isUser={true} bigSize={true} />
         {session.user.officialId === citizen.officialId &&
           (citizen.avatar != "" ? (
             <CrossButton small={true} click={handleDeleteAvatar} />
@@ -224,7 +234,7 @@ export default function Citizen() {
           )}
         </span>
       </div>
-      <div className="w-full mt-4 justify-center flex gap-2">
+      <div className="w-full max-w-[300px] md:max-w-lg mt-4 justify-center flex gap-2">
         {citizen.bio ? (
           <MDEditor.Markdown
             className="bg-transparent text-light text-justify"
@@ -253,11 +263,26 @@ export default function Citizen() {
                 <>
                   <div className="max-w-[90%] flex flex-wrap items-center justify-center gap-1">
                     <IdTag label={citizen.officialId} />
+                    <span className="flex items-center gap-1">
+                      <LanguagesTag
+                        languages={
+                          citizen.language != "" ? [citizen.language] : []
+                        }
+                      />
+                      {session.user.officialId === citizen.officialId && (
+                        <EditIcon
+                          target="citizen"
+                          param={languageList}
+                          path="language"
+                          indice={citizen.language}
+                        />
+                      )}
+                    </span>
                     {session.user.officialId === citizen.officialId && (
                       <CreditTag label={citizen.credits} owner={true} />
                     )}
                     {citizen.citizenship.nationOwner && <NationOwnerTag />}
-                    <div className="flex items-center gap-1">
+                    {/* <div className="flex items-center gap-1">
                       <ResidenceTag
                         residenceId={citizen.citizenship.residence}
                       />
@@ -269,7 +294,7 @@ export default function Citizen() {
                             path="citizenship.residence"
                           />
                         )}
-                    </div>
+                    </div> */}
                     {citizen.role === "admin" && (
                       <RoleTag label={t("pages.citizen.role.admin")} />
                     )}

@@ -7,16 +7,17 @@ import { errorMessage } from "../../utils/toasts";
 
 export default function CreditTag({ owner, label }: customTagProps) {
   const { t } = useTranslation();
+
   return (
     <Tag
-      text={label.toString()}
+      text={label ? label.toString() : ""}
       hover={t("components.hoverInfos.tags.credits")}
-      bgColor="bg-info"
+      bgColor="bg-complementary2"
       children={
         <>
           {owner && (
             <span
-              className="text-2xl cursor-pointer hover:animate-jump"
+              className="text-2xl cursor-not-allowed"
               onClick={() => errorMessage(t("toasts.user.creditsNotReady"))}
             >
               <MdAddCircle />

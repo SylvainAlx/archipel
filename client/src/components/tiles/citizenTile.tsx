@@ -19,6 +19,7 @@ import NationTag from "../tags/nationTag";
 import NationOwnerTag from "../tags/nationOwnerTag";
 import { useEffect, useState } from "react";
 import { IoDiamondOutline } from "react-icons/io5";
+import LanguagesTag from "../tags/languagesTag";
 
 export interface CitizenTileProps {
   citizen: User;
@@ -91,11 +92,15 @@ export default function CitizenTile({ citizen }: CitizenTileProps) {
         {citizen.role === "admin" && (
           <RoleTag label={t("pages.citizen.role.admin")} />
         )}
+
         {citizen.citizenship.nationOwner && <NationOwnerTag />}
         {citizen.citizenship.nationId != "" &&
           emplacement.pathname != `/nation/${citizen.citizenship.nationId}` && (
             <NationTag label={citizen.citizenship.nationId} />
           )}
+        <LanguagesTag
+          languages={citizen.language != "" ? [citizen.language] : []}
+        />
       </div>
     </fieldset>
   );

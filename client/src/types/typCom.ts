@@ -1,8 +1,7 @@
 export interface Com {
   _id: string;
-  originId: string;
-  destinationId?: string;
-  originName: string;
+  origin?: string;
+  destination?: string;
   title: string;
   comType: number;
   message: string;
@@ -11,9 +10,8 @@ export interface Com {
 
 export const EmptyCom: Com = {
   _id: "",
-  originId: "",
-  destinationId: "",
-  originName: "",
+  origin: "",
+  destination: "",
   title: "",
   comType: -1,
   message: "",

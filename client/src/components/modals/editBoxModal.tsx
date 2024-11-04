@@ -163,6 +163,8 @@ export default function EditBoxModal() {
       setEditBox({ ...editBox, new: e.target.value });
     } else if (editBox.path === "citizenship.residence") {
       setEditBox({ ...editBox, new: e.target.value });
+    } else if (editBox.path === "language") {
+      setEditBox({ ...editBox, new: e.target.value });
     } else {
       setEditBox({ ...editBox, new: Number(e.target.value) });
     }

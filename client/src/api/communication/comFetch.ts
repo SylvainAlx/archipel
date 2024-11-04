@@ -17,8 +17,14 @@ export const createComFetch = async (payload: ComPayload) => {
   return result;
 };
 
-export const getAllComs = async () => {
-  const resp = await fetch(`${SERVER_URL}/com/getall`);
+export const getComsByDestinationFetch = async (officialId: string) => {
+  const resp = await fetch(`${SERVER_URL}/com/getbydestination/${officialId}`);
+  const result = await resp.json();
+  return result;
+};
+
+export const getPublicComsFetch = async () => {
+  const resp = await fetch(`${SERVER_URL}/com/getpubliccoms`);
   const result = await resp.json();
   return result;
 };

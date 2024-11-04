@@ -11,10 +11,16 @@ export const placesCount = async (req, res) => {
         res.status(200).json(count);
       })
       .catch((error) => {
-        res.status(400).json({ message: error.message });
+        console.error(error);
+        res.status(400).json({
+          infoType: "400",
+        });
       });
   } catch (error) {
-    res.status(400).json({ message: error.message });
+    console.error(error);
+    res.status(400).json({
+      infoType: "400",
+    });
   }
 };
 
@@ -26,10 +32,16 @@ export const getPlaces = async (req, res) => {
         res.status(200).json(places);
       })
       .catch((error) => {
-        res.status(400).json({ message: error.message });
+        console.error(error);
+        res.status(400).json({
+          infoType: "400",
+        });
       });
   } catch (error) {
-    res.status(400).json({ message: error.message });
+    console.error(error);
+    res.status(400).json({
+      infoType: "400",
+    });
   }
 };
 
@@ -41,9 +53,9 @@ export const getOne = async (req, res) => {
       place,
     });
   } catch (error) {
+    console.error(error);
     res.status(404).json({
-      message: "[A TRADUIRE] aucun lieu à afficher",
-      erreur: error.message,
+      infoType: "404",
     });
   }
 };
@@ -61,7 +73,10 @@ export const getAllPlaces = async (req, res) => {
       res.status(200).json(places);
     }
   } catch (error) {
-    res.status(404).json({ message: "[A TRADUIRE] aucun lieux" });
+    console.error(error);
+    res.status(404).json({
+      infoType: "404",
+    });
   }
 };
 
@@ -106,6 +121,7 @@ export const createPlace = async (req, res) => {
     }
   } catch (error) {
     if (error.code === 11000) {
+      console.error(error);
       res.status(400).json({ infoType: "11000" });
     } else {
       res.status(400).json({ infoType: "miss" });
@@ -119,14 +135,12 @@ export const deletePlace = async (req, res) => {
     const id = req.params.id;
     const place = await Place.findOne({ officialId: id });
     if (!place) {
-      return res.status(404).json({ message: "[A TRADUIRE] Lieu non trouvé" });
+      return res.status(404).json({ infoType: "404" });
     }
     const user = await User.findOne({ officialId: req.userId });
     const nation = await Nation.findOne({ officialId: place.nation });
     if (!user || !nation) {
-      return res
-        .status(404)
-        .json({ message: "[A TRADUIRE] Action impossible" });
+      return res.status(404).json({ infoType: "404" });
     }
 
     if (nation.data.roleplay.capital === place.officialId) {
@@ -142,14 +156,11 @@ export const deletePlace = async (req, res) => {
       { $set: { parentId: place.parentId } },
     );
     await Place.findByIdAndDelete(place._id);
-    res
-      .status(200)
-      .json({ place, nation, user, message: `[A TRADUIRE] Lieu supprimé` });
+    res.status(200).json({ place, nation, user, infoType: "delete" });
   } catch (error) {
     console.error(error);
     res.status(400).json({
-      message: "[A TRADUIRE] Impossible de supprimer le lieu",
-      erreur: error.message,
+      infoType: "400",
     });
   }
 };
@@ -173,19 +184,20 @@ export const updatePlace = async (req, res) => {
         })
         .catch((error) => {
           console.error(error);
-
           res.status(400).json({
-            message: `[A TRADUIRE] certaines informations sont erronées ou manquantes`,
-            erreur: error,
+            infoType: "miss",
           });
         });
     } else {
-      res
-        .sendStatus(403)
-        .json({ message: "[A TRADUIRE] modification interdite" });
+      console.error(error);
+      res.status(403).json({
+        infoType: "forbidden",
+      });
     }
   } catch (error) {
     console.error(error);
-    res.status(400).json({ message: error });
+    res.status(400).json({
+      infoType: "400",
+    });
   }
 };
