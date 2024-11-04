@@ -12,14 +12,14 @@ export default function LoadingSpinner() {
   useEffect(() => {
     setTimeout(() => {
       setShowMore(true);
-    }, 1000);
+    }, 2000);
   }, []);
 
   return (
     <div className="flex flex-col justify-center items-center gap-4">
       {showMore && (
-        <div>
-          <h2 className="animate-fadeIn text-2xl text-center p-4">
+        <div className="animate-fadeIn">
+          <h2 className="text-2xl text-center p-4">
             {t("components.modals.loadingModal.title")}
           </h2>
           <p className="text-center">
@@ -27,7 +27,7 @@ export default function LoadingSpinner() {
           </p>
         </div>
       )}
-      <Spinner />
+      <Spinner showClock={showMore} />
       {showMore && (
         <Button
           text={t("components.buttons.cancel")}

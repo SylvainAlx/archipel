@@ -1,12 +1,17 @@
-// import Logo from "../logo";
+import { FadeLoader, RingLoader } from "react-spinners";
 
-import { FadeLoader } from "react-spinners";
+interface SpinnerProps {
+  showClock?: boolean;
+}
 
-export default function Spinner() {
+export default function Spinner({ showClock = false }: SpinnerProps) {
   return (
     <div role="status" className="relative">
-      {/* <ClockLoader size={150} color="rgb(0, 129, 138)" /> */}
-      <FadeLoader color="rgb(0, 129, 138)" />
+      {showClock ? (
+        <RingLoader color="rgb(0, 129, 138)" />
+      ) : (
+        <FadeLoader color="rgb(0, 129, 138)" />
+      )}
     </div>
   );
 }

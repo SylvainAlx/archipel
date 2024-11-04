@@ -35,13 +35,13 @@ export default function PlaceList({ text }: StringProps) {
               );
             }
           })}
-        {displayedPlaces < placesList.length && (
-          <Button
-            click={() => setDisplayedPlaces(displayedPlaces + 5)}
-            text={t("components.buttons.showMore")}
-          />
-        )}
       </section>
+      {displayedPlaces < placesList.length && (
+        <Button
+          click={() => setDisplayedPlaces(displayedPlaces + 5)}
+          text={t("components.buttons.showMore")}
+        />
+      )}
     </>
   );
 }

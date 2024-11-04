@@ -38,13 +38,13 @@ export default function CitizenList({ text }: StringProps) {
               );
             }
           })}
-        {displayedCitizens < citizensList.length && (
-          <Button
-            click={() => setDisplayedCitizens(displayedCitizens + 5)}
-            text={t("components.buttons.showMore")}
-          />
-        )}
       </section>
+      {displayedCitizens < citizensList.length && (
+        <Button
+          click={() => setDisplayedCitizens(displayedCitizens + 5)}
+          text={t("components.buttons.showMore")}
+        />
+      )}
     </>
   );
 }
