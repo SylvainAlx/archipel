@@ -109,15 +109,15 @@ export const placeSearchSortOptions: StandardOption[] = [
 ];
 
 export const comOptions: StandardOption[] = [
-  { id: 0, label: "contact administrateur" },
-  { id: 1, label: "Nouvelle nation" },
-  { id: 2, label: "Suppression d'une nation" },
-  { id: 3, label: "Politique intérieure (public)" },
-  { id: 4, label: "Politique extérieure (public)" },
-  { id: 5, label: "Modification apportée" },
+  { id: 0, label: "[A TRADUIRE] administrateur" },
+  { id: 1, label: "[A TRADUIRE] Annonce générale" },
+  { id: 10, label: "[A TRADUIRE] nation com privée" },
+  { id: 11, label: "[A TRADUIRE] nation com publique" },
+  { id: 12, label: "[A TRADUIRE] nation modification" },
+  { id: 20, label: "[A TRADUIRE] info utilisateur" },
 ];
 
-export const comTypeOptions = [comOptions[3], comOptions[4], comOptions[0]];
+export const comTypeOptions = [comOptions[2], comOptions[3], comOptions[0]];
 
 export const regimeTypeList: RegimeType[] = [
   {

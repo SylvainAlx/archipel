@@ -380,6 +380,7 @@
     },
     "nation": {
       "create": "New nation created",
+      "update": "Nation updated",
       "delete": "Nation deleted"
     },
     "relation": {

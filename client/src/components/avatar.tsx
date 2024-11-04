@@ -10,9 +10,15 @@ export interface AvatarProps {
   url: string;
   isUser: boolean;
   isHeader?: boolean;
+  bigSize?: boolean;
 }
 
-export default function Avatar({ url, isUser, isHeader }: AvatarProps) {
+export default function Avatar({
+  url,
+  isUser,
+  isHeader,
+  bigSize,
+}: AvatarProps) {
   const LazyImage = lazy(() => import("./lazy/lazyImage"));
   const { t } = useTranslation();
   const [cachedImage, setCachedImage] = useState<string | null>(null);
@@ -20,6 +26,8 @@ export default function Avatar({ url, isUser, isHeader }: AvatarProps) {
   useEffect(() => {
     if (url) {
       getCachedImage(url).then(setCachedImage);
+    } else {
+      setCachedImage("");
     }
   }, [url]);
 
@@ -32,7 +40,7 @@ export default function Avatar({ url, isUser, isHeader }: AvatarProps) {
       className={
         isHeader
           ? "rounded-full w-[45px] h-[45px] md:w-[28px] md:h-[28px] overflow-hidden"
-          : "animate-fadeIn h-[80px] w-[80px] flex flex-col justify-center rounded-full overflow-hidden"
+          : "animate-fadeIn h-[150px] w-[150px] flex flex-col justify-center rounded-full overflow-hidden"
       }
     >
       {cachedImage ? (
@@ -53,7 +61,13 @@ export default function Avatar({ url, isUser, isHeader }: AvatarProps) {
           />
         </Suspense>
       ) : (
-        <div className="text-7xl flex items-center justify-center">
+        <div
+          className={
+            !isHeader
+              ? `flex justify-center ${bigSize ? "text-9xl" : "text-[3.1rem]"}`
+              : ""
+          }
+        >
           {isUser ? <RxAvatar /> : <AiOutlinePicture />}
         </div>
       )}

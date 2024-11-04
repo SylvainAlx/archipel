@@ -8,7 +8,7 @@ import BarreLoader from "../../components/loading/barreLoader";
 import { StringProps } from "../../types/typProp";
 import { Nation } from "../../types/typNation";
 import { useTranslation } from "react-i18next";
-import AdBanner from "../../components/ads/adBanner";
+// import AdBanner from "../../components/ads/adBanner";
 
 export default function NationList({ text }: StringProps) {
   const [nationsList, setNationsList] = useState<Nation[]>([]);
@@ -18,7 +18,7 @@ export default function NationList({ text }: StringProps) {
 
   return (
     <>
-      <AdBanner />
+      {/* <AdBanner /> */}
       <H1 text={text} />
       <NationSearchBar
         type="nation"

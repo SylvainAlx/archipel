@@ -22,7 +22,6 @@ import {
   findElementsByName,
   findNationsByTag,
 } from "../../utils/functions";
-import { errorMessage, successMessage } from "../../utils/toasts";
 import {
   createNationFetch,
   DeleteSelfFetch,
@@ -69,6 +68,7 @@ export const createNation = (payload: NewNationPayload) => {
     })
     .catch((error: { infoType: string }) => {
       myStore.set(loadingAtom, false);
+      console.error(error);
       displayNationInfoByType(error.infoType);
     });
 };
@@ -87,7 +87,8 @@ export const getNation = (id: string) => {
       .catch((error) => {
         myStore.set(nationFetchedAtom, EmptyNation);
         myStore.set(loadingAtom, false);
-        errorMessage(error.message);
+        console.error(error);
+        displayNationInfoByType(error.infoType);
       });
   } else {
     myStore.set(loadingAtom, false);
@@ -122,7 +123,8 @@ export const getNations = (searchName: string, searchTag: string) => {
       })
       .catch((error) => {
         myStore.set(loadingAtom, false);
-        errorMessage(error.message);
+        console.error(error);
+        displayNationInfoByType(error.infoType);
       });
   }
 };
@@ -138,12 +140,13 @@ export const updateNation = (payload: Nation) => {
         myStore.set(sessionAtom, { ...session, nation: resp.nation });
         updateOrCreateNationInMemory(resp.nation);
       } else {
-        successMessage(resp.message);
+        displayNationInfoByType(resp.infoType);
       }
     })
     .catch((error) => {
       myStore.set(loadingAtom, false);
-      errorMessage(error.message);
+      console.error(error);
+      displayNationInfoByType(error.infoType);
     });
 };
 
@@ -169,7 +172,8 @@ export const deleteSelfNation = () => {
     })
     .catch((error) => {
       myStore.set(loadingAtom, false);
-      errorMessage(error.message);
+      console.error(error);
+      displayNationInfoByType(error.infoType);
     });
 };
 
@@ -184,6 +188,7 @@ export const getAllNationTags = () => {
     })
     .catch((error) => {
       myStore.set(loadingAtom, false);
-      errorMessage(error.message);
+      console.error(error);
+      displayNationInfoByType(error.infoType);
     });
 };

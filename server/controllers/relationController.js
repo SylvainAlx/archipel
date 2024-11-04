@@ -69,29 +69,26 @@ export const updateRelation = async (req, res) => {
           .then((relation) => {
             res.status(200).json({
               relation,
-              message: "[A TRADUIRE] mise à jour réussie",
               infoType: "update",
             });
           })
           .catch((error) => {
+            console.error(error);
             res.status(400).json({
-              message: `[A TRADUIRE] certaines informations sont erronées ou manquantes`,
-              erreur: error.message,
+              infoType: "400",
             });
           });
       } else {
-        res.status(400).json({ message: error, infoType: "400" });
+        console.error(error);
+        res.status(400).json({ infoType: "400" });
       }
     } else {
       const relation = await Relation.findOneAndDelete({ officialId });
       relation.nations = [];
-      res
-        .status(200)
-        .json({
-          relation,
-          message: "[A TRADUIRE] mise à jour réussie",
-          infoType: "update",
-        });
+      res.status(200).json({
+        relation,
+        infoType: "update",
+      });
     }
   } catch (error) {
     res.status(400).json({ message: error, infoType: "400" });

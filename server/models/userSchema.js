@@ -59,7 +59,7 @@ const UserSchema = mongoose.Schema(
     },
     credits: {
       type: Number,
-      default: 0,
+      default: 20,
     },
     plan: {
       type: String,
