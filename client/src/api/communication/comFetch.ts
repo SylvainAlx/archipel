@@ -2,6 +2,12 @@ import { SERVER_URL } from "../../settings/consts";
 import { ComPayload } from "../../types/typPayload";
 import { GET_JWT } from "../../utils/functions";
 
+export const getComsCountFetch = async () => {
+  const resp = await fetch(`${SERVER_URL}/com/count`);
+  const result = await resp.json();
+  return result;
+};
+
 export const createComFetch = async (payload: ComPayload) => {
   const jwt = GET_JWT();
   const resp = await fetch(`${SERVER_URL}/com/create`, {

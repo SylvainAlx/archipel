@@ -6,6 +6,7 @@ import {
   confirmBox,
   loadingAtom,
   myStore,
+  statsAtom,
 } from "../../settings/store";
 import { Com } from "../../types/typCom";
 import {
@@ -16,11 +17,29 @@ import { errorMessage, successMessage } from "../../utils/toasts";
 import {
   createComFetch,
   deleteComFetch,
+  getComsCountFetch,
   getComsByDestinationFetch,
   getPublicComsFetch,
 } from "./comFetch";
 
 const confirm = myStore.get(confirmBox);
+
+export const getComsCount = () => {
+  const stats = myStore.get(statsAtom);
+  myStore.set(loadingAtom, true);
+  getComsCountFetch()
+    .then((response) => {
+      myStore.set(loadingAtom, false);
+      const updatedStats = { ...stats };
+      updatedStats.counts.coms = response;
+      myStore.set(statsAtom, updatedStats);
+    })
+    .catch((error) => {
+      myStore.set(loadingAtom, false);
+      console.error(error);
+      errorMessage(error.message);
+    });
+};
 
 export const getComsByDestination = (officialId: string) => {
   const savedComList: Com[] = [];

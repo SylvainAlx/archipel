@@ -20,13 +20,13 @@ export const VERSION = {
 
 //  Colors
 
-export const color_primary = "#081825";
+export const color_primary = "var(--color-primary)";
 export const color_secondary = "var(--color-secondary)";
 export const color_complementary = "var(--color-complementary)";
 export const color_light = "var(--color-light)";
 export const color_black_alpha = "var(--color-black-alpha)";
 
-// Const
+// Credits
 
 export const QUOTAS = {
   PLACES: 10,
@@ -253,5 +253,3 @@ export const placesTypeList = [
     label: i18n.t("components.searchBars.placesList.checkbox.nature"),
   },
 ];
-
-// onglets

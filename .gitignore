@@ -1,6 +1,9 @@
 /server/.env
 /server/node_modules
+/server/dist
 
 /client/.env
 /client/node_modules
 /client/dist
+
+/db

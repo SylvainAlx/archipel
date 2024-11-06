@@ -1,6 +1,26 @@
 import Com from "../models/comSchema.js";
 import { COMTYPE } from "../settings/const.js";
 
+export const comCount = async (req, res) => {
+  try {
+    Com.countDocuments({})
+      .then((count) => {
+        res.status(200).json(count);
+      })
+      .catch((error) => {
+        console.error(error);
+        res.status(400).json({
+          infoType: "400",
+        });
+      });
+  } catch (error) {
+    console.error(error);
+    res.status(400).json({
+      infoType: "400",
+    });
+  }
+};
+
 export const getDestinationComs = async (req, res) => {
   try {
     const destination = req.params.id;

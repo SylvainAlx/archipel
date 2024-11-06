@@ -27,8 +27,8 @@ export default function ComTile({ com }: ComTileProps) {
     <div
       className={`p-2 rounded flex flex-col items-center gap-3 bg-complementary shadow-xl`}
     >
-      <h3 className="text-light text-xl pl-4 pr-6">{com.title}</h3>
-      <div className="w-full flex justify-end">
+      <div className="w-full flex justify-between">
+        <h3 className="text-light text-xl pl-4 pr-6">{com.title}</h3>
         <NationTag label={com.origin != undefined ? com.origin : ""} />
       </div>
       <div className="flex items-center gap-2">

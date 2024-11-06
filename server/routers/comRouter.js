@@ -1,5 +1,6 @@
 import express from "express";
 import {
+  comCount,
   createCom,
   deleteCom,
   getDestinationComs,
@@ -9,6 +10,7 @@ import { isAdmin, verifyJwt } from "../middlewares/authMiddleware.js";
 
 const comRouter = express.Router();
 
+comRouter.get("/count", comCount);
 comRouter.get("/getbydestination/:id", getDestinationComs);
 comRouter.get("/getpubliccoms", getPublicComs);
 comRouter.post("/create", [verifyJwt], createCom);
