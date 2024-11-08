@@ -3,7 +3,7 @@ import { COMTYPE } from "../settings/const.js";
 
 export const comCount = async (req, res) => {
   try {
-    Com.countDocuments({})
+    Com.countDocuments({ comType: COMTYPE[3].id })
       .then((count) => {
         res.status(200).json(count);
       })

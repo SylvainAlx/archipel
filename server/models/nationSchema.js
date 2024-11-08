@@ -82,6 +82,10 @@ const nationSchema = mongoose.Schema(
         },
       },
       roleplay: {
+        treasury: {
+          type: Number,
+          default: 0,
+        },
         capital: {
           type: String,
           default: "",

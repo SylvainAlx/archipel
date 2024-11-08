@@ -41,6 +41,7 @@ export const createNation = async (req, res) => {
     data.general.currency = currency;
     data.general.tags = tags;
     data.roleplay.citizens += 1;
+    data.roleplay.treasury += 10;
     const nation = new Nation({
       officialId,
       name,

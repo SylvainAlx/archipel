@@ -84,10 +84,9 @@ export const createPlace = async (req, res) => {
   try {
     const { nation, parentId, name, type, description, image } = req.body;
     const placeNation = await Nation.findOne({ officialId: nation });
-    const user = await User.findOne({ officialId: req.userId });
     if (
       placeNation.data.roleplay.places < QUOTAS.PLACES ||
-      user.credits >= COSTS.PLACES
+      placeNation.data.roleplay.treasury >= COSTS.PLACES
     ) {
       const officialId = createOfficialId("p");
       const place = new Place({
@@ -108,14 +107,12 @@ export const createPlace = async (req, res) => {
         placeNation.data.roleplay.capital = place.officialId;
       }
       placeNation.data.roleplay.places += 1;
-      await placeNation.save();
+
       if (placeNation.data.roleplay.places > QUOTAS.PLACES) {
-        user.credits -= COSTS.PLACES;
-        await user.save();
+        placeNation.data.roleplay.treasury -= COSTS.PLACES;
       }
-      res
-        .status(201)
-        .json({ place, nation: placeNation, user, infoType: "new" });
+      await placeNation.save();
+      res.status(201).json({ place, nation: placeNation, infoType: "new" });
     } else {
       res.status(403).json({ infoType: "forbidden" });
     }
@@ -137,9 +134,8 @@ export const deletePlace = async (req, res) => {
     if (!place) {
       return res.status(404).json({ infoType: "404" });
     }
-    const user = await User.findOne({ officialId: req.userId });
     const nation = await Nation.findOne({ officialId: place.nation });
-    if (!user || !nation) {
+    if (!nation) {
       return res.status(404).json({ infoType: "404" });
     }
 
@@ -148,15 +144,14 @@ export const deletePlace = async (req, res) => {
     }
     nation.data.roleplay.population -= place.population;
     nation.data.roleplay.places -= 1;
+    nation.data.roleplay.treasury += COSTS.PLACES;
     await nation.save();
-    user.credits += COSTS.PLACES;
-    await user.save();
     await Place.updateMany(
       { parentId: id },
       { $set: { parentId: place.parentId } },
     );
     await Place.findByIdAndDelete(place._id);
-    res.status(200).json({ place, nation, user, infoType: "delete" });
+    res.status(200).json({ place, nation, infoType: "delete" });
   } catch (error) {
     console.error(error);
     res.status(400).json({

@@ -45,12 +45,12 @@ export default function Stats({ text }: StringProps) {
           children={<H3 text={stats.counts.nations.toString()} />}
         />
         <DashTile
-          title={t("pages.explore.stats.locations")}
-          children={<H3 text={stats.counts.places.toString()} />}
-        />
-        <DashTile
           title={t("pages.explore.stats.citizens")}
           children={<H3 text={stats.counts.citizens.toString()} />}
+        />
+        <DashTile
+          title={t("pages.explore.stats.locations")}
+          children={<H3 text={stats.counts.places.toString()} />}
         />
         <DashTile
           title={t("pages.explore.stats.coms")}

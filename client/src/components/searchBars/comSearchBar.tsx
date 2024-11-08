@@ -28,9 +28,7 @@ export default function ComSearchBar({ setList }: SearchBarProps) {
   const [stats] = useAtom(statsAtom);
 
   useEffect(() => {
-    if (comList.length != stats.counts.coms) {
-      getPublicComs();
-    }
+    getPublicComs();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [stats.counts.coms]);
 

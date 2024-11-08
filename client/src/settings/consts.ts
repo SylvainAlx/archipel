@@ -67,6 +67,14 @@ export const nationSearchSortOptions: StandardOption[] = [
     id: 5,
     label: i18n.t("components.searchBars.nationsList.sortNations.descCtz"),
   },
+  {
+    id: 6,
+    label: i18n.t("components.searchBars.nationsList.sortNations.ascTreasury"),
+  },
+  {
+    id: 7,
+    label: i18n.t("components.searchBars.nationsList.sortNations.descTreasury"),
+  },
 ];
 
 export const citizenSearchSortOptions: StandardOption[] = [

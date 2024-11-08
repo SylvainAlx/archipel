@@ -263,7 +263,8 @@
         "currency": "currency",
         "nationalDay": "national day",
         "nationOwner": "nation leader",
-        "residence": "residence"
+        "residence": "residence",
+        "treasury": "treasury"
       },
       "avatar": "avatar",
       "relations": {
@@ -284,7 +285,9 @@
           "ascLoc": "Growing number of locations",
           "descLoc": "Decreasing number of locations",
           "ascCtz": "Growing number of citizens",
-          "descCtz": "Decreasing number of citizens"
+          "descCtz": "Decreasing number of citizens",
+          "ascTreasury": "Growing wealth",
+          "descTreasury": "Decreasing wealth"
         }
       },
       "citizensList": {

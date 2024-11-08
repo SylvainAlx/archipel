@@ -263,7 +263,8 @@
         "currency": "monnaie",
         "nationalDay": "fête nationale",
         "nationOwner": "leader de la nation",
-        "residence": "résidence"
+        "residence": "résidence",
+        "treasury": "trésor public"
       },
       "avatar": "avatar",
       "relations": {
@@ -284,7 +285,9 @@
           "ascLoc": "Nombre de lieux croissant",
           "descLoc": "Nombre de lieux décroissant",
           "ascCtz": "Nombre de citoyens croissant",
-          "descCtz": "Nombre de citoyens décroissant"
+          "descCtz": "Nombre de citoyens décroissant",
+          "ascTreasury": "Richesse croissante",
+          "descTreasury": "Richesse décroissante"
         }
       },
       "citizensList": {
