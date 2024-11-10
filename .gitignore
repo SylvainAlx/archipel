@@ -6,4 +6,7 @@
 /client/node_modules
 /client/dist
 
-/db
+/db/backup
+/db/extracted
+/db/scripts/createBackup.bat
+/db/scripts/restoreDB.bat

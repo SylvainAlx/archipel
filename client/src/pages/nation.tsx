@@ -20,6 +20,7 @@ import CrossButton from "../components/buttons/crossButton";
 import FreeTiles from "../components/nation/freeTiles";
 import NationMap from "../components/nation/nationMap";
 import { ConfirmBoxDefault } from "../types/typAtom";
+import NationComs from "../components/nation/nationComs";
 
 export default function Nation() {
   const [nation] = useAtom(nationFetchedAtom);
@@ -89,6 +90,7 @@ export default function Nation() {
                 <Diplomacy selectedNation={nation} owner={owner} />
                 <Citizens selectedNation={nation} owner={owner} />
                 <Places selectedNation={nation} owner={owner} />
+                <NationComs selectedNation={nation} owner={owner} />
               </>
             )}
           </section>

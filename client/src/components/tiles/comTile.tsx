@@ -3,16 +3,20 @@ import { Com } from "../../types/typCom";
 import NationTag from "../tags/nationTag";
 import EditIcon from "../editIcon";
 import { useAtom } from "jotai";
-import { sessionAtom } from "../../settings/store";
+import { confirmBox, myStore, sessionAtom } from "../../settings/store";
 import { useEffect, useState } from "react";
+import CrossButton from "../buttons/crossButton";
+import { useTranslation } from "react-i18next";
 
 export interface ComTileProps {
   com: Com;
+  owner: boolean;
 }
 
 export default function ComTile({ com }: ComTileProps) {
   const [session] = useAtom(sessionAtom);
   const [owner, setOwner] = useState(false);
+  const { t } = useTranslation();
   useEffect(() => {
     if (
       session.user.citizenship.nationId === com.origin &&
@@ -23,6 +27,16 @@ export default function ComTile({ com }: ComTileProps) {
       setOwner(false);
     }
   }, [com.origin, session]);
+
+  const handleDelete = () => {
+    myStore.set(confirmBox, {
+      action: "deleteCom",
+      text: t("components.modals.confirmModal.deleteCom"),
+      result: "",
+      target: com,
+    });
+  };
+
   return (
     <div
       className={`p-2 rounded flex flex-col items-center gap-3 bg-complementary shadow-xl`}
@@ -39,6 +53,11 @@ export default function ComTile({ com }: ComTileProps) {
         />
         {owner && <EditIcon target="com" param={com.message} path="message" />}
       </div>
+      {owner && (
+        <div className="w-max self-end">
+          <CrossButton click={handleDelete} />
+        </div>
+      )}
     </div>
   );
 }

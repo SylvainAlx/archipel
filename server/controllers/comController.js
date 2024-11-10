@@ -34,6 +34,24 @@ export const getDestinationComs = async (req, res) => {
   }
 };
 
+export const getPublicComsByOrigin = async (req, res) => {
+  try {
+    const nationId = req.param.id;
+    let coms;
+    if (nationId) {
+      coms = await Com.find({ comType: COMTYPE[3].id, origin: nationId });
+    } else {
+      coms = await Com.find({ comType: COMTYPE[3].id });
+    }
+    res.status(200).json(coms);
+  } catch (error) {
+    res.status(400).json({
+      message: "[A TRADUIRE] aucune communication",
+      erreur: error.message,
+    });
+  }
+};
+
 export const getPublicComs = async (req, res) => {
   try {
     const coms = await Com.find({ comType: COMTYPE[3].id });

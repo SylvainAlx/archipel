@@ -33,6 +33,10 @@
       "places": {
         "title": "lieux",
         "noPlaces": "aucun lieu à afficher"
+      },
+      "coms": {
+        "title": "Communiqués",
+        "noComs": "aucun communiqué à afficher"
       }
     },
     "explore": {
@@ -143,7 +147,8 @@
       "createRelation": "créer une relation diplomatique",
       "parent": "parent",
       "createFreeTile": "ajouter une tuile libre",
-      "plan": "choisir une souscription"
+      "plan": "choisir une souscription",
+      "createCom": "poster un communiqué"
     },
     "form": {
       "input": {
@@ -179,7 +184,9 @@
         "deleteTile": "Confirmez-vous la suppression de la tuile ?",
         "updateNation": "Confirmez-vous la mise à jour de la nation ?",
         "updatePlace": "Confirmez-vous la mise à jour du lieu ?",
-        "updateCitizen": "Confirmez-vous la mise à jour de votre profil ?"
+        "updateCitizen": "Confirmez-vous la mise à jour de votre profil ?",
+        "createCom": "Confirmez-vous la création du communiqué ?",
+        "deleteCom": "Confirmez-vous la suppression définitive du communiqué ?"
       },
       "cookiesModal": {
         "text": "Ce site utilise des cookies pour améliorer votre expérience utilisateur",
@@ -229,6 +236,11 @@
         "inputTitle": "Titre",
         "inputDescription": "Description",
         "inputValue": "Valeur"
+      },
+      "newComModal": {
+        "title": "Nouveau communiqué",
+        "comTitle": "Titre",
+        "comMessage": "Message"
       }
     },
     "hoverInfos": {

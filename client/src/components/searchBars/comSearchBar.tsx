@@ -28,7 +28,7 @@ export default function ComSearchBar({ setList }: SearchBarProps) {
   const [stats] = useAtom(statsAtom);
 
   useEffect(() => {
-    getPublicComs();
+    getPublicComs("");
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [stats.counts.coms]);
 
@@ -38,7 +38,7 @@ export default function ComSearchBar({ setList }: SearchBarProps) {
   }, [selectOption, comList]);
 
   const reset = () => {
-    getPublicComs();
+    getPublicComs("");
     setSelectOption("1");
   };
 
@@ -65,7 +65,7 @@ export default function ComSearchBar({ setList }: SearchBarProps) {
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    getPublicComs();
+    getPublicComs("");
   };
 
   return (

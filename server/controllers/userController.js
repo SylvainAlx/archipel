@@ -12,10 +12,13 @@ export const register = async (req, res) => {
     const { name, password, gender, language } = req.body;
     const userIp = req.clientIp;
 
-    const userToCheck = await User.findOne({
-      ip: { $elemMatch: { value: userIp } },
-    });
-    if (userToCheck) {
+    const IpIsBanished =
+      (await Param.findOne({
+        name: "banished",
+        props: { $elemMatch: { label: "ip", value: userIp } },
+      })) != null;
+
+    if (IpIsBanished) {
       return res.status(403).json({
         infoType: "ip",
       });

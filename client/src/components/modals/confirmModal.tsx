@@ -36,7 +36,7 @@ export default function ConfirmModal() {
       deleteUser();
     }
     if (confirm.action === "deleteCom") {
-      deleteCom();
+      deleteCom(confirm.target);
     }
     if (confirm.action === "createCom") {
       createNewCom(confirm.payload);

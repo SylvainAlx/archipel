@@ -127,7 +127,7 @@ export const comOptions: StandardOption[] = [
   { id: 20, label: "[A TRADUIRE] info utilisateur" },
 ];
 
-export const comTypeOptions = [comOptions[2], comOptions[3], comOptions[0]];
+export const comTypeOptions = [comOptions[2], comOptions[3]];
 
 export const regimeTypeList: RegimeType[] = [
   {
