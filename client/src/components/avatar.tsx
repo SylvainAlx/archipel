@@ -5,10 +5,12 @@ import { useTranslation } from "react-i18next";
 import { getCachedImage } from "../utils/functions";
 import { imageAtom, myStore } from "../settings/store";
 import { AiOutlinePicture } from "react-icons/ai";
+import { FaCity } from "react-icons/fa";
 
 export interface AvatarProps {
   url: string;
   isUser: boolean;
+  isCity?: boolean;
   isHeader?: boolean;
   bigSize?: boolean;
 }
@@ -16,6 +18,7 @@ export interface AvatarProps {
 export default function Avatar({
   url,
   isUser,
+  isCity = false,
   isHeader,
   bigSize,
 }: AvatarProps) {
@@ -52,7 +55,7 @@ export default function Avatar({
           onClick={() => !isHeader && handleClick(cachedImage)}
         />
       ) : url ? (
-        <Suspense fallback={<Spinner />}>
+        <Suspense fallback={<Spinner showClock={false} />}>
           <LazyImage
             src={url}
             alt="avatar"
@@ -68,7 +71,15 @@ export default function Avatar({
               : ""
           }
         >
-          {isUser ? <RxAvatar /> : <AiOutlinePicture />}
+          {isUser ? (
+            <RxAvatar />
+          ) : isCity ? (
+            <div className="text-[30px]">
+              <FaCity />
+            </div>
+          ) : (
+            <AiOutlinePicture />
+          )}
         </div>
       )}
     </div>

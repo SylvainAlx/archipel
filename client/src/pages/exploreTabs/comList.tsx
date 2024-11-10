@@ -27,20 +27,20 @@ export default function ComList({ text }: StringProps) {
               return (
                 <Suspense key={i} fallback={<BarreLoader />}>
                   <div className="min-w-[300px] w-full relative transition-all duration-300 animate-fadeIn">
-                    <ComTile com={com} />
+                    <ComTile com={com} owner={false} />
                     <IndexTag text={i} />
                   </div>
                 </Suspense>
               );
             }
           })}
-        {displayedComs < comList.length && (
-          <Button
-            click={() => setDisplayedComs(displayedComs + 5)}
-            text={t("components.buttons.showMore")}
-          />
-        )}
       </section>
+      {displayedComs < comList.length && (
+        <Button
+          click={() => setDisplayedComs(displayedComs + 5)}
+          text={t("components.buttons.showMore")}
+        />
+      )}
     </>
   );
 }

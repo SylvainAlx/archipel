@@ -47,13 +47,13 @@ export default function NationList({ text }: StringProps) {
               );
             }
           })}
-        {displayedNations < nationsList.length && (
-          <Button
-            click={() => setDisplayedNations(displayedNations + 5)}
-            text={t("components.buttons.showMore")}
-          />
-        )}
       </section>
+      {displayedNations < nationsList.length && (
+        <Button
+          click={() => setDisplayedNations(displayedNations + 5)}
+          text={t("components.buttons.showMore")}
+        />
+      )}
     </>
   );
 }

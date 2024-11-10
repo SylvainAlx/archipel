@@ -11,6 +11,7 @@ import { getCitizensCount } from "../../api/user/userAPI";
 import { useTranslation } from "react-i18next";
 import { StringProps } from "../../types/typProp";
 import HashTag from "../../components/tags/hashTag";
+import { getComsCount } from "../../api/communication/comAPI";
 
 export default function Stats({ text }: StringProps) {
   const [stats] = useAtom(statsAtom);
@@ -28,7 +29,7 @@ export default function Stats({ text }: StringProps) {
       getCitizensCount();
     }
     if (stats.counts.coms === 0) {
-      // getComsCount
+      getComsCount();
     }
     if (tagList.length === 0) {
       getAllNationTags();
@@ -44,12 +45,12 @@ export default function Stats({ text }: StringProps) {
           children={<H3 text={stats.counts.nations.toString()} />}
         />
         <DashTile
-          title={t("pages.explore.stats.locations")}
-          children={<H3 text={stats.counts.places.toString()} />}
-        />
-        <DashTile
           title={t("pages.explore.stats.citizens")}
           children={<H3 text={stats.counts.citizens.toString()} />}
+        />
+        <DashTile
+          title={t("pages.explore.stats.locations")}
+          children={<H3 text={stats.counts.places.toString()} />}
         />
         <DashTile
           title={t("pages.explore.stats.coms")}

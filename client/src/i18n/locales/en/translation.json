@@ -33,6 +33,10 @@
       "places": {
         "title": "locations",
         "noPlaces": "no locations to display"
+      },
+      "coms": {
+        "title": "Press releases",
+        "noComs": "no press releases to display"
       }
     },
     "explore": {
@@ -143,7 +147,8 @@
       "createRelation": "CREATE DIPLOMATIC RELATIONSHIP",
       "parent": "parent",
       "createFreeTile": "create free tile",
-      "plan": "Choose a subscription"
+      "plan": "Choose a subscription",
+      "createCom": "post a press release"
     },
     "form": {
       "input": {
@@ -179,7 +184,9 @@
         "deleteTile": "Delete tile ?",
         "updateNation": "Update nation ?",
         "updatePlace": "Update place ?",
-        "updateCitizen": "Update profile ?"
+        "updateCitizen": "Update profile ?",
+        "createCom": "Confirm new press release ?",
+        "deleteCom": "Delete press release ?"
       },
       "cookiesModal": {
         "text": "This site uses cookies to improve your user experience",
@@ -263,7 +270,8 @@
         "currency": "currency",
         "nationalDay": "national day",
         "nationOwner": "nation leader",
-        "residence": "residence"
+        "residence": "residence",
+        "treasury": "treasury"
       },
       "avatar": "avatar",
       "relations": {
@@ -284,7 +292,9 @@
           "ascLoc": "Growing number of locations",
           "descLoc": "Decreasing number of locations",
           "ascCtz": "Growing number of citizens",
-          "descCtz": "Decreasing number of citizens"
+          "descCtz": "Decreasing number of citizens",
+          "ascTreasury": "Growing wealth",
+          "descTreasury": "Decreasing wealth"
         }
       },
       "citizensList": {

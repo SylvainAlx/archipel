@@ -17,7 +17,7 @@ import {
 import { Place, emptyPlace } from "../types/typPlace";
 import i18n from "../i18n/i18n";
 import { emptyUser, User } from "../types/typUser";
-import { Com } from "../types/typCom";
+import { Com, ComPayload, emptyComPayload } from "../types/typCom";
 import {
   DiplomaticRelationship,
   emptyDiplomaticRelationship,
@@ -95,6 +95,7 @@ export const newRelationAtom = atom({
 
 export const comFetchedListAtom = atom<Com[]>([]);
 export const comsListAtom = atom<Com[]>([]);
+export const newComAtom = atom<ComPayload>(emptyComPayload);
 
 // tag
 

@@ -1,10 +1,48 @@
 import Com from "../models/comSchema.js";
 import { COMTYPE } from "../settings/const.js";
 
+export const comCount = async (req, res) => {
+  try {
+    Com.countDocuments({ comType: COMTYPE[3].id })
+      .then((count) => {
+        res.status(200).json(count);
+      })
+      .catch((error) => {
+        console.error(error);
+        res.status(400).json({
+          infoType: "400",
+        });
+      });
+  } catch (error) {
+    console.error(error);
+    res.status(400).json({
+      infoType: "400",
+    });
+  }
+};
+
 export const getDestinationComs = async (req, res) => {
   try {
     const destination = req.params.id;
     const coms = await Com.find({ destination });
+    res.status(200).json(coms);
+  } catch (error) {
+    res.status(400).json({
+      message: "[A TRADUIRE] aucune communication",
+      erreur: error.message,
+    });
+  }
+};
+
+export const getPublicComsByOrigin = async (req, res) => {
+  try {
+    const nationId = req.param.id;
+    let coms;
+    if (nationId) {
+      coms = await Com.find({ comType: COMTYPE[3].id, origin: nationId });
+    } else {
+      coms = await Com.find({ comType: COMTYPE[3].id });
+    }
     res.status(200).json(coms);
   } catch (error) {
     res.status(400).json({

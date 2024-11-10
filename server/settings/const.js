@@ -10,6 +10,10 @@ export const COSTS = {
   COMS: 10,
 };
 
+export const GIFTS = {
+  REGISTER: 10,
+};
+
 export const COMTYPE = [
   { id: 0, label: "[A TRADUIRE] administrateur" },
   { id: 1, label: "[A TRADUIRE] Annonce générale" },

@@ -1,6 +1,12 @@
 import { SERVER_URL } from "../../settings/consts";
-import { ComPayload } from "../../types/typPayload";
+import { ComPayload } from "../../types/typCom";
 import { GET_JWT } from "../../utils/functions";
+
+export const getComsCountFetch = async () => {
+  const resp = await fetch(`${SERVER_URL}/com/count`);
+  const result = await resp.json();
+  return result;
+};
 
 export const createComFetch = async (payload: ComPayload) => {
   const jwt = GET_JWT();
@@ -23,8 +29,14 @@ export const getComsByDestinationFetch = async (officialId: string) => {
   return result;
 };
 
-export const getPublicComsFetch = async () => {
+export const getAllPublicComsFetch = async () => {
   const resp = await fetch(`${SERVER_URL}/com/getpubliccoms`);
+  const result = await resp.json();
+  return result;
+};
+
+export const getPublicComsByOriginFetch = async (nationId: string) => {
+  const resp = await fetch(`${SERVER_URL}/com/getpubliccoms/${nationId}`);
   const result = await resp.json();
   return result;
 };

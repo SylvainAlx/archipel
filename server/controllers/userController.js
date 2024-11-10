@@ -5,11 +5,24 @@ import Place from "../models/placeSchema.js";
 import jwt from "jsonwebtoken";
 import { LoremIpsum } from "lorem-ipsum";
 import { addMonths, createOfficialId } from "../utils/functions.js";
+import { GIFTS } from "../settings/const.js";
 
 export const register = async (req, res) => {
   try {
     const { name, password, gender, language } = req.body;
     const userIp = req.clientIp;
+
+    const IpIsBanished =
+      (await Param.findOne({
+        name: "banished",
+        props: { $elemMatch: { label: "ip", value: userIp } },
+      })) != null;
+
+    if (IpIsBanished) {
+      return res.status(403).json({
+        infoType: "ip",
+      });
+    }
 
     if (!name || !password) {
       return res.status(400).json({
@@ -43,6 +56,7 @@ export const register = async (req, res) => {
       gender,
       language,
       role,
+      credits: GIFTS.REGISTER,
     });
 
     try {
