@@ -60,6 +60,9 @@ export default function ReleaseNotes() {
                 <ul>
                   <li>Créer une organisation</li>
                   <li>Rejoindre une organisation</li>
+                  <li>
+                    Créer des items et les proposer à l'aquisition aux citoyens
+                  </li>
                 </ul>
               </>
             }

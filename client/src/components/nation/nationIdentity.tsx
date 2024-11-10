@@ -26,6 +26,7 @@ import {
 import PopulationTag from "../tags/populationTag";
 import PlaceTag from "../tags/placeTag";
 import MDEditor from "@uiw/react-md-editor";
+import TreasuryTag from "../tags/treasuryTag";
 
 export default function NationIdentity({
   selectedNation,
@@ -169,6 +170,9 @@ export default function NationIdentity({
 
                   <div className="flex gap-1 flex-wrap items-center justify-center">
                     <IdTag label={selectedNation.officialId} />
+                    <TreasuryTag
+                      label={selectedNation.data.roleplay.treasury}
+                    />
                     <div className="flex items-center gap-2">
                       {selectedNation.data != undefined && (
                         <RegimeTag selectedNation={selectedNation} />
@@ -182,7 +186,6 @@ export default function NationIdentity({
                         />
                       )}
                     </div>
-
                     <PopulationTag
                       label={selectedNation.data.roleplay.citizens}
                     />

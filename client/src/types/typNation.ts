@@ -31,6 +31,7 @@ export interface Nation {
       description: string;
     };
     roleplay: {
+      treasury: number;
       capital: string;
       citizens: number;
       places: number;
@@ -62,6 +63,7 @@ export const EmptyNation: Nation = {
       description: "",
     },
     roleplay: {
+      treasury: 0,
       capital: "",
       citizens: 0,
       places: 0,

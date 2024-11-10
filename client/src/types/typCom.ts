@@ -17,3 +17,19 @@ export const EmptyCom: Com = {
   message: "",
   createdAt: new Date(),
 };
+
+export interface ComPayload {
+  origin: string;
+  destination: string;
+  title: string;
+  comType: number;
+  message: string;
+}
+
+export const emptyComPayload: ComPayload = {
+  origin: "",
+  destination: "",
+  title: "",
+  comType: -1,
+  message: "",
+};

@@ -6,6 +6,7 @@ import RegimeTag from "../tags/regimeTag";
 import PlaceTag from "../tags/placeTag";
 import Flag from "../flag";
 import TagList from "../nation/tagList";
+import TreasuryTag from "../tags/treasuryTag";
 
 export default function NationTile(nation: Nation) {
   const navigate = useNavigate();
@@ -24,6 +25,7 @@ export default function NationTile(nation: Nation) {
         <EyeButton click={handleClick} />
       </div>
       <div className="max-w-[80%] flex gap-1 self-end flex-wrap justify-end">
+        <TreasuryTag label={nation.data.roleplay.treasury} />
         <RegimeTag selectedNation={nation} />
         <PopulationTag label={nation.data.roleplay.citizens} />
         <PlaceTag label={nation.data.roleplay.places} />

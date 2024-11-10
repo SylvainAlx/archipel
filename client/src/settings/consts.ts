@@ -20,13 +20,13 @@ export const VERSION = {
 
 //  Colors
 
-export const color_primary = "#081825";
+export const color_primary = "var(--color-primary)";
 export const color_secondary = "var(--color-secondary)";
 export const color_complementary = "var(--color-complementary)";
 export const color_light = "var(--color-light)";
 export const color_black_alpha = "var(--color-black-alpha)";
 
-// Const
+// Credits
 
 export const QUOTAS = {
   PLACES: 10,
@@ -66,6 +66,14 @@ export const nationSearchSortOptions: StandardOption[] = [
   {
     id: 5,
     label: i18n.t("components.searchBars.nationsList.sortNations.descCtz"),
+  },
+  {
+    id: 6,
+    label: i18n.t("components.searchBars.nationsList.sortNations.ascTreasury"),
+  },
+  {
+    id: 7,
+    label: i18n.t("components.searchBars.nationsList.sortNations.descTreasury"),
   },
 ];
 
@@ -119,7 +127,7 @@ export const comOptions: StandardOption[] = [
   { id: 20, label: "[A TRADUIRE] info utilisateur" },
 ];
 
-export const comTypeOptions = [comOptions[2], comOptions[3], comOptions[0]];
+export const comTypeOptions = [comOptions[2], comOptions[3]];
 
 export const regimeTypeList: RegimeType[] = [
   {
@@ -253,5 +261,3 @@ export const placesTypeList = [
     label: i18n.t("components.searchBars.placesList.checkbox.nature"),
   },
 ];
-
-// onglets

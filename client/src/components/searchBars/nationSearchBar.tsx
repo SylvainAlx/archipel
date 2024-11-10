@@ -27,7 +27,7 @@ export interface SearchBarProps {
 }
 
 export default function NationSearchBar({ list, setList }: SearchBarProps) {
-  const [selectOption, setSelectOption] = useState("5");
+  const [selectOption, setSelectOption] = useState("7");
   const { t } = useTranslation();
   const [searchName, setSearchName] = useState("");
   const [searchTag, setSearchTag] = useState("");
@@ -48,7 +48,7 @@ export default function NationSearchBar({ list, setList }: SearchBarProps) {
 
   const reset = () => {
     getNations("", "");
-    setSelectOption("0");
+    setSelectOption("7");
     setSearchName("");
     setSearchTag("");
   };
@@ -89,6 +89,18 @@ export default function NationSearchBar({ list, setList }: SearchBarProps) {
       setList(
         list.sort(function (a, b) {
           return b.data.roleplay.citizens - a.data.roleplay.citizens;
+        }),
+      );
+    } else if (selectOption === "6") {
+      setList(
+        list.sort(function (a, b) {
+          return a.data.roleplay.treasury - b.data.roleplay.treasury;
+        }),
+      );
+    } else if (selectOption === "7") {
+      setList(
+        list.sort(function (a, b) {
+          return b.data.roleplay.treasury - a.data.roleplay.treasury;
         }),
       );
     }

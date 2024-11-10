@@ -1,5 +1,6 @@
 import Tile from "../models/tileSchema.js";
 import User from "../models/userSchema.js";
+import Nation from "../models/nationSchema.js";
 import { COSTS, QUOTAS } from "../settings/const.js";
 
 const verifyNationOwner = async (userId, nationId) => {
@@ -20,15 +21,16 @@ export const createTile = async (req, res) => {
     const { nationOfficialId, title, description, value } = req.body;
     const userId = req.userId;
     const nationsTiles = await Tile.find({ nationOfficialId });
-    const user = await User.findOne({ officialId: userId });
+    const nation = await Nation.findOne({ officialId: nationOfficialId });
     const allow =
       verifyNationOwner(userId, nationOfficialId) &&
-      (nationsTiles.length < QUOTAS.TILES || user.credits >= COSTS.TILES);
+      (nationsTiles.length < QUOTAS.TILES ||
+        nation.data.roleplay.treasury >= COSTS.TILES);
     if (allow) {
-      let updatedUser;
+      let updatedNation;
       if (nationsTiles.length > QUOTAS.TILES) {
-        user.credits -= COSTS.TILES;
-        updatedUser = await user.save();
+        nation.data.roleplay.treasury -= COSTS.TILES;
+        updatedNation = await nation.save();
       }
 
       const tile = new Tile({
@@ -40,7 +42,9 @@ export const createTile = async (req, res) => {
       tile
         .save()
         .then(() =>
-          res.status(201).json({ tile, user: updatedUser, infoType: "new" }),
+          res
+            .status(201)
+            .json({ tile, nation: updatedNation, infoType: "new" }),
         )
         .catch((error) => {
           console.error(error);
@@ -77,11 +81,16 @@ export const deleteTile = async (req, res) => {
     const id = req.params.id;
     const userId = req.userId;
     const tile = await Tile.findOne({ _id: id });
-    if (tile) {
+    const nation = await Nation.findOne({ officialId: tile.nationOfficialId });
+    if (tile && nation) {
       const allow = verifyNationOwner(userId, tile.nationOfficialId);
       if (allow) {
         await Tile.findByIdAndDelete(tile._id);
-        res.status(200).json({ tile, infoType: `delete` });
+        nation.data.roleplay.treasury += COSTS.TILES;
+        const updatedNation = await nation.save();
+        res
+          .status(200)
+          .json({ tile, nation: updatedNation, infoType: `delete` });
       } else {
         return res.status(403).json({ infoType: "forbidden" });
       }

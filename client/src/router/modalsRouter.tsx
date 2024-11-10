@@ -7,6 +7,7 @@ import {
   imageAtom,
   infoModalAtom,
   loadingAtom,
+  newComAtom,
   newNationAtom,
   newPlaceAtom,
   newRelationAtom,
@@ -27,6 +28,7 @@ import NewNationModal from "../components/modals/newNationModal";
 import { ChangePasswordModal } from "../components/modals/changePasswordModal";
 import NewRelationModal from "../components/modals/newRelationModal";
 import TileFormModal from "../components/modals/tileFormModal";
+import NewComModal from "../components/modals/newComModal";
 
 export default function ModalsRouter() {
   const [recovery] = useAtom(recoveryKey);
@@ -42,6 +44,7 @@ export default function ModalsRouter() {
   const [changePassword] = useAtom(changePasswordModalAtom);
   const [newRelation] = useAtom(newRelationAtom);
   const [tile] = useAtom(editTileAtom);
+  const [newCom] = useAtom(newComAtom);
 
   if (
     recovery != "" ||
@@ -56,7 +59,8 @@ export default function ModalsRouter() {
     newNation.owner != "" ||
     changePassword ||
     newRelation.show ||
-    tile.nationOfficialId != ""
+    tile.nationOfficialId != "" ||
+    newCom.origin != ""
   ) {
     return (
       <div className="animate-in fade-in z-20 fixed top-0 w-screen h-screen backdrop-blur-sm bg-black_alpha flex items-center justify-center">
@@ -75,6 +79,7 @@ export default function ModalsRouter() {
                   {info != "" && <InfoModal />}
                   {editBox.original != -1 && <EditBoxModal />}
                   {newPlace.nation != "" && <NewPlaceModal />}
+                  {newCom.origin != "" && <NewComModal />}
                   {lang && <LangModal />}
                   {image != "" && <ImageModal />}
                   {menu && <MenuModal />}
