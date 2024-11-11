@@ -4,7 +4,7 @@ import H2 from "../components/titles/h2";
 export default function LegalNotice() {
   return (
     <>
-      <H1 text="Mentions légales" />
+      <H1 text="[A TRADUIRE] Mentions légales" />
 
       <section className="w-[80%] flex flex-col items-center gap-2 text-justify">
         <p>

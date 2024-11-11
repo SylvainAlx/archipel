@@ -202,7 +202,7 @@ export default function Citizen() {
           <EditIcon target="citizen" param={citizen.name} path="name" />
         )}
       </div>
-      <div className="relative">
+      <div className="relative flex flex-col items-center">
         <Avatar url={citizen.avatar} isUser={true} bigSize={true} />
         {session.user.officialId === citizen.officialId &&
           (citizen.avatar != "" ? (
