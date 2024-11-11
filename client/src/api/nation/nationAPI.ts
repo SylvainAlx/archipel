@@ -1,4 +1,5 @@
 import {
+  citizenFetchAtom,
   loadingAtom,
   myStore,
   nationFetchedAtom,
@@ -57,10 +58,12 @@ export const createNation = (payload: NewNationPayload) => {
           resp.nation,
         ]);
         myStore.set(nationFetchedAtom, resp.nation);
+        myStore.set(citizenFetchAtom, resp.user);
+        const session = myStore.get(sessionAtom);
         myStore.set(sessionAtom, {
-          ...myStore.get(sessionAtom),
           nation: resp.nation,
           user: resp.user,
+          jwt: session.jwt,
         });
       }
       myStore.set(loadingAtom, false);
@@ -153,7 +156,7 @@ export const updateNation = (payload: Nation) => {
 export const deleteSelfNation = () => {
   myStore.set(loadingAtom, true);
   DeleteSelfFetch()
-    .then((resp: { user: User }) => {
+    .then((resp: { user: User; infoType: string }) => {
       const session = myStore.get(sessionAtom);
       myStore.set(loadingAtom, false);
       if (session.nation) {
@@ -163,11 +166,13 @@ export const deleteSelfNation = () => {
         );
         myStore.set(nationsListAtom, updatedNations);
       }
-      displayNationInfoByType("delete");
+      displayNationInfoByType(resp.infoType);
+      myStore.set(nationFetchedAtom, EmptyNation);
+      myStore.set(citizenFetchAtom, resp.user);
       myStore.set(sessionAtom, {
-        ...session,
         nation: EmptyNation,
         user: resp.user,
+        jwt: session.jwt,
       });
     })
     .catch((error) => {

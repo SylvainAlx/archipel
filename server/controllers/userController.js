@@ -66,6 +66,8 @@ export const register = async (req, res) => {
         .status(201)
         .json({ user: savedUser, recovery, jwt, infoType: "signup" });
     } catch (error) {
+      console.error(error);
+
       if (error.code === 11000) {
         return res.status(400).json({
           error: error.keyValue,

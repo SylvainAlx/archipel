@@ -63,7 +63,9 @@ export default function ModalsRouter() {
     newCom.origin != ""
   ) {
     return (
-      <div className="animate-in fade-in z-20 fixed top-0 w-screen h-screen backdrop-blur-sm bg-black_alpha flex items-center justify-center">
+      <div
+        className={`animate-in fade-in z-20 fixed top-0 w-screen h-screen ${!loading && "bg-black_alpha backdrop-blur-sm"} flex items-center justify-center`}
+      >
         <div
           className={`min-w-[350px] max-w-[90%] ${!loading && "bg-slate-800"} rounded-md p-3 flex flex-col items-center gap-4`}
         >
