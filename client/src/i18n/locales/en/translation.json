@@ -236,6 +236,11 @@
         "inputTitle": "Title",
         "inputDescription": "Description",
         "inputValue": "Value"
+      },
+      "newComModal": {
+        "title": "New press release",
+        "comTitle": "Title",
+        "comMessage": "Message"
       }
     },
     "hoverInfos": {
@@ -352,13 +357,13 @@
         "other": "other"
       }
     },
-    "sortNations": {
-      "ascAlpha": "Ascending alphabetical",
-      "descAlpha": "Descending alphabetical",
-      "ascLoc": "Growing number of locations",
-      "descLoc": "Decreasing number of locations",
-      "ascCtz": "Growing number of citizens",
-      "descCtz": "Decreasing number of citizens"
+    "comType": {
+      "admin": "administrator",
+      "general": "global announcement",
+      "nationPrivate": "private announcement",
+      "nationPublic": "public announcement",
+      "nationUpdate": "nation update information",
+      "userUpdate": "user update information"
     }
   },
   "toasts": {
@@ -410,6 +415,10 @@
     "file": {
       "import": "File uploaded successful",
       "delete": "File deleted successful"
+    },
+    "com": {
+      "new": "Press release created",
+      "delete": "Press release deleted"
     }
   }
 }

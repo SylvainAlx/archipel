@@ -1,7 +1,6 @@
 import MDEditor from "@uiw/react-md-editor";
 import { Com } from "../../types/typCom";
 import NationTag from "../tags/nationTag";
-import EditIcon from "../editIcon";
 import { useAtom } from "jotai";
 import { confirmBox, myStore, sessionAtom } from "../../settings/store";
 import { useEffect, useState } from "react";
@@ -51,7 +50,6 @@ export default function ComTile({ com }: ComTileProps) {
           source={com.message}
           style={{ whiteSpace: "pre-wrap" }}
         />
-        {owner && <EditIcon target="com" param={com.message} path="message" />}
       </div>
       {owner && (
         <div className="w-max self-end">

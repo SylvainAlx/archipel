@@ -5,11 +5,11 @@ import Button from "../buttons/button";
 import { ChangeEvent, FormEvent } from "react";
 import Form from "../form/form";
 import Input from "../form/input";
-import TextArea from "../form/textArea";
 import Select from "../form/select";
 import { comTypeOptions } from "../../settings/consts";
 import { useTranslation } from "react-i18next";
 import { emptyComPayload } from "../../types/typCom";
+import MarkdownEditor from "../markdownEditor";
 
 export default function NewComModal() {
   const [newCom, setNewCom] = useAtom(newComAtom);
@@ -62,14 +62,11 @@ export default function NewComModal() {
               onChange={handleSelectChange}
               value={newCom.comType}
             />
-            <TextArea
-              required
-              onChange={handleChange}
-              name="message"
-              placeholder={t("components.modals.newComModal.comMessage")}
+            <MarkdownEditor
               value={newCom.message}
-              maxLength={500}
-              rows={10}
+              onChange={(e) =>
+                e != undefined && setNewCom({ ...newCom, message: e })
+              }
             />
             <Button
               type="submit"
