@@ -189,3 +189,22 @@ export const displayFileInfoByType = (type: string) => {
       break;
   }
 };
+
+export const displayComInfoByType = (type: string) => {
+  switch (type) {
+    case "new":
+      successMessage(i18n.t("toasts.com.new"));
+      break;
+    case "delete":
+      successMessage(i18n.t("toasts.com.delete"));
+      break;
+    case "400":
+      errorMessage(i18n.t("toasts.errors.400"));
+      break;
+    case "11000":
+      errorMessage(i18n.t("toasts.errors.11000"));
+      break;
+    default:
+      break;
+  }
+};

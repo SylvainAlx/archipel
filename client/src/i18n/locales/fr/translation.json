@@ -276,7 +276,8 @@
         "nationalDay": "fête nationale",
         "nationOwner": "leader de la nation",
         "residence": "résidence",
-        "treasury": "trésor public"
+        "treasury": "trésor public",
+        "date": "date"
       },
       "avatar": "avatar",
       "relations": {
@@ -356,6 +357,14 @@
         "noGovernment": "pas de gouvernement",
         "other": "autre"
       }
+    },
+    "comType": {
+      "admin": "administrateur",
+      "general": "annonce générale",
+      "nationPrivate": "annonce privée",
+      "nationPublic": "annonce publique",
+      "nationUpdate": "information de mise à jour de la nation",
+      "userUpdate": "information de mise à jour de l'utilisateur"
     }
   },
   "toasts": {
@@ -407,6 +416,10 @@
     "file": {
       "import": "Fichier importé avec succès",
       "delete": "Fichier supprimé avec succès"
+    },
+    "com": {
+      "new": "Nouveau communiqué posté",
+      "delete": "Communiqué supprimé"
     }
   }
 }

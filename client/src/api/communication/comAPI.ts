@@ -12,7 +12,7 @@ import {
   spliceByDBId,
   updateOrCreateComInMemory,
 } from "../../utils/atomArrayFunctions";
-import { errorMessage, successMessage } from "../../utils/toasts";
+import { displayComInfoByType } from "../../utils/displayInfos";
 import {
   createComFetch,
   deleteComFetch,
@@ -35,7 +35,7 @@ export const getComsCount = () => {
     .catch((error) => {
       myStore.set(loadingAtom, false);
       console.error(error);
-      errorMessage(error.message);
+      displayComInfoByType(error.infoType);
     });
 };
 
@@ -62,7 +62,8 @@ export const getComsByDestination = (officialId: string) => {
       })
       .catch((error) => {
         myStore.set(loadingAtom, false);
-        errorMessage(error.message);
+        console.error(error);
+        displayComInfoByType(error.infoType);
       });
   }
 };
@@ -108,11 +109,12 @@ export const createNewCom = (payload: ComPayload) => {
       const tempArray = [...myStore.get(comFetchedListAtom)];
       tempArray.push(resp.com);
       myStore.set(comFetchedListAtom, tempArray);
-      successMessage(resp.infoType);
+      displayComInfoByType(resp.infoType);
     })
     .catch((error) => {
       myStore.set(loadingAtom, false);
-      errorMessage(error.message);
+      console.error(error);
+      displayComInfoByType(error.infoType);
     });
 };
 
@@ -125,10 +127,11 @@ export const deleteCom = (com: Com) => {
       myStore.set(comsListAtom, tempArray);
       tempArray = spliceByDBId(resp.com._id, myStore.get(comFetchedListAtom));
       myStore.set(comFetchedListAtom, tempArray);
-      successMessage(resp.infoType);
+      displayComInfoByType(resp.infoType);
     })
     .catch((error) => {
       myStore.set(loadingAtom, false);
-      errorMessage(error.message);
+      console.error(error);
+      displayComInfoByType(error.infoType);
     });
 };
