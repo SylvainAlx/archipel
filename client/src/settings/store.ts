@@ -34,7 +34,7 @@ export const loadingAtom = atom(false);
 
 // Lobby
 
-export const lobbyAtom = atom(true);
+export const lobbyAtom = atom(false);
 
 // Session
 

@@ -19,8 +19,7 @@ import { ArchipelRoute } from "./types/typReact";
 import i18n from "./i18n/i18n";
 import { authentification } from "./api/user/userAPI";
 import { getNation } from "./api/nation/nationAPI";
-// import { errorMessage } from "./utils/toasts";
-// import { MDP_LOBBY } from "./settings/consts";
+import { MDP_LOBBY } from "./settings/consts";
 import Lobby from "./pages/lobby";
 import CookiesModal from "./components/modals/cookiesModal";
 import { SpeedInsights } from "@vercel/speed-insights/react";
@@ -35,16 +34,14 @@ export default function App() {
 
   useEffect(() => {
     i18n.init();
-    // const lobbyToken = localStorage.getItem("lobby");
-    // if (!access && lobbyToken && lobbyToken === MDP_LOBBY) {
-    setAccess(true);
-    session.user.officialId === "" && authentification();
-
-    // } else if (lobbyToken) {
-    //   setAccess(false);
-    //   errorMessage("mot de passe d'accès anticipé erroné");
-    // }
-  }, [access]);
+    const lobbyToken = localStorage.getItem("lobbyToken");
+    if (!access && lobbyToken === MDP_LOBBY) {
+      setAccess(true);
+      session.user.officialId === "" && authentification();
+    } else {
+      setAccess(false);
+    }
+  }, []);
 
   useEffect(() => {
     if (session.user.officialId != "") {
@@ -57,6 +54,7 @@ export default function App() {
       navigate(`/citizen/${session.user.officialId}`);
       setOpenPrivateRoads(true);
     } else {
+      navigate(`/`);
       setOpenPrivateRoads(false);
     }
   }, [session.user]);

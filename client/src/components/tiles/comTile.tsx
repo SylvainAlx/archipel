@@ -1,12 +1,12 @@
 import MDEditor from "@uiw/react-md-editor";
 import { Com } from "../../types/typCom";
 import NationTag from "../tags/nationTag";
-import EditIcon from "../editIcon";
 import { useAtom } from "jotai";
 import { confirmBox, myStore, sessionAtom } from "../../settings/store";
 import { useEffect, useState } from "react";
 import CrossButton from "../buttons/crossButton";
 import { useTranslation } from "react-i18next";
+import DateTag from "../tags/dateTag";
 
 export interface ComTileProps {
   com: Com;
@@ -43,7 +43,10 @@ export default function ComTile({ com }: ComTileProps) {
     >
       <div className="w-full flex justify-between">
         <h3 className="text-light text-xl pl-4 pr-6">{com.title}</h3>
-        <NationTag label={com.origin != undefined ? com.origin : ""} />
+        <div className="flex gap-1 items-center flex-wrap justify-end">
+          <DateTag date={com.createdAt} />
+          <NationTag label={com.origin != undefined ? com.origin : ""} />
+        </div>
       </div>
       <div className="flex items-center gap-2">
         <MDEditor.Markdown
@@ -51,7 +54,6 @@ export default function ComTile({ com }: ComTileProps) {
           source={com.message}
           style={{ whiteSpace: "pre-wrap" }}
         />
-        {owner && <EditIcon target="com" param={com.message} path="message" />}
       </div>
       {owner && (
         <div className="w-max self-end">

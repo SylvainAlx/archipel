@@ -36,11 +36,6 @@ export const displayUserInfoByType = (type: string) => {
     case "forbidden":
       errorMessage(i18n.t("toasts.errors.forbidden"));
       break;
-    case "ip":
-      errorMessage(
-        "[A TRADUIRE] adresse IP déjà utilisé pour un autre utilisateur",
-      );
-      break;
     case "user":
       errorMessage(i18n.t("toasts.user.badUser"));
       break;
@@ -185,6 +180,25 @@ export const displayFileInfoByType = (type: string) => {
       errorMessage(i18n.t("toasts.errors.400"));
       break;
 
+    default:
+      break;
+  }
+};
+
+export const displayComInfoByType = (type: string) => {
+  switch (type) {
+    case "new":
+      successMessage(i18n.t("toasts.com.new"));
+      break;
+    case "delete":
+      successMessage(i18n.t("toasts.com.delete"));
+      break;
+    case "400":
+      errorMessage(i18n.t("toasts.errors.400"));
+      break;
+    case "11000":
+      errorMessage(i18n.t("toasts.errors.11000"));
+      break;
     default:
       break;
   }

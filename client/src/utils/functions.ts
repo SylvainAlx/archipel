@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import i18n from "../i18n/i18n";
 import {
+  MAX_LENGTH,
   placesTypeList,
   politicalSideList,
   regimeList,
@@ -294,4 +295,17 @@ export const dateIsExpired = (stringDate: string): boolean => {
   const date = new Date(stringDate);
   const now = new Date();
   return date < now;
+};
+
+export const getMaxLength = (path: string) => {
+  switch (path) {
+    case "data.general.description":
+      return MAX_LENGTH.nationDescription;
+    case "description":
+      return MAX_LENGTH.placeDescription;
+    case "bio":
+      return MAX_LENGTH.userPresentation;
+    default:
+      return 0;
+  }
 };

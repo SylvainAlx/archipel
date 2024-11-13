@@ -11,7 +11,6 @@ import { createNation } from "../../api/nation/nationAPI";
 import Select from "../form/select";
 import { regimeList } from "../../settings/consts";
 import { useTranslation } from "react-i18next";
-import RequiredStar from "../form/requiredStar";
 import { errorMessage } from "../../utils/toasts";
 import HashTag from "../tags/hashTag";
 
@@ -152,7 +151,6 @@ export default function NewNationModal() {
               click={() => setNewNation(emptyNewNationPayload)}
               widthFull={true}
             />
-            <RequiredStar />
           </>
         }
       />

@@ -23,7 +23,8 @@ export const nationsCount = async (req, res) => {
 
 export const createNation = async (req, res) => {
   try {
-    const { name, owner, motto, regime, currency, tags } = req.body;
+    const { name, owner, motto, regime, currency, nationalDay, tags } =
+      req.body;
 
     if (!name || !owner) {
       return res.status(400).json({ infoType: "miss" });
@@ -35,13 +36,12 @@ export const createNation = async (req, res) => {
 
     const officialId = createOfficialId("n");
 
-    let data = { roleplay: { citizens: 0 }, general: {} };
+    let data = { roleplay: { citizens: 1, treasury: 10 }, general: {} };
     data.general.motto = motto;
     data.general.regime = regime;
     data.general.currency = currency;
+    data.general.nationalDay = nationalDay;
     data.general.tags = tags;
-    data.roleplay.citizens += 1;
-    data.roleplay.treasury += 10;
     const nation = new Nation({
       officialId,
       name,

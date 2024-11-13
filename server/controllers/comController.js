@@ -27,27 +27,30 @@ export const getDestinationComs = async (req, res) => {
     const coms = await Com.find({ destination });
     res.status(200).json(coms);
   } catch (error) {
+    console.error(error);
     res.status(400).json({
-      message: "[A TRADUIRE] aucune communication",
-      erreur: error.message,
+      infoType: "400",
     });
   }
 };
 
 export const getPublicComsByOrigin = async (req, res) => {
   try {
-    const nationId = req.param.id;
-    let coms;
+    const nationId = req.params.id;
+    let coms = [];
     if (nationId) {
-      coms = await Com.find({ comType: COMTYPE[3].id, origin: nationId });
+      coms = await Com.find({
+        comType: { $in: [COMTYPE[3].id, COMTYPE[2].id] },
+        origin: nationId,
+      }).sort({ createdAt: -1 });
     } else {
-      coms = await Com.find({ comType: COMTYPE[3].id });
+      coms = await Com.find({ comType: COMTYPE[3].id }).sort({ createdAt: -1 });
     }
     res.status(200).json(coms);
   } catch (error) {
+    console.error(error);
     res.status(400).json({
-      message: "[A TRADUIRE] aucune communication",
-      erreur: error.message,
+      infoType: "400",
     });
   }
 };
@@ -57,9 +60,9 @@ export const getPublicComs = async (req, res) => {
     const coms = await Com.find({ comType: COMTYPE[3].id });
     res.status(200).json(coms);
   } catch (error) {
+    console.error(error);
     res.status(400).json({
-      message: "[A TRADUIRE] aucune communication",
-      erreur: error.message,
+      infoType: "400",
     });
   }
 };

@@ -13,7 +13,6 @@ import {
   languageList,
 } from "../settings/consts";
 import { errorMessage } from "../utils/toasts";
-import RequiredStar from "../components/form/requiredStar";
 import ReCAPTCHA from "react-google-recaptcha";
 
 export default function Register() {
@@ -128,7 +127,6 @@ export default function Register() {
               disabled={!acceptCGU || !captchaOk}
               widthFull={true}
             />
-            <RequiredStar />
           </>
         }
       />

@@ -2,13 +2,19 @@ import { useTranslation } from "react-i18next";
 import DashTile from "../dashTile";
 import { SelectedNationProps } from "../../types/typProp";
 import { useAtom } from "jotai";
-import { comFetchedListAtom, myStore, newComAtom } from "../../settings/store";
+import {
+  comFetchedListAtom,
+  myStore,
+  newComAtom,
+  sessionAtom,
+} from "../../settings/store";
 import { getPublicComs } from "../../api/communication/comAPI";
-import { lazy, Suspense, useEffect } from "react";
+import { lazy, Suspense, useEffect, useState } from "react";
 import BarreLoader from "../loading/barreLoader";
 import Button from "../buttons/button";
 import { FaComment } from "react-icons/fa";
 import { ComPayload, emptyComPayload } from "../../types/typCom";
+import Countdown from "../countdown";
 
 export default function NationComs({
   selectedNation,
@@ -16,6 +22,8 @@ export default function NationComs({
 }: SelectedNationProps) {
   const { t } = useTranslation();
   const [nationComList] = useAtom(comFetchedListAtom);
+  const [allowPost, setAllowPost] = useState<boolean>(true);
+  const [dueDate, setDueDate] = useState(new Date());
   const ComTile = lazy(() => import("../tiles/comTile"));
 
   useEffect(() => {
@@ -23,6 +31,36 @@ export default function NationComs({
       getPublicComs(selectedNation.officialId);
     }
   }, [selectedNation]);
+
+  useEffect(() => {
+    if (nationComList.length > 0) {
+      if (
+        new Date(nationComList[0].createdAt).toLocaleDateString() <
+          new Date().toLocaleDateString() ||
+        (myStore.get(sessionAtom).user.plan != "free" &&
+          myStore.get(sessionAtom).user.expirationDate >
+            new Date().toLocaleDateString())
+      ) {
+        setAllowPost(true);
+      } else {
+        setAllowPost(false);
+      }
+    } else {
+      setAllowPost(true);
+    }
+  }, [nationComList]);
+
+  useEffect(() => {
+    if (!allowPost && nationComList.length > 0) {
+      const givenDate = new Date(nationComList[0].createdAt);
+      const dateAfter24Hours = new Date(
+        givenDate.getTime() + 24 * 60 * 60 * 1000,
+      );
+      setDueDate(dateAfter24Hours);
+    } else {
+      setDueDate(new Date());
+    }
+  }, [allowPost, nationComList]);
 
   const handleClick = () => {
     const newComPayload: ComPayload = {
@@ -42,11 +80,15 @@ export default function NationComs({
         <section className="w-full flex flex-col items-center rounded">
           <div className="w-full flex flex-col gap-2 items-center">
             {owner && (
-              <Button
-                text={t("components.buttons.createCom")}
-                children={<FaComment />}
-                click={handleClick}
-              />
+              <div className="flex gap-1 justify-center items-center flex-wrap">
+                <Button
+                  text={t("components.buttons.createCom")}
+                  children={<FaComment />}
+                  click={handleClick}
+                  disabled={!allowPost}
+                />
+                {dueDate > new Date() && <Countdown targetDate={dueDate} />}
+              </div>
             )}
             {nationComList.length > 0 ? (
               nationComList.map((com, i) => {

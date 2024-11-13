@@ -40,6 +40,16 @@ export const COSTS = {
   COM: 10,
 };
 
+// Longueurs max
+
+export const MAX_LENGTH = {
+  comMessage: 500,
+  userPresentation: 1000,
+  nationDescription: 5000,
+  placeDescription: 2000,
+  textArea: 60,
+};
+
 // listes
 
 export const nationSearchSortOptions: StandardOption[] = [
@@ -119,12 +129,12 @@ export const placeSearchSortOptions: StandardOption[] = [
 ];
 
 export const comOptions: StandardOption[] = [
-  { id: 0, label: "[A TRADUIRE] administrateur" },
-  { id: 1, label: "[A TRADUIRE] Annonce générale" },
-  { id: 10, label: "[A TRADUIRE] nation com privée" },
-  { id: 11, label: "[A TRADUIRE] nation com publique" },
-  { id: 12, label: "[A TRADUIRE] nation modification" },
-  { id: 20, label: "[A TRADUIRE] info utilisateur" },
+  { id: 0, label: i18n.t("listes.comType.admin") },
+  { id: 1, label: i18n.t("listes.comType.general") },
+  { id: 10, label: i18n.t("listes.comType.nationPrivate") },
+  { id: 11, label: i18n.t("listes.comType.nationPublic") },
+  { id: 12, label: i18n.t("listes.comType.nationUpdate") },
+  { id: 20, label: i18n.t("listes.comType.userUpdate") },
 ];
 
 export const comTypeOptions = [comOptions[2], comOptions[3]];

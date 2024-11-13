@@ -37,15 +37,14 @@ import { getNationPlaces } from "../api/place/placeAPI";
 import { ConfirmBoxDefault } from "../types/typAtom";
 import { getNation } from "../api/nation/nationAPI";
 import MDEditor from "@uiw/react-md-editor";
-import i18n from "../i18n/i18n";
 import CreditTag from "../components/tags/creditTag";
-import { MdOutlineUpdate } from "react-icons/md";
 import { IoDiamondOutline } from "react-icons/io5";
 import PlanButton from "../components/buttons/planButton";
 import { errorMessage } from "../utils/toasts";
 import LanguagesTag from "../components/tags/languagesTag";
 import { languageList } from "../settings/consts";
 import { getComsByDestination } from "../api/communication/comAPI";
+import DateTag from "../components/tags/dateTag";
 
 export default function Citizen() {
   const { t } = useTranslation();
@@ -202,7 +201,7 @@ export default function Citizen() {
           <EditIcon target="citizen" param={citizen.name} path="name" />
         )}
       </div>
-      <div className="relative">
+      <div className="relative flex flex-col items-center">
         <Avatar url={citizen.avatar} isUser={true} bigSize={true} />
         {session.user.officialId === citizen.officialId &&
           (citizen.avatar != "" ? (
@@ -353,14 +352,7 @@ export default function Citizen() {
                             ? t("pages.citizen.plans.premium")
                             : t("pages.citizen.plans.elite")}
                         </span>
-                        <span className="flex items-center gap-1">
-                          <MdOutlineUpdate />
-                          <span>
-                            {new Date(
-                              citizen.expirationDate,
-                            ).toLocaleDateString(i18n.language)}
-                          </span>
-                        </span>
+                        <DateTag date={citizen.expirationDate} due={true} />
                       </div>
                     )}
                     {userPlan === "free" && (
