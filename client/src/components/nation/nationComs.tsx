@@ -80,7 +80,7 @@ export default function NationComs({
         <section className="w-full flex flex-col items-center rounded">
           <div className="w-full flex flex-col gap-2 items-center">
             {owner && (
-              <div className="flex gap-1 items-center">
+              <div className="flex gap-1 justify-center items-center flex-wrap">
                 <Button
                   text={t("components.buttons.createCom")}
                   children={<FaComment />}

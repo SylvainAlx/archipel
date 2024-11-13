@@ -6,10 +6,10 @@ import { ChangeEvent, FormEvent } from "react";
 import Form from "../form/form";
 import Input from "../form/input";
 import Select from "../form/select";
-import { comTypeOptions } from "../../settings/consts";
+import { comTypeOptions, MAX_LENGTH } from "../../settings/consts";
 import { useTranslation } from "react-i18next";
 import { emptyComPayload } from "../../types/typCom";
-import MarkdownEditor from "../markdownEditor";
+import MarkdownEditor from "../form/markdownEditor";
 
 export default function NewComModal() {
   const [newCom, setNewCom] = useAtom(newComAtom);
@@ -41,7 +41,7 @@ export default function NewComModal() {
   };
 
   return (
-    <div>
+    <div className="max-w-[600px] flex flex-col justify-center items-center gap-2">
       <h2 className="text-2xl text-center p-4">
         {t("components.modals.newComModal.title")}
       </h2>
@@ -67,6 +67,7 @@ export default function NewComModal() {
               onChange={(e) =>
                 e != undefined && setNewCom({ ...newCom, message: e })
               }
+              maxLength={MAX_LENGTH.comMessage}
             />
             <Button
               type="submit"

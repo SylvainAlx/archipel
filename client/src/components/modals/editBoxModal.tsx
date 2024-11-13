@@ -16,7 +16,9 @@ import { useTranslation } from "react-i18next";
 import TextArea from "../form/textArea";
 import { IoMdCloseCircle } from "react-icons/io";
 import { MdCheckCircle } from "react-icons/md";
-import MarkdownEditor from "../markdownEditor";
+import MarkdownEditor from "../form/markdownEditor";
+import { getMaxLength } from "../../utils/functions";
+import { MAX_LENGTH } from "../../settings/consts";
 
 export default function EditBoxModal() {
   const [editBox, setEditBox] = useAtom(editbox);
@@ -194,7 +196,7 @@ export default function EditBoxModal() {
           editBox.path != "data.general.nationalDay" ? (
             <TextArea
               required={!editBox.canBeEmpty}
-              maxLength={60}
+              maxLength={MAX_LENGTH.textArea}
               placeholder={t("components.modals.editModal.newValue")}
               onChange={handleTextChange}
               value={editBox.new.toString()}
@@ -212,6 +214,7 @@ export default function EditBoxModal() {
             <MarkdownEditor
               value={editBox.new.toString()}
               onChange={(e: any) => setEditBox({ ...editBox, new: e })}
+              maxLength={getMaxLength(editBox.path)}
             />
           ))}
         {typeof editBox.original == "number" && (

@@ -4,6 +4,11 @@
       "title": "Welcome",
       "presentation": "Welcome to <b>Archipel Network</b> ! Here, you can create your own virtual identity and build your own virtual nation, or join existing ones that best match your vision of society. With an intuitive tagging system, easily find <b>virtual nations</b> that share your ideals and aspirations. But that's not all! Virtual nations can also unite to form powerful organizations, all created by our <b>virtual citizens</b>. Whether for fun or to bring serious projects to life, our application offers a unique platform to explore, interact, and innovate in a boundless virtual world. Join us today and start building your utopia !"
     },
+    "lobby": {
+      "description": "Enter the password to access the application",
+      "allowed": "access allowed",
+      "denied": "Access denied"
+    },
     "nation": {
       "title": "nation",
       "nationIdentity": {
@@ -152,14 +157,18 @@
     },
     "form": {
       "input": {
-        "name": "Name *",
-        "password": "Password *"
+        "name": "Name",
+        "password": "Password"
       },
       "select": {
         "choose": "CHOOSE",
         "language": "Spoken language"
       },
-      "missingField": "Missing field(s)"
+      "missingField": "Missing field(s)",
+      "mdEditor": {
+        "reached": "Maximum text length reached",
+        "character": "character"
+      }
     },
     "logo": {
       "title": "ARCHIPEL",

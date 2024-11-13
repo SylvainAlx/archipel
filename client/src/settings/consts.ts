@@ -40,6 +40,16 @@ export const COSTS = {
   COM: 10,
 };
 
+// Longueurs max
+
+export const MAX_LENGTH = {
+  comMessage: 500,
+  userPresentation: 1000,
+  nationDescription: 5000,
+  placeDescription: 2000,
+  textArea: 60,
+};
+
 // listes
 
 export const nationSearchSortOptions: StandardOption[] = [

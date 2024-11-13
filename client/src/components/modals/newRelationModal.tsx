@@ -6,7 +6,6 @@ import { ChangeEvent, FormEvent, useState } from "react";
 import Form from "../form/form";
 import Input from "../form/input";
 import { useTranslation } from "react-i18next";
-import RequiredStar from "../form/requiredStar";
 import { errorMessage } from "../../utils/toasts";
 import { emptyDiplomaticRelationship } from "../../types/typRelation";
 import { FaBriefcase, FaCoins, FaFlask } from "react-icons/fa";
@@ -186,7 +185,6 @@ export default function NewRelationModal({ update }: NewRelationModalProps) {
               }
               widthFull={true}
             />
-            <RequiredStar />
           </>
         }
       />

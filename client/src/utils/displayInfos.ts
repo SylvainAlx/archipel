@@ -36,11 +36,6 @@ export const displayUserInfoByType = (type: string) => {
     case "forbidden":
       errorMessage(i18n.t("toasts.errors.forbidden"));
       break;
-    case "ip":
-      errorMessage(
-        "[A TRADUIRE] adresse IP déjà utilisé pour un autre utilisateur",
-      );
-      break;
     case "user":
       errorMessage(i18n.t("toasts.user.badUser"));
       break;
