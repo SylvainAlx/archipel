@@ -6,6 +6,7 @@ import { confirmBox, myStore, sessionAtom } from "../../settings/store";
 import { useEffect, useState } from "react";
 import CrossButton from "../buttons/crossButton";
 import { useTranslation } from "react-i18next";
+import DateTag from "../tags/dateTag";
 
 export interface ComTileProps {
   com: Com;
@@ -42,7 +43,10 @@ export default function ComTile({ com }: ComTileProps) {
     >
       <div className="w-full flex justify-between">
         <h3 className="text-light text-xl pl-4 pr-6">{com.title}</h3>
-        <NationTag label={com.origin != undefined ? com.origin : ""} />
+        <div className="flex gap-1 items-center">
+          <NationTag label={com.origin != undefined ? com.origin : ""} />
+          <DateTag date={com.createdAt} />
+        </div>
       </div>
       <div className="flex items-center gap-2">
         <MDEditor.Markdown

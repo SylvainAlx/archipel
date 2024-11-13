@@ -42,9 +42,9 @@ export const getPublicComsByOrigin = async (req, res) => {
       coms = await Com.find({
         comType: { $in: [COMTYPE[3].id, COMTYPE[2].id] },
         origin: nationId,
-      });
+      }).sort({ createdAt: -1 });
     } else {
-      coms = await Com.find({ comType: COMTYPE[3].id });
+      coms = await Com.find({ comType: COMTYPE[3].id }).sort({ createdAt: -1 });
     }
     res.status(200).json(coms);
   } catch (error) {

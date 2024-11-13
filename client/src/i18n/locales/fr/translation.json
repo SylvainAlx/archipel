@@ -276,7 +276,8 @@
         "nationalDay": "fête nationale",
         "nationOwner": "leader de la nation",
         "residence": "résidence",
-        "treasury": "trésor public"
+        "treasury": "trésor public",
+        "date": "date"
       },
       "avatar": "avatar",
       "relations": {
