@@ -94,7 +94,7 @@ export default function App() {
           <Lobby />
         )}
         <ModalsRouter />
-        <CookiesModal />
+        {access && <CookiesModal />}
         <SpeedInsights />
       </main>
       <Footer />
