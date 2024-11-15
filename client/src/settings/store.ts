@@ -31,10 +31,11 @@ export type SetAtom<Args extends any[], Result> = (...args: Args) => Result;
 // Loading
 
 export const loadingAtom = atom(false);
+export const longLoadingAtom = atom(false);
 
 // Lobby
 
-export const lobbyAtom = atom(true);
+export const lobbyAtom = atom(false);
 
 // Session
 

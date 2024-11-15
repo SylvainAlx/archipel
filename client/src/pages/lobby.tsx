@@ -7,6 +7,7 @@ import { useTranslation } from "react-i18next";
 import { lobbyAtom } from "../settings/store";
 import Form from "../components/form/form";
 import { errorMessage, successMessage } from "../utils/toasts";
+import LangButton from "../components/buttons/langButton";
 
 export default function Lobby() {
   const { t } = useTranslation();
@@ -19,25 +20,24 @@ export default function Lobby() {
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     if (password === MDP_LOBBY) {
-      successMessage("[A TRADUIRE] accès autorisé");
+      successMessage(t("pages.lobby.allowed"));
       setAccess(true);
       localStorage.setItem("lobbyToken", password);
     } else {
-      errorMessage("[A TRADUIRE] accès reffusé");
+      errorMessage(t("pages.lobby.denied"));
     }
+    setPassword("");
   };
   return (
     <main className="flex flex-col items-center justify-start gap-4 h-[70vh]">
-      <p className="max-w-[80%] text-center">
-        [A TRADUIRE] Renseignez le mot de passe pour accéder à l'application
-      </p>
+      <p className="max-w-[80%] text-center">{t("pages.lobby.description")}</p>
       <Form
         submit={handleSubmit}
         children={
           <>
             <Input
               type="password"
-              placeholder="[A TRADUIRE] Mot de passe"
+              placeholder={t("components.form.input.password")}
               name="password"
               required
               value={password}
@@ -48,6 +48,7 @@ export default function Lobby() {
               text={t("components.buttons.validate")}
               widthFull={true}
             />
+            <LangButton />
           </>
         }
       />

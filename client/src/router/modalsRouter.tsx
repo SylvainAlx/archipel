@@ -7,6 +7,7 @@ import {
   imageAtom,
   infoModalAtom,
   loadingAtom,
+  longLoadingAtom,
   newComAtom,
   newNationAtom,
   newPlaceAtom,
@@ -35,6 +36,7 @@ export default function ModalsRouter() {
   const [confirm] = useAtom(confirmBox);
   const [info] = useAtom(infoModalAtom);
   const [loading] = useAtom(loadingAtom);
+  const [longLoading] = useAtom(longLoadingAtom);
   const [editBox] = useAtom(editbox);
   const [newPlace] = useAtom(newPlaceAtom);
   const [lang] = useAtom(showLangModalAtom);
@@ -64,10 +66,10 @@ export default function ModalsRouter() {
   ) {
     return (
       <div
-        className={`animate-in fade-in z-20 fixed top-0 w-screen h-screen ${!loading && "bg-black_alpha backdrop-blur-sm"} flex items-center justify-center`}
+        className={`animate-in fade-in z-20 fixed top-0 w-screen h-screen ${(!loading || longLoading) && "bg-black_alpha backdrop-blur-sm"} flex items-center justify-center`}
       >
         <div
-          className={`min-w-[350px] max-w-[90%] ${!loading && "bg-slate-800"} rounded-md p-3 flex flex-col items-center gap-4`}
+          className={`min-w-[350px] max-w-[90%] ${(!loading || longLoading) && "bg-slate-800"} rounded-md p-3 flex flex-col items-center gap-4`}
         >
           {loading ? (
             <LoadingSpinner />

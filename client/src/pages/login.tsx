@@ -7,7 +7,6 @@ import Form from "../components/form/form";
 
 import { useTranslation } from "react-i18next";
 import { login } from "../api/user/userAPI";
-import RequiredStar from "../components/form/requiredStar";
 
 export default function Login() {
   const [name, setName] = useState("");
@@ -73,7 +72,6 @@ export default function Login() {
               type="submit"
               widthFull={true}
             />
-            <RequiredStar />
           </>
         }
       />

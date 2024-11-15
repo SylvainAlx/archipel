@@ -5,7 +5,6 @@ import Button from "../buttons/button";
 import { ChangeEvent, FormEvent } from "react";
 import Form from "../form/form";
 import Input from "../form/input";
-import TextArea from "../form/textArea";
 import { emptyPlace } from "../../types/typPlace";
 import { createNewPlace } from "../../api/place/placeAPI";
 import Select from "../form/select";
@@ -53,17 +52,6 @@ export default function NewPlaceModal() {
               placeholder={t("components.modals.newPlaceModal.placeName")}
             />
             <Select options={placesTypeList} onChange={handleSelectChange} />
-            <TextArea
-              required
-              onChange={handleChange}
-              name="description"
-              placeholder={t(
-                "components.modals.newPlaceModal.placeDescription",
-              )}
-              value={newPlace.description}
-              maxLength={500}
-              rows={10}
-            />
             <Button
               type="submit"
               text={t("components.buttons.validate")}
