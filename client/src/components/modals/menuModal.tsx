@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { myStore, sessionAtom, showMenuAtom } from "../../settings/store";
 import Button from "../buttons/button";
 import { useTranslation } from "react-i18next";
@@ -40,15 +40,17 @@ export default function MenuModal() {
           click={() => navigate("/releasenotes")}
           widthFull={true}
         />
-        <Button
-          text=""
-          type="button"
-          children={
-            <a className="w-full h-full" href={`mailto:${ADMIN_EMAIL}`}>
-              <BsFillEnvelopeAtFill />
-            </a>
-          }
-        />
+        <Link
+          className="w-full h-full flex items-center gap-1"
+          to={`mailto:${ADMIN_EMAIL}`}
+        >
+          <Button
+            text={t("components.buttons.contact")}
+            type="button"
+            widthFull={true}
+            children={<BsFillEnvelopeAtFill />}
+          />
+        </Link>
       </nav>
       <Button
         text={t("components.buttons.close")}

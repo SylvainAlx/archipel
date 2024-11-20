@@ -2,7 +2,9 @@
   "pages": {
     "home": {
       "title": "Welcome",
-      "presentation": "Welcome to <b>Archipel Network</b> ! Here, you can create your own virtual identity and build your own virtual nation, or join existing ones that best match your vision of society. With an intuitive tagging system, easily find <b>virtual nations</b> that share your ideals and aspirations. But that's not all! Virtual nations can also unite to form powerful organizations, all created by our <b>virtual citizens</b>. Whether for fun or to bring serious projects to life, our application offers a unique platform to explore, interact, and innovate in a boundless virtual world. Join us today and start building your utopia !"
+      "presentation1": "Welcome to your hub for micronations and virtual nations! Whether you're part of a serious micronation or a fan of role-playing in imaginary worlds, our application is here for you. Join a vibrant community, connect, collaborate, and showcase your nation in a space designed to bring people together. Build connections, share your projects, and bring your vision to life!",
+      "presentation2": "Customize and bring your nation to life! As a leader, you have the tools to shape your nation in your own image. Add a flag that represents your values, define a motto to inspire your community, and write a detailed description to showcase your vision. You can also map out your territory by adding key locations, giving your nation its unique identity. Turn your dream into a virtual reality and let your nation shine among others!",
+      "presentation3": "Forge diplomatic ties and build alliances! Our platform offers you the opportunity to engage with other nations, whether real or virtual. Initiate diplomatic relations, negotiate agreements, form strategic alliances, or organize joint events. Expand your nation’s influence by building bridges between cultures and collaborating with other leaders. Together, take your ambitions to new heights!"
     },
     "lobby": {
       "description": "Enter the password to access the application",
@@ -83,9 +85,6 @@
     "coms": {
       "title": "communications"
     },
-    "legalNotice": {
-      "title": "legal notice"
-    },
     "login": {
       "title": "Sign in",
       "forgottenPassword": "Forgotten password ?",
@@ -153,7 +152,8 @@
       "parent": "parent",
       "createFreeTile": "create free tile",
       "plan": "Choose a subscription",
-      "createCom": "post a press release"
+      "createCom": "post a press release",
+      "contact": "contact"
     },
     "form": {
       "input": {

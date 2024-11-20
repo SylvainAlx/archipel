@@ -28,24 +28,18 @@ export default function Footer() {
         <div className=" pb-1 flex items-center gap-2 text-[10px] md:text-[12px] opacity-30 md:opacity-100">
           <Link
             className="transition-colors cursor-pointer hover:text-secondary"
-            to="/legalnotice"
-          >
-            {t("pages.legalNotice.title")}
-          </Link>
-          <span>-</span>
-          <Link
-            className="transition-colors cursor-pointer hover:text-secondary"
             to="/termsofservice"
           >
             {t("pages.termsOfService.title")}
           </Link>
           <span>-</span>
-          <a
-            href={`mailto:${ADMIN_EMAIL}`}
-            className="mx-2 transition-colors cursor-pointer hover:text-secondary"
+          <Link
+            to={`mailto:${ADMIN_EMAIL}`}
+            className="mx-2 transition-colors cursor-pointer hover:text-secondary flex items-center gap-1"
           >
             <BsFillEnvelopeAtFill />
-          </a>
+            {t("components.buttons.contact")}
+          </Link>
         </div>
       </div>
     </footer>
