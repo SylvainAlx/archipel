@@ -2,13 +2,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { FileUploaderRegular } from "@uploadcare/react-uploader";
 import "@uploadcare/react-uploader/core.css";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { myStore, sessionAtom } from "../settings/store";
 import { updateNation } from "../api/nation/nationAPI";
 import { updateUser } from "../api/user/userAPI";
 import { UPLOADCARE_PUBLIC_KEY } from "../settings/consts";
 import { Place } from "../types/typPlace";
 import { updatePlace } from "../api/place/placeAPI";
+import { verifyImage } from "../utils/AIModels/nsfwJs";
+import { errorMessage } from "../utils/toasts";
 
 export interface UploaderProps {
   path: string;
@@ -24,21 +26,30 @@ export default function Upploader({
   place,
 }: UploaderProps) {
   const [files, setFiles] = useState<any[]>([]);
+  const [showUploader, setShowUploader] = useState(true); // État pour afficher/masquer le composant
 
-  useEffect(() => {
-    if (files.length > 0) {
-      handleSubmit();
+  // Gestion de l'upload après la sélection du fichier
+  const handleUpload = async (AFileInfo: any) => {
+    const AFile = AFileInfo.file as File;
+    if (!AFile) return;
+
+    const isNSFW = await verifyImage(AFile);
+
+    if (isNSFW) {
+      errorMessage(
+        "[A TRADUIRE] L'image contient du contenu NSFW et a été retirée.",
+      );
+      // Retirer l'image de la liste des fichiers
+      setFiles((prevFiles) =>
+        prevFiles.filter((file) => file.internalId !== AFileInfo.internalId),
+      );
+      setShowUploader(false); // Masquer le composant
+    } else {
+      setFiles((prevFiles) => [...prevFiles, AFileInfo]);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [files]);
-
-  const handleChangeEvent = (items: any) => {
-    setFiles([
-      ...items.allEntries.filter((file: any) => file.status === "success"),
-    ]);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     const session = myStore.get(sessionAtom);
     const parties: string[] = path.split(".");
     let isOk = true;
@@ -115,6 +126,8 @@ export default function Upploader({
         }
 
         if (isOk) {
+          console.log(updatePlace);
+
           updatePlace(updatedPlace);
         }
 
@@ -124,18 +137,20 @@ export default function Upploader({
 
   return (
     <div>
-      <FileUploaderRegular
-        onChange={handleChangeEvent}
-        pubkey={UPLOADCARE_PUBLIC_KEY}
-        maxLocalFileSizeBytes={maxSize}
-        multiple={false}
-        imgOnly={true}
-        sourceList="local, url, gdrive, instagram"
-        useCloudImageEditor={false}
-        classNameUploader="my-config uc-dark"
-        confirmUpload={true}
-        useLocalImageEditor={true}
-      />
+      {showUploader && (
+        <FileUploaderRegular
+          pubkey={UPLOADCARE_PUBLIC_KEY}
+          onFileAdded={handleUpload}
+          maxLocalFileSizeBytes={maxSize}
+          multiple={false}
+          imgOnly={true}
+          sourceList="local, url, gdrive, instagram"
+          useCloudImageEditor={false}
+          classNameUploader="my-config uc-dark"
+          confirmUpload={true}
+          onUploadClick={() => files.length > 0 && handleSubmit}
+        />
+      )}
     </div>
   );
 }

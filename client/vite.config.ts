@@ -9,6 +9,9 @@ export default defineConfig({
     VitePWA({
       registerType: "prompt",
       includeAssets: ["favicon.ico", "apple-touc-icon.png", "masked-icon.svg"],
+      workbox: {
+        maximumFileSizeToCacheInBytes: 6000000,
+      },
       manifest: {
         name: "Archipel",
         short_name: "Archipel",
