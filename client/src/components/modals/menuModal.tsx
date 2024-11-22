@@ -26,11 +26,6 @@ export default function MenuModal() {
           />
         )}
         <Button
-          text={t("pages.legalNotice.title")}
-          click={() => navigate("/legalnotice")}
-          widthFull={true}
-        />
-        <Button
           text={t("pages.termsOfService.title")}
           click={() => navigate("/termsofservice")}
           widthFull={true}

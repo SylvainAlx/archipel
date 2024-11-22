@@ -199,8 +199,8 @@
       },
       "cookiesModal": {
         "text": "Ce site utilise des cookies pour améliorer votre expérience utilisateur",
-        "accept": "ACCEPTER",
-        "decline": "REFFUSER"
+        "accept": "je comprends",
+        "decline": "je refuse"
       },
       "langModal": {
         "title": "CHOIX DE LA LANGUE"

@@ -1,5 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Routes, Route, useNavigate } from "react-router-dom";
 import {
   adminRoutes,
@@ -21,16 +19,35 @@ import { authentification } from "./api/user/userAPI";
 import { getNation } from "./api/nation/nationAPI";
 import { MDP_LOBBY } from "./settings/consts";
 import Lobby from "./pages/lobby";
-import CookiesModal from "./components/modals/cookiesModal";
 import { SpeedInsights } from "@vercel/speed-insights/react";
+import ReactGA from "react-ga4";
+import { GOOGLE_ANALYTICS_MEASUREMENT_ID } from "./settings/consts.ts";
+import CookiesModal from "./components/modals/cookiesModal.tsx";
 
 export default function App() {
+  const [access, setAccess] = useAtom(lobbyAtom);
+  const [cookiesAccepted, setCookiesAccepted] = useState(false);
+  const [openPrivateRoads, setOpenPrivateRoads] = useState(false);
   const [session, setSession] = useAtom(sessionAtom);
   const [nation] = useAtom(nationFetchedAtom);
-  const [openPrivateRoads, setOpenPrivateRoads] = useState(false);
-  const [access, setAccess] = useAtom(lobbyAtom);
 
   const navigate = useNavigate();
+
+  const handleAcceptCookies = () => {
+    setCookiesAccepted(true);
+    ReactGA.initialize(GOOGLE_ANALYTICS_MEASUREMENT_ID);
+    ReactGA.send("pageview");
+  };
+
+  const handleDeclineCookies = () => {
+    setCookiesAccepted(false);
+  };
+
+  useEffect(() => {
+    if (cookiesAccepted) {
+      ReactGA.initialize(GOOGLE_ANALYTICS_MEASUREMENT_ID);
+    }
+  }, [cookiesAccepted]);
 
   useEffect(() => {
     i18n.init();
@@ -41,6 +58,7 @@ export default function App() {
     } else {
       setAccess(false);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -57,6 +75,7 @@ export default function App() {
       navigate(`/`);
       setOpenPrivateRoads(false);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [session.user]);
 
   useEffect(() => {
@@ -66,12 +85,12 @@ export default function App() {
     ) {
       setSession({ ...session, nation });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [nation]);
 
   return (
     <>
       <Header />
-
       <main className="animate-fadeIn flex flex-grow flex-col items-center gap-2 self-center pt-10 pb-[100px] sm:pt-20 px-1 md:px-4 w-full min-w-[300px] max-w-[1440px]">
         {access ? (
           <Routes>
@@ -94,7 +113,12 @@ export default function App() {
           <Lobby />
         )}
         <ModalsRouter />
-        {access && <CookiesModal />}
+        {access && (
+          <CookiesModal
+            accept={handleAcceptCookies}
+            decline={handleDeclineCookies}
+          />
+        )}
         <SpeedInsights />
       </main>
       <Footer />

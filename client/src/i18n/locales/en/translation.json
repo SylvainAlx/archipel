@@ -199,8 +199,8 @@
       },
       "cookiesModal": {
         "text": "This site uses cookies to improve your user experience",
-        "accept": "ACCEPT",
-        "decline": "DECLINE"
+        "accept": "I understand",
+        "decline": "I deline"
       },
       "langModal": {
         "title": "LANGUAGE"
