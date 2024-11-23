@@ -1,6 +1,6 @@
-@import 'tailwindcss/base';
-@import 'tailwindcss/components';
-@import 'tailwindcss/utilities';
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
 
 @font-face {
   font-family: "Montserrat";
@@ -58,7 +58,8 @@
   background-color: var(--color-primary);
 }
 
-b, strong {
+b,
+strong {
   color: var(--color-secondary);
   font-family: var(--secondary-font);
 }

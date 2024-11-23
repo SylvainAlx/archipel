@@ -9,9 +9,17 @@ import {
 } from "../settings/consts";
 import { LabelId, Nation } from "../types/typNation";
 import { Place } from "../types/typPlace";
-import { confirmBox, myStore, nationPlacesListAtom } from "../settings/store";
+import {
+  confirmBox,
+  myStore,
+  nationPlacesListAtom,
+  sessionAtom,
+} from "../settings/store";
 import { User } from "../types/typUser";
 import { deleteFileAPIProps } from "../api/files/fileAPI";
+import { updateNation } from "../api/nation/nationAPI";
+import { updateUser } from "../api/user/userAPI";
+import { updatePlace } from "../api/place/placeAPI";
 
 export const GET_JWT = () => {
   const jwt = localStorage.getItem("jwt");
@@ -307,5 +315,93 @@ export const getMaxLength = (path: string) => {
       return MAX_LENGTH.userPresentation;
     default:
       return 0;
+  }
+};
+
+export const updateElement = (
+  destination: string,
+  path: string,
+  value: string,
+  place?: Place,
+) => {
+  const session = myStore.get(sessionAtom);
+  const parties: string[] = path.split(".");
+  let isOk = true;
+  let objetCourant;
+  let dernierePartie;
+  switch (destination) {
+    case "nation":
+      const updatedNation: any = { ...session.nation };
+      objetCourant = updatedNation;
+      for (let i = 0; i < parties.length - 1; i++) {
+        if (typeof objetCourant === "object" && objetCourant !== null) {
+          objetCourant = objetCourant[parties[i]];
+        } else {
+          isOk = false;
+          console.error(
+            `Chemin incorrect. Propriété ${parties[i]} non trouvée.`,
+          );
+          break;
+        }
+      }
+      dernierePartie = parties[parties.length - 1];
+      if (typeof objetCourant === "object" && objetCourant !== null) {
+        objetCourant[dernierePartie] = value;
+      }
+
+      if (isOk) {
+        updateNation(updatedNation);
+      }
+
+      break;
+    case "citizen":
+      // eslint-disable-next-line no-case-declarations
+      const updatedUser: any = { ...session.user };
+      objetCourant = updatedUser;
+      for (let i = 0; i < parties.length - 1; i++) {
+        if (typeof objetCourant === "object" && objetCourant !== null) {
+          objetCourant = objetCourant[parties[i]];
+        } else {
+          isOk = false;
+          console.error(
+            `Chemin incorrect. Propriété ${parties[i]} non trouvée.`,
+          );
+          break;
+        }
+      }
+      dernierePartie = parties[parties.length - 1];
+      if (typeof objetCourant === "object" && objetCourant !== null) {
+        objetCourant[dernierePartie] = value;
+      }
+
+      if (isOk) {
+        updateUser(updatedUser);
+      }
+
+      break;
+    case "place":
+      // eslint-disable-next-line no-case-declarations
+      const updatedPlace: any = { ...place };
+      objetCourant = updatedPlace;
+      for (let i = 0; i < parties.length - 1; i++) {
+        if (typeof objetCourant === "object" && objetCourant !== null) {
+          objetCourant = objetCourant[parties[i]];
+        } else {
+          isOk = false;
+          console.error(
+            `Chemin incorrect. Propriété ${parties[i]} non trouvée.`,
+          );
+          break;
+        }
+      }
+      dernierePartie = parties[parties.length - 1];
+      if (typeof objetCourant === "object" && objetCourant !== null) {
+        objetCourant[dernierePartie] = value;
+      }
+
+      if (isOk) {
+        updatePlace(updatedPlace);
+      }
+      break;
   }
 };

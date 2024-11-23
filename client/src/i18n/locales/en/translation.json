@@ -94,7 +94,8 @@
     "place": {
       "noChildrenPlaces": "no children locations to display",
       "image": "image of the location",
-      "noImage": "no image of the location"
+      "noImage": "no image of the location",
+      "noDescription": "no description"
     },
     "recovery": {
       "title": "reset password",
