@@ -183,11 +183,15 @@ export default function Place() {
           {/* <PopulationTag label={getTotalPopulation(place)} /> */}
         </div>
         <div className="flex items-center gap-2">
-          <MDEditor.Markdown
-            className="bg-transparent text-light text-justify"
-            source={place.description}
-            style={{ whiteSpace: "pre-wrap" }}
-          />
+          {place.description != "" ? (
+            <MDEditor.Markdown
+              className="bg-transparent text-light text-justify"
+              source={place.description}
+              style={{ whiteSpace: "pre-wrap" }}
+            />
+          ) : (
+            <em className="text-center">{t("pages.place.noDescription")}</em>
+          )}
           {owner && (
             <EditIcon
               target="place"

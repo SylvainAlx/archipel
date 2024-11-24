@@ -94,7 +94,8 @@
     "place": {
       "noChildrenPlaces": "aucun lieu enfant à afficher",
       "image": "illustration du lieu",
-      "noImage": "aucune illustration du lieu"
+      "noImage": "aucune illustration du lieu",
+      "noDescription": "pas de description"
     },
     "recovery": {
       "title": "réinitialisation du mot de passe",
@@ -153,7 +154,8 @@
       "createFreeTile": "ajouter une tuile libre",
       "plan": "choisir une souscription",
       "createCom": "poster un communiqué",
-      "contact": "contact"
+      "contact": "contact",
+      "generate": "générer"
     },
     "form": {
       "input": {

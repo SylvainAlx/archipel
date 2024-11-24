@@ -1,13 +1,11 @@
 import * as nsfwjs from "nsfwjs";
 import "@tensorflow/tfjs";
 
-// Charger le modèle NSFW une seule fois
 const loadModel = async () => {
   const model = await nsfwjs.load();
   return model;
 };
 
-// Fonction de vérification de l'image
 export const verifyImage = async (AFile: File) => {
   return new Promise<boolean>((resolve) => {
     const reader = new FileReader();
@@ -29,6 +27,6 @@ export const verifyImage = async (AFile: File) => {
       };
     };
 
-    reader.readAsDataURL(AFile); // Convertit le fichier en Data URL pour l'analyse
+    reader.readAsDataURL(AFile);
   });
 };

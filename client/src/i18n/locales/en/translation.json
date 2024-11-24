@@ -94,7 +94,8 @@
     "place": {
       "noChildrenPlaces": "no children locations to display",
       "image": "image of the location",
-      "noImage": "no image of the location"
+      "noImage": "no image of the location",
+      "noDescription": "no description"
     },
     "recovery": {
       "title": "reset password",
@@ -153,7 +154,8 @@
       "createFreeTile": "create free tile",
       "plan": "Choose a subscription",
       "createCom": "post a press release",
-      "contact": "contact"
+      "contact": "contact",
+      "generate": "generate"
     },
     "form": {
       "input": {

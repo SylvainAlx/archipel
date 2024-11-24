@@ -13,7 +13,7 @@ import { SetAtom, citizenListAtom, statsAtom } from "../../settings/store";
 import { useTranslation } from "react-i18next";
 import { useAtom } from "jotai";
 import { getCitizens } from "../../api/user/userAPI";
-import { citizenSearchSortOptions } from "../../settings/consts";
+import { citizenSearchSortOptions } from "../../settings/lists";
 
 export interface SearchBarProps {
   type: string;

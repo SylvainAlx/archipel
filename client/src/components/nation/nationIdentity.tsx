@@ -5,7 +5,7 @@ import RegimeTag from "../tags/regimeTag";
 import IdTag from "../tags/idTag";
 import CapitalTag from "../tags/capitalTag";
 import { useTranslation } from "react-i18next";
-import { regimeList } from "../../settings/consts";
+import { COA_MAKER_URL, FLAG_MAKER_URL } from "../../settings/consts";
 import Spinner from "../loading/spinner";
 import { BsShieldShaded } from "react-icons/bs";
 import { GiBlackFlag } from "react-icons/gi";
@@ -27,6 +27,9 @@ import PopulationTag from "../tags/populationTag";
 import PlaceTag from "../tags/placeTag";
 import MDEditor from "@uiw/react-md-editor";
 import TreasuryTag from "../tags/treasuryTag";
+import LinkButton from "../buttons/linkButton";
+import { FaExternalLinkAlt } from "react-icons/fa";
+import { regimeList } from "../../settings/lists";
 
 export default function NationIdentity({
   selectedNation,
@@ -63,7 +66,7 @@ export default function NationIdentity({
                       />
                     )}
                   </div>
-                  <div className="flex flex-row justify-center items-center flex-wrap gap-6">
+                  <div className="flex flex-row justify-center items-start flex-wrap gap-6">
                     <div className="relative">
                       <div
                         className={`w-[140px] h-full flex flex-col items-center justify-end gap-2`}
@@ -102,6 +105,11 @@ export default function NationIdentity({
                                 maxSize={500000}
                               />
                             )}
+                            <LinkButton
+                              text={t("components.buttons.generate")}
+                              path={FLAG_MAKER_URL}
+                              children={<FaExternalLinkAlt />}
+                            />
                           </>
                         )}
                       </div>
@@ -144,6 +152,11 @@ export default function NationIdentity({
                                 maxSize={500000}
                               />
                             )}
+                            <LinkButton
+                              text={t("components.buttons.generate")}
+                              path={COA_MAKER_URL}
+                              children={<FaExternalLinkAlt />}
+                            />
                           </>
                         )}
                       </div>

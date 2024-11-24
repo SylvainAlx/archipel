@@ -42,9 +42,9 @@ import { IoDiamondOutline } from "react-icons/io5";
 import PlanButton from "../components/buttons/planButton";
 import { errorMessage } from "../utils/toasts";
 import LanguagesTag from "../components/tags/languagesTag";
-import { languageList } from "../settings/consts";
 import { getComsByDestination } from "../api/communication/comAPI";
 import DateTag from "../components/tags/dateTag";
+import { languageList } from "../settings/lists";
 
 export default function Citizen() {
   const { t } = useTranslation();

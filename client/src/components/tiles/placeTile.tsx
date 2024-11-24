@@ -14,7 +14,7 @@ import { useEffect, useState } from "react";
 import { Place } from "../../types/typPlace";
 import NationTag from "../tags/nationTag";
 import Avatar from "../avatar";
-import { placesTypeList } from "../../settings/consts";
+import { placesTypeList } from "../../settings/lists";
 
 export interface PlaceTileProp {
   owner?: boolean;

@@ -7,13 +7,10 @@ import Form from "../components/form/form";
 import { useTranslation } from "react-i18next";
 import { register, verifyCaptcha } from "../api/user/userAPI";
 import Select from "../components/form/select";
-import {
-  CAPTCHA_PUBLIC_KEY,
-  genderList,
-  languageList,
-} from "../settings/consts";
+import { CAPTCHA_PUBLIC_KEY } from "../settings/consts";
 import { errorMessage } from "../utils/toasts";
 import ReCAPTCHA from "react-google-recaptcha";
+import { genderList, languageList } from "../settings/lists";
 
 export default function Register() {
   const [name, setName] = useState("");
