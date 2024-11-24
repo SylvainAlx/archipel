@@ -1,12 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import i18n from "../i18n/i18n";
-import {
-  MAX_LENGTH,
-  placesTypeList,
-  politicalSideList,
-  regimeList,
-  regimeTypeList,
-} from "../settings/consts";
+import { MAX_LENGTH } from "../settings/consts";
 import { LabelId, Nation } from "../types/typNation";
 import { Place } from "../types/typPlace";
 import {
@@ -20,6 +14,12 @@ import { deleteFileAPIProps } from "../api/files/fileAPI";
 import { updateNation } from "../api/nation/nationAPI";
 import { updateUser } from "../api/user/userAPI";
 import { updatePlace } from "../api/place/placeAPI";
+import {
+  placesTypeList,
+  politicalSideList,
+  regimeList,
+  regimeTypeList,
+} from "../settings/lists";
 
 export const GET_JWT = () => {
   const jwt = localStorage.getItem("jwt");

@@ -13,10 +13,10 @@ import Select from "../form/select";
 import { SetAtom, placesListAtom, statsAtom } from "../../settings/store";
 import { useTranslation } from "react-i18next";
 import { useAtom } from "jotai";
-import { placeSearchSortOptions } from "../../settings/consts";
 import { getPlaces } from "../../api/place/placeAPI";
 import { getPlaceTypeLabel, getTotalPopulation } from "../../utils/functions";
 import { Place } from "../../types/typPlace";
+import { placeSearchSortOptions } from "../../settings/lists";
 
 export interface SearchBarProps {
   type: string;

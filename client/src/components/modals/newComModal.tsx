@@ -6,10 +6,11 @@ import { ChangeEvent, FormEvent } from "react";
 import Form from "../form/form";
 import Input from "../form/input";
 import Select from "../form/select";
-import { comTypeOptions, MAX_LENGTH } from "../../settings/consts";
+import { MAX_LENGTH } from "../../settings/consts";
 import { useTranslation } from "react-i18next";
 import { emptyComPayload } from "../../types/typCom";
 import MarkdownEditor from "../form/markdownEditor";
+import { comTypeOptions } from "../../settings/lists";
 
 export default function NewComModal() {
   const [newCom, setNewCom] = useAtom(newComAtom);

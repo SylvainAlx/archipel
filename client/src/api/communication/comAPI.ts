@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { comOptions } from "../../settings/consts";
+import { comOptions } from "../../settings/lists";
 import {
   comFetchedListAtom,
   comsListAtom,

@@ -5,10 +5,9 @@ import {
   privateRoutes,
   publicRoutes,
 } from "./router/routes";
-
 import Header from "./layouts/header";
 import Footer from "./layouts/footer";
-import "./App.css";
+import "./assets/styles/App.css";
 import { useAtom } from "jotai";
 import { lobbyAtom, nationFetchedAtom, sessionAtom } from "./settings/store";
 import { useEffect, useState } from "react";

@@ -154,7 +154,8 @@
       "createFreeTile": "create free tile",
       "plan": "Choose a subscription",
       "createCom": "post a press release",
-      "contact": "contact"
+      "contact": "contact",
+      "generate": "generate"
     },
     "form": {
       "input": {

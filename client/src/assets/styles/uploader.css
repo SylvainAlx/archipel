@@ -1,0 +1,28 @@
+.uploader button {
+  width: 100%;
+  padding: 0 10px 0 10px;
+  font-size: medium;
+  color: var(--color-light);
+  border-radius: 20px;
+  background: linear-gradient(
+    to right,
+    var(--color-secondary2),
+    var(--color-secondary)
+  );
+}
+
+.uploader button:hover {
+  background: linear-gradient(
+    to bottom right,
+    var(--color-secondary2),
+    var(--color-secondary)
+  );
+}
+
+.uploader .uc-content {
+  background-color: var(--color-complementary);
+}
+
+.uploader .uc-icon-container {
+  background-color: var(--color-complementary2);
+}

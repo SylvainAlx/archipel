@@ -8,8 +8,8 @@ import Input from "../form/input";
 import { emptyPlace } from "../../types/typPlace";
 import { createNewPlace } from "../../api/place/placeAPI";
 import Select from "../form/select";
-import { placesTypeList } from "../../settings/consts";
 import { useTranslation } from "react-i18next";
+import { placesTypeList } from "../../settings/lists";
 
 export default function NewPlaceModal() {
   const [newPlace, setNewPlace] = useAtom(newPlaceAtom);

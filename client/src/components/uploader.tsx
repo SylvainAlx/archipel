@@ -8,6 +8,7 @@ import { Place } from "../types/typPlace";
 import { verifyImage } from "../utils/AIModels/nsfwJs";
 import { errorMessage } from "../utils/toasts";
 import { updateElement } from "../utils/functions";
+import "../assets/styles/uploader.css";
 
 export interface UploaderProps {
   path: string;
@@ -60,7 +61,7 @@ export default function Upploader({
           imgOnly={true}
           sourceList="local, url, gdrive, instagram"
           useCloudImageEditor={false}
-          classNameUploader="my-config uc-dark"
+          classNameUploader="uploader"
           confirmUpload={true}
         />
       )}

@@ -154,7 +154,8 @@
       "createFreeTile": "ajouter une tuile libre",
       "plan": "choisir une souscription",
       "createCom": "poster un communiqué",
-      "contact": "contact"
+      "contact": "contact",
+      "generate": "générer"
     },
     "form": {
       "input": {
