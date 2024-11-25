@@ -4,13 +4,19 @@ interface LinkButtonProps {
   text: string;
   path: string;
   children?: JSX.Element;
+  blank?: boolean;
 }
 
-export default function LinkButton({ text, path, children }: LinkButtonProps) {
+export default function LinkButton({
+  text,
+  path,
+  children,
+  blank = true,
+}: LinkButtonProps) {
   return (
     <Link
       to={path}
-      target="_blank"
+      target={blank ? "_blank" : undefined}
       className="px-5 flex gap-1 items-center justify-center flex-wrap bg-gradient-to-r from-secondary2 to-secondary hover:bg-gradient-to-br rounded-full"
     >
       <span className="text-sm">{children}</span>

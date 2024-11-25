@@ -1,18 +1,26 @@
-import { useEffect } from "react";
+import { Suspense, useEffect, useState } from "react";
 import H1 from "../components/titles/h1";
-import { paramsListAtom } from "../settings/store";
+import { comFetchedListAtom, paramsListAtom } from "../settings/store";
 import { useAtom } from "jotai";
 import { getAllParams } from "../api/param/paramAPI";
 import H2 from "../components/titles/h2";
 import TileContainer from "../components/tileContainer";
 import DashTile from "../components/dashTile";
+import { getAdminComs } from "../api/communication/comAPI";
+import BarreLoader from "../components/loading/barreLoader";
+import AdminComTile from "../components/tiles/adminComTile";
+import IndexTag from "../components/tags/indexTag";
+import Button from "../components/buttons/button";
 import { useTranslation } from "react-i18next";
 
 export default function Admin() {
   const [paramsList] = useAtom(paramsListAtom);
+  const [adminComs] = useAtom(comFetchedListAtom);
+  const [displayedComs, setDisplayedComs] = useState(10);
   const { t } = useTranslation();
 
   useEffect(() => {
+    getAdminComs();
     if (paramsList.length === 0) {
       getAllParams();
     }
@@ -21,8 +29,8 @@ export default function Admin() {
 
   return (
     <>
-      <H1 text={`Administration de ${t("components.logo.title")}`} />
-      <H2 text={"Paramètres"} />
+      <H1 text="Administration" />
+      <H2 text="Paramètres" />
       <TileContainer
         children={
           <>
@@ -53,6 +61,28 @@ export default function Admin() {
           </>
         }
       />
+      <section className="w-full flex gap-1 flex-wrap items-center flex-col-reverse">
+        {adminComs != undefined &&
+          adminComs.length > 0 &&
+          adminComs.map((com, i) => {
+            if (i < displayedComs) {
+              return (
+                <Suspense key={i} fallback={<BarreLoader />}>
+                  <div className="min-w-[300px] w-full relative transition-all duration-300 animate-fadeIn">
+                    <AdminComTile com={com} />
+                    <IndexTag text={i} />
+                  </div>
+                </Suspense>
+              );
+            }
+          })}
+      </section>
+      {displayedComs < adminComs.length && (
+        <Button
+          click={() => setDisplayedComs(displayedComs + 5)}
+          text={t("components.buttons.showMore")}
+        />
+      )}
     </>
   );
 }

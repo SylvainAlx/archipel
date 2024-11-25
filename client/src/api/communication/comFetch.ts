@@ -35,6 +35,19 @@ export const getAllPublicComsFetch = async () => {
   return result;
 };
 
+export const getAllAdminComsFetch = async () => {
+  const jwt = GET_JWT();
+  const resp = await fetch(`${SERVER_URL}/com/getadmincoms`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      authorization: "Bearer " + jwt,
+    },
+  });
+  const result = await resp.json();
+  return result;
+};
+
 export const getPublicComsByOriginFetch = async (nationId: string) => {
   const resp = await fetch(`${SERVER_URL}/com/getpubliccoms/${nationId}`);
   const result = await resp.json();

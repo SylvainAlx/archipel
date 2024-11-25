@@ -74,6 +74,9 @@ export default function ConfirmModal() {
     if (confirm.action === "updateUser") {
       updateUser(confirm.payload);
     }
+    if (confirm.action === "reportContent") {
+      createNewCom(confirm.payload);
+    }
   };
 
   return (

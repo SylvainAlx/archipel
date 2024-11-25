@@ -45,6 +45,7 @@ import LanguagesTag from "../components/tags/languagesTag";
 import { getComsByDestination } from "../api/communication/comAPI";
 import DateTag from "../components/tags/dateTag";
 import { languageList } from "../settings/lists";
+import ReportButton from "../components/buttons/reportButton";
 
 export default function Citizen() {
   const { t } = useTranslation();
@@ -383,7 +384,9 @@ export default function Citizen() {
                 }
               />
             ) : (
-              <></>
+              <div className="flex items-center justify-center">
+                <ReportButton contentOfficialId={citizen.officialId} />
+              </div>
             )}
           </>
         }

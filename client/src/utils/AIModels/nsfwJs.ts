@@ -7,7 +7,7 @@ const loadModel = async () => {
 };
 
 export const verifyImage = async (AFile: File) => {
-  return new Promise<boolean>((resolve) => {
+  return new Promise<{ isNSFW: boolean; predictions: any[] }>((resolve) => {
     const reader = new FileReader();
     reader.onload = async (e) => {
       const image = new Image();
@@ -16,6 +16,7 @@ export const verifyImage = async (AFile: File) => {
       image.onload = async () => {
         const model = await loadModel();
         const predictions = await model.classify(image);
+
         const isNSFW = predictions.some(
           (prediction) =>
             prediction.className !== "Neutral" &&
@@ -23,10 +24,13 @@ export const verifyImage = async (AFile: File) => {
             prediction.probability > 0.7,
         );
 
-        resolve(isNSFW);
+        resolve({ isNSFW, predictions });
       };
     };
 
     reader.readAsDataURL(AFile);
   });
 };
+
+export const highConfidencePredictions = (predictions: any[]) =>
+  predictions.filter((prediction) => prediction.probability > 0.7);

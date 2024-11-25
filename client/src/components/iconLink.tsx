@@ -10,6 +10,7 @@ import { MouseEventHandler, useEffect, useState } from "react";
 import Flag from "./flag";
 import Avatar from "./avatar";
 import { useLocation } from "react-router-dom";
+import { FaShieldAlt } from "react-icons/fa";
 
 export interface IconLinkProps {
   destination: string;
@@ -46,7 +47,9 @@ export default function IconLink({ destination, text, action }: IconLinkProps) {
       case "nation":
         currentURL.includes("nation") && setFocus(true);
         break;
-
+      case "admin":
+        currentURL === "/admin" && setFocus(true);
+        break;
       default:
         break;
     }
@@ -67,6 +70,7 @@ export default function IconLink({ destination, text, action }: IconLinkProps) {
       {destination === "nation" && (
         <Flag nation={session.nation} isHeader={true} />
       )}
+      {destination === "admin" && <FaShieldAlt className="text-2xl" />}
       <h2 className="hidden md:block text-[10px]">
         {text.toLocaleUpperCase()}
       </h2>
