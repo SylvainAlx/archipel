@@ -20,7 +20,7 @@ export const verifyImage = async (AFile: File) => {
         const isNSFW = predictions.some(
           (prediction) =>
             prediction.className !== "Neutral" &&
-            // prediction.className !== "Drawing" &&
+            prediction.className !== "Drawing" &&
             prediction.probability > 0.7,
         );
 

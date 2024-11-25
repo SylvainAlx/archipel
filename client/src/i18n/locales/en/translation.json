@@ -198,7 +198,7 @@
         "updatePlace": "Update place ?",
         "updateCitizen": "Update profile ?",
         "createCom": "Confirm new press release ?",
-        "deleteCom": "Delete press release ?",
+        "deleteCom": "Delete communication ?",
         "reportContent": "Confirm reporting the content to the administrator ?"
       },
       "cookiesModal": {

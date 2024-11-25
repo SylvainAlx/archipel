@@ -198,7 +198,7 @@
         "updatePlace": "Confirmez-vous la mise à jour du lieu ?",
         "updateCitizen": "Confirmez-vous la mise à jour de votre profil ?",
         "createCom": "Confirmez-vous la création du communiqué ?",
-        "deleteCom": "Confirmez-vous la suppression définitive du communiqué ?",
+        "deleteCom": "Confirmez-vous la suppression définitive de la communication ?",
         "reportContent": "Confirmez-vous le signalement du contenu à l'administrateur ?"
       },
       "cookiesModal": {

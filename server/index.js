@@ -22,7 +22,11 @@ import { verifyCaptcha } from "./controllers/captchaController.js";
 const app = express();
 const PORT = process.env.PORT ? process.env.PORT : 3000;
 
-app.use(cors());
+const optionsCors = {
+  origin: process.env.FRONTEND_URL,
+};
+
+app.use(cors(optionsCors));
 
 app.use(requestIp.mw());
 

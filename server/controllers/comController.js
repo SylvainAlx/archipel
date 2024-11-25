@@ -67,6 +67,18 @@ export const getPublicComs = async (req, res) => {
   }
 };
 
+export const getAdminComs = async (req, res) => {
+  try {
+    const coms = await Com.find({ comType: COMTYPE[0].id });
+    res.status(200).json(coms);
+  } catch (error) {
+    console.error(error);
+    res.status(400).json({
+      infoType: "400",
+    });
+  }
+};
+
 export const createCom = async (req, res) => {
   try {
     const { origin, destination, title, comType, message } = req.body;
