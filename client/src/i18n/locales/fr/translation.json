@@ -155,7 +155,8 @@
       "plan": "choisir une souscription",
       "createCom": "poster un communiqué",
       "contact": "contact",
-      "generate": "générer"
+      "generate": "générer",
+      "report": "SIGNALER"
     },
     "form": {
       "input": {
@@ -197,7 +198,8 @@
         "updatePlace": "Confirmez-vous la mise à jour du lieu ?",
         "updateCitizen": "Confirmez-vous la mise à jour de votre profil ?",
         "createCom": "Confirmez-vous la création du communiqué ?",
-        "deleteCom": "Confirmez-vous la suppression définitive du communiqué ?"
+        "deleteCom": "Confirmez-vous la suppression définitive du communiqué ?",
+        "reportContent": "Confirmez-vous le signalement du contenu à l'administrateur ?"
       },
       "cookiesModal": {
         "text": "Ce site utilise des cookies pour améliorer votre expérience utilisateur",
@@ -385,7 +387,8 @@
       "serverError": "Erreur serveur",
       "miss": "Certaines informations sont erronées ou manquantes",
       "forbidden": "Action interdite",
-      "11000": "Information déjà existante"
+      "11000": "Information déjà existante",
+      "nsfw": "L'image contient du contenu NSFW ! Notification envoyée à l'administrateur"
     },
     "user": {
       "signIn": "Connexion réussie",
@@ -429,8 +432,8 @@
       "delete": "Fichier supprimé avec succès"
     },
     "com": {
-      "new": "Nouveau communiqué posté",
-      "delete": "Communiqué supprimé"
+      "new": "Communication envoyée",
+      "delete": "Communication supprimée"
     }
   }
 }

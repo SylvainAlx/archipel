@@ -5,10 +5,17 @@ import "@uploadcare/react-uploader/core.css";
 import { useState } from "react";
 import { UPLOADCARE_PUBLIC_KEY } from "../settings/consts";
 import { Place } from "../types/typPlace";
-import { verifyImage } from "../utils/AIModels/nsfwJs";
+import {
+  highConfidencePredictions,
+  verifyImage,
+} from "../utils/AIModels/nsfwJs";
 import { errorMessage } from "../utils/toasts";
 import { updateElement } from "../utils/functions";
 import "../assets/styles/uploader.css";
+import { useTranslation } from "react-i18next";
+import { createNewCom } from "../api/communication/comAPI";
+import { ComPayload } from "../types/typCom";
+import { myStore, sessionAtom } from "../settings/store";
 
 export interface UploaderProps {
   path: string;
@@ -23,19 +30,25 @@ export default function Upploader({
   maxSize,
   place,
 }: UploaderProps) {
-  const [showUploader, setShowUploader] = useState(true); // État pour afficher/masquer le composant
+  const [showUploader, setShowUploader] = useState(true);
+  const { t } = useTranslation();
 
-  // Gestion de l'upload après la sélection du fichier
   const handleAdd = async (AFileInfo: any) => {
     const AFile = AFileInfo.file as File;
     if (!AFile) return;
 
-    const isNSFW = await verifyImage(AFile);
+    const { isNSFW, predictions } = await verifyImage(AFile);
 
     if (isNSFW) {
-      errorMessage(
-        "[A TRADUIRE] L'image contient du contenu NSFW et a été retirée.",
-      );
+      errorMessage(t("toasts.errors.nsfw"));
+      const payload: ComPayload = {
+        comType: 0,
+        destination: "",
+        origin: myStore.get(sessionAtom).user.officialId,
+        title: "NSFW",
+        message: highConfidencePredictions(predictions)[0].className,
+      };
+      createNewCom(payload);
       setShowUploader(false);
       return false;
     }

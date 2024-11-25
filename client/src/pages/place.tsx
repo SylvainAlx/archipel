@@ -29,6 +29,7 @@ import Upploader from "../components/uploader";
 import { AiOutlinePicture } from "react-icons/ai";
 import { ConfirmBoxDefault } from "../types/typAtom";
 import MDEditor from "@uiw/react-md-editor";
+import ReportButton from "../components/buttons/reportButton";
 
 export default function Place() {
   const navigate = useNavigate();
@@ -121,7 +122,11 @@ export default function Place() {
       <section className="w-full px-2 pb-2 flex flex-col items-center gap-2">
         <div className="w-full flex items-center justify-center flex-wrap gap-1">
           <ParentButton click={handleClick} />
-          {owner && <CrossButton click={handleDelete} />}
+          {owner ? (
+            <CrossButton click={handleDelete} />
+          ) : (
+            <ReportButton contentOfficialId={place.officialId} />
+          )}
         </div>
         <div className="flex items-center gap-2">
           <b>{`${nation.name != parentName ? nation.name + " > " + parentName : nation.name}`}</b>

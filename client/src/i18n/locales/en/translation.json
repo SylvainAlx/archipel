@@ -155,7 +155,8 @@
       "plan": "Choose a subscription",
       "createCom": "post a press release",
       "contact": "contact",
-      "generate": "generate"
+      "generate": "generate",
+      "report": "REPORT"
     },
     "form": {
       "input": {
@@ -197,7 +198,8 @@
         "updatePlace": "Update place ?",
         "updateCitizen": "Update profile ?",
         "createCom": "Confirm new press release ?",
-        "deleteCom": "Delete press release ?"
+        "deleteCom": "Delete press release ?",
+        "reportContent": "Confirm reporting the content to the administrator ?"
       },
       "cookiesModal": {
         "text": "This site uses cookies to improve your user experience",
@@ -385,7 +387,8 @@
       "serverError": "Server error",
       "miss": "Some information is wrong or missing",
       "forbidden": "Delete action",
-      "11000": "Information already existing in the database"
+      "11000": "Information already existing in the database",
+      "nsfw": "Image contains NSFW content! Notification sent to admin"
     },
     "user": {
       "signIn": "Sign In successful",
@@ -429,8 +432,8 @@
       "delete": "File deleted successful"
     },
     "com": {
-      "new": "Press release created",
-      "delete": "Press release deleted"
+      "new": "Communication created",
+      "delete": "Communication deleted"
     }
   }
 }

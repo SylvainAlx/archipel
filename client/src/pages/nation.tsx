@@ -21,6 +21,7 @@ import FreeTiles from "../components/nation/freeTiles";
 import NationMap from "../components/nation/nationMap";
 import { ConfirmBoxDefault } from "../types/typAtom";
 import NationComs from "../components/nation/nationComs";
+import ReportButton from "../components/buttons/reportButton";
 
 export default function Nation() {
   const [nation] = useAtom(nationFetchedAtom);
@@ -95,11 +96,15 @@ export default function Nation() {
             )}
           </section>
           <section className="pt-10 flex flex-col items-center gap-4">
-            {owner && (
+            {owner ? (
               <CrossButton
                 text={t("components.buttons.deleteNation")}
                 click={handleDelete}
               />
+            ) : (
+              <div className="flex items-center justify-center">
+                <ReportButton contentOfficialId={nation.officialId} />
+              </div>
             )}
           </section>
         </>
