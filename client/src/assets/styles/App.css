@@ -1,17 +1,17 @@
-@import 'tailwindcss/base';
-@import 'tailwindcss/components';
-@import 'tailwindcss/utilities';
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
 
 @font-face {
   font-family: "Montserrat";
-  src: url("./assets/fonts/Montserrat-VariableFont_wght.ttf") format("truetype");
+  src: url("../fonts/Montserrat-VariableFont_wght.ttf") format("truetype");
   font-weight: 400;
   font-style: normal;
 }
 
 @font-face {
   font-family: "Montserrat Bold";
-  src: url("./assets/fonts/Montserrat-VariableFont_wght.ttf") format("truetype");
+  src: url("../fonts/Montserrat-VariableFont_wght.ttf") format("truetype");
   font-weight: 500;
   font-style: normal;
 }
@@ -58,7 +58,8 @@
   background-color: var(--color-primary);
 }
 
-b, strong {
+b,
+strong {
   color: var(--color-secondary);
   font-family: var(--secondary-font);
 }
@@ -91,11 +92,6 @@ h5 {
     var(--color-complementary2),
     rgba(0, 0, 0, 0)
   );
-}
-
-.my-config {
-  --uc-primary-oklch-dark: 69% 0.1768 258.4;
-  --uc-primary-oklch-light: 59% 0.22 264;
 }
 
 .bold {

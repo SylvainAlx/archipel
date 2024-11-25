@@ -9,16 +9,20 @@ import Input from "../form/input";
 import { emptyNewNationPayload } from "../../types/typNation";
 import { createNation } from "../../api/nation/nationAPI";
 import Select from "../form/select";
-import { regimeList } from "../../settings/consts";
 import { useTranslation } from "react-i18next";
 import { errorMessage } from "../../utils/toasts";
 import HashTag from "../tags/hashTag";
+import { regimeList } from "../../settings/lists";
 
 export default function NewNationModal() {
   const [newNation, setNewNation] = useAtom(newNationAtom);
   const [tagString, setTagString] = useState<string>("");
   const [tags, setTags] = useState<string[]>([]);
   const { t } = useTranslation();
+
+  useEffect(() => {
+    console.log(newNation.regime);
+  }, [newNation.regime]);
 
   useEffect(() => {
     const updateNewNation = { ...newNation };
@@ -111,6 +115,7 @@ export default function NewNationModal() {
                 placeholder={t("components.hoverInfos.tags.hash")}
                 value={tagString}
                 disabled={tags.length > 5}
+                required={tags.length === 0}
               />
               <em className="text-sm">
                 {t("components.modals.newNationModal.tagsInfos")}
@@ -138,6 +143,7 @@ export default function NewNationModal() {
               onChange={handleSelectChange}
               options={regimeList}
               title={t("components.modals.newNationModal.regime")}
+              required={newNation.regime === 0}
             />
 
             <Button

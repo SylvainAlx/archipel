@@ -6,11 +6,9 @@ import { getAllParams } from "../api/param/paramAPI";
 import H2 from "../components/titles/h2";
 import TileContainer from "../components/tileContainer";
 import DashTile from "../components/dashTile";
-import { useTranslation } from "react-i18next";
 
 export default function Admin() {
   const [paramsList] = useAtom(paramsListAtom);
-  const { t } = useTranslation();
 
   useEffect(() => {
     if (paramsList.length === 0) {
@@ -21,8 +19,8 @@ export default function Admin() {
 
   return (
     <>
-      <H1 text={`Administration de ${t("components.logo.title")}`} />
-      <H2 text={"Paramètres"} />
+      <H1 text="Administration" />
+      <H2 text="Paramètres" />
       <TileContainer
         children={
           <>

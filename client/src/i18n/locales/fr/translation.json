@@ -2,7 +2,9 @@
   "pages": {
     "home": {
       "title": "Bienvenue",
-      "presentation": "Bienvenue sur le <b>Réseau Archipel</b> ! Ici, vous pouvez créer votre propre identité virtuelle et bâtir votre propre <b>nation virtuelle</b>, ou rejoindre celles existantes qui correspondent le mieux à votre vision de la société. Grâce à un système de tags intuitif, trouvez facilement les nations virtuelles qui partagent vos idéaux et vos aspirations. Mais ce n'est pas tout! Les nations virtuelles peuvent également s'unir pour former des organisations puissantes, toutes créées par nos <b>citoyens virtuels</b>. Que ce soit pour le plaisir ou pour donner vie à des projets plus sérieux, notre application offre une plateforme unique pour explorer, interagir et innover dans un monde virtuel sans limites. Rejoignez-nous dès aujourd'hui et commencez à construire votre utopie !"
+      "presentation1": "Bienvenue dans votre espace dédié aux micronations et nations virtuelles ! Que vous soyez membre d'une micronation sérieuse ou passionné de role-play dans des univers imaginaires, notre application est là pour vous. Rejoignez une communauté dynamique, échangez, collaborez et faites briller votre nation dans un espace conçu pour vous rapprocher. Créez des liens, partagez vos projets, et faites vivre votre vision !",
+      "presentation2": "En tant que leader, vous avez la possibilité de façonner votre nation à votre image. Ajoutez un drapeau qui incarne vos valeurs, définissez une devise qui inspire votre communauté, rédigez une description détaillée pour présenter votre vision. Vous pouvez également cartographier votre territoire en ajoutant des lieux importants et marquer ainsi l’identité unique de votre nation. Transformez votre rêve en une réalité virtuelle, et faites rayonner votre nation auprès des autres !",
+      "presentation3": "Tissez des liens diplomatiques et créez des alliances ! Notre plateforme vous offre l’opportunité d’interagir avec d’autres nations, qu’elles soient réelles ou virtuelles. Initiez des relations diplomatiques, négociez des accords, formez des alliances stratégiques ou organisez des événements communs. Élargissez l’influence de votre nation en construisant des ponts entre les cultures et en collaborant avec d’autres leaders. Ensemble, donnez une nouvelle dimension à vos ambitions !"
     },
     "lobby": {
       "description": "Renseignez le mot de passe pour accéder à l'application",
@@ -83,9 +85,6 @@
     "coms": {
       "title": "communications"
     },
-    "legalNotice": {
-      "title": "mentions légales"
-    },
     "login": {
       "title": "S'identifier",
       "forgottenPassword": "Mot de passe oublié ?",
@@ -95,7 +94,8 @@
     "place": {
       "noChildrenPlaces": "aucun lieu enfant à afficher",
       "image": "illustration du lieu",
-      "noImage": "aucune illustration du lieu"
+      "noImage": "aucune illustration du lieu",
+      "noDescription": "pas de description"
     },
     "recovery": {
       "title": "réinitialisation du mot de passe",
@@ -153,7 +153,10 @@
       "parent": "parent",
       "createFreeTile": "ajouter une tuile libre",
       "plan": "choisir une souscription",
-      "createCom": "poster un communiqué"
+      "createCom": "poster un communiqué",
+      "contact": "contact",
+      "generate": "générer",
+      "report": "SIGNALER"
     },
     "form": {
       "input": {
@@ -195,12 +198,13 @@
         "updatePlace": "Confirmez-vous la mise à jour du lieu ?",
         "updateCitizen": "Confirmez-vous la mise à jour de votre profil ?",
         "createCom": "Confirmez-vous la création du communiqué ?",
-        "deleteCom": "Confirmez-vous la suppression définitive du communiqué ?"
+        "deleteCom": "Confirmez-vous la suppression définitive du communiqué ?",
+        "reportContent": "Confirmez-vous le signalement du contenu à l'administrateur ?"
       },
       "cookiesModal": {
         "text": "Ce site utilise des cookies pour améliorer votre expérience utilisateur",
-        "accept": "ACCEPTER",
-        "decline": "REFFUSER"
+        "accept": "je comprends",
+        "decline": "je refuse"
       },
       "langModal": {
         "title": "CHOIX DE LA LANGUE"
@@ -383,7 +387,8 @@
       "serverError": "Erreur serveur",
       "miss": "Certaines informations sont erronées ou manquantes",
       "forbidden": "Action interdite",
-      "11000": "Information déjà existante"
+      "11000": "Information déjà existante",
+      "nsfw": "L'image contient du contenu NSFW ! Notification envoyée à l'administrateur"
     },
     "user": {
       "signIn": "Connexion réussie",
@@ -427,8 +432,8 @@
       "delete": "Fichier supprimé avec succès"
     },
     "com": {
-      "new": "Nouveau communiqué posté",
-      "delete": "Communiqué supprimé"
+      "new": "Communication envoyée",
+      "delete": "Communication supprimée"
     }
   }
 }

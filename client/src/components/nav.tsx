@@ -56,6 +56,13 @@ export default function Nav() {
             }
           />
         )}
+      {session.user.role === "admin" && (
+        <IconLink
+          destination="admin"
+          text={t("components.buttons.admin")}
+          action={() => navigate(`/admin`)}
+        />
+      )}
       <div className="flex flex-col gap-1 self-start">
         <LangButton />
         <MenuButton />

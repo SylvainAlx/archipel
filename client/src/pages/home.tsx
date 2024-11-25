@@ -4,6 +4,8 @@ import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { sessionAtom } from "../settings/store";
 import { useAtom } from "jotai";
+import Illustration from "../components/illustration";
+import { IoMdAddCircleOutline, IoMdGlobe, IoMdLogIn } from "react-icons/io";
 
 export default function Home() {
   const { t } = useTranslation();
@@ -13,48 +15,79 @@ export default function Home() {
   return (
     <>
       <H1 text={t("pages.home.title")} />
-      <p
-        className="text-xl px-4"
-        dangerouslySetInnerHTML={{ __html: t("pages.home.presentation") }}
-      />
-      {session.user.officialId === undefined ||
-      session.user.officialId === "" ? (
-        <div className="w-full py-4 flex justify-center gap-2 flex-wrap">
-          <Button
-            text={t("components.buttons.login")}
-            type="button"
-            click={() => navigate("/login")}
-            widthFull={true}
-          />
-          <Button
-            text={t("components.buttons.register")}
-            type="button"
-            click={() => navigate("/register")}
-            widthFull={true}
-          />
-          <Button
-            text={t("components.buttons.explore")}
-            type="button"
-            click={() => navigate("/explore")}
-            widthFull={true}
-          />
-        </div>
-      ) : (
-        <div className="w-full py-4 flex justify-center gap-4 flex-wrap">
-          <Button
-            text={t("components.buttons.user")}
-            type="button"
-            click={() => navigate(`/citizen/${session.user.officialId}`)}
-            widthFull={true}
-          />
-          <Button
-            text={t("components.buttons.explore")}
-            type="button"
-            click={() => navigate("/explore")}
-            widthFull={true}
-          />
-        </div>
-      )}
+      <section className="flex flex-col items-center gap-10">
+        <article className="flex flex-col lg:flex-row justify-center items-center lg:items-stretch flex-wrap px-4 gap-4">
+          <div className="lg:animate-fade-right w-full lg:w-[45%] flex flex-col justify-between">
+            <p
+              className="text-xl"
+              dangerouslySetInnerHTML={{
+                __html: t("pages.home.presentation1"),
+              }}
+            />
+            {session.user.officialId === undefined ||
+            session.user.officialId === "" ? (
+              <div className="animate-fade w-full py-4 flex justify-center gap-4 flex-wrap">
+                <Button
+                  text={t("components.buttons.login")}
+                  type="button"
+                  click={() => navigate("/login")}
+                  children={<IoMdLogIn />}
+                />
+                <Button
+                  text={t("components.buttons.register")}
+                  type="button"
+                  click={() => navigate("/register")}
+                  children={<IoMdAddCircleOutline />}
+                />
+                <Button
+                  text={t("components.buttons.explore")}
+                  type="button"
+                  click={() => navigate("/explore")}
+                  children={<IoMdGlobe />}
+                />
+              </div>
+            ) : (
+              <div className="animate-fade w-full py-4 flex justify-center gap-4 flex-wrap">
+                <Button
+                  text={t("components.buttons.user")}
+                  type="button"
+                  click={() => navigate(`/citizen/${session.user.officialId}`)}
+                  widthFull={true}
+                />
+                <Button
+                  text={t("components.buttons.explore")}
+                  type="button"
+                  click={() => navigate("/explore")}
+                  widthFull={true}
+                />
+              </div>
+            )}
+          </div>
+          <Illustration src="/archipelago.webp" />
+        </article>
+        <article className="flex flex-col-reverse lg:flex-row justify-center items-center lg:items-stretch flex-wrap px-4 gap-4">
+          <Illustration src="/worldbuilding.webp" />
+          <div className="lg:animate-fade-left w-full lg:w-[45%]">
+            <p
+              className="text-xl"
+              dangerouslySetInnerHTML={{
+                __html: t("pages.home.presentation2"),
+              }}
+            />
+          </div>
+        </article>
+        <article className="flex flex-col lg:flex-row justify-center items-center lg:items-stretch flex-wrap px-4 gap-4">
+          <div className="lg:animate-fade-right w-full lg:w-[45%]">
+            <p
+              className="text-xl"
+              dangerouslySetInnerHTML={{
+                __html: t("pages.home.presentation3"),
+              }}
+            />
+          </div>
+          <Illustration src="/citizen.webp" />
+        </article>
+      </section>
     </>
   );
 }

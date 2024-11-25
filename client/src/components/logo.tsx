@@ -10,7 +10,7 @@ export default function Logo() {
   return (
     <div onClick={handleClick} className="animate-fadeIn h-[50px] w-[50px]">
       <img
-        src="/logoV2.webp"
+        src="/logo.webp"
         className="cursor-pointer h-full hover:animate-pulse"
       ></img>
     </div>

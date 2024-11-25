@@ -1,5 +1,5 @@
 // import { FaCoins } from "react-icons/fa6";
-import { COSTS, placesTypeList, QUOTAS } from "../../settings/consts";
+import { COSTS, QUOTAS } from "../../settings/consts";
 import Button from "./button";
 import { Place, emptyPlace } from "../../types/typPlace";
 import { myStore, newPlaceAtom, sessionAtom } from "../../settings/store";
@@ -9,6 +9,7 @@ import { MdLandscape } from "react-icons/md";
 import { Nation } from "../../types/typNation";
 import { FaCoins } from "react-icons/fa";
 import { errorMessage } from "../../utils/toasts";
+import { placesTypeList } from "../../settings/lists";
 
 export interface newPlaceProps {
   nation: Nation;

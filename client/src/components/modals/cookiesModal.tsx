@@ -1,7 +1,12 @@
 import CookieConsent from "react-cookie-consent";
 import { useTranslation } from "react-i18next";
 
-export default function CookiesModal() {
+interface CookiesModalProps {
+  accept: () => void;
+  decline: () => void;
+}
+
+export default function CookiesModal({ accept, decline }: CookiesModalProps) {
   const { t } = useTranslation();
   return (
     <div>
@@ -10,12 +15,8 @@ export default function CookiesModal() {
         buttonText={t("components.modals.cookiesModal.accept")}
         declineButtonText={t("components.modals.cookiesModal.decline")}
         enableDeclineButton
-        // onAccept={() => {
-        //   console.log("Cookies acceptés");
-        // }}
-        // onDecline={() => {
-        //   console.log("Cookies refusés");
-        // }}
+        onAccept={accept}
+        onDecline={decline}
         style={{ background: "rgb(0, 99, 138)" }}
         buttonStyle={{ background: "#4CAF50", color: "#ffffff" }}
       >

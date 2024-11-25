@@ -16,9 +16,9 @@ import {
   nationsListFetchedAtom,
   statsAtom,
 } from "../../settings/store";
-import { nationSearchSortOptions } from "../../settings/consts";
 import { useTranslation } from "react-i18next";
 import { useAtom } from "jotai";
+import { nationSearchSortOptions } from "../../settings/lists";
 
 export interface SearchBarProps {
   type: string;

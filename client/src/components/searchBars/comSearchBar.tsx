@@ -12,8 +12,8 @@ import Select from "../form/select";
 import { SetAtom, comFetchedListAtom, statsAtom } from "../../settings/store";
 import { useTranslation } from "react-i18next";
 import { useAtom } from "jotai";
-import { comSearchSortOptions } from "../../settings/consts";
 import { getPublicComs } from "../../api/communication/comAPI";
+import { comSearchSortOptions } from "../../settings/lists";
 
 export interface SearchBarProps {
   type: string;
