@@ -13,6 +13,7 @@
     },
     "nation": {
       "title": "nation",
+      "reported": "nation signalée et en attente de modération",
       "nationIdentity": {
         "title": "identité de la nation",
         "generalInformations": "informations générales",
@@ -69,6 +70,7 @@
       }
     },
     "citizen": {
+      "reported": "utilisateur signalé et en attente de modération",
       "noBio": "pas de biographie",
       "virtualCitizenship": "citoyenneté virtuelle",
       "settings": "paramètre du compte",

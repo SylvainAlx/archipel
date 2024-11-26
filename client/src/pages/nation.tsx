@@ -22,6 +22,7 @@ import NationMap from "../components/nation/nationMap";
 import { ConfirmBoxDefault } from "../types/typAtom";
 import NationComs from "../components/nation/nationComs";
 import ReportButton from "../components/buttons/reportButton";
+import { IoWarning } from "react-icons/io5";
 
 export default function Nation() {
   const [nation] = useAtom(nationFetchedAtom);
@@ -79,34 +80,45 @@ export default function Nation() {
       <H1 text={t("pages.nation.title")} />
       {nation != undefined && (
         <>
-          <section className="w-full flex flex-wrap gap-8 items-start justify-between">
-            <div className="w-full flex flex-col gap-3 items-center justify-center">
-              <Links selectedNation={nation} owner={owner} />
+          {!nation.reported ? (
+            <>
+              <section className="w-full flex flex-wrap gap-8 items-start justify-between">
+                <div className="w-full flex flex-col gap-3 items-center justify-center">
+                  <Links selectedNation={nation} owner={owner} />
+                </div>
+                {nation.officialId === param.id && (
+                  <>
+                    <NationIdentity selectedNation={nation} owner={owner} />
+                    <NationMap selectedNation={nation} owner={owner} />
+                    <FreeTiles selectedNation={nation} owner={owner} />
+                    <Diplomacy selectedNation={nation} owner={owner} />
+                    <Citizens selectedNation={nation} owner={owner} />
+                    <Places selectedNation={nation} owner={owner} />
+                    <NationComs selectedNation={nation} owner={owner} />
+                  </>
+                )}
+              </section>
+              <section className="pt-10 flex flex-col items-center gap-4">
+                {owner ? (
+                  <CrossButton
+                    text={t("components.buttons.deleteNation")}
+                    click={handleDelete}
+                  />
+                ) : (
+                  <div className="flex items-center justify-center">
+                    <ReportButton contentOfficialId={nation.officialId} />
+                  </div>
+                )}
+              </section>
+            </>
+          ) : (
+            <div className="animate-pulse text-danger text-xl flex items-center justify-center gap-2">
+              <IoWarning />
+              <strong className="text-danger">
+                {t("pages.nation.reported")}
+              </strong>
             </div>
-            {nation.officialId === param.id && (
-              <>
-                <NationIdentity selectedNation={nation} owner={owner} />
-                <NationMap selectedNation={nation} owner={owner} />
-                <FreeTiles selectedNation={nation} owner={owner} />
-                <Diplomacy selectedNation={nation} owner={owner} />
-                <Citizens selectedNation={nation} owner={owner} />
-                <Places selectedNation={nation} owner={owner} />
-                <NationComs selectedNation={nation} owner={owner} />
-              </>
-            )}
-          </section>
-          <section className="pt-10 flex flex-col items-center gap-4">
-            {owner ? (
-              <CrossButton
-                text={t("components.buttons.deleteNation")}
-                click={handleDelete}
-              />
-            ) : (
-              <div className="flex items-center justify-center">
-                <ReportButton contentOfficialId={nation.officialId} />
-              </div>
-            )}
-          </section>
+          )}
         </>
       )}
     </>

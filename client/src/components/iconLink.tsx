@@ -57,7 +57,7 @@ export default function IconLink({ destination, text, action }: IconLinkProps) {
 
   return (
     <div
-      className={`flex flex-col items-center text-5xl md:text-3xl hover:text-secondary transition-all cursor-pointer ${focus && "text-secondary"}`}
+      className={`flex flex-col items-center justify-center text-5xl md:text-3xl hover:text-secondary transition-all cursor-pointer ${focus && "text-secondary"}`}
       onClick={action}
     >
       {destination === "home" && <IoMdHome />}
@@ -70,7 +70,9 @@ export default function IconLink({ destination, text, action }: IconLinkProps) {
       {destination === "nation" && (
         <Flag nation={session.nation} isHeader={true} />
       )}
-      {destination === "admin" && <FaShieldAlt className="text-2xl" />}
+      {destination === "admin" && (
+        <FaShieldAlt className="text-[40px] md:text-[25px]" />
+      )}
       <h2 className="hidden md:block text-[10px]">
         {text.toLocaleUpperCase()}
       </h2>

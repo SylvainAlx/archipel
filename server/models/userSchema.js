@@ -85,6 +85,14 @@ const UserSchema = mongoose.Schema(
         default: "",
       },
     },
+    reported: {
+      type: Boolean,
+      default: false,
+    },
+    banished: {
+      type: Boolean,
+      default: false,
+    },
   },
   {
     timestamps: true,

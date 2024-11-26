@@ -38,7 +38,7 @@ import { ConfirmBoxDefault } from "../types/typAtom";
 import { getNation } from "../api/nation/nationAPI";
 import MDEditor from "@uiw/react-md-editor";
 import CreditTag from "../components/tags/creditTag";
-import { IoDiamondOutline } from "react-icons/io5";
+import { IoDiamondOutline, IoWarning } from "react-icons/io5";
 import PlanButton from "../components/buttons/planButton";
 import { errorMessage } from "../utils/toasts";
 import LanguagesTag from "../components/tags/languagesTag";
@@ -202,87 +202,95 @@ export default function Citizen() {
           <EditIcon target="citizen" param={citizen.name} path="name" />
         )}
       </div>
-      <div className="relative flex flex-col items-center">
-        <Avatar url={citizen.avatar} isUser={true} bigSize={true} />
-        {session.user.officialId === citizen.officialId &&
-          (citizen.avatar != "" ? (
-            <CrossButton small={true} click={handleDeleteAvatar} />
-          ) : (
-            <Upploader path="avatar" destination="citizen" maxSize={500000} />
-          ))}
-      </div>
-      <div className="flex items-center justify-center gap-6">
-        <span className="flex items-center gap-1">
-          <ExternalLink
-            url={citizen.link}
-            children={<FaLink />}
-            hover={t("components.hoverInfos.links.website")}
-          />
-          {session.user.officialId === citizen.officialId && (
-            <EditIcon target="citizen" param={citizen.link} path="link" />
-          )}
-        </span>
+      {!citizen.reported && (
+        <>
+          <div className="relative flex flex-col items-center">
+            <Avatar url={citizen.avatar} isUser={true} bigSize={true} />
+            {session.user.officialId === citizen.officialId &&
+              (citizen.avatar != "" ? (
+                <CrossButton small={true} click={handleDeleteAvatar} />
+              ) : (
+                <Upploader
+                  path="avatar"
+                  destination="citizen"
+                  maxSize={500000}
+                />
+              ))}
+          </div>
+          <div className="flex items-center justify-center gap-6">
+            <span className="flex items-center gap-1">
+              <ExternalLink
+                url={citizen.link}
+                children={<FaLink />}
+                hover={t("components.hoverInfos.links.website")}
+              />
+              {session.user.officialId === citizen.officialId && (
+                <EditIcon target="citizen" param={citizen.link} path="link" />
+              )}
+            </span>
 
-        <span className="flex items-center gap-1">
-          <ExternalLink
-            url={citizen.email != "" ? "mailto:" + citizen.email : ""}
-            children={<BsFillEnvelopeAtFill />}
-            hover={t("components.hoverInfos.links.email")}
-          />
-          {session.user.officialId === citizen.officialId && (
-            <EditIcon target="citizen" param={citizen.email} path="email" />
-          )}
-        </span>
-      </div>
-      <div className="w-full max-w-[300px] md:max-w-lg mt-4 justify-center flex gap-2">
-        {citizen.bio ? (
-          <MDEditor.Markdown
-            className="bg-transparent text-light text-justify"
-            source={citizen.bio}
-            style={{ whiteSpace: "pre-wrap" }}
-          />
-        ) : (
-          <em className="text-center">{t("pages.citizen.noBio")}</em>
-        )}
+            <span className="flex items-center gap-1">
+              <ExternalLink
+                url={citizen.email != "" ? "mailto:" + citizen.email : ""}
+                children={<BsFillEnvelopeAtFill />}
+                hover={t("components.hoverInfos.links.email")}
+              />
+              {session.user.officialId === citizen.officialId && (
+                <EditIcon target="citizen" param={citizen.email} path="email" />
+              )}
+            </span>
+          </div>
+          <div className="w-full max-w-[300px] md:max-w-lg mt-4 justify-center flex gap-2">
+            {citizen.bio ? (
+              <MDEditor.Markdown
+                className="bg-transparent text-light text-justify"
+                source={citizen.bio}
+                style={{ whiteSpace: "pre-wrap" }}
+              />
+            ) : (
+              <em className="text-center">{t("pages.citizen.noBio")}</em>
+            )}
 
-        {session.user.officialId === citizen.officialId && (
-          <EditIcon
-            target="citizen"
-            param={citizen.bio ? citizen.bio : ""}
-            path="bio"
-          />
-        )}
-      </div>
-
+            {session.user.officialId === citizen.officialId && (
+              <EditIcon
+                target="citizen"
+                param={citizen.bio ? citizen.bio : ""}
+                path="bio"
+              />
+            )}
+          </div>
+        </>
+      )}
       <TileContainer
         children={
           <>
-            <DashTile
-              title={t("pages.citizen.virtualCitizenship")}
-              children={
-                <>
-                  <div className="max-w-[90%] flex flex-wrap items-center justify-center gap-1">
-                    <IdTag label={citizen.officialId} />
-                    <span className="flex items-center gap-1">
-                      <LanguagesTag
-                        languages={
-                          citizen.language != "" ? [citizen.language] : []
-                        }
-                      />
-                      {session.user.officialId === citizen.officialId && (
-                        <EditIcon
-                          target="citizen"
-                          param={languageList}
-                          path="language"
-                          indice={citizen.language}
+            {!citizen.reported ? (
+              <DashTile
+                title={t("pages.citizen.virtualCitizenship")}
+                children={
+                  <>
+                    <div className="max-w-[90%] flex flex-wrap items-center justify-center gap-1">
+                      <IdTag label={citizen.officialId} />
+                      <span className="flex items-center gap-1">
+                        <LanguagesTag
+                          languages={
+                            citizen.language != "" ? [citizen.language] : []
+                          }
                         />
+                        {session.user.officialId === citizen.officialId && (
+                          <EditIcon
+                            target="citizen"
+                            param={languageList}
+                            path="language"
+                            indice={citizen.language}
+                          />
+                        )}
+                      </span>
+                      {session.user.officialId === citizen.officialId && (
+                        <CreditTag label={citizen.credits} owner={true} />
                       )}
-                    </span>
-                    {session.user.officialId === citizen.officialId && (
-                      <CreditTag label={citizen.credits} owner={true} />
-                    )}
-                    {citizen.citizenship.nationOwner && <NationOwnerTag />}
-                    {/* <div className="flex items-center gap-1">
+                      {citizen.citizenship.nationOwner && <NationOwnerTag />}
+                      {/* <div className="flex items-center gap-1">
                       <ResidenceTag
                         residenceId={citizen.citizenship.residence}
                       />
@@ -295,51 +303,59 @@ export default function Citizen() {
                           />
                         )}
                     </div> */}
-                    {citizen.role === "admin" && (
-                      <RoleTag label={t("pages.citizen.role.admin")} />
-                    )}
-                  </div>
-                  {nation != undefined &&
-                  nation.officialId != "" &&
-                  citizen.citizenship.nationId != "" ? (
-                    <div className="w-full flex flex-col justify-center items-center gap-2">
-                      <div className="w-[300px] relative flex gap-2 items-center justify-center">
-                        <Button
-                          text={nation.name}
-                          click={() => handleClick("nation")}
-                          children={<GiBlackFlag />}
-                          widthFull={true}
-                        />
-                        {enableLeaving && (
-                          <CrossButton
-                            text=""
-                            small={true}
-                            click={leaveNation}
-                          />
-                        )}
-                      </div>
-                    </div>
-                  ) : (
-                    <>
-                      {session.user.officialId === citizen.officialId && (
-                        <>
-                          <Button
-                            text={t("components.buttons.createNation")}
-                            click={() => handleClick("new")}
-                            widthFull={true}
-                          />
-                          <Button
-                            text={t("components.buttons.joinNation")}
-                            click={() => handleClick("join")}
-                            widthFull={true}
-                          />
-                        </>
+                      {citizen.role === "admin" && (
+                        <RoleTag label={t("pages.citizen.role.admin")} />
                       )}
-                    </>
-                  )}
-                </>
-              }
-            />
+                    </div>
+                    {nation != undefined &&
+                    nation.officialId != "" &&
+                    citizen.citizenship.nationId != "" ? (
+                      <div className="w-full flex flex-col justify-center items-center gap-2">
+                        <div className="w-[300px] relative flex gap-2 items-center justify-center">
+                          <Button
+                            text={nation.name}
+                            click={() => handleClick("nation")}
+                            children={<GiBlackFlag />}
+                            widthFull={true}
+                          />
+                          {enableLeaving && (
+                            <CrossButton
+                              text=""
+                              small={true}
+                              click={leaveNation}
+                            />
+                          )}
+                        </div>
+                      </div>
+                    ) : (
+                      <>
+                        {session.user.officialId === citizen.officialId && (
+                          <>
+                            <Button
+                              text={t("components.buttons.createNation")}
+                              click={() => handleClick("new")}
+                              widthFull={true}
+                            />
+                            <Button
+                              text={t("components.buttons.joinNation")}
+                              click={() => handleClick("join")}
+                              widthFull={true}
+                            />
+                          </>
+                        )}
+                      </>
+                    )}
+                  </>
+                }
+              />
+            ) : (
+              <div className="animate-pulse text-danger text-xl flex items-center justify-center gap-2">
+                <IoWarning />
+                <strong className="text-danger">
+                  {t("pages.citizen.reported")}
+                </strong>
+              </div>
+            )}
             {session.user.officialId === citizen.officialId ? (
               <DashTile
                 title={t("pages.citizen.settings")}

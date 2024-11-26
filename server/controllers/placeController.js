@@ -1,6 +1,5 @@
 import Place from "../models/placeSchema.js";
 import Nation from "../models/nationSchema.js";
-import User from "../models/userSchema.js";
 import { createOfficialId } from "../utils/functions.js";
 import { COSTS, QUOTAS } from "../settings/const.js";
 

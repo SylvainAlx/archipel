@@ -127,7 +127,7 @@ export const verify = async (req, res) => {
 
     const user = await User.findOne(
       { name: decoded.name },
-      "officialId name bio gender avatar language email link role credits plan expirationDate citizenship createdAt",
+      "officialId name bio gender avatar language email link role credits plan expirationDate citizenship reported banished createdAt",
     );
 
     if (user) {
@@ -217,13 +217,13 @@ export const getAllUsers = async (req, res) => {
     if (searchText) {
       const users = await User.find(
         { name: { $regex: searchText, $options: "i" } },
-        "officialId name bio gender avatar language email link role plan expirationDate citizenship createdAt",
+        "officialId name bio gender avatar language email link role plan expirationDate citizenship reported banished createdAt",
       );
       res.status(200).json(users);
     } else {
       const users = await User.find(
         {},
-        "officialId name bio gender avatar language email link role plan expirationDate citizenship createdAt",
+        "officialId name bio gender avatar language email link role plan expirationDate citizenship reported banished createdAt",
       );
       res.status(200).json(users);
     }
@@ -237,7 +237,7 @@ export const getOneUser = async (req, res) => {
   try {
     const user = await User.findOne(
       { officialId: userId },
-      "officialId name bio gender avatar language email link role plan expirationDate citizenship createdAt",
+      "officialId name bio gender avatar language email link role plan expirationDate citizenship reported banished createdAt",
     );
     res.status(200).json({
       user,
@@ -335,7 +335,7 @@ export const updateUser = async (req, res) => {
     if (req.userId === officialId) {
       const user = await User.findOne(
         { officialId },
-        "officialId name surname gender avatar language email link role credits plan expirationDate citizenship createdAt",
+        "officialId name surname gender avatar language email link role credits plan expirationDate citizenship reported banished createdAt",
       );
       let newResidence;
       let oldResidence;
@@ -407,7 +407,7 @@ export const changeStatus = async (req, res) => {
     if (req.userId === officialId || status != 0) {
       const user = await User.findOne(
         { officialId },
-        "officialId nofficialIdame bio gender avatar language email link role credits plan expirationDate citizenship createdAt",
+        "officialId nofficialIdame bio gender avatar language email link role credits plan expirationDate citizenship reported banished createdAt",
       );
 
       const nation = await Nation.findOne(

@@ -12,6 +12,8 @@ export interface Nation {
   officialId: string;
   name: string;
   owner: string;
+  reported: boolean;
+  banished: boolean;
   data: {
     url: {
       flag: string;
@@ -44,6 +46,8 @@ export const EmptyNation: Nation = {
   officialId: "",
   name: "",
   owner: "",
+  reported: false,
+  banished: false,
   data: {
     url: {
       flag: "",

@@ -6,12 +6,12 @@ import { getAllParams } from "../api/param/paramAPI";
 import H2 from "../components/titles/h2";
 import TileContainer from "../components/tileContainer";
 import DashTile from "../components/dashTile";
-import { getAdminComs } from "../api/communication/comAPI";
 import BarreLoader from "../components/loading/barreLoader";
 import AdminComTile from "../components/tiles/adminComTile";
 import IndexTag from "../components/tags/indexTag";
 import Button from "../components/buttons/button";
 import { useTranslation } from "react-i18next";
+import { getAdminComs } from "../api/admin/adminAPI";
 
 export default function Admin() {
   const [paramsList] = useAtom(paramsListAtom);
@@ -20,7 +20,9 @@ export default function Admin() {
   const { t } = useTranslation();
 
   useEffect(() => {
-    getAdminComs();
+    if (adminComs.length === 0) {
+      getAdminComs();
+    }
     if (paramsList.length === 0) {
       getAllParams();
     }

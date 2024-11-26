@@ -89,13 +89,13 @@ export const getAllNations = async (req, res) => {
           name: { $regex: searchText, $options: "i" },
           "data.general.tags": { $regex: searchTag, $options: "i" },
         },
-        "officialId name owner role data createdAt",
+        "officialId name owner role reported banished data createdAt",
       );
       res.status(200).json(nations);
     } else if (searchText === "" && searchTag === "") {
       const nations = await Nation.find(
         {},
-        "officialId name owner role data createdAt",
+        "officialId name owner role reported banished data createdAt",
       );
       res.status(200).json(nations);
     } else {
@@ -112,7 +112,7 @@ export const getTop100Nations = async (req, res) => {
   try {
     const nations = await Nation.find(
       {},
-      "officialId name owner role data createdAt",
+      "officialId name owner role reported banished data createdAt",
     ).limit(100);
     res.status(200).json(nations);
   } catch (error) {
@@ -126,7 +126,7 @@ export const getOneNation = async (req, res) => {
   try {
     const nation = await Nation.findOne(
       { officialId: nationId },
-      "officialId name owner role data createdAt",
+      "officialId name owner role reported banished data createdAt",
     );
     res.status(200).json(nation);
   } catch (error) {
@@ -228,7 +228,7 @@ export const updateNation = async (req, res) => {
     if (req.userId === owner) {
       const nation = await Nation.findOne(
         { officialId },
-        "officialId name owner role data createdAt",
+        "officialId name owner role reported banished data createdAt",
       );
       nation.name = name;
       nation.data = data;

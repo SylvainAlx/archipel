@@ -13,6 +13,8 @@ export interface User {
   credits: number;
   plan: "free" | "premium" | "elite";
   expirationDate: string;
+  reported: boolean;
+  banished: boolean;
   citizenship: {
     status: number;
     nationId: string;
@@ -62,6 +64,8 @@ export const emptyUser: User = {
   credits: 0,
   plan: "free",
   expirationDate: "",
+  reported: false,
+  banished: false,
   citizenship: {
     status: -1,
     nationId: "",
