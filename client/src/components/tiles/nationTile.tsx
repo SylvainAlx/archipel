@@ -7,6 +7,7 @@ import PlaceTag from "../tags/placeTag";
 import Flag from "../flag";
 import TagList from "../nation/tagList";
 import TreasuryTag from "../tags/treasuryTag";
+import ReportPanel from "../reportPanel";
 
 export default function NationTile(nation: Nation) {
   const navigate = useNavigate();
@@ -33,6 +34,7 @@ export default function NationTile(nation: Nation) {
           <TagList nation={nation} isTile={true} />
         </div>
       </div>
+      <ReportPanel content={nation} />
     </div>
   );
 }

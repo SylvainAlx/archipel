@@ -51,3 +51,16 @@ export const getAllAdminComsFetch = async () => {
   const result = await resp.json();
   return result;
 };
+
+export const getBannedUsersFetch = async () => {
+  const jwt = GET_JWT();
+  const resp = await fetch(`${SERVER_URL}/admin/getbannedusers`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      authorization: "Bearer " + jwt,
+    },
+  });
+  const result = await resp.json();
+  return result;
+};

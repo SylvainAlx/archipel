@@ -5,8 +5,6 @@ import CrossButton from "../buttons/crossButton";
 import { useTranslation } from "react-i18next";
 import DateTag from "../tags/dateTag";
 import LinkButton from "../buttons/linkButton";
-import Button from "../buttons/button";
-import { FaBan } from "react-icons/fa";
 
 export interface ComTileProps {
   com: Com;
@@ -15,10 +13,6 @@ export interface ComTileProps {
 export default function AdminComTile({ com }: ComTileProps) {
   const { t } = useTranslation();
   useEffect(() => {}, [com]);
-
-  const handleBan = (target: string) => {
-    console.log(target);
-  };
 
   const handleDelete = () => {
     myStore.set(confirmBox, {
@@ -73,22 +67,6 @@ export default function AdminComTile({ com }: ComTileProps) {
       </div>
       <div className="flex items-center gap-2">
         <p className="bg-transparent text-light text-justify">{com.message}</p>
-      </div>
-      <div className="w-max self-end flex items-center gap-1">
-        <Button
-          text="bannir"
-          bgColor="bg-danger"
-          children={<FaBan />}
-          click={() =>
-            handleBan(
-              com.destination && com.origin
-                ? com.destination
-                : com.origin
-                  ? com.origin
-                  : "",
-            )
-          }
-        />
       </div>
       <div className="self-end">
         <CrossButton click={handleDelete} text="supprimer com" />

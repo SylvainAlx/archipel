@@ -407,7 +407,8 @@
       "deleteKO": "impossible de supprimer l'utilisateur",
       "update": "Mise à jour réussie",
       "creditsNotReady": "L'ajout de crédits n'est pas encore disponible",
-      "subscriptionNotReady": "La souscription n'est pas encore disponible"
+      "subscriptionNotReady": "La souscription n'est pas encore disponible",
+      "ipbanned": "Votre adresse IP a été banni de Archipel"
     },
     "nation": {
       "create": "Nouvelle nation créée",

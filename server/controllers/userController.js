@@ -7,18 +7,22 @@ import { LoremIpsum } from "lorem-ipsum";
 import { addMonths, createOfficialId } from "../utils/functions.js";
 import { GIFTS } from "../settings/const.js";
 
+const IpIsBanished = async (AUserIp) => {
+  const banned =
+    (await Param.findOne({
+      name: "banished",
+      props: { $elemMatch: { label: "ip", value: AUserIp } },
+    })) != null;
+
+  return banned;
+};
+
 export const register = async (req, res) => {
   try {
     const { name, password, gender, language } = req.body;
     const userIp = req.clientIp;
 
-    const IpIsBanished =
-      (await Param.findOne({
-        name: "banished",
-        props: { $elemMatch: { label: "ip", value: userIp } },
-      })) != null;
-
-    if (IpIsBanished) {
+    if (await IpIsBanished(userIp)) {
       return res.status(403).json({
         infoType: "ip",
       });
@@ -88,6 +92,13 @@ export const register = async (req, res) => {
 export const login = async (req, res) => {
   try {
     const userIp = req.clientIp;
+
+    if (await IpIsBanished(userIp)) {
+      return res.status(403).json({
+        infoType: "ip",
+      });
+    }
+
     const { name, password } = req.body;
 
     const user = await User.findOne(
@@ -119,6 +130,11 @@ export const login = async (req, res) => {
 export const verify = async (req, res) => {
   try {
     const userIp = req.clientIp;
+    if (await IpIsBanished(userIp)) {
+      return res.status(403).json({
+        infoType: "ip",
+      });
+    }
 
     const token = req.headers.authorization.split(" ")[1];
     const secret = process.env.JWT_SECRET;
@@ -216,13 +232,13 @@ export const getAllUsers = async (req, res) => {
     const searchText = req.query.texteRecherche;
     if (searchText) {
       const users = await User.find(
-        { name: { $regex: searchText, $options: "i" } },
+        { name: { $regex: searchText, $options: "i" }, banished: false },
         "officialId name bio gender avatar language email link role plan expirationDate citizenship reported banished createdAt",
       );
       res.status(200).json(users);
     } else {
       const users = await User.find(
-        {},
+        { banished: false },
         "officialId name bio gender avatar language email link role plan expirationDate citizenship reported banished createdAt",
       );
       res.status(200).json(users);
@@ -236,7 +252,7 @@ export const getOneUser = async (req, res) => {
   const userId = req.params.id;
   try {
     const user = await User.findOne(
-      { officialId: userId },
+      { officialId: userId, banished: false },
       "officialId name bio gender avatar language email link role plan expirationDate citizenship reported banished createdAt",
     );
     res.status(200).json({
@@ -290,7 +306,7 @@ export const deleteSelfUser = async (req, res) => {
 export const getUsersByNation = async (req, res) => {
   const nationId = req.params.id;
   try {
-    await User.find({ "citizenship.nationId": nationId })
+    await User.find({ "citizenship.nationId": nationId, banished: false })
       .then((users) => {
         res.status(200).json(users);
       })
@@ -304,7 +320,7 @@ export const getUsersByNation = async (req, res) => {
 
 export const usersCount = async (req, res) => {
   try {
-    User.countDocuments({})
+    User.countDocuments({ banished: false })
       .then((count) => {
         res.status(200).json(count);
       })

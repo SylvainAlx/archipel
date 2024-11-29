@@ -1,5 +1,6 @@
 import { comOptions } from "../../settings/lists";
 import {
+  bannedCitizensAtom,
   comFetchedListAtom,
   comsListAtom,
   loadingAtom,
@@ -11,6 +12,7 @@ import { successMessage } from "../../utils/toasts";
 import {
   banContentFetch,
   getAllAdminComsFetch,
+  getBannedUsersFetch,
   reportContentFetch,
 } from "./adminFetch";
 
@@ -68,4 +70,19 @@ export const banContent = async (
   } catch (error) {
     console.error(error);
   }
+};
+
+export const getBannedUsers = async () => {
+  myStore.set(loadingAtom, true);
+  getBannedUsersFetch()
+    .then((data) => {
+      myStore.set(loadingAtom, false);
+      if (data != undefined) {
+        myStore.set(bannedCitizensAtom, data);
+      }
+    })
+    .catch((error) => {
+      myStore.set(loadingAtom, false);
+      console.error(error);
+    });
 };

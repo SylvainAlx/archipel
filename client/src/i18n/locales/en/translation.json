@@ -407,7 +407,8 @@
       "deleteKO": "Unable to delete the user",
       "update": "Update successful",
       "creditsNotReady": "Adding credits is not yet available",
-      "subscriptionNotReady": "Subscription is not yet available"
+      "subscriptionNotReady": "Subscription is not yet available",
+      "ipbanned": "Your IP address has been banned from Archipel"
     },
     "nation": {
       "create": "New nation created",

@@ -3,6 +3,7 @@ import { COMTYPE } from "../settings/const.js";
 import Nation from "../models/nationSchema.js";
 import User from "../models/userSchema.js";
 import Place from "../models/placeSchema.js";
+import Param from "../models/paramSchema.js";
 
 export const getAdminComs = async (req, res) => {
   try {
@@ -24,20 +25,17 @@ const modifierReportOuBan = async (
 ) => {
   try {
     let AModel;
-    let ATypeEntite;
 
     switch (AContent.charAt(2)) {
       case "n":
         AModel = Nation;
-        ATypeEntite = "Nation";
         break;
       case "c":
         AModel = User;
-        ATypeEntite = "Utilisateur";
+        ABanStatus && banIp(AContent);
         break;
       case "p":
         AModel = Place;
-        ATypeEntite = "Lieu";
         break;
       default:
         return res.status(404).json({ message: "Type d'entité inconnu." });
@@ -45,7 +43,7 @@ const modifierReportOuBan = async (
 
     const entite = await AModel.findOne({ officialId: AContent });
     if (!entite) {
-      return res.status(404).json({ message: `${ATypeEntite} non trouvé.` });
+      return res.status(404).json({ message: `Entité non trouvé.` });
     }
 
     if (AReportedStatus != null) {
@@ -58,14 +56,38 @@ const modifierReportOuBan = async (
 
     res.status(200).json(entite);
   } catch (error) {
-    console.error(
-      `Erreur lors de la modification du statut de ${ATypeEntite} :`,
-      error,
-    );
+    console.error(`Erreur lors de la modification du statut :`, error);
     res.status(500).json({
-      message: `Erreur interne du serveur pour ${ATypeEntite}.`,
+      message: `Erreur interne du serveur.`,
       error,
     });
+  }
+};
+
+const banIp = async (AContent) => {
+  try {
+    const user = await User.findOne({ officialId: AContent });
+    const lastIp = user.ip.reduce((APlusRecent, AElement) => {
+      return new Date(AElement.lastVisit) > new Date(APlusRecent.lastVisit)
+        ? AElement
+        : APlusRecent;
+    }, user.ip[0]);
+
+    const banished = await Param.findOne({
+      name: "banished",
+    });
+    if (banished) {
+      banished.props.push({ label: "ip", value: lastIp.value });
+      await banished.save();
+    } else {
+      const banishedParam = new Param({
+        name: "banished",
+        props: [{ label: "ip", value: lastIp.value }],
+      });
+      await banishedParam.save();
+    }
+  } catch (error) {
+    console.error(error);
   }
 };
 
@@ -79,12 +101,31 @@ export const reverseReportContent = (req, res) => {
   modifierReportOuBan(AContent, false, null, res);
 };
 
-export const banContent = (req, res) => {
-  const AContent = req.params.id;
-  modifierReportOuBan(AContent, null, true, res);
+export const banContent = async (req, res) => {
+  try {
+    const AContent = req.params.id;
+    await modifierReportOuBan(AContent, null, true, res);
+  } catch (error) {
+    res.status(500).json({
+      message: `Erreur interne du serveur.`,
+      error,
+    });
+  }
 };
 
 export const reverseBanContent = (req, res) => {
   const AContent = req.params.id;
   modifierReportOuBan(AContent, null, false, res);
+};
+
+export const getBannedUsers = async (req, res) => {
+  try {
+    const users = await User.find(
+      { banished: true },
+      "officialId name bio gender avatar language email link role plan expirationDate citizenship reported banished createdAt",
+    );
+    res.status(200).json(users);
+  } catch (error) {
+    res.status(404).json({ message: error.message, infoType: "noUser" });
+  }
 };
