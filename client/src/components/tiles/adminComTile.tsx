@@ -6,9 +6,7 @@ import { useTranslation } from "react-i18next";
 import DateTag from "../tags/dateTag";
 import LinkButton from "../buttons/linkButton";
 import Button from "../buttons/button";
-import { BiSolidHide } from "react-icons/bi";
 import { FaBan } from "react-icons/fa";
-import { reportContent } from "../../api/admin/adminAPI";
 
 export interface ComTileProps {
   com: Com;
@@ -17,10 +15,6 @@ export interface ComTileProps {
 export default function AdminComTile({ com }: ComTileProps) {
   const { t } = useTranslation();
   useEffect(() => {}, [com]);
-
-  const handleWarn = (target: string) => {
-    reportContent(target);
-  };
 
   const handleBan = (target: string) => {
     console.log(target);
@@ -81,20 +75,6 @@ export default function AdminComTile({ com }: ComTileProps) {
         <p className="bg-transparent text-light text-justify">{com.message}</p>
       </div>
       <div className="w-max self-end flex items-center gap-1">
-        <Button
-          text="masquer"
-          bgColor="bg-wait"
-          children={<BiSolidHide />}
-          click={() =>
-            handleWarn(
-              com.destination && com.origin
-                ? com.destination
-                : com.origin
-                  ? com.origin
-                  : "",
-            )
-          }
-        />
         <Button
           text="bannir"
           bgColor="bg-danger"

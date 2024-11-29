@@ -38,14 +38,15 @@ import { ConfirmBoxDefault } from "../types/typAtom";
 import { getNation } from "../api/nation/nationAPI";
 import MDEditor from "@uiw/react-md-editor";
 import CreditTag from "../components/tags/creditTag";
-import { IoDiamondOutline, IoWarning } from "react-icons/io5";
+import { IoDiamondOutline } from "react-icons/io5";
 import PlanButton from "../components/buttons/planButton";
 import { errorMessage } from "../utils/toasts";
 import LanguagesTag from "../components/tags/languagesTag";
 import { getComsByDestination } from "../api/communication/comAPI";
 import DateTag from "../components/tags/dateTag";
 import { languageList } from "../settings/lists";
-import ReportButton from "../components/buttons/reportButton";
+import ReportPanel from "../components/reportPanel";
+import ReportedFlag from "../components/reportedFlag";
 
 export default function Citizen() {
   const { t } = useTranslation();
@@ -259,38 +260,32 @@ export default function Citizen() {
               />
             )}
           </div>
-        </>
-      )}
-      <TileContainer
-        children={
-          <>
-            {!citizen.reported ? (
-              <DashTile
-                title={t("pages.citizen.virtualCitizenship")}
-                children={
-                  <>
-                    <div className="max-w-[90%] flex flex-wrap items-center justify-center gap-1">
-                      <IdTag label={citizen.officialId} />
-                      <span className="flex items-center gap-1">
-                        <LanguagesTag
-                          languages={
-                            citizen.language != "" ? [citizen.language] : []
-                          }
-                        />
-                        {session.user.officialId === citizen.officialId && (
-                          <EditIcon
-                            target="citizen"
-                            param={languageList}
-                            path="language"
-                            indice={citizen.language}
-                          />
-                        )}
-                      </span>
-                      {session.user.officialId === citizen.officialId && (
-                        <CreditTag label={citizen.credits} owner={true} />
-                      )}
-                      {citizen.citizenship.nationOwner && <NationOwnerTag />}
-                      {/* <div className="flex items-center gap-1">
+          <DashTile
+            title={t("pages.citizen.virtualCitizenship")}
+            children={
+              <>
+                <div className="max-w-[90%] flex flex-wrap items-center justify-center gap-1">
+                  <IdTag label={citizen.officialId} />
+                  <span className="flex items-center gap-1">
+                    <LanguagesTag
+                      languages={
+                        citizen.language != "" ? [citizen.language] : []
+                      }
+                    />
+                    {session.user.officialId === citizen.officialId && (
+                      <EditIcon
+                        target="citizen"
+                        param={languageList}
+                        path="language"
+                        indice={citizen.language}
+                      />
+                    )}
+                  </span>
+                  {session.user.officialId === citizen.officialId && (
+                    <CreditTag label={citizen.credits} owner={true} />
+                  )}
+                  {citizen.citizenship.nationOwner && <NationOwnerTag />}
+                  {/* <div className="flex items-center gap-1">
                       <ResidenceTag
                         residenceId={citizen.citizenship.residence}
                       />
@@ -303,64 +298,58 @@ export default function Citizen() {
                           />
                         )}
                     </div> */}
-                      {citizen.role === "admin" && (
-                        <RoleTag label={t("pages.citizen.role.admin")} />
+                  {citizen.role === "admin" && (
+                    <RoleTag label={t("pages.citizen.role.admin")} />
+                  )}
+                </div>
+                {nation != undefined &&
+                nation.officialId != "" &&
+                citizen.citizenship.nationId != "" ? (
+                  <div className="w-full flex flex-col justify-center items-center gap-2">
+                    <div className="w-[300px] relative flex gap-2 items-center justify-center">
+                      <Button
+                        text={nation.name}
+                        click={() => handleClick("nation")}
+                        children={<GiBlackFlag />}
+                        widthFull={true}
+                      />
+                      {enableLeaving && (
+                        <CrossButton text="" small={true} click={leaveNation} />
                       )}
                     </div>
-                    {nation != undefined &&
-                    nation.officialId != "" &&
-                    citizen.citizenship.nationId != "" ? (
-                      <div className="w-full flex flex-col justify-center items-center gap-2">
-                        <div className="w-[300px] relative flex gap-2 items-center justify-center">
-                          <Button
-                            text={nation.name}
-                            click={() => handleClick("nation")}
-                            children={<GiBlackFlag />}
-                            widthFull={true}
-                          />
-                          {enableLeaving && (
-                            <CrossButton
-                              text=""
-                              small={true}
-                              click={leaveNation}
-                            />
-                          )}
-                        </div>
-                      </div>
-                    ) : (
+                  </div>
+                ) : (
+                  <>
+                    {session.user.officialId === citizen.officialId && (
                       <>
-                        {session.user.officialId === citizen.officialId && (
-                          <>
-                            <Button
-                              text={t("components.buttons.createNation")}
-                              click={() => handleClick("new")}
-                              widthFull={true}
-                            />
-                            <Button
-                              text={t("components.buttons.joinNation")}
-                              click={() => handleClick("join")}
-                              widthFull={true}
-                            />
-                          </>
-                        )}
+                        <Button
+                          text={t("components.buttons.createNation")}
+                          click={() => handleClick("new")}
+                          widthFull={true}
+                        />
+                        <Button
+                          text={t("components.buttons.joinNation")}
+                          click={() => handleClick("join")}
+                          widthFull={true}
+                        />
                       </>
                     )}
                   </>
-                }
-              />
-            ) : (
-              <div className="animate-pulse text-danger text-xl flex items-center justify-center gap-2">
-                <IoWarning />
-                <strong className="text-danger">
-                  {t("pages.citizen.reported")}
-                </strong>
-              </div>
-            )}
+                )}
+              </>
+            }
+          />
+        </>
+      )}
+      <TileContainer
+        children={
+          <>
             {session.user.officialId === citizen.officialId ? (
               <DashTile
                 title={t("pages.citizen.settings")}
                 children={
                   <>
+                    {session.user.reported && <ReportedFlag />}
                     {userPlan != "free" && (
                       <div className="px-2 flex gap-1 items-center bg-gold rounded text-primary bold">
                         <IoDiamondOutline />
@@ -400,9 +389,7 @@ export default function Citizen() {
                 }
               />
             ) : (
-              <div className="flex items-center justify-center">
-                <ReportButton contentOfficialId={citizen.officialId} />
-              </div>
+              <ReportPanel content={citizen} />
             )}
           </>
         }

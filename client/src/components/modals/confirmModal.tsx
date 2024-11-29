@@ -17,6 +17,7 @@ import { useNavigate } from "react-router-dom";
 import { updateRelation } from "../../api/relation/relationAPI";
 import { createTile, deleteTile, updateTile } from "../../api/tile/tileAPI";
 import { ConfirmBoxDefault } from "../../types/typAtom";
+import { banContent, reportContent } from "../../api/admin/adminAPI";
 
 export default function ConfirmModal() {
   const { t } = useTranslation();
@@ -76,6 +77,18 @@ export default function ConfirmModal() {
     }
     if (confirm.action === "reportContent") {
       createNewCom(confirm.payload);
+    }
+    if (confirm.action === "adminReport") {
+      reportContent(confirm.target);
+    }
+    if (confirm.action === "adminReportReverse") {
+      reportContent(confirm.target, true);
+    }
+    if (confirm.action === "adminBan") {
+      banContent(confirm.target);
+    }
+    if (confirm.action === "adminBanReverse") {
+      banContent(confirm.target, true);
     }
   };
 

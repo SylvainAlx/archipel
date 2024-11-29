@@ -21,8 +21,7 @@ import FreeTiles from "../components/nation/freeTiles";
 import NationMap from "../components/nation/nationMap";
 import { ConfirmBoxDefault } from "../types/typAtom";
 import NationComs from "../components/nation/nationComs";
-import ReportButton from "../components/buttons/reportButton";
-import { IoWarning } from "react-icons/io5";
+import ReportPanel from "../components/reportPanel";
 
 export default function Nation() {
   const [nation] = useAtom(nationFetchedAtom);
@@ -80,7 +79,7 @@ export default function Nation() {
       <H1 text={t("pages.nation.title")} />
       {nation != undefined && (
         <>
-          {!nation.reported ? (
+          {!nation.reported && (
             <>
               <section className="w-full flex flex-wrap gap-8 items-start justify-between">
                 <div className="w-full flex flex-col gap-3 items-center justify-center">
@@ -98,27 +97,18 @@ export default function Nation() {
                   </>
                 )}
               </section>
-              <section className="pt-10 flex flex-col items-center gap-4">
-                {owner ? (
-                  <CrossButton
-                    text={t("components.buttons.deleteNation")}
-                    click={handleDelete}
-                  />
-                ) : (
-                  <div className="flex items-center justify-center">
-                    <ReportButton contentOfficialId={nation.officialId} />
-                  </div>
-                )}
-              </section>
             </>
-          ) : (
-            <div className="animate-pulse text-danger text-xl flex items-center justify-center gap-2">
-              <IoWarning />
-              <strong className="text-danger">
-                {t("pages.nation.reported")}
-              </strong>
-            </div>
           )}
+          <section className="pt-10 flex flex-col items-center gap-4">
+            {owner ? (
+              <CrossButton
+                text={t("components.buttons.deleteNation")}
+                click={handleDelete}
+              />
+            ) : (
+              session.user.officialId != "" && <ReportPanel content={nation} />
+            )}
+          </section>
         </>
       )}
     </>

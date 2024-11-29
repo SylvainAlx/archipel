@@ -16,36 +16,75 @@ export const getAdminComs = async (req, res) => {
   }
 };
 
-export const reportContent = async (req, res) => {
+const modifierReportOuBan = async (
+  AContent,
+  AReportedStatus,
+  ABanStatus,
+  res,
+) => {
   try {
-    const content = req.params.id;
-    console.log(content);
+    let AModel;
+    let ATypeEntite;
 
-    switch (content.charAt(2)) {
+    switch (AContent.charAt(2)) {
       case "n":
-        let nation = await Nation.findOne({ officialId: content });
-        nation.reported = true;
-        nation = await nation.save();
-        res.status(200).json(nation);
+        AModel = Nation;
+        ATypeEntite = "Nation";
         break;
       case "c":
-        let user = await User.findOne({ officialId: content });
-        user.reported = true;
-        user = await user.save();
-        res.status(200).json(user);
+        AModel = User;
+        ATypeEntite = "Utilisateur";
         break;
       case "p":
-        let place = await Place.findOne({ officialId: content });
-        place.reported = true;
-        place = await place.save();
-        res.status(200).json(place);
+        AModel = Place;
+        ATypeEntite = "Lieu";
         break;
       default:
-        res.status(404);
-        break;
+        return res.status(404).json({ message: "Type d'entité inconnu." });
     }
+
+    const entite = await AModel.findOne({ officialId: AContent });
+    if (!entite) {
+      return res.status(404).json({ message: `${ATypeEntite} non trouvé.` });
+    }
+
+    if (AReportedStatus != null) {
+      entite.reported = AReportedStatus;
+      await entite.save();
+    } else if (ABanStatus != null) {
+      entite.banished = ABanStatus;
+      await entite.save();
+    }
+
+    res.status(200).json(entite);
   } catch (error) {
-    console.error(error);
-    res.status(400).json(error);
+    console.error(
+      `Erreur lors de la modification du statut de ${ATypeEntite} :`,
+      error,
+    );
+    res.status(500).json({
+      message: `Erreur interne du serveur pour ${ATypeEntite}.`,
+      error,
+    });
   }
+};
+
+export const reportContent = (req, res) => {
+  const AContent = req.params.id;
+  modifierReportOuBan(AContent, true, null, res);
+};
+
+export const reverseReportContent = (req, res) => {
+  const AContent = req.params.id;
+  modifierReportOuBan(AContent, false, null, res);
+};
+
+export const banContent = (req, res) => {
+  const AContent = req.params.id;
+  modifierReportOuBan(AContent, null, true, res);
+};
+
+export const reverseBanContent = (req, res) => {
+  const AContent = req.params.id;
+  modifierReportOuBan(AContent, null, false, res);
 };
