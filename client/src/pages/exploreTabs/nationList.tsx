@@ -38,6 +38,8 @@ export default function NationList({ text }: StringProps) {
                       officialId={nation.officialId}
                       name={nation.name}
                       owner={nation.owner}
+                      reported={nation.reported}
+                      banished={nation.banished}
                       data={nation.data}
                       createdAt={nation.createdAt}
                     />

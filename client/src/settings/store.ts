@@ -67,6 +67,8 @@ export const citizenFetchAtom = atom<User>(emptyUser);
 export const citizenListAtom = atom<User[]>([]);
 export const nationCitizenListAtom = atom<User[]>([]);
 
+export const bannedCitizensAtom = atom<User[]>([]);
+
 // Nation
 
 export const nationFetchedAtom = atom<Nation>(EmptyNation);

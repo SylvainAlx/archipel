@@ -68,8 +68,8 @@ export default function AdminComTile({ com }: ComTileProps) {
       <div className="flex items-center gap-2">
         <p className="bg-transparent text-light text-justify">{com.message}</p>
       </div>
-      <div className="w-max self-end">
-        <CrossButton click={handleDelete} />
+      <div className="self-end">
+        <CrossButton click={handleDelete} text="supprimer com" />
       </div>
     </div>
   );

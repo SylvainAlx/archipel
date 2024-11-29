@@ -36,6 +36,14 @@ const PlaceSchema = mongoose.Schema(
       type: String,
       default: "",
     },
+    reported: {
+      type: Boolean,
+      default: false,
+    },
+    banished: {
+      type: Boolean,
+      default: false,
+    },
   },
   {
     timestamps: true,

@@ -20,7 +20,6 @@ import {
   getComsByDestinationFetch,
   getAllPublicComsFetch,
   getPublicComsByOriginFetch,
-  getAllAdminComsFetch,
 } from "./comFetch";
 
 export const getComsCount = () => {
@@ -87,34 +86,6 @@ export const getPublicComs = async (nationId: string) => {
       } else {
         response = await getAllPublicComsFetch();
       }
-      myStore.set(loadingAtom, false);
-      if (response != undefined) {
-        response.forEach((com: Com) => {
-          updateOrCreateComInMemory(com);
-        });
-        myStore.set(comFetchedListAtom, response);
-      }
-    } catch (error) {
-      myStore.set(loadingAtom, false);
-      console.error(error);
-    }
-  }
-};
-
-export const getAdminComs = async () => {
-  const savedComList: Com[] = [];
-  myStore.get(comsListAtom).forEach((com) => {
-    if (com.comType === comOptions[0].id) {
-      savedComList.push(com);
-    }
-  });
-  if (savedComList.length > 0) {
-    myStore.set(comFetchedListAtom, savedComList);
-  } else {
-    try {
-      myStore.set(loadingAtom, true);
-      let response: [Com];
-      response = await getAllAdminComsFetch();
       myStore.set(loadingAtom, false);
       if (response != undefined) {
         response.forEach((com: Com) => {

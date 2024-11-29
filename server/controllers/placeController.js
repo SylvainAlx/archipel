@@ -1,12 +1,11 @@
 import Place from "../models/placeSchema.js";
 import Nation from "../models/nationSchema.js";
-import User from "../models/userSchema.js";
 import { createOfficialId } from "../utils/functions.js";
 import { COSTS, QUOTAS } from "../settings/const.js";
 
 export const placesCount = async (req, res) => {
   try {
-    Place.countDocuments({})
+    Place.countDocuments({ banished: false })
       .then((count) => {
         res.status(200).json(count);
       })
@@ -27,7 +26,7 @@ export const placesCount = async (req, res) => {
 export const getPlaces = async (req, res) => {
   const nationId = req.params.id;
   try {
-    await Place.find({ nation: nationId })
+    await Place.find({ nation: nationId, banished: false })
       .then((places) => {
         res.status(200).json(places);
       })
@@ -48,7 +47,7 @@ export const getPlaces = async (req, res) => {
 export const getOne = async (req, res) => {
   const id = req.params.id;
   try {
-    const place = await Place.findOne({ officialId: id });
+    const place = await Place.findOne({ officialId: id, banished: false });
     res.status(200).json({
       place,
     });
@@ -66,10 +65,11 @@ export const getAllPlaces = async (req, res) => {
     if (searchText) {
       const places = await Place.find({
         name: { $regex: searchText, $options: "i" },
+        banished: false,
       });
       res.status(200).json(places);
     } else {
-      const places = await Place.find({});
+      const places = await Place.find({ banished: false });
       res.status(200).json(places);
     }
   } catch (error) {

@@ -15,6 +15,7 @@ import { Place } from "../../types/typPlace";
 import NationTag from "../tags/nationTag";
 import Avatar from "../avatar";
 import { placesTypeList } from "../../settings/lists";
+import ReportPanel from "../reportPanel";
 
 export interface PlaceTileProp {
   owner?: boolean;
@@ -78,6 +79,7 @@ export default function PlaceTile({ place, owner }: PlaceTileProp) {
           <NationTag label={place.nation} />
         )}
       </div>
+      <ReportPanel content={place} />
     </div>
   );
 }

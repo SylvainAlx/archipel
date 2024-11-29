@@ -20,6 +20,7 @@ import NationOwnerTag from "../tags/nationOwnerTag";
 import { useEffect, useState } from "react";
 import { IoDiamondOutline } from "react-icons/io5";
 import LanguagesTag from "../tags/languagesTag";
+import ReportPanel from "../reportPanel";
 
 export interface CitizenTileProps {
   citizen: User;
@@ -102,6 +103,7 @@ export default function CitizenTile({ citizen }: CitizenTileProps) {
           languages={citizen.language != "" ? [citizen.language] : []}
         />
       </div>
+      <ReportPanel content={citizen} />
     </fieldset>
   );
 }

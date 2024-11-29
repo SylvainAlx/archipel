@@ -39,6 +39,8 @@ export default function NewPlaceButton({
         name: emptyPlace.name,
         description: emptyPlace.description,
         image: emptyPlace.image,
+        reported: emptyPlace.reported,
+        banished: emptyPlace.banished,
       };
 
       myStore.set(newPlaceAtom, newPlace);

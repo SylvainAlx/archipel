@@ -8,6 +8,8 @@ export interface Place {
   name: string;
   description: string;
   image: string;
+  reported: boolean;
+  banished: boolean;
 }
 
 export const emptyPlace: Place = {
@@ -19,4 +21,6 @@ export const emptyPlace: Place = {
   name: "",
   description: "",
   image: "",
+  reported: false,
+  banished: false,
 };

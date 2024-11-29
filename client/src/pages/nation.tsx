@@ -21,7 +21,7 @@ import FreeTiles from "../components/nation/freeTiles";
 import NationMap from "../components/nation/nationMap";
 import { ConfirmBoxDefault } from "../types/typAtom";
 import NationComs from "../components/nation/nationComs";
-import ReportButton from "../components/buttons/reportButton";
+import ReportPanel from "../components/reportPanel";
 
 export default function Nation() {
   const [nation] = useAtom(nationFetchedAtom);
@@ -79,22 +79,26 @@ export default function Nation() {
       <H1 text={t("pages.nation.title")} />
       {nation != undefined && (
         <>
-          <section className="w-full flex flex-wrap gap-8 items-start justify-between">
-            <div className="w-full flex flex-col gap-3 items-center justify-center">
-              <Links selectedNation={nation} owner={owner} />
-            </div>
-            {nation.officialId === param.id && (
-              <>
-                <NationIdentity selectedNation={nation} owner={owner} />
-                <NationMap selectedNation={nation} owner={owner} />
-                <FreeTiles selectedNation={nation} owner={owner} />
-                <Diplomacy selectedNation={nation} owner={owner} />
-                <Citizens selectedNation={nation} owner={owner} />
-                <Places selectedNation={nation} owner={owner} />
-                <NationComs selectedNation={nation} owner={owner} />
-              </>
-            )}
-          </section>
+          {!nation.reported && (
+            <>
+              <section className="w-full flex flex-wrap gap-8 items-start justify-between">
+                <div className="w-full flex flex-col gap-3 items-center justify-center">
+                  <Links selectedNation={nation} owner={owner} />
+                </div>
+                {nation.officialId === param.id && (
+                  <>
+                    <NationIdentity selectedNation={nation} owner={owner} />
+                    <NationMap selectedNation={nation} owner={owner} />
+                    <FreeTiles selectedNation={nation} owner={owner} />
+                    <Diplomacy selectedNation={nation} owner={owner} />
+                    <Citizens selectedNation={nation} owner={owner} />
+                    <Places selectedNation={nation} owner={owner} />
+                    <NationComs selectedNation={nation} owner={owner} />
+                  </>
+                )}
+              </section>
+            </>
+          )}
           <section className="pt-10 flex flex-col items-center gap-4">
             {owner ? (
               <CrossButton
@@ -102,9 +106,7 @@ export default function Nation() {
                 click={handleDelete}
               />
             ) : (
-              <div className="flex items-center justify-center">
-                <ReportButton contentOfficialId={nation.officialId} />
-              </div>
+              session.user.officialId != "" && <ReportPanel content={nation} />
             )}
           </section>
         </>

@@ -7,7 +7,7 @@ import { createOfficialId, deleteFile } from "../utils/functions.js";
 
 export const nationsCount = async (req, res) => {
   try {
-    Nation.countDocuments({})
+    Nation.countDocuments({ banished: false })
       .then((count) => {
         res.status(200).json(count);
       })
@@ -88,14 +88,15 @@ export const getAllNations = async (req, res) => {
         {
           name: { $regex: searchText, $options: "i" },
           "data.general.tags": { $regex: searchTag, $options: "i" },
+          banished: false,
         },
-        "officialId name owner role data createdAt",
+        "officialId name owner role reported banished data createdAt",
       );
       res.status(200).json(nations);
     } else if (searchText === "" && searchTag === "") {
       const nations = await Nation.find(
-        {},
-        "officialId name owner role data createdAt",
+        { banished: false },
+        "officialId name owner role reported banished data createdAt",
       );
       res.status(200).json(nations);
     } else {
@@ -111,8 +112,8 @@ export const getAllNations = async (req, res) => {
 export const getTop100Nations = async (req, res) => {
   try {
     const nations = await Nation.find(
-      {},
-      "officialId name owner role data createdAt",
+      { banished: false },
+      "officialId name owner role reported banished data createdAt",
     ).limit(100);
     res.status(200).json(nations);
   } catch (error) {
@@ -125,8 +126,8 @@ export const getOneNation = async (req, res) => {
   const nationId = req.params.id;
   try {
     const nation = await Nation.findOne(
-      { officialId: nationId },
-      "officialId name owner role data createdAt",
+      { officialId: nationId, banished: false },
+      "officialId name owner role reported banished data createdAt",
     );
     res.status(200).json(nation);
   } catch (error) {
@@ -228,7 +229,7 @@ export const updateNation = async (req, res) => {
     if (req.userId === owner) {
       const nation = await Nation.findOne(
         { officialId },
-        "officialId name owner role data createdAt",
+        "officialId name owner role reported banished data createdAt",
       );
       nation.name = name;
       nation.data = data;
@@ -253,6 +254,11 @@ export const updateNation = async (req, res) => {
 export const getTags = async (req, res) => {
   try {
     const tags = await Nation.aggregate([
+      {
+        $match: {
+          banished: false,
+        },
+      },
       {
         $project: {
           tags: "$data.general.tags",

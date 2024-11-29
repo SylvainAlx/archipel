@@ -48,6 +48,9 @@ export const displayUserInfoByType = (type: string) => {
     case "serverError":
       errorMessage(i18n.t("toasts.user.serverError"));
       break;
+    case "ip":
+      errorMessage(i18n.t("toasts.user.ipbanned"));
+      break;
     default:
       break;
   }
