@@ -31,6 +31,7 @@ import { BsFillEnvelopeAtFill } from "react-icons/bs";
 import NationOwnerTag from "../components/tags/nationOwnerTag";
 import {
   dateIsExpired,
+  displayUnwatchedComs,
   getLabelIdArrayFromNationPlaceList,
 } from "../utils/functions";
 import { getNationPlaces } from "../api/place/placeAPI";
@@ -64,6 +65,8 @@ export default function Citizen() {
   const [enableLeaving, setEnableLeaving] = useState(false);
   const [userPlan, setUserPlan] = useState("free");
 
+  const self = session.user.officialId === citizen.officialId;
+
   useEffect(() => {
     if (param.id) {
       if (
@@ -77,10 +80,7 @@ export default function Citizen() {
   }, [param.id, session.user]);
 
   useEffect(() => {
-    if (
-      session.user.officialId === citizen.officialId &&
-      !session.user.citizenship.nationOwner
-    ) {
+    if (self && !session.user.citizenship.nationOwner) {
       setEnableLeaving(true);
     } else {
       setEnableLeaving(false);
@@ -112,7 +112,13 @@ export default function Citizen() {
   }, [nation]);
 
   useEffect(() => {
-    // console.log(comList);
+    if (
+      self &&
+      comList.length > 0 &&
+      comList[0].destination === citizen.officialId
+    ) {
+      displayUnwatchedComs(citizen.officialId, comList);
+    }
   }, [comList]);
 
   useEffect(() => {
@@ -199,15 +205,13 @@ export default function Citizen() {
     <>
       <div className="flex items-center gap-1">
         <H1 text={citizen.name} />
-        {session.user.officialId === citizen.officialId && (
-          <EditIcon target="citizen" param={citizen.name} path="name" />
-        )}
+        {self && <EditIcon target="citizen" param={citizen.name} path="name" />}
       </div>
       {!citizen.reported && (
         <>
           <div className="relative flex flex-col items-center">
             <Avatar url={citizen.avatar} isUser={true} bigSize={true} />
-            {session.user.officialId === citizen.officialId &&
+            {self &&
               (citizen.avatar != "" ? (
                 <CrossButton small={true} click={handleDeleteAvatar} />
               ) : (
@@ -225,7 +229,7 @@ export default function Citizen() {
                 children={<FaLink />}
                 hover={t("components.hoverInfos.links.website")}
               />
-              {session.user.officialId === citizen.officialId && (
+              {self && (
                 <EditIcon target="citizen" param={citizen.link} path="link" />
               )}
             </span>
@@ -236,7 +240,7 @@ export default function Citizen() {
                 children={<BsFillEnvelopeAtFill />}
                 hover={t("components.hoverInfos.links.email")}
               />
-              {session.user.officialId === citizen.officialId && (
+              {self && (
                 <EditIcon target="citizen" param={citizen.email} path="email" />
               )}
             </span>
@@ -252,7 +256,7 @@ export default function Citizen() {
               <em className="text-center">{t("pages.citizen.noBio")}</em>
             )}
 
-            {session.user.officialId === citizen.officialId && (
+            {self && (
               <EditIcon
                 target="citizen"
                 param={citizen.bio ? citizen.bio : ""}
@@ -272,7 +276,7 @@ export default function Citizen() {
                         citizen.language != "" ? [citizen.language] : []
                       }
                     />
-                    {session.user.officialId === citizen.officialId && (
+                    {self && (
                       <EditIcon
                         target="citizen"
                         param={languageList}
@@ -281,9 +285,7 @@ export default function Citizen() {
                       />
                     )}
                   </span>
-                  {session.user.officialId === citizen.officialId && (
-                    <CreditTag label={citizen.credits} owner={true} />
-                  )}
+                  {self && <CreditTag label={citizen.credits} owner={true} />}
                   {citizen.citizenship.nationOwner && <NationOwnerTag />}
                   {/* <div className="flex items-center gap-1">
                       <ResidenceTag
@@ -320,7 +322,7 @@ export default function Citizen() {
                   </div>
                 ) : (
                   <>
-                    {session.user.officialId === citizen.officialId && (
+                    {self && (
                       <>
                         <Button
                           text={t("components.buttons.createNation")}
@@ -344,7 +346,7 @@ export default function Citizen() {
       <TileContainer
         children={
           <>
-            {session.user.officialId === citizen.officialId ? (
+            {self ? (
               <DashTile
                 title={t("pages.citizen.settings")}
                 children={
