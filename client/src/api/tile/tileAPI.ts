@@ -47,7 +47,7 @@ export const createTile = (tile: Tile) => {
     })
     .catch((error) => {
       myStore.set(loadingAtom, false);
-      console.log(error);
+      console.error(error);
     });
 };
 
@@ -74,7 +74,7 @@ export const getNationTiles = (nationOfficialId: string) => {
       })
       .catch((error) => {
         myStore.set(loadingAtom, false);
-        console.log(error);
+        console.error(error);
       });
   }
 };

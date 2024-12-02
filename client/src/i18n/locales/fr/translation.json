@@ -197,7 +197,7 @@
         "updateNation": "Confirmez-vous la mise à jour de la nation ?",
         "updatePlace": "Confirmez-vous la mise à jour du lieu ?",
         "updateCitizen": "Confirmez-vous la mise à jour de votre profil ?",
-        "createCom": "Confirmez-vous la création du communiqué ?",
+        "createCom": "Confirmez-vous la création de la communication ?",
         "deleteCom": "Confirmez-vous la suppression définitive de la communication ?",
         "reportContent": "Confirmez-vous le signalement du contenu à l'administrateur ?"
       },
@@ -372,12 +372,13 @@
       }
     },
     "comType": {
-      "admin": "administrateur",
+      "admin": "message administrateur",
       "general": "annonce générale",
-      "nationPrivate": "annonce privée",
-      "nationPublic": "annonce publique",
-      "nationUpdate": "information de mise à jour de la nation",
-      "userUpdate": "information de mise à jour de l'utilisateur"
+      "nationPrivate": "communiqué privé de la nation",
+      "nationPublic": "communiqué publique de la nation",
+      "nationUpdate": "Mise à jour de la nation",
+      "userUpdate": "Mise à jour de l'utilisateur",
+      "userPrivate": "Communication privée"
     }
   },
   "toasts": {

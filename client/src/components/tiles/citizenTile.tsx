@@ -103,7 +103,9 @@ export default function CitizenTile({ citizen }: CitizenTileProps) {
           languages={citizen.language != "" ? [citizen.language] : []}
         />
       </div>
-      <ReportPanel content={citizen} />
+      {session.user.officialId != citizen.officialId && (
+        <ReportPanel content={citizen} center={false} />
+      )}
     </fieldset>
   );
 }

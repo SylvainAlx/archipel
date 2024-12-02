@@ -197,7 +197,7 @@
         "updateNation": "Update nation ?",
         "updatePlace": "Update place ?",
         "updateCitizen": "Update profile ?",
-        "createCom": "Confirm new press release ?",
+        "createCom": "Confirm new communication ?",
         "deleteCom": "Delete communication ?",
         "reportContent": "Confirm reporting the content to the administrator ?"
       },
@@ -374,10 +374,11 @@
     "comType": {
       "admin": "administrator",
       "general": "global announcement",
-      "nationPrivate": "private announcement",
-      "nationPublic": "public announcement",
+      "nationPrivate": "nation private announcement",
+      "nationPublic": "nation public announcement",
       "nationUpdate": "nation update information",
-      "userUpdate": "user update information"
+      "userUpdate": "user update information",
+      "userPrivate": "private communication"
     }
   },
   "toasts": {

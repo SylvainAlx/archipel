@@ -79,7 +79,7 @@ export default function PlaceTile({ place, owner }: PlaceTileProp) {
           <NationTag label={place.nation} />
         )}
       </div>
-      <ReportPanel content={place} />
+      <ReportPanel content={place} center={false} />
     </div>
   );
 }

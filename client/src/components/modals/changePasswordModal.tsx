@@ -17,7 +17,6 @@ export function ChangePasswordModal() {
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     const payload: ChangePasswordPayload = { oldPassword, newPassword };
-    console.log(payload);
     changePassword(payload);
     myStore.set(changePasswordModalAtom, false);
   };

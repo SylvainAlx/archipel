@@ -21,10 +21,6 @@ export default function NewNationModal() {
   const { t } = useTranslation();
 
   useEffect(() => {
-    console.log(newNation.regime);
-  }, [newNation.regime]);
-
-  useEffect(() => {
     const updateNewNation = { ...newNation };
     updateNewNation.tags = tags;
     setNewNation(updateNewNation);

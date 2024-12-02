@@ -15,6 +15,7 @@ import { updateNation } from "../api/nation/nationAPI";
 import { updateUser } from "../api/user/userAPI";
 import { updatePlace } from "../api/place/placeAPI";
 import {
+  comOptions,
   placesTypeList,
   politicalSideList,
   regimeList,
@@ -424,14 +425,36 @@ export const updateElement = (
 export const displayUnwatchedComs = (officialId: string, comList: Com[]) => {
   const lastVisit = GET_LAST_WATCH(officialId);
   comList.forEach((com) => {
-    if (!lastVisit || com.createdAt.toString() > lastVisit.toISOString()) {
+    if (
+      (!lastVisit || com.createdAt.toString() > lastVisit.toISOString()) &&
+      isDateLessThanOneMonthOld(com.createdAt)
+    ) {
       const comDate = new Date(com.createdAt);
+      const comType = getComTypeLabelById(com.comType);
       comMessage(
-        `${comDate.toLocaleString(i18n.language)} - [${com.title}] - ${com.message}`,
+        `${comDate.toLocaleString(i18n.language)} - [${comType && comType}] - ${com.title} - ${com.message}`,
       );
     }
   });
 
   const date = new Date();
   SET_LAST_WATCH(officialId, date);
+};
+
+export const isDateLessThanOneMonthOld = (Adate: Date) => {
+  const dateATester = new Date(Adate);
+  const dateActuelle = new Date();
+  const dateIlYAUnMois = new Date();
+  dateIlYAUnMois.setMonth(dateActuelle.getMonth() - 1);
+  return dateATester > dateIlYAUnMois;
+};
+
+export const getComTypeLabelById = (id: number) => {
+  let label: string | null = null;
+  comOptions.forEach((com) => {
+    if (com.id === id && typeof com.id === "number") {
+      label = com.label;
+    }
+  });
+  return label;
 };

@@ -24,7 +24,9 @@ export const comCount = async (req, res) => {
 export const getDestinationComs = async (req, res) => {
   try {
     const destination = req.params.id;
-    const coms = await Com.find({ destination });
+    const coms = await Com.find({
+      $or: [{ destination: destination }, { comType: COMTYPE[1].id }],
+    });
     res.status(200).json(coms);
   } catch (error) {
     console.error(error);

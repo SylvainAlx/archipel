@@ -17,6 +17,7 @@ import Button from "../components/buttons/button";
 import { useTranslation } from "react-i18next";
 import { getAdminComs, getBannedUsers } from "../api/admin/adminAPI";
 import CitizenTile from "../components/tiles/citizenTile";
+import AdminForm from "../components/form/adminForm";
 
 export default function Admin() {
   const [paramsList] = useAtom(paramsListAtom);
@@ -27,9 +28,7 @@ export default function Admin() {
   const { t } = useTranslation();
 
   useEffect(() => {
-    if (adminComs.length === 0) {
-      getAdminComs();
-    }
+    getAdminComs();
     if (paramsList.length === 0) {
       getAllParams();
     }
@@ -42,7 +41,7 @@ export default function Admin() {
   return (
     <>
       <H1 text="Administration" />
-      <section className="w-full flex flex-wrap gap-8 items-start justify-between">
+      <section className="w-full flex flex-wrap gap-8 items-start justify-center lg:justify-between">
         <TileContainer
           children={
             <>
@@ -74,36 +73,6 @@ export default function Admin() {
             </>
           }
         />
-
-        <TileContainer
-          children={
-            <>
-              <H2 text="Communications" />
-              <section className="w-full flex gap-1 flex-wrap items-center flex-col-reverse">
-                {adminComs != undefined &&
-                  adminComs.length > 0 &&
-                  adminComs.map((com, i) => {
-                    if (i < displayedComs) {
-                      return (
-                        <Suspense key={i} fallback={<BarreLoader />}>
-                          <div className="min-w-[300px] w-full relative transition-all duration-300 animate-fadeIn">
-                            <AdminComTile com={com} />
-                            <IndexTag text={i} />
-                          </div>
-                        </Suspense>
-                      );
-                    }
-                  })}
-                {displayedComs < adminComs.length && (
-                  <Button
-                    click={() => setDisplayedComs(displayedComs + 5)}
-                    text={t("components.buttons.showMore")}
-                  />
-                )}
-              </section>
-            </>
-          }
-        />
         <TileContainer
           children={
             <>
@@ -126,6 +95,43 @@ export default function Admin() {
                 {displayedCitizens < bannedUsers.length && (
                   <Button
                     click={() => setDisplayedCitizens(displayedCitizens + 5)}
+                    text={t("components.buttons.showMore")}
+                  />
+                )}
+              </section>
+            </>
+          }
+        />
+        <TileContainer
+          children={
+            <section className="flex flex-col items-center">
+              <H2 text="Envoyer communication" />
+              <AdminForm />
+            </section>
+          }
+        />
+        <TileContainer
+          children={
+            <>
+              <H2 text="Communications" />
+              <section className="w-full flex gap-1 flex-wrap items-center flex-col-reverse">
+                {adminComs != undefined &&
+                  adminComs.length > 0 &&
+                  adminComs.map((com, i) => {
+                    if (i < displayedComs) {
+                      return (
+                        <Suspense key={i} fallback={<BarreLoader />}>
+                          <div className="min-w-[300px] w-full relative transition-all duration-300 animate-fadeIn">
+                            <AdminComTile com={com} />
+                            <IndexTag text={i} />
+                          </div>
+                        </Suspense>
+                      );
+                    }
+                  })}
+                {displayedComs < adminComs.length && (
+                  <Button
+                    click={() => setDisplayedComs(displayedComs + 5)}
                     text={t("components.buttons.showMore")}
                   />
                 )}

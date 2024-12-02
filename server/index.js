@@ -47,7 +47,7 @@ const connectToDatabase = async () => {
     await mongoose.connect(process.env.MONGO_DB_URI);
     console.log("Database connection OK");
   } catch (error) {
-    console.log("Database connection KO :", error);
+    console.error("Database connection KO :", error);
   }
 };
 
