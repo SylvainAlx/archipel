@@ -18,7 +18,7 @@ export default function ReportButton({ contentOfficialId }: ReportButtonProps) {
       destination: contentOfficialId,
       origin: myStore.get(sessionAtom).user.officialId,
       title: "Report",
-      message: "",
+      message: "Content reported and awaiting moderation",
     };
     myStore.set(confirmBox, {
       action: "reportContent",

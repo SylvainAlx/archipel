@@ -85,9 +85,11 @@ export const comOptions: StandardOption[] = [
   { id: 11, label: i18n.t("listes.comType.nationPublic") },
   { id: 12, label: i18n.t("listes.comType.nationUpdate") },
   { id: 20, label: i18n.t("listes.comType.userUpdate") },
+  { id: 21, label: i18n.t("listes.comType.userPrivate") },
 ];
 
 export const comTypeOptions = [comOptions[2], comOptions[3]];
+export const adminComTypeOptions = [comOptions[1], comOptions[6]];
 
 export const regimeTypeList: RegimeType[] = [
   {

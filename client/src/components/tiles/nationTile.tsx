@@ -8,9 +8,12 @@ import Flag from "../flag";
 import TagList from "../nation/tagList";
 import TreasuryTag from "../tags/treasuryTag";
 import ReportPanel from "../reportPanel";
+import { sessionAtom } from "../../settings/store";
+import { useAtom } from "jotai";
 
 export default function NationTile(nation: Nation) {
   const navigate = useNavigate();
+  const [session] = useAtom(sessionAtom);
 
   const handleClick = () => {
     navigate(`/nation/${nation.officialId}`);
@@ -34,7 +37,9 @@ export default function NationTile(nation: Nation) {
           <TagList nation={nation} isTile={true} />
         </div>
       </div>
-      <ReportPanel content={nation} />
+      {session.nation.officialId != nation.officialId && (
+        <ReportPanel content={nation} center={false} />
+      )}
     </div>
   );
 }

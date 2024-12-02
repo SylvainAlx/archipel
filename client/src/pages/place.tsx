@@ -1,4 +1,5 @@
 import {
+  comFetchedListAtom,
   confirmBox,
   nationFetchedAtom,
   nationPlacesListAtom,
@@ -12,6 +13,7 @@ import { getNationPlaces, getPlace } from "../api/place/placeAPI";
 import IdTag from "../components/tags/idTag";
 import PlaceTag from "../components/tags/placeTag";
 import {
+  displayUnwatchedComs,
   getPlaceListByType,
   getPlaceName,
   getPlaceTypeLabel,
@@ -30,6 +32,7 @@ import { AiOutlinePicture } from "react-icons/ai";
 import { ConfirmBoxDefault } from "../types/typAtom";
 import MDEditor from "@uiw/react-md-editor";
 import ReportPanel from "../components/reportPanel";
+import { getComsByDestination } from "../api/communication/comAPI";
 
 export default function Place() {
   const navigate = useNavigate();
@@ -38,6 +41,7 @@ export default function Place() {
   const [session] = useAtom(sessionAtom);
   const [nation] = useAtom(nationFetchedAtom);
   const [place] = useAtom(placeFetchedAtom);
+  const [comList] = useAtom(comFetchedListAtom);
   const [nationPlacesList] = useAtom(nationPlacesListAtom);
   const [confirm, setConfirm] = useAtom(confirmBox);
   const param = useParams();
@@ -60,6 +64,7 @@ export default function Place() {
       session.user.citizenship.nationOwner
     ) {
       setOwner(true);
+      getComsByDestination(place.officialId);
     }
     if (
       place.nation != undefined &&
@@ -94,6 +99,16 @@ export default function Place() {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [confirm]);
+
+  useEffect(() => {
+    if (
+      owner &&
+      comList.length > 0 &&
+      comList[0].destination === place.officialId
+    ) {
+      displayUnwatchedComs(place.officialId, comList);
+    }
+  }, [comList]);
 
   const handleClick = () => {
     if (place.nation === place.parentId) {

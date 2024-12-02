@@ -28,8 +28,6 @@ export default function EditIcon({
 }: EditIconProps) {
   const [, setEditBox] = useAtom(editbox);
   const handleClick = () => {
-    // console.log({ original: param, new: "", indice, path });
-
     setEditBox({
       target,
       original: param,

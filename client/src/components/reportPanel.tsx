@@ -10,13 +10,19 @@ import ReportedFlag from "./reportedFlag";
 
 interface ReportPanelProps {
   content: User | Nation | Place;
+  center?: boolean;
 }
 
-export default function ReportPanel({ content }: ReportPanelProps) {
+export default function ReportPanel({
+  content,
+  center = true,
+}: ReportPanelProps) {
   const [session] = useAtom(sessionAtom);
 
   return (
-    <section className="flex flex-col items-center justify-center gap-2">
+    <section
+      className={`w-full flex flex-col justify-center ${center ? "items-center" : "items-end"} gap-2`}
+    >
       {content.reported && <ReportedFlag />}
       {session.user.role != "admin" ? (
         !content.reported && (

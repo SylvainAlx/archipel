@@ -15,15 +15,31 @@ import { updateNation } from "../api/nation/nationAPI";
 import { updateUser } from "../api/user/userAPI";
 import { updatePlace } from "../api/place/placeAPI";
 import {
+  comOptions,
   placesTypeList,
   politicalSideList,
   regimeList,
   regimeTypeList,
 } from "../settings/lists";
+import { Com } from "../types/typCom";
+import { comMessage } from "./toasts";
 
 export const GET_JWT = () => {
   const jwt = localStorage.getItem("jwt");
   return jwt;
+};
+
+export const SET_LAST_WATCH = (param: string, date: Date) => {
+  localStorage.setItem(param, date.toString());
+};
+
+export const GET_LAST_WATCH = (param: string) => {
+  const date = localStorage.getItem(param);
+  if (date) {
+    return new Date(date);
+  } else {
+    return null;
+  }
 };
 
 export const dateToString = (date: Date) => {
@@ -404,4 +420,41 @@ export const updateElement = (
       }
       break;
   }
+};
+
+export const displayUnwatchedComs = (officialId: string, comList: Com[]) => {
+  const lastVisit = GET_LAST_WATCH(officialId);
+  comList.forEach((com) => {
+    if (
+      (!lastVisit || com.createdAt.toString() > lastVisit.toISOString()) &&
+      isDateLessThanOneMonthOld(com.createdAt)
+    ) {
+      const comDate = new Date(com.createdAt);
+      const comType = getComTypeLabelById(com.comType);
+      comMessage(
+        `${comDate.toLocaleString(i18n.language)} - [${comType && comType}] - ${com.title} - ${com.message}`,
+      );
+    }
+  });
+
+  const date = new Date();
+  SET_LAST_WATCH(officialId, date);
+};
+
+export const isDateLessThanOneMonthOld = (Adate: Date) => {
+  const dateATester = new Date(Adate);
+  const dateActuelle = new Date();
+  const dateIlYAUnMois = new Date();
+  dateIlYAUnMois.setMonth(dateActuelle.getMonth() - 1);
+  return dateATester > dateIlYAUnMois;
+};
+
+export const getComTypeLabelById = (id: number) => {
+  let label: string | null = null;
+  comOptions.forEach((com) => {
+    if (com.id === id && typeof com.id === "number") {
+      label = com.label;
+    }
+  });
+  return label;
 };

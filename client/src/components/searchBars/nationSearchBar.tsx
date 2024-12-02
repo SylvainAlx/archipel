@@ -113,7 +113,6 @@ export default function NationSearchBar({ list, setList }: SearchBarProps) {
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     getNations(searchName, searchTag);
-    // console.log(searchName, searchTag);
   };
 
   return (
