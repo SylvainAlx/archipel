@@ -8,7 +8,6 @@ import {
 } from "react";
 
 import Input from "../form/input";
-import Button from "../buttons/button";
 import Select from "../form/select";
 import { SetAtom, placesListAtom, statsAtom } from "../../settings/store";
 import { useTranslation } from "react-i18next";
@@ -17,6 +16,7 @@ import { getPlaces } from "../../api/place/placeAPI";
 import { getPlaceTypeLabel, getTotalPopulation } from "../../utils/functions";
 import { Place } from "../../types/typPlace";
 import { placeSearchSortOptions } from "../../settings/lists";
+import SearchButtons from "../form/searchButtons";
 
 export interface SearchBarProps {
   type: string;
@@ -200,23 +200,7 @@ export default function PlaceSearchBar({ list, setList }: SearchBarProps) {
             />
           </label>
         </fieldset>
-        <div className="pb-2 flex flex-wrap gap-2 items-center justify-between md:justify-end">
-          <div className="w-[150px] flex justify-center">
-            <Button
-              type="submit"
-              disabled={false}
-              text={t("components.buttons.search")}
-            />
-          </div>
-          <div className="w-[150px] flex justify-center">
-            <Button
-              type="button"
-              disabled={false}
-              text={t("components.buttons.reset")}
-              click={reset}
-            />
-          </div>
-        </div>
+        <SearchButtons reset={reset} />
       </div>
     </form>
   );

@@ -8,13 +8,14 @@ import {
   newComAtom,
   sessionAtom,
 } from "../../settings/store";
-import { getPublicComs } from "../../api/communication/comAPI";
+import { getComsByDestination } from "../../api/communication/comAPI";
 import { lazy, Suspense, useEffect, useState } from "react";
 import BarreLoader from "../loading/barreLoader";
 import Button from "../buttons/button";
 import { FaComment } from "react-icons/fa";
 import { ComPayload, emptyComPayload } from "../../types/typCom";
 import Countdown from "../countdown";
+import { COM_TYPE } from "../../settings/consts";
 
 export default function NationComs({
   selectedNation,
@@ -28,7 +29,7 @@ export default function NationComs({
 
   useEffect(() => {
     if (selectedNation != undefined) {
-      getPublicComs(selectedNation.officialId);
+      getComsByDestination(selectedNation.officialId);
     }
   }, [selectedNation]);
 
@@ -93,11 +94,15 @@ export default function NationComs({
             {nationComList.length > 0 ? (
               nationComList.map((com, i) => {
                 return (
-                  <Suspense key={i} fallback={<BarreLoader />}>
-                    <div className="relative w-full">
-                      <ComTile com={com} owner={owner ? owner : false} />
-                    </div>
-                  </Suspense>
+                  com.destination === selectedNation.officialId &&
+                  (com.comType === COM_TYPE.nationPrivate.id ||
+                    COM_TYPE.nationPublic.id) && (
+                    <Suspense key={i} fallback={<BarreLoader />}>
+                      <div className="relative w-full">
+                        <ComTile com={com} owner={owner ? owner : false} />
+                      </div>
+                    </Suspense>
+                  )
                 );
               })
             ) : (

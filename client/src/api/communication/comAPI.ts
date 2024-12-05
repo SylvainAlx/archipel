@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { comOptions } from "../../settings/lists";
+import { COM_TYPE } from "../../settings/consts";
 import {
   comFetchedListAtom,
   comsListAtom,
@@ -71,7 +71,7 @@ export const getComsByDestination = (officialId: string) => {
 export const getPublicComs = async (nationId: string) => {
   const savedComList: Com[] = [];
   myStore.get(comsListAtom).forEach((com) => {
-    if (com.comType === comOptions[3].id) {
+    if (com.comType === COM_TYPE.nationPublic.id) {
       savedComList.push(com);
     }
   });

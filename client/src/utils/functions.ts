@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import i18n from "../i18n/i18n";
-import { MAX_LENGTH } from "../settings/consts";
+import { COM_TYPE, MAX_LENGTH } from "../settings/consts";
 import { LabelId, Nation } from "../types/typNation";
 import { Place } from "../types/typPlace";
 import {
@@ -15,7 +15,6 @@ import { updateNation } from "../api/nation/nationAPI";
 import { updateUser } from "../api/user/userAPI";
 import { updatePlace } from "../api/place/placeAPI";
 import {
-  comOptions,
   placesTypeList,
   politicalSideList,
   regimeList,
@@ -451,9 +450,9 @@ export const isDateLessThanOneMonthOld = (Adate: Date) => {
 
 export const getComTypeLabelById = (id: number) => {
   let label: string | null = null;
-  comOptions.forEach((com) => {
-    if (com.id === id && typeof com.id === "number") {
-      label = com.label;
+  Object.values(COM_TYPE).forEach((type) => {
+    if (type.id === id && typeof type.id === "number") {
+      label = type.label;
     }
   });
   return label;

@@ -21,6 +21,7 @@ const UserSchema = mongoose.Schema(
     bio: {
       type: String,
       default: "",
+      maxlength: [1000, "Le texte ne peut pas dépasser 1000 caractères."],
     },
     gender: {
       type: Number,

@@ -10,16 +10,15 @@ import { MAX_LENGTH } from "../../settings/consts";
 import { useTranslation } from "react-i18next";
 import { emptyComPayload } from "../../types/typCom";
 import MarkdownEditor from "../form/markdownEditor";
-import { comTypeOptions } from "../../settings/lists";
+import { nationComTypeOptions } from "../../settings/lists";
 
 export default function NewComModal() {
   const [newCom, setNewCom] = useAtom(newComAtom);
   const { t } = useTranslation();
 
   const handleSubmit = (e: FormEvent) => {
-    setNewCom(emptyComPayload);
     e.preventDefault();
-
+    setNewCom(emptyComPayload);
     myStore.set(confirmBox, {
       action: "createCom",
       text: t("components.modals.confirmModal.createCom"),
@@ -59,14 +58,14 @@ export default function NewComModal() {
               placeholder={t("components.modals.newComModal.comTitle")}
             />
             <Select
-              options={comTypeOptions}
+              options={nationComTypeOptions}
               onChange={handleSelectChange}
               value={newCom.comType}
             />
             <MarkdownEditor
               value={newCom.message}
-              onChange={(e) =>
-                e != undefined && setNewCom({ ...newCom, message: e })
+              onChange={(value) =>
+                value != undefined && setNewCom({ ...newCom, message: value })
               }
               maxLength={MAX_LENGTH.comMessage}
             />
@@ -74,6 +73,7 @@ export default function NewComModal() {
               type="submit"
               text={t("components.buttons.validate")}
               widthFull={true}
+              disabled={newCom.message.length > MAX_LENGTH.comMessage}
             />
             <Button
               type="button"

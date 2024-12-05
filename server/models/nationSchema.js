@@ -79,6 +79,7 @@ const nationSchema = mongoose.Schema(
         description: {
           type: String,
           default: "",
+          maxlength: [5000, "Le texte ne peut pas dépasser 5000 caractères."],
         },
       },
       roleplay: {

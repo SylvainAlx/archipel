@@ -1,6 +1,7 @@
 import i18n from "../i18n/i18n";
 import { StandardOption } from "../types/typAtom";
 import { PoliticalSide, Regime, RegimeType } from "../types/typNation";
+import { COM_TYPE } from "./consts";
 
 export const nationSearchSortOptions: StandardOption[] = [
   {
@@ -78,18 +79,12 @@ export const comSearchSortOptions: StandardOption[] = [
   },
 ];
 
-export const comOptions: StandardOption[] = [
-  { id: 0, label: i18n.t("listes.comType.admin") },
-  { id: 1, label: i18n.t("listes.comType.general") },
-  { id: 10, label: i18n.t("listes.comType.nationPrivate") },
-  { id: 11, label: i18n.t("listes.comType.nationPublic") },
-  { id: 12, label: i18n.t("listes.comType.nationUpdate") },
-  { id: 20, label: i18n.t("listes.comType.userUpdate") },
-  { id: 21, label: i18n.t("listes.comType.userPrivate") },
+export const nationComTypeOptions = [
+  COM_TYPE.nationPrivate,
+  COM_TYPE.nationPublic,
 ];
 
-export const comTypeOptions = [comOptions[2], comOptions[3]];
-export const adminComTypeOptions = [comOptions[1], comOptions[6]];
+export const adminComTypeOptions = [COM_TYPE.general, COM_TYPE.userPrivate];
 
 export const regimeTypeList: RegimeType[] = [
   {

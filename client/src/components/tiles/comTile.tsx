@@ -45,7 +45,9 @@ export default function ComTile({ com }: ComTileProps) {
         <h3 className="text-light text-xl pl-4 pr-6">{com.title}</h3>
         <div className="flex gap-1 items-center flex-wrap justify-end">
           <DateTag date={com.createdAt} />
-          <NationTag label={com.origin != undefined ? com.origin : ""} />
+          {com.origin != undefined && com.origin.charAt(2) === "n" && (
+            <NationTag label={com.origin} />
+          )}
         </div>
       </div>
       <div className="flex items-center gap-2">

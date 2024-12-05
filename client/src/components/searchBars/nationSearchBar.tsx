@@ -9,7 +9,6 @@ import {
 
 import { getNations } from "../../api/nation/nationAPI";
 import Input from "../form/input";
-import Button from "../buttons/button";
 import Select from "../form/select";
 import {
   SetAtom,
@@ -19,6 +18,7 @@ import {
 import { useTranslation } from "react-i18next";
 import { useAtom } from "jotai";
 import { nationSearchSortOptions } from "../../settings/lists";
+import SearchButtons from "../form/searchButtons";
 
 export interface SearchBarProps {
   type: string;
@@ -144,23 +144,7 @@ export default function NationSearchBar({ list, setList }: SearchBarProps) {
         value={selectOption}
       />
 
-      <div className="pb-2 flex flex-wrap gap-2 items-center justify-center md:justify-end">
-        <div className="w-[150px] flex justify-center">
-          <Button
-            type="submit"
-            disabled={false}
-            text={t("components.buttons.search")}
-          />
-        </div>
-        <div className="w-[150px] flex justify-center">
-          <Button
-            type="button"
-            disabled={false}
-            text={t("components.buttons.reset")}
-            click={reset}
-          />
-        </div>
-      </div>
+      <SearchButtons reset={reset} />
     </form>
   );
 }

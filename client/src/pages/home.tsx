@@ -6,6 +6,7 @@ import { sessionAtom } from "../settings/store";
 import { useAtom } from "jotai";
 import Illustration from "../components/illustration";
 import { IoMdAddCircleOutline, IoMdGlobe, IoMdLogIn } from "react-icons/io";
+import { RxAvatar } from "react-icons/rx";
 
 export default function Home() {
   const { t } = useTranslation();
@@ -53,12 +54,14 @@ export default function Home() {
                   type="button"
                   click={() => navigate(`/citizen/${session.user.officialId}`)}
                   widthFull={true}
+                  children={<RxAvatar />}
                 />
                 <Button
                   text={t("components.buttons.explore")}
                   type="button"
                   click={() => navigate("/explore")}
                   widthFull={true}
+                  children={<IoMdGlobe />}
                 />
               </div>
             )}
