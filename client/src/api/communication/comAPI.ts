@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { comOptions } from "../../settings/lists";
+import { COM_TYPE } from "../../settings/consts";
 import {
   comFetchedListAtom,
   comsListAtom,
@@ -20,6 +20,7 @@ import {
   getComsByDestinationFetch,
   getAllPublicComsFetch,
   getPublicComsByOriginFetch,
+  getComsFetch,
 } from "./comFetch";
 
 export const getComsCount = () => {
@@ -37,6 +38,36 @@ export const getComsCount = () => {
       console.error(error);
       displayComInfoByType(error.infoType);
     });
+};
+
+export const getComs = async (
+  originId: string,
+  destinationId: string,
+  comType: number[],
+) => {
+  const savedComList: Com[] = [];
+  myStore.get(comsListAtom).forEach((com) => {
+    if (
+      com.origin === originId &&
+      com.destination === destinationId &&
+      comType.includes(com.comType)
+    ) {
+      savedComList.push(com);
+    }
+  });
+  if (savedComList.length > 0) {
+    myStore.set(comFetchedListAtom, savedComList);
+  } else {
+    myStore.set(loadingAtom, true);
+    const coms = await getComsFetch(originId, destinationId, comType);
+    if (coms != undefined) {
+      coms.forEach((com: Com) => {
+        updateOrCreateComInMemory(com);
+      });
+      myStore.set(comFetchedListAtom, coms);
+    }
+    myStore.set(loadingAtom, false);
+  }
 };
 
 export const getComsByDestination = (officialId: string) => {
@@ -71,7 +102,7 @@ export const getComsByDestination = (officialId: string) => {
 export const getPublicComs = async (nationId: string) => {
   const savedComList: Com[] = [];
   myStore.get(comsListAtom).forEach((com) => {
-    if (com.comType === comOptions[3].id) {
+    if (com.comType === COM_TYPE.nationPublic.id) {
       savedComList.push(com);
     }
   });

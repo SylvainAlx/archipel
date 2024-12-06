@@ -1,3 +1,5 @@
+import i18n from "../i18n/i18n";
+
 export const MDP_LOBBY = import.meta.env.VITE_MDP_LOBBY;
 export const SERVER_URL = import.meta.env.VITE_SERVER_URL;
 export const UPLOADCARE_PUBLIC_KEY = import.meta.env.VITE_UPLOADCARE_PUBLIC_KEY;
@@ -31,12 +33,25 @@ export const COSTS = {
 };
 
 export const MAX_LENGTH = {
+  default: 2000,
   comMessage: 500,
   userPresentation: 1000,
   nationDescription: 5000,
   placeDescription: 2000,
   textArea: 60,
 };
+
+export const COM_TYPE = {
+  admin: { id: 0, label: i18n.t("listes.comType.admin") },
+  general: { id: 1, label: i18n.t("listes.comType.general") },
+  nationPrivate: { id: 10, label: i18n.t("listes.comType.nationPrivate") },
+  nationPublic: { id: 11, label: i18n.t("listes.comType.nationPublic") },
+  nationUpdate: { id: 12, label: i18n.t("listes.comType.nationUpdate") },
+  userUpdate: { id: 20, label: i18n.t("listes.comType.userUpdate") },
+  userPrivate: { id: 21, label: i18n.t("listes.comType.userPrivate") },
+};
+
+export const COM_GENERAL_DESTINATION = "-1";
 
 export const FLAG_MAKER_URL = "https://flagmakerjr.stg7.net/";
 export const COA_MAKER_URL = "https://coamaker.com/";

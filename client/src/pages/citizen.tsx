@@ -17,7 +17,6 @@ import { useTranslation } from "react-i18next";
 import Avatar from "../components/avatar";
 import { useEffect, useState } from "react";
 import DashTile from "../components/dashTile";
-import TileContainer from "../components/tileContainer";
 import { emptyNewNationPayload, LabelId } from "../types/typNation";
 import IdTag from "../components/tags/idTag";
 import RoleTag from "../components/tags/roleTag";
@@ -25,7 +24,7 @@ import Upploader from "../components/uploader";
 import CrossButton from "../components/buttons/crossButton";
 import { GiBlackFlag } from "react-icons/gi";
 import ExternalLink from "../components/externalLink";
-import { FaLink } from "react-icons/fa";
+import { FaLink, FaRegArrowAltCircleRight } from "react-icons/fa";
 import EditIcon from "../components/editIcon";
 import { BsFillEnvelopeAtFill } from "react-icons/bs";
 import NationOwnerTag from "../components/tags/nationOwnerTag";
@@ -34,7 +33,6 @@ import {
   displayUnwatchedComs,
   getLabelIdArrayFromNationPlaceList,
 } from "../utils/functions";
-import { getNationPlaces } from "../api/place/placeAPI";
 import { ConfirmBoxDefault } from "../types/typAtom";
 import { getNation } from "../api/nation/nationAPI";
 import MDEditor from "@uiw/react-md-editor";
@@ -48,6 +46,10 @@ import DateTag from "../components/tags/dateTag";
 import { languageList } from "../settings/lists";
 import ReportPanel from "../components/reportPanel";
 import ReportedFlag from "../components/reportedFlag";
+import { MdAddCircle } from "react-icons/md";
+import { RiLockPasswordFill } from "react-icons/ri";
+import { IoMdLogOut } from "react-icons/io";
+import { COM_GENERAL_DESTINATION } from "../settings/consts";
 
 export default function Citizen() {
   const { t } = useTranslation();
@@ -85,7 +87,7 @@ export default function Citizen() {
     } else {
       setEnableLeaving(false);
     }
-    if (citizen.citizenship.nationId != "") {
+    if (citizen.citizenship.nationId != "" && nation.officialId === "") {
       getNation(citizen.citizenship.nationId);
     }
 
@@ -100,16 +102,16 @@ export default function Citizen() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [citizen]);
 
-  useEffect(() => {
-    if (
-      nation.officialId != undefined &&
-      nation.officialId !== "" &&
-      nationPlaces.length === 0
-    ) {
-      getNationPlaces(nation);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [nation]);
+  // useEffect(() => {
+  //   if (
+  //     nation.officialId != undefined &&
+  //     nation.officialId !== "" &&
+  //     nationPlaces.length === 0
+  //   ) {
+  //     getNationPlaces(nation);
+  //   }
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [nation]);
 
   useEffect(() => {
     if (
@@ -117,6 +119,7 @@ export default function Citizen() {
       comList.length > 0 &&
       comList[0].destination === citizen.officialId
     ) {
+      displayUnwatchedComs(COM_GENERAL_DESTINATION, comList);
       displayUnwatchedComs(citizen.officialId, comList);
     }
   }, [comList]);
@@ -207,87 +210,98 @@ export default function Citizen() {
         <H1 text={citizen.name} />
         {self && <EditIcon target="citizen" param={citizen.name} path="name" />}
       </div>
-      {!citizen.reported && (
-        <>
-          <div className="relative flex flex-col items-center">
-            <Avatar url={citizen.avatar} isUser={true} bigSize={true} />
-            {self &&
-              (citizen.avatar != "" ? (
-                <CrossButton small={true} click={handleDeleteAvatar} />
-              ) : (
-                <Upploader
-                  path="avatar"
-                  destination="citizen"
-                  maxSize={500000}
-                />
-              ))}
-          </div>
-          <div className="flex items-center justify-center gap-6">
-            <span className="flex items-center gap-1">
-              <ExternalLink
-                url={citizen.link}
-                children={<FaLink />}
-                hover={t("components.hoverInfos.links.website")}
-              />
-              {self && (
-                <EditIcon target="citizen" param={citizen.link} path="link" />
-              )}
-            </span>
-
-            <span className="flex items-center gap-1">
-              <ExternalLink
-                url={citizen.email != "" ? "mailto:" + citizen.email : ""}
-                children={<BsFillEnvelopeAtFill />}
-                hover={t("components.hoverInfos.links.email")}
-              />
-              {self && (
-                <EditIcon target="citizen" param={citizen.email} path="email" />
-              )}
-            </span>
-          </div>
-          <div className="w-full max-w-[300px] md:max-w-lg mt-4 justify-center flex gap-2">
-            {citizen.bio ? (
-              <MDEditor.Markdown
-                className="bg-transparent text-light text-justify"
-                source={citizen.bio}
-                style={{ whiteSpace: "pre-wrap" }}
-              />
-            ) : (
-              <em className="text-center">{t("pages.citizen.noBio")}</em>
-            )}
-
-            {self && (
-              <EditIcon
-                target="citizen"
-                param={citizen.bio ? citizen.bio : ""}
-                path="bio"
-              />
-            )}
-          </div>
-          <DashTile
-            title={t("pages.citizen.virtualCitizenship")}
-            children={
-              <>
-                <div className="max-w-[90%] flex flex-wrap items-center justify-center gap-1">
-                  <IdTag label={citizen.officialId} />
-                  <span className="flex items-center gap-1">
-                    <LanguagesTag
-                      languages={
-                        citizen.language != "" ? [citizen.language] : []
-                      }
+      <section className="w-full flex flex-wrap gap-8 items-start justify-between">
+        {!citizen.reported && (
+          <>
+            <section className="w-full flex flex-col items-center">
+              <div className="relative flex flex-col items-center">
+                <Avatar url={citizen.avatar} isUser={true} bigSize={true} />
+                {self &&
+                  (citizen.avatar != "" ? (
+                    <CrossButton small={true} click={handleDeleteAvatar} />
+                  ) : (
+                    <Upploader
+                      path="avatar"
+                      destination="citizen"
+                      maxSize={500000}
                     />
-                    {self && (
-                      <EditIcon
-                        target="citizen"
-                        param={languageList}
-                        path="language"
-                        indice={citizen.language}
+                  ))}
+              </div>
+              <div className="flex items-center justify-center gap-6">
+                <span className="flex items-center gap-1">
+                  <ExternalLink
+                    url={citizen.link}
+                    children={<FaLink />}
+                    hover={t("components.hoverInfos.links.website")}
+                  />
+                  {self && (
+                    <EditIcon
+                      target="citizen"
+                      param={citizen.link}
+                      path="link"
+                    />
+                  )}
+                </span>
+
+                <span className="flex items-center gap-1">
+                  <ExternalLink
+                    url={citizen.email != "" ? "mailto:" + citizen.email : ""}
+                    children={<BsFillEnvelopeAtFill />}
+                    hover={t("components.hoverInfos.links.email")}
+                  />
+                  {self && (
+                    <EditIcon
+                      target="citizen"
+                      param={citizen.email}
+                      path="email"
+                    />
+                  )}
+                </span>
+              </div>
+              <div className="w-full max-w-[300px] md:max-w-lg mt-4 justify-center flex gap-2">
+                {citizen.bio ? (
+                  <MDEditor.Markdown
+                    className="bg-transparent text-light text-justify"
+                    source={citizen.bio}
+                    style={{ whiteSpace: "pre-wrap" }}
+                  />
+                ) : (
+                  <em className="text-center">{t("pages.citizen.noBio")}</em>
+                )}
+
+                {self && (
+                  <EditIcon
+                    target="citizen"
+                    param={citizen.bio ? citizen.bio : ""}
+                    path="bio"
+                  />
+                )}
+              </div>
+            </section>
+            <DashTile
+              title={t("pages.citizen.virtualCitizenship")}
+              children={
+                <>
+                  <div className="max-w-[90%] flex flex-wrap items-center justify-center gap-1">
+                    <IdTag label={citizen.officialId} />
+                    <span className="flex items-center gap-1">
+                      <LanguagesTag
+                        languages={
+                          citizen.language != "" ? [citizen.language] : []
+                        }
                       />
-                    )}
-                  </span>
-                  {self && <CreditTag label={citizen.credits} owner={true} />}
-                  {citizen.citizenship.nationOwner && <NationOwnerTag />}
-                  {/* <div className="flex items-center gap-1">
+                      {self && (
+                        <EditIcon
+                          target="citizen"
+                          param={languageList}
+                          path="language"
+                          indice={citizen.language}
+                        />
+                      )}
+                    </span>
+                    {self && <CreditTag label={citizen.credits} owner={true} />}
+                    {citizen.citizenship.nationOwner && <NationOwnerTag />}
+                    {/* <div className="flex items-center gap-1">
                       <ResidenceTag
                         residenceId={citizen.citizenship.residence}
                       />
@@ -300,102 +314,103 @@ export default function Citizen() {
                           />
                         )}
                     </div> */}
-                  {citizen.role === "admin" && (
-                    <RoleTag label={t("pages.citizen.role.admin")} />
-                  )}
-                </div>
-                {nation != undefined &&
-                nation.officialId != "" &&
-                citizen.citizenship.nationId != "" ? (
-                  <div className="w-full flex flex-col justify-center items-center gap-2">
-                    <div className="w-[300px] relative flex gap-2 items-center justify-center">
-                      <Button
-                        text={nation.name}
-                        click={() => handleClick("nation")}
-                        children={<GiBlackFlag />}
-                        widthFull={true}
-                      />
-                      {enableLeaving && (
-                        <CrossButton text="" small={true} click={leaveNation} />
-                      )}
-                    </div>
-                  </div>
-                ) : (
-                  <>
-                    {self && (
-                      <>
-                        <Button
-                          text={t("components.buttons.createNation")}
-                          click={() => handleClick("new")}
-                          widthFull={true}
-                        />
-                        <Button
-                          text={t("components.buttons.joinNation")}
-                          click={() => handleClick("join")}
-                          widthFull={true}
-                        />
-                      </>
+                    {citizen.role === "admin" && (
+                      <RoleTag label={t("pages.citizen.role.admin")} />
                     )}
-                  </>
+                  </div>
+                  {nation != undefined &&
+                  nation.officialId != "" &&
+                  citizen.citizenship.nationId != "" ? (
+                    <div className="w-full flex flex-col justify-center items-center gap-2">
+                      <div className="w-[300px] relative flex gap-2 items-center justify-center">
+                        <Button
+                          text={nation.name}
+                          click={() => handleClick("nation")}
+                          children={<GiBlackFlag />}
+                          widthFull={true}
+                        />
+                        {enableLeaving && (
+                          <CrossButton
+                            text=""
+                            small={true}
+                            click={leaveNation}
+                          />
+                        )}
+                      </div>
+                    </div>
+                  ) : (
+                    <>
+                      {self && (
+                        <div className="flex flex-wrap gap-2 justify-center">
+                          <Button
+                            text={t("components.buttons.createNation")}
+                            click={() => handleClick("new")}
+                            children={<MdAddCircle />}
+                          />
+                          <Button
+                            text={t("components.buttons.joinNation")}
+                            click={() => handleClick("join")}
+                            children={<FaRegArrowAltCircleRight />}
+                          />
+                        </div>
+                      )}
+                    </>
+                  )}
+                </>
+              }
+            />
+          </>
+        )}
+        {self ? (
+          <DashTile
+            title={t("pages.citizen.settings")}
+            children={
+              <>
+                {session.user.reported && <ReportedFlag />}
+                {userPlan != "free" && (
+                  <div className="px-2 flex gap-1 items-center bg-gold rounded text-primary bold">
+                    <IoDiamondOutline />
+                    <span>
+                      {userPlan === "premium"
+                        ? t("pages.citizen.plans.premium")
+                        : t("pages.citizen.plans.elite")}
+                    </span>
+                    <DateTag date={citizen.expirationDate} due={true} />
+                  </div>
                 )}
+                <div className="w-full flex flex-wrap gap-2 justify-center">
+                  {userPlan === "free" && (
+                    <PlanButton
+                      click={() =>
+                        errorMessage(t("toasts.user.subscriptionNotReady"))
+                      }
+                    />
+                  )}
+                  <Button
+                    text={t("components.buttons.changePassword")}
+                    click={() => myStore.set(changePasswordModalAtom, true)}
+                    children={<RiLockPasswordFill />}
+                  />
+                </div>
+                <div className="w-full flex flex-wrap gap-2 justify-center">
+                  <Button
+                    text={t("components.buttons.logout")}
+                    bgColor="bg-danger"
+                    click={logout}
+                    children={<IoMdLogOut />}
+                  />
+                  <CrossButton
+                    text={t("components.buttons.deleteAccount")}
+                    click={handleDelete}
+                  />
+                </div>
               </>
             }
           />
-        </>
-      )}
-      <TileContainer
-        children={
-          <>
-            {self ? (
-              <DashTile
-                title={t("pages.citizen.settings")}
-                children={
-                  <>
-                    {session.user.reported && <ReportedFlag />}
-                    {userPlan != "free" && (
-                      <div className="px-2 flex gap-1 items-center bg-gold rounded text-primary bold">
-                        <IoDiamondOutline />
-                        <span>
-                          {userPlan === "premium"
-                            ? t("pages.citizen.plans.premium")
-                            : t("pages.citizen.plans.elite")}
-                        </span>
-                        <DateTag date={citizen.expirationDate} due={true} />
-                      </div>
-                    )}
-                    {userPlan === "free" && (
-                      <PlanButton
-                        click={() =>
-                          errorMessage(t("toasts.user.subscriptionNotReady"))
-                        }
-                      />
-                    )}
-                    <Button
-                      text={t("components.buttons.changePassword")}
-                      click={() => myStore.set(changePasswordModalAtom, true)}
-                      widthFull={true}
-                    />
-                    <Button
-                      text={t("components.buttons.logout")}
-                      bgColor="bg-danger"
-                      click={logout}
-                      widthFull={true}
-                    />
-                    <Button
-                      text={t("components.buttons.deleteAccount")}
-                      bgColor="bg-danger"
-                      click={handleDelete}
-                      widthFull={true}
-                    />
-                  </>
-                }
-              />
-            ) : (
-              <ReportPanel content={citizen} />
-            )}
-          </>
-        }
-      />
+        ) : (
+          <ReportPanel content={citizen} />
+        )}
+      </section>
     </>
   );
 }

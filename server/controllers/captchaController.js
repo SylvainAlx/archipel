@@ -34,10 +34,10 @@ export const verifyCaptcha = async (req, res) => {
         .json({ success: false, message: "CAPTCHA verification failed." });
     }
   } catch (error) {
-    return res.status(500).json({
-      success: false,
-      message: "Internal Server Error",
-      error: error.message,
+    console.error(error);
+    res.status(500).json({
+      infoType: "500",
+      error,
     });
   }
 };

@@ -11,8 +11,9 @@ export const getAdminComs = async (req, res) => {
     res.status(200).json(coms);
   } catch (error) {
     console.error(error);
-    res.status(400).json({
-      infoType: "400",
+    res.status(500).json({
+      infoType: "500",
+      error,
     });
   }
 };
@@ -58,7 +59,7 @@ const modifierReportOuBan = async (
   } catch (error) {
     console.error(`Erreur lors de la modification du statut :`, error);
     res.status(500).json({
-      message: `Erreur interne du serveur.`,
+      infoType: "500",
       error,
     });
   }
@@ -88,6 +89,10 @@ const banIp = async (AContent) => {
     }
   } catch (error) {
     console.error(error);
+    res.status(500).json({
+      infoType: "500",
+      error,
+    });
   }
 };
 
@@ -106,8 +111,9 @@ export const banContent = async (req, res) => {
     const AContent = req.params.id;
     await modifierReportOuBan(AContent, null, true, res);
   } catch (error) {
+    console.error(error);
     res.status(500).json({
-      message: `Erreur interne du serveur.`,
+      infoType: "500",
       error,
     });
   }
@@ -126,6 +132,10 @@ export const getBannedUsers = async (req, res) => {
     );
     res.status(200).json(users);
   } catch (error) {
-    res.status(404).json({ message: error.message, infoType: "noUser" });
+    console.error(error);
+    res.status(500).json({
+      infoType: "500",
+      error,
+    });
   }
 };

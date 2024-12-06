@@ -16,3 +16,4 @@
 - Créer des lieux pour sa nation virtuelle
 - Rejoindre une nation virtuelle
 - Créer des relations diplomatiques entre nations
+- Signaler des contenus offensants

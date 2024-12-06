@@ -24,30 +24,31 @@ export default function ReportPanel({
       className={`w-full flex flex-col justify-center ${center ? "items-center" : "items-end"} gap-2`}
     >
       {content.reported && <ReportedFlag />}
-      {session.user.role != "admin" ? (
-        !content.reported && (
-          <ReportButton contentOfficialId={content.officialId} />
-        )
-      ) : content.reported ? (
-        <div className="flex flex-wrap items-center justify-center gap-2">
-          <AdminReportButton
-            contentOfficialId={content.officialId}
-            reverse={true}
-          />
-          {content.banished ? (
-            <AdminBanButton
+      {session.user.officialId != "" &&
+        (session.user.role != "admin" ? (
+          !content.reported && (
+            <ReportButton contentOfficialId={content.officialId} />
+          )
+        ) : content.reported ? (
+          <div className="flex flex-wrap items-center justify-center gap-2">
+            <AdminReportButton
               contentOfficialId={content.officialId}
               reverse={true}
             />
-          ) : (
-            <AdminBanButton contentOfficialId={content.officialId} />
-          )}
-        </div>
-      ) : (
-        <div className="flex flex-wrap items-center justify-center gap-2">
-          <AdminReportButton contentOfficialId={content.officialId} />
-        </div>
-      )}
+            {content.banished ? (
+              <AdminBanButton
+                contentOfficialId={content.officialId}
+                reverse={true}
+              />
+            ) : (
+              <AdminBanButton contentOfficialId={content.officialId} />
+            )}
+          </div>
+        ) : (
+          <div className="flex flex-wrap items-center justify-center gap-2">
+            <AdminReportButton contentOfficialId={content.officialId} />
+          </div>
+        ))}
     </section>
   );
 }

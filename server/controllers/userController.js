@@ -85,7 +85,11 @@ export const register = async (req, res) => {
       }
     }
   } catch (error) {
-    res.status(400).json({ message: error.message, infoType: "error" });
+    console.error(error);
+    res.status(500).json({
+      infoType: "500",
+      error,
+    });
   }
 };
 
@@ -123,7 +127,11 @@ export const login = async (req, res) => {
       res.status(200).json({ user, jwt, infoType: "signin" });
     });
   } catch (error) {
-    res.status(400).json({ message: error.message, infoType: "error" });
+    console.error(error);
+    res.status(500).json({
+      infoType: "500",
+      error,
+    });
   }
 };
 
@@ -186,9 +194,10 @@ export const forgetPassword = async (req, res) => {
       }
     });
   } catch (error) {
-    res.status(400).json({
-      infoType: "error",
-      message: error.message,
+    console.error(error);
+    res.status(500).json({
+      infoType: "500",
+      error,
     });
   }
 };
@@ -220,9 +229,10 @@ export const changePassword = async (req, res) => {
       }
     });
   } catch (error) {
-    res.status(400).json({
-      infoType: "error",
-      message: error.message,
+    console.error(error);
+    res.status(500).json({
+      infoType: "500",
+      error,
     });
   }
 };
@@ -244,7 +254,11 @@ export const getAllUsers = async (req, res) => {
       res.status(200).json(users);
     }
   } catch (error) {
-    res.status(404).json({ message: error.message, infoType: "noUser" });
+    console.error(error);
+    res.status(500).json({
+      infoType: "500",
+      error,
+    });
   }
 };
 
@@ -259,9 +273,10 @@ export const getOneUser = async (req, res) => {
       user,
     });
   } catch (error) {
-    res.status(404).json({
-      infoType: "noUser",
-      message: error.message,
+    console.error(error);
+    res.status(500).json({
+      infoType: "500",
+      error,
     });
   }
 };
@@ -272,9 +287,10 @@ export const getSelfUser = async (req, res) => {
     const user = await User.findOne({ officialId: id });
     res.status(200).json({ user });
   } catch (error) {
-    res.status(404).json({
-      infoType: "noUser",
-      message: error.message,
+    console.error(error);
+    res.status(500).json({
+      infoType: "500",
+      error,
     });
   }
 };
@@ -296,9 +312,10 @@ export const deleteSelfUser = async (req, res) => {
       res.status(200).json({ nation, infoType: "delete" });
     });
   } catch (error) {
-    res.status(400).json({
-      message: error.message,
-      infoType: "deleteKO",
+    console.error(error);
+    res.status(500).json({
+      infoType: "500",
+      error,
     });
   }
 };
@@ -314,7 +331,11 @@ export const getUsersByNation = async (req, res) => {
         res.status(400).json({ message: error.message, infoType: "error" });
       });
   } catch (error) {
-    res.status(400).json({ message: error.message, infoType: "error" });
+    console.error(error);
+    res.status(500).json({
+      infoType: "500",
+      error,
+    });
   }
 };
 
@@ -328,7 +349,11 @@ export const usersCount = async (req, res) => {
         res.status(400).json({ message: error.message, infoType: "error" });
       });
   } catch (error) {
-    res.status(400).json({ message: error.message, infoType: "error" });
+    console.error(error);
+    res.status(500).json({
+      infoType: "500",
+      error,
+    });
   }
 };
 
@@ -410,8 +435,9 @@ export const updateUser = async (req, res) => {
     }
   } catch (error) {
     console.error(error);
-    res.status(400).json({
-      infoType: "serverError",
+    res.status(500).json({
+      infoType: "500",
+      error,
     });
   }
 };
@@ -474,7 +500,11 @@ export const changeStatus = async (req, res) => {
       res.sendStatus(403).json({ infoType: "forbidden" });
     }
   } catch (error) {
-    res.status(400).json({ message: error.message, infoType: "error" });
+    console.error(error);
+    res.status(500).json({
+      infoType: "500",
+      error,
+    });
   }
 };
 
@@ -493,9 +523,9 @@ export const changePlan = async (req, res) => {
     }
   } catch (error) {
     console.error(error);
-    res.status(400).json({
-      message: error.message,
-      infoType: "error",
+    res.status(500).json({
+      infoType: "500",
+      error,
     });
   }
 };

@@ -82,16 +82,14 @@ export const getNation = (id: string) => {
   if (nation === undefined || nation === null) {
     getOneNationFetch(id)
       .then((resp: Nation) => {
-        myStore.set(loadingAtom, false);
         myStore.set(nationFetchedAtom, resp);
         updateOrCreateNationInMemory(resp);
         myStore.set(loadingAtom, false);
       })
       .catch((error) => {
         myStore.set(nationFetchedAtom, EmptyNation);
-        myStore.set(loadingAtom, false);
-        console.error(error);
         displayNationInfoByType(error.infoType);
+        myStore.set(loadingAtom, false);
       });
   } else {
     myStore.set(loadingAtom, false);

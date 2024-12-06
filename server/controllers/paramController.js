@@ -10,8 +10,10 @@ export const createParam = async (req, res) => {
     param.save();
     res.status(201).json({ param, message: "paramètre créé" });
   } catch (error) {
-    res.status(400).json({
-      erreur: error,
+    console.error(error);
+    res.status(500).json({
+      infoType: "500",
+      error,
     });
   }
 };
@@ -21,8 +23,10 @@ export const getParam = async (req, res) => {
     const param = await Param.findOne({ name: req.params.name });
     res.status(200).json({ param });
   } catch (error) {
-    res.status(400).json({
-      erreur: error,
+    console.error(error);
+    res.status(500).json({
+      infoType: "500",
+      error,
     });
   }
 };
@@ -32,8 +36,10 @@ export const getAllParams = async (req, res) => {
     const params = await Param.find();
     res.status(200).json(params);
   } catch (error) {
-    res.status(400).json({
-      erreur: error,
+    console.error(error);
+    res.status(500).json({
+      infoType: "500",
+      error,
     });
   }
 };

@@ -14,7 +14,6 @@
     "@tensorflow/tfjs": "^4.22.0",
     "@uiw/react-md-editor": "^4.0.4",
     "@uploadcare/react-uploader": "^1.0.0",
-    "@vercel/speed-insights": "^1.0.12",
     "i18next": "^23.10.1",
     "i18next-browser-languagedetector": "^7.2.0",
     "jotai": "^2.9.3",

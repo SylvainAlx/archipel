@@ -1,4 +1,4 @@
-import { comOptions } from "../../settings/lists";
+import { COM_TYPE } from "../../settings/consts";
 import {
   bannedCitizensAtom,
   comFetchedListAtom,
@@ -19,7 +19,7 @@ import {
 export const getAdminComs = async () => {
   const savedComList: Com[] = [];
   myStore.get(comsListAtom).forEach((com) => {
-    if (com.comType === comOptions[0].id) {
+    if (com.comType === COM_TYPE.admin.id) {
       savedComList.push(com);
     }
   });
