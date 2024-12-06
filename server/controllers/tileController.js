@@ -57,8 +57,9 @@ export const createTile = async (req, res) => {
     }
   } catch (error) {
     console.error(error);
-    res.status(400).json({
-      infoType: "serverError",
+    res.status(500).json({
+      infoType: "500",
+      error,
     });
   }
 };
@@ -70,8 +71,9 @@ export const getNationTile = async (req, res) => {
     res.status(200).json(tiles);
   } catch (error) {
     console.error(error);
-    res.status(400).json({
-      infoType: "serverError",
+    res.status(500).json({
+      infoType: "500",
+      error,
     });
   }
 };
@@ -99,8 +101,9 @@ export const deleteTile = async (req, res) => {
     }
   } catch (error) {
     console.error(error);
-    res.status(400).json({
-      infoType: "serverError",
+    res.status(500).json({
+      infoType: "500",
+      error,
     });
   }
 };
@@ -122,8 +125,9 @@ export const updateTile = async (req, res) => {
     }
   } catch (error) {
     console.error(error);
-    res.status(400).json({
-      infoType: "serverError",
+    res.status(500).json({
+      infoType: "500",
+      error,
     });
   }
 };

@@ -386,7 +386,7 @@
     "errors": {
       "400": "Unknown error",
       "404": "Page not found",
-      "serverError": "Server error",
+      "500": "Server error",
       "miss": "Some information is wrong or missing",
       "forbidden": "Delete action",
       "11000": "Information already existing in the database",

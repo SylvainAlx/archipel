@@ -16,8 +16,11 @@ export const nationsCount = async (req, res) => {
         res.status(400).json({ infoType: "serverError" });
       });
   } catch (error) {
-    console.error(error.message);
-    res.status(400).json({ infoType: "serverError" });
+    console.error(error);
+    res.status(500).json({
+      infoType: "500",
+      error,
+    });
   }
 };
 
@@ -74,8 +77,11 @@ export const createNation = async (req, res) => {
       }
     }
   } catch (error) {
-    res.status(400).json({ infoType: "serverError" });
-    console.error(error.message);
+    console.error(error);
+    res.status(500).json({
+      infoType: "500",
+      error,
+    });
   }
 };
 
@@ -105,7 +111,10 @@ export const getAllNations = async (req, res) => {
     }
   } catch (error) {
     console.error(error);
-    res.status(400).json({ infoType: "400" });
+    res.status(500).json({
+      infoType: "500",
+      error,
+    });
   }
 };
 
@@ -118,7 +127,10 @@ export const getTop100Nations = async (req, res) => {
     res.status(200).json(nations);
   } catch (error) {
     console.error(error);
-    res.status(400).json({ infoType: "400" });
+    res.status(500).json({
+      infoType: "500",
+      error,
+    });
   }
 };
 
@@ -132,7 +144,10 @@ export const getOneNation = async (req, res) => {
     res.status(200).json(nation);
   } catch (error) {
     console.error(error);
-    res.status(400).json({ infoType: "400" });
+    res.status(500).json({
+      infoType: "500",
+      error,
+    });
   }
 };
 
@@ -219,7 +234,10 @@ export const deleteSelfNation = async (req, res) => {
     }
   } catch (error) {
     console.error(error);
-    res.status(400).json({ infoType: "400" });
+    res.status(500).json({
+      infoType: "500",
+      error,
+    });
   }
 };
 
@@ -247,7 +265,10 @@ export const updateNation = async (req, res) => {
     }
   } catch (error) {
     console.error(error);
-    res.status(400).json({ infoType: "400" });
+    res.status(500).json({
+      infoType: "500",
+      error,
+    });
   }
 };
 
@@ -280,6 +301,9 @@ export const getTags = async (req, res) => {
     res.status(200).json(tags.length > 0 ? tags[0].tousLesTags : []);
   } catch (error) {
     console.error(error);
-    res.status(400).json({ infoType: "400" });
+    res.status(500).json({
+      infoType: "500",
+      error,
+    });
   }
 };

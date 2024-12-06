@@ -1,7 +1,6 @@
 import H1 from "../components/titles/h1";
 import NationIdentity from "../components/nation/nationIdentity";
 import {
-  comFetchedListAtom,
   confirmBox,
   myStore,
   nationFetchedAtom,
@@ -23,13 +22,10 @@ import NationMap from "../components/nation/nationMap";
 import { ConfirmBoxDefault } from "../types/typAtom";
 import NationComs from "../components/nation/nationComs";
 import ReportPanel from "../components/reportPanel";
-import { getComsByDestination } from "../api/communication/comAPI";
-import { displayUnwatchedComs } from "../utils/functions";
 
 export default function Nation() {
   const [nation] = useAtom(nationFetchedAtom);
   const [session] = useAtom(sessionAtom);
-  const [comList] = useAtom(comFetchedListAtom);
   const [confirm, setConfirm] = useAtom(confirmBox);
   const [owner, setOwner] = useState(false);
   const { t } = useTranslation();
@@ -42,7 +38,6 @@ export default function Nation() {
       session.user.citizenship.nationId === param.id
     ) {
       setOwner(true);
-      getComsByDestination(session.user.citizenship.nationId);
     } else {
       setOwner(false);
     }
@@ -70,16 +65,6 @@ export default function Nation() {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [confirm]);
-
-  useEffect(() => {
-    if (
-      owner &&
-      comList.length > 0 &&
-      comList[0].destination === nation.officialId
-    ) {
-      displayUnwatchedComs(nation.officialId, comList);
-    }
-  }, [comList]);
 
   const handleDelete = () => {
     myStore.set(confirmBox, {

@@ -17,8 +17,9 @@ export const placesCount = async (req, res) => {
       });
   } catch (error) {
     console.error(error);
-    res.status(400).json({
-      infoType: "400",
+    res.status(500).json({
+      infoType: "500",
+      error,
     });
   }
 };
@@ -38,8 +39,9 @@ export const getPlaces = async (req, res) => {
       });
   } catch (error) {
     console.error(error);
-    res.status(400).json({
-      infoType: "400",
+    res.status(500).json({
+      infoType: "500",
+      error,
     });
   }
 };
@@ -53,8 +55,9 @@ export const getOne = async (req, res) => {
     });
   } catch (error) {
     console.error(error);
-    res.status(404).json({
-      infoType: "404",
+    res.status(500).json({
+      infoType: "500",
+      error,
     });
   }
 };
@@ -74,8 +77,9 @@ export const getAllPlaces = async (req, res) => {
     }
   } catch (error) {
     console.error(error);
-    res.status(404).json({
-      infoType: "404",
+    res.status(500).json({
+      infoType: "500",
+      error,
     });
   }
 };
@@ -121,8 +125,11 @@ export const createPlace = async (req, res) => {
       console.error(error);
       res.status(400).json({ infoType: "11000" });
     } else {
-      res.status(400).json({ infoType: "miss" });
       console.error(error);
+      res.status(500).json({
+        infoType: "500",
+        error,
+      });
     }
   }
 };
@@ -154,8 +161,9 @@ export const deletePlace = async (req, res) => {
     res.status(200).json({ place, nation, infoType: "delete" });
   } catch (error) {
     console.error(error);
-    res.status(400).json({
-      infoType: "400",
+    res.status(500).json({
+      infoType: "500",
+      error,
     });
   }
 };
@@ -191,8 +199,9 @@ export const updatePlace = async (req, res) => {
     }
   } catch (error) {
     console.error(error);
-    res.status(400).json({
-      infoType: "400",
+    res.status(500).json({
+      infoType: "500",
+      error,
     });
   }
 };

@@ -423,21 +423,25 @@ export const updateElement = (
 
 export const displayUnwatchedComs = (officialId: string, comList: Com[]) => {
   const lastVisit = GET_LAST_WATCH(officialId);
+  let count = 0;
   comList.forEach((com) => {
     if (
       (!lastVisit || com.createdAt.toString() > lastVisit.toISOString()) &&
-      isDateLessThanOneMonthOld(com.createdAt)
+      isDateLessThanOneMonthOld(com.createdAt) &&
+      com.destination === officialId
     ) {
       const comDate = new Date(com.createdAt);
       const comType = getComTypeLabelById(com.comType);
       comMessage(
         `${comDate.toLocaleString(i18n.language)} - [${comType && comType}] - ${com.title} - ${com.message}`,
       );
+      count++;
     }
   });
-
-  const date = new Date();
-  SET_LAST_WATCH(officialId, date);
+  if (count > 0) {
+    const date = new Date();
+    SET_LAST_WATCH(officialId, date);
+  }
 };
 
 export const isDateLessThanOneMonthOld = (Adate: Date) => {

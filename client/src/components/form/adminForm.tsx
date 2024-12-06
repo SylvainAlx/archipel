@@ -6,7 +6,7 @@ import MarkdownEditor from "./markdownEditor";
 import Select from "./select";
 import { emptyComPayload } from "../../types/typCom";
 import { adminComTypeOptions } from "../../settings/lists";
-import { MAX_LENGTH } from "../../settings/consts";
+import { COM_GENERAL_DESTINATION, MAX_LENGTH } from "../../settings/consts";
 import { useTranslation } from "react-i18next";
 import { confirmBox, myStore, sessionAtom } from "../../settings/store";
 
@@ -15,7 +15,11 @@ export default function AdminForm() {
   const { t } = useTranslation();
 
   useEffect(() => {
-    setNewCom({ ...newCom, origin: myStore.get(sessionAtom).user.officialId });
+    setNewCom({
+      ...newCom,
+      origin: myStore.get(sessionAtom).user.officialId,
+      destination: COM_GENERAL_DESTINATION,
+    });
   }, []);
 
   const handleSubmit = (e: FormEvent) => {

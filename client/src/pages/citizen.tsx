@@ -49,6 +49,7 @@ import ReportedFlag from "../components/reportedFlag";
 import { MdAddCircle } from "react-icons/md";
 import { RiLockPasswordFill } from "react-icons/ri";
 import { IoMdLogOut } from "react-icons/io";
+import { COM_GENERAL_DESTINATION } from "../settings/consts";
 
 export default function Citizen() {
   const { t } = useTranslation();
@@ -118,6 +119,7 @@ export default function Citizen() {
       comList.length > 0 &&
       comList[0].destination === citizen.officialId
     ) {
+      displayUnwatchedComs(COM_GENERAL_DESTINATION, comList);
       displayUnwatchedComs(citizen.officialId, comList);
     }
   }, [comList]);
@@ -376,7 +378,7 @@ export default function Citizen() {
                     <DateTag date={citizen.expirationDate} due={true} />
                   </div>
                 )}
-                <div className="flex flex-wrap gap-2 justify-center">
+                <div className="w-full flex flex-wrap gap-2 justify-center">
                   {userPlan === "free" && (
                     <PlanButton
                       click={() =>
@@ -389,6 +391,8 @@ export default function Citizen() {
                     click={() => myStore.set(changePasswordModalAtom, true)}
                     children={<RiLockPasswordFill />}
                   />
+                </div>
+                <div className="w-full flex flex-wrap gap-2 justify-center">
                   <Button
                     text={t("components.buttons.logout")}
                     bgColor="bg-danger"

@@ -53,14 +53,12 @@ export default function Home() {
                   text={t("components.buttons.user")}
                   type="button"
                   click={() => navigate(`/citizen/${session.user.officialId}`)}
-                  widthFull={true}
                   children={<RxAvatar />}
                 />
                 <Button
                   text={t("components.buttons.explore")}
                   type="button"
                   click={() => navigate("/explore")}
-                  widthFull={true}
                   children={<IoMdGlobe />}
                 />
               </div>

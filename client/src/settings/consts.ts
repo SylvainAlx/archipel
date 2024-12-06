@@ -51,5 +51,7 @@ export const COM_TYPE = {
   userPrivate: { id: 21, label: i18n.t("listes.comType.userPrivate") },
 };
 
+export const COM_GENERAL_DESTINATION = "-1";
+
 export const FLAG_MAKER_URL = "https://flagmakerjr.stg7.net/";
 export const COA_MAKER_URL = "https://coamaker.com/";

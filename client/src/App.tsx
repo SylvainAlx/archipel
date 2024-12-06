@@ -15,10 +15,8 @@ import ModalsRouter from "./router/modalsRouter";
 import { ArchipelRoute } from "./types/typReact";
 import i18n from "./i18n/i18n";
 import { authentification } from "./api/user/userAPI";
-import { getNation } from "./api/nation/nationAPI";
 import { MDP_LOBBY } from "./settings/consts";
 import Lobby from "./pages/lobby";
-import { SpeedInsights } from "@vercel/speed-insights/react";
 import ReactGA from "react-ga4";
 import { GOOGLE_ANALYTICS_MEASUREMENT_ID } from "./settings/consts.ts";
 import CookiesModal from "./components/modals/cookiesModal.tsx";
@@ -66,9 +64,8 @@ export default function App() {
         session.user.citizenship.nationId != "" &&
         nation.officialId != session.user.citizenship.nationId
       ) {
-        getNation(session.user.citizenship.nationId);
+        navigate(`/citizen/${session.user.officialId}`);
       }
-      navigate(`/citizen/${session.user.officialId}`);
       setOpenPrivateRoads(true);
     } else {
       navigate(`/`);
@@ -118,7 +115,6 @@ export default function App() {
             decline={handleDeclineCookies}
           />
         )}
-        <SpeedInsights />
       </main>
       <Footer />
     </>

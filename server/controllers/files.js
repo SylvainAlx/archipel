@@ -20,8 +20,9 @@ export const deleteUploadedFile = async (req, res) => {
     }
   } catch (error) {
     console.error(error);
-    return res.status(500).json({
-      infoType: "serverError",
+    res.status(500).json({
+      infoType: "500",
+      error,
     });
   }
 };

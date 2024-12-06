@@ -20,6 +20,7 @@ import {
   getComsByDestinationFetch,
   getAllPublicComsFetch,
   getPublicComsByOriginFetch,
+  getComsFetch,
 } from "./comFetch";
 
 export const getComsCount = () => {
@@ -37,6 +38,36 @@ export const getComsCount = () => {
       console.error(error);
       displayComInfoByType(error.infoType);
     });
+};
+
+export const getComs = async (
+  originId: string,
+  destinationId: string,
+  comType: number[],
+) => {
+  const savedComList: Com[] = [];
+  myStore.get(comsListAtom).forEach((com) => {
+    if (
+      com.origin === originId &&
+      com.destination === destinationId &&
+      comType.includes(com.comType)
+    ) {
+      savedComList.push(com);
+    }
+  });
+  if (savedComList.length > 0) {
+    myStore.set(comFetchedListAtom, savedComList);
+  } else {
+    myStore.set(loadingAtom, true);
+    const coms = await getComsFetch(originId, destinationId, comType);
+    if (coms != undefined) {
+      coms.forEach((com: Com) => {
+        updateOrCreateComInMemory(com);
+      });
+      myStore.set(comFetchedListAtom, coms);
+    }
+    myStore.set(loadingAtom, false);
+  }
 };
 
 export const getComsByDestination = (officialId: string) => {

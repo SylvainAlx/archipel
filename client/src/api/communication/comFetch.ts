@@ -23,8 +23,35 @@ export const createComFetch = async (payload: ComPayload) => {
   return result;
 };
 
+export const getComsFetch = async (
+  originId: string,
+  destinationId: string,
+  comType: number[],
+) => {
+  const jwt = GET_JWT();
+  const resp = await fetch(
+    `${SERVER_URL}/com/getcoms?originId=${originId}&destinationId=${destinationId}&&comType=${comType}`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        authorization: "Bearer " + jwt,
+      },
+    },
+  );
+  const result = await resp.json();
+  return result;
+};
+
 export const getComsByDestinationFetch = async (officialId: string) => {
-  const resp = await fetch(`${SERVER_URL}/com/getbydestination/${officialId}`);
+  const jwt = GET_JWT();
+  const resp = await fetch(`${SERVER_URL}/com/getbydestination/${officialId}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      authorization: "Bearer " + jwt,
+    },
+  });
   const result = await resp.json();
   return result;
 };

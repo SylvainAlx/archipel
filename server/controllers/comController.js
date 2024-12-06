@@ -36,13 +36,35 @@ export const getDestinationComs = async (req, res) => {
   }
 };
 
+export const getComs = async (req, res) => {
+  try {
+    const originId = req.query.originId;
+    const destinationId = req.query.destinationId;
+    const comType = req.query.comType;
+    const comTypeArray = comType.includes(",")
+      ? comType.split(",").map(Number)
+      : [Number(comType)];
+    const coms = await Com.find({
+      origin: originId,
+      destination: destinationId,
+      comType: { $in: comTypeArray },
+    });
+    res.status(200).json(coms);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      infoType: "500",
+    });
+  }
+};
+
 export const getPublicComsByOrigin = async (req, res) => {
   try {
     const nationId = req.params.id;
     let coms = [];
     if (nationId) {
       coms = await Com.find({
-        comType: { $in: [COMTYPE[3].id, COMTYPE[2].id] },
+        comType: COMTYPE[3].id,
         origin: nationId,
       }).sort({ createdAt: -1 });
     } else {
@@ -51,8 +73,8 @@ export const getPublicComsByOrigin = async (req, res) => {
     res.status(200).json(coms);
   } catch (error) {
     console.error(error);
-    res.status(400).json({
-      infoType: "400",
+    res.status(500).json({
+      infoType: "500",
     });
   }
 };
@@ -63,8 +85,8 @@ export const getPublicComs = async (req, res) => {
     res.status(200).json(coms);
   } catch (error) {
     console.error(error);
-    res.status(400).json({
-      infoType: "400",
+    res.status(500).json({
+      infoType: "500",
     });
   }
 };
@@ -100,8 +122,8 @@ export const createCom = async (req, res) => {
       });
   } catch (error) {
     console.error(error);
-    res.status(400).json({
-      infoType: "400",
+    res.status(500).json({
+      infoType: "500",
     });
   }
 };
@@ -117,8 +139,8 @@ export const deleteCom = async (req, res) => {
     });
   } catch (error) {
     console.error(error);
-    res.status(400).json({
-      infoType: "400",
+    res.status(500).json({
+      infoType: "500",
     });
   }
 };

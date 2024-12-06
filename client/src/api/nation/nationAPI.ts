@@ -78,29 +78,22 @@ export const createNation = (payload: NewNationPayload) => {
 
 export const getNation = (id: string) => {
   myStore.set(loadingAtom, true);
-  const sessionNation = myStore.get(sessionAtom).nation;
-  if (sessionNation.officialId === id) {
-    myStore.set(nationFetchedAtom, sessionNation);
+  const nation = findElementOfAtomArray(id, myStore.get(nationsListAtom));
+  if (nation === undefined || nation === null) {
+    getOneNationFetch(id)
+      .then((resp: Nation) => {
+        myStore.set(nationFetchedAtom, resp);
+        updateOrCreateNationInMemory(resp);
+        myStore.set(loadingAtom, false);
+      })
+      .catch((error) => {
+        myStore.set(nationFetchedAtom, EmptyNation);
+        displayNationInfoByType(error.infoType);
+        myStore.set(loadingAtom, false);
+      });
   } else {
-    const nation = findElementOfAtomArray(id, myStore.get(nationsListAtom));
-    if (nation === undefined || nation === null) {
-      getOneNationFetch(id)
-        .then((resp: Nation) => {
-          myStore.set(loadingAtom, false);
-          myStore.set(nationFetchedAtom, resp);
-          updateOrCreateNationInMemory(resp);
-          myStore.set(loadingAtom, false);
-        })
-        .catch((error) => {
-          myStore.set(nationFetchedAtom, EmptyNation);
-          myStore.set(loadingAtom, false);
-          console.error(error);
-          displayNationInfoByType(error.infoType);
-        });
-    } else {
-      myStore.set(loadingAtom, false);
-      myStore.set(nationFetchedAtom, nation);
-    }
+    myStore.set(loadingAtom, false);
+    myStore.set(nationFetchedAtom, nation);
   }
 };
 
