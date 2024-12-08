@@ -156,7 +156,8 @@
       "createCom": "post a press release",
       "contact": "contact",
       "generate": "generate",
-      "report": "REPORT"
+      "report": "REPORT",
+      "cookiesConsent": "cookies consent"
     },
     "form": {
       "input": {
@@ -261,7 +262,7 @@
       "noCoatOfArms": "no nation coat of arms",
       "flag": "nation flag",
       "noFlag": "no nation flag",
-      "dev": "under development",
+      "dev": "under testing & development",
       "links": {
         "website": "website",
         "instagram": "Instagram account",

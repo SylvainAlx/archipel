@@ -10,6 +10,7 @@ import {
   nationPlacesListAtom,
   newNationAtom,
   sessionAtom,
+  showCookiesModalAtom,
 } from "../settings/store";
 import Button from "../components/buttons/button";
 import { useNavigate, useParams } from "react-router-dom";
@@ -24,7 +25,7 @@ import Upploader from "../components/uploader";
 import CrossButton from "../components/buttons/crossButton";
 import { GiBlackFlag } from "react-icons/gi";
 import ExternalLink from "../components/externalLink";
-import { FaLink, FaRegArrowAltCircleRight } from "react-icons/fa";
+import { FaCookieBite, FaLink, FaRegArrowAltCircleRight } from "react-icons/fa";
 import EditIcon from "../components/editIcon";
 import { BsFillEnvelopeAtFill } from "react-icons/bs";
 import NationOwnerTag from "../components/tags/nationOwnerTag";
@@ -50,6 +51,8 @@ import { MdAddCircle } from "react-icons/md";
 import { RiLockPasswordFill } from "react-icons/ri";
 import { IoMdLogOut } from "react-icons/io";
 import { COM_GENERAL_DESTINATION } from "../settings/consts";
+import { resetCookieConsentValue } from "react-cookie-consent";
+import CookiesModal from "../components/modals/cookiesModal";
 
 export default function Citizen() {
   const { t } = useTranslation();
@@ -61,6 +64,7 @@ export default function Citizen() {
   const [comList] = useAtom(comFetchedListAtom);
   const [session, setSession] = useAtom(sessionAtom);
   const [confirm, setConfirm] = useAtom(confirmBox);
+  const [showCookiesModal, setShowCookiesModal] = useAtom(showCookiesModalAtom);
   const [nationPlaces] = useAtom(nationPlacesListAtom);
   const [, setPlacesList] = useState<LabelId[]>([]);
   const [, setConfirmModal] = useAtom(confirmBox);
@@ -76,6 +80,7 @@ export default function Citizen() {
         citizen.officialId != session.user.officialId
       ) {
         setCitizen(session.user);
+        getComsByDestination(session.user.officialId);
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -96,8 +101,6 @@ export default function Citizen() {
     } else {
       setUserPlan("free");
     }
-
-    citizen.officialId != "" && getComsByDestination(citizen.officialId);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [citizen]);
@@ -202,6 +205,11 @@ export default function Citizen() {
     newSession.user.citizenship.nationId = "";
     newSession.user.citizenship.status = -1;
     setSession(newSession);
+  };
+
+  const resetCookiesConsent = () => {
+    setShowCookiesModal(true);
+    resetCookieConsentValue();
   };
 
   return (
@@ -391,6 +399,11 @@ export default function Citizen() {
                     click={() => myStore.set(changePasswordModalAtom, true)}
                     children={<RiLockPasswordFill />}
                   />
+                  <Button
+                    text={t("components.buttons.cookiesConsent")}
+                    click={resetCookiesConsent}
+                    children={<FaCookieBite />}
+                  />
                 </div>
                 <div className="w-full flex flex-wrap gap-2 justify-center">
                   <Button
@@ -411,6 +424,7 @@ export default function Citizen() {
           <ReportPanel content={citizen} />
         )}
       </section>
+      {showCookiesModal && <CookiesModal />}
     </>
   );
 }
