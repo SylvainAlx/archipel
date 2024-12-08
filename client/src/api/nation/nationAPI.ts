@@ -140,6 +140,7 @@ export const updateNation = (payload: Nation) => {
         const session = myStore.get(sessionAtom);
         myStore.set(sessionAtom, { ...session, nation: resp.nation });
         updateOrCreateNationInMemory(resp.nation);
+        displayNationInfoByType(resp.infoType);
       } else {
         displayNationInfoByType(resp.infoType);
       }

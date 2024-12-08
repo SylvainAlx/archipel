@@ -12,6 +12,7 @@ export const VERSION = {
   beta: "BETA-0.1",
   rc: "",
   release: "",
+  testing: true,
 };
 
 export const color_primary = "var(--color-primary)";

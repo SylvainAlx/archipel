@@ -3,6 +3,8 @@ import HeaderNav from "../components/headerNav";
 import Logo from "../components/logo";
 import { lobbyAtom } from "../settings/store";
 import { useAtom } from "jotai";
+import DevFlag from "../components/devFlag";
+import { VERSION } from "../settings/consts";
 
 export default function Header() {
   const { t } = useTranslation();
@@ -20,6 +22,7 @@ export default function Header() {
       </div>
 
       {access && <HeaderNav />}
+      {VERSION.testing && <DevFlag />}
     </header>
   );
 }

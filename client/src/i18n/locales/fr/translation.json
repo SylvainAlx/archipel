@@ -156,7 +156,8 @@
       "createCom": "poster un communiqué",
       "contact": "contact",
       "generate": "générer",
-      "report": "SIGNALER"
+      "report": "SIGNALER",
+      "cookiesConsent": "consentement des cookies"
     },
     "form": {
       "input": {
@@ -261,7 +262,7 @@
       "noCoatOfArms": "nation sans blason",
       "flag": "drapeau de la nation",
       "noFlag": "nation sans drapeau",
-      "dev": "en cours de développement",
+      "dev": "tests & développements en cours",
       "links": {
         "website": "site internet",
         "instagram": "compte Instagram",

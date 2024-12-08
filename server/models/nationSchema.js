@@ -41,18 +41,34 @@ const nationSchema = mongoose.Schema(
         website: {
           type: String,
           default: "",
+          match: [
+            /^https?:\/\/[^\s$.?#].[^\s]*$/,
+            "Le champ 'website' doit être une URL valide.",
+          ],
         },
         wiki: {
           type: String,
           default: "",
+          match: [
+            /^https?:\/\/([a-z]{2}\.)?wikipedia\.org\/wiki\/.+$/,
+            "Le champ 'wiki' doit être une URL de page Wikipédia valide (par exemple : https://fr.wikipedia.org/wiki/).",
+          ],
         },
         instagram: {
           type: String,
           default: "",
+          match: [
+            /^https?:\/\/(www\.)?instagram\.com\/[a-zA-Z0-9_.-]+\/?$/,
+            "Le champ 'instagram' doit être une URL de compte Instagram valide.",
+          ],
         },
         discord: {
           type: String,
           default: "",
+          match: [
+            /^https?:\/\/(www\.)?discord\.gg\/[a-zA-Z0-9]+$/,
+            "Le champ 'discord' doit être une URL de serveur Discord valide.",
+          ],
         },
       },
       general: {

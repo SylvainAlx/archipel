@@ -112,7 +112,7 @@ export default function Register() {
               ></input>
               <p className="text-sm">
                 {t("pages.register.acceptTerms")}{" "}
-                <Link to="/termsofservice">
+                <Link to="/termsofservice" target="_blank">
                   <b>{t("pages.register.termsOfService")}</b>
                 </Link>
               </p>

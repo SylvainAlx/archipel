@@ -28,6 +28,10 @@ export const myStore = createStore();
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type SetAtom<Args extends any[], Result> = (...args: Args) => Result;
 
+// Cookies
+
+export const showCookiesModalAtom = atom(true);
+
 // Loading
 
 export const loadingAtom = atom(false);
