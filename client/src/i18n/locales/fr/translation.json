@@ -99,10 +99,10 @@
     },
     "recovery": {
       "title": "réinitialisation du mot de passe",
-      "placeholderName": "Nom d'utilisateur *",
-      "recoveryKey": "Phrase de récupération *",
-      "newPassword": "Nouveau mot de passe *",
-      "confirmPassword": "Confirmez le mot de passe *",
+      "placeholderName": "Nom d'utilisateur",
+      "recoveryKey": "Phrase de récupération",
+      "newPassword": "Nouveau mot de passe",
+      "confirmPassword": "Confirmez le mot de passe",
       "changePassword": "CHANGER LE MOT DE PASSE"
     },
     "register": {
@@ -127,7 +127,7 @@
       "home": "ACCUEIL",
       "login": "se connecter",
       "logout": "se déconnecter",
-      "register": "s'enregistrer",
+      "register": "s'inscrire",
       "explore": "explorer",
       "dashboard": "tableau de bord",
       "close": "FERMER",
@@ -340,7 +340,7 @@
         }
       },
       "comsList": {
-        "input": "Titre",
+        "input": "ID officiel de la nation",
         "SortComs": {
           "ascDate": "Du plus ancien au plus récent",
           "descDate": "Du plus récent au plus ancien"

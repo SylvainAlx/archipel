@@ -28,7 +28,11 @@ import {
   updateOrCreatePlaceInMemory,
 } from "../../utils/atomArrayFunctions";
 import { displayUserInfoByType } from "../../utils/displayInfos";
-import { findElementOfAtomArray, GET_JWT } from "../../utils/functions";
+import {
+  createComByStatus,
+  findElementOfAtomArray,
+  GET_JWT,
+} from "../../utils/functions";
 import { successMessage } from "../../utils/toasts";
 import {
   authGet,
@@ -235,7 +239,7 @@ export const getNationCitizens = (nation: Nation) => {
     }
   });
   if (
-    savedNationCitizenList.length > 0 &&
+    savedNationCitizenList.length > 1 &&
     nation.data.roleplay.citizens === savedNationCitizenList.length
   ) {
     myStore.set(nationCitizenListAtom, savedNationCitizenList);
@@ -313,21 +317,25 @@ export const updateUser = (payload: User) => {
 export const changeStatus = (payload: changeStatusPayload) => {
   myStore.set(loadingAtom, true);
   changeStatusFetch(payload)
-    .then((resp) => {
+    .then((resp: { user: User; nation: Nation; infoType: string }) => {
       myStore.set(loadingAtom, false);
       if (resp.user) {
         myStore.set(citizenFetchAtom, resp.user);
         myStore.set(nationFetchedAtom, resp.nation);
         updateOrCreateNationInMemory(resp.nation);
         updateOrCreateCitizenInMemory(resp.user);
+
         const session = myStore.get(sessionAtom);
-        myStore.set(sessionAtom, {
-          nation: session.nation,
-          user: resp.user,
-          jwt: session.jwt,
-        });
+        if (session.user.officialId === resp.user.officialId) {
+          myStore.set(sessionAtom, {
+            nation: session.nation,
+            user: resp.user,
+            jwt: session.jwt,
+          });
+        }
         getNationCitizens(resp.nation);
         displayUserInfoByType(resp.infoType);
+        createComByStatus(resp.user.citizenship.status, resp.nation, resp.user);
       } else {
         displayUserInfoByType(resp.infoType);
       }

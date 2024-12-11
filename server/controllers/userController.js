@@ -449,13 +449,10 @@ export const changeStatus = async (req, res) => {
     if (req.userId === officialId || status != 0) {
       const user = await User.findOne(
         { officialId },
-        "officialId nofficialIdame bio gender avatar language email link role credits plan expirationDate citizenship reported banished createdAt",
+        "officialId name bio gender avatar language email link role credits plan expirationDate citizenship reported banished createdAt",
       );
 
-      const nation = await Nation.findOne(
-        { officialId: nationId },
-        "officialId name data",
-      );
+      const nation = await Nation.findOne({ officialId: nationId });
 
       if (status === 0 || status === 1) {
         user.citizenship.nationId = nation.officialId;

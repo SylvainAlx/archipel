@@ -21,7 +21,7 @@ export default function ReportPanel({
 
   return (
     <section
-      className={`w-full flex flex-col justify-center ${center ? "items-center" : "items-end"} gap-2`}
+      className={`flex flex-col justify-center ${center ? "items-center" : "items-end"} gap-2`}
     >
       {content.reported && <ReportedFlag />}
       {session.user.officialId != "" &&

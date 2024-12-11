@@ -26,7 +26,12 @@ export default function NationTile(nation: Nation) {
           <Flag nation={nation} />
           <h3 className="text-light text-xl pl-4 pr-6">{nation.name}</h3>
         </div>
-        <EyeButton click={handleClick} />
+        <div className="flex gap-1 flex-wrap items-center">
+          <EyeButton click={handleClick} />
+          {session.user.citizenship.nationId != nation.officialId && (
+            <ReportPanel content={nation} center={false} />
+          )}
+        </div>
       </div>
       <div className="max-w-[80%] flex gap-1 self-end flex-wrap justify-end">
         <TreasuryTag label={nation.data.roleplay.treasury} />
@@ -37,9 +42,6 @@ export default function NationTile(nation: Nation) {
           <TagList nation={nation} isTile={true} />
         </div>
       </div>
-      {session.nation.officialId != nation.officialId && (
-        <ReportPanel content={nation} center={false} />
-      )}
     </div>
   );
 }

@@ -62,7 +62,7 @@ export default function Citizen() {
   const [citizen, setCitizen] = useAtom(citizenFetchAtom);
   const [nation] = useAtom(nationFetchedAtom);
   const [comList] = useAtom(comFetchedListAtom);
-  const [session, setSession] = useAtom(sessionAtom);
+  const [session] = useAtom(sessionAtom);
   const [confirm, setConfirm] = useAtom(confirmBox);
   const [showCookiesModal, setShowCookiesModal] = useAtom(showCookiesModalAtom);
   const [nationPlaces] = useAtom(nationPlacesListAtom);
@@ -75,10 +75,7 @@ export default function Citizen() {
 
   useEffect(() => {
     if (param.id) {
-      if (
-        session.user.officialId === param.id &&
-        citizen.officialId != session.user.officialId
-      ) {
+      if (session.user.officialId === param.id) {
         setCitizen(session.user);
         getComsByDestination(session.user.officialId);
       }
@@ -104,17 +101,6 @@ export default function Citizen() {
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [citizen]);
-
-  // useEffect(() => {
-  //   if (
-  //     nation.officialId != undefined &&
-  //     nation.officialId !== "" &&
-  //     nationPlaces.length === 0
-  //   ) {
-  //     getNationPlaces(nation);
-  //   }
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [nation]);
 
   useEffect(() => {
     if (
@@ -200,11 +186,6 @@ export default function Citizen() {
       result: "",
       payload,
     });
-
-    const newSession = { ...session };
-    newSession.user.citizenship.nationId = "";
-    newSession.user.citizenship.status = -1;
-    setSession(newSession);
   };
 
   const resetCookiesConsent = () => {
@@ -309,19 +290,6 @@ export default function Citizen() {
                     </span>
                     {self && <CreditTag label={citizen.credits} owner={true} />}
                     {citizen.citizenship.nationOwner && <NationOwnerTag />}
-                    {/* <div className="flex items-center gap-1">
-                      <ResidenceTag
-                        residenceId={citizen.citizenship.residence}
-                      />
-                      {placesList.length > 0 &&
-                        session.user.officialId === citizen.officialId && (
-                          <EditIcon
-                            target="citizen"
-                            param={placesList}
-                            path="citizenship.residence"
-                          />
-                        )}
-                    </div> */}
                     {citizen.role === "admin" && (
                       <RoleTag label={t("pages.citizen.role.admin")} />
                     )}

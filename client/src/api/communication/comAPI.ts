@@ -106,7 +106,7 @@ export const getPublicComs = async (nationId: string) => {
       savedComList.push(com);
     }
   });
-  if (savedComList.length > 0) {
+  if (savedComList.length > 0 && nationId != "") {
     myStore.set(comFetchedListAtom, savedComList);
   } else {
     try {

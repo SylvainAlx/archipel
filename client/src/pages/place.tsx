@@ -33,6 +33,7 @@ import { ConfirmBoxDefault } from "../types/typAtom";
 import MDEditor from "@uiw/react-md-editor";
 import ReportPanel from "../components/reportPanel";
 import { getComsByDestination } from "../api/communication/comAPI";
+import { FaSortAmountDownAlt } from "react-icons/fa";
 
 export default function Place() {
   const navigate = useNavigate();
@@ -140,6 +141,7 @@ export default function Place() {
           {owner && <CrossButton click={handleDelete} />}
         </div>
         <div className="flex items-center gap-2">
+          <FaSortAmountDownAlt className="text-secondary" />
           <b>{`${nation.name != parentName ? nation.name + " > " + parentName : nation.name}`}</b>
           {owner && (
             <EditIcon
@@ -150,7 +152,7 @@ export default function Place() {
           )}
         </div>
         {!place.reported && (
-          <section className="w-full flex flex-col items-center rounded">
+          <section className="w-full flex flex-col items-center rounded gap-4">
             <div className="flex items-center gap-2">
               <H2 text={`${place.name}`} />
               {owner && (

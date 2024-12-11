@@ -15,6 +15,8 @@ import { genderList, languageList } from "../settings/lists";
 export default function Register() {
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [passwordsMatch, setPasswordsMatch] = useState(true);
   const [language, setLanguage] = useState("");
   const [gender, setGender] = useState(0);
   const [acceptCGU, setAcceptCGU] = useState(false);
@@ -84,6 +86,17 @@ export default function Register() {
               placeholder={t("components.form.input.password")}
               value={password}
             />
+            <Input
+              required={true}
+              onChange={(e) => {
+                setConfirmPassword(e.target.value);
+                setPasswordsMatch(password === e.target.value);
+              }}
+              type="password"
+              name="confirm"
+              placeholder={t("pages.recovery.confirmPassword")}
+              value={confirmPassword}
+            />
             <Select
               title="Genre"
               options={genderList}
@@ -121,7 +134,7 @@ export default function Register() {
             <Button
               text={t("components.buttons.register")}
               type="submit"
-              disabled={!acceptCGU || !captchaOk}
+              disabled={!acceptCGU || !captchaOk || !passwordsMatch}
               widthFull={true}
             />
           </>

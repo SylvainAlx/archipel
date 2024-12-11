@@ -58,14 +58,14 @@ export const placeSearchSortOptions: StandardOption[] = [
     id: 1,
     label: i18n.t("components.searchBars.placesList.sortPlaces.descAlpha"),
   },
-  {
-    id: 2,
-    label: i18n.t("components.searchBars.placesList.sortPlaces.ascCtz"),
-  },
-  {
-    id: 3,
-    label: i18n.t("components.searchBars.placesList.sortPlaces.descCtz"),
-  },
+  // {
+  //   id: 2,
+  //   label: i18n.t("components.searchBars.placesList.sortPlaces.ascCtz"),
+  // },
+  // {
+  //   id: 3,
+  //   label: i18n.t("components.searchBars.placesList.sortPlaces.descCtz"),
+  // },
 ];
 
 export const comSearchSortOptions: StandardOption[] = [

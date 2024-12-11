@@ -99,10 +99,10 @@
     },
     "recovery": {
       "title": "reset password",
-      "placeholderName": "User name *",
-      "recoveryKey": "Recovery key *",
-      "newPassword": "New password *",
-      "confirmPassword": "Confirm new password *",
+      "placeholderName": "User name",
+      "recoveryKey": "Recovery key",
+      "newPassword": "New password",
+      "confirmPassword": "Confirm new password",
       "changePassword": "CHANGE PASSWORD"
     },
     "register": {
@@ -340,7 +340,7 @@
         }
       },
       "comsList": {
-        "input": "Title",
+        "input": "Nation official ID",
         "SortComs": {
           "ascDate": "From oldest to newest",
           "descDate": "From newest to oldest"

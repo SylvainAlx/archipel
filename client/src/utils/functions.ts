@@ -20,8 +20,9 @@ import {
   regimeList,
   regimeTypeList,
 } from "../settings/lists";
-import { Com } from "../types/typCom";
+import { Com, ComPayload } from "../types/typCom";
 import { comMessage } from "./toasts";
+import { createNewCom } from "../api/communication/comAPI";
 
 export const GET_JWT = () => {
   const jwt = localStorage.getItem("jwt");
@@ -460,4 +461,63 @@ export const getComTypeLabelById = (id: number) => {
     }
   });
   return label;
+};
+
+export const createComByStatus = (
+  status: number,
+  nation: Nation,
+  user: User,
+) => {
+  if (status === 1) {
+    const newCom: ComPayload = {
+      comType: COM_TYPE.userPrivate.id,
+      origin: nation.officialId,
+      destination: user.officialId,
+      message: "[A TRADUIRE] Vous avez rejoint la nation",
+      title: nation.name,
+    };
+    createNewCom(newCom);
+    const newCom2: ComPayload = {
+      comType: COM_TYPE.userPrivate.id,
+      origin: nation.officialId,
+      destination: nation.owner,
+      message: user.name + " [A TRADUIRE] a rejoint la nation",
+      title: nation.name,
+    };
+    createNewCom(newCom2);
+  } else if (user.citizenship.status === -1) {
+    const newCom1: ComPayload = {
+      comType: COM_TYPE.userPrivate.id,
+      origin: nation.officialId,
+      destination: user.officialId,
+      message: "[A TRADUIRE] Vous avez quitté la nation",
+      title: nation.name,
+    };
+    createNewCom(newCom1);
+    const newCom2: ComPayload = {
+      comType: COM_TYPE.userPrivate.id,
+      origin: nation.officialId,
+      destination: nation.owner,
+      message: user.name + " [A TRADUIRE] a quitté la nation",
+      title: nation.name,
+    };
+    createNewCom(newCom2);
+  } else {
+    const newCom1: ComPayload = {
+      comType: COM_TYPE.userPrivate.id,
+      origin: nation.officialId,
+      destination: nation.owner,
+      message: user.name + " [A TRADUIRE] demande la citoyenneté de la nation",
+      title: nation.name,
+    };
+    createNewCom(newCom1);
+    const newCom2: ComPayload = {
+      comType: COM_TYPE.userPrivate.id,
+      origin: nation.officialId,
+      destination: user.officialId,
+      message: "[A TRADUIRE] Votre demande de citoyenneté est en attente",
+      title: nation.name,
+    };
+    createNewCom(newCom2);
+  }
 };

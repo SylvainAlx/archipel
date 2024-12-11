@@ -2,7 +2,7 @@
 
 - Créer une organisation
 - Rejoindre une organisation
-- Créer des items et les proposer à l'aquisition aux citoyens
+- Créer des items et les proposer à l'acquisition aux citoyens
 - Ajouter les hymnes des nations
 - Créer une gazette des nations en se basant sur les communiqués
 - Montrer la répartitions des langues parlées dans chaque nation
@@ -10,10 +10,27 @@
 - Créer une aide pour les premiers pas d'un utilisateur
 - Améliorer le système de notifications
 - Exporter une carte d'identité virtuelle sous forme d'image
+- Améliorer le référencement et l'accessibilité
+- Étendre les fonctionnalités pour les utilisateurs mobile
+- Lier les lieux de la nation à un emplacement sur la carte
 
-## Développements en cours
+## Versions en développement
 
-## Versions
+### BETA-0.2
+
+### Ajouts
+
+Aucun
+
+### Suppressions
+
+Aucune
+
+### Corrections
+
+Aucune
+
+## Versions terminées
 
 ### BETA-0.1
 
@@ -30,8 +47,8 @@
 
 ### Suppressions
 
-Aucunes
+Aucune
 
 ### Corrections
 
-Aucunes
+Aucune

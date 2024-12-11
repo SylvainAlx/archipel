@@ -32,7 +32,8 @@ export default function NationComs({
   useEffect(() => {
     setNationComList([]);
     if (selectedNation != undefined) {
-      session.nation.officialId === selectedNation.officialId
+      session.user.citizenship.nationId === selectedNation.officialId &&
+      session.user.citizenship.status > 0
         ? getComs(selectedNation.officialId, selectedNation.officialId, [
             COM_TYPE.nationPrivate.id,
             COM_TYPE.nationPublic.id,

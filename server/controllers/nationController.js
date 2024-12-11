@@ -194,6 +194,7 @@ export const deleteSelfNation = async (req, res) => {
       user.citizenship.nationId = "";
       user.citizenship.nationName = "";
       user.citizenship.nationOwner = false;
+      user.citizenship.status = -1;
       const savedUser = await user.save();
 
       // suppression de l'appartenance à la nation pour tous les citoyens

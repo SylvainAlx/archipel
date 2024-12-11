@@ -2,7 +2,7 @@ import {
   editPlaceAtom,
   myStore,
   nationPlacesListAtom,
-  session,
+  sessionAtom,
 } from "../../settings/store";
 import { useAtom } from "jotai";
 import { GiCapitol } from "react-icons/gi";
@@ -29,6 +29,7 @@ export default function PlaceTile({ place, owner }: PlaceTileProp) {
     population: 0,
     children: 0,
   });
+  const [session] = useAtom(sessionAtom);
   const emplacement = useLocation();
   const navigate = useNavigate();
 
@@ -70,7 +71,12 @@ export default function PlaceTile({ place, owner }: PlaceTileProp) {
           </span>
           <span>{place.name}</span>
         </div>
-        <EyeButton click={handleClick} />
+        <div className="flex gap-1 flex-wrap items-center">
+          <EyeButton click={handleClick} />
+          {session.user.citizenship.nationId != place.nation && (
+            <ReportPanel content={place} center={false} />
+          )}
+        </div>
       </h3>
       <div className="max-w-[90%] flex flex-wrap items-center self-end justify-end gap-1">
         <PlaceTag label={getPlaceTypeLabel(place.type)} />
@@ -79,7 +85,6 @@ export default function PlaceTile({ place, owner }: PlaceTileProp) {
           <NationTag label={place.nation} />
         )}
       </div>
-      <ReportPanel content={place} center={false} />
     </div>
   );
 }
