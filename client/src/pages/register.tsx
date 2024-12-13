@@ -26,10 +26,14 @@ export default function Register() {
   const navigate = useNavigate();
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    if (e.target.type == "text") {
+    if (e.target.name == "name") {
       setName(e.target.value);
-    } else {
+    } else if (e.target.name == "password") {
       setPassword(e.target.value);
+      setPasswordsMatch(confirmPassword === e.target.value);
+    } else if (e.target.name == "confirm") {
+      setConfirmPassword(e.target.value);
+      setPasswordsMatch(password === e.target.value);
     }
   };
 
@@ -88,10 +92,7 @@ export default function Register() {
             />
             <Input
               required={true}
-              onChange={(e) => {
-                setConfirmPassword(e.target.value);
-                setPasswordsMatch(password === e.target.value);
-              }}
+              onChange={handleChange}
               type="password"
               name="confirm"
               placeholder={t("pages.recovery.confirmPassword")}

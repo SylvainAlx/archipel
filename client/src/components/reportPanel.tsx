@@ -7,9 +7,10 @@ import AdminReportButton from "./buttons/adminReportButton";
 import ReportButton from "./buttons/reportButton";
 import { sessionAtom } from "../settings/store";
 import ReportedFlag from "./reportedFlag";
+import { Com } from "../types/typCom";
 
 interface ReportPanelProps {
-  content: User | Nation | Place;
+  content: User | Nation | Place | Com;
   center?: boolean;
 }
 

@@ -191,13 +191,15 @@ export const changePassword = ({
     });
 };
 
-export const deleteUser = () => {
+export const deleteUser = (password: string) => {
   myStore.set(loadingAtom, true);
-  deleteUserFetch()
+  deleteUserFetch(password)
     .then((resp) => {
       myStore.set(loadingAtom, false);
-      myStore.set(sessionAtom, emptySession);
-      localStorage.removeItem("jwt");
+      if (resp.infoType === "delete") {
+        myStore.set(sessionAtom, emptySession);
+        localStorage.removeItem("jwt");
+      }
       displayUserInfoByType(resp.infoType);
       if (resp.nation != null) {
         updateOrCreateNationInMemory(resp.nation);

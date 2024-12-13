@@ -9,7 +9,7 @@ import { emptyPlace } from "../../types/typPlace";
 import { createNewPlace } from "../../api/place/placeAPI";
 import Select from "../form/select";
 import { useTranslation } from "react-i18next";
-import { placesTypeList } from "../../settings/lists";
+import { PLACE_TYPE } from "../../settings/consts";
 
 export default function NewPlaceModal() {
   const [newPlace, setNewPlace] = useAtom(newPlaceAtom);
@@ -51,7 +51,10 @@ export default function NewPlaceModal() {
               onChange={handleChange}
               placeholder={t("components.modals.newPlaceModal.placeName")}
             />
-            <Select options={placesTypeList} onChange={handleSelectChange} />
+            <Select
+              options={Object.values(PLACE_TYPE)}
+              onChange={handleSelectChange}
+            />
             <Button
               type="submit"
               text={t("components.buttons.validate")}

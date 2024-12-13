@@ -1,5 +1,6 @@
 import Com from "../models/comSchema.js";
 import { COMTYPE } from "../settings/const.js";
+import { createOfficialId } from "../utils/functions.js";
 
 export const comCount = async (req, res) => {
   try {
@@ -41,14 +42,27 @@ export const getComs = async (req, res) => {
     const originId = req.query.originId;
     const destinationId = req.query.destinationId;
     const comType = req.query.comType;
+
+    // Si comType contient des virgules, on le découpe et on le transforme en tableau de nombres
     const comTypeArray = comType.includes(",")
       ? comType.split(",").map(Number)
       : [Number(comType)];
-    const coms = await Com.find({
-      origin: originId,
+
+    // Construction de l'objet de filtre
+    const filter = {
       destination: destinationId,
       comType: { $in: comTypeArray },
-    });
+    };
+
+    // Si originId n'est pas une chaîne vide, on ajoute ce filtre
+    if (originId !== "") {
+      filter.origin = originId;
+    }
+
+    // Exécution de la requête avec le filtre construit
+    const coms = await Com.find(filter);
+
+    // Retour des résultats
     res.status(200).json(coms);
   } catch (error) {
     console.error(error);
@@ -95,7 +109,10 @@ export const createCom = async (req, res) => {
   try {
     const { origin, destination, title, comType, message } = req.body;
 
+    const officialId = createOfficialId("m");
+
     const com = new Com({
+      officialId,
       origin,
       destination,
       title,

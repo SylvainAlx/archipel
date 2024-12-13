@@ -14,6 +14,7 @@ import { confirmBox, myStore, sessionAtom } from "../../settings/store";
 import { useTranslation } from "react-i18next";
 import NationTag from "../tags/nationTag";
 import HoverInfo from "../hoverInfo";
+import Button from "../buttons/button";
 
 export interface RelationTileProps {
   relation: DiplomaticRelationship;
@@ -37,6 +38,28 @@ export default function RelationTile({ relation }: RelationTileProps) {
       }
     });
   }, [relation, session.user.citizenship]);
+
+  const handleAccept = () => {
+    const updatedRelation = structuredClone(relation);
+    updatedRelation.nations[nationIndex].accepted = true;
+    myStore.set(confirmBox, {
+      action: "acceptRelation",
+      text: t("components.modals.confirmModal.acceptRelation"),
+      payload: updatedRelation,
+      result: "",
+    });
+  };
+
+  const handleRefuse = () => {
+    const updatedRelation = structuredClone(relation);
+    updatedRelation.nations[nationIndex].accepted = true;
+    myStore.set(confirmBox, {
+      action: "leave",
+      text: t("components.modals.confirmModal.refuseRelation"),
+      payload: updatedRelation,
+      result: "",
+    });
+  };
 
   const handleLeave = () => {
     const updatedRelation: DiplomaticRelationship = { ...relation };
@@ -117,9 +140,26 @@ export default function RelationTile({ relation }: RelationTileProps) {
           return <NationTag key={i} label={nation.OfficialId} />;
         })}
       </div>
-      <div className="self-end">
-        {nationIndex != -1 && (
-          <CrossButton click={handleLeave} text="rompre la relation" />
+      <div className="flex items-center gap-1 self-end">
+        {relation.nations[1].OfficialId === session.user.citizenship.nationId &&
+        !relation.nations[1].accepted ? (
+          <>
+            <Button
+              text={t("components.buttons.accept")}
+              click={handleAccept}
+            />
+            <CrossButton
+              text={t("components.buttons.refuse")}
+              click={handleRefuse}
+            />
+          </>
+        ) : (
+          nationIndex != -1 && (
+            <CrossButton
+              click={handleLeave}
+              text={t("components.buttons.break")}
+            />
+          )
         )}
       </div>
       {hoverInfo != "" && <HoverInfo text={hoverInfo} />}

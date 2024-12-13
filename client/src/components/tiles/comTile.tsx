@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import CrossButton from "../buttons/crossButton";
 import { useTranslation } from "react-i18next";
 import DateTag from "../tags/dateTag";
+import ReportPanel from "../reportPanel";
 
 export interface ComTileProps {
   com: Com;
@@ -57,11 +58,13 @@ export default function ComTile({ com }: ComTileProps) {
           style={{ whiteSpace: "pre-wrap" }}
         />
       </div>
-      {owner && (
-        <div className="w-max self-end">
+      <div className="w-max self-end">
+        {owner ? (
           <CrossButton click={handleDelete} />
-        </div>
-      )}
+        ) : (
+          <ReportPanel content={com} center={false} />
+        )}
+      </div>
     </div>
   );
 }

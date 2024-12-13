@@ -24,6 +24,7 @@ export default function Recovery() {
       setName(e.target.value);
     } else if (e.target.type == "password") {
       setPassword(e.target.value);
+      setPasswordsMatch(confirmPassword === e.target.value);
     } else {
       setRecovery(e.target.value);
     }
@@ -31,7 +32,7 @@ export default function Recovery() {
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    recoveryUser({ name, password, recovery });
+    recoveryUser({ name, recovery, password });
     navigate("/login");
   };
 
@@ -77,20 +78,13 @@ export default function Recovery() {
               placeholder={t("pages.recovery.confirmPassword")}
               value={confirmPassword}
             />
-            {/* <button
-          disabled={!passwordsMatch}
-          type="submit"
-          className={`button ${!passwordsMatch && "cursor-not-allowed"}`}
-        >
-          CHANGER DE MOT DE PASSE
-        </button> */}
             <div
               className={`${!passwordsMatch && "cursor-not-allowed"} w-full`}
             >
               <Button
                 text={t("pages.recovery.changePassword")}
                 type="submit"
-                disabled={!passwordsMatch}
+                disabled={!passwordsMatch || !confirmPassword}
                 widthFull={true}
               />
             </div>

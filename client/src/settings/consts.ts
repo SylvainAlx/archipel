@@ -52,6 +52,25 @@ export const COM_TYPE = {
   userPrivate: { id: 21, label: i18n.t("listes.comType.userPrivate") },
 };
 
+export const PLACE_TYPE = {
+  state: {
+    id: 0,
+    label: i18n.t("components.searchBars.placesList.checkbox.state"),
+  },
+  county: {
+    id: 1,
+    label: i18n.t("components.searchBars.placesList.checkbox.county"),
+  },
+  city: {
+    id: 2,
+    label: i18n.t("components.searchBars.placesList.checkbox.city"),
+  },
+  nature: {
+    id: 3,
+    label: i18n.t("components.searchBars.placesList.checkbox.nature"),
+  },
+};
+
 export const COM_GENERAL_DESTINATION = "-1";
 
 export const FLAG_MAKER_URL = "https://flagmakerjr.stg7.net/";

@@ -1,13 +1,7 @@
 /* eslint-disable no-case-declarations */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useAtom } from "jotai";
-import {
-  confirmBox,
-  editPlaceAtom,
-  editbox,
-  myStore,
-  sessionAtom,
-} from "../../settings/store";
+import { editPlaceAtom, editbox } from "../../settings/store";
 import Button from "../buttons/button";
 import Input from "../form/input";
 import Select from "../form/select";
@@ -17,20 +11,19 @@ import TextArea from "../form/textArea";
 import { IoMdCloseCircle } from "react-icons/io";
 import { MdCheckCircle } from "react-icons/md";
 import MarkdownEditor from "../form/markdownEditor";
-import { getMaxLength } from "../../utils/functions";
+import { getMaxLength, updateElement } from "../../utils/functions";
 import { MAX_LENGTH } from "../../settings/consts";
 
 export default function EditBoxModal() {
   const [editBox, setEditBox] = useAtom(editbox);
   const [newElement, setNewElement] = useState("");
   const [placeData] = useAtom(editPlaceAtom);
-  const [, setConfirm] = useAtom(confirmBox);
   const { t } = useTranslation();
 
   useEffect(() => {
     if (Array.isArray(editBox.original)) {
       if (editBox.path === "data.roleplay.capital") {
-        setEditBox({ ...editBox, new: editBox.original[0].id });
+        setEditBox({ ...editBox, new: editBox.original });
       } else if (editBox.path === "citizenship.residence") {
         setEditBox({ ...editBox, new: editBox.original[0].id });
       } else if (editBox.path === "parentId") {
@@ -45,98 +38,15 @@ export default function EditBoxModal() {
   }, [editBox.original]);
 
   const handleSubmit = (e: FormEvent) => {
-    const session = myStore.get(sessionAtom);
     e.preventDefault();
-    const parties: string[] = editBox.path.split(".");
-    let objetCourant;
-    let dernierePartie;
-    switch (editBox.target) {
-      case "nation":
-        const updatedNation: any = { ...session.nation };
-        objetCourant = updatedNation;
-        for (let i = 0; i < parties.length - 1; i++) {
-          if (typeof objetCourant === "object" && objetCourant !== null) {
-            objetCourant = objetCourant[parties[i]];
-          } else {
-            console.error(
-              `Chemin incorrect. Propriété ${parties[i]} non trouvée.`,
-            );
-            break;
-          }
-        }
-        dernierePartie = parties[parties.length - 1];
-        if (typeof objetCourant === "object" && objetCourant !== null) {
-          objetCourant[dernierePartie] = editBox.new;
-        }
-        // updatedNation.officialId = session.user.officialId;
-
-        setConfirm({
-          action: "updateNation",
-          text: t("components.modals.confirmModal.updateNation"),
-          result: "",
-          target: "",
-          payload: updatedNation,
-        });
-        break;
-      case "citizen":
-        const updatedCitizen: any = { ...session.user };
-        objetCourant = updatedCitizen;
-        for (let i = 0; i < parties.length - 1; i++) {
-          if (typeof objetCourant === "object" && objetCourant !== null) {
-            objetCourant = objetCourant[parties[i]];
-          } else {
-            console.error(
-              `Chemin incorrect. Propriété ${parties[i]} non trouvée.`,
-            );
-            break;
-          }
-        }
-        dernierePartie = parties[parties.length - 1];
-        if (typeof objetCourant === "object" && objetCourant !== null) {
-          objetCourant[dernierePartie] = editBox.new;
-        }
-        setConfirm({
-          action: "updateUser",
-          text: t("components.modals.confirmModal.updateCitizen"),
-          result: "",
-          target: "",
-          payload: updatedCitizen,
-        });
-        break;
-      case "place":
-        const updatedPlace: any = { ...placeData.place };
-        objetCourant = updatedPlace;
-        for (let i = 0; i < parties.length - 1; i++) {
-          if (typeof objetCourant === "object" && objetCourant !== null) {
-            objetCourant = objetCourant[parties[i]];
-          } else {
-            console.error(
-              `Chemin incorrect. Propriété ${parties[i]} non trouvée.`,
-            );
-            break;
-          }
-        }
-        dernierePartie = parties[parties.length - 1];
-        if (typeof objetCourant === "object" && objetCourant !== null) {
-          objetCourant[dernierePartie] = editBox.new;
-        }
-        setConfirm({
-          action: "updatePlace",
-          text: t("components.modals.confirmModal.updatePlace"),
-          result: "",
-          target: "",
-          payload: updatedPlace,
-        });
-        break;
-      default:
-        break;
-    }
-
+    updateElement(
+      editBox.target,
+      editBox.path,
+      editBox.new,
+      placeData.place,
+      true,
+    );
     setEditBox({ target: "", original: -1, new: -1, path: "" });
-  };
-
-  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setEditBox({ ...editBox, new: e.target.value });
   };
 
   const handleInputChangeArray = (
@@ -150,11 +60,9 @@ export default function EditBoxModal() {
     }
   };
 
-  const handleTextChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-    setEditBox({ ...editBox, new: e.target.value });
-  };
-
-  const handleDateChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (
+    e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
+  ) => {
     setEditBox({ ...editBox, new: e.target.value });
   };
 
@@ -198,14 +106,14 @@ export default function EditBoxModal() {
               required={!editBox.canBeEmpty}
               maxLength={MAX_LENGTH.textArea}
               placeholder={t("components.modals.editModal.newValue")}
-              onChange={handleTextChange}
+              onChange={handleChange}
               value={editBox.new.toString()}
               name=""
               rows={1}
             />
           ) : editBox.path === "data.general.nationalDay" ? (
             <Input
-              onChange={handleDateChange}
+              onChange={handleChange}
               type="date"
               name="nationalDay"
               value={editBox.new.toString()}
@@ -222,7 +130,7 @@ export default function EditBoxModal() {
             required={!editBox.canBeEmpty}
             type="number"
             placeholder={t("components.modals.editModal.newValue")}
-            onChange={handleInputChange}
+            onChange={handleChange}
             value={editBox.new.toString()}
             name=""
           />

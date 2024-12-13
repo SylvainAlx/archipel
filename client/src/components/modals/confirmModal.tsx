@@ -34,7 +34,7 @@ export default function ConfirmModal() {
       deleteSelfNation();
     }
     if (confirm.action === "deleteUser") {
-      deleteUser();
+      deleteUser(confirm.payload);
     }
     if (confirm.action === "deleteCom") {
       deleteCom(confirm.target);
@@ -61,6 +61,9 @@ export default function ConfirmModal() {
       changeStatus(confirm.payload);
     }
     if (confirm.action === "leave") {
+      updateRelation(confirm.payload);
+    }
+    if (confirm.action === "acceptRelation") {
       updateRelation(confirm.payload);
     }
     if (confirm.action === "deleteTile") {

@@ -1,3 +1,5 @@
+import { PLACE_TYPE } from "../settings/consts";
+
 export interface Place {
   _id?: string;
   officialId: string;
@@ -16,7 +18,7 @@ export const emptyPlace: Place = {
   nation: "",
   officialId: "",
   parentId: "",
-  type: 0,
+  type: PLACE_TYPE.state.id,
   population: 0,
   name: "",
   description: "",

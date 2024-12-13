@@ -1,6 +1,7 @@
 import {
   comFetchedListAtom,
   confirmBox,
+  editPlaceAtom,
   nationFetchedAtom,
   nationPlacesListAtom,
   placeFetchedAtom,
@@ -45,6 +46,7 @@ export default function Place() {
   const [comList] = useAtom(comFetchedListAtom);
   const [nationPlacesList] = useAtom(nationPlacesListAtom);
   const [confirm, setConfirm] = useAtom(confirmBox);
+  const [, setEditPlace] = useAtom(editPlaceAtom);
   const param = useParams();
   const [refresh, setRefresh] = useState(false);
   const [haveChildren, setHaveChildren] = useState(false);
@@ -60,6 +62,7 @@ export default function Place() {
   }, [param.id]);
 
   useEffect(() => {
+    setEditPlace({ place });
     if (
       place.nation === session.user.citizenship.nationId &&
       session.user.citizenship.nationOwner

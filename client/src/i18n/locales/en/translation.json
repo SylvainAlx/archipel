@@ -157,7 +157,10 @@
       "contact": "contact",
       "generate": "generate",
       "report": "REPORT",
-      "cookiesConsent": "cookies consent"
+      "cookiesConsent": "cookies consent",
+      "accept": "ACCEPT",
+      "refuse": "REFUSE",
+      "break": "BREAK"
     },
     "form": {
       "input": {
@@ -191,7 +194,9 @@
         "askCitizenship": "Ask citizenship ?",
         "leaveNation": "Leave the nation ?",
         "cancelCitizenship": "Cancel citizenship application ?",
-        "leaveRelation": "Leave relation ?",
+        "acceptRelation": "Accept diplomatic relations ?",
+        "refuseRelation": "Refuse diplomatic relations ?",
+        "leaveRelation": "Leave diplomatic relations ?",
         "createTile": "Confirm new tile ?",
         "updateTile": "Update tile ?",
         "deleteTile": "Delete tile ?",

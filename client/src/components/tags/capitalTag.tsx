@@ -45,12 +45,10 @@ export default function CapitalTag({ selectedNation }: CapitalTagProps) {
       hover={t("components.hoverInfos.tags.capital")}
       text={capital}
       bgColor="bg-info"
-      children={
-        <>
-          <GiCapitol />
-        </>
+      children={<GiCapitol />}
+      click={
+        selectedNation.data.roleplay.capital != "" ? handleClick : undefined
       }
-      click={handleClick}
     />
   );
 }

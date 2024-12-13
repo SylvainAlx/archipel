@@ -1,7 +1,7 @@
 import Place from "../models/placeSchema.js";
 import Nation from "../models/nationSchema.js";
 import { createOfficialId } from "../utils/functions.js";
-import { COSTS, QUOTAS } from "../settings/const.js";
+import { COSTS, PLACE_TYPE, QUOTAS } from "../settings/const.js";
 
 export const placesCount = async (req, res) => {
   try {
@@ -105,8 +105,9 @@ export const createPlace = async (req, res) => {
       });
       await place.save();
       if (
-        placeNation.data.roleplay.capital === "" ||
-        placeNation.data.roleplay.capital == undefined
+        (placeNation.data.roleplay.capital === "" ||
+          placeNation.data.roleplay.capital == undefined) &&
+        place.type === PLACE_TYPE.city
       ) {
         placeNation.data.roleplay.capital = place.officialId;
       }

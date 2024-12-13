@@ -1,5 +1,5 @@
 // import { FaCoins } from "react-icons/fa6";
-import { COSTS, QUOTAS } from "../../settings/consts";
+import { COSTS, PLACE_TYPE, QUOTAS } from "../../settings/consts";
 import Button from "./button";
 import { Place, emptyPlace } from "../../types/typPlace";
 import { myStore, newPlaceAtom, sessionAtom } from "../../settings/store";
@@ -9,7 +9,6 @@ import { MdLandscape } from "react-icons/md";
 import { Nation } from "../../types/typNation";
 import { FaCoins } from "react-icons/fa";
 import { errorMessage } from "../../utils/toasts";
-import { placesTypeList } from "../../settings/lists";
 
 export interface newPlaceProps {
   nation: Nation;
@@ -34,7 +33,7 @@ export default function NewPlaceButton({
         officialId: emptyPlace.officialId,
         parentId,
         nation: session.nation.officialId,
-        type: placesTypeList[0].id,
+        type: PLACE_TYPE.state.id,
         population: emptyPlace.population,
         name: emptyPlace.name,
         description: emptyPlace.description,

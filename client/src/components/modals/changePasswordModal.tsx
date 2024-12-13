@@ -14,6 +14,18 @@ export function ChangePasswordModal() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const { t } = useTranslation();
 
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.target.name == "OldPassword") {
+      setOldPassword(e.target.value);
+    } else if (e.target.name == "newPassword") {
+      setNewPassword(e.target.value);
+      setPasswordsMatch(confirmPassword === e.target.value);
+    } else if (e.target.name == "confirmPassword") {
+      setConfirmPassword(e.target.value);
+      setPasswordsMatch(newPassword === e.target.value);
+    }
+  };
+
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     const payload: ChangePasswordPayload = { oldPassword, newPassword };
@@ -32,9 +44,7 @@ export function ChangePasswordModal() {
           <>
             <Input
               required={true}
-              onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                setOldPassword(e.target.value)
-              }
+              onChange={handleChange}
               type="password"
               name="OldPassword"
               placeholder={t(
@@ -44,9 +54,7 @@ export function ChangePasswordModal() {
             />
             <Input
               required={true}
-              onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                setNewPassword(e.target.value)
-              }
+              onChange={handleChange}
               type="password"
               name="newPassword"
               placeholder={t(
@@ -56,10 +64,7 @@ export function ChangePasswordModal() {
             />
             <Input
               required={true}
-              onChange={(e) => {
-                setConfirmPassword(e.target.value);
-                setPasswordsMatch(newPassword === e.target.value);
-              }}
+              onChange={handleChange}
               type="password"
               name="confirmPassword"
               placeholder={t(
@@ -67,13 +72,12 @@ export function ChangePasswordModal() {
               )}
               value={confirmPassword}
             />
-            <div className="w-full flex flex-col gap-4 justify-center my-4">
+            <div className="flex gap-4 justify-center my-4">
               <div className={`${!passwordsMatch && "cursor-not-allowed"}`}>
                 <Button
                   text={t("components.buttons.validate")}
                   type="submit"
                   disabled={!passwordsMatch}
-                  widthFull={true}
                 />
               </div>
               <Button

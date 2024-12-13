@@ -38,7 +38,7 @@ export const register = async (req, res) => {
       sentencesPerParagraph: { max: 8, min: 4 },
       wordsPerSentence: { max: 16, min: 4 },
     });
-    const recovery = random.generateWords(15);
+    const recovery = random.generateWords(12);
 
     let role = "standard";
 
@@ -143,14 +143,10 @@ export const verify = async (req, res) => {
         infoType: "ip",
       });
     }
-
-    const token = req.headers.authorization.split(" ")[1];
-    const secret = process.env.JWT_SECRET;
-
-    const decoded = jwt.verify(token, secret);
+    const userId = req.userId;
 
     const user = await User.findOne(
-      { name: decoded.name },
+      { officialId: userId },
       "officialId name bio gender avatar language email link role credits plan expirationDate citizenship reported banished createdAt",
     );
 
@@ -175,23 +171,19 @@ export const forgetPassword = async (req, res) => {
       return res.status(404).json({ infoType: "user" });
     }
 
-    user.compare(recovery, async (error, isMatch) => {
-      if (error) {
-        return res
-          .status(500)
-          .json({ infoType: "serverError", error: error.message });
-      }
-      if (isMatch) {
-        user.password = newPassword;
-        await user.save();
-        return res.status(200).json({
-          infoType: "newPassword",
-        });
-      } else {
-        return res.status(401).json({
-          infoType: "badRecovery",
-        });
-      }
+    const isMatch = await user.compare(recovery);
+
+    if (!isMatch) {
+      return res.status(401).json({
+        infoType: "badRecovery",
+      });
+    }
+
+    user.password = newPassword;
+    await user.save();
+
+    return res.status(200).json({
+      infoType: "newPassword",
     });
   } catch (error) {
     console.error(error);
@@ -212,9 +204,7 @@ export const changePassword = async (req, res) => {
     }
     user.comparePassword(oldPassword, async (error, isMatch) => {
       if (error) {
-        return res
-          .status(500)
-          .json({ infoType: "serverError", error: error.message });
+        return res.status(500).json({ infoType: "500", error: error.message });
       }
       if (isMatch) {
         user.password = newPassword;
@@ -223,8 +213,8 @@ export const changePassword = async (req, res) => {
           infoType: "newPassword",
         });
       } else {
-        return res.status(401).json({
-          infoType: "error",
+        return res.status(403).json({
+          infoType: "forbidden",
         });
       }
     });
@@ -298,18 +288,35 @@ export const getSelfUser = async (req, res) => {
 export const deleteSelfUser = async (req, res) => {
   try {
     const id = req.userId;
-    User.findOneAndDelete({ officialId: id }).then(async (user) => {
-      const nation = await Nation.findOne({
-        officialId: user.citizenship.nationId,
-      });
-      if (nation != null) {
-        if (nation.owner === user.officialId) {
-          nation.owner = "";
-        }
-        nation.data.roleplay.citizens -= 1;
-        nation.save();
+    const { password } = req.body;
+
+    const user = await User.findOne({ officialId: id });
+    if (!user) {
+      return res.status(404).json({ infoType: "404" });
+    }
+    user.comparePassword(password, async (error, isMatch) => {
+      if (error) {
+        return res.status(500).json({ infoType: "500", error: error.message });
       }
-      res.status(200).json({ nation, infoType: "delete" });
+      if (isMatch) {
+        User.findOneAndDelete({ officialId: id }).then(async (user) => {
+          const nation = await Nation.findOne({
+            officialId: user.citizenship.nationId,
+          });
+          if (nation != null) {
+            if (nation.owner === user.officialId) {
+              nation.owner = "";
+            }
+            nation.data.roleplay.citizens -= 1;
+            nation.save();
+          }
+          res.status(200).json({ nation, infoType: "delete" });
+        });
+      } else {
+        return res.status(403).json({
+          infoType: "forbidden",
+        });
+      }
     });
   } catch (error) {
     console.error(error);

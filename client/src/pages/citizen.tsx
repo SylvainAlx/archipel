@@ -42,7 +42,7 @@ import { IoDiamondOutline } from "react-icons/io5";
 import PlanButton from "../components/buttons/planButton";
 import { errorMessage } from "../utils/toasts";
 import LanguagesTag from "../components/tags/languagesTag";
-import { getComsByDestination } from "../api/communication/comAPI";
+import { getComs } from "../api/communication/comAPI";
 import DateTag from "../components/tags/dateTag";
 import { languageList } from "../settings/lists";
 import ReportPanel from "../components/reportPanel";
@@ -50,9 +50,11 @@ import ReportedFlag from "../components/reportedFlag";
 import { MdAddCircle } from "react-icons/md";
 import { RiLockPasswordFill } from "react-icons/ri";
 import { IoMdLogOut } from "react-icons/io";
-import { COM_GENERAL_DESTINATION } from "../settings/consts";
+import { COM_GENERAL_DESTINATION, COM_TYPE } from "../settings/consts";
 import { resetCookieConsentValue } from "react-cookie-consent";
 import CookiesModal from "../components/modals/cookiesModal";
+import { getOneUser } from "../api/user/userAPI";
+import CitizensCom from "../components/citizen/citizensCom";
 
 export default function Citizen() {
   const { t } = useTranslation();
@@ -77,7 +79,13 @@ export default function Citizen() {
     if (param.id) {
       if (session.user.officialId === param.id) {
         setCitizen(session.user);
-        getComsByDestination(session.user.officialId);
+        getComs("", session.user.officialId, [
+          COM_TYPE.userPrivate.id,
+          COM_TYPE.userUpdate.id,
+          COM_TYPE.general.id,
+        ]);
+      } else if (citizen.officialId != param.id) {
+        getOneUser(param.id);
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -89,7 +97,10 @@ export default function Citizen() {
     } else {
       setEnableLeaving(false);
     }
-    if (citizen.citizenship.nationId != "" && nation.officialId === "") {
+    if (
+      citizen.citizenship.nationId != "" &&
+      nation.officialId != citizen.citizenship.nationId
+    ) {
       getNation(citizen.citizenship.nationId);
     }
 
@@ -154,11 +165,15 @@ export default function Citizen() {
   };
 
   const handleDelete = () => {
-    myStore.set(confirmBox, {
-      action: "deleteUser",
-      text: t("components.modals.confirmModal.deleteUser"),
-      result: "",
-    });
+    const payload = window.prompt(t("components.form.input.password"));
+    if (payload) {
+      myStore.set(confirmBox, {
+        action: "deleteUser",
+        text: t("components.modals.confirmModal.deleteUser"),
+        payload,
+        result: "",
+      });
+    }
   };
 
   const handleDeleteAvatar = () => {
@@ -189,8 +204,8 @@ export default function Citizen() {
   };
 
   const resetCookiesConsent = () => {
-    setShowCookiesModal(true);
     resetCookieConsentValue();
+    setShowCookiesModal(true);
   };
 
   return (
@@ -389,8 +404,11 @@ export default function Citizen() {
             }
           />
         ) : (
-          <ReportPanel content={citizen} />
+          <div className="w-full flex justify-center">
+            <ReportPanel content={citizen} />
+          </div>
         )}
+        {self && <CitizensCom citizen={citizen} />}
       </section>
       {showCookiesModal && <CookiesModal />}
     </>
