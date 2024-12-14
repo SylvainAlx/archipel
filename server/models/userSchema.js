@@ -134,11 +134,8 @@ UserSchema.methods.comparePassword = function (candidatePassword, cb) {
   });
 };
 
-UserSchema.methods.compare = function (candidatePassword, cb) {
-  bcrypt.compare(candidatePassword, this.recovery, (err, isMatch) => {
-    if (err) return cb(err);
-    cb(null, isMatch);
-  });
+UserSchema.methods.compare = async function (candidatePassword) {
+  return bcrypt.compare(candidatePassword, this.recovery);
 };
 
 //création du JWT pour le login et le register

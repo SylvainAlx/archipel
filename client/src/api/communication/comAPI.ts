@@ -102,11 +102,11 @@ export const getComsByDestination = (officialId: string) => {
 export const getPublicComs = async (nationId: string) => {
   const savedComList: Com[] = [];
   myStore.get(comsListAtom).forEach((com) => {
-    if (com.comType === COM_TYPE.nationPublic.id) {
+    if (com.comType === COM_TYPE.nationPublic.id && com.origin === nationId) {
       savedComList.push(com);
     }
   });
-  if (savedComList.length > 0) {
+  if (savedComList.length > 0 && nationId != "") {
     myStore.set(comFetchedListAtom, savedComList);
   } else {
     try {

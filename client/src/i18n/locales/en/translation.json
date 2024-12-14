@@ -31,7 +31,8 @@
       },
       "relations": {
         "title": "diplomacy",
-        "noRelations": "no diplomatic relationship"
+        "noRelations": "no diplomatic relationship",
+        "pendingRelations": "diplomatic relations are pending approval"
       },
       "citizens": {
         "title": "citizens",
@@ -80,7 +81,8 @@
         "free": "hobby",
         "premium": "premium",
         "elite": "elite"
-      }
+      },
+      "privateCom": "private messages"
     },
     "coms": {
       "title": "communications"
@@ -99,10 +101,10 @@
     },
     "recovery": {
       "title": "reset password",
-      "placeholderName": "User name *",
-      "recoveryKey": "Recovery key *",
-      "newPassword": "New password *",
-      "confirmPassword": "Confirm new password *",
+      "placeholderName": "User name",
+      "recoveryKey": "Recovery key",
+      "newPassword": "New password",
+      "confirmPassword": "Confirm new password",
       "changePassword": "CHANGE PASSWORD"
     },
     "register": {
@@ -157,7 +159,10 @@
       "contact": "contact",
       "generate": "generate",
       "report": "REPORT",
-      "cookiesConsent": "cookies consent"
+      "cookiesConsent": "cookies consent",
+      "accept": "ACCEPT",
+      "refuse": "REFUSE",
+      "break": "BREAK"
     },
     "form": {
       "input": {
@@ -191,7 +196,9 @@
         "askCitizenship": "Ask citizenship ?",
         "leaveNation": "Leave the nation ?",
         "cancelCitizenship": "Cancel citizenship application ?",
-        "leaveRelation": "Leave relation ?",
+        "acceptRelation": "Accept diplomatic relations ?",
+        "refuseRelation": "Refuse diplomatic relations ?",
+        "leaveRelation": "Leave diplomatic relations ?",
         "createTile": "Confirm new tile ?",
         "updateTile": "Update tile ?",
         "deleteTile": "Delete tile ?",
@@ -340,7 +347,7 @@
         }
       },
       "comsList": {
-        "input": "Title",
+        "input": "Nation official ID",
         "SortComs": {
           "ascDate": "From oldest to newest",
           "descDate": "From newest to oldest"
@@ -438,6 +445,44 @@
     "com": {
       "new": "Communication created",
       "delete": "Communication deleted"
+    }
+  },
+  "coms": {
+    "nationCreate": {
+      "title": "Life of the nation ",
+      "message": "Your nation has been created"
+    },
+    "nationDelete": {
+      "title": "Life of the nation ",
+      "message": "Your nation has been deleted"
+    },
+    "nationJoin": {
+      "title": "Life of the nation ",
+      "message": " has joined the nation"
+    },
+    "nationLeave": {
+      "title": "Life of the nation ",
+      "message": " has left the nation"
+    },
+    "nationToAccept": {
+      "title": "Life of the nation ",
+      "message": " requests citizenship for the nation"
+    },
+    "nationToWait": {
+      "title": "Life of the nation ",
+      "message": "Citizenship request pending approval"
+    },
+    "relationToAccept": {
+      "title": "Diplomacy",
+      "message": "Diplomatic relation request to validate"
+    },
+    "relationToWait": {
+      "title": "Diplomacy",
+      "message": "Diplomatic relation request pending approval"
+    },
+    "relationUpdate": {
+      "title": "Diplomacy",
+      "message": "Diplomatic relations updated"
     }
   }
 }

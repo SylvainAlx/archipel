@@ -7,9 +7,10 @@ import AdminReportButton from "./buttons/adminReportButton";
 import ReportButton from "./buttons/reportButton";
 import { sessionAtom } from "../settings/store";
 import ReportedFlag from "./reportedFlag";
+import { Com } from "../types/typCom";
 
 interface ReportPanelProps {
-  content: User | Nation | Place;
+  content: User | Nation | Place | Com;
   center?: boolean;
 }
 
@@ -21,7 +22,7 @@ export default function ReportPanel({
 
   return (
     <section
-      className={`w-full flex flex-col justify-center ${center ? "items-center" : "items-end"} gap-2`}
+      className={`flex flex-col justify-center ${center ? "items-center" : "items-end"} gap-2`}
     >
       {content.reported && <ReportedFlag />}
       {session.user.officialId != "" &&

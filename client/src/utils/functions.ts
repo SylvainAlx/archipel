@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import i18n from "../i18n/i18n";
-import { COM_TYPE, MAX_LENGTH } from "../settings/consts";
-import { LabelId, Nation } from "../types/typNation";
+import { COM_TYPE, MAX_LENGTH, PLACE_TYPE } from "../settings/consts";
+import { LabelId, Nation, PoliticalSide, Regime } from "../types/typNation";
 import { Place } from "../types/typPlace";
 import {
   confirmBox,
@@ -11,17 +11,18 @@ import {
 } from "../settings/store";
 import { User } from "../types/typUser";
 import { deleteFileAPIProps } from "../api/files/fileAPI";
-import { updateNation } from "../api/nation/nationAPI";
-import { updateUser } from "../api/user/userAPI";
-import { updatePlace } from "../api/place/placeAPI";
 import {
-  placesTypeList,
   politicalSideList,
   regimeList,
   regimeTypeList,
 } from "../settings/lists";
-import { Com } from "../types/typCom";
+import { Com, ComPayload } from "../types/typCom";
 import { comMessage } from "./toasts";
+import { createNewCom } from "../api/communication/comAPI";
+import i18next from "i18next";
+import { updateNation } from "../api/nation/nationAPI";
+import { updateUser } from "../api/user/userAPI";
+import { updatePlace } from "../api/place/placeAPI";
 
 export const GET_JWT = () => {
   const jwt = localStorage.getItem("jwt");
@@ -139,12 +140,8 @@ export const getPlaceListByType = (
 };
 
 export const getPlaceTypeLabel = (id: number) => {
-  const foundType = placesTypeList.find((type) => type.id === id);
-  if (foundType) {
-    return foundType.label;
-  } else {
-    return "";
-  }
+  const foundType = Object.values(PLACE_TYPE).find((type) => type.id === id);
+  return foundType ? foundType.label : "";
 };
 
 export const createTagRegime = (id: number) => {
@@ -336,8 +333,16 @@ export const getMaxLength = (path: string) => {
 export const updateElement = (
   destination: string,
   path: string,
-  value: string,
+  value:
+    | string
+    | number
+    | boolean
+    | any[]
+    | Regime[]
+    | PoliticalSide[]
+    | LabelId[],
   place?: Place,
+  confirm?: boolean,
 ) => {
   const session = myStore.get(sessionAtom);
   const parties: string[] = path.split(".");
@@ -346,7 +351,7 @@ export const updateElement = (
   let dernierePartie;
   switch (destination) {
     case "nation":
-      const updatedNation: any = { ...session.nation };
+      const updatedNation: any = structuredClone(session.nation);
       objetCourant = updatedNation;
       for (let i = 0; i < parties.length - 1; i++) {
         if (typeof objetCourant === "object" && objetCourant !== null) {
@@ -365,13 +370,23 @@ export const updateElement = (
       }
 
       if (isOk) {
-        updateNation(updatedNation);
+        if (confirm) {
+          myStore.set(confirmBox, {
+            action: "updateNation",
+            text: i18next.t("components.modals.confirmModal.updateNation"),
+            result: "",
+            target: "",
+            payload: updatedNation,
+          });
+        } else {
+          updateNation(updatedNation);
+        }
       }
 
       break;
     case "citizen":
       // eslint-disable-next-line no-case-declarations
-      const updatedUser: any = { ...session.user };
+      const updatedUser: any = structuredClone(session.user);
       objetCourant = updatedUser;
       for (let i = 0; i < parties.length - 1; i++) {
         if (typeof objetCourant === "object" && objetCourant !== null) {
@@ -390,13 +405,23 @@ export const updateElement = (
       }
 
       if (isOk) {
-        updateUser(updatedUser);
+        if (confirm) {
+          myStore.set(confirmBox, {
+            action: "updateUser",
+            text: i18n.t("components.modals.confirmModal.updateCitizen"),
+            result: "",
+            target: "",
+            payload: updatedUser,
+          });
+        } else {
+          updateUser(updatedUser);
+        }
       }
 
       break;
     case "place":
       // eslint-disable-next-line no-case-declarations
-      const updatedPlace: any = { ...place };
+      const updatedPlace: any = structuredClone(place);
       objetCourant = updatedPlace;
       for (let i = 0; i < parties.length - 1; i++) {
         if (typeof objetCourant === "object" && objetCourant !== null) {
@@ -415,7 +440,17 @@ export const updateElement = (
       }
 
       if (isOk) {
-        updatePlace(updatedPlace);
+        if (confirm) {
+          myStore.set(confirmBox, {
+            action: "updatePlace",
+            text: i18n.t("components.modals.confirmModal.updatePlace"),
+            result: "",
+            target: "",
+            payload: updatedPlace,
+          });
+        } else {
+          updatePlace(updatedPlace);
+        }
       }
       break;
   }
@@ -460,4 +495,47 @@ export const getComTypeLabelById = (id: number) => {
     }
   });
   return label;
+};
+
+export const createComByStatus = (
+  status: number,
+  nation: Nation,
+  user: User,
+) => {
+  if (status === 1) {
+    const newCom: ComPayload = {
+      comType: COM_TYPE.nationPrivate.id,
+      origin: nation.officialId,
+      destination: nation.officialId,
+      title: i18n.t("coms.nationJoin.title"),
+      message: user.name + i18n.t("coms.nationJoin.message") + nation.name,
+    };
+    createNewCom(newCom);
+  } else if (user.citizenship.status === -1) {
+    const newCom: ComPayload = {
+      comType: COM_TYPE.nationPrivate.id,
+      origin: nation.officialId,
+      destination: nation.officialId,
+      title: i18n.t("coms.nationLeave.title"),
+      message: user.name + i18n.t("coms.nationLeave.message") + nation.name,
+    };
+    createNewCom(newCom);
+  } else {
+    const newCom1: ComPayload = {
+      comType: COM_TYPE.userPrivate.id,
+      origin: nation.officialId,
+      destination: nation.owner,
+      title: i18n.t("coms.nationToAccept.title") + nation.name,
+      message: user.name + i18n.t("coms.nationToAccept.message"),
+    };
+    createNewCom(newCom1);
+    const newCom2: ComPayload = {
+      comType: COM_TYPE.userPrivate.id,
+      origin: nation.officialId,
+      destination: user.officialId,
+      title: i18n.t("coms.nationToWait.title") + nation.name,
+      message: i18n.t("coms.nationToWait.message"),
+    };
+    createNewCom(newCom2);
+  }
 };

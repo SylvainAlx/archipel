@@ -2,7 +2,7 @@ import {
   editPlaceAtom,
   myStore,
   nationPlacesListAtom,
-  session,
+  sessionAtom,
 } from "../../settings/store";
 import { useAtom } from "jotai";
 import { GiCapitol } from "react-icons/gi";
@@ -14,8 +14,8 @@ import { useEffect, useState } from "react";
 import { Place } from "../../types/typPlace";
 import NationTag from "../tags/nationTag";
 import Avatar from "../avatar";
-import { placesTypeList } from "../../settings/lists";
 import ReportPanel from "../reportPanel";
+import { PLACE_TYPE } from "../../settings/consts";
 
 export interface PlaceTileProp {
   owner?: boolean;
@@ -29,6 +29,7 @@ export default function PlaceTile({ place, owner }: PlaceTileProp) {
     population: 0,
     children: 0,
   });
+  const [session] = useAtom(sessionAtom);
   const emplacement = useLocation();
   const navigate = useNavigate();
 
@@ -54,13 +55,13 @@ export default function PlaceTile({ place, owner }: PlaceTileProp) {
     <div
       className={`min-h-[100px] p-2 rounded flex flex-col flex-grow items-center justify-between gap-3 bg-complementary shadow-xl`}
     >
-      <h3 className="w-full flex justify-between flex-wrap">
+      <div className="w-full flex justify-between flex-wrap">
         <div className="text-xl flex items-center gap-2">
           <div className="w-[50px] h-[50px] rounded-full flex items-center justify-center overflow-hidden">
             <Avatar
               url={place.image}
               isUser={false}
-              isCity={place.type === placesTypeList[2].id}
+              isCity={place.type === PLACE_TYPE.city.id}
             />
           </div>
           <span className="text-lg text-info">
@@ -68,10 +69,15 @@ export default function PlaceTile({ place, owner }: PlaceTileProp) {
               <GiCapitol />
             )}
           </span>
-          <span>{place.name}</span>
+          <h3>{place.name}</h3>
         </div>
-        <EyeButton click={handleClick} />
-      </h3>
+        <div className="w-full flex gap-1 flex-wrap items-center justify-end">
+          <EyeButton click={handleClick} />
+          {session.user.citizenship.nationId != place.nation && (
+            <ReportPanel content={place} center={false} />
+          )}
+        </div>
+      </div>
       <div className="max-w-[90%] flex flex-wrap items-center self-end justify-end gap-1">
         <PlaceTag label={getPlaceTypeLabel(place.type)} />
         {/* <PopulationTag label={getTotalPopulation(place)} /> */}
@@ -79,7 +85,6 @@ export default function PlaceTile({ place, owner }: PlaceTileProp) {
           <NationTag label={place.nation} />
         )}
       </div>
-      <ReportPanel content={place} center={false} />
     </div>
   );
 }

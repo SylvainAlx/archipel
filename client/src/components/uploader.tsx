@@ -15,7 +15,7 @@ import "../assets/styles/uploader.css";
 import { useTranslation } from "react-i18next";
 import { createNewCom } from "../api/communication/comAPI";
 import { ComPayload } from "../types/typCom";
-import { myStore, sessionAtom } from "../settings/store";
+import { loadingAtom, myStore, sessionAtom } from "../settings/store";
 
 export interface UploaderProps {
   path: string;
@@ -37,7 +37,9 @@ export default function Upploader({
     const AFile = AFileInfo.file as File;
     if (!AFile) return;
 
+    myStore.set(loadingAtom, true);
     const { isNSFW, predictions } = await verifyImage(AFile);
+    myStore.set(loadingAtom, false);
 
     if (isNSFW) {
       errorMessage(t("toasts.errors.nsfw"));

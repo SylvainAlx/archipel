@@ -69,7 +69,7 @@ export default function NationIdentity({
                   <div className="flex flex-row justify-center items-start flex-wrap gap-6">
                     <div className="relative">
                       <div
-                        className={`w-[140px] h-full flex flex-col items-center justify-end gap-2`}
+                        className={`w-[200px] h-full flex flex-col items-center justify-end gap-2`}
                       >
                         {selectedNation.data.url.flag ? (
                           <div className="relative">
@@ -99,24 +99,26 @@ export default function NationIdentity({
                               <GiBlackFlag />
                             </div>
                             {owner && (
-                              <Upploader
-                                path="data.url.flag"
-                                destination="nation"
-                                maxSize={500000}
-                              />
+                              <>
+                                <Upploader
+                                  path="data.url.flag"
+                                  destination="nation"
+                                  maxSize={500000}
+                                />
+                                <LinkButton
+                                  text={t("components.buttons.generate")}
+                                  path={FLAG_MAKER_URL}
+                                  children={<FaExternalLinkAlt />}
+                                />
+                              </>
                             )}
-                            <LinkButton
-                              text={t("components.buttons.generate")}
-                              path={FLAG_MAKER_URL}
-                              children={<FaExternalLinkAlt />}
-                            />
                           </>
                         )}
                       </div>
                     </div>
                     <div className="relative">
                       <div
-                        className={`w-[140px] h-full flex flex-col items-center justify-end gap-2`}
+                        className={`w-[200px] h-full flex flex-col items-center justify-end gap-2`}
                       >
                         {selectedNation.data.url.coatOfArms ? (
                           <>
@@ -146,17 +148,19 @@ export default function NationIdentity({
                               <BsShieldShaded />
                             </div>
                             {owner && (
-                              <Upploader
-                                path="data.url.coatOfArms"
-                                destination="nation"
-                                maxSize={500000}
-                              />
+                              <>
+                                <Upploader
+                                  path="data.url.coatOfArms"
+                                  destination="nation"
+                                  maxSize={500000}
+                                />
+                                <LinkButton
+                                  text={t("components.buttons.generate")}
+                                  path={COA_MAKER_URL}
+                                  children={<FaExternalLinkAlt />}
+                                />
+                              </>
                             )}
-                            <LinkButton
-                              text={t("components.buttons.generate")}
-                              path={COA_MAKER_URL}
-                              children={<FaExternalLinkAlt />}
-                            />
                           </>
                         )}
                       </div>
@@ -241,7 +245,7 @@ export default function NationIdentity({
                     </div>
                     <div className="flex items-center gap-2">
                       <CapitalTag selectedNation={selectedNation} />
-                      {owner && (
+                      {owner && selectedNation.data.roleplay.capital != "" && (
                         <EditIcon
                           target="nation"
                           param={placesList}

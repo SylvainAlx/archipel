@@ -72,11 +72,15 @@ export const authGet = async (token: string) => {
   return result;
 };
 
-export const deleteUserFetch = async () => {
+export const deleteUserFetch = async (password: string) => {
   const jwt = GET_JWT();
   const resp = await fetch(`${SERVER_URL}/user/delete`, {
     method: "DELETE",
-    headers: { authorization: `Bearer ${jwt}` },
+    headers: {
+      authorization: `Bearer ${jwt}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ password }),
   });
   const result = await resp.json();
   return result;

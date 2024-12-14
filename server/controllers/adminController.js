@@ -38,6 +38,9 @@ const modifierReportOuBan = async (
       case "p":
         AModel = Place;
         break;
+      case "m":
+        AModel = Com;
+        break;
       default:
         return res.status(404).json({ message: "Type d'entité inconnu." });
     }

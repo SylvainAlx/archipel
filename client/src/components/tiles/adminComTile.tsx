@@ -35,6 +35,9 @@ export default function AdminComTile({ com }: ComTileProps) {
       case "p":
         path = `/place/${target}`;
         break;
+      case "m":
+        path = `/explore/5`;
+        break;
       default:
         break;
     }

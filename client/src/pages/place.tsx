@@ -1,6 +1,7 @@
 import {
   comFetchedListAtom,
   confirmBox,
+  editPlaceAtom,
   nationFetchedAtom,
   nationPlacesListAtom,
   placeFetchedAtom,
@@ -33,6 +34,7 @@ import { ConfirmBoxDefault } from "../types/typAtom";
 import MDEditor from "@uiw/react-md-editor";
 import ReportPanel from "../components/reportPanel";
 import { getComsByDestination } from "../api/communication/comAPI";
+import { FaSortAmountDownAlt } from "react-icons/fa";
 
 export default function Place() {
   const navigate = useNavigate();
@@ -44,6 +46,7 @@ export default function Place() {
   const [comList] = useAtom(comFetchedListAtom);
   const [nationPlacesList] = useAtom(nationPlacesListAtom);
   const [confirm, setConfirm] = useAtom(confirmBox);
+  const [, setEditPlace] = useAtom(editPlaceAtom);
   const param = useParams();
   const [refresh, setRefresh] = useState(false);
   const [haveChildren, setHaveChildren] = useState(false);
@@ -59,6 +62,7 @@ export default function Place() {
   }, [param.id]);
 
   useEffect(() => {
+    setEditPlace({ place });
     if (
       place.nation === session.user.citizenship.nationId &&
       session.user.citizenship.nationOwner
@@ -140,6 +144,7 @@ export default function Place() {
           {owner && <CrossButton click={handleDelete} />}
         </div>
         <div className="flex items-center gap-2">
+          <FaSortAmountDownAlt className="text-secondary" />
           <b>{`${nation.name != parentName ? nation.name + " > " + parentName : nation.name}`}</b>
           {owner && (
             <EditIcon
@@ -150,7 +155,7 @@ export default function Place() {
           )}
         </div>
         {!place.reported && (
-          <section className="w-full flex flex-col items-center rounded">
+          <section className="w-full flex flex-col items-center rounded gap-4">
             <div className="flex items-center gap-2">
               <H2 text={`${place.name}`} />
               {owner && (

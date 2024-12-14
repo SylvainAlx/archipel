@@ -22,3 +22,10 @@ export const COMTYPE = [
   { id: 12, label: "nation modification" },
   { id: 20, label: "info utilisateur" },
 ];
+
+export const PLACE_TYPE = {
+  state: 0,
+  county: 1,
+  city: 2,
+  nature: 3,
+};

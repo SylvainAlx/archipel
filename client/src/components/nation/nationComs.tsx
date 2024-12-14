@@ -32,7 +32,8 @@ export default function NationComs({
   useEffect(() => {
     setNationComList([]);
     if (selectedNation != undefined) {
-      session.nation.officialId === selectedNation.officialId
+      session.user.citizenship.nationId === selectedNation.officialId &&
+      session.user.citizenship.status > 0
         ? getComs(selectedNation.officialId, selectedNation.officialId, [
             COM_TYPE.nationPrivate.id,
             COM_TYPE.nationPublic.id,
@@ -43,17 +44,31 @@ export default function NationComs({
 
   useEffect(() => {
     if (nationComList.length > 0) {
-      if (
-        new Date(
-          nationComList[nationComList.length - 1].createdAt,
-        ).toLocaleDateString() < new Date().toLocaleDateString() ||
-        (myStore.get(sessionAtom).user.plan != "free" &&
+      const getLastPublicCom = () => {
+        for (let i = nationComList.length - 1; i >= 0; i--) {
+          if (nationComList[i].comType === COM_TYPE.nationPublic.id) {
+            return nationComList[i];
+          }
+        }
+        return null;
+      };
+      const lastElement = getLastPublicCom();
+      if (lastElement) {
+        const is24hBeforeLastCom: boolean =
+          new Date(lastElement.createdAt).toLocaleDateString() <
+          new Date().toLocaleDateString();
+        const isActivePlan =
+          myStore.get(sessionAtom).user.plan != "free" &&
           myStore.get(sessionAtom).user.expirationDate >
-            new Date().toLocaleDateString())
-      ) {
-        setAllowPost(true);
+            new Date().toLocaleDateString();
+
+        if (is24hBeforeLastCom || isActivePlan) {
+          setAllowPost(true);
+        } else {
+          setAllowPost(false);
+        }
       } else {
-        setAllowPost(false);
+        setAllowPost(true);
       }
       session.nation.officialId === selectedNation.officialId &&
         displayUnwatchedComs(selectedNation.officialId, nationComList);

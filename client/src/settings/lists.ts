@@ -58,14 +58,14 @@ export const placeSearchSortOptions: StandardOption[] = [
     id: 1,
     label: i18n.t("components.searchBars.placesList.sortPlaces.descAlpha"),
   },
-  {
-    id: 2,
-    label: i18n.t("components.searchBars.placesList.sortPlaces.ascCtz"),
-  },
-  {
-    id: 3,
-    label: i18n.t("components.searchBars.placesList.sortPlaces.descCtz"),
-  },
+  // {
+  //   id: 2,
+  //   label: i18n.t("components.searchBars.placesList.sortPlaces.ascCtz"),
+  // },
+  // {
+  //   id: 3,
+  //   label: i18n.t("components.searchBars.placesList.sortPlaces.descCtz"),
+  // },
 ];
 
 export const comSearchSortOptions: StandardOption[] = [
@@ -198,23 +198,4 @@ export const politicalSideList: PoliticalSide[] = [
   { id: 20, label: "Droite modérée" },
   { id: 60, label: "Droite radicale" },
   { id: 90, label: "Extrême droite" },
-];
-
-export const placesTypeList = [
-  {
-    id: 0,
-    label: i18n.t("components.searchBars.placesList.checkbox.state"),
-  },
-  {
-    id: 1,
-    label: i18n.t("components.searchBars.placesList.checkbox.county"),
-  },
-  {
-    id: 2,
-    label: i18n.t("components.searchBars.placesList.checkbox.city"),
-  },
-  {
-    id: 3,
-    label: i18n.t("components.searchBars.placesList.checkbox.nature"),
-  },
 ];

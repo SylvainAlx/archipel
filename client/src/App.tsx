@@ -68,10 +68,6 @@ export default function App() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [nation]);
 
-  useEffect(() => {
-    console.log(showModal);
-  }, [showModal]);
-
   return (
     <>
       <Header />

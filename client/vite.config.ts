@@ -15,7 +15,16 @@ export default defineConfig({
       manifest: {
         name: "Archipel",
         short_name: "Archipel",
-        description: "Réseau des nations virtuelles",
+        description: "Citoyens des micronations & nations virtuelles",
+        handle_links: "preferred",
+        categories: [
+          "social",
+          "lifestyle",
+          "community",
+          "game",
+          "entertainment",
+        ],
+        lang: "fr",
         icons: [
           {
             src: "/android-chrome-192x192.png",

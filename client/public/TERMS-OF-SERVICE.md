@@ -16,7 +16,7 @@
 
 ### Présentation de Archipel
 
-Archipel est une application web accessible par navigateur sur tous les supports. Chaque utilisateur auquel elle est destinée va pouvoir jouer un rôle de citoyen en créant ou en rejoignant une nation qu'il va par la suite contribuer à a se développer.
+Archipel est une application web accessible par navigateur sur tous les supports. Chaque utilisateur auquel elle est destinée va pouvoir jouer un rôle de citoyen en créant ou en rejoignant une nation qu'il va par la suite contribuer à développer. **Il est important de considérer Archipel comme un divertissement. Aucun élément créé sur l'application ne peut se voir attribuer le caractère d'"officiel" ou rattaché de près ou de loin à une personne, une nation, un lieu ou toute autre entité existant réellement**.
 
 ### Objet des Conditions Générales d'Utilisation
 
@@ -82,7 +82,7 @@ Pour accéder aux services de l'application, l'Utilisateur doit remplir les cond
 
 ### Modalités d'inscription
 
-Pour s'inscrire sur l'application, l'Utilisateur doit remplir un formulaire d'inscription en fournissant un nom et un mot de passe, un genre et une langue parlée. Ces deux derniers éléments ne sont pas nécéssairement ceux de l'Utilisateur physique. Le nom et le mot de passe, qui sont obligatoires, lui permettront d'accéder à son compte. Aucun email n'est demandé à l'inscription.
+Pour s'inscrire sur l'application, l'Utilisateur doit remplir un formulaire d'inscription en fournissant un nom et un mot de passe, un genre et une langue parlée. Ces deux derniers éléments ne sont pas nécessairement ceux de l'Utilisateur physique. Le nom et le mot de passe, qui sont obligatoires, lui permettront d'accéder à son compte. Aucun email n'est demandé à l'inscription.
 L'inscription est finalisée lorsque l'Utilisateur :
 
 - a bien renseigné les informations obligatoires du formulaire
@@ -90,7 +90,7 @@ L'inscription est finalisée lorsque l'Utilisateur :
 - confirme ne pas être un robot en cliquant sur le bouton prévu à cet effet
 - valide l'inscription en cliquant sur le bouton prévu à cet effet
 
-Si les informations ci dessus sont validées par le serveur, celui-ci communique immédiatement à l'Utilisateur sa phrase secrète de récupération. Cette dernière lui permettra de changer son mot de passe s'il le désire par la suite. Il est conseillé à l'Utilisateur de conserver précieusement cette phrase car elle ne pourra plus jamais être communiquée.
+Si les informations ci-dessus sont validées par le serveur, celui-ci communique immédiatement à l'Utilisateur sa phrase secrète de récupération. Cette dernière lui permettra de changer son mot de passe s'il le désire par la suite. Il est conseillé à l'Utilisateur de conserver précieusement cette phrase car elle ne pourra plus jamais être communiquée.
 
 ## Description des services et fonctionnalités
 
@@ -100,7 +100,7 @@ Un internaute peut accéder aux sections suivantes sans s'être inscrit préalab
 
 #### Présentation générale de l'application
 
-La page d'accueil de l'application donne une présentation globales des services proposés et invite l'internaute à s'inscrire afin de lui donner la meilleure expérience utilisateur possible.
+La page d'accueil de l'application donne une présentation globale des services proposés et invite l'internaute à s'inscrire afin de lui donner la meilleure expérience utilisateur possible.
 
 #### Découvertes d'Archipel via l'onglet "explorer"
 
@@ -110,9 +110,9 @@ Dans la page "explorer" accessible par le bouton du même nom de la barre de nav
 2. La nations : La liste de toutes les nations virtuelles présentent sur l'application avec un système de filtre et de tri possible.
 3. Les citoyens : La liste de tous les citoyens inscrits sur Archipel, également avec un système de tri.
 4. Les lieux : La liste de tous les lieux créés depuis les nations, également avec un système de filtre et de tri.
-5. Les communiqués : La liste de tous les communiqués postés par les responsables des nations, également avec un système de tri. Est présent le, titre, le message, la date d'émission et la nation émettrice.
+5. Les communiqués : La liste de tous les communiqués postés par les responsables des nations, également avec un système de tri. Est présent le titre, le message, la date d'émission et la nation émettrice.
 
-Les informations visibles sur chaques éléments peuvent être consultés avec plus de détail en cliquant sur le bouton "VOIR" si disponible.
+Les informations visibles sur chaque élément peuvent être consultées avec plus de détails en cliquant sur le bouton "VOIR" si disponible.
 
 #### Les pages "citoyens"
 
@@ -166,7 +166,12 @@ L'inscription d'un utilisateur sur l'application Archipel permet à celui-ci d'e
 
 Tout citoyen inscrit sur Archipel peux accéder au détail de son compte en cliquant sur le bouton "MON COMPTE" dans la barre de navigation. Cette page est identique aux pages "citoyen" énoncées plus haut, avec cependant la possibilité d'éditer le nom, l'avatar, les liens et la biographie. La page propose également au citoyen de changer son mot de passe, de modifier ses préférences concernant les cookies, se déconnecter et supprimer son compte.
 
-#### Fontionnalités complémentaires pour le citoyen inscrit
+#### Rejoindre une nation
+
+Un citoyen sans aucune nation peut demander la citoyenneté de n'importe quelle nation depuis la page de cette dernière. Une fois la demande effectuée, celle-ci devra être validée par le gérant de la nation en question. Il est possible d'annuler sa demande directement depuis la page "MON COMPTE" en cliquant sur la petite croix présente sur le bouton avec le nom de la nation.
+Il n'est pas possible de faire plusieurs demandes en même temps et il n'est également pas possible d'être dans deux nations.
+
+#### Fonctionnalités complémentaires pour le citoyen inscrit
 
 Le citoyen peut signaler via le bouton du même nom tout contenu qu'il juge inapproprié. L'éditeur, qui est administrateur de l'application, sera informé et agira en conséquence.
 
@@ -176,20 +181,59 @@ Dans la version actuelle de l'application, seul le citoyen à l'origine de la cr
 
 #### La création d'une nation virtuelle
 
+Un citoyen n'appartenant pas à une nation a la possibilité d'en créer une nouvelle dont il sera responsable. Lors de la création d'une nation il est demandé de renseigner :
+
+- Le nom de la nation (obligatoire et ne doit pas être celui d'une nation déjà existante sur l'application ou dans la réalité).
+- La devise
+- Un ou plusieurs mots clés pour apporter un meilleur référencement de la nation
+- Le nom de la monnaie (fictive ou non)
+- Le jour de la fête nationale (même si le choix de l'année est possible, ne sera affiché que le jour et le mois)
+- Le type de régime (obligatoire)
+
+Si tous les éléments obligatoires sont correctement renseignés, la nation sera créée avec succès.
+
 #### La modification d'une nation
+
+Le citoyen chargé d'une nation va pouvoir la mettre à jour et renseigner toutes les informations qu'il juge bon de faire connaître au public.
+Sur la page "NATION" (accessible depuis la page de citoyen ou directement sur la barre de navigation) il est possible de modifier les informations liées à l'identité de la nation :
+
+- Le nom de la nation (avec les même restrictions qu'à la création)
+- L'ajout ou la suppression de drapeau et de blason
+- La devise
+- Les tags (Type de régime, jour de fête national, monnaie, capitale, mots-clés)
+- La description
+
+Le gérant d'une nation peut décider seul de supprimer sa nation. Cela a pour conséquence la suppression de tous les lieux, tuiles et communiqués associés. Les citoyens intégrés à cette nation se retrouvent immédiatement apatrides.
+
+#### L'ajout d'une carte de la nation
+
+Un emplacement est dédié à la carte de la nation, ce qui est un élément important pour une plus grande immersion des citoyens.
 
 #### L'ajout d'une tuile d'information libre
 
-#### La création d'une relation diplomatique
+Le gérant d'une nation peut ajouter à sa page "NATION" des tuiles d'informations libres afin de communiquer d'autres renseignements complémentaires.
 
 #### La gestion des citoyens
 
+Le gérant d'une nation peut décider de déchoir de sa nationalité n'importe quel citoyen appartenant à sa nation sans donner de motif.
+
 #### La création d'un lieu
+
+Le gérant d'une nation peut créer des lieux appartenant à sa nation. Lorsque la nation en possède plusieurs, il est possible de les apparenter entre eux afin de créer une organisation complexe. Si la nation possède un lieu de type "ville", celle-ci peut être désignée comme capitale de la nation.
+
+#### La création d'un communiqué officiel
+
+Le gérant d'une nation peut poster un communiqué officiel en lien avec la nation. Il peut choisir si celui-ci est privé (visible uniquement par les citoyens de la nation) ou public et, de ce fait, accessible sur la page "Explorer", onglet "Communiqués". Actuellement il est possible d'envoyer un seul communiqué par 24h.
+
+#### La création d'une relation diplomatique
+
+Le gérant d'une nation peut faire une demande de relations diplomatiques auprès d'une autre nation directement depuis la page de celle-ci. Il propose un titre de la relation ainsi que les types de partenariat qu'il souhaite entreprendre. La relation sera effective uniquement lorsque la nation questionnée acceptera la demande. Dans le cas contraire, la demande est annulée.
 
 ### Restrictions
 
-- Un citoyen qui n'est pas en charge de la gestion d'une nation ne peut effectuer aucune modification sur celle-ci.
+- Un citoyen qui n'est pas chargé de la gestion d'une nation ne peut effectuer aucune modification sur celle-ci.
 - Un citoyen non administrateur de l'application ne pourra pas accéder à la page d'administration.
+- Des quotas restreignent la quantité maximum de certains éléments au sein d'une (10 lieux, 8 tuiles d'informations, et 1 communiqué officiel par jour).
 
 ## Obligations des utilisateurs
 

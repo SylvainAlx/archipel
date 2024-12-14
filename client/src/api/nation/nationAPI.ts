@@ -1,3 +1,5 @@
+import i18n from "../../i18n/i18n";
+import { COM_TYPE } from "../../settings/consts";
 import {
   citizenFetchAtom,
   loadingAtom,
@@ -23,6 +25,7 @@ import {
   findElementsByName,
   findNationsByTag,
 } from "../../utils/functions";
+import { createNewCom } from "../communication/comAPI";
 import {
   createNationFetch,
   DeleteSelfFetch,
@@ -68,6 +71,13 @@ export const createNation = (payload: NewNationPayload) => {
       }
       myStore.set(loadingAtom, false);
       displayNationInfoByType(resp.infoType);
+      createNewCom({
+        comType: COM_TYPE.userPrivate.id,
+        origin: resp.nation.officialId,
+        destination: resp.user.officialId,
+        title: i18n.t("coms.nationCreate.title") + resp.nation.name,
+        message: i18n.t("coms.nationCreate.message"),
+      });
     })
     .catch((error: { infoType: string }) => {
       myStore.set(loadingAtom, false);
@@ -108,7 +118,7 @@ export const getNations = (searchName: string, searchTag: string) => {
   if (searchName === "" && searchTag === "") {
     nations = myStore.get(nationsListAtom);
   }
-  if (nations.length > 0) {
+  if (nations.length === myStore.get(statsAtom).counts.nations) {
     myStore.set(nationsListFetchedAtom, nations);
   } else {
     myStore.set(loadingAtom, true);
@@ -130,49 +140,57 @@ export const getNations = (searchName: string, searchTag: string) => {
   }
 };
 
-export const updateNation = (payload: Nation) => {
-  myStore.set(loadingAtom, true);
-  updateNationFetch(payload)
-    .then((resp) => {
-      myStore.set(loadingAtom, false);
-      if (resp.nation) {
-        myStore.set(nationFetchedAtom, resp.nation);
-        const session = myStore.get(sessionAtom);
-        myStore.set(sessionAtom, { ...session, nation: resp.nation });
-        updateOrCreateNationInMemory(resp.nation);
-        displayNationInfoByType(resp.infoType);
-      } else {
-        displayNationInfoByType(resp.infoType);
-      }
-    })
-    .catch((error) => {
-      myStore.set(loadingAtom, false);
-      console.error(error);
-      displayNationInfoByType(error.infoType);
-    });
+export const updateNation = async (payload: Nation) => {
+  try {
+    myStore.set(loadingAtom, true);
+    const response = await updateNationFetch(payload);
+    myStore.set(loadingAtom, false);
+    if (response.infoType === "update") {
+      myStore.set(nationFetchedAtom, response.nation);
+      const session = myStore.get(sessionAtom);
+      myStore.set(sessionAtom, { ...session, nation: response.nation });
+      updateOrCreateNationInMemory(response.nation);
+      displayNationInfoByType(response.infoType);
+    } else {
+      displayNationInfoByType(response.infoType);
+    }
+  } catch (error) {
+    myStore.set(loadingAtom, false);
+    console.error(error);
+  }
 };
 
 export const deleteSelfNation = () => {
   myStore.set(loadingAtom, true);
   DeleteSelfFetch()
     .then((resp: { user: User; infoType: string }) => {
-      const session = myStore.get(sessionAtom);
-      myStore.set(loadingAtom, false);
-      if (session.nation) {
-        const updatedNations = spliceByOfficialId(
-          session.nation.officialId,
-          myStore.get(nationsListAtom),
-        );
-        myStore.set(nationsListAtom, updatedNations);
+      if (resp.infoType === "delete") {
+        const session = myStore.get(sessionAtom);
+        if (session.nation) {
+          const updatedNations = spliceByOfficialId(
+            session.nation.officialId,
+            myStore.get(nationsListAtom),
+          );
+          myStore.set(nationsListAtom, updatedNations);
+        }
+        displayNationInfoByType(resp.infoType);
+        myStore.set(nationFetchedAtom, EmptyNation);
+        myStore.set(citizenFetchAtom, resp.user);
+        myStore.set(sessionAtom, {
+          nation: EmptyNation,
+          user: resp.user,
+          jwt: session.jwt,
+        });
+        createNewCom({
+          comType: COM_TYPE.userPrivate.id,
+          origin: session.nation.officialId,
+          destination: resp.user.officialId,
+          title: i18n.t("coms.nationDelete.title") + session.nation.name,
+          message: i18n.t("coms.nationDelete.message"),
+        });
       }
-      displayNationInfoByType(resp.infoType);
-      myStore.set(nationFetchedAtom, EmptyNation);
-      myStore.set(citizenFetchAtom, resp.user);
-      myStore.set(sessionAtom, {
-        nation: EmptyNation,
-        user: resp.user,
-        jwt: session.jwt,
-      });
+
+      myStore.set(loadingAtom, false);
     })
     .catch((error) => {
       myStore.set(loadingAtom, false);

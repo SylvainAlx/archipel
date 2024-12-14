@@ -23,7 +23,7 @@ export interface SearchBarProps {
 export default function ComSearchBar({ setList }: SearchBarProps) {
   const [selectOption, setSelectOption] = useState("1");
   const { t } = useTranslation();
-  const [searchName, setSearchName] = useState("");
+  const [nationId, setNationId] = useState("");
   const [comList] = useAtom(comFetchedListAtom);
   const [stats] = useAtom(statsAtom);
 
@@ -60,12 +60,12 @@ export default function ComSearchBar({ setList }: SearchBarProps) {
   };
 
   const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
-    setSearchName(e.target.value);
+    setNationId(e.target.value);
   };
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    getPublicComs("");
+    setList(comList.filter((com) => com.origin === nationId));
   };
 
   return (
@@ -77,9 +77,9 @@ export default function ComSearchBar({ setList }: SearchBarProps) {
         required={true}
         onChange={handleSearch}
         type="text"
-        name="title"
+        name="nationId"
         placeholder={t("components.searchBars.comsList.input")}
-        value={searchName}
+        value={nationId}
       />
       <Select
         onChange={(e: ChangeEvent<HTMLSelectElement>) =>

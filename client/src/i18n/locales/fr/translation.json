@@ -31,7 +31,8 @@
       },
       "relations": {
         "title": "diplomatie",
-        "noRelations": "aucune relation diplomatique"
+        "noRelations": "aucune relation diplomatique",
+        "pendingRelations": "des relations sont en attente d'approbation"
       },
       "citizens": {
         "title": "citoyens",
@@ -80,7 +81,8 @@
         "free": "loisir",
         "premium": "premium",
         "elite": "élite"
-      }
+      },
+      "privateCom": "messages privés"
     },
     "coms": {
       "title": "communications"
@@ -99,10 +101,10 @@
     },
     "recovery": {
       "title": "réinitialisation du mot de passe",
-      "placeholderName": "Nom d'utilisateur *",
-      "recoveryKey": "Phrase de récupération *",
-      "newPassword": "Nouveau mot de passe *",
-      "confirmPassword": "Confirmez le mot de passe *",
+      "placeholderName": "Nom d'utilisateur",
+      "recoveryKey": "Phrase de récupération",
+      "newPassword": "Nouveau mot de passe",
+      "confirmPassword": "Confirmez le mot de passe",
       "changePassword": "CHANGER LE MOT DE PASSE"
     },
     "register": {
@@ -127,7 +129,7 @@
       "home": "ACCUEIL",
       "login": "se connecter",
       "logout": "se déconnecter",
-      "register": "s'enregistrer",
+      "register": "s'inscrire",
       "explore": "explorer",
       "dashboard": "tableau de bord",
       "close": "FERMER",
@@ -157,7 +159,10 @@
       "contact": "contact",
       "generate": "générer",
       "report": "SIGNALER",
-      "cookiesConsent": "consentement des cookies"
+      "cookiesConsent": "consentement des cookies",
+      "accept": "ACCEPTER",
+      "refuse": "REFUSER",
+      "break": "ROMPRE"
     },
     "form": {
       "input": {
@@ -191,7 +196,9 @@
         "askCitizenship": "Demander la nationnalité ?",
         "leaveNation": "Quitter la nation ?",
         "cancelCitizenship": "Annuler la demande de citoyenneté ?",
-        "leaveRelation": "Rompre la relation ?",
+        "acceptRelation": "Accepter la relation diplomatique ?",
+        "refuseRelation": "Refuser la relation diplomatique ?",
+        "leaveRelation": "Rompre la relation diplomatique ?",
         "createTile": "Confirmez-vous la création de la tuile ?",
         "updateTile": "Confirmez-vous la mise à jour de la tuile ?",
         "deleteTile": "Confirmez-vous la suppression de la tuile ?",
@@ -340,7 +347,7 @@
         }
       },
       "comsList": {
-        "input": "Titre",
+        "input": "ID officiel de la nation",
         "SortComs": {
           "ascDate": "Du plus ancien au plus récent",
           "descDate": "Du plus récent au plus ancien"
@@ -438,6 +445,44 @@
     "com": {
       "new": "Communication envoyée",
       "delete": "Communication supprimée"
+    }
+  },
+  "coms": {
+    "nationCreate": {
+      "title": "Vie de la nation ",
+      "message": "Votre nation a été créée"
+    },
+    "nationDelete": {
+      "title": "Vie de la nation ",
+      "message": "Votre nation a été supprimée"
+    },
+    "nationJoin": {
+      "title": "Vie de la nation ",
+      "message": " a rejoint la nation "
+    },
+    "nationLeave": {
+      "title": "Vie de la nation ",
+      "message": " a quitté la nation "
+    },
+    "nationToAccept": {
+      "title": "Vie de la nation ",
+      "message": " demande la citoyenneté de la nation"
+    },
+    "nationToWait": {
+      "title": "Vie de la nation ",
+      "message": "Demande de citoyenneté en attente d'approbation"
+    },
+    "relationToAccept": {
+      "title": "Diplomatie",
+      "message": "Demande de relation diplomatique à valider"
+    },
+    "relationToWait": {
+      "title": "Diplomatie",
+      "message": "Demande de relation diplomatique en attente d'approbation"
+    },
+    "relationUpdate": {
+      "title": "Diplomatie",
+      "message": "Mise à jour des relations diplomatiques"
     }
   }
 }

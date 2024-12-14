@@ -71,7 +71,12 @@ export default function CitizenTile({ citizen }: CitizenTileProps) {
             {citizen.name}
           </h3>
         </div>
+      </div>
+      <div className="flex gap-1 flex-wrap items-center self-end">
         <EyeButton click={handleClick} />
+        {session.user.officialId != citizen.officialId && (
+          <ReportPanel content={citizen} center={false} />
+        )}
       </div>
       {session.user.citizenship.nationOwner &&
         session.user.citizenship.nationId === citizen.citizenship.nationId &&
@@ -103,9 +108,6 @@ export default function CitizenTile({ citizen }: CitizenTileProps) {
           languages={citizen.language != "" ? [citizen.language] : []}
         />
       </div>
-      {session.user.officialId != citizen.officialId && (
-        <ReportPanel content={citizen} center={false} />
-      )}
     </fieldset>
   );
 }

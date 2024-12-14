@@ -31,6 +31,8 @@ export const createTile = async (req, res) => {
       if (nationsTiles.length > QUOTAS.TILES) {
         nation.data.roleplay.treasury -= COSTS.TILES;
         updatedNation = await nation.save();
+      } else {
+        updatedNation = nation;
       }
 
       const tile = new Tile({
