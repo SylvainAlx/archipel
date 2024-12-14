@@ -1,3 +1,4 @@
+import i18n from "../../i18n/i18n";
 import { COM_TYPE } from "../../settings/consts";
 import {
   citizenFetchAtom,
@@ -70,6 +71,13 @@ export const createNation = (payload: NewNationPayload) => {
       }
       myStore.set(loadingAtom, false);
       displayNationInfoByType(resp.infoType);
+      createNewCom({
+        comType: COM_TYPE.userPrivate.id,
+        origin: resp.nation.officialId,
+        destination: resp.user.officialId,
+        title: i18n.t("coms.nationCreate.title") + resp.nation.name,
+        message: i18n.t("coms.nationCreate.message"),
+      });
     })
     .catch((error: { infoType: string }) => {
       myStore.set(loadingAtom, false);
@@ -177,8 +185,8 @@ export const deleteSelfNation = () => {
           comType: COM_TYPE.userPrivate.id,
           origin: session.nation.officialId,
           destination: resp.user.officialId,
-          title: "[A TRADUIRE] La fin d'une nation",
-          message: "[A TRADUIRE] Votre nation a été supprimée",
+          title: i18n.t("coms.nationDelete.title") + session.nation.name,
+          message: i18n.t("coms.nationDelete.message"),
         });
       }
 

@@ -31,7 +31,8 @@
       },
       "relations": {
         "title": "diplomatie",
-        "noRelations": "aucune relation diplomatique"
+        "noRelations": "aucune relation diplomatique",
+        "pendingRelations": "des relations sont en attente d'approbation"
       },
       "citizens": {
         "title": "citoyens",
@@ -80,7 +81,8 @@
         "free": "loisir",
         "premium": "premium",
         "elite": "élite"
-      }
+      },
+      "privateCom": "messages privés"
     },
     "coms": {
       "title": "communications"
@@ -443,6 +445,44 @@
     "com": {
       "new": "Communication envoyée",
       "delete": "Communication supprimée"
+    }
+  },
+  "coms": {
+    "nationCreate": {
+      "title": "Vie de la nation ",
+      "message": "Votre nation a été créée"
+    },
+    "nationDelete": {
+      "title": "Vie de la nation ",
+      "message": "Votre nation a été supprimée"
+    },
+    "nationJoin": {
+      "title": "Vie de la nation ",
+      "message": " a rejoint la nation "
+    },
+    "nationLeave": {
+      "title": "Vie de la nation ",
+      "message": " a quitté la nation "
+    },
+    "nationToAccept": {
+      "title": "Vie de la nation ",
+      "message": " demande la citoyenneté de la nation"
+    },
+    "nationToWait": {
+      "title": "Vie de la nation ",
+      "message": "Demande de citoyenneté en attente d'approbation"
+    },
+    "relationToAccept": {
+      "title": "Diplomatie",
+      "message": "Demande de relation diplomatique à valider"
+    },
+    "relationToWait": {
+      "title": "Diplomatie",
+      "message": "Demande de relation diplomatique en attente d'approbation"
+    },
+    "relationUpdate": {
+      "title": "Diplomatie",
+      "message": "Mise à jour des relations diplomatiques"
     }
   }
 }

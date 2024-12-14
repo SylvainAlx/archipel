@@ -28,7 +28,9 @@ Aucune
 
 ### Corrections
 
-Aucune
+- Amélioration des performances
+- Optimisation du code source
+- Amélioration des traductions
 
 ## Versions terminées
 
@@ -43,7 +45,7 @@ Aucune
 - Rejoindre une nation virtuelle
 - Créer des relations diplomatiques entre nations
 - Signaler des contenus offensants
-- Poster un communiqué officiel
+- Poster des communiqués officiels et des communications privée pour la nation
 
 ### Suppressions
 

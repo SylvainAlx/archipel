@@ -504,53 +504,37 @@ export const createComByStatus = (
 ) => {
   if (status === 1) {
     const newCom: ComPayload = {
-      comType: COM_TYPE.userPrivate.id,
+      comType: COM_TYPE.nationPrivate.id,
       origin: nation.officialId,
-      destination: user.officialId,
-      message: "[A TRADUIRE] Vous avez rejoint la nation",
-      title: nation.name,
+      destination: nation.officialId,
+      title: i18n.t("coms.nationJoin.title"),
+      message: user.name + i18n.t("coms.nationJoin.message") + nation.name,
     };
     createNewCom(newCom);
-    const newCom2: ComPayload = {
-      comType: COM_TYPE.userPrivate.id,
-      origin: nation.officialId,
-      destination: nation.owner,
-      message: user.name + " [A TRADUIRE] a rejoint la nation",
-      title: nation.name,
-    };
-    createNewCom(newCom2);
   } else if (user.citizenship.status === -1) {
-    const newCom1: ComPayload = {
-      comType: COM_TYPE.userPrivate.id,
+    const newCom: ComPayload = {
+      comType: COM_TYPE.nationPrivate.id,
       origin: nation.officialId,
-      destination: user.officialId,
-      message: "[A TRADUIRE] Vous avez quitté la nation",
-      title: nation.name,
+      destination: nation.officialId,
+      title: i18n.t("coms.nationLeave.title"),
+      message: user.name + i18n.t("coms.nationLeave.message") + nation.name,
     };
-    createNewCom(newCom1);
-    const newCom2: ComPayload = {
-      comType: COM_TYPE.userPrivate.id,
-      origin: nation.officialId,
-      destination: nation.owner,
-      message: user.name + " [A TRADUIRE] a quitté la nation",
-      title: nation.name,
-    };
-    createNewCom(newCom2);
+    createNewCom(newCom);
   } else {
     const newCom1: ComPayload = {
       comType: COM_TYPE.userPrivate.id,
       origin: nation.officialId,
       destination: nation.owner,
-      message: user.name + " [A TRADUIRE] demande la citoyenneté de la nation",
-      title: nation.name,
+      title: i18n.t("coms.nationToAccept.title") + nation.name,
+      message: user.name + i18n.t("coms.nationToAccept.message"),
     };
     createNewCom(newCom1);
     const newCom2: ComPayload = {
       comType: COM_TYPE.userPrivate.id,
       origin: nation.officialId,
       destination: user.officialId,
-      message: "[A TRADUIRE] Votre demande de citoyenneté est en attente",
-      title: nation.name,
+      title: i18n.t("coms.nationToWait.title") + nation.name,
+      message: i18n.t("coms.nationToWait.message"),
     };
     createNewCom(newCom2);
   }

@@ -1,3 +1,4 @@
+import i18n from "../../i18n/i18n";
 import { COM_TYPE } from "../../settings/consts";
 import { loadingAtom, myStore, relationListAtom } from "../../settings/store";
 import { DiplomaticRelationship } from "../../types/typRelation";
@@ -24,15 +25,15 @@ export const createRelation = (payload: DiplomaticRelationship) => {
           comType: COM_TYPE.userPrivate.id,
           origin: resp.relation.nations[1].OfficialId,
           destination: resp.relation.nations[1].AmbassadorId,
-          title: "[A TRADUIRE] Diplomatie",
-          message: "[A TRADUIRE] Demande de relation diplomatique à valider",
+          title: i18n.t("coms.relationToAccept.title"),
+          message: i18n.t("coms.relationToAccept.message"),
         });
         createNewCom({
           comType: COM_TYPE.userPrivate.id,
           origin: resp.relation.nations[0].OfficialId,
           destination: resp.relation.nations[0].AmbassadorId,
-          title: "[A TRADUIRE] Diplomatie",
-          message: "[A TRADUIRE] Demande de relation en attente d'approbation",
+          title: i18n.t("coms.relationToWait.title"),
+          message: i18n.t("coms.relationToWait.message"),
         });
       }
       myStore.set(loadingAtom, false);
@@ -55,15 +56,15 @@ export const updateRelation = (payload: DiplomaticRelationship) => {
           comType: COM_TYPE.nationPrivate.id,
           origin: resp.relation.nations[0].OfficialId,
           destination: resp.relation.nations[0].OfficialId,
-          title: "[A TRADUIRE] Diplomatie",
-          message: "[A TRADUIRE] Mise à jour des relations diplomatiques",
+          title: i18n.t("coms.relationUpdate.title"),
+          message: i18n.t("coms.relationUpdate.message"),
         });
         createNewCom({
           comType: COM_TYPE.nationPrivate.id,
           origin: resp.relation.nations[1].OfficialId,
           destination: resp.relation.nations[1].OfficialId,
-          title: "[A TRADUIRE] Diplomatie",
-          message: "[A TRADUIRE] Mise à jour des relations diplomatiques",
+          title: i18n.t("coms.relationUpdate.title"),
+          message: i18n.t("coms.relationUpdate.message"),
         });
       }
       myStore.set(loadingAtom, false);

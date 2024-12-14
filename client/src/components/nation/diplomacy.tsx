@@ -98,14 +98,14 @@ export default function Diplomacy({
                   } else {
                     return (
                       <em key={i} className="text-center">
-                        [A TRADUIRE] Des relations sont en attente d'approbation
+                        {t("components.buttons.createRelation")}
                       </em>
                     );
                   }
                 })
               ) : (
                 <em className="text-center">
-                  {t("pages.nation.relations.noRelations")}
+                  {t("pages.nation.relations.pendingRelations")}
                 </em>
               )}
               {!owner && session.user.citizenship.nationOwner && (

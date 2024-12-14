@@ -30,7 +30,7 @@ export default function CitizensCom({ citizen }: CitizensComProps) {
 
   return (
     <DashTile
-      title={t("pages.nation.coms.title")}
+      title={t("pages.citizen.privateCom")}
       children={
         <section className="w-full flex flex-col items-center rounded gap-4">
           <div className="w-full flex flex-col-reverse gap-2 items-center">
