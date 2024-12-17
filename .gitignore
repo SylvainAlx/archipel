@@ -8,5 +8,6 @@
 
 /db/backup
 /db/extracted
+/db/scripts/dump
 /db/scripts/createBackup.bat
 /db/scripts/restoreDB.bat

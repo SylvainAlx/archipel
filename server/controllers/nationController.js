@@ -291,15 +291,15 @@ export const getTags = async (req, res) => {
       },
       {
         $group: {
-          _id: null,
-          tousLesTags: { $addToSet: "$tags" },
+          _id: "$tags",
+          occurrence: { $sum: 1 },
         },
       },
       {
-        $sort: { tousLesTags: 1 },
+        $sort: { occurrence: -1 },
       },
     ]);
-    res.status(200).json(tags.length > 0 ? tags[0].tousLesTags : []);
+    res.status(200).json(tags.length > 0 ? tags : []);
   } catch (error) {
     console.error(error);
     res.status(500).json({

@@ -98,7 +98,7 @@ export default function NewNationModal() {
                     key={i}
                     className="hover:text-danger"
                   >
-                    <HashTag label={tag} />
+                    <HashTag label={tag} occurrence={-1} />
                   </span>
                 );
               })}

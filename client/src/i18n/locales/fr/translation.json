@@ -363,7 +363,8 @@
         "semiPresidentialRepublic": "république à régime semi-présidentiel",
         "parliamentaryRepublic": "république parlementaire",
         "onePartyRepublic": "république à parti unique",
-        "directDemocracy": "démocratie directe"
+        "directDemocracy": "démocratie directe",
+        "illiberalDemocracy": "démocratie illibérale"
       },
       "monarchies": {
         "constitutionalMonarchy": "monarchie constitutionnelle",

@@ -9,7 +9,7 @@ export const GOOGLE_ANALYTICS_MEASUREMENT_ID = import.meta.env
   .VITE_GOOGLE_ANALYTICS_MEASUREMENT_ID;
 
 export const VERSION = {
-  beta: "BETA-0.1",
+  beta: "BETA-0.2",
   rc: "",
   release: "",
   testing: true,

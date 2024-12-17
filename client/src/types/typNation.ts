@@ -123,3 +123,8 @@ export const emptyNewNationPayload: NewNationPayload = {
   nationalDay: "",
   tags: [],
 };
+
+export interface Hashtag {
+  label: string;
+  occurrence: number;
+}

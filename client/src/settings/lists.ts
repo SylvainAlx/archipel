@@ -28,14 +28,14 @@ export const nationSearchSortOptions: StandardOption[] = [
     id: 5,
     label: i18n.t("components.searchBars.nationsList.sortNations.descCtz"),
   },
-  {
-    id: 6,
-    label: i18n.t("components.searchBars.nationsList.sortNations.ascTreasury"),
-  },
-  {
-    id: 7,
-    label: i18n.t("components.searchBars.nationsList.sortNations.descTreasury"),
-  },
+  // {
+  //   id: 6,
+  //   label: i18n.t("components.searchBars.nationsList.sortNations.ascTreasury"),
+  // },
+  // {
+  //   id: 7,
+  //   label: i18n.t("components.searchBars.nationsList.sortNations.descTreasury"),
+  // },
 ];
 
 export const citizenSearchSortOptions: StandardOption[] = [
@@ -149,6 +149,11 @@ export const regimeList: Regime[] = [
   {
     id: 104,
     label: i18n.t("listes.regimeList.democracies.directDemocracy"),
+    type: 1,
+  },
+  {
+    id: 105,
+    label: i18n.t("listes.regimeList.democracies.illiberalDemocracy"),
     type: 1,
   },
   {

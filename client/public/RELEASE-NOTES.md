@@ -13,6 +13,7 @@
 - Améliorer le référencement et l'accessibilité
 - Étendre les fonctionnalités pour les utilisateurs mobile
 - Lier les lieux de la nation à un emplacement sur la carte
+- Améliorer des traductions
 
 ## Versions en développement
 
@@ -20,17 +21,18 @@
 
 ### Ajouts
 
-Aucun
+- Ajout du régime "démocratie illibérale"
+- Ajout du nombre d'occurrence par mot-clé dans les statistiques
 
 ### Suppressions
 
-Aucune
+- mise en retrait du tri par "Richesse" pour les nations (fonctionnalité non disponible pour l'heure)
 
 ### Corrections
 
-- Amélioration des performances
+- Correction du dysfonctionnement du tri sur la page "explorer"
 - Optimisation du code source
-- Amélioration des traductions
+- Amélioration de l'expérience utilisateur
 
 ## Versions terminées
 

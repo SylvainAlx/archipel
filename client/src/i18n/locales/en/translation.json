@@ -363,7 +363,8 @@
         "semiPresidentialRepublic": "semi-presidential republic",
         "parliamentaryRepublic": "parliamentary republic",
         "onePartyRepublic": "one-party republic",
-        "directDemocracy": "direct democracy"
+        "directDemocracy": "direct democracy",
+        "illiberalDemocracy": "illiberal democracy"
       },
       "monarchies": {
         "constitutionalMonarchy": "constitutional monarchy",

@@ -3,6 +3,7 @@ import { atom, createStore } from "jotai";
 import {
   EmptyNation,
   emptyNewNationPayload,
+  Hashtag,
   Nation,
   NationRoleplayData,
   NewNationPayload,
@@ -105,8 +106,7 @@ export const comsListAtom = atom<Com[]>([]);
 export const newComAtom = atom<ComPayload>(emptyComPayload);
 
 // tag
-
-export const tagListAtom = atom<string[]>([]);
+export const tagListAtom = atom<Hashtag[]>([]);
 
 // tile
 

@@ -27,7 +27,7 @@ export interface SearchBarProps {
 }
 
 export default function NationSearchBar({ list, setList }: SearchBarProps) {
-  const [selectOption, setSelectOption] = useState("7");
+  const [selectOption, setSelectOption] = useState("5");
   const { t } = useTranslation();
   const [searchName, setSearchName] = useState("");
   const [searchTag, setSearchTag] = useState("");
@@ -48,7 +48,7 @@ export default function NationSearchBar({ list, setList }: SearchBarProps) {
 
   const reset = () => {
     getNations("", "");
-    setSelectOption("7");
+    setSelectOption("5");
     setSearchName("");
     setSearchTag("");
   };

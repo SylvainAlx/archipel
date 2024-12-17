@@ -12,7 +12,12 @@ import {
   statsAtom,
   tagListAtom,
 } from "../../settings/store";
-import { EmptyNation, Nation, NewNationPayload } from "../../types/typNation";
+import {
+  EmptyNation,
+  Hashtag,
+  Nation,
+  NewNationPayload,
+} from "../../types/typNation";
 import { User } from "../../types/typUser";
 import {
   spliceByOfficialId,
@@ -202,10 +207,14 @@ export const deleteSelfNation = () => {
 export const getAllNationTags = () => {
   myStore.set(loadingAtom, true);
   getAllNationTagsFetch()
-    .then((data) => {
+    .then((data: { _id: string; occurrence: number }[]) => {
       myStore.set(loadingAtom, false);
       if (data != undefined) {
-        myStore.set(tagListAtom, data);
+        const inventory: Hashtag[] = [];
+        data.forEach((tag) => {
+          inventory.push({ label: tag._id, occurrence: tag.occurrence });
+        });
+        myStore.set(tagListAtom, inventory);
       }
     })
     .catch((error) => {
