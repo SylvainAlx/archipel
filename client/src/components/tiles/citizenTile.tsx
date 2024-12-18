@@ -21,6 +21,7 @@ import { useEffect, useState } from "react";
 import { IoDiamondOutline } from "react-icons/io5";
 import LanguagesTag from "../tags/languagesTag";
 import ReportPanel from "../reportPanel";
+import DateTag from "../tags/dateTag";
 
 export interface CitizenTileProps {
   citizen: User;
@@ -107,6 +108,7 @@ export default function CitizenTile({ citizen }: CitizenTileProps) {
         <LanguagesTag
           languages={citizen.language != "" ? [citizen.language] : []}
         />
+        <DateTag date={citizen.createdAt} />
       </div>
     </fieldset>
   );

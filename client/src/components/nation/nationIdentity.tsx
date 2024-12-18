@@ -13,7 +13,6 @@ import { SelectedNationProps } from "../../types/typProp";
 import TileContainer from "../tileContainer";
 import DashTile from "../dashTile";
 import EditIcon from "../editIcon";
-import H3 from "../titles/h3";
 import Upploader from "../uploader";
 import CrossButton from "../buttons/crossButton";
 import TagList from "./tagList";
@@ -26,7 +25,6 @@ import {
 import PopulationTag from "../tags/populationTag";
 import PlaceTag from "../tags/placeTag";
 import MDEditor from "@uiw/react-md-editor";
-import TreasuryTag from "../tags/treasuryTag";
 import LinkButton from "../buttons/linkButton";
 import { FaExternalLinkAlt } from "react-icons/fa";
 import { regimeList } from "../../settings/lists";
@@ -55,17 +53,6 @@ export default function NationIdentity({
             children={
               <>
                 <div className="w-full p-4 flex flex-col gap-2 items-center">
-                  <div className="w-full relative flex items-center justify-center gap-2">
-                    <H3 text={selectedNation.name} />
-                    {owner && (
-                      <EditIcon
-                        target="nation"
-                        param={selectedNation.name}
-                        path="name"
-                        canBeEmpty={false}
-                      />
-                    )}
-                  </div>
                   <div className="flex flex-row justify-center items-start flex-wrap gap-6">
                     <div className="relative">
                       <div
@@ -187,9 +174,9 @@ export default function NationIdentity({
 
                   <div className="flex gap-1 flex-wrap items-center justify-center">
                     <IdTag label={selectedNation.officialId} />
-                    <TreasuryTag
+                    {/* <TreasuryTag
                       label={selectedNation.data.roleplay.treasury}
-                    />
+                    /> */}
                     <div className="flex items-center gap-2">
                       {selectedNation.data != undefined && (
                         <RegimeTag selectedNation={selectedNation} />

@@ -112,18 +112,28 @@ export const getNation = (id: string) => {
   }
 };
 
-export const getNations = (searchName: string, searchTag: string) => {
+export const getNations = (
+  searchName: string,
+  searchTag: string,
+  nationList?: Nation[],
+) => {
   let nations: Nation[] = [];
   if (searchName != "") {
-    nations = findElementsByName(searchName, myStore.get(nationsListAtom));
+    nations = findElementsByName(
+      searchName,
+      nationList ? nationList : myStore.get(nationsListAtom),
+    );
   }
   if (searchTag != "") {
-    nations = findNationsByTag(searchTag, myStore.get(nationsListAtom));
+    nations = findNationsByTag(
+      searchTag,
+      nationList ? nationList : myStore.get(nationsListAtom),
+    );
   }
   if (searchName === "" && searchTag === "") {
     nations = myStore.get(nationsListAtom);
   }
-  if (nations.length === myStore.get(statsAtom).counts.nations) {
+  if (nations.length > 0) {
     myStore.set(nationsListFetchedAtom, nations);
   } else {
     myStore.set(loadingAtom, true);

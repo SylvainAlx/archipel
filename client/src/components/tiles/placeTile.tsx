@@ -16,6 +16,8 @@ import NationTag from "../tags/nationTag";
 import Avatar from "../avatar";
 import ReportPanel from "../reportPanel";
 import { PLACE_TYPE } from "../../settings/consts";
+import TreeTag from "../tags/treeTag";
+import DateTag from "../tags/dateTag";
 
 export interface PlaceTileProp {
   owner?: boolean;
@@ -81,9 +83,12 @@ export default function PlaceTile({ place, owner }: PlaceTileProp) {
       <div className="max-w-[90%] flex flex-wrap items-center self-end justify-end gap-1">
         <PlaceTag label={getPlaceTypeLabel(place.type)} />
         {/* <PopulationTag label={getTotalPopulation(place)} /> */}
-        {emplacement.pathname != `/nation/${place.nation}` && (
+        {emplacement.pathname != `/nation/${place.nation}` ? (
           <NationTag label={place.nation} />
+        ) : (
+          <TreeTag label={childrenStats.children} />
         )}
+        {place.createdAt && <DateTag date={place.createdAt} />}
       </div>
     </div>
   );

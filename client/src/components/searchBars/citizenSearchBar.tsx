@@ -25,6 +25,7 @@ export default function CitizenSearchBar({ list, setList }: SearchBarProps) {
   const [selectOption, setSelectOption] = useState("0");
   const { t } = useTranslation();
   const [searchName, setSearchName] = useState("");
+  const [isLeader, setIsLeader] = useState(false);
   const [citizenList] = useAtom(citizenListAtom);
   const [stats] = useAtom(statsAtom);
 
@@ -38,7 +39,7 @@ export default function CitizenSearchBar({ list, setList }: SearchBarProps) {
   useEffect(() => {
     citizensSorting();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectOption, citizenList]);
+  }, [selectOption, citizenList, isLeader]);
 
   const reset = () => {
     getCitizens("");
@@ -60,6 +61,13 @@ export default function CitizenSearchBar({ list, setList }: SearchBarProps) {
         }),
       );
     }
+
+    if (isLeader) {
+      const updatedList = list.filter(
+        (citizen) => citizen.citizenship.nationOwner === true,
+      );
+      setList(updatedList);
+    }
   };
 
   const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
@@ -69,6 +77,10 @@ export default function CitizenSearchBar({ list, setList }: SearchBarProps) {
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     getCitizens(searchName);
+  };
+
+  const handleChangeCheckbox = () => {
+    setIsLeader(!isLeader);
   };
 
   return (
@@ -84,6 +96,7 @@ export default function CitizenSearchBar({ list, setList }: SearchBarProps) {
         placeholder={t("components.searchBars.citizensList.input")}
         value={searchName}
       />
+
       <Select
         onChange={(e: ChangeEvent<HTMLSelectElement>) =>
           setSelectOption(e.target.value)
@@ -91,7 +104,20 @@ export default function CitizenSearchBar({ list, setList }: SearchBarProps) {
         options={citizenSearchSortOptions}
         value={selectOption}
       />
-      <SearchButtons reset={reset} />
+      <div className="flex flex-wrap flex-col md:flex-row gap-2 items-center justify-center md:justify-between">
+        <fieldset className="flex gap-3">
+          <label className="flex gap-2 items-center">
+            {t("components.hoverInfos.tags.nationOwner")}
+            <input
+              type="checkbox"
+              id="0"
+              checked={isLeader}
+              onChange={handleChangeCheckbox}
+            />
+          </label>
+        </fieldset>
+        <SearchButtons reset={reset} />
+      </div>
     </form>
   );
 }

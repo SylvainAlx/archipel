@@ -42,13 +42,9 @@ export default function Place() {
       setOwner(true);
       getComsByDestination(place.officialId);
     }
-    if (
-      place.nation != undefined &&
-      place.nation != "" &&
-      nation.officialId === ""
-    ) {
-      getNation(place.nation);
-    }
+
+    getNation(place.nation);
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [place]);
 

@@ -22,6 +22,7 @@ import NationMap from "../components/nation/nationMap";
 import { ConfirmBoxDefault } from "../types/typAtom";
 import NationComs from "../components/nation/nationComs";
 import ReportPanel from "../components/reportPanel";
+import EditIcon from "../components/editIcon";
 
 export default function Nation() {
   const [nation] = useAtom(nationFetchedAtom);
@@ -76,7 +77,17 @@ export default function Nation() {
 
   return (
     <>
-      <H1 text={t("pages.nation.title")} />
+      <div className="w-full relative flex items-center justify-center gap-2">
+        <H1 text={nation.name} />
+        {owner && (
+          <EditIcon
+            target="nation"
+            param={nation.name}
+            path="name"
+            canBeEmpty={false}
+          />
+        )}
+      </div>
       {nation != undefined && (
         <>
           {!nation.reported && (

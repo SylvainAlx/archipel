@@ -15,10 +15,10 @@ export default function HashTag({ label, occurrence }: HashtagProps) {
       text={`#${label.toString()}`}
       hover={t("components.hoverInfos.tags.hash")}
       bgColor="bg-complementary3"
-      click={() => navigate("/explore/2")}
+      click={() => navigate(`/explore/2#${label}`)}
       children={
         occurrence != -1 ? (
-          <span className="bg-complementary2 rounded-full px-2">
+          <span className="bg-complementary2 rounded-full px-1">
             {occurrence}
           </span>
         ) : (

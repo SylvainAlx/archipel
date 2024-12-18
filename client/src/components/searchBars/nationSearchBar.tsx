@@ -19,6 +19,7 @@ import { useTranslation } from "react-i18next";
 import { useAtom } from "jotai";
 import { nationSearchSortOptions } from "../../settings/lists";
 import SearchButtons from "../form/searchButtons";
+import { useLocation, useNavigate } from "react-router-dom";
 
 export interface SearchBarProps {
   type: string;
@@ -33,10 +34,12 @@ export default function NationSearchBar({ list, setList }: SearchBarProps) {
   const [searchTag, setSearchTag] = useState("");
   const [nationsList] = useAtom(nationsListFetchedAtom);
   const [stats] = useAtom(statsAtom);
+  const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (nationsList.length != stats.counts.nations) {
-      getNations("", "");
+      getNations(searchName, searchTag);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [stats.counts.nations]);
@@ -46,11 +49,22 @@ export default function NationSearchBar({ list, setList }: SearchBarProps) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectOption, nationsList]);
 
+  useEffect(() => {
+    setSearchTag(location.hash.replace("#", ""));
+  }, [location]);
+
+  useEffect(() => {
+    if (searchTag != "" && location.hash != "") {
+      getNations(searchName, searchTag);
+    }
+  }, [searchTag]);
+
   const reset = () => {
     getNations("", "");
     setSelectOption("5");
     setSearchName("");
     setSearchTag("");
+    navigate(`/explore/2`);
   };
 
   const nationsSorting = () => {

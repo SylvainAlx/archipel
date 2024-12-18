@@ -360,7 +360,7 @@
     "regimeList": {
       "democracies": {
         "presidentialRepublic": "république présidentielle",
-        "semiPresidentialRepublic": "république à régime semi-présidentiel",
+        "semiPresidentialRepublic": "république semi-présidentielle",
         "parliamentaryRepublic": "république parlementaire",
         "onePartyRepublic": "république à parti unique",
         "directDemocracy": "démocratie directe",

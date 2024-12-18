@@ -4,7 +4,6 @@ import { emptyNewNationPayload, Nation } from "../../types/typNation";
 import { User } from "../../types/typUser";
 import DashTile from "../dashTile";
 import EditIcon from "../editIcon";
-import CreditTag from "../tags/creditTag";
 import IdTag from "../tags/idTag";
 import LanguagesTag from "../tags/languagesTag";
 import NationOwnerTag from "../tags/nationOwnerTag";
@@ -98,7 +97,7 @@ export default function Citizenship({
                 />
               )}
             </span>
-            {owner && <CreditTag label={citizen.credits} owner={true} />}
+            {/* {owner && <CreditTag label={citizen.credits} owner={true} />} */}
             {citizen.citizenship.nationOwner && <NationOwnerTag />}
             {citizen.role === "admin" && (
               <RoleTag label={t("pages.citizen.role.admin")} />
