@@ -21,6 +21,8 @@ export const color_complementary = "var(--color-complementary)";
 export const color_light = "var(--color-light)";
 export const color_black_alpha = "var(--color-black-alpha)";
 
+export const PIONEER_DATE = "2025-01-01T00:00:00.000Z";
+
 export const QUOTAS = {
   PLACES: 10,
   TILES: 8,

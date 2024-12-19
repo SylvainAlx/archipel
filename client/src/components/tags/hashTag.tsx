@@ -12,7 +12,7 @@ export default function HashTag({ label, occurrence }: HashtagProps) {
   const navigate = useNavigate();
   return (
     <Tag
-      text={`#${label.toString()}`}
+      text={`#${label}`}
       hover={t("components.hoverInfos.tags.hash")}
       bgColor="bg-complementary3"
       click={() => navigate(`/explore/2#${label}`)}

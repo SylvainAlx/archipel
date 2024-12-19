@@ -22,6 +22,8 @@ import { IoDiamondOutline } from "react-icons/io5";
 import LanguagesTag from "../tags/languagesTag";
 import ReportPanel from "../reportPanel";
 import DateTag from "../tags/dateTag";
+import { PIONEER_DATE } from "../../settings/consts";
+import PioneerTag from "../tags/pioneerTag";
 
 export interface CitizenTileProps {
   citizen: User;
@@ -33,6 +35,8 @@ export default function CitizenTile({ citizen }: CitizenTileProps) {
   const { t } = useTranslation();
   const [session] = useAtom(sessionAtom);
   const [userPlan, setUserPlan] = useState("free");
+  const pioneerDate = new Date(PIONEER_DATE);
+  const citizenCreationDate = new Date(citizen.createdAt);
   const handleClick = () => {
     myStore.set(citizenFetchAtom, citizen);
     myStore.set(nationFetchedAtom, EmptyNation);
@@ -99,7 +103,7 @@ export default function CitizenTile({ citizen }: CitizenTileProps) {
         {citizen.role === "admin" && (
           <RoleTag label={t("pages.citizen.role.admin")} />
         )}
-
+        {citizenCreationDate < pioneerDate && <PioneerTag />}
         {citizen.citizenship.nationOwner && <NationOwnerTag />}
         {citizen.citizenship.nationId != "" &&
           emplacement.pathname != `/nation/${citizen.citizenship.nationId}` && (

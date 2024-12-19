@@ -36,6 +36,14 @@ export const nationSearchSortOptions: StandardOption[] = [
   //   id: 7,
   //   label: i18n.t("components.searchBars.nationsList.sortNations.descTreasury"),
   // },
+  {
+    id: 8,
+    label: i18n.t("components.searchBars.nationsList.sortNations.ascDate"),
+  },
+  {
+    id: 9,
+    label: i18n.t("components.searchBars.nationsList.sortNations.descDate"),
+  },
 ];
 
 export const citizenSearchSortOptions: StandardOption[] = [
@@ -46,6 +54,14 @@ export const citizenSearchSortOptions: StandardOption[] = [
   {
     id: 1,
     label: i18n.t("components.searchBars.citizensList.sortCitizens.descAlpha"),
+  },
+  {
+    id: 2,
+    label: i18n.t("components.searchBars.citizensList.sortCitizens.ascDate"),
+  },
+  {
+    id: 3,
+    label: i18n.t("components.searchBars.citizensList.sortCitizens.descDate"),
   },
 ];
 
@@ -66,6 +82,14 @@ export const placeSearchSortOptions: StandardOption[] = [
   //   id: 3,
   //   label: i18n.t("components.searchBars.placesList.sortPlaces.descCtz"),
   // },
+  {
+    id: 4,
+    label: i18n.t("components.searchBars.placesList.sortPlaces.ascDate"),
+  },
+  {
+    id: 5,
+    label: i18n.t("components.searchBars.placesList.sortPlaces.descDate"),
+  },
 ];
 
 export const comSearchSortOptions: StandardOption[] = [

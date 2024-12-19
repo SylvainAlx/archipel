@@ -32,6 +32,8 @@ Aucune
 - Ajout du nombre de lieux enfants sur les tuiles de lieu sur la page "nation"
 - Filtre par tag directement possible en cliquant sur celui-ci
 - Extension du tag "Date" pour les citoyens, nations et lieux
+- Ajout du tri par ordre de création/inscription
+- Ajout du tag "Pionnier" pour les utilisateurs inscrits avant 2025
 
 #### Suppressions
 
@@ -45,6 +47,7 @@ Aucune
 - Optimisation du code source
 - Amélioration des traductions
 - Amélioration des performances
+- Ajout d'un timer pour l'indication de chargement long (démarrage serveur)
 
 ## Développements à venir
 
@@ -62,3 +65,4 @@ Aucune
 - Étendre les fonctionnalités pour les utilisateurs mobile
 - Lier les lieux de la nation à un emplacement sur la carte
 - Améliorer des traductions
+- Carte de l'Archipel avec l'ensemble des nations représentées

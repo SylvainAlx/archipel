@@ -14,6 +14,7 @@ import { useAtom } from "jotai";
 import { getCitizens } from "../../api/user/userAPI";
 import { citizenSearchSortOptions } from "../../settings/lists";
 import SearchButtons from "../form/searchButtons";
+import { sortByCreatedAt, sortByName } from "../../utils/sorting";
 
 export interface SearchBarProps {
   type: string;
@@ -22,7 +23,7 @@ export interface SearchBarProps {
 }
 
 export default function CitizenSearchBar({ list, setList }: SearchBarProps) {
-  const [selectOption, setSelectOption] = useState("0");
+  const [selectOption, setSelectOption] = useState("3");
   const { t } = useTranslation();
   const [searchName, setSearchName] = useState("");
   const [isLeader, setIsLeader] = useState(false);
@@ -37,29 +38,35 @@ export default function CitizenSearchBar({ list, setList }: SearchBarProps) {
   }, [stats.counts.citizens]);
 
   useEffect(() => {
-    citizensSorting();
+    if (citizenList.length > 0) {
+      citizensSorting();
+    }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectOption, citizenList, isLeader]);
 
   const reset = () => {
     getCitizens("");
-    setSelectOption("0");
+    setSelectOption("3");
   };
 
   const citizensSorting = () => {
     list = [...citizenList];
-    if (selectOption === "0") {
-      setList(
-        list.sort(function (a, b) {
-          return a.name.localeCompare(b.name);
-        }),
-      );
-    } else if (selectOption === "1") {
-      setList(
-        list.sort(function (a, b) {
-          return b.name.localeCompare(a.name);
-        }),
-      );
+    switch (selectOption) {
+      case "0":
+        setList(sortByName(list, true));
+        break;
+      case "1":
+        setList(sortByName(list, false));
+        break;
+      case "2":
+        setList(sortByCreatedAt(list, true));
+        break;
+      case "3":
+        setList(sortByCreatedAt(list, false));
+        break;
+      default:
+        break;
     }
 
     if (isLeader) {

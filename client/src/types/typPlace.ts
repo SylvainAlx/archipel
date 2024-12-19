@@ -12,7 +12,7 @@ export interface Place {
   image: string;
   reported: boolean;
   banished: boolean;
-  createdAt?: Date;
+  createdAt: Date;
 }
 
 export const emptyPlace: Place = {

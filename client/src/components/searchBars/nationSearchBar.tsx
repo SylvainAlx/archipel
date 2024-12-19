@@ -20,6 +20,13 @@ import { useAtom } from "jotai";
 import { nationSearchSortOptions } from "../../settings/lists";
 import SearchButtons from "../form/searchButtons";
 import { useLocation, useNavigate } from "react-router-dom";
+import {
+  sortByCreatedAt,
+  sortByName,
+  sortByPlaces,
+  sortByTreasury,
+  sortNationsByCitizens,
+} from "../../utils/sorting";
 
 export interface SearchBarProps {
   type: string;
@@ -69,54 +76,39 @@ export default function NationSearchBar({ list, setList }: SearchBarProps) {
 
   const nationsSorting = () => {
     list = [...nationsList];
-    if (selectOption === "0") {
-      setList(
-        list.sort(function (a, b) {
-          return a.name.localeCompare(b.name);
-        }),
-      );
-    } else if (selectOption === "1") {
-      setList(
-        list.sort(function (a, b) {
-          return b.name.localeCompare(a.name);
-        }),
-      );
-    } else if (selectOption === "2") {
-      setList(
-        list.sort(function (a, b) {
-          return a.data.roleplay.places - b.data.roleplay.places;
-        }),
-      );
-    } else if (selectOption === "3") {
-      setList(
-        list.sort(function (a, b) {
-          return b.data.roleplay.places - a.data.roleplay.places;
-        }),
-      );
-    } else if (selectOption === "4") {
-      setList(
-        list.sort(function (a, b) {
-          return a.data.roleplay.citizens - b.data.roleplay.citizens;
-        }),
-      );
-    } else if (selectOption === "5") {
-      setList(
-        list.sort(function (a, b) {
-          return b.data.roleplay.citizens - a.data.roleplay.citizens;
-        }),
-      );
-    } else if (selectOption === "6") {
-      setList(
-        list.sort(function (a, b) {
-          return a.data.roleplay.treasury - b.data.roleplay.treasury;
-        }),
-      );
-    } else if (selectOption === "7") {
-      setList(
-        list.sort(function (a, b) {
-          return b.data.roleplay.treasury - a.data.roleplay.treasury;
-        }),
-      );
+    switch (selectOption) {
+      case "0":
+        setList(sortByName(list, true));
+        break;
+      case "1":
+        setList(sortByName(list, false));
+        break;
+      case "2":
+        setList(sortByPlaces(list, true));
+        break;
+      case "3":
+        setList(sortByPlaces(list, false));
+        break;
+      case "4":
+        setList(sortNationsByCitizens(list, true));
+        break;
+      case "5":
+        setList(sortNationsByCitizens(list, false));
+        break;
+      case "6":
+        setList(sortByTreasury(list, true));
+        break;
+      case "7":
+        setList(sortByTreasury(list, false));
+        break;
+      case "8":
+        setList(sortByCreatedAt(list, true));
+        break;
+      case "9":
+        setList(sortByCreatedAt(list, false));
+        break;
+      default:
+        break;
     }
   };
 
