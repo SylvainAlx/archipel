@@ -298,7 +298,8 @@
         "nationOwner": "nation leader",
         "residence": "residence",
         "treasury": "treasury",
-        "date": "date"
+        "date": "date",
+        "pioneer": "pioneer"
       },
       "avatar": "avatar",
       "relations": {
@@ -321,14 +322,18 @@
           "ascCtz": "Growing number of citizens",
           "descCtz": "Decreasing number of citizens",
           "ascTreasury": "Growing wealth",
-          "descTreasury": "Decreasing wealth"
+          "descTreasury": "Decreasing wealth",
+          "ascDate": "Creation date ascending",
+          "descDate": "Creation date descending"
         }
       },
       "citizensList": {
         "input": "Citizen name",
         "sortCitizens": {
           "ascAlpha": "Ascending alphabetical",
-          "descAlpha": "Descending alphabetical"
+          "descAlpha": "Descending alphabetical",
+          "ascDate": "Registration date ascending",
+          "descDate": "Registration date descending"
         }
       },
       "placesList": {
@@ -343,7 +348,9 @@
           "ascAlpha": "Ascending alphabetical",
           "descAlpha": "Descending alphabetical",
           "ascCtz": "Growing number of citizens",
-          "descCtz": "Decreasing number of citizens"
+          "descCtz": "Decreasing number of citizens",
+          "ascDate": "Creation date ascending",
+          "descDate": "Creation date descending"
         }
       },
       "comsList": {
@@ -363,7 +370,8 @@
         "semiPresidentialRepublic": "semi-presidential republic",
         "parliamentaryRepublic": "parliamentary republic",
         "onePartyRepublic": "one-party republic",
-        "directDemocracy": "direct democracy"
+        "directDemocracy": "direct democracy",
+        "illiberalDemocracy": "illiberal democracy"
       },
       "monarchies": {
         "constitutionalMonarchy": "constitutional monarchy",

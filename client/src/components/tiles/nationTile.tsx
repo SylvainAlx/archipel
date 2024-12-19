@@ -9,6 +9,7 @@ import TagList from "../nation/tagList";
 import ReportPanel from "../reportPanel";
 import { sessionAtom } from "../../settings/store";
 import { useAtom } from "jotai";
+import DateTag from "../tags/dateTag";
 
 export default function NationTile(nation: Nation) {
   const navigate = useNavigate();
@@ -37,6 +38,7 @@ export default function NationTile(nation: Nation) {
         <RegimeTag selectedNation={nation} />
         <PopulationTag label={nation.data.roleplay.citizens} />
         <PlaceTag label={nation.data.roleplay.places} />
+        <DateTag date={nation.createdAt} />
         <div className="self-end">
           <TagList nation={nation} isTile={true} />
         </div>

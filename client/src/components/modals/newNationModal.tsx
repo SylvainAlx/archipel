@@ -5,7 +5,6 @@ import Button from "../buttons/button";
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import Form from "../form/form";
 import Input from "../form/input";
-// import Select from "../form/select";
 import { emptyNewNationPayload } from "../../types/typNation";
 import { createNation } from "../../api/nation/nationAPI";
 import Select from "../form/select";
@@ -98,7 +97,7 @@ export default function NewNationModal() {
                     key={i}
                     className="hover:text-danger"
                   >
-                    <HashTag label={tag} />
+                    <HashTag label={tag} occurrence={-1} />
                   </span>
                 );
               })}

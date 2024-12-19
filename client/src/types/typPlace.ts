@@ -12,6 +12,7 @@ export interface Place {
   image: string;
   reported: boolean;
   banished: boolean;
+  createdAt: Date;
 }
 
 export const emptyPlace: Place = {
@@ -25,4 +26,5 @@ export const emptyPlace: Place = {
   image: "",
   reported: false,
   banished: false,
+  createdAt: new Date(0),
 };

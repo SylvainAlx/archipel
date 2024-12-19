@@ -14,6 +14,7 @@ import { useAtom } from "jotai";
 import { getCitizens } from "../../api/user/userAPI";
 import { citizenSearchSortOptions } from "../../settings/lists";
 import SearchButtons from "../form/searchButtons";
+import { sortByCreatedAt, sortByName } from "../../utils/sorting";
 
 export interface SearchBarProps {
   type: string;
@@ -22,9 +23,10 @@ export interface SearchBarProps {
 }
 
 export default function CitizenSearchBar({ list, setList }: SearchBarProps) {
-  const [selectOption, setSelectOption] = useState("0");
+  const [selectOption, setSelectOption] = useState("3");
   const { t } = useTranslation();
   const [searchName, setSearchName] = useState("");
+  const [isLeader, setIsLeader] = useState(false);
   const [citizenList] = useAtom(citizenListAtom);
   const [stats] = useAtom(statsAtom);
 
@@ -36,29 +38,42 @@ export default function CitizenSearchBar({ list, setList }: SearchBarProps) {
   }, [stats.counts.citizens]);
 
   useEffect(() => {
-    citizensSorting();
+    if (citizenList.length > 0) {
+      citizensSorting();
+    }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectOption, citizenList]);
+  }, [selectOption, citizenList, isLeader]);
 
   const reset = () => {
     getCitizens("");
-    setSelectOption("0");
+    setSelectOption("3");
   };
 
   const citizensSorting = () => {
     list = [...citizenList];
-    if (selectOption === "0") {
-      setList(
-        list.sort(function (a, b) {
-          return a.name.localeCompare(b.name);
-        }),
+    switch (selectOption) {
+      case "0":
+        setList(sortByName(list, true));
+        break;
+      case "1":
+        setList(sortByName(list, false));
+        break;
+      case "2":
+        setList(sortByCreatedAt(list, true));
+        break;
+      case "3":
+        setList(sortByCreatedAt(list, false));
+        break;
+      default:
+        break;
+    }
+
+    if (isLeader) {
+      const updatedList = list.filter(
+        (citizen) => citizen.citizenship.nationOwner === true,
       );
-    } else if (selectOption === "1") {
-      setList(
-        list.sort(function (a, b) {
-          return b.name.localeCompare(a.name);
-        }),
-      );
+      setList(updatedList);
     }
   };
 
@@ -69,6 +84,10 @@ export default function CitizenSearchBar({ list, setList }: SearchBarProps) {
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     getCitizens(searchName);
+  };
+
+  const handleChangeCheckbox = () => {
+    setIsLeader(!isLeader);
   };
 
   return (
@@ -84,6 +103,7 @@ export default function CitizenSearchBar({ list, setList }: SearchBarProps) {
         placeholder={t("components.searchBars.citizensList.input")}
         value={searchName}
       />
+
       <Select
         onChange={(e: ChangeEvent<HTMLSelectElement>) =>
           setSelectOption(e.target.value)
@@ -91,7 +111,20 @@ export default function CitizenSearchBar({ list, setList }: SearchBarProps) {
         options={citizenSearchSortOptions}
         value={selectOption}
       />
-      <SearchButtons reset={reset} />
+      <div className="flex flex-wrap flex-col md:flex-row gap-2 items-center justify-center md:justify-between">
+        <fieldset className="flex gap-3">
+          <label className="flex gap-2 items-center">
+            {t("components.hoverInfos.tags.nationOwner")}
+            <input
+              type="checkbox"
+              id="0"
+              checked={isLeader}
+              onChange={handleChangeCheckbox}
+            />
+          </label>
+        </fieldset>
+        <SearchButtons reset={reset} />
+      </div>
     </form>
   );
 }

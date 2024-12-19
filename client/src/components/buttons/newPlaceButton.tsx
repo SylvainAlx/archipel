@@ -40,6 +40,7 @@ export default function NewPlaceButton({
         image: emptyPlace.image,
         reported: emptyPlace.reported,
         banished: emptyPlace.banished,
+        createdAt: new Date(),
       };
 
       myStore.set(newPlaceAtom, newPlace);

@@ -16,7 +16,7 @@ export default function TagList({ nation, owner, isTile }: TagListProps) {
       {nation.data.general.tags.map((hashtag, i) => {
         return (
           <span className="flex justify-center items-center gap-1" key={i}>
-            <HashTag label={hashtag} />
+            <HashTag label={hashtag} occurrence={-1} />
           </span>
         );
       })}

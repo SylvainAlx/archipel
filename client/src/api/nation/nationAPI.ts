@@ -12,7 +12,12 @@ import {
   statsAtom,
   tagListAtom,
 } from "../../settings/store";
-import { EmptyNation, Nation, NewNationPayload } from "../../types/typNation";
+import {
+  EmptyNation,
+  Hashtag,
+  Nation,
+  NewNationPayload,
+} from "../../types/typNation";
 import { User } from "../../types/typUser";
 import {
   spliceByOfficialId,
@@ -107,18 +112,28 @@ export const getNation = (id: string) => {
   }
 };
 
-export const getNations = (searchName: string, searchTag: string) => {
+export const getNations = (
+  searchName: string,
+  searchTag: string,
+  nationList?: Nation[],
+) => {
   let nations: Nation[] = [];
   if (searchName != "") {
-    nations = findElementsByName(searchName, myStore.get(nationsListAtom));
+    nations = findElementsByName(
+      searchName,
+      nationList ? nationList : myStore.get(nationsListAtom),
+    );
   }
   if (searchTag != "") {
-    nations = findNationsByTag(searchTag, myStore.get(nationsListAtom));
+    nations = findNationsByTag(
+      searchTag,
+      nationList ? nationList : myStore.get(nationsListAtom),
+    );
   }
   if (searchName === "" && searchTag === "") {
     nations = myStore.get(nationsListAtom);
   }
-  if (nations.length === myStore.get(statsAtom).counts.nations) {
+  if (nations.length > 0) {
     myStore.set(nationsListFetchedAtom, nations);
   } else {
     myStore.set(loadingAtom, true);
@@ -202,10 +217,14 @@ export const deleteSelfNation = () => {
 export const getAllNationTags = () => {
   myStore.set(loadingAtom, true);
   getAllNationTagsFetch()
-    .then((data) => {
+    .then((data: { _id: string; occurrence: number }[]) => {
       myStore.set(loadingAtom, false);
       if (data != undefined) {
-        myStore.set(tagListAtom, data);
+        const inventory: Hashtag[] = [];
+        data.forEach((tag) => {
+          inventory.push({ label: tag._id, occurrence: tag.occurrence });
+        });
+        myStore.set(tagListAtom, inventory);
       }
     })
     .catch((error) => {

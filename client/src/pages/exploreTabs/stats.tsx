@@ -62,7 +62,13 @@ export default function Stats({ text }: StringProps) {
             <div className="w-full px-2 flex flex-wrap items-center justify-center gap-1">
               {tagList != undefined &&
                 tagList.map((tag, i) => {
-                  return <HashTag label={tag} key={i} />;
+                  return (
+                    <HashTag
+                      label={tag.label}
+                      occurrence={tag.occurrence}
+                      key={i}
+                    />
+                  );
                 })}
             </div>
           }

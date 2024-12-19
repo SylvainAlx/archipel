@@ -28,13 +28,21 @@ export const nationSearchSortOptions: StandardOption[] = [
     id: 5,
     label: i18n.t("components.searchBars.nationsList.sortNations.descCtz"),
   },
+  // {
+  //   id: 6,
+  //   label: i18n.t("components.searchBars.nationsList.sortNations.ascTreasury"),
+  // },
+  // {
+  //   id: 7,
+  //   label: i18n.t("components.searchBars.nationsList.sortNations.descTreasury"),
+  // },
   {
-    id: 6,
-    label: i18n.t("components.searchBars.nationsList.sortNations.ascTreasury"),
+    id: 8,
+    label: i18n.t("components.searchBars.nationsList.sortNations.ascDate"),
   },
   {
-    id: 7,
-    label: i18n.t("components.searchBars.nationsList.sortNations.descTreasury"),
+    id: 9,
+    label: i18n.t("components.searchBars.nationsList.sortNations.descDate"),
   },
 ];
 
@@ -46,6 +54,14 @@ export const citizenSearchSortOptions: StandardOption[] = [
   {
     id: 1,
     label: i18n.t("components.searchBars.citizensList.sortCitizens.descAlpha"),
+  },
+  {
+    id: 2,
+    label: i18n.t("components.searchBars.citizensList.sortCitizens.ascDate"),
+  },
+  {
+    id: 3,
+    label: i18n.t("components.searchBars.citizensList.sortCitizens.descDate"),
   },
 ];
 
@@ -66,6 +82,14 @@ export const placeSearchSortOptions: StandardOption[] = [
   //   id: 3,
   //   label: i18n.t("components.searchBars.placesList.sortPlaces.descCtz"),
   // },
+  {
+    id: 4,
+    label: i18n.t("components.searchBars.placesList.sortPlaces.ascDate"),
+  },
+  {
+    id: 5,
+    label: i18n.t("components.searchBars.placesList.sortPlaces.descDate"),
+  },
 ];
 
 export const comSearchSortOptions: StandardOption[] = [
@@ -149,6 +173,11 @@ export const regimeList: Regime[] = [
   {
     id: 104,
     label: i18n.t("listes.regimeList.democracies.directDemocracy"),
+    type: 1,
+  },
+  {
+    id: 105,
+    label: i18n.t("listes.regimeList.democracies.illiberalDemocracy"),
     type: 1,
   },
   {

@@ -151,37 +151,17 @@ export const createTagRegime = (id: number) => {
     type: 0,
     bgColor: "bg-regime_0",
   };
+
   const getLabel = (id: number): string => {
-    switch (id) {
-      case 1:
-        return i18n.t("listes.regimeList.others.unknownPoliticalRegime");
-      case 2:
-        return i18n.t("listes.regimeList.others.noGovernment");
-      case 3:
-        return i18n.t("listes.regimeList.others.provisionalGovernment");
-      case 4:
-        return i18n.t("listes.regimeList.others.other");
-      case 100:
-        return i18n.t("listes.regimeList.democracies.presidentialRepublic");
-      case 101:
-        return i18n.t("listes.regimeList.democracies.semiPresidentialRepublic");
-      case 102:
-        return i18n.t("listes.regimeList.democracies.parliamentaryRepublic");
-      case 103:
-        return i18n.t("listes.regimeList.democracies.onePartyRepublic");
-      case 104:
-        return i18n.t("listes.regimeList.democracies.directDemocracy");
-      case 200:
-        return i18n.t("listes.regimeList.monarchies.constitutionalMonarchy");
-      case 201:
-        return i18n.t("listes.regimeList.monarchies.absoluteMonarchy");
-      case 300:
-        return i18n.t(
-          "listes.regimeList.autoritarianRegimes.militaryDictatorship",
-        );
-    }
-    return i18n.t("listes.regimeList.others.unknownPoliticalRegime");
+    let label = i18n.t("listes.regimeList.others.unknownPoliticalRegime");
+    regimeList.map((regime) => {
+      if (regime.id === id) {
+        label = regime.label;
+      }
+    });
+    return label;
   };
+
   tagRegime.label = getLabel(id);
   regimeList.map((regime) => {
     if (regime.id === id) {

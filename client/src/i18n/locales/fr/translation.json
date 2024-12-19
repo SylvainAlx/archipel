@@ -298,7 +298,8 @@
         "nationOwner": "leader de la nation",
         "residence": "résidence",
         "treasury": "trésor public",
-        "date": "date"
+        "date": "date",
+        "pioneer": "pionnier"
       },
       "avatar": "avatar",
       "relations": {
@@ -321,14 +322,18 @@
           "ascCtz": "Nombre de citoyens croissant",
           "descCtz": "Nombre de citoyens décroissant",
           "ascTreasury": "Richesse croissante",
-          "descTreasury": "Richesse décroissante"
+          "descTreasury": "Richesse décroissante",
+          "ascDate": "Date de creation croissante",
+          "descDate": "Date de creation décroissante"
         }
       },
       "citizensList": {
         "input": "Citoyen.ne",
         "sortCitizens": {
           "ascAlpha": "Alphabetique croissant",
-          "descAlpha": "Alphabetique décroissant"
+          "descAlpha": "Alphabetique décroissant",
+          "ascDate": "Date d'inscription croissante",
+          "descDate": "Date d'inscription décroissante"
         }
       },
       "placesList": {
@@ -343,7 +348,9 @@
           "ascAlpha": "Alphabetique croissant",
           "descAlpha": "Alphabetique décroissant",
           "ascCtz": "Nombre de citoyens croissant",
-          "descCtz": "Nombre de citoyens décroissant"
+          "descCtz": "Nombre de citoyens décroissant",
+          "ascDate": "Date de creation croissante",
+          "descDate": "Date de creation décroissante"
         }
       },
       "comsList": {
@@ -360,10 +367,11 @@
     "regimeList": {
       "democracies": {
         "presidentialRepublic": "république présidentielle",
-        "semiPresidentialRepublic": "république à régime semi-présidentiel",
+        "semiPresidentialRepublic": "république semi-présidentielle",
         "parliamentaryRepublic": "république parlementaire",
         "onePartyRepublic": "république à parti unique",
-        "directDemocracy": "démocratie directe"
+        "directDemocracy": "démocratie directe",
+        "illiberalDemocracy": "démocratie illibérale"
       },
       "monarchies": {
         "constitutionalMonarchy": "monarchie constitutionnelle",

@@ -1,59 +1,31 @@
 import {
   comFetchedListAtom,
-  confirmBox,
   editPlaceAtom,
   nationFetchedAtom,
-  nationPlacesListAtom,
   placeFetchedAtom,
   sessionAtom,
 } from "../settings/store";
 import { useAtom } from "jotai";
-import { Suspense, lazy, useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import { getNationPlaces, getPlace } from "../api/place/placeAPI";
-import IdTag from "../components/tags/idTag";
-import PlaceTag from "../components/tags/placeTag";
-import {
-  displayUnwatchedComs,
-  getPlaceListByType,
-  getPlaceName,
-  getPlaceTypeLabel,
-  handleDeleteImage,
-} from "../utils/functions";
-import NewPlaceButton from "../components/buttons/newPlaceButton";
-import Spinner from "../components/loading/spinner";
-import EditIcon from "../components/editIcon";
-import H2 from "../components/titles/h2";
-import ParentButton from "../components/buttons/parentButton";
-import { useTranslation } from "react-i18next";
+import { displayUnwatchedComs } from "../utils/functions";
 import { getNation } from "../api/nation/nationAPI";
-import CrossButton from "../components/buttons/crossButton";
-import Upploader from "../components/uploader";
-import { AiOutlinePicture } from "react-icons/ai";
-import { ConfirmBoxDefault } from "../types/typAtom";
-import MDEditor from "@uiw/react-md-editor";
 import ReportPanel from "../components/reportPanel";
 import { getComsByDestination } from "../api/communication/comAPI";
-import { FaSortAmountDownAlt } from "react-icons/fa";
+import PlaceIdentity from "../components/place/placeIdentity";
+import PlaceChildren from "../components/place/placeChildren";
+import PlaceHeader from "../components/place/placeHeader";
 
 export default function Place() {
-  const navigate = useNavigate();
-  const { t } = useTranslation();
-
   const [session] = useAtom(sessionAtom);
   const [nation] = useAtom(nationFetchedAtom);
   const [place] = useAtom(placeFetchedAtom);
   const [comList] = useAtom(comFetchedListAtom);
-  const [nationPlacesList] = useAtom(nationPlacesListAtom);
-  const [confirm, setConfirm] = useAtom(confirmBox);
   const [, setEditPlace] = useAtom(editPlaceAtom);
   const param = useParams();
-  const [refresh, setRefresh] = useState(false);
-  const [haveChildren, setHaveChildren] = useState(false);
-  const [parentName, setParentName] = useState("");
+
   const [owner, setOwner] = useState(false);
-  const PlaceTile = lazy(() => import("../components/tiles/placeTile"));
-  const LazyImage = lazy(() => import("../components/lazy/lazyImage"));
 
   useEffect(() => {
     if (param.id != undefined) {
@@ -70,13 +42,9 @@ export default function Place() {
       setOwner(true);
       getComsByDestination(place.officialId);
     }
-    if (
-      place.nation != undefined &&
-      place.nation != "" &&
-      nation.officialId === ""
-    ) {
-      getNation(place.nation);
-    }
+
+    getNation(place.nation);
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [place]);
 
@@ -85,24 +53,6 @@ export default function Place() {
       getNationPlaces(nation);
     }
   }, [nation]);
-
-  useEffect(() => {
-    if (nationPlacesList != undefined) {
-      setParentName(
-        getPlaceName(nationPlacesList, place.parentId, nation.name),
-      );
-    }
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [nationPlacesList, place, nation]);
-
-  useEffect(() => {
-    if (confirm.action === "deletePlace" && confirm.result === "OK") {
-      navigate(`/nation/${place.nation}`);
-      setConfirm(ConfirmBoxDefault);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [confirm]);
 
   useEffect(() => {
     if (
@@ -114,146 +64,13 @@ export default function Place() {
     }
   }, [comList]);
 
-  const handleClick = () => {
-    if (place.nation === place.parentId) {
-      navigate(`/nation/${place.nation}`);
-    } else {
-      nationPlacesList.forEach((loc) => {
-        if (loc.officialId === place.parentId) {
-          navigate(`/place/${loc.officialId}`);
-          setRefresh(!refresh);
-        }
-      });
-    }
-  };
-
-  const handleDelete = () => {
-    setConfirm({
-      action: "deletePlace",
-      text: t("components.modals.confirmModal.deletePlace"),
-      result: "",
-      target: place,
-    });
-  };
-
   return (
     <>
       <section className="w-full px-2 pb-2 flex flex-col items-center gap-2">
-        <div className="w-full flex items-center justify-center flex-wrap gap-1">
-          <ParentButton click={handleClick} />
-          {owner && <CrossButton click={handleDelete} />}
-        </div>
-        <div className="flex items-center gap-2">
-          <FaSortAmountDownAlt className="text-secondary" />
-          <b>{`${nation.name != parentName ? nation.name + " > " + parentName : nation.name}`}</b>
-          {owner && (
-            <EditIcon
-              target="place"
-              param={getPlaceListByType(nation, nationPlacesList, [0, 1])}
-              path="parentId"
-            />
-          )}
-        </div>
-        {!place.reported && (
-          <section className="w-full flex flex-col items-center rounded gap-4">
-            <div className="flex items-center gap-2">
-              <H2 text={`${place.name}`} />
-              {owner && (
-                <EditIcon target="place" param={place.name} path="name" />
-              )}
-            </div>
-            {place.image != undefined && place.image != "" ? (
-              <div className="relative max-w-[800px]">
-                <Suspense fallback={<Spinner />}>
-                  <LazyImage
-                    src={place.image}
-                    alt={`image of ${place.name}`}
-                    className="object-contain w-full h-full rounded cursor-zoom-in"
-                    hover={t("pages.place.image")}
-                  />
-                </Suspense>
-                {owner && (
-                  <CrossButton
-                    small={true}
-                    click={() =>
-                      handleDeleteImage({
-                        url: place.image,
-                        type: "placeImage",
-                      })
-                    }
-                  />
-                )}
-              </div>
-            ) : (
-              <>
-                <AiOutlinePicture className="text-9xl" />
-                {owner && (
-                  <Upploader
-                    path="image"
-                    destination="place"
-                    place={place}
-                    maxSize={2000000}
-                  />
-                )}
-                <em>{t("pages.place.noImage")}</em>
-              </>
-            )}
-            <div className="flex items-center justify-center flex-wrap gap-1">
-              {place.officialId && <IdTag label={place.officialId} />}
-              <PlaceTag label={getPlaceTypeLabel(place.type)} />
-              {/* <PopulationTag label={getTotalPopulation(place)} /> */}
-            </div>
-            <div className="flex items-center gap-2">
-              {place.description != "" ? (
-                <MDEditor.Markdown
-                  className="bg-transparent text-light text-justify"
-                  source={place.description}
-                  style={{ whiteSpace: "pre-wrap" }}
-                />
-              ) : (
-                <em className="text-center">
-                  {t("pages.place.noDescription")}
-                </em>
-              )}
-              {owner && (
-                <EditIcon
-                  target="place"
-                  param={place.description}
-                  path="description"
-                />
-              )}
-            </div>
-          </section>
-        )}
+        <PlaceHeader place={place} nation={nation} owner={owner} />
+        {!place.reported && <PlaceIdentity place={place} owner={owner} />}
       </section>
-      <section className="w-full px-2 flex flex-wrap justify-center gap-2">
-        <div className="w-full py-4 flex flex-col gap-2">
-          {nationPlacesList != undefined &&
-            nationPlacesList.length > 0 &&
-            nationPlacesList.map((loc, i) => {
-              if (loc.parentId === place.officialId) {
-                !haveChildren && setHaveChildren(true);
-                return (
-                  <Suspense key={i} fallback={<Spinner />}>
-                    <div className="relative w-full">
-                      <PlaceTile owner={false} place={loc} />
-                    </div>
-                  </Suspense>
-                );
-              }
-            })}
-          {!haveChildren && (
-            <em className="text-center">{t("pages.place.noChildrenPlaces")}</em>
-          )}
-        </div>
-        {owner && place.type != 2 && (
-          <NewPlaceButton
-            nation={nation}
-            parentId={place.officialId}
-            owner={owner}
-          />
-        )}
-      </section>
+      <PlaceChildren place={place} nation={nation} owner={owner} />
       <ReportPanel content={place} />
     </>
   );

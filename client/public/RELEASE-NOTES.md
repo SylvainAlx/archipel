@@ -1,3 +1,54 @@
+## Versions terminées
+
+### BETA-0.1
+
+#### Ajouts
+
+- Parcourir la liste des nations, des citoyens, des lieux virtuels et des communiqués publics
+- Créer un compte de citoyen virtuel
+- Créer une nation virtuelles
+- Créer des lieux pour sa nation virtuelle
+- Rejoindre une nation virtuelle
+- Créer des relations diplomatiques entre nations
+- Signaler des contenus offensants
+- Poster des communiqués officiels et des communications privée pour la nation
+
+#### Suppressions
+
+Aucune
+
+#### Modifications & Corrections
+
+Aucune
+
+## Versions en développement
+
+### BETA-0.2
+
+#### Ajouts
+
+- Ajout du régime "démocratie illibérale"
+- Ajout du nombre d'occurrence par mot-clé dans les statistiques
+- Ajout du nombre de lieux enfants sur les tuiles de lieu sur la page "nation"
+- Filtre par tag directement possible en cliquant sur celui-ci
+- Extension du tag "Date" pour les citoyens, nations et lieux
+- Ajout du tri par ordre de création/inscription
+- Ajout du tag "Pionnier" pour les utilisateurs inscrits avant 2025
+
+#### Suppressions
+
+- mise en retrait du tri par "Richesse" pour les nations (fonctionnalité non disponible pour l'heure)
+- mise en retrait du tag de crédit et du trésor public (fonctionnalité non disponible pour l'heure)
+
+#### Modifications & Corrections
+
+- Correction du dysfonctionnement du tri sur la page "explorer"
+- Correction de l'erreur de nom du lieu parent
+- Optimisation du code source
+- Amélioration des traductions
+- Amélioration des performances
+- Ajout d'un timer pour l'indication de chargement long (démarrage serveur)
+
 ## Développements à venir
 
 - Créer une organisation
@@ -13,44 +64,5 @@
 - Améliorer le référencement et l'accessibilité
 - Étendre les fonctionnalités pour les utilisateurs mobile
 - Lier les lieux de la nation à un emplacement sur la carte
-
-## Versions en développement
-
-### BETA-0.2
-
-### Ajouts
-
-Aucun
-
-### Suppressions
-
-Aucune
-
-### Corrections
-
-- Amélioration des performances
-- Optimisation du code source
-- Amélioration des traductions
-
-## Versions terminées
-
-### BETA-0.1
-
-### Ajouts
-
-- Parcourir la liste des nations, des citoyens, des lieux virtuels et des communiqués publics
-- Créer un compte de citoyen virtuel
-- Créer une nation virtuelles
-- Créer des lieux pour sa nation virtuelle
-- Rejoindre une nation virtuelle
-- Créer des relations diplomatiques entre nations
-- Signaler des contenus offensants
-- Poster des communiqués officiels et des communications privée pour la nation
-
-### Suppressions
-
-Aucune
-
-### Corrections
-
-Aucune
+- Améliorer des traductions
+- Carte de l'Archipel avec l'ensemble des nations représentées

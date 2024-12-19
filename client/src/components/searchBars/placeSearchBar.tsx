@@ -17,6 +17,11 @@ import { getPlaceTypeLabel, getTotalPopulation } from "../../utils/functions";
 import { Place } from "../../types/typPlace";
 import { placeSearchSortOptions } from "../../settings/lists";
 import SearchButtons from "../form/searchButtons";
+import {
+  sortByCreatedAt,
+  sortByName,
+  sortPlacesByCitizen,
+} from "../../utils/sorting";
 
 export interface SearchBarProps {
   type: string;
@@ -85,6 +90,29 @@ export default function PlaceSearchBar({ list, setList }: SearchBarProps) {
 
   const placesSorting = (Alist: Place[], selectOption: string) => {
     const updatedList = [...Alist];
+    switch (selectOption) {
+      case "0":
+        setList(sortByName(updatedList, true));
+        break;
+      case "1":
+        setList(sortByName(updatedList, false));
+        break;
+      case "2":
+        setList(sortPlacesByCitizen(updatedList, true));
+        break;
+      case "3":
+        setList(sortPlacesByCitizen(updatedList, false));
+        break;
+      case "4":
+        setList(sortByCreatedAt(updatedList, true));
+        break;
+      case "5":
+        setList(sortByCreatedAt(updatedList, false));
+        break;
+      default:
+        break;
+    }
+
     if (selectOption === "0") {
       setList(
         updatedList.sort(function (a, b) {

@@ -240,10 +240,7 @@ export const getNationCitizens = (nation: Nation) => {
       savedNationCitizenList.push(citizen);
     }
   });
-  if (
-    savedNationCitizenList.length > 1 &&
-    nation.data.roleplay.citizens === savedNationCitizenList.length
-  ) {
+  if (savedNationCitizenList.length > 0) {
     myStore.set(nationCitizenListAtom, savedNationCitizenList);
   } else {
     myStore.set(loadingAtom, true);

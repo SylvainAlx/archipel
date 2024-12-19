@@ -9,7 +9,7 @@ export const GOOGLE_ANALYTICS_MEASUREMENT_ID = import.meta.env
   .VITE_GOOGLE_ANALYTICS_MEASUREMENT_ID;
 
 export const VERSION = {
-  beta: "BETA-0.1",
+  beta: "BETA-0.2",
   rc: "",
   release: "",
   testing: true,
@@ -20,6 +20,8 @@ export const color_secondary = "var(--color-secondary)";
 export const color_complementary = "var(--color-complementary)";
 export const color_light = "var(--color-light)";
 export const color_black_alpha = "var(--color-black-alpha)";
+
+export const PIONEER_DATE = "2025-01-01T00:00:00.000Z";
 
 export const QUOTAS = {
   PLACES: 10,
