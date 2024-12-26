@@ -430,7 +430,8 @@
     "nation": {
       "create": "Nouvelle nation créée",
       "update": "Nation modifiée",
-      "delete": "Nation supprimée"
+      "delete": "Nation supprimée",
+      "notEnoughCredits": "Crédits insuffisants"
     },
     "relation": {
       "create": "Nouvelle relation diplomatique créée",

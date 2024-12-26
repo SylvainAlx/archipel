@@ -21,7 +21,7 @@ export default function Footer() {
           className="text-[12px] cursor-pointer hover:text-secondary"
           onClick={() => navigate("/releasenotes")}
         >
-          {VERSION.beta != "" && VERSION.beta}
+          {VERSION.beta != "" && "BETA-" + VERSION.beta}
           {VERSION.rc != "" && VERSION.rc}
           {VERSION.release != "" && VERSION.release}
         </div>

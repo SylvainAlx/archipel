@@ -7,6 +7,8 @@ import { confirmBox, editTileAtom, myStore } from "../../settings/store";
 import { useAtom } from "jotai";
 import { useTranslation } from "react-i18next";
 import TextArea from "../form/textArea";
+import { FaCoins } from "react-icons/fa";
+import { COSTS } from "../../settings/consts";
 
 export default function TileFormModal() {
   const [newTile, setNewTile] = useState(false);
@@ -53,12 +55,18 @@ export default function TileFormModal() {
     }
   };
   return (
-    <div>
+    <div className="flex flex-col items-center">
       <h2 className="text-2xl text-center p-4">
         {newTile
           ? t("components.modals.tileModal.new")
           : t("components.modals.tileModal.update")}
       </h2>
+      {!updatedTile.isFree && (
+        <span className="flex items-center gap-1 text-gold">
+          <FaCoins />
+          {COSTS.TILE}
+        </span>
+      )}
       <Form
         submit={handleSubmit}
         children={

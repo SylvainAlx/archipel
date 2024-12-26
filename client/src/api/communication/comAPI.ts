@@ -13,6 +13,7 @@ import {
   updateOrCreateComInMemory,
 } from "../../utils/atomArrayFunctions";
 import { displayComInfoByType } from "../../utils/displayInfos";
+import { errorCatching } from "../../utils/functions";
 import {
   createComFetch,
   deleteComFetch,
@@ -23,21 +24,21 @@ import {
   getComsFetch,
 } from "./comFetch";
 
-export const getComsCount = () => {
+export const getComsCount = async () => {
   const stats = myStore.get(statsAtom);
   myStore.set(loadingAtom, true);
-  getComsCountFetch()
-    .then((response) => {
-      myStore.set(loadingAtom, false);
-      const updatedStats = { ...stats };
-      updatedStats.counts.coms = response;
-      myStore.set(statsAtom, updatedStats);
-    })
-    .catch((error) => {
-      myStore.set(loadingAtom, false);
-      console.error(error);
-      displayComInfoByType(error.infoType);
-    });
+  try {
+    const response = await getComsCountFetch();
+    const updatedStats = {
+      ...stats,
+      counts: { ...stats.counts, coms: response },
+    };
+    myStore.set(statsAtom, updatedStats);
+  } catch (error) {
+    errorCatching(error);
+  } finally {
+    myStore.set(loadingAtom, false);
+  }
 };
 
 export const getComs = async (
@@ -109,24 +110,22 @@ export const getPublicComs = async (nationId: string) => {
   if (savedComList.length > 0 && nationId != "") {
     myStore.set(comFetchedListAtom, savedComList);
   } else {
+    myStore.set(loadingAtom, true);
     try {
-      myStore.set(loadingAtom, true);
       let response: [Com];
       if (nationId != "") {
         response = await getPublicComsByOriginFetch(nationId);
       } else {
         response = await getAllPublicComsFetch();
       }
-      myStore.set(loadingAtom, false);
-      if (response != undefined) {
-        response.forEach((com: Com) => {
-          updateOrCreateComInMemory(com);
-        });
-        myStore.set(comFetchedListAtom, response);
-      }
+      response.forEach((com: Com) => {
+        updateOrCreateComInMemory(com);
+      });
+      myStore.set(comFetchedListAtom, response);
     } catch (error) {
+      errorCatching(error);
+    } finally {
       myStore.set(loadingAtom, false);
-      console.error(error);
     }
   }
 };

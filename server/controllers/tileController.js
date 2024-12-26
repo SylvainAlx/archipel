@@ -20,15 +20,15 @@ export const createTile = async (req, res) => {
   try {
     const { nationOfficialId, title, description, value } = req.body;
     const userId = req.userId;
-    const nationsTiles = await Tile.find({ nationOfficialId });
+    const nationsTilesCount = await Tile.countDocuments({ nationOfficialId });
     const nation = await Nation.findOne({ officialId: nationOfficialId });
+    const freeTile = nationsTilesCount < QUOTAS.TILES;
+    const enoughMoney = nation.data.roleplay.treasury >= COSTS.TILES;
     const allow =
-      verifyNationOwner(userId, nationOfficialId) &&
-      (nationsTiles.length < QUOTAS.TILES ||
-        nation.data.roleplay.treasury >= COSTS.TILES);
+      verifyNationOwner(userId, nationOfficialId) && (freeTile || enoughMoney);
     if (allow) {
       let updatedNation;
-      if (nationsTiles.length > QUOTAS.TILES) {
+      if (!freeTile) {
         nation.data.roleplay.treasury -= COSTS.TILES;
         updatedNation = await nation.save();
       } else {
@@ -90,7 +90,12 @@ export const deleteTile = async (req, res) => {
       const allow = verifyNationOwner(userId, tile.nationOfficialId);
       if (allow) {
         await Tile.findByIdAndDelete(tile._id);
-        nation.data.roleplay.treasury += COSTS.TILES;
+        const nationsTilesCount = await Tile.countDocuments({
+          nationOfficialId: nation.officialId,
+        });
+        if (nationsTilesCount + 1 > QUOTAS.TILES) {
+          nation.data.roleplay.treasury += COSTS.TILES;
+        }
         const updatedNation = await nation.save();
         res
           .status(200)

@@ -67,13 +67,13 @@ export default function NewComModal() {
               onChange={(value) =>
                 value != undefined && setNewCom({ ...newCom, message: value })
               }
-              maxLength={MAX_LENGTH.comMessage}
+              maxLength={MAX_LENGTH.text.comMessage}
             />
             <Button
               type="submit"
               text={t("components.buttons.validate")}
               widthFull={true}
-              disabled={newCom.message.length > MAX_LENGTH.comMessage}
+              disabled={newCom.message.length > MAX_LENGTH.text.comMessage}
             />
             <Button
               type="button"

@@ -88,10 +88,11 @@ export const createPlace = async (req, res) => {
   try {
     const { nation, parentId, name, type, description, image } = req.body;
     const placeNation = await Nation.findOne({ officialId: nation });
-    if (
-      placeNation.data.roleplay.places < QUOTAS.PLACES ||
-      placeNation.data.roleplay.treasury >= COSTS.PLACES
-    ) {
+
+    const freePlace = placeNation.data.roleplay.places < QUOTAS.PLACES;
+    const enoughMoney = placeNation.data.roleplay.treasury >= COSTS.PLACES;
+
+    if (freePlace || enoughMoney) {
       const officialId = createOfficialId("p");
       const place = new Place({
         nation,
@@ -104,6 +105,7 @@ export const createPlace = async (req, res) => {
         image,
       });
       await place.save();
+      // Capitale par défaut si non définie
       if (
         (placeNation.data.roleplay.capital === "" ||
           placeNation.data.roleplay.capital == undefined) &&
@@ -111,11 +113,13 @@ export const createPlace = async (req, res) => {
       ) {
         placeNation.data.roleplay.capital = place.officialId;
       }
-      placeNation.data.roleplay.places += 1;
 
-      if (placeNation.data.roleplay.places > QUOTAS.PLACES) {
+      if (!freePlace) {
         placeNation.data.roleplay.treasury -= COSTS.PLACES;
       }
+
+      placeNation.data.roleplay.places += 1;
+
       await placeNation.save();
       res.status(201).json({ place, nation: placeNation, infoType: "new" });
     } else {
@@ -151,8 +155,13 @@ export const deletePlace = async (req, res) => {
       nation.data.roleplay.capital = "";
     }
     nation.data.roleplay.population -= place.population;
+
+    if (nation.data.roleplay.places > QUOTAS.PLACES) {
+      nation.data.roleplay.treasury += COSTS.PLACES;
+    }
+
     nation.data.roleplay.places -= 1;
-    nation.data.roleplay.treasury += COSTS.PLACES;
+
     await nation.save();
     await Place.updateMany(
       { parentId: id },

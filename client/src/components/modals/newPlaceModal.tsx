@@ -9,7 +9,8 @@ import { emptyPlace } from "../../types/typPlace";
 import { createNewPlace } from "../../api/place/placeAPI";
 import Select from "../form/select";
 import { useTranslation } from "react-i18next";
-import { PLACE_TYPE } from "../../settings/consts";
+import { COSTS, PLACE_TYPE } from "../../settings/consts";
+import { FaCoins } from "react-icons/fa";
 
 export default function NewPlaceModal() {
   const [newPlace, setNewPlace] = useAtom(newPlaceAtom);
@@ -35,10 +36,16 @@ export default function NewPlaceModal() {
   };
 
   return (
-    <div>
+    <div className="flex flex-col items-center">
       <h2 className="text-2xl text-center p-4">
         {t("components.modals.newPlaceModal.title")}
       </h2>
+      {!newPlace.isFree && (
+        <span className="flex items-center gap-1 text-gold">
+          <FaCoins />
+          {COSTS.PLACE}
+        </span>
+      )}
       <Form
         submit={handleSubmit}
         children={

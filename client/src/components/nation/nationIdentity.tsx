@@ -28,6 +28,7 @@ import MDEditor from "@uiw/react-md-editor";
 import LinkButton from "../buttons/linkButton";
 import { FaExternalLinkAlt } from "react-icons/fa";
 import { regimeList } from "../../settings/lists";
+import TreasuryTag from "../tags/treasuryTag";
 
 export default function NationIdentity({
   selectedNation,
@@ -174,9 +175,9 @@ export default function NationIdentity({
 
                   <div className="flex gap-1 flex-wrap items-center justify-center">
                     <IdTag label={selectedNation.officialId} />
-                    {/* <TreasuryTag
+                    <TreasuryTag
                       label={selectedNation.data.roleplay.treasury}
-                    /> */}
+                    />
                     <div className="flex items-center gap-2">
                       {selectedNation.data != undefined && (
                         <RegimeTag selectedNation={selectedNation} />
@@ -250,9 +251,8 @@ export default function NationIdentity({
                   <div className="w-full mt-4 justify-center flex gap-2">
                     {selectedNation.data.general.description ? (
                       <MDEditor.Markdown
-                        className="bg-transparent text-light text-justify"
+                        className="bg-transparent text-light text-justify mde-markdown"
                         source={selectedNation.data.general.description}
-                        style={{ whiteSpace: "pre-wrap" }}
                       />
                     ) : (
                       <em className="text-center">

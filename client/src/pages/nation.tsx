@@ -75,7 +75,7 @@ export default function Nation() {
     });
   };
 
-  return (
+  return nation.officialId === param.id ? (
     <>
       <div className="w-full relative flex items-center justify-center gap-2">
         <H1 text={nation.name} />
@@ -123,5 +123,7 @@ export default function Nation() {
         </>
       )}
     </>
+  ) : (
+    <p>[A TRADUIRE] pas de nation</p>
   );
 }

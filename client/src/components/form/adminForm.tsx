@@ -83,7 +83,7 @@ export default function AdminForm() {
                   onChange={(e) =>
                     e != undefined && setNewCom({ ...newCom, message: e })
                   }
-                  maxLength={MAX_LENGTH.comMessage}
+                  maxLength={MAX_LENGTH.text.comMessage}
                 />
                 <Button
                   type="submit"

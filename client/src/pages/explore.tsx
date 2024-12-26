@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import TabNav from "../components/tabNav";
-import { session } from "../settings/store";
+import { sessionAtom } from "../settings/store";
 import { useTranslation } from "react-i18next";
 import { StandardOption } from "../types/typAtom";
 import NationList from "./exploreTabs/nationList";
@@ -9,9 +9,11 @@ import CitizenList from "./exploreTabs/citizenList";
 import PlaceList from "./exploreTabs/placeList";
 import ComList from "./exploreTabs/comList";
 import { useParams } from "react-router-dom";
+import { useAtom } from "jotai";
 
 export default function Explore() {
   const { t } = useTranslation();
+  const [session] = useAtom(sessionAtom);
   const nationTabs: StandardOption[] = [
     { id: 1, label: t("pages.explore.stats.title") },
     { id: 2, label: t("pages.explore.nationsList.title") },

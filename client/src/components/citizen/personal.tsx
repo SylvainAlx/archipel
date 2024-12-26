@@ -65,9 +65,8 @@ export default function Personal({ citizen, owner }: PersonalProps) {
       <div className="w-full max-w-[300px] md:max-w-lg mt-4 justify-center flex gap-2">
         {citizen.bio ? (
           <MDEditor.Markdown
-            className="bg-transparent text-light text-justify"
+            className="bg-transparent text-light text-justify mde-markdown"
             source={citizen.bio}
-            style={{ whiteSpace: "pre-wrap" }}
           />
         ) : (
           <em className="text-center">{t("pages.citizen.noBio")}</em>

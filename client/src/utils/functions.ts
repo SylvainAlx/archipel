@@ -23,6 +23,8 @@ import i18next from "i18next";
 import { updateNation } from "../api/nation/nationAPI";
 import { updateUser } from "../api/user/userAPI";
 import { updatePlace } from "../api/place/placeAPI";
+import { displayComInfoByType } from "./displayInfos";
+import { InfoTypeError } from "../types/typGlobal";
 
 export const GET_JWT = () => {
   const jwt = localStorage.getItem("jwt");
@@ -300,11 +302,11 @@ export const dateIsExpired = (stringDate: string): boolean => {
 export const getMaxLength = (path: string) => {
   switch (path) {
     case "data.general.description":
-      return MAX_LENGTH.nationDescription;
+      return MAX_LENGTH.text.nationDescription;
     case "description":
-      return MAX_LENGTH.placeDescription;
+      return MAX_LENGTH.text.placeDescription;
     case "bio":
-      return MAX_LENGTH.userPresentation;
+      return MAX_LENGTH.text.userPresentation;
     default:
       return 0;
   }
@@ -517,5 +519,13 @@ export const createComByStatus = (
       message: i18n.t("coms.nationToWait.message"),
     };
     createNewCom(newCom2);
+  }
+};
+
+export const errorCatching = (error: unknown) => {
+  if ((error as InfoTypeError)?.infoType) {
+    displayComInfoByType((error as InfoTypeError).infoType!);
+  } else {
+    console.error(error);
   }
 };

@@ -3,9 +3,17 @@ import { ComPayload } from "../../types/typCom";
 import { GET_JWT } from "../../utils/functions";
 
 export const getComsCountFetch = async () => {
-  const resp = await fetch(`${SERVER_URL}/com/count`);
-  const result = await resp.json();
-  return result;
+  try {
+    const resp = await fetch(`${SERVER_URL}/com/count`);
+    if (!resp.ok) {
+      const errorPayload = await resp.json();
+      throw new Error(errorPayload);
+    }
+    const result = await resp.json();
+    return result;
+  } catch (error) {
+    throw error;
+  }
 };
 
 export const createComFetch = async (payload: ComPayload) => {
@@ -57,9 +65,17 @@ export const getComsByDestinationFetch = async (officialId: string) => {
 };
 
 export const getAllPublicComsFetch = async () => {
-  const resp = await fetch(`${SERVER_URL}/com/getpubliccoms`);
-  const result = await resp.json();
-  return result;
+  try {
+    const resp = await fetch(`${SERVER_URL}/com/getpubliccoms`);
+    if (!resp.ok) {
+      const errorPayload = await resp.json();
+      throw new Error(errorPayload);
+    }
+    const result = await resp.json();
+    return result;
+  } catch (error) {
+    throw error;
+  }
 };
 
 export const getPublicComsByOriginFetch = async (nationId: string) => {

@@ -104,7 +104,7 @@ export default function EditBoxModal() {
           editBox.path != "data.general.nationalDay" ? (
             <TextArea
               required={!editBox.canBeEmpty}
-              maxLength={MAX_LENGTH.textArea}
+              maxLength={MAX_LENGTH.text.textArea}
               placeholder={t("components.modals.editModal.newValue")}
               onChange={handleChange}
               value={editBox.new.toString()}

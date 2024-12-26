@@ -4,20 +4,13 @@ import { createOfficialId } from "../utils/functions.js";
 
 export const comCount = async (req, res) => {
   try {
-    Com.countDocuments({ comType: COMTYPE[3].id })
-      .then((count) => {
-        res.status(200).json(count);
-      })
-      .catch((error) => {
-        console.error(error);
-        res.status(400).json({
-          infoType: "400",
-        });
-      });
+    const count = await Com.countDocuments({ comType: COMTYPE[3].id });
+    res.status(200).json(count);
   } catch (error) {
     console.error(error);
-    res.status(400).json({
-      infoType: "400",
+    const statusCode = error.name === "ValidationError" ? 400 : 500;
+    res.status(statusCode).json({
+      infoType: statusCode.toString(),
     });
   }
 };
@@ -31,8 +24,9 @@ export const getDestinationComs = async (req, res) => {
     res.status(200).json(coms);
   } catch (error) {
     console.error(error);
-    res.status(400).json({
-      infoType: "400",
+    const statusCode = error.name === "ValidationError" ? 400 : 500;
+    res.status(statusCode).json({
+      infoType: statusCode.toString(),
     });
   }
 };
@@ -66,8 +60,9 @@ export const getComs = async (req, res) => {
     res.status(200).json(coms);
   } catch (error) {
     console.error(error);
-    res.status(500).json({
-      infoType: "500",
+    const statusCode = error.name === "ValidationError" ? 400 : 500;
+    res.status(statusCode).json({
+      infoType: statusCode.toString(),
     });
   }
 };
@@ -87,8 +82,9 @@ export const getPublicComsByOrigin = async (req, res) => {
     res.status(200).json(coms);
   } catch (error) {
     console.error(error);
-    res.status(500).json({
-      infoType: "500",
+    const statusCode = error.name === "ValidationError" ? 400 : 500;
+    res.status(statusCode).json({
+      infoType: statusCode.toString(),
     });
   }
 };
@@ -99,8 +95,9 @@ export const getPublicComs = async (req, res) => {
     res.status(200).json(coms);
   } catch (error) {
     console.error(error);
-    res.status(500).json({
-      infoType: "500",
+    const statusCode = error.name === "ValidationError" ? 400 : 500;
+    res.status(statusCode).json({
+      infoType: statusCode.toString(),
     });
   }
 };
@@ -139,8 +136,9 @@ export const createCom = async (req, res) => {
       });
   } catch (error) {
     console.error(error);
-    res.status(500).json({
-      infoType: "500",
+    const statusCode = error.name === "ValidationError" ? 400 : 500;
+    res.status(statusCode).json({
+      infoType: statusCode.toString(),
     });
   }
 };
@@ -156,8 +154,9 @@ export const deleteCom = async (req, res) => {
     });
   } catch (error) {
     console.error(error);
-    res.status(500).json({
-      infoType: "500",
+    const statusCode = error.name === "ValidationError" ? 400 : 500;
+    res.status(statusCode).json({
+      infoType: statusCode.toString(),
     });
   }
 };

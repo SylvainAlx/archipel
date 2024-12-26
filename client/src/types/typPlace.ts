@@ -13,6 +13,7 @@ export interface Place {
   reported: boolean;
   banished: boolean;
   createdAt: Date;
+  isFree: boolean;
 }
 
 export const emptyPlace: Place = {
@@ -27,4 +28,5 @@ export const emptyPlace: Place = {
   reported: false,
   banished: false,
   createdAt: new Date(0),
+  isFree: true,
 };

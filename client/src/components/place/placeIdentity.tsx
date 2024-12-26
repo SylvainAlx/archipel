@@ -70,9 +70,8 @@ export default function PlaceIdentity({ place, owner }: PlaceIdentityProps) {
       <div className="flex items-center gap-2">
         {place.description != "" ? (
           <MDEditor.Markdown
-            className="bg-transparent text-light text-justify"
+            className="bg-transparent text-light text-justify mde-markdown"
             source={place.description}
-            style={{ whiteSpace: "pre-wrap" }}
           />
         ) : (
           <em className="text-center">{t("pages.place.noDescription")}</em>

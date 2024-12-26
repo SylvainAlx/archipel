@@ -7,6 +7,7 @@ import { useAtom } from "jotai";
 import Illustration from "../components/illustration";
 import { IoMdAddCircleOutline, IoMdGlobe, IoMdLogIn } from "react-icons/io";
 import { RxAvatar } from "react-icons/rx";
+import { GiBlackFlag } from "react-icons/gi";
 
 export default function Home() {
   const { t } = useTranslation();
@@ -55,6 +56,16 @@ export default function Home() {
                   click={() => navigate(`/citizen/${session.user.officialId}`)}
                   children={<RxAvatar />}
                 />
+                {session.user.citizenship.nationId != "" && (
+                  <Button
+                    text={t("components.buttons.nation")}
+                    type="button"
+                    click={() =>
+                      navigate(`/nation/${session.user.citizenship.nationId}`)
+                    }
+                    children={<GiBlackFlag />}
+                  />
+                )}
                 <Button
                   text={t("components.buttons.explore")}
                   type="button"

@@ -1,5 +1,5 @@
 export const QUOTAS = {
-  PLACES: 7,
+  PLACES: 10,
   TILES: 8,
   COMS: 1, // par jour
 };

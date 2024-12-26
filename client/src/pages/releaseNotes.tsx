@@ -25,7 +25,7 @@ export default function ReleaseNotes() {
         <strong className="animate-pulse">ONLY IN FRENCH LANGUAGE</strong>
       )}
       <MDEditor.Markdown
-        className="bg-transparent text-light text-justify"
+        className="bg-transparent text-light text-justify mde-markdown"
         source={markdownContent}
       />
     </section>
