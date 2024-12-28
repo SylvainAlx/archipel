@@ -8,7 +8,7 @@
 
 #### Suppressions
 
-aucune
+- mise en retrait du bouton de souscription de la page citoyen (fonctionnalité non disponible pour l'heure)
 
 #### Modifications & Corrections
 
