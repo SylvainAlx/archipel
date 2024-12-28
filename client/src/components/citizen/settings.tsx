@@ -2,8 +2,6 @@ import { IoDiamondOutline } from "react-icons/io5";
 import DashTile from "../dashTile";
 import ReportedFlag from "../reportedFlag";
 import DateTag from "../tags/dateTag";
-import PlanButton from "../buttons/planButton";
-import { errorMessage } from "../../utils/toasts";
 import Button from "../buttons/button";
 import {
   changePasswordModalAtom,
@@ -86,13 +84,13 @@ export default function Settings({ citizen }: SettingsProps) {
               </div>
             )}
             <div className="w-full flex flex-wrap gap-2 justify-center">
-              {userPlan === "free" && (
+              {/* {userPlan === "free" && (
                 <PlanButton
                   click={() =>
                     errorMessage(t("toasts.user.subscriptionNotReady"))
                   }
                 />
-              )}
+              )} */}
               <Button
                 text={t("components.buttons.changePassword")}
                 click={() => myStore.set(changePasswordModalAtom, true)}

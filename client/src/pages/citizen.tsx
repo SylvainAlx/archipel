@@ -12,10 +12,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { LabelId } from "../types/typNation";
 import EditIcon from "../components/editIcon";
-import {
-  displayUnwatchedComs,
-  getLabelIdArrayFromNationPlaceList,
-} from "../utils/functions";
+import { getLabelIdArrayFromNationPlaceList } from "../utils/functions";
 import { ConfirmBoxDefault } from "../types/typAtom";
 import { getNation } from "../api/nation/nationAPI";
 import { getComs } from "../api/communication/comAPI";
@@ -26,6 +23,7 @@ import CitizensCom from "../components/citizen/citizensCom";
 import Personal from "../components/citizen/personal";
 import Citizenship from "../components/citizen/citizenship";
 import Settings from "../components/citizen/settings";
+import { displayUnwatchedComs } from "../utils/procedures";
 
 export default function Citizen() {
   const navigate = useNavigate();

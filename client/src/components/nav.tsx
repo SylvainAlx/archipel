@@ -7,7 +7,6 @@ import MenuButton from "./buttons/menuButton";
 import LangButton from "./buttons/langButton";
 
 export default function Nav() {
-  // const user = myStore.get(userAtom);
   const [session] = useAtom(sessionAtom);
   const { t } = useTranslation();
   const navigate = useNavigate();
@@ -63,7 +62,7 @@ export default function Nav() {
           action={() => navigate(`/admin`)}
         />
       )}
-      <div className="flex flex-col gap-1 self-start">
+      <div className="pt-2 flex flex-col self-start">
         <LangButton />
         <MenuButton />
       </div>

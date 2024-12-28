@@ -5,9 +5,9 @@ import TileContainer from "../tileContainer";
 import Upploader from "../uploader";
 import Spinner from "../loading/spinner";
 import CrossButton from "../buttons/crossButton";
-import { handleDeleteImage } from "../../utils/functions";
 import { useTranslation } from "react-i18next";
 import { FaMapLocationDot } from "react-icons/fa6";
+import { handleDeleteImage } from "../../utils/procedures";
 
 export default function NationMap({
   selectedNation,

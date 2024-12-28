@@ -9,7 +9,7 @@ export const GOOGLE_ANALYTICS_MEASUREMENT_ID = import.meta.env
   .VITE_GOOGLE_ANALYTICS_MEASUREMENT_ID;
 
 export const VERSION = {
-  beta: "BETA-0.2",
+  beta: "0.3",
   rc: "",
   release: "",
   testing: true,
@@ -36,12 +36,17 @@ export const COSTS = {
 };
 
 export const MAX_LENGTH = {
-  default: 2000,
-  comMessage: 500,
-  userPresentation: 1000,
-  nationDescription: 5000,
-  placeDescription: 2000,
-  textArea: 60,
+  text: {
+    default: 2000,
+    comMessage: 500,
+    userPresentation: 1000,
+    nationDescription: 5000,
+    placeDescription: 2000,
+    textArea: 60,
+  },
+  array: {
+    tags: 5,
+  },
 };
 
 export const COM_TYPE = {

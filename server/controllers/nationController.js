@@ -4,6 +4,7 @@ import Place from "../models/placeSchema.js";
 import Tile from "../models/tileSchema.js";
 import Relation from "../models/relationSchema.js";
 import { createOfficialId, deleteFile } from "../utils/functions.js";
+import { GIFTS } from "../settings/const.js";
 
 export const nationsCount = async (req, res) => {
   try {
@@ -39,7 +40,10 @@ export const createNation = async (req, res) => {
 
     const officialId = createOfficialId("n");
 
-    let data = { roleplay: { citizens: 1, treasury: 10 }, general: {} };
+    let data = {
+      roleplay: { citizens: 1, treasury: GIFTS.REGISTER },
+      general: {},
+    };
     data.general.motto = motto;
     data.general.regime = regime;
     data.general.currency = currency;

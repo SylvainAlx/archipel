@@ -12,7 +12,10 @@ import {
   spliceByDBId,
   updateOrCreateComInMemory,
 } from "../../utils/atomArrayFunctions";
-import { displayComInfoByType } from "../../utils/displayInfos";
+import {
+  comErrorCatching,
+  displayComInfoByType,
+} from "../../utils/displayInfos";
 import {
   createComFetch,
   deleteComFetch,
@@ -23,21 +26,21 @@ import {
   getComsFetch,
 } from "./comFetch";
 
-export const getComsCount = () => {
+export const getComsCount = async () => {
   const stats = myStore.get(statsAtom);
   myStore.set(loadingAtom, true);
-  getComsCountFetch()
-    .then((response) => {
-      myStore.set(loadingAtom, false);
-      const updatedStats = { ...stats };
-      updatedStats.counts.coms = response;
-      myStore.set(statsAtom, updatedStats);
-    })
-    .catch((error) => {
-      myStore.set(loadingAtom, false);
-      console.error(error);
-      displayComInfoByType(error.infoType);
-    });
+  try {
+    const response = await getComsCountFetch();
+    const updatedStats = {
+      ...stats,
+      counts: { ...stats.counts, coms: response },
+    };
+    myStore.set(statsAtom, updatedStats);
+  } catch (error) {
+    comErrorCatching(error);
+  } finally {
+    myStore.set(loadingAtom, false);
+  }
 };
 
 export const getComs = async (
@@ -59,18 +62,21 @@ export const getComs = async (
     myStore.set(comFetchedListAtom, savedComList);
   } else {
     myStore.set(loadingAtom, true);
-    const coms = await getComsFetch(originId, destinationId, comType);
-    if (coms != undefined) {
+    try {
+      const coms = await getComsFetch(originId, destinationId, comType);
       coms.forEach((com: Com) => {
         updateOrCreateComInMemory(com);
       });
       myStore.set(comFetchedListAtom, coms);
+    } catch (error) {
+      comErrorCatching(error);
+    } finally {
+      myStore.set(loadingAtom, false);
     }
-    myStore.set(loadingAtom, false);
   }
 };
 
-export const getComsByDestination = (officialId: string) => {
+export const getComsByDestination = async (officialId: string) => {
   const savedComList: Com[] = [];
   myStore.get(comsListAtom).forEach((com) => {
     if (com.destination === officialId) {
@@ -81,21 +87,17 @@ export const getComsByDestination = (officialId: string) => {
     myStore.set(comFetchedListAtom, savedComList);
   } else {
     myStore.set(loadingAtom, true);
-    getComsByDestinationFetch(officialId)
-      .then((resp) => {
-        myStore.set(loadingAtom, false);
-        if (resp != undefined) {
-          resp.forEach((com: Com) => {
-            updateOrCreateComInMemory(com);
-          });
-          myStore.set(comFetchedListAtom, resp);
-        }
-      })
-      .catch((error) => {
-        myStore.set(loadingAtom, false);
-        console.error(error);
-        displayComInfoByType(error.infoType);
+    try {
+      const resp = await getComsByDestinationFetch(officialId);
+      resp.forEach((com: Com) => {
+        updateOrCreateComInMemory(com);
       });
+      myStore.set(comFetchedListAtom, resp);
+    } catch (error) {
+      comErrorCatching(error);
+    } finally {
+      myStore.set(loadingAtom, false);
+    }
   }
 };
 
@@ -109,60 +111,54 @@ export const getPublicComs = async (nationId: string) => {
   if (savedComList.length > 0 && nationId != "") {
     myStore.set(comFetchedListAtom, savedComList);
   } else {
+    myStore.set(loadingAtom, true);
     try {
-      myStore.set(loadingAtom, true);
       let response: [Com];
       if (nationId != "") {
         response = await getPublicComsByOriginFetch(nationId);
       } else {
         response = await getAllPublicComsFetch();
       }
-      myStore.set(loadingAtom, false);
-      if (response != undefined) {
-        response.forEach((com: Com) => {
-          updateOrCreateComInMemory(com);
-        });
-        myStore.set(comFetchedListAtom, response);
-      }
+      response.forEach((com: Com) => {
+        updateOrCreateComInMemory(com);
+      });
+      myStore.set(comFetchedListAtom, response);
     } catch (error) {
+      comErrorCatching(error);
+    } finally {
       myStore.set(loadingAtom, false);
-      console.error(error);
     }
   }
 };
 
-export const createNewCom = (payload: ComPayload) => {
+export const createNewCom = async (payload: ComPayload) => {
   myStore.set(loadingAtom, true);
-  createComFetch(payload)
-    .then((resp: { com: Com; infoType: string }) => {
-      myStore.set(loadingAtom, false);
-      updateOrCreateComInMemory(resp.com);
-      const tempArray = [...myStore.get(comFetchedListAtom)];
-      tempArray.push(resp.com);
-      myStore.set(comFetchedListAtom, tempArray);
-      displayComInfoByType(resp.infoType);
-    })
-    .catch((error) => {
-      myStore.set(loadingAtom, false);
-      console.error(error);
-      displayComInfoByType(error.infoType);
-    });
+  try {
+    const resp: { com: Com; infoType: string } = await createComFetch(payload);
+    updateOrCreateComInMemory(resp.com);
+    const tempArray = [...myStore.get(comFetchedListAtom)];
+    tempArray.push(resp.com);
+    myStore.set(comFetchedListAtom, tempArray);
+    displayComInfoByType(resp.infoType);
+  } catch (error) {
+    comErrorCatching(error);
+  } finally {
+    myStore.set(loadingAtom, false);
+  }
 };
 
-export const deleteCom = (com: Com) => {
+export const deleteCom = async (com: Com) => {
   myStore.set(loadingAtom, true);
-  deleteComFetch(com._id)
-    .then((resp: { com: Com; infoType: string }) => {
-      myStore.set(loadingAtom, false);
-      let tempArray = spliceByDBId(resp.com._id, myStore.get(comsListAtom));
-      myStore.set(comsListAtom, tempArray);
-      tempArray = spliceByDBId(resp.com._id, myStore.get(comFetchedListAtom));
-      myStore.set(comFetchedListAtom, tempArray);
-      displayComInfoByType(resp.infoType);
-    })
-    .catch((error) => {
-      myStore.set(loadingAtom, false);
-      console.error(error);
-      displayComInfoByType(error.infoType);
-    });
+  try {
+    const resp: { com: Com; infoType: string } = await deleteComFetch(com._id);
+    let tempArray = spliceByDBId(resp.com._id, myStore.get(comsListAtom));
+    myStore.set(comsListAtom, tempArray);
+    tempArray = spliceByDBId(resp.com._id, myStore.get(comFetchedListAtom));
+    myStore.set(comFetchedListAtom, tempArray);
+    displayComInfoByType(resp.infoType);
+  } catch (error) {
+    comErrorCatching(error);
+  } finally {
+    myStore.set(loadingAtom, false);
+  }
 };

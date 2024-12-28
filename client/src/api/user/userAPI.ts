@@ -28,11 +28,8 @@ import {
   updateOrCreatePlaceInMemory,
 } from "../../utils/atomArrayFunctions";
 import { displayUserInfoByType } from "../../utils/displayInfos";
-import {
-  createComByStatus,
-  findElementOfAtomArray,
-  GET_JWT,
-} from "../../utils/functions";
+import { findElementOfAtomArray, GET_JWT } from "../../utils/functions";
+import { createComByStatus } from "../../utils/procedures";
 import { successMessage } from "../../utils/toasts";
 import {
   authGet,

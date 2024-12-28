@@ -34,7 +34,7 @@ export default function TermsOfService() {
         </>
       )}
       <MDEditor.Markdown
-        className="bg-transparent text-light text-justify"
+        className="bg-transparent text-light text-justify mde-markdown"
         source={markdownContent}
       />
     </section>

@@ -26,7 +26,7 @@ export default function NewPlaceButton({
 
   const handleClick = () => {
     if (
-      session.user.credits >= COSTS.PLACE ||
+      session.nation.data.roleplay.treasury >= COSTS.PLACE ||
       nation.data.roleplay.places < QUOTAS.PLACES
     ) {
       const newPlace: Place = {
@@ -41,11 +41,12 @@ export default function NewPlaceButton({
         reported: emptyPlace.reported,
         banished: emptyPlace.banished,
         createdAt: new Date(),
+        isFree: nation.data.roleplay.places < QUOTAS.PLACES,
       };
 
       myStore.set(newPlaceAtom, newPlace);
     } else {
-      errorMessage(t("toasts.user.creditsNotReady"));
+      errorMessage(t("toasts.nation.notEnoughCredits"));
     }
   };
 

@@ -7,6 +7,7 @@ import { useAtom } from "jotai";
 import Illustration from "../components/illustration";
 import { IoMdAddCircleOutline, IoMdGlobe, IoMdLogIn } from "react-icons/io";
 import { RxAvatar } from "react-icons/rx";
+import { GiBlackFlag } from "react-icons/gi";
 
 export default function Home() {
   const { t } = useTranslation();
@@ -27,7 +28,7 @@ export default function Home() {
             />
             {session.user.officialId === undefined ||
             session.user.officialId === "" ? (
-              <div className="animate-fade w-full py-4 flex justify-center gap-4 flex-wrap">
+              <div className="animate-fade w-full py-4 flex justify-center gap-2 flex-wrap">
                 <Button
                   text={t("components.buttons.login")}
                   type="button"
@@ -48,13 +49,23 @@ export default function Home() {
                 />
               </div>
             ) : (
-              <div className="animate-fade w-full py-4 flex justify-center gap-4 flex-wrap">
+              <div className="animate-fade w-full py-4 flex justify-center gap-2 flex-wrap">
                 <Button
                   text={t("components.buttons.user")}
                   type="button"
                   click={() => navigate(`/citizen/${session.user.officialId}`)}
                   children={<RxAvatar />}
                 />
+                {session.user.citizenship.nationId != "" && (
+                  <Button
+                    text={t("components.buttons.nation")}
+                    type="button"
+                    click={() =>
+                      navigate(`/nation/${session.user.citizenship.nationId}`)
+                    }
+                    children={<GiBlackFlag />}
+                  />
+                )}
                 <Button
                   text={t("components.buttons.explore")}
                   type="button"

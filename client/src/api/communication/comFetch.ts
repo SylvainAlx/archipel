@@ -3,24 +3,39 @@ import { ComPayload } from "../../types/typCom";
 import { GET_JWT } from "../../utils/functions";
 
 export const getComsCountFetch = async () => {
-  const resp = await fetch(`${SERVER_URL}/com/count`);
-  const result = await resp.json();
-  return result;
+  try {
+    const resp = await fetch(`${SERVER_URL}/com/count`);
+    if (!resp.ok) {
+      const errorPayload = await resp.json();
+      throw new Error(JSON.stringify(errorPayload));
+    }
+    const result = await resp.json();
+    return result;
+  } catch (error) {
+    throw error;
+  }
 };
 
 export const createComFetch = async (payload: ComPayload) => {
   const jwt = GET_JWT();
-  const resp = await fetch(`${SERVER_URL}/com/create`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      authorization: "Bearer " + jwt,
-    },
-    body: JSON.stringify(payload),
-  });
-  const result = await resp.json();
-
-  return result;
+  try {
+    const resp = await fetch(`${SERVER_URL}/com/create`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        authorization: "Bearer " + jwt,
+      },
+      body: JSON.stringify(payload),
+    });
+    if (!resp.ok) {
+      const errorPayload = await resp.json();
+      throw new Error(JSON.stringify(errorPayload));
+    }
+    const result = await resp.json();
+    return result;
+  } catch (error) {
+    throw error;
+  }
 };
 
 export const getComsFetch = async (
@@ -29,51 +44,94 @@ export const getComsFetch = async (
   comType: number[],
 ) => {
   const jwt = GET_JWT();
-  const resp = await fetch(
-    `${SERVER_URL}/com/getcoms?originId=${originId}&destinationId=${destinationId}&&comType=${comType}`,
-    {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        authorization: "Bearer " + jwt,
+  try {
+    const resp = await fetch(
+      `${SERVER_URL}/com/getcoms?originId=${originId}&destinationId=${destinationId}&&comType=${comType}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          authorization: "Bearer " + jwt,
+        },
       },
-    },
-  );
-  const result = await resp.json();
-  return result;
+    );
+    if (!resp.ok) {
+      const errorPayload = await resp.json();
+      throw new Error(JSON.stringify(errorPayload));
+    }
+    const result = await resp.json();
+    return result;
+  } catch (error) {
+    throw error;
+  }
 };
 
 export const getComsByDestinationFetch = async (officialId: string) => {
   const jwt = GET_JWT();
-  const resp = await fetch(`${SERVER_URL}/com/getbydestination/${officialId}`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      authorization: "Bearer " + jwt,
-    },
-  });
-  const result = await resp.json();
-  return result;
+  try {
+    const resp = await fetch(
+      `${SERVER_URL}/com/getbydestination/${officialId}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          authorization: "Bearer " + jwt,
+        },
+      },
+    );
+    if (!resp.ok) {
+      const errorPayload = await resp.json();
+      throw new Error(JSON.stringify(errorPayload));
+    }
+    const result = await resp.json();
+    return result;
+  } catch (error) {
+    throw error;
+  }
 };
 
 export const getAllPublicComsFetch = async () => {
-  const resp = await fetch(`${SERVER_URL}/com/getpubliccoms`);
-  const result = await resp.json();
-  return result;
+  try {
+    const resp = await fetch(`${SERVER_URL}/com/getpubliccoms`);
+    if (!resp.ok) {
+      const errorPayload = await resp.json();
+      throw new Error(JSON.stringify(errorPayload));
+    }
+    const result = await resp.json();
+    return result;
+  } catch (error) {
+    throw error;
+  }
 };
 
 export const getPublicComsByOriginFetch = async (nationId: string) => {
-  const resp = await fetch(`${SERVER_URL}/com/getpubliccoms/${nationId}`);
-  const result = await resp.json();
-  return result;
+  try {
+    const resp = await fetch(`${SERVER_URL}/com/getpubliccoms/${nationId}`);
+    if (!resp.ok) {
+      const errorPayload = await resp.json();
+      throw new Error(JSON.stringify(errorPayload));
+    }
+    const result = await resp.json();
+    return result;
+  } catch (error) {
+    throw error;
+  }
 };
 
 export const deleteComFetch = async (id: string) => {
   const jwt = GET_JWT();
-  const resp = await fetch(`${SERVER_URL}/com/delete/${id}`, {
-    method: "DELETE",
-    headers: { authorization: `Bearer ${jwt}` },
-  });
-  const result = await resp.json();
-  return result;
+  try {
+    const resp = await fetch(`${SERVER_URL}/com/delete/${id}`, {
+      method: "DELETE",
+      headers: { authorization: `Bearer ${jwt}` },
+    });
+    if (!resp.ok) {
+      const errorPayload = await resp.json();
+      throw new Error(JSON.stringify(errorPayload));
+    }
+    const result = await resp.json();
+    return result;
+  } catch (error) {
+    throw error;
+  }
 };

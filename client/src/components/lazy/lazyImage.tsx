@@ -31,16 +31,14 @@ export default function LazyImage({
 
   return (
     <>
-      {cachedImage != null && (
-        <img
-          onClick={() => handleClick(src)}
-          onMouseEnter={() => setShowInfo(true)}
-          onMouseLeave={() => setShowInfo(false)}
-          src={cachedImage}
-          alt={alt}
-          className={className}
-        />
-      )}
+      <img
+        onClick={() => handleClick(src)}
+        onMouseEnter={() => setShowInfo(true)}
+        onMouseLeave={() => setShowInfo(false)}
+        src={cachedImage != null ? cachedImage : src}
+        alt={alt}
+        className={className}
+      />
       {showInfo && <HoverInfo text={hover} />}
     </>
   );

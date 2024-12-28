@@ -17,7 +17,7 @@ interface MarkdownEditorProps {
 export default function MarkdownEditor({
   value,
   onChange,
-  maxLength = MAX_LENGTH.default,
+  maxLength = MAX_LENGTH.text.default,
 }: MarkdownEditorProps) {
   const { t } = useTranslation();
 

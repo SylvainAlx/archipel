@@ -1,14 +1,14 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import FooterNav from "../components/footerNav";
-import { ADMIN_EMAIL, VERSION } from "../settings/consts";
+import { ADMIN_EMAIL } from "../settings/consts";
 import { useTranslation } from "react-i18next";
 import { lobbyAtom } from "../settings/store";
 import { useAtom } from "jotai";
 import { BsFillEnvelopeAtFill } from "react-icons/bs";
+import ReleaseNotesLink from "../components/releaseNotesLink";
 
 export default function Footer() {
   const { t } = useTranslation();
-  const navigate = useNavigate();
   const [access] = useAtom(lobbyAtom);
   return (
     <footer className="animate-slideInFromBottom flex flex-col items-center">
@@ -17,14 +17,7 @@ export default function Footer() {
         <div>
           {t("components.logo.title")} - {new Date().getFullYear()}
         </div>
-        <div
-          className="text-[12px] cursor-pointer hover:text-secondary"
-          onClick={() => navigate("/releasenotes")}
-        >
-          {VERSION.beta != "" && VERSION.beta}
-          {VERSION.rc != "" && VERSION.rc}
-          {VERSION.release != "" && VERSION.release}
-        </div>
+        <ReleaseNotesLink smallSize={true} />
         <div className="pb-1 flex items-center gap-2 text-[10px] md:text-[12px] opacity-30 md:opacity-100">
           <Link
             className="transition-colors cursor-pointer hover:text-secondary"

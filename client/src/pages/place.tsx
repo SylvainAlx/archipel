@@ -9,13 +9,13 @@ import { useAtom } from "jotai";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getNationPlaces, getPlace } from "../api/place/placeAPI";
-import { displayUnwatchedComs } from "../utils/functions";
 import { getNation } from "../api/nation/nationAPI";
 import ReportPanel from "../components/reportPanel";
 import { getComsByDestination } from "../api/communication/comAPI";
 import PlaceIdentity from "../components/place/placeIdentity";
 import PlaceChildren from "../components/place/placeChildren";
 import PlaceHeader from "../components/place/placeHeader";
+import { displayUnwatchedComs } from "../utils/procedures";
 
 export default function Place() {
   const [session] = useAtom(sessionAtom);

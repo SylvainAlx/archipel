@@ -12,11 +12,12 @@ import { useTranslation } from "react-i18next";
 import { errorMessage } from "../../utils/toasts";
 import HashTag from "../tags/hashTag";
 import { regimeList } from "../../settings/lists";
+import { MAX_LENGTH } from "../../settings/consts";
 
 export default function NewNationModal() {
   const [newNation, setNewNation] = useAtom(newNationAtom);
   const [tagString, setTagString] = useState<string>("");
-  const [tags, setTags] = useState<string[]>([]);
+  const [tags, setTags] = useState<string[]>(newNation.tags);
   const { t } = useTranslation();
 
   useEffect(() => {
@@ -49,19 +50,20 @@ export default function NewNationModal() {
   };
 
   const handleChangeTag = (e: ChangeEvent<HTMLInputElement>) => {
-    const valeur = e.target.value;
-    setTagString(valeur);
+    const value = e.target.value;
+    if (value != " ") {
+      setTagString(value);
 
-    if (valeur.includes(" ")) {
-      const mots = valeur.trim().split(/\s+/); // Séparer par des espaces multiples
-      setTags([...tags, ...mots]); // Ajouter les mots au tableau de mots-clés
-      setTagString("");
+      if (value.includes(" ")) {
+        const word = value.trim().split(/\s+/); // Séparer par des espaces multiples
+        setTags([...tags, ...word]); // Ajouter les mots au tableau de mots-clés
+        setTagString("");
+      }
     }
   };
 
   const deleteTag = (value: string) => {
-    const updatedTags = tags.filter((tag) => tag !== value);
-    setTags(updatedTags);
+    setTags((currentTags) => currentTags.filter((tag) => tag !== value));
   };
 
   return (
@@ -109,7 +111,7 @@ export default function NewNationModal() {
                 name="tag"
                 placeholder={t("components.hoverInfos.tags.hash")}
                 value={tagString}
-                disabled={tags.length > 5}
+                disabled={tags.length === MAX_LENGTH.array.tags}
                 required={tags.length === 0}
               />
               <em className="text-sm">

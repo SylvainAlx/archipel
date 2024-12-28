@@ -1,5 +1,5 @@
 export const QUOTAS = {
-  PLACES: 7,
+  PLACES: 10,
   TILES: 8,
   COMS: 1, // par jour
 };
@@ -12,6 +12,7 @@ export const COSTS = {
 
 export const GIFTS = {
   REGISTER: 10,
+  CITIZENSHIP: 10,
 };
 
 export const COMTYPE = [

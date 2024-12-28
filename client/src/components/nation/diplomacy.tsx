@@ -105,7 +105,7 @@ export default function Diplomacy({
                 })
               ) : (
                 <em className="text-center">
-                  {t("pages.nation.relations.pendingRelations")}
+                  {t("pages.nation.relations.noRelations")}
                 </em>
               )}
               {!owner && session.user.citizenship.nationOwner && (

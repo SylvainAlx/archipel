@@ -5,8 +5,8 @@ import { useAtom } from "jotai";
 import { sessionAtom } from "../../settings/store";
 import { IoMdCloseCircle } from "react-icons/io";
 import { MdCheckCircle } from "react-icons/md";
-import { approveCitizenship, declineCitizenship } from "../../utils/functions";
 import { useTranslation } from "react-i18next";
+import { approveCitizenship, declineCitizenship } from "../../utils/procedures";
 
 export interface CitizenTagProps {
   label: string;

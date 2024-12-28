@@ -13,7 +13,7 @@ export default function ReleaseNotes() {
   }, []);
 
   const fetchMarkdown = async () => {
-    const response = await fetch("/RELEASE-NOTES.md");
+    const response = await fetch("/CHANGELOG.md");
     const text = await response.text();
     setMarkdownContent(text);
   };
@@ -25,7 +25,7 @@ export default function ReleaseNotes() {
         <strong className="animate-pulse">ONLY IN FRENCH LANGUAGE</strong>
       )}
       <MDEditor.Markdown
-        className="bg-transparent text-light text-justify"
+        className="bg-transparent text-light text-justify mde-markdown"
         source={markdownContent}
       />
     </section>

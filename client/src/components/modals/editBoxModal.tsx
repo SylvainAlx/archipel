@@ -11,8 +11,9 @@ import TextArea from "../form/textArea";
 import { IoMdCloseCircle } from "react-icons/io";
 import { MdCheckCircle } from "react-icons/md";
 import MarkdownEditor from "../form/markdownEditor";
-import { getMaxLength, updateElement } from "../../utils/functions";
+import { getMaxLength } from "../../utils/functions";
 import { MAX_LENGTH } from "../../settings/consts";
+import { updateElement } from "../../utils/procedures";
 
 export default function EditBoxModal() {
   const [editBox, setEditBox] = useAtom(editbox);
@@ -28,7 +29,7 @@ export default function EditBoxModal() {
         setEditBox({ ...editBox, new: editBox.original[0].id });
       } else if (editBox.path === "parentId") {
         setEditBox({ ...editBox, new: editBox.original[0].id });
-      } else setEditBox({ ...editBox, new: [] });
+      } else setEditBox({ ...editBox, new: editBox.original });
     }
     if (typeof editBox.original == "string") {
       setEditBox({ ...editBox, new: editBox.original });
@@ -81,10 +82,21 @@ export default function EditBoxModal() {
   };
 
   const handleDeleteItem = (i: number) => {
-    const newArray = editBox.original;
+    const newArray = structuredClone(editBox.new);
     if (Array.isArray(newArray)) {
       newArray.splice(i, 1);
       setEditBox({ ...editBox, new: newArray });
+    }
+  };
+
+  const handleAddItem = () => {
+    if (newElement != "") {
+      const newArray = structuredClone(editBox.new);
+      if (Array.isArray(newArray)) {
+        newArray.push(newElement);
+        setEditBox({ ...editBox, new: newArray });
+        setNewElement("");
+      }
     }
   };
 
@@ -104,7 +116,7 @@ export default function EditBoxModal() {
           editBox.path != "data.general.nationalDay" ? (
             <TextArea
               required={!editBox.canBeEmpty}
-              maxLength={MAX_LENGTH.textArea}
+              maxLength={MAX_LENGTH.text.textArea}
               placeholder={t("components.modals.editModal.newValue")}
               onChange={handleChange}
               value={editBox.new.toString()}
@@ -136,9 +148,11 @@ export default function EditBoxModal() {
           />
         )}
         {Array.isArray(editBox.original) &&
-        typeof editBox.original[0] == "string" ? (
+        Array.isArray(editBox.new) &&
+        (typeof editBox.original[0] == "string" ||
+          editBox.path === "data.general.tags") ? (
           <div className="flex flex-wrap justify-center items-center gap-2">
-            {editBox.original.map((_element, i) => {
+            {editBox.new.map((_element, i) => {
               return (
                 <div
                   className="w-full flex items-center gap-1 justify-center"
@@ -175,14 +189,7 @@ export default function EditBoxModal() {
               />
               <div
                 className="cursor-pointer text-xl hover:animate-pulse rounded-full transition-all"
-                onClick={() => {
-                  const newArray = editBox.original;
-                  if (Array.isArray(newArray)) {
-                    newArray.push(newElement);
-                    setEditBox({ ...editBox, new: newArray });
-                    setNewElement("");
-                  }
-                }}
+                onClick={handleAddItem}
               >
                 <MdCheckCircle />
               </div>
@@ -197,7 +204,6 @@ export default function EditBoxModal() {
             />
           )
         )}
-
         <Button
           text={t("components.buttons.cancel")}
           click={() =>
@@ -205,11 +211,11 @@ export default function EditBoxModal() {
           }
           widthFull={true}
         />
-
         <Button
           type="submit"
           text={t("components.buttons.validate")}
           widthFull={true}
+          disabled={editBox.new === editBox.original}
         />
       </form>
     </div>

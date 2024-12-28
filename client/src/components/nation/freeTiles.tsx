@@ -4,11 +4,7 @@ import TileContainer from "../tileContainer";
 import { getNationTiles } from "../../api/tile/tileAPI";
 import { SelectedNationProps } from "../../types/typProp";
 import { useAtom } from "jotai";
-import {
-  editTileAtom,
-  nationTileListAtom,
-  session,
-} from "../../settings/store";
+import { editTileAtom, nationTileListAtom } from "../../settings/store";
 import Button from "../buttons/button";
 import { emptyTile } from "../../types/typTile";
 import { GiSBrick } from "react-icons/gi";
@@ -37,14 +33,15 @@ export default function FreeTiles({
 
   const handleClick = () => {
     if (
-      session.user.credits >= COSTS.TILE ||
+      selectedNation.data.roleplay.treasury >= COSTS.TILE ||
       nationTileList.length < QUOTAS.TILES
     ) {
       const newTile = { ...emptyTile };
+      newTile.isFree = nationTileList.length < QUOTAS.TILES;
       newTile.nationOfficialId = selectedNation.officialId;
       setEditTile(newTile);
     } else {
-      errorMessage(t("toasts.user.creditsNotReady"));
+      errorMessage(t("toasts.nation.notEnoughCredits"));
     }
   };
 
