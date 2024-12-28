@@ -7,7 +7,6 @@ export const comCount = async (req, res) => {
     const count = await Com.countDocuments({ comType: COMTYPE[3].id });
     res.status(200).json(count);
   } catch (error) {
-    console.error(error);
     const statusCode = error.name === "ValidationError" ? 400 : 500;
     res.status(statusCode).json({
       infoType: statusCode.toString(),
@@ -105,9 +104,7 @@ export const getPublicComs = async (req, res) => {
 export const createCom = async (req, res) => {
   try {
     const { origin, destination, title, comType, message } = req.body;
-
     const officialId = createOfficialId("m");
-
     const com = new Com({
       officialId,
       origin,
@@ -116,29 +113,13 @@ export const createCom = async (req, res) => {
       comType,
       message,
     });
-    com
-      .save()
-      .then((com) => {
-        res.status(201).json({ com, infoType: "new" });
-      })
-
-      .catch((error) => {
-        if (error.code === 11000) {
-          res.status(400).json({
-            infoType: "11000",
-            erreur: error.keyValue,
-          });
-        } else {
-          res.status(400).json({
-            infoType: "400",
-          });
-        }
-      });
+    await com.save();
+    res.status(201).json({ com, infoType: "201" });
   } catch (error) {
     console.error(error);
     const statusCode = error.name === "ValidationError" ? 400 : 500;
     res.status(statusCode).json({
-      infoType: statusCode.toString(),
+      infoType: error.code.toString(),
     });
   }
 };

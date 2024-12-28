@@ -10,12 +10,12 @@ import {
   verifyImage,
 } from "../utils/AIModels/nsfwJs";
 import { errorMessage } from "../utils/toasts";
-import { updateElement } from "../utils/functions";
 import "../assets/styles/uploader.css";
 import { useTranslation } from "react-i18next";
 import { createNewCom } from "../api/communication/comAPI";
 import { ComPayload } from "../types/typCom";
 import { loadingAtom, myStore, sessionAtom } from "../settings/store";
+import { updateElement } from "../utils/procedures";
 
 export interface UploaderProps {
   path: string;

@@ -13,7 +13,7 @@ export default function ReleaseNotes() {
   }, []);
 
   const fetchMarkdown = async () => {
-    const response = await fetch("/RELEASE-NOTES.md");
+    const response = await fetch("/CHANGELOG.md");
     const text = await response.text();
     setMarkdownContent(text);
   };

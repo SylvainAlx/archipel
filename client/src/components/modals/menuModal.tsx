@@ -6,6 +6,7 @@ import { useAtom } from "jotai";
 import { IoMdSettings } from "react-icons/io";
 import { BsFillEnvelopeAtFill } from "react-icons/bs";
 import { ADMIN_EMAIL } from "../../settings/consts";
+import ReleaseNotesLink from "../releaseNotesLink";
 
 export default function MenuModal() {
   const { t } = useTranslation();
@@ -30,11 +31,7 @@ export default function MenuModal() {
           click={() => navigate("/termsofservice")}
           widthFull={true}
         />
-        <Button
-          text={t("pages.releaseNotes.title")}
-          click={() => navigate("/releasenotes")}
-          widthFull={true}
-        />
+        <Button text="" widthFull={true} children={<ReleaseNotesLink />} />
         <Link
           className="w-full h-full flex items-center gap-1"
           to={`mailto:${ADMIN_EMAIL}`}

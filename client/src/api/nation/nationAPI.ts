@@ -133,7 +133,10 @@ export const getNations = (
   if (searchName === "" && searchTag === "") {
     nations = myStore.get(nationsListAtom);
   }
-  if (nations.length > 0) {
+  if (
+    nations.length > 0 &&
+    nations.length === myStore.get(statsAtom).counts.nations
+  ) {
     myStore.set(nationsListFetchedAtom, nations);
   } else {
     myStore.set(loadingAtom, true);

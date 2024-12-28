@@ -16,7 +16,7 @@ import { FaComment } from "react-icons/fa";
 import { ComPayload, emptyComPayload } from "../../types/typCom";
 import Countdown from "../countdown";
 import { COM_TYPE } from "../../settings/consts";
-import { displayUnwatchedComs } from "../../utils/functions";
+import { displayUnwatchedComs } from "../../utils/procedures";
 
 export default function NationComs({
   selectedNation,

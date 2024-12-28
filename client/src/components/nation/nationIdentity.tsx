@@ -18,10 +18,7 @@ import CrossButton from "../buttons/crossButton";
 import TagList from "./tagList";
 import CurrencyTag from "../tags/currencyTag";
 import NationalDayTag from "../tags/nationalDayTag";
-import {
-  getLabelIdArrayFromNationPlaceList,
-  handleDeleteImage,
-} from "../../utils/functions";
+import { getLabelIdArrayFromNationPlaceList } from "../../utils/functions";
 import PopulationTag from "../tags/populationTag";
 import PlaceTag from "../tags/placeTag";
 import MDEditor from "@uiw/react-md-editor";
@@ -29,6 +26,7 @@ import LinkButton from "../buttons/linkButton";
 import { FaExternalLinkAlt } from "react-icons/fa";
 import { regimeList } from "../../settings/lists";
 import TreasuryTag from "../tags/treasuryTag";
+import { handleDeleteImage } from "../../utils/procedures";
 
 export default function NationIdentity({
   selectedNation,
@@ -57,7 +55,7 @@ export default function NationIdentity({
                   <div className="flex flex-row justify-center items-start flex-wrap gap-6">
                     <div className="relative">
                       <div
-                        className={`w-[200px] h-full flex flex-col items-center justify-end gap-2`}
+                        className={`w-[200px] flex flex-col items-center justify-end gap-2`}
                       >
                         {selectedNation.data.url.flag ? (
                           <div className="relative">

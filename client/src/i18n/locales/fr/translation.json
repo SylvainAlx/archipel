@@ -12,11 +12,13 @@
       "denied": "accès reffusé"
     },
     "nation": {
+      "noNation": "aucune nation à afficher",
       "title": "nation",
       "nationIdentity": {
         "title": "identité de la nation",
         "generalInformations": "informations générales",
         "noCapital": "aucune capitale",
+        "noTags": "aucun mot clé",
         "noMotto": "pas de devise",
         "externalLinks": "liens externes",
         "noDescription": "pas de description"

@@ -8,9 +8,10 @@ import { AiOutlinePicture } from "react-icons/ai";
 import Upploader from "../uploader";
 import IdTag from "../tags/idTag";
 import PlaceTag from "../tags/placeTag";
-import { getPlaceTypeLabel, handleDeleteImage } from "../../utils/functions";
+import { getPlaceTypeLabel } from "../../utils/functions";
 import MDEditor from "@uiw/react-md-editor";
 import { useTranslation } from "react-i18next";
+import { handleDeleteImage } from "../../utils/procedures";
 
 interface PlaceIdentityProps {
   place: Place;

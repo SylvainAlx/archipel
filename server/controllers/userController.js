@@ -5,7 +5,7 @@ import Place from "../models/placeSchema.js";
 import jwt from "jsonwebtoken";
 import { LoremIpsum } from "lorem-ipsum";
 import { addMonths, createOfficialId } from "../utils/functions.js";
-import { GIFTS } from "../settings/const.js";
+import { COSTS, GIFTS } from "../settings/const.js";
 
 const IpIsBanished = async (AUserIp) => {
   const banned =
@@ -466,6 +466,7 @@ export const changeStatus = async (req, res) => {
         user.citizenship.nationName = nation.name;
         if (status === 1) {
           nation.data.roleplay.citizens += 1;
+          nation.data.roleplay.treasury += GIFTS.CITIZENSHIP;
           nation.save().catch((error) => {
             res.status(400).json({
               erreur: error.message,
@@ -477,6 +478,7 @@ export const changeStatus = async (req, res) => {
         user.citizenship.nationName = "";
         if (user.citizenship.status === 1) {
           nation.data.roleplay.citizens -= 1;
+          nation.data.roleplay.treasury -= GIFTS.CITIZENSHIP;
           nation.save().catch((error) => {
             res.status(400).json({
               erreur: error.message,

@@ -23,6 +23,7 @@ import { authentification } from "./api/user/userAPI";
 import { MDP_LOBBY } from "./settings/consts";
 import Lobby from "./pages/lobby";
 import CookiesModal from "./components/modals/cookiesModal.tsx";
+import { clearImagesInCache } from "./utils/procedures.ts";
 
 export default function App() {
   const [access, setAccess] = useAtom(lobbyAtom);
@@ -35,6 +36,7 @@ export default function App() {
   const location = useLocation();
 
   useEffect(() => {
+    clearImagesInCache();
     i18n.init();
     const lobbyToken = localStorage.getItem("lobbyToken");
     if (!access && lobbyToken === MDP_LOBBY) {

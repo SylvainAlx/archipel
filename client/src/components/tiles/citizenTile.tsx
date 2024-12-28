@@ -11,7 +11,7 @@ import {
   sessionAtom,
 } from "../../settings/store";
 import { EmptyNation } from "../../types/typNation";
-import { dateIsExpired, declineCitizenship } from "../../utils/functions";
+import { dateIsExpired } from "../../utils/functions";
 import CrossButton from "../buttons/crossButton";
 import { useAtom } from "jotai";
 import { useTranslation } from "react-i18next";
@@ -24,6 +24,7 @@ import ReportPanel from "../reportPanel";
 import DateTag from "../tags/dateTag";
 import { PIONEER_DATE } from "../../settings/consts";
 import PioneerTag from "../tags/pioneerTag";
+import { declineCitizenship } from "../../utils/procedures";
 
 export interface CitizenTileProps {
   citizen: User;

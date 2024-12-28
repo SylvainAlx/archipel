@@ -24,7 +24,7 @@ export default function FooterNav() {
 
   return (
     <nav
-      className={`bottom-0 transition-all duration-500 fixed md:hidden w-full h-[70px] flex justify-evenly items-center pt-2 bg-black_alpha backdrop-blur-sm`}
+      className={`mb-[-1px] bottom-0 transition-all duration-500 fixed md:hidden w-full h-[70px] flex justify-evenly items-center bg-black_alpha backdrop-blur-sm`}
     >
       <Nav />
     </nav>

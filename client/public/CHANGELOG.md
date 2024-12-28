@@ -4,7 +4,7 @@
 
 #### Ajouts
 
-aucun
+- Réaffichage des crédits dans la vue "Nation"
 
 #### Suppressions
 
@@ -15,9 +15,13 @@ aucune
 - Optimisation du code source
 - Modification de la présentation des notes de version
 - Modification du style des éléments MarkDown
-- Correction de la gestion des mots clés lors de la création d'une nation
-- Réaffichage des crédits dans la vue "Nation"
+- Correction de la gestion des mots-clés lors de la création d'une nation
+- Correction de l'édition de la liste de mots-clés
 - Correction des algorithmes liés aux crédits de la nation
+- Correction de taille de la barre de navigation en version mobile
+- Correction du problème de cache pour les image
+- Correction du blocage de recherche sur la page explorer
+- Amélioration des traductions
 
 ## Développements à venir
 

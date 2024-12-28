@@ -12,11 +12,13 @@
       "denied": "Access denied"
     },
     "nation": {
+      "noNation": "no nation to display",
       "title": "nation",
       "nationIdentity": {
         "title": "nation identity",
         "generalInformations": "general informations",
         "noCapital": "no capital",
+        "noTags": "no tags",
         "noMotto": "no motto",
         "externalLinks": "external links",
         "noDescription": "no description"

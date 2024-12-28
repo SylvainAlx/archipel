@@ -12,6 +12,7 @@ export const COSTS = {
 
 export const GIFTS = {
   REGISTER: 10,
+  CITIZENSHIP: 10,
 };
 
 export const COMTYPE = [

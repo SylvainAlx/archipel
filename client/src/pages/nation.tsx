@@ -124,6 +124,6 @@ export default function Nation() {
       )}
     </>
   ) : (
-    <p>[A TRADUIRE] pas de nation</p>
+    <em className="text-center">{t("pages.nation.noNation")}</em>
   );
 }

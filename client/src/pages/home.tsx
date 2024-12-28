@@ -28,7 +28,7 @@ export default function Home() {
             />
             {session.user.officialId === undefined ||
             session.user.officialId === "" ? (
-              <div className="animate-fade w-full py-4 flex justify-center gap-4 flex-wrap">
+              <div className="animate-fade w-full py-4 flex justify-center gap-2 flex-wrap">
                 <Button
                   text={t("components.buttons.login")}
                   type="button"
@@ -49,7 +49,7 @@ export default function Home() {
                 />
               </div>
             ) : (
-              <div className="animate-fade w-full py-4 flex justify-center gap-4 flex-wrap">
+              <div className="animate-fade w-full py-4 flex justify-center gap-2 flex-wrap">
                 <Button
                   text={t("components.buttons.user")}
                   type="button"
