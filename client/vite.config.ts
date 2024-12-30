@@ -7,10 +7,12 @@ export default defineConfig({
   plugins: [
     react(),
     VitePWA({
-      registerType: "prompt",
-      includeAssets: ["favicon.ico", "apple-touc-icon.png", "masked-icon.svg"],
+      registerType: "autoUpdate",
+      includeAssets: ["favicon.ico", "apple-touch-icon.png", "masked-icon.svg"],
       workbox: {
-        maximumFileSizeToCacheInBytes: 6000000,
+        maximumFileSizeToCacheInBytes: 5700000,
+        globDirectory: "dist",
+        globPatterns: ["**/*.{js,css,html,png,jpg,svg,ico,json}"],
       },
       manifest: {
         name: "Archipel",
@@ -30,25 +32,25 @@ export default defineConfig({
             src: "/android-chrome-192x192.png",
             sizes: "192x192",
             type: "image/png",
-            purpose: "favicon",
+            purpose: "any",
           },
           {
             src: "/android-chrome-512x512.png",
             sizes: "512x512",
             type: "image/png",
-            purpose: "favicon",
+            purpose: "any",
           },
           {
             src: "/apple-touch-icon.png",
             sizes: "180x180",
             type: "image/png",
-            purpose: "apple touch icon",
+            purpose: "any",
           },
           {
             src: "/maskable_icon.png",
             sizes: "512x512",
             type: "image/png",
-            purpose: "any maskable",
+            purpose: "maskable",
           },
         ],
         theme_color: "#fff",

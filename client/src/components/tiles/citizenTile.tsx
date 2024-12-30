@@ -1,6 +1,5 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import { User } from "../../types/typUser";
-import EyeButton from "../buttons/eyeButton";
 import RoleTag from "../tags/roleTag";
 import Avatar from "../avatar";
 import CitizenTag from "../tags/citizenTag";
@@ -38,10 +37,13 @@ export default function CitizenTile({ citizen }: CitizenTileProps) {
   const [userPlan, setUserPlan] = useState("free");
   const pioneerDate = new Date(PIONEER_DATE);
   const citizenCreationDate = new Date(citizen.createdAt);
-  const handleClick = () => {
-    myStore.set(citizenFetchAtom, citizen);
-    myStore.set(nationFetchedAtom, EmptyNation);
-    navigate(`/citizen/${citizen.officialId}`);
+
+  const handleClick = (event: React.MouseEvent<HTMLDivElement>) => {
+    if (event.target === event.currentTarget) {
+      myStore.set(citizenFetchAtom, citizen);
+      myStore.set(nationFetchedAtom, EmptyNation);
+      navigate(`/citizen/${citizen.officialId}`);
+    }
   };
 
   useEffect(() => {
@@ -53,8 +55,9 @@ export default function CitizenTile({ citizen }: CitizenTileProps) {
   }, [citizen]);
 
   return (
-    <fieldset
-      className={`min-h-[100px] p-2 rounded flex flex-col items-center justify-between gap-3 bg-complementary shadow-xl ${(userPlan === "premium" || userPlan === "elite") && "border-2 border-solid border-secondary"}`}
+    <div
+      onClick={handleClick}
+      className={`min-h-[100px] p-2 rounded flex flex-col items-center justify-between gap-3 bg-complementary hover:bg-complementary2 cursor-pointer shadow-xl ${(userPlan === "premium" || userPlan === "elite") && "border-2 border-solid border-secondary"}`}
     >
       {userPlan != "free" && (
         <legend className="px-2">
@@ -79,7 +82,6 @@ export default function CitizenTile({ citizen }: CitizenTileProps) {
         </div>
       </div>
       <div className="flex gap-1 flex-wrap items-center self-end">
-        <EyeButton click={handleClick} />
         {session.user.officialId != citizen.officialId && (
           <ReportPanel content={citizen} center={false} />
         )}
@@ -115,6 +117,6 @@ export default function CitizenTile({ citizen }: CitizenTileProps) {
         />
         <DateTag date={citizen.createdAt} />
       </div>
-    </fieldset>
+    </div>
   );
 }

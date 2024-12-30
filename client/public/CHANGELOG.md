@@ -1,5 +1,42 @@
 ## Version actuelle
 
+### BETA-0.4
+
+#### Ajouts
+
+- Ajout du fichier robots.txt pour les crawlers des moteurs de recherche
+
+#### Suppressions
+
+Aucune
+
+#### Modifications & Corrections
+
+- Optimisation du code source
+- Modification de l'UX des tuiles sur la page "explorer"
+- Correction des bugs de la PWA
+
+## Développements à venir
+
+- Créer une organisation
+- Rejoindre une organisation
+- Créer des items et les proposer à l'acquisition aux citoyens
+- Ajouter les hymnes des nations
+- Créer une gazette des nations en se basant sur les communiqués
+- Montrer la répartitions des langues parlées dans chaque nation
+- Ajouter la possibilité de partager la page "nation" via le partage natif des appareils
+- Créer une aide pour les premiers pas d'un utilisateur
+- Améliorer le système de notifications
+- Exporter une carte d'identité virtuelle sous forme d'image
+- Améliorer le référencement et l'accessibilité
+- Étendre les fonctionnalités pour les utilisateurs mobile
+- Lier les lieux de la nation à un emplacement sur la carte
+- Améliorer des traductions
+- Carte de l'Archipel avec l'ensemble des nations représentées
+- Permettre les virements de crédits entre citoyens et entre nations
+
+## Versions précédentes
+
 ### BETA-0.3
 
 #### Ajouts
@@ -22,27 +59,6 @@
 - Correction du problème de cache pour les image
 - Correction du blocage de recherche sur la page explorer
 - Amélioration des traductions
-
-## Développements à venir
-
-- Créer une organisation
-- Rejoindre une organisation
-- Créer des items et les proposer à l'acquisition aux citoyens
-- Ajouter les hymnes des nations
-- Créer une gazette des nations en se basant sur les communiqués
-- Montrer la répartitions des langues parlées dans chaque nation
-- Ajouter la possibilité de partager la page "nation" via le partage natif des appareils
-- Créer une aide pour les premiers pas d'un utilisateur
-- Améliorer le système de notifications
-- Exporter une carte d'identité virtuelle sous forme d'image
-- Améliorer le référencement et l'accessibilité
-- Étendre les fonctionnalités pour les utilisateurs mobile
-- Lier les lieux de la nation à un emplacement sur la carte
-- Améliorer des traductions
-- Carte de l'Archipel avec l'ensemble des nations représentées
-- Permettre les virements de crédits entre citoyens et entre nations
-
-## Versions précédentes
 
 ### BETA-0.2
 

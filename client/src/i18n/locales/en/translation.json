@@ -249,7 +249,7 @@
       },
       "recoveryModal": {
         "title": "IMPORTANT INFORMATION",
-        "info": "Please keep your recovery phrase safe",
+        "info": "Please keep your recovery phrase safe, this one is unique !",
         "boldInfo": "IT WILL NOT BE COMMUNICATED TO YOU AFTERWARDS !",
         "confirm": "I have read this information"
       },

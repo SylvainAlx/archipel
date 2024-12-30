@@ -249,7 +249,7 @@
       },
       "recoveryModal": {
         "title": "INFORMATION IMPORTANTE",
-        "info": "Merci de conserver précieusement votre phrase de récupération",
+        "info": "Merci de conserver précieusement votre phrase de récupération, celle-ci est unique !",
         "boldInfo": "ELLE NE VOUS SERA PLUS COMMUNIQUÉE PAR LA SUITE !",
         "confirm": "J'ai pris connaissance de cette information"
       },

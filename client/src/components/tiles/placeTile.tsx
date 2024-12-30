@@ -7,7 +7,6 @@ import {
 import { useAtom } from "jotai";
 import { GiCapitol } from "react-icons/gi";
 import { useLocation, useNavigate } from "react-router-dom";
-import EyeButton from "../buttons/eyeButton";
 import { getPlaceTypeLabel } from "../../utils/functions";
 import PlaceTag from "../tags/placeTag";
 import { useEffect, useState } from "react";
@@ -35,7 +34,11 @@ export default function PlaceTile({ place, owner }: PlaceTileProp) {
   const emplacement = useLocation();
   const navigate = useNavigate();
 
-  const handleClick = () => {
+  const handleClick = (event: React.MouseEvent<HTMLDivElement>) => {
+    if (event.target === event.currentTarget) {
+      myStore.set(editPlaceAtom, { place, owner });
+      navigate(`/place/${place.officialId}`);
+    }
     myStore.set(editPlaceAtom, { place, owner });
     navigate(`/place/${place.officialId}`);
   };
@@ -55,7 +58,8 @@ export default function PlaceTile({ place, owner }: PlaceTileProp) {
 
   return (
     <div
-      className={`min-h-[100px] p-2 rounded flex flex-col flex-grow items-center justify-between gap-3 bg-complementary shadow-xl`}
+      onClick={handleClick}
+      className={`min-h-[100px] p-2 rounded flex flex-col flex-grow items-center justify-between gap-3 bg-complementary hover:bg-complementary2 cursor-pointer shadow-xl`}
     >
       <div className="w-full flex justify-between flex-wrap">
         <div className="text-xl flex items-center gap-2">
@@ -74,7 +78,6 @@ export default function PlaceTile({ place, owner }: PlaceTileProp) {
           <h3>{place.name}</h3>
         </div>
         <div className="w-full flex gap-1 flex-wrap items-center justify-end">
-          <EyeButton click={handleClick} />
           {session.user.citizenship.nationId != place.nation && (
             <ReportPanel content={place} center={false} />
           )}

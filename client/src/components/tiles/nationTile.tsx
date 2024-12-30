@@ -1,6 +1,5 @@
 import { Nation } from "../../types/typNation";
 import PopulationTag from "../tags/populationTag";
-import EyeButton from "../buttons/eyeButton";
 import { useNavigate } from "react-router-dom";
 import RegimeTag from "../tags/regimeTag";
 import PlaceTag from "../tags/placeTag";
@@ -15,12 +14,17 @@ export default function NationTile(nation: Nation) {
   const navigate = useNavigate();
   const [session] = useAtom(sessionAtom);
 
-  const handleClick = () => {
-    navigate(`/nation/${nation.officialId}`);
+  const handleClick = (event: React.MouseEvent<HTMLDivElement>) => {
+    if (event.target === event.currentTarget) {
+      navigate(`/nation/${nation.officialId}`);
+    }
   };
 
   return (
-    <div className="bg-complementary flex flex-col items-center p-2 gap-3 rounded transition-all">
+    <div
+      onClick={handleClick}
+      className="bg-complementary hover:bg-complementary2 flex flex-col items-center p-2 gap-3 rounded transition-all cursor-pointer"
+    >
       <div className="w-full flex justify-between">
         <div className="flex items-center">
           <Flag nation={nation} />
@@ -28,7 +32,6 @@ export default function NationTile(nation: Nation) {
         </div>
       </div>
       <div className="flex gap-1 flex-wrap items-center self-end">
-        <EyeButton click={handleClick} />
         {session.user.citizenship.nationId != nation.officialId && (
           <ReportPanel content={nation} center={false} />
         )}
