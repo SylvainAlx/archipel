@@ -30,11 +30,16 @@ export const sortByPlaces = (list: Nation[], ascending: boolean = true) => {
 };
 
 export const sortNationsByCitizens = (
-  list: Nation[],
-  ascending: boolean = true,
+  AList: Nation[],
+  AAscending: boolean = true,
 ) => {
-  return [...list].sort(function (a, b) {
-    return ascending
+  return [...AList].sort((a, b) => {
+    if (a.data.roleplay.citizens === b.data.roleplay.citizens) {
+      return AAscending
+        ? a.data.roleplay.places - b.data.roleplay.places
+        : b.data.roleplay.places - a.data.roleplay.places;
+    }
+    return AAscending
       ? a.data.roleplay.citizens - b.data.roleplay.citizens
       : b.data.roleplay.citizens - a.data.roleplay.citizens;
   });

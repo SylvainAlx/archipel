@@ -31,8 +31,11 @@ export default function EditBoxModal() {
         setEditBox({ ...editBox, new: editBox.original[0].id });
       } else setEditBox({ ...editBox, new: editBox.original });
     }
-    if (typeof editBox.original == "string") {
-      setEditBox({ ...editBox, new: editBox.original });
+    if (
+      typeof editBox.indice == "string" ||
+      typeof editBox.indice == "number"
+    ) {
+      setEditBox({ ...editBox, new: editBox.indice });
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -201,6 +204,7 @@ export default function EditBoxModal() {
               required
               options={editBox.original}
               onChange={handleSelectChange}
+              value={editBox.new.toString()}
             />
           )
         )}
@@ -215,7 +219,7 @@ export default function EditBoxModal() {
           type="submit"
           text={t("components.buttons.validate")}
           widthFull={true}
-          disabled={editBox.new === editBox.original}
+          disabled={editBox.new === editBox.indice}
         />
       </form>
     </div>

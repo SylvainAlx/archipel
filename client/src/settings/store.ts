@@ -16,7 +16,6 @@ import {
   Session,
 } from "../types/typAtom";
 import { Place, emptyPlace } from "../types/typPlace";
-import i18n from "../i18n/i18n";
 import { emptyUser, User } from "../types/typUser";
 import { Com, ComPayload, emptyComPayload } from "../types/typCom";
 import {
@@ -126,8 +125,6 @@ export const infoModalAtom = atom("");
 export const changePasswordModalAtom = atom(false);
 
 export const dataCheckedAtom = atom(false);
-
-export const langAtom = atom(i18n.language);
 
 export const imageAtom = atom("");
 

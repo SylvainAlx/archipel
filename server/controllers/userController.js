@@ -2,10 +2,9 @@ import User from "../models/userSchema.js";
 import Nation from "../models/nationSchema.js";
 import Param from "../models/paramSchema.js";
 import Place from "../models/placeSchema.js";
-import jwt from "jsonwebtoken";
 import { LoremIpsum } from "lorem-ipsum";
 import { addMonths, createOfficialId } from "../utils/functions.js";
-import { COSTS, GIFTS } from "../settings/const.js";
+import { GIFTS } from "../settings/const.js";
 
 const IpIsBanished = async (AUserIp) => {
   const banned =
@@ -105,17 +104,14 @@ export const login = async (req, res) => {
 
     const { name, password } = req.body;
 
-    const user = await User.findOne(
-      { name },
-      "officialId name bio gender avatar language password email link role credits plan expirationDate citizenship createdAt",
-    );
+    const user = await User.findOne({ name }, "-ip -recovery");
     if (!user) {
       return res.status(404).json({ infoType: "user" });
     }
     user.comparePassword(password, async (error, isMatch) => {
       if (error) {
         return res.status(400).json({
-          infoType: "error",
+          infoType: "400",
           error: error.message,
         });
       }
@@ -147,7 +143,7 @@ export const verify = async (req, res) => {
 
     const user = await User.findOne(
       { officialId: userId },
-      "officialId name bio gender avatar language email link role credits plan expirationDate citizenship reported banished createdAt",
+      "-ip -password -recovery",
     );
 
     if (user) {
@@ -233,13 +229,13 @@ export const getAllUsers = async (req, res) => {
     if (searchText) {
       const users = await User.find(
         { name: { $regex: searchText, $options: "i" }, banished: false },
-        "officialId name bio gender avatar language email link role plan expirationDate citizenship reported banished createdAt",
+        "-ip -password -recovery",
       );
       res.status(200).json(users);
     } else {
       const users = await User.find(
         { banished: false },
-        "officialId name bio gender avatar language email link role plan expirationDate citizenship reported banished createdAt",
+        "-ip -password -recovery",
       );
       res.status(200).json(users);
     }
@@ -257,7 +253,7 @@ export const getOneUser = async (req, res) => {
   try {
     const user = await User.findOne(
       { officialId: userId, banished: false },
-      "officialId name bio gender avatar language email link role plan expirationDate citizenship reported banished createdAt",
+      "-ip -password -recovery",
     );
     res.status(200).json({
       user,
@@ -275,7 +271,7 @@ export const getSelfUser = async (req, res) => {
   const id = req.userId;
   try {
     const user = await User.findOne({ officialId: id });
-    res.status(200).json({ user });
+    res.status(200).json({ user }, "-ip -password -recovery");
   } catch (error) {
     console.error(error);
     res.status(500).json({
@@ -330,7 +326,10 @@ export const deleteSelfUser = async (req, res) => {
 export const getUsersByNation = async (req, res) => {
   const nationId = req.params.id;
   try {
-    await User.find({ "citizenship.nationId": nationId, banished: false })
+    await User.find(
+      { "citizenship.nationId": nationId, banished: false },
+      "-ip -password -recovery",
+    )
       .then((users) => {
         res.status(200).json(users);
       })
@@ -373,6 +372,7 @@ export const updateUser = async (req, res) => {
       gender,
       avatar,
       language,
+      religion,
       email,
       link,
       role,
@@ -383,7 +383,7 @@ export const updateUser = async (req, res) => {
     if (req.userId === officialId) {
       const user = await User.findOne(
         { officialId },
-        "officialId name surname gender avatar language email link role credits plan expirationDate citizenship reported banished createdAt",
+        "-ip -password -recovery",
       );
       let newResidence;
       let oldResidence;
@@ -414,6 +414,7 @@ export const updateUser = async (req, res) => {
       (user.bio = bio), (user.gender = gender);
       user.avatar = avatar;
       user.language = language;
+      user.religion = religion;
       user.email = email;
       user.link = link;
       user.role = role;
@@ -456,7 +457,7 @@ export const changeStatus = async (req, res) => {
     if (req.userId === officialId || status != 0) {
       const user = await User.findOne(
         { officialId },
-        "officialId name bio gender avatar language email link role credits plan expirationDate citizenship reported banished createdAt",
+        "-ip -password -recovery",
       );
 
       const nation = await Nation.findOne({ officialId: nationId });
@@ -517,7 +518,7 @@ export const changeStatus = async (req, res) => {
 export const changePlan = async (req, res) => {
   try {
     const { officialId, plan, duration } = req.body;
-    const user = await User.findOne({ officialId });
+    const user = await User.findOne({ officialId }, "-ip -password -recovery");
     if (user) {
       user.plan = plan;
       user.expirationDate = addMonths(duration);
@@ -539,7 +540,10 @@ export const changePlan = async (req, res) => {
 const updateUserIpAddress = async (userOfficialId, ip) => {
   try {
     let isFind = false;
-    const user = await User.findOne({ officialId: userOfficialId });
+    const user = await User.findOne(
+      { officialId: userOfficialId },
+      "-password -recovery",
+    );
     for (const address of user.ip) {
       if (address.value === ip) {
         isFind = true;

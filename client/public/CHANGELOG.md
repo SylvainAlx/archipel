@@ -5,21 +5,26 @@
 #### Ajouts
 
 - Ajout du fichier robots.txt pour les crawlers des moteurs de recherche
+- Ajout de l'information et du tag "religion" pour les citoyens
+- Ajout du tag "genre" pour les citoyens
 
 #### Suppressions
 
-Aucune
+- Suppression du stockage des images dans le localStorage du navigateur
 
 #### Modifications & Corrections
 
 - Optimisation du code source
 - Modification de l'UX des tuiles sur la page "explorer"
 - Correction des bugs de la PWA
+- Correction du bug de création de communiqué
+- Modification du tri par défaut des lieux sur la page "explorer"
+- Amélioration des traductions anglaises
+- Amélioration des modals de modification
 
 ## Développements à venir
 
-- Créer une organisation
-- Rejoindre une organisation
+- Créer une organisation ou en rejoindre une
 - Créer des items et les proposer à l'acquisition aux citoyens
 - Ajouter les hymnes des nations
 - Créer une gazette des nations en se basant sur les communiqués
@@ -32,7 +37,7 @@ Aucune
 - Étendre les fonctionnalités pour les utilisateurs mobile
 - Lier les lieux de la nation à un emplacement sur la carte
 - Améliorer des traductions
-- Carte de l'Archipel avec l'ensemble des nations représentées
+- Carte virtuelle d'Archipel avec l'ensemble des nations représentées
 - Permettre les virements de crédits entre citoyens et entre nations
 
 ## Versions précédentes

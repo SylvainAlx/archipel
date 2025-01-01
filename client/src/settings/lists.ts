@@ -198,7 +198,6 @@ export const regimeList: Regime[] = [
 ];
 
 export const languageList: StandardOption[] = [
-  { id: "", label: "" },
   { id: "ar", label: "العربية" },
   { id: "en", label: "English" },
   { id: "fr", label: "Français" },
@@ -213,10 +212,31 @@ export const languageList: StandardOption[] = [
 ];
 
 export const genderList: StandardOption[] = [
-  { id: 0, label: "ne souhaite pas l'indiquer" },
-  { id: 1, label: "femme" },
-  { id: 2, label: "homme" },
-  { id: 3, label: "autre" },
+  { id: 0, label: i18n.t("listes.genderList.preferNotToSay") },
+  { id: 1, label: i18n.t("listes.genderList.female") },
+  { id: 2, label: i18n.t("listes.genderList.male") },
+  { id: 3, label: i18n.t("listes.genderList.other") },
+  { id: 4, label: i18n.t("listes.genderList.nonBinary") },
+];
+
+export const religionList: StandardOption[] = [
+  { id: 0, label: i18n.t("listes.religionList.preferNotToSay") },
+  { id: 1, label: i18n.t("listes.religionList.christian") },
+  { id: 2, label: i18n.t("listes.religionList.muslim") },
+  { id: 3, label: i18n.t("listes.religionList.jewish") },
+  { id: 4, label: i18n.t("listes.religionList.buddhist") },
+  { id: 5, label: i18n.t("listes.religionList.hindu") },
+  { id: 6, label: i18n.t("listes.religionList.sikh") },
+  { id: 7, label: i18n.t("listes.religionList.shinto") },
+  { id: 8, label: i18n.t("listes.religionList.bahai") },
+  { id: 9, label: i18n.t("listes.religionList.jain") },
+  { id: 10, label: i18n.t("listes.religionList.zoroastrian") },
+  { id: 11, label: i18n.t("listes.religionList.taoist") },
+  { id: 12, label: i18n.t("listes.religionList.confucian") },
+  { id: 13, label: i18n.t("listes.religionList.indigenous") },
+  { id: 14, label: i18n.t("listes.religionList.atheist") },
+  { id: 15, label: i18n.t("listes.religionList.agnostic") },
+  { id: 16, label: i18n.t("listes.religionList.other") },
 ];
 
 export const politicalSideList: PoliticalSide[] = [

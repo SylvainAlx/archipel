@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
 import { Nation } from "../types/typNation";
-import { getCachedImage } from "../utils/functions";
 import { GiBlackFlag } from "react-icons/gi";
+import { lazy, Suspense } from "react";
+import Spinner from "./loading/spinner";
+import { useTranslation } from "react-i18next";
 
 interface FlagProps {
   nation: Nation;
@@ -9,13 +10,8 @@ interface FlagProps {
 }
 
 export default function Flag({ nation, isHeader }: FlagProps) {
-  const [cachedImage, setCachedImage] = useState<string | null>(null);
-
-  useEffect(() => {
-    if (nation.data.url.flag) {
-      getCachedImage(nation.data.url.flag).then(setCachedImage);
-    }
-  }, [nation.data.url.flag]);
+  const { t } = useTranslation();
+  const LazyImage = lazy(() => import("./lazy/lazyImage"));
 
   return (
     <div
@@ -26,19 +22,15 @@ export default function Flag({ nation, isHeader }: FlagProps) {
       }
     >
       {nation.data.url.flag != "" ? (
-        cachedImage ? (
-          <img
-            src={cachedImage}
-            alt={`flag of ${nation.name}`}
-            className="w-full h-full"
-          />
-        ) : (
-          <img
+        <Suspense fallback={<Spinner showClock={false} />}>
+          <LazyImage
             src={nation.data.url.flag}
             alt={`flag of ${nation.name}`}
-            className="w-full h-full"
+            className={`object-cover w-full h-full rounded ${!isHeader && "cursor-zoom-in"}`}
+            hover={t("components.hoverInfos.flag")}
+            isHeader={isHeader}
           />
-        )
+        </Suspense>
       ) : (
         <div className={`${!isHeader ? "text-[3.1rem]" : ""}`}>
           <GiBlackFlag />

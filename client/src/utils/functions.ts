@@ -3,7 +3,11 @@ import i18n from "../i18n/i18n";
 import { COM_TYPE, MAX_LENGTH, PLACE_TYPE } from "../settings/consts";
 import { LabelId, Nation } from "../types/typNation";
 import { Place } from "../types/typPlace";
-import { myStore, nationPlacesListAtom } from "../settings/store";
+import {
+  comFetchedListAtom,
+  myStore,
+  nationPlacesListAtom,
+} from "../settings/store";
 import { User } from "../types/typUser";
 import {
   politicalSideList,
@@ -164,36 +168,6 @@ export const sortObjectKeys = (obj: any): any => {
   return sortedObj;
 };
 
-export async function getCachedImage(url: string): Promise<string | null> {
-  const cached = localStorage.getItem(url);
-
-  if (cached) {
-    return cached;
-  } else {
-    try {
-      const response = await fetch(url);
-      const blob = await response.blob();
-      const reader = new FileReader();
-
-      return new Promise((resolve, reject) => {
-        reader.onloadend = () => {
-          if (reader.result) {
-            localStorage.setItem(url, reader.result as string);
-            resolve(reader.result as string);
-          } else {
-            reject("Failed to read the image data");
-          }
-        };
-        reader.onerror = () => reject(reader.error);
-        reader.readAsDataURL(blob);
-      });
-    } catch (error) {
-      console.error("Failed to fetch image:", error);
-      return null;
-    }
-  }
-}
-
 export const getLabelIdArrayFromNationPlaceList = () => {
   const updatedPlaces: LabelId[] = [];
   const nationPlaces = myStore.get(nationPlacesListAtom);
@@ -252,4 +226,14 @@ export const getComTypeLabelById = (id: number) => {
     }
   });
   return label;
+};
+
+export const getLastPublicCom = () => {
+  const nationComList = myStore.get(comFetchedListAtom);
+  for (let i = nationComList.length - 1; i >= 0; i--) {
+    if (nationComList[i].comType === COM_TYPE.nationPublic.id) {
+      return nationComList[i];
+    }
+  }
+  return null;
 };

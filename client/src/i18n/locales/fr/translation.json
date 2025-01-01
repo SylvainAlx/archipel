@@ -301,7 +301,9 @@
         "residence": "résidence",
         "treasury": "trésor public",
         "date": "date",
-        "pioneer": "pionnier"
+        "pioneer": "pionnier",
+        "religion": "religion",
+        "gender": "genre"
       },
       "avatar": "avatar",
       "relations": {
@@ -388,6 +390,32 @@
         "noGovernment": "pas de gouvernement",
         "other": "autre"
       }
+    },
+    "religionList": {
+      "preferNotToSay": "ne souhaite pas l'indiquer",
+      "christian": "chrétien",
+      "muslim": "musulman",
+      "jewish": "juif",
+      "buddhist": "bouddhiste",
+      "hindu": "hindou",
+      "sikh": "sikh",
+      "shinto": "shinto",
+      "bahai": "bahai",
+      "jain": "jain",
+      "zoroastrian": "zoroastrien",
+      "taoist": "taoïste",
+      "confucian": "confucéen",
+      "indigenous": "religion autochtone",
+      "atheist": "athée",
+      "agnostic": "agnostique",
+      "other": "autre"
+    },
+    "genderList": {
+      "male": "homme",
+      "female": "femme",
+      "nonBinary": "non-binaire",
+      "other": "autre",
+      "preferNotToSay": "ne souhaite pas l'indiquer"
     },
     "comType": {
       "admin": "message administrateur",

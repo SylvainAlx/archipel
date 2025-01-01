@@ -17,6 +17,7 @@ import { ComPayload, emptyComPayload } from "../../types/typCom";
 import Countdown from "../countdown";
 import { COM_TYPE } from "../../settings/consts";
 import { displayUnwatchedComs } from "../../utils/procedures";
+import { getLastPublicCom } from "../../utils/functions";
 
 export default function NationComs({
   selectedNation,
@@ -44,24 +45,16 @@ export default function NationComs({
 
   useEffect(() => {
     if (nationComList.length > 0) {
-      const getLastPublicCom = () => {
-        for (let i = nationComList.length - 1; i >= 0; i--) {
-          if (nationComList[i].comType === COM_TYPE.nationPublic.id) {
-            return nationComList[i];
-          }
-        }
-        return null;
-      };
       const lastElement = getLastPublicCom();
       if (lastElement) {
+        const comDate = new Date(lastElement.createdAt);
+        const today = new Date();
         const is24hBeforeLastCom: boolean =
-          new Date(lastElement.createdAt).toLocaleDateString() <
-          new Date().toLocaleDateString();
+          comDate.toDateString() < today.toDateString();
         const isActivePlan =
           myStore.get(sessionAtom).user.plan != "free" &&
           myStore.get(sessionAtom).user.expirationDate >
             new Date().toLocaleDateString();
-
         if (is24hBeforeLastCom || isActivePlan) {
           setAllowPost(true);
         } else {

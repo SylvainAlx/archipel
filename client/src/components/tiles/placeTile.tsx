@@ -39,8 +39,6 @@ export default function PlaceTile({ place, owner }: PlaceTileProp) {
       myStore.set(editPlaceAtom, { place, owner });
       navigate(`/place/${place.officialId}`);
     }
-    myStore.set(editPlaceAtom, { place, owner });
-    navigate(`/place/${place.officialId}`);
   };
 
   useEffect(() => {
@@ -61,27 +59,30 @@ export default function PlaceTile({ place, owner }: PlaceTileProp) {
       onClick={handleClick}
       className={`min-h-[100px] p-2 rounded flex flex-col flex-grow items-center justify-between gap-3 bg-complementary hover:bg-complementary2 cursor-pointer shadow-xl`}
     >
-      <div className="w-full flex justify-between flex-wrap">
-        <div className="text-xl flex items-center gap-2">
-          <div className="w-[50px] h-[50px] rounded-full flex items-center justify-center overflow-hidden">
-            <Avatar
-              url={place.image}
-              isUser={false}
-              isCity={place.type === PLACE_TYPE.city.id}
-            />
-          </div>
-          <span className="text-lg text-info">
-            {place.officialId === session.nation.data.roleplay.capital && (
-              <GiCapitol />
-            )}
-          </span>
-          <h3>{place.name}</h3>
+      <div className="self-start text-xl flex items-center gap-2 cursor-default">
+        <div className="w-[50px] h-[50px] rounded-full flex items-center justify-center overflow-hidden">
+          <Avatar
+            url={place.image}
+            isUser={false}
+            isCity={place.type === PLACE_TYPE.city.id}
+          />
         </div>
-        <div className="w-full flex gap-1 flex-wrap items-center justify-end">
-          {session.user.citizenship.nationId != place.nation && (
-            <ReportPanel content={place} center={false} />
+        <span className="text-lg text-info">
+          {place.officialId === session.nation.data.roleplay.capital && (
+            <GiCapitol />
           )}
-        </div>
+        </span>
+        <h3
+          onClick={handleClick}
+          className="flex items-center gap-2 text-light text-xl cursor-pointer"
+        >
+          {place.name}
+        </h3>
+      </div>
+      <div className="flex gap-1 flex-wrap items-center self-end">
+        {session.user.citizenship.nationId != place.nation && (
+          <ReportPanel content={place} center={false} />
+        )}
       </div>
       <div className="max-w-[90%] flex flex-wrap items-center self-end justify-end gap-1">
         <PlaceTag label={getPlaceTypeLabel(place.type)} />
