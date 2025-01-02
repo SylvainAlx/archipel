@@ -7,6 +7,9 @@
 - Ajout du fichier robots.txt pour les crawlers des moteurs de recherche
 - Ajout de l'information et du tag "religion" pour les citoyens
 - Ajout du tag "genre" pour les citoyens
+- Ajouts de nouvelles langues pour le tag "langue"
+- Ajout d'un bouton de partage sur les pages des citoyens, nations et lieux
+- Ajout du nom du document sur l'onglet du navigateur
 
 #### Suppressions
 
@@ -21,6 +24,7 @@
 - Modification du tri par défaut des lieux sur la page "explorer"
 - Amélioration des traductions anglaises
 - Amélioration des modals de modification
+- Amélioration du tag "langue"
 
 ## Développements à venir
 

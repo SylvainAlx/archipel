@@ -11,17 +11,20 @@ import { CAPTCHA_PUBLIC_KEY } from "../settings/consts";
 import { errorMessage } from "../utils/toasts";
 import ReCAPTCHA from "react-google-recaptcha";
 import { genderList, languageList } from "../settings/lists";
+import i18n from "../i18n/i18n";
 
 export default function Register() {
+  const { t } = useTranslation();
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [passwordsMatch, setPasswordsMatch] = useState(true);
-  const [language, setLanguage] = useState("");
+  const [language, setLanguage] = useState(i18n.language);
   const [gender, setGender] = useState(0);
   const [acceptCGU, setAcceptCGU] = useState(false);
   const [captchaOk, setCaptchaOk] = useState(false);
-  const { t } = useTranslation();
+
+  console.log(language);
 
   const navigate = useNavigate();
 
@@ -107,6 +110,7 @@ export default function Register() {
               title={t("components.form.select.language")}
               options={languageList}
               onChange={handleLanguageChange}
+              value={language}
             />
 
             <div className="flex justify-center text-sm gap-2">

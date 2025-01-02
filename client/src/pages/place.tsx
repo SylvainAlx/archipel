@@ -16,6 +16,7 @@ import PlaceIdentity from "../components/place/placeIdentity";
 import PlaceChildren from "../components/place/placeChildren";
 import PlaceHeader from "../components/place/placeHeader";
 import { displayUnwatchedComs } from "../utils/procedures";
+import { getDocumentTitle } from "../utils/functions";
 
 export default function Place() {
   const [session] = useAtom(sessionAtom);
@@ -44,6 +45,11 @@ export default function Place() {
     }
 
     getNation(place.nation);
+
+    document.title = getDocumentTitle(place.name);
+    return () => {
+      document.title = getDocumentTitle("");
+    };
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [place]);

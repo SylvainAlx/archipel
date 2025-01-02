@@ -198,17 +198,39 @@ export const regimeList: Regime[] = [
 ];
 
 export const languageList: StandardOption[] = [
-  { id: "ar", label: "العربية" },
-  { id: "en", label: "English" },
-  { id: "fr", label: "Français" },
-  { id: "de", label: "Deutsch" },
-  { id: "es", label: "Español" },
-  { id: "hi", label: "हिन्दी" },
-  { id: "ja", label: "日本語" },
-  { id: "ko", label: "한국어" },
-  { id: "pt", label: "Português" },
-  { id: "ru", label: "Анже" },
-  { id: "zh", label: "昂热" },
+  { id: "ar", label: "العربية" }, // Arabe
+  { id: "en", label: "English" }, // Anglais
+  { id: "fr-FR", label: "Français" }, // Français
+  { id: "de", label: "Deutsch" }, // Allemand
+  { id: "es", label: "Español" }, // Espagnol
+  { id: "hi", label: "हिन्दी" }, // Hindi
+  { id: "ja", label: "日本語" }, // Japonais
+  { id: "ko", label: "한국어" }, // Coréen
+  { id: "pt", label: "Português" }, // Portugais
+  { id: "ru", label: "Русский" }, // Russe
+  { id: "zh", label: "中文" }, // Chinois simplifié
+  { id: "it", label: "Italiano" }, // Italien
+  { id: "nl", label: "Nederlands" }, // Néerlandais
+  { id: "sv", label: "Svenska" }, // Suédois
+  { id: "no", label: "Norsk" }, // Norvégien
+  { id: "fi", label: "Suomi" }, // Finnois
+  { id: "da", label: "Dansk" }, // Danois
+  { id: "tr", label: "Türkçe" }, // Turc
+  { id: "pl", label: "Polski" }, // Polonais
+  { id: "cs", label: "Čeština" }, // Tchèque
+  { id: "el", label: "Ελληνικά" }, // Grec
+  { id: "he", label: "עברית" }, // Hébreu
+  { id: "vi", label: "Tiếng Việt" }, // Vietnamien
+  { id: "th", label: "ภาษาไทย" }, // Thaï
+  { id: "id", label: "Bahasa Indonesia" }, // Indonésien
+  { id: "ms", label: "Bahasa Melayu" }, // Malais
+  { id: "ta", label: "தமிழ்" }, // Tamoul
+  { id: "bn", label: "বাংলা" }, // Bengali
+  { id: "fa", label: "فارسی" }, // Persan
+  { id: "uk", label: "Українська" }, // Ukrainien
+  { id: "hu", label: "Magyar" }, // Hongrois
+  { id: "ro", label: "Română" }, // Roumain
+  { id: "bg", label: "Български" }, // Bulgare
 ];
 
 export const genderList: StandardOption[] = [

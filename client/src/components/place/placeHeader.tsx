@@ -11,6 +11,7 @@ import { Nation } from "../../types/typNation";
 import { confirmBox, nationPlacesListAtom } from "../../settings/store";
 import { useAtom } from "jotai";
 import { ConfirmBoxDefault } from "../../types/typAtom";
+import ShareButton from "../buttons/shareButton";
 
 interface PlaceHeaderProps {
   place: Place;
@@ -74,10 +75,11 @@ export default function PlaceHeader({
       <div className="w-full flex items-center justify-center flex-wrap gap-1">
         <ParentButton click={handleClick} />
         {owner && <CrossButton click={handleDelete} />}
+        <ShareButton label={place.name} />
       </div>
-      <div className="flex items-center gap-2">
-        <FaSortAmountDownAlt className="text-secondary" />
-        <b>{`${nation.name != parentName ? nation.name + " > " + parentName : nation.name}`}</b>
+      <div className="flex items-center gap-2 text-complementary3">
+        <FaSortAmountDownAlt />
+        <p>{`${nation.name != parentName ? nation.name + " > " + parentName : nation.name}`}</p>
         {owner && (
           <EditIcon
             target="place"

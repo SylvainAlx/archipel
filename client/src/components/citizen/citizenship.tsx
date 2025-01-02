@@ -103,9 +103,7 @@ export default function Citizenship({
               )}
             </span>
             <span className="flex items-center gap-1">
-              <LanguagesTag
-                languages={citizen.language != "" ? [citizen.language] : []}
-              />
+              <LanguagesTag language={citizen.language} />
               {owner && (
                 <EditIcon
                   target="citizen"

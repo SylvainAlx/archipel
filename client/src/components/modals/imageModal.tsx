@@ -11,7 +11,7 @@ export default function ImageModal() {
   return (
     <>
       <a
-        className={`max-w-screen-sm bg-complementary flex flex-col items-center justify-center overflow-hidden rounded cursor-zoom-in`}
+        className={`max-w-screen-sm max-h-screen bg-complementary flex flex-col items-center justify-center overflow-hidden rounded cursor-zoom-in`}
         href={image}
         target="_blank"
       >

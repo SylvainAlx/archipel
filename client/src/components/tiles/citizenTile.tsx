@@ -115,9 +115,7 @@ export default function CitizenTile({ citizen }: CitizenTileProps) {
           emplacement.pathname != `/nation/${citizen.citizenship.nationId}` && (
             <NationTag label={citizen.citizenship.nationId} />
           )}
-        <LanguagesTag
-          languages={citizen.language != "" ? [citizen.language] : []}
-        />
+        <LanguagesTag language={citizen.language} />
         <DateTag date={citizen.createdAt} />
       </div>
     </div>

@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import i18n from "../i18n/i18n";
-import { COM_TYPE, MAX_LENGTH, PLACE_TYPE } from "../settings/consts";
+import { APP_NAME, COM_TYPE, MAX_LENGTH, PLACE_TYPE } from "../settings/consts";
 import { LabelId, Nation } from "../types/typNation";
 import { Place } from "../types/typPlace";
 import {
@@ -10,6 +10,7 @@ import {
 } from "../settings/store";
 import { User } from "../types/typUser";
 import {
+  languageList,
   politicalSideList,
   regimeList,
   regimeTypeList,
@@ -236,4 +237,22 @@ export const getLastPublicCom = () => {
     }
   }
   return null;
+};
+
+export const getLanguageLabel = (language: string) => {
+  let label = "";
+  languageList.map((lang) => {
+    if (lang.id === language || (language === "fr" && lang.id === "fr-FR")) {
+      label = lang.label;
+    }
+  });
+  return label;
+};
+
+export const getDocumentTitle = (title: string) => {
+  if (title === "") {
+    return APP_NAME;
+  } else {
+    return APP_NAME + " - " + title;
+  }
 };

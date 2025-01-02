@@ -15,6 +15,8 @@ export const VERSION = {
   testing: true,
 };
 
+export const APP_NAME = i18n.t("components.logo.title");
+
 export const color_primary = "var(--color-primary)";
 export const color_secondary = "var(--color-secondary)";
 export const color_complementary = "var(--color-complementary)";

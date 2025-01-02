@@ -23,6 +23,7 @@ import { ConfirmBoxDefault } from "../types/typAtom";
 import NationComs from "../components/nation/nationComs";
 import ReportPanel from "../components/reportPanel";
 import EditIcon from "../components/editIcon";
+import { getDocumentTitle } from "../utils/functions";
 
 export default function Nation() {
   const [nation] = useAtom(nationFetchedAtom);
@@ -42,6 +43,11 @@ export default function Nation() {
     } else {
       setOwner(false);
     }
+
+    document.title = getDocumentTitle(nation.name);
+    return () => {
+      document.title = getDocumentTitle("");
+    };
   }, [session.user, nation, param.id]);
 
   useEffect(() => {

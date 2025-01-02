@@ -8,6 +8,12 @@ export default defineConfig({
     react(),
     VitePWA({
       registerType: "autoUpdate",
+      includeAssets: [
+        "apple-touch-icon.png",
+        "android-chrome-192x192.png",
+        "android-chrome-512x512.png",
+        "maskable_icon.png",
+      ],
       workbox: {
         maximumFileSizeToCacheInBytes: 5700000,
       },
@@ -15,7 +21,6 @@ export default defineConfig({
         name: "Archipel",
         short_name: "Archipel",
         description: "Citoyens des micronations & nations virtuelles",
-        handle_links: "preferred",
         categories: [
           "social",
           "lifestyle",
@@ -48,7 +53,7 @@ export default defineConfig({
           },
           {
             src: "/maskable_icon.png",
-            sizes: "512x512",
+            sizes: "347x347",
             type: "image/png",
             purpose: "maskable",
           },

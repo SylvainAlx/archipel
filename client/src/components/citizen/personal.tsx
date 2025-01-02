@@ -9,6 +9,7 @@ import { User } from "../../types/typUser";
 import { FaLink } from "react-icons/fa";
 import { confirmBox, myStore } from "../../settings/store";
 import { useTranslation } from "react-i18next";
+import ShareButton from "../buttons/shareButton";
 
 interface PersonalProps {
   citizen: User;
@@ -50,7 +51,6 @@ export default function Personal({ citizen, owner }: PersonalProps) {
             <EditIcon target="citizen" param={citizen.link} path="link" />
           )}
         </span>
-
         <span className="flex items-center gap-1">
           <ExternalLink
             url={citizen.email != "" ? "mailto:" + citizen.email : ""}
@@ -61,6 +61,7 @@ export default function Personal({ citizen, owner }: PersonalProps) {
             <EditIcon target="citizen" param={citizen.email} path="email" />
           )}
         </span>
+        <ShareButton label={citizen.name} />
       </div>
       <div className="w-full max-w-[300px] md:max-w-lg mt-4 justify-center flex gap-2">
         {citizen.bio ? (
