@@ -8,11 +8,8 @@ export default defineConfig({
     react(),
     VitePWA({
       registerType: "autoUpdate",
-      includeAssets: ["favicon.ico", "apple-touch-icon.png", "masked-icon.svg"],
       workbox: {
         maximumFileSizeToCacheInBytes: 5700000,
-        globDirectory: "dist",
-        globPatterns: ["**/*.{js,css,html,png,jpg,svg,ico,json}"],
       },
       manifest: {
         name: "Archipel",
