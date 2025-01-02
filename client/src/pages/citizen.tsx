@@ -12,7 +12,10 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { LabelId } from "../types/typNation";
 import EditIcon from "../components/editIcon";
-import { getLabelIdArrayFromNationPlaceList } from "../utils/functions";
+import {
+  getDocumentTitle,
+  getLabelIdArrayFromNationPlaceList,
+} from "../utils/functions";
 import { ConfirmBoxDefault } from "../types/typAtom";
 import { getNation } from "../api/nation/nationAPI";
 import { getComs } from "../api/communication/comAPI";
@@ -63,6 +66,11 @@ export default function Citizen() {
     ) {
       getNation(citizen.citizenship.nationId);
     }
+
+    document.title = getDocumentTitle(citizen.name);
+    return () => {
+      document.title = getDocumentTitle("");
+    };
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [citizen]);

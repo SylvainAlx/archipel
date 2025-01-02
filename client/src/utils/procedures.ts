@@ -259,3 +259,23 @@ export const clearImagesInCache = () => {
     }
   }
 };
+
+export const handleShare = async (label: string) => {
+  if (navigator.share) {
+    try {
+      await navigator.share({
+        title: document.title, // Titre de la page
+        text: label,
+        url: window.location.href, // URL actuelle
+      });
+      console.log("Contenu partagé avec succès !");
+    } catch (error) {
+      console.error("Erreur lors du partage :", error);
+    }
+  } else {
+    console.warn("L'API Web Share n'est pas supportée sur ce navigateur.");
+    alert(
+      "Votre navigateur ne prend pas en charge la fonctionnalité de partage.",
+    );
+  }
+};

@@ -8,6 +8,7 @@ export interface ButtonProps {
   disabled?: boolean;
   children?: JSX.Element;
   widthFull?: boolean;
+  lowerCase?: boolean;
   click?: MouseEventHandler<HTMLButtonElement>;
   keyDown?: React.KeyboardEventHandler;
 }
@@ -19,6 +20,7 @@ export default function Button({
   disabled,
   children,
   widthFull,
+  lowerCase = true,
   click,
   keyDown,
 }: ButtonProps) {
@@ -34,7 +36,7 @@ export default function Button({
       onKeyDown={keyDown && keyDown}
     >
       <div className={`text-xl ${hover && "animate-jump"}`}>{children}</div>
-      {text != "" && <span>{text.toLowerCase()}</span>}
+      {text != "" && <span>{lowerCase ? text.toLowerCase() : text}</span>}
     </button>
   );
 }

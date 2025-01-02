@@ -35,6 +35,10 @@ const UserSchema = mongoose.Schema(
       type: String,
       default: "",
     },
+    religion: {
+      type: Number,
+      default: 0,
+    },
     password: {
       type: String,
       required: true,

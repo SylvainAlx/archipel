@@ -2,14 +2,11 @@ import Tag from "./tag";
 import { FaCrown, FaPersonMilitaryPointing, FaQuestion } from "react-icons/fa6";
 import { MdHowToVote } from "react-icons/md";
 import { useEffect, useState } from "react";
-import { langAtom } from "../../settings/store";
-import { useAtom } from "jotai";
 import { createTagRegime } from "../../utils/functions";
 import { SelectedNationProps } from "../../types/typProp";
 import { useTranslation } from "react-i18next";
 
 export default function RegimeTag({ selectedNation }: SelectedNationProps) {
-  const [lang] = useAtom(langAtom);
   const { t } = useTranslation();
   const [regime, setRegime] = useState({
     id: 0,
@@ -19,7 +16,7 @@ export default function RegimeTag({ selectedNation }: SelectedNationProps) {
   });
   useEffect(() => {
     setRegime(createTagRegime(selectedNation.data.general.regime));
-  }, [lang, selectedNation]);
+  }, [selectedNation]);
 
   return (
     <Tag

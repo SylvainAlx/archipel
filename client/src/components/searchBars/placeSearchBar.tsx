@@ -32,7 +32,7 @@ export interface SearchBarProps {
 export default function PlaceSearchBar({ list, setList }: SearchBarProps) {
   const { t } = useTranslation();
   const [searchName, setSearchName] = useState("");
-  const [sorting, setSorting] = useState("3");
+  const [sorting, setSorting] = useState("5");
   const [placeType, setPlaceType] = useState({
     type_0: true,
     type_1: true,

@@ -7,16 +7,20 @@ export default defineConfig({
   plugins: [
     react(),
     VitePWA({
-      registerType: "prompt",
-      includeAssets: ["favicon.ico", "apple-touc-icon.png", "masked-icon.svg"],
+      registerType: "autoUpdate",
+      includeAssets: [
+        "apple-touch-icon.png",
+        "android-chrome-192x192.png",
+        "android-chrome-512x512.png",
+        "maskable_icon.png",
+      ],
       workbox: {
-        maximumFileSizeToCacheInBytes: 6000000,
+        maximumFileSizeToCacheInBytes: 5700000,
       },
       manifest: {
         name: "Archipel",
         short_name: "Archipel",
         description: "Citoyens des micronations & nations virtuelles",
-        handle_links: "preferred",
         categories: [
           "social",
           "lifestyle",
@@ -27,28 +31,31 @@ export default defineConfig({
         lang: "fr",
         icons: [
           {
+            src: "/apple-touch-icon.png",
+            sizes: "180x180",
+            type: "image/png",
+          },
+          {
             src: "/android-chrome-192x192.png",
             sizes: "192x192",
             type: "image/png",
-            purpose: "favicon",
           },
           {
             src: "/android-chrome-512x512.png",
             sizes: "512x512",
             type: "image/png",
-            purpose: "favicon",
           },
           {
-            src: "/apple-touch-icon.png",
-            sizes: "180x180",
+            src: "/android-chrome-512x512.png",
+            sizes: "512x512",
             type: "image/png",
-            purpose: "apple touch icon",
+            purpose: "any",
           },
           {
             src: "/maskable_icon.png",
-            sizes: "512x512",
+            sizes: "347x347",
             type: "image/png",
-            purpose: "any maskable",
+            purpose: "maskable",
           },
         ],
         theme_color: "#fff",

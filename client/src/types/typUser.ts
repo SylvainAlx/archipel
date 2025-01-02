@@ -5,6 +5,7 @@ export interface User {
   gender: number;
   avatar: string;
   language: string;
+  religion: number;
   password?: string;
   recovery?: string;
   email: string;
@@ -56,6 +57,7 @@ export const emptyUser: User = {
   gender: 0,
   avatar: "",
   language: "",
+  religion: 0,
   password: "",
   recovery: "",
   email: "",

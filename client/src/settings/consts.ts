@@ -9,11 +9,13 @@ export const GOOGLE_ANALYTICS_MEASUREMENT_ID = import.meta.env
   .VITE_GOOGLE_ANALYTICS_MEASUREMENT_ID;
 
 export const VERSION = {
-  beta: "0.3",
+  beta: "0.4",
   rc: "",
   release: "",
   testing: true,
 };
+
+export const APP_NAME = i18n.t("components.logo.title");
 
 export const color_primary = "var(--color-primary)";
 export const color_secondary = "var(--color-secondary)";

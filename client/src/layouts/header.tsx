@@ -14,7 +14,9 @@ export default function Header() {
       <div className="mb-6 lg:mb-0 flex flex-col lg:flex-row gap-2 items-center">
         <Logo />
         <div className="flex flex-col items-center lg:items-start">
-          <h2 className="text-3xl text-center">{t("components.logo.title")}</h2>
+          <h2 className="text-3xl text-center">
+            {t("components.logo.title").toUpperCase()}
+          </h2>
           <h4 className="text-sm lg:text-md text-center">
             {t("components.logo.subtitle")}
           </h4>

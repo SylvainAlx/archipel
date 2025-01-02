@@ -1,5 +1,5 @@
 import { useTranslation } from "react-i18next";
-import { languageList } from "../../settings/lists";
+import { genderList, languageList, religionList } from "../../settings/lists";
 import { emptyNewNationPayload, Nation } from "../../types/typNation";
 import { User } from "../../types/typUser";
 import DashTile from "../dashTile";
@@ -24,6 +24,8 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { PIONEER_DATE } from "../../settings/consts";
 import PioneerTag from "../tags/pioneerTag";
+import ReligionTag from "../tags/religionTag";
+import GenderTag from "../tags/genderTag";
 
 interface CitizenshipProps {
   citizen: User;
@@ -90,15 +92,35 @@ export default function Citizenship({
           <div className="max-w-[90%] flex flex-wrap items-center justify-center gap-1">
             <IdTag label={citizen.officialId} />
             <span className="flex items-center gap-1">
-              <LanguagesTag
-                languages={citizen.language != "" ? [citizen.language] : []}
-              />
+              <GenderTag genderId={citizen.gender} />
+              {owner && (
+                <EditIcon
+                  target="citizen"
+                  param={genderList}
+                  path="gender"
+                  indice={citizen.gender}
+                />
+              )}
+            </span>
+            <span className="flex items-center gap-1">
+              <LanguagesTag language={citizen.language} />
               {owner && (
                 <EditIcon
                   target="citizen"
                   param={languageList}
                   path="language"
                   indice={citizen.language}
+                />
+              )}
+            </span>
+            <span className="flex items-center gap-1">
+              <ReligionTag religionId={citizen.religion} />
+              {owner && (
+                <EditIcon
+                  target="citizen"
+                  param={religionList}
+                  path="religion"
+                  indice={citizen.religion}
                 />
               )}
             </span>
@@ -119,6 +141,7 @@ export default function Citizenship({
                   click={() => handleClick("nation")}
                   children={<GiBlackFlag />}
                   widthFull={true}
+                  lowerCase={false}
                 />
                 {enableLeaving && (
                   <CrossButton text="" small={true} click={leaveNation} />
