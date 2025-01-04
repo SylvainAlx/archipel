@@ -21,7 +21,8 @@
         "noTags": "no tags",
         "noMotto": "no motto",
         "externalLinks": "external links",
-        "noDescription": "no description"
+        "noDescription": "no description",
+        "nationState": "Nation-State"
       },
       "map": {
         "title": "nation map",
@@ -227,6 +228,7 @@
         "title": "NEW NATION",
         "nationName": "Nation name",
         "motto": "Motto",
+        "isNationState": "Check if it is a Nation-state",
         "currency": "Currency",
         "regime": "Regime",
         "tagsInfos": "Space to apply, click to delete"
@@ -297,13 +299,15 @@
         "nation": "nation",
         "currency": "currency",
         "nationalDay": "national day",
-        "nationOwner": "nation leader",
+        "nationOwner": "nation editor",
         "residence": "residence",
         "treasury": "treasury",
         "date": "date",
-        "pioneer": "pioneer",
+        "honor": "honor",
+        "honor_pioneer": "pioneer",
         "religion": "religion",
-        "gender": "gender"
+        "gender": "gender",
+        "particularity": "particularity"
       },
       "avatar": "avatar",
       "relations": {

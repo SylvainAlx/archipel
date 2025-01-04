@@ -45,7 +45,7 @@ export const getNationsCount = () => {
   myStore.set(loadingAtom, true);
   getNationsCountFetch()
     .then((response: number) => {
-      const updatedStats: Stats = { ...myStore.get(statsAtom) };
+      const updatedStats: Stats = structuredClone(myStore.get(statsAtom));
       updatedStats.counts.nations = response;
       myStore.set(statsAtom, updatedStats);
       myStore.set(loadingAtom, false);

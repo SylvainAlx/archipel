@@ -36,6 +36,11 @@ export default function EditBoxModal() {
       typeof editBox.indice == "number"
     ) {
       setEditBox({ ...editBox, new: editBox.indice });
+    } else if (
+      typeof editBox.original == "string" ||
+      typeof editBox.indice == "number"
+    ) {
+      setEditBox({ ...editBox, new: editBox.original });
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps

@@ -8,10 +8,13 @@ import { StringProps } from "../../types/typProp";
 import { useTranslation } from "react-i18next";
 import ComSearchBar from "../../components/searchBars/comSearchBar";
 import { Com } from "../../types/typCom";
+import { ELEMENTS_DISPLAYED_LIMIT } from "../../settings/consts";
 
 export default function ComList({ text }: StringProps) {
   const [comList, setComList] = useState<Com[]>([]);
-  const [displayedComs, setDisplayedComs] = useState(10);
+  const [displayedComs, setDisplayedComs] = useState(
+    ELEMENTS_DISPLAYED_LIMIT.coms,
+  );
   const { t } = useTranslation();
   const ComTile = lazy(() => import("../../components/tiles/comTile"));
 
@@ -37,7 +40,9 @@ export default function ComList({ text }: StringProps) {
       </section>
       {displayedComs < comList.length && (
         <Button
-          click={() => setDisplayedComs(displayedComs + 5)}
+          click={() =>
+            setDisplayedComs(displayedComs + ELEMENTS_DISPLAYED_LIMIT.coms)
+          }
           text={t("components.buttons.showMore")}
         />
       )}

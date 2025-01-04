@@ -27,6 +27,7 @@ export interface Nation {
     general: {
       motto: string;
       nationalDay: string;
+      isNationState: boolean;
       regime: number;
       currency: string;
       tags: string[];
@@ -61,6 +62,7 @@ export const EmptyNation: Nation = {
     general: {
       motto: "",
       nationalDay: "",
+      isNationState: false,
       regime: 0,
       currency: "",
       tags: [],
@@ -108,6 +110,7 @@ export interface NewNationPayload {
   name: string;
   owner: string;
   motto: string;
+  isNationState: boolean;
   regime: number;
   currency: string;
   nationalDay: string;
@@ -118,6 +121,7 @@ export const emptyNewNationPayload: NewNationPayload = {
   name: "",
   owner: "",
   motto: "",
+  isNationState: false,
   regime: 0,
   currency: "",
   nationalDay: "",

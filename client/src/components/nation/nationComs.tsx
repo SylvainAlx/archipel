@@ -17,7 +17,7 @@ import { ComPayload, emptyComPayload } from "../../types/typCom";
 import Countdown from "../countdown";
 import { COM_TYPE } from "../../settings/consts";
 import { displayUnwatchedComs } from "../../utils/procedures";
-import { getLastPublicCom } from "../../utils/functions";
+import { isMoreThan24Hours } from "../../utils/functions";
 
 export default function NationComs({
   selectedNation,
@@ -26,7 +26,7 @@ export default function NationComs({
   const { t } = useTranslation();
   const [nationComList, setNationComList] = useAtom(comFetchedListAtom);
   const [session] = useAtom(sessionAtom);
-  const [allowPost, setAllowPost] = useState<boolean>(false);
+  const [allowPost, setAllowPost] = useState<boolean>(true);
   const [dueDate, setDueDate] = useState(new Date());
   const ComTile = lazy(() => import("../tiles/comTile"));
 
@@ -45,17 +45,13 @@ export default function NationComs({
 
   useEffect(() => {
     if (nationComList.length > 0) {
-      const lastElement = getLastPublicCom();
+      const lastElement = nationComList[nationComList.length - 1];
       if (lastElement) {
-        const comDate = new Date(lastElement.createdAt);
-        const today = new Date();
-        const is24hBeforeLastCom: boolean =
-          comDate.toDateString() < today.toDateString();
         const isActivePlan =
           myStore.get(sessionAtom).user.plan != "free" &&
           myStore.get(sessionAtom).user.expirationDate >
             new Date().toLocaleDateString();
-        if (is24hBeforeLastCom || isActivePlan) {
+        if (isMoreThan24Hours(lastElement.createdAt) || isActivePlan) {
           setAllowPost(true);
         } else {
           setAllowPost(false);

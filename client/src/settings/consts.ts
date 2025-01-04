@@ -9,7 +9,7 @@ export const GOOGLE_ANALYTICS_MEASUREMENT_ID = import.meta.env
   .VITE_GOOGLE_ANALYTICS_MEASUREMENT_ID;
 
 export const VERSION = {
-  beta: "0.4",
+  beta: "0.5",
   rc: "",
   release: "",
   testing: true,
@@ -23,7 +23,7 @@ export const color_complementary = "var(--color-complementary)";
 export const color_light = "var(--color-light)";
 export const color_black_alpha = "var(--color-black-alpha)";
 
-export const PIONEER_DATE = "2025-01-01T00:00:00.000Z";
+export const PIONEER_DATE = "2025-03-07T00:00:00.000Z";
 
 export const QUOTAS = {
   PLACES: 10,
@@ -49,6 +49,13 @@ export const MAX_LENGTH = {
   array: {
     tags: 5,
   },
+};
+
+export const ELEMENTS_DISPLAYED_LIMIT = {
+  nations: 30,
+  citizens: 30,
+  places: 30,
+  coms: 30,
 };
 
 export const COM_TYPE = {

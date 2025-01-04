@@ -32,12 +32,11 @@ import {
 } from "./placeFetch";
 
 export const getPlacesCount = () => {
-  const stats = myStore.get(statsAtom);
   myStore.set(loadingAtom, true);
   getPlacesCountFetch()
     .then((response) => {
       myStore.set(loadingAtom, false);
-      const updatedStats = { ...stats };
+      const updatedStats = structuredClone(myStore.get(statsAtom));
       updatedStats.counts.places = response;
       myStore.set(statsAtom, updatedStats);
     })

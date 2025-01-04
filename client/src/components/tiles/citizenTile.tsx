@@ -22,8 +22,8 @@ import LanguagesTag from "../tags/languagesTag";
 import ReportPanel from "../reportPanel";
 import DateTag from "../tags/dateTag";
 import { PIONEER_DATE } from "../../settings/consts";
-import PioneerTag from "../tags/pioneerTag";
 import { declineCitizenship } from "../../utils/procedures";
+import HonorTag from "../tags/honorTag";
 
 export interface CitizenTileProps {
   citizen: User;
@@ -109,7 +109,9 @@ export default function CitizenTile({ citizen }: CitizenTileProps) {
         {citizen.role === "admin" && (
           <RoleTag label={t("pages.citizen.role.admin")} />
         )}
-        {citizenCreationDate < pioneerDate && <PioneerTag />}
+        {citizenCreationDate < pioneerDate && (
+          <HonorTag honor="honor_pioneer" />
+        )}
         {citizen.citizenship.nationOwner && <NationOwnerTag />}
         {citizen.citizenship.nationId != "" &&
           emplacement.pathname != `/nation/${citizen.citizenship.nationId}` && (

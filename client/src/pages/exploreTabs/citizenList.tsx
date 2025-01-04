@@ -8,10 +8,13 @@ import { StringProps } from "../../types/typProp";
 import { User } from "../../types/typUser";
 import CitizenSearchBar from "../../components/searchBars/citizenSearchBar";
 import { useTranslation } from "react-i18next";
+import { ELEMENTS_DISPLAYED_LIMIT } from "../../settings/consts";
 
 export default function CitizenList({ text }: StringProps) {
   const [citizensList, setCitizensList] = useState<User[]>([]);
-  const [displayedCitizens, setDisplayedCitizens] = useState(10);
+  const [displayedCitizens, setDisplayedCitizens] = useState(
+    ELEMENTS_DISPLAYED_LIMIT.citizens,
+  );
   const { t } = useTranslation();
   const CitizenTile = lazy(() => import("../../components/tiles/citizenTile"));
 
@@ -41,7 +44,11 @@ export default function CitizenList({ text }: StringProps) {
       </section>
       {displayedCitizens < citizensList.length && (
         <Button
-          click={() => setDisplayedCitizens(displayedCitizens + 5)}
+          click={() =>
+            setDisplayedCitizens(
+              displayedCitizens + ELEMENTS_DISPLAYED_LIMIT.citizens,
+            )
+          }
           text={t("components.buttons.showMore")}
         />
       )}

@@ -25,7 +25,7 @@ export default function TextArea({
       onChange={onChange}
       required={required}
       name={name}
-      placeholder={placeholder}
+      placeholder={placeholder + (required ? " *" : "")}
       value={value}
       maxLength={maxLength}
       rows={rows}

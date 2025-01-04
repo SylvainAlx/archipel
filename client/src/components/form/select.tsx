@@ -28,10 +28,11 @@ export default function Select({
   return (
     <label className="w-full max-w-[300px]">
       {title ? title.toLocaleUpperCase() : t("components.form.select.choose")}
+      {required && " *"}
       <select
         required={required}
         onChange={onChange}
-        className="w-full rounded-lg p-4 pe-12 text-sm shadow-sm text-primary capitalize"
+        className={`w-full rounded-lg p-4 pe-12 text-sm shadow-sm text-primary capitalize outline-none`}
         value={value}
         id={id && id}
       >

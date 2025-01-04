@@ -27,8 +27,16 @@ export const nationsCount = async (req, res) => {
 
 export const createNation = async (req, res) => {
   try {
-    const { name, owner, motto, regime, currency, nationalDay, tags } =
-      req.body;
+    const {
+      name,
+      owner,
+      motto,
+      isNationState,
+      regime,
+      currency,
+      nationalDay,
+      tags,
+    } = req.body;
 
     if (!name || !owner) {
       return res.status(400).json({ infoType: "miss" });
@@ -46,6 +54,7 @@ export const createNation = async (req, res) => {
     };
     data.general.motto = motto;
     data.general.regime = regime;
+    data.general.isNationState = isNationState;
     data.general.currency = currency;
     data.general.nationalDay = nationalDay;
     data.general.tags = tags;

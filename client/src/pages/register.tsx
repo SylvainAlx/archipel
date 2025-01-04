@@ -12,6 +12,7 @@ import { errorMessage } from "../utils/toasts";
 import ReCAPTCHA from "react-google-recaptcha";
 import { genderList, languageList } from "../settings/lists";
 import i18n from "../i18n/i18n";
+import RequiredStar from "../components/form/requiredStar";
 
 export default function Register() {
   const { t } = useTranslation();
@@ -136,6 +137,7 @@ export default function Register() {
               </p>
             </div>
             <ReCAPTCHA sitekey={CAPTCHA_PUBLIC_KEY} onChange={verifyToken} />
+            <RequiredStar />
             <Button
               text={t("components.buttons.register")}
               type="submit"

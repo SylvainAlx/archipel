@@ -48,12 +48,11 @@ import {
 } from "./userFetch";
 
 export const getCitizensCount = () => {
-  const stats = myStore.get(statsAtom);
   myStore.set(loadingAtom, true);
   getCitizensCountFetch()
     .then((response) => {
       myStore.set(loadingAtom, false);
-      const updatedStats = { ...stats };
+      const updatedStats = structuredClone(myStore.get(statsAtom));
       updatedStats.counts.citizens = response;
       myStore.set(statsAtom, updatedStats);
     })

@@ -27,14 +27,11 @@ import {
 } from "./comFetch";
 
 export const getComsCount = async () => {
-  const stats = myStore.get(statsAtom);
   myStore.set(loadingAtom, true);
   try {
     const response = await getComsCountFetch();
-    const updatedStats = {
-      ...stats,
-      counts: { ...stats.counts, coms: response },
-    };
+    const updatedStats = structuredClone(myStore.get(statsAtom));
+    updatedStats.counts.coms = response;
     myStore.set(statsAtom, updatedStats);
   } catch (error) {
     comErrorCatching(error);
