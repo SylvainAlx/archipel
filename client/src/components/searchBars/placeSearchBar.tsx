@@ -13,15 +13,15 @@ import { SetAtom, placesListAtom, statsAtom } from "../../settings/store";
 import { useTranslation } from "react-i18next";
 import { useAtom } from "jotai";
 import { getPlaces } from "../../api/place/placeAPI";
-import { getPlaceTypeLabel, getTotalPopulation } from "../../utils/functions";
+import { getPlaceTypeLabel } from "../../utils/functions";
 import { Place } from "../../types/typPlace";
-import { placeSearchSortOptions } from "../../settings/lists";
 import SearchButtons from "../form/searchButtons";
 import {
   sortByCreatedAt,
   sortByName,
   sortPlacesByCitizen,
 } from "../../utils/sorting";
+import { PLACE_SORTING } from "../../settings/sorting";
 
 export interface SearchBarProps {
   type: string;
@@ -32,7 +32,7 @@ export interface SearchBarProps {
 export default function PlaceSearchBar({ list, setList }: SearchBarProps) {
   const { t } = useTranslation();
   const [searchName, setSearchName] = useState("");
-  const [sorting, setSorting] = useState("5");
+  const [sorting, setSorting] = useState(PLACE_SORTING.descDate.id);
   const [placeType, setPlaceType] = useState({
     type_0: true,
     type_1: true,
@@ -88,56 +88,57 @@ export default function PlaceSearchBar({ list, setList }: SearchBarProps) {
     });
   };
 
-  const placesSorting = (Alist: Place[], selectOption: string) => {
+  const placesSorting = (Alist: Place[], selectOption: number) => {
     const updatedList = [...Alist];
     switch (selectOption) {
-      case "0":
+      case 0:
         setList(sortByName(updatedList, true));
         break;
-      case "1":
+      case 1:
         setList(sortByName(updatedList, false));
         break;
-      case "2":
+      case 2:
         setList(sortPlacesByCitizen(updatedList, true));
         break;
-      case "3":
+      case 3:
         setList(sortPlacesByCitizen(updatedList, false));
         break;
-      case "4":
+      case 4:
         setList(sortByCreatedAt(updatedList, true));
         break;
-      case "5":
+      case 5:
         setList(sortByCreatedAt(updatedList, false));
         break;
       default:
         break;
     }
 
-    if (selectOption === "0") {
+    if (selectOption === PLACE_SORTING.ascAlpha.id) {
       setList(
         updatedList.sort(function (a, b) {
           return a.name.localeCompare(b.name);
         }),
       );
-    } else if (selectOption === "1") {
+    } else if (selectOption === PLACE_SORTING.descAlpha.id) {
       setList(
         updatedList.sort(function (a, b) {
           return b.name.localeCompare(a.name);
         }),
       );
-    } else if (selectOption === "2") {
-      setList(
-        updatedList.sort(
-          (a, b) => getTotalPopulation(a) - getTotalPopulation(b),
-        ),
-      );
-    } else if (selectOption === "3") {
-      setList(
-        updatedList.sort(
-          (a, b) => getTotalPopulation(b) - getTotalPopulation(a),
-        ),
-      );
     }
+    // else if (selectOption === PLACE_SORTING.ascCtz.id) {
+    //   setList(
+    //     updatedList.sort(
+    //       (a, b) => getTotalPopulation(a) - getTotalPopulation(b),
+    //     ),
+    //   );
+    // } else if (selectOption === PLACE_SORTING.descCtz.id) {
+    //   setList(
+    //     updatedList.sort(
+    //       (a, b) => getTotalPopulation(b) - getTotalPopulation(a),
+    //     ),
+    //   );
+    // }
     setSorting(selectOption);
   };
 
@@ -184,9 +185,9 @@ export default function PlaceSearchBar({ list, setList }: SearchBarProps) {
       />
       <Select
         onChange={(e: ChangeEvent<HTMLSelectElement>) =>
-          placesSorting(list, e.target.value)
+          placesSorting(list, Number(e.target.value))
         }
-        options={placeSearchSortOptions}
+        options={Object.values(PLACE_SORTING)}
         value={sorting}
       />
       <div className="flex flex-wrap flex-col md:flex-row gap-2 items-center justify-center md:justify-between">

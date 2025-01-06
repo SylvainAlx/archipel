@@ -17,16 +17,15 @@ import {
 } from "../../settings/store";
 import { useTranslation } from "react-i18next";
 import { useAtom } from "jotai";
-import { nationSearchSortOptions } from "../../settings/lists";
 import SearchButtons from "../form/searchButtons";
 import { useLocation, useNavigate } from "react-router-dom";
 import {
   sortByCreatedAt,
   sortByName,
   sortByPlaces,
-  sortByTreasury,
   sortNationsByCitizens,
 } from "../../utils/sorting";
+import { NATION_SORTING } from "../../settings/sorting";
 
 export interface SearchBarProps {
   type: string;
@@ -35,7 +34,7 @@ export interface SearchBarProps {
 }
 
 export default function NationSearchBar({ list, setList }: SearchBarProps) {
-  const [selectOption, setSelectOption] = useState("5");
+  const [selectOption, setSelectOption] = useState(NATION_SORTING.descCtz.id);
   const { t } = useTranslation();
   const [searchName, setSearchName] = useState("");
   const [searchTag, setSearchTag] = useState("");
@@ -68,7 +67,7 @@ export default function NationSearchBar({ list, setList }: SearchBarProps) {
 
   const reset = () => {
     getNations("", "");
-    setSelectOption("5");
+    setSelectOption(NATION_SORTING.descCtz.id);
     setSearchName("");
     setSearchTag("");
     navigate(`/explore/2`);
@@ -77,34 +76,34 @@ export default function NationSearchBar({ list, setList }: SearchBarProps) {
   const nationsSorting = () => {
     list = [...nationsList];
     switch (selectOption) {
-      case "0":
+      case NATION_SORTING.ascAlpha.id:
         setList(sortByName(list, true));
         break;
-      case "1":
+      case NATION_SORTING.descAlpha.id:
         setList(sortByName(list, false));
         break;
-      case "2":
+      case NATION_SORTING.ascLoc.id:
         setList(sortByPlaces(list, true));
         break;
-      case "3":
+      case NATION_SORTING.descLoc.id:
         setList(sortByPlaces(list, false));
         break;
-      case "4":
+      case NATION_SORTING.ascCtz.id:
         setList(sortNationsByCitizens(list, true));
         break;
-      case "5":
+      case NATION_SORTING.descCtz.id:
         setList(sortNationsByCitizens(list, false));
         break;
-      case "6":
-        setList(sortByTreasury(list, true));
-        break;
-      case "7":
-        setList(sortByTreasury(list, false));
-        break;
-      case "8":
+      // case NATION_SORTING.ascTreasury.id:
+      //   setList(sortByTreasury(list, true));
+      //   break;
+      // case NATION_SORTING.descTreasury.id:
+      //   setList(sortByTreasury(list, false));
+      //   break;
+      case NATION_SORTING.ascDate.id:
         setList(sortByCreatedAt(list, true));
         break;
-      case "9":
+      case NATION_SORTING.descDate.id:
         setList(sortByCreatedAt(list, false));
         break;
       default:
@@ -144,9 +143,9 @@ export default function NationSearchBar({ list, setList }: SearchBarProps) {
       />
       <Select
         onChange={(e: ChangeEvent<HTMLSelectElement>) =>
-          setSelectOption(e.target.value)
+          setSelectOption(Number(e.target.value))
         }
-        options={nationSearchSortOptions}
+        options={Object.values(NATION_SORTING)}
         value={selectOption}
       />
 

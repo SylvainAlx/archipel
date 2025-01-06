@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { LabelId, Nation, PoliticalSide, Regime } from "./typNation";
+import { LabelId, Nation, Regime } from "./typNation";
 import { Place } from "./typPlace";
 import { User } from "./typUser";
 
@@ -37,22 +37,8 @@ export const ConfirmBoxDefault: ConfirmBox = {
 
 export interface EditBox {
   target: string;
-  original:
-    | string
-    | number
-    | boolean
-    | Regime[]
-    | PoliticalSide[]
-    | LabelId[]
-    | any[];
-  new:
-    | string
-    | number
-    | boolean
-    | Regime[]
-    | PoliticalSide[]
-    | LabelId[]
-    | any[];
+  original: string | number | boolean | Regime[] | LabelId[] | any[];
+  new: string | number | boolean | Regime[] | LabelId[] | any[];
   path: string;
   indice?: number | string;
   canBeEmpty?: boolean;

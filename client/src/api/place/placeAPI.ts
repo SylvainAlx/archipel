@@ -8,11 +8,9 @@ import {
   placeFetchedAtom,
   placesListAtom,
   sessionAtom,
-  statsAtom,
 } from "../../settings/store";
 import { Nation } from "../../types/typNation";
-import { PlacePayload } from "../../types/typPayload";
-import { Place } from "../../types/typPlace";
+import { Place, PlacePayload } from "../../types/typPlace";
 import {
   getUpdateByOfficialId,
   spliceByOfficialId,
@@ -27,25 +25,8 @@ import {
   getAllPlacesFetch,
   getNationPlacesFetch,
   getPlaceFetch,
-  getPlacesCountFetch,
   updatePlaceFetch,
 } from "./placeFetch";
-
-export const getPlacesCount = () => {
-  myStore.set(loadingAtom, true);
-  getPlacesCountFetch()
-    .then((response) => {
-      myStore.set(loadingAtom, false);
-      const updatedStats = structuredClone(myStore.get(statsAtom));
-      updatedStats.counts.places = response;
-      myStore.set(statsAtom, updatedStats);
-    })
-    .catch((error) => {
-      myStore.set(loadingAtom, false);
-      console.error(error);
-      displayPlaceInfoByType(error.infoType);
-    });
-};
 
 export const createNewPlace = (newPlace: PlacePayload) => {
   myStore.set(loadingAtom, true);

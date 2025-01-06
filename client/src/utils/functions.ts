@@ -5,12 +5,7 @@ import { LabelId, Nation } from "../types/typNation";
 import { Place } from "../types/typPlace";
 import { myStore, nationPlacesListAtom } from "../settings/store";
 import { User } from "../types/typUser";
-import {
-  languageList,
-  politicalSideList,
-  regimeList,
-  regimeTypeList,
-} from "../settings/lists";
+import { languageList, regimeList, regimeTypeList } from "../settings/lists";
 
 export const GET_JWT = () => {
   const jwt = localStorage.getItem("jwt");
@@ -63,16 +58,6 @@ export const findNationsByTag = (searchTag: string, nations: Nation[]) => {
       tag.toLowerCase().includes(searchTag.toLowerCase()),
     ),
   );
-};
-
-export const getPoliticalSide = (value: number) => {
-  let label = "";
-  politicalSideList.map((politicalSide) => {
-    if (value === politicalSide.id) {
-      label = politicalSide.label;
-    }
-  });
-  return label;
 };
 
 export const differenceEnMinutes = (date: Date) => {

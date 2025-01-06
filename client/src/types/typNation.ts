@@ -1,12 +1,3 @@
-import { Place } from "./typPlace";
-import { User } from "./typUser";
-
-export interface NationRoleplayData {
-  nationId: string;
-  citizens: User[];
-  places: Place[];
-}
-
 export interface Nation {
   _id?: string;
   officialId: string;
@@ -86,18 +77,6 @@ export interface RegimeType {
 export interface Regime {
   id: number;
   type: number;
-  label: string;
-}
-
-export interface RegimeOption {
-  id: number;
-  label?: string;
-  type: number;
-  color: string;
-}
-
-export interface PoliticalSide {
-  id: number;
   label: string;
 }
 

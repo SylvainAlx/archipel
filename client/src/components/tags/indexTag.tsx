@@ -1,8 +1,7 @@
 import { useTranslation } from "react-i18next";
-import { NumberProps } from "../../types/typProp";
 import Tag from "./tag";
 
-export default function IndexTag({ text }: NumberProps) {
+export default function IndexTag({ text }: { text: number }) {
   const { t } = useTranslation();
   return (
     <div className="absolute bottom-2 left-2 shadow-md">

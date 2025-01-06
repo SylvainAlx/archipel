@@ -6,6 +6,7 @@
 
 - Ajout du concept d'"État-Nation" avec un champ dans le formulaire d'inscription et l'indication sur la nation
 - Ajout d'un tag "État-Nation" pour les nations concernées
+- Ajout d'un compteur dynamique pour l'onglet "statistiques" de la page "explorer"
 
 #### Suppressions
 
@@ -13,6 +14,7 @@ aucune
 
 #### Modifications & Corrections
 
+- Optimisation du code source
 - Modification du tag "distinction"
 - Autorisation de la distinction "pionnier" pour les utilisateurs inscrits avant le 07/03/2025 (date de sortie prévue de la version 1.0.0)
 - Modification du tag "rôle du citoyen": le "leader de la nation" devient "éditeur de la nation"
@@ -22,6 +24,8 @@ aucune
 - Correction du bug pour poster une communication + blocage 24h étendu aux communications privée de la nation
 - Augmentation du nombre d'éléments visibles initialement dans les onglets de la page "explorer" (10 -> 30)
 - Correction du calcul des statistiques
+- Modification de la liste des communiqué en intégrant les annonce générales
+- Mise en forme des CGU
 
 ## Développements à venir
 

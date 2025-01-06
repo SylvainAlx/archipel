@@ -1,13 +1,6 @@
 import { SERVER_URL } from "../../settings/consts";
-import { PlacePayload } from "../../types/typPayload";
-import { Place } from "../../types/typPlace";
+import { Place, PlacePayload } from "../../types/typPlace";
 import { GET_JWT } from "../../utils/functions";
-
-export const getPlacesCountFetch = async () => {
-  const resp = await fetch(`${SERVER_URL}/place/count`);
-  const result = await resp.json();
-  return result;
-};
 
 // export const getAllPlacesFetch = async () => {
 //   const resp = await fetch(`${SERVER_URL}/place/getall`);

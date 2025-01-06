@@ -1,3 +1,4 @@
+import CountUp from "react-countup";
 import Tag from "./tag";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
@@ -18,9 +19,10 @@ export default function HashTag({ label, occurrence }: HashtagProps) {
       click={() => navigate(`/explore/2#${label}`)}
       children={
         occurrence != -1 ? (
-          <span className="bg-complementary2 rounded-full px-1">
-            {occurrence}
-          </span>
+          <CountUp
+            className="bg-complementary2 rounded-full px-1"
+            end={occurrence}
+          />
         ) : (
           <></>
         )

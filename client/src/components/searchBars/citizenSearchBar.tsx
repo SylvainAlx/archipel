@@ -12,9 +12,9 @@ import { SetAtom, citizenListAtom, statsAtom } from "../../settings/store";
 import { useTranslation } from "react-i18next";
 import { useAtom } from "jotai";
 import { getCitizens } from "../../api/user/userAPI";
-import { citizenSearchSortOptions } from "../../settings/lists";
 import SearchButtons from "../form/searchButtons";
 import { sortByCreatedAt, sortByName } from "../../utils/sorting";
+import { CITIZEN_SORTING } from "../../settings/sorting";
 
 export interface SearchBarProps {
   type: string;
@@ -23,7 +23,7 @@ export interface SearchBarProps {
 }
 
 export default function CitizenSearchBar({ list, setList }: SearchBarProps) {
-  const [selectOption, setSelectOption] = useState("3");
+  const [selectOption, setSelectOption] = useState(CITIZEN_SORTING.descDate.id);
   const { t } = useTranslation();
   const [searchName, setSearchName] = useState("");
   const [isLeader, setIsLeader] = useState(false);
@@ -47,22 +47,22 @@ export default function CitizenSearchBar({ list, setList }: SearchBarProps) {
 
   const reset = () => {
     getCitizens("");
-    setSelectOption("3");
+    setSelectOption(CITIZEN_SORTING.descDate.id);
   };
 
   const citizensSorting = () => {
     list = [...citizenList];
     switch (selectOption) {
-      case "0":
+      case CITIZEN_SORTING.ascAlpha.id:
         setList(sortByName(list, true));
         break;
-      case "1":
+      case CITIZEN_SORTING.descAlpha.id:
         setList(sortByName(list, false));
         break;
-      case "2":
+      case CITIZEN_SORTING.ascDate.id:
         setList(sortByCreatedAt(list, true));
         break;
-      case "3":
+      case CITIZEN_SORTING.descDate.id:
         setList(sortByCreatedAt(list, false));
         break;
       default:
@@ -106,9 +106,9 @@ export default function CitizenSearchBar({ list, setList }: SearchBarProps) {
 
       <Select
         onChange={(e: ChangeEvent<HTMLSelectElement>) =>
-          setSelectOption(e.target.value)
+          setSelectOption(Number(e.target.value))
         }
-        options={citizenSearchSortOptions}
+        options={Object.values(CITIZEN_SORTING)}
         value={selectOption}
       />
       <div className="flex flex-wrap flex-col md:flex-row gap-2 items-center justify-center md:justify-between">

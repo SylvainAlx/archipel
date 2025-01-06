@@ -8,7 +8,7 @@ import i18n from "../i18n/i18n";
 import { COM_TYPE } from "../settings/consts";
 import { confirmBox, myStore, sessionAtom } from "../settings/store";
 import { Com, ComPayload } from "../types/typCom";
-import { LabelId, Nation, PoliticalSide, Regime } from "../types/typNation";
+import { LabelId, Nation, Regime } from "../types/typNation";
 import { Place } from "../types/typPlace";
 import { User } from "../types/typUser";
 import {
@@ -63,14 +63,7 @@ export const handleDeleteImage = ({ url, type }: deleteFileAPIProps) => {
 export const updateElement = (
   destination: string,
   path: string,
-  value:
-    | string
-    | number
-    | boolean
-    | any[]
-    | Regime[]
-    | PoliticalSide[]
-    | LabelId[],
+  value: string | number | boolean | any[] | Regime[] | LabelId[],
   place?: Place,
   confirm?: boolean,
 ) => {

@@ -30,3 +30,10 @@ export const emptyPlace: Place = {
   createdAt: new Date(0),
   isFree: true,
 };
+
+export interface PlacePayload {
+  nation: string;
+  name: string;
+  description: string;
+  image: string;
+}

@@ -18,6 +18,7 @@ import tileRouter from "./routers/tileRouter.js";
 import bodyParser from "body-parser";
 import { verifyCaptcha } from "./controllers/captchaController.js";
 import adminRouter from "./routers/adminRouter.js";
+import statsRouter from "./routers/statsRouter.js";
 
 // config serveur
 const app = express();
@@ -54,14 +55,15 @@ const connectToDatabase = async () => {
 connectToDatabase();
 
 // Définition des routes
-app.use("/admin", [isAdmin], adminRouter);
+app.use("/admin", [verifyJwt], [isAdmin], adminRouter);
 app.use("/user", userRouter);
 app.use("/nation", nationRouter);
 app.use("/com", comRouter);
 app.use("/place", placeRouter);
-app.use("/param", paramRouter);
+app.use("/param", [verifyJwt], paramRouter);
 app.use("/relation", relationRouter);
 app.use("/tile", tileRouter);
+app.use("/stats", statsRouter);
 app.delete("/file/delete/:id", [verifyJwt], deleteUploadedFile);
 app.post("/captcha", verifyCaptcha);
 app.use("/", home);

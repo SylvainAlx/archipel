@@ -1,5 +1,7 @@
 import i18n from "../i18n/i18n";
 
+// CONFIG GENERALE
+
 export const MDP_LOBBY = import.meta.env.VITE_MDP_LOBBY;
 export const SERVER_URL = import.meta.env.VITE_SERVER_URL;
 export const UPLOADCARE_PUBLIC_KEY = import.meta.env.VITE_UPLOADCARE_PUBLIC_KEY;
@@ -58,6 +60,11 @@ export const ELEMENTS_DISPLAYED_LIMIT = {
   coms: 30,
 };
 
+export const COM_GENERAL_DESTINATION = "-1";
+
+export const FLAG_MAKER_URL = "https://flagmakerjr.stg7.net/";
+export const COA_MAKER_URL = "https://coamaker.com/";
+
 export const COM_TYPE = {
   admin: { id: 0, label: i18n.t("listes.comType.admin") },
   general: { id: 1, label: i18n.t("listes.comType.general") },
@@ -86,8 +93,3 @@ export const PLACE_TYPE = {
     label: i18n.t("components.searchBars.placesList.checkbox.nature"),
   },
 };
-
-export const COM_GENERAL_DESTINATION = "-1";
-
-export const FLAG_MAKER_URL = "https://flagmakerjr.stg7.net/";
-export const COA_MAKER_URL = "https://coamaker.com/";

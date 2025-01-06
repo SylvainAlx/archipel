@@ -10,10 +10,6 @@ export interface StringProps {
   text: string;
 }
 
-export interface NumberProps {
-  text: number;
-}
-
 export interface customTagProps {
   label: string | number;
   type?: number;
