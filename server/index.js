@@ -19,6 +19,7 @@ import bodyParser from "body-parser";
 import { verifyCaptcha } from "./controllers/captchaController.js";
 import adminRouter from "./routers/adminRouter.js";
 import statsRouter from "./routers/statsRouter.js";
+import { pingBackend } from "./utils/functions.js";
 
 // config serveur
 const app = express();
@@ -46,9 +47,12 @@ const connectToDatabase = async () => {
   try {
     mongoose.set("strictQuery", false);
     await mongoose.connect(process.env.MONGO_DB_URI);
-    console.log("Database connection OK");
+    console.log(`${new Date().toISOString()} : Database connection OK`);
   } catch (error) {
-    console.error("Database connection KO :", error);
+    console.error(
+      `${new Date().toISOString()} : Database connection KO : `,
+      error,
+    );
   }
 };
 
@@ -70,5 +74,11 @@ app.use("/", home);
 
 // Démarrage du serveur
 app.listen(PORT, () => {
-  console.log(`server running at PORT : ${PORT}`);
+  console.log(`${new Date().toISOString()} : Server running at PORT : ${PORT}`);
 });
+
+//Ping régulier
+const interval = process.env.PING_INTERVAL;
+if (interval > 0) {
+  setInterval(pingBackend, interval);
+}

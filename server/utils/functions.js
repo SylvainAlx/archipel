@@ -82,3 +82,20 @@ export const addMonths = (months) => {
   result.setMonth(result.getMonth() + months);
   return result;
 };
+
+export const pingBackend = async () => {
+  try {
+    const reponse = await fetch(process.env.BACKEND_URL);
+    if (reponse.ok) {
+      console.log(
+        `${new Date().toISOString()} : Ping with code ${reponse.status}`,
+      );
+    } else {
+      console.error(
+        `${new Date().toISOString()} : Ping error with code ${reponse.status}`,
+      );
+    }
+  } catch (erreur) {
+    console.error(`${new Date().toISOString()} : Ping error :`, erreur.message);
+  }
+};

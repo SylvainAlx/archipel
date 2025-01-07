@@ -7,6 +7,7 @@
 - Ajout du concept d'"État-Nation" avec un champ dans le formulaire d'inscription et l'indication sur la nation
 - Ajout d'un tag "État-Nation" pour les nations concernées
 - Ajout d'un compteur dynamique pour l'onglet "statistiques" de la page "explorer"
+- Ajout d'un ping régulier sur le backend pour maintenir le serveur actif
 
 #### Suppressions
 
