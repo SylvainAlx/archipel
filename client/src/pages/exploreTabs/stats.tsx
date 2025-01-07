@@ -4,14 +4,12 @@ import DashTile from "../../components/dashTile";
 import H1 from "../../components/titles/h1";
 import { statsAtom, tagListAtom } from "../../settings/store";
 import { useEffect } from "react";
-import H3 from "../../components/titles/h3";
-import { getAllNationTags, getNationsCount } from "../../api/nation/nationAPI";
-import { getPlacesCount } from "../../api/place/placeAPI";
-import { getCitizensCount } from "../../api/user/userAPI";
+import { getAllNationTags } from "../../api/nation/nationAPI";
 import { useTranslation } from "react-i18next";
 import { StringProps } from "../../types/typProp";
 import HashTag from "../../components/tags/hashTag";
-import { getComsCount } from "../../api/communication/comAPI";
+import CountUp from "react-countup";
+import { getCounts } from "../../api/stats/statsAPI";
 
 export default function Stats({ text }: StringProps) {
   const [stats] = useAtom(statsAtom);
@@ -19,17 +17,13 @@ export default function Stats({ text }: StringProps) {
   const { t } = useTranslation();
 
   useEffect(() => {
-    if (stats.counts.nations === 0) {
-      getNationsCount();
-    }
-    if (stats.counts.places === 0) {
-      getPlacesCount();
-    }
-    if (stats.counts.citizens === 0) {
-      getCitizensCount();
-    }
-    if (stats.counts.coms === 0) {
-      getComsCount();
+    if (
+      stats.counts.nations === 0 ||
+      stats.counts.places === 0 ||
+      stats.counts.citizens === 0 ||
+      stats.counts.coms === 0
+    ) {
+      getCounts();
     }
     if (tagList.length === 0) {
       getAllNationTags();
@@ -42,19 +36,21 @@ export default function Stats({ text }: StringProps) {
       <div className="flex flex-wrap items-center justify-between gap-2">
         <DashTile
           title={t("pages.explore.stats.nations")}
-          children={<H3 text={stats.counts.nations.toString()} />}
+          children={<CountUp className="text-3xl" end={stats.counts.nations} />}
         />
         <DashTile
           title={t("pages.explore.stats.citizens")}
-          children={<H3 text={stats.counts.citizens.toString()} />}
+          children={
+            <CountUp className="text-3xl" end={stats.counts.citizens} />
+          }
         />
         <DashTile
           title={t("pages.explore.stats.locations")}
-          children={<H3 text={stats.counts.places.toString()} />}
+          children={<CountUp className="text-3xl" end={stats.counts.places} />}
         />
         <DashTile
           title={t("pages.explore.stats.coms")}
-          children={<H3 text={stats.counts.coms.toString()} />}
+          children={<CountUp className="text-3xl" end={stats.counts.coms} />}
         />
         <DashTile
           title={t("pages.explore.stats.tags")}

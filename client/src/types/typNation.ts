@@ -1,12 +1,3 @@
-import { Place } from "./typPlace";
-import { User } from "./typUser";
-
-export interface NationRoleplayData {
-  nationId: string;
-  citizens: User[];
-  places: Place[];
-}
-
 export interface Nation {
   _id?: string;
   officialId: string;
@@ -27,6 +18,7 @@ export interface Nation {
     general: {
       motto: string;
       nationalDay: string;
+      isNationState: boolean;
       regime: number;
       currency: string;
       tags: string[];
@@ -61,6 +53,7 @@ export const EmptyNation: Nation = {
     general: {
       motto: "",
       nationalDay: "",
+      isNationState: false,
       regime: 0,
       currency: "",
       tags: [],
@@ -87,18 +80,6 @@ export interface Regime {
   label: string;
 }
 
-export interface RegimeOption {
-  id: number;
-  label?: string;
-  type: number;
-  color: string;
-}
-
-export interface PoliticalSide {
-  id: number;
-  label: string;
-}
-
 export interface LabelId {
   id: string;
   label: string;
@@ -108,6 +89,7 @@ export interface NewNationPayload {
   name: string;
   owner: string;
   motto: string;
+  isNationState: boolean;
   regime: number;
   currency: string;
   nationalDay: string;
@@ -118,6 +100,7 @@ export const emptyNewNationPayload: NewNationPayload = {
   name: "",
   owner: "",
   motto: "",
+  isNationState: false,
   regime: 0,
   currency: "",
   nationalDay: "",

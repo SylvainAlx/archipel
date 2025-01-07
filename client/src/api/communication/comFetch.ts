@@ -2,20 +2,6 @@ import { SERVER_URL } from "../../settings/consts";
 import { ComPayload } from "../../types/typCom";
 import { GET_JWT } from "../../utils/functions";
 
-export const getComsCountFetch = async () => {
-  try {
-    const resp = await fetch(`${SERVER_URL}/com/count`);
-    if (!resp.ok) {
-      const errorPayload = await resp.json();
-      throw new Error(JSON.stringify(errorPayload));
-    }
-    const result = await resp.json();
-    return result;
-  } catch (error) {
-    throw error;
-  }
-};
-
 export const createComFetch = async (payload: ComPayload) => {
   const jwt = GET_JWT();
   try {

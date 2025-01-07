@@ -21,7 +21,8 @@
         "noTags": "aucun mot clé",
         "noMotto": "pas de devise",
         "externalLinks": "liens externes",
-        "noDescription": "pas de description"
+        "noDescription": "pas de description",
+        "nationState": "État-Nation"
       },
       "map": {
         "title": "carte de la nation",
@@ -228,6 +229,7 @@
         "nationName": "Nom de la nation",
         "motto": "Devise",
         "currency": "Monnaie",
+        "isNationState": "Cocher s'il s'agit d'un État-nation",
         "regime": "Regime",
         "tagsInfos": "Espace pour valider, cliquer pour supprimer"
       },
@@ -297,13 +299,15 @@
         "nation": "nation",
         "currency": "monnaie",
         "nationalDay": "fête nationale",
-        "nationOwner": "leader de la nation",
+        "nationOwner": "éditeur de la nation",
         "residence": "résidence",
         "treasury": "trésor public",
         "date": "date",
-        "pioneer": "pionnier",
+        "honor": "distinction",
+        "honor_pioneer": "pionnier",
         "religion": "religion",
-        "gender": "genre"
+        "gender": "genre",
+        "particularity": "particularité"
       },
       "avatar": "avatar",
       "relations": {

@@ -3,18 +3,9 @@ import i18n from "../i18n/i18n";
 import { APP_NAME, COM_TYPE, MAX_LENGTH, PLACE_TYPE } from "../settings/consts";
 import { LabelId, Nation } from "../types/typNation";
 import { Place } from "../types/typPlace";
-import {
-  comFetchedListAtom,
-  myStore,
-  nationPlacesListAtom,
-} from "../settings/store";
+import { myStore, nationPlacesListAtom } from "../settings/store";
 import { User } from "../types/typUser";
-import {
-  languageList,
-  politicalSideList,
-  regimeList,
-  regimeTypeList,
-} from "../settings/lists";
+import { languageList, regimeList, regimeTypeList } from "../settings/lists";
 
 export const GET_JWT = () => {
   const jwt = localStorage.getItem("jwt");
@@ -67,16 +58,6 @@ export const findNationsByTag = (searchTag: string, nations: Nation[]) => {
       tag.toLowerCase().includes(searchTag.toLowerCase()),
     ),
   );
-};
-
-export const getPoliticalSide = (value: number) => {
-  let label = "";
-  politicalSideList.map((politicalSide) => {
-    if (value === politicalSide.id) {
-      label = politicalSide.label;
-    }
-  });
-  return label;
 };
 
 export const differenceEnMinutes = (date: Date) => {
@@ -229,16 +210,6 @@ export const getComTypeLabelById = (id: number) => {
   return label;
 };
 
-export const getLastPublicCom = () => {
-  const nationComList = myStore.get(comFetchedListAtom);
-  for (let i = nationComList.length - 1; i >= 0; i--) {
-    if (nationComList[i].comType === COM_TYPE.nationPublic.id) {
-      return nationComList[i];
-    }
-  }
-  return null;
-};
-
 export const getLanguageLabel = (language: string) => {
   let label = "";
   languageList.map((lang) => {
@@ -255,4 +226,10 @@ export const getDocumentTitle = (title: string) => {
   } else {
     return APP_NAME + " - " + title;
   }
+};
+
+export const isMoreThan24Hours = (stringDate: Date) => {
+  const date1 = new Date(stringDate);
+  const date2 = new Date();
+  return date1.getTime() < date2.getTime() - 24 * 60 * 60 * 1000;
 };

@@ -20,8 +20,9 @@ export default function ComTile({ com }: ComTileProps) {
   const { t } = useTranslation();
   useEffect(() => {
     if (
-      session.user.citizenship.nationId === com.origin &&
-      session.user.citizenship.nationOwner
+      (session.user.citizenship.nationId === com.origin &&
+        session.user.citizenship.nationOwner) ||
+      session.user.officialId === com.origin
     ) {
       setOwner(true);
     } else {

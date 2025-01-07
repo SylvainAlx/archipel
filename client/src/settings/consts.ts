@@ -1,5 +1,7 @@
 import i18n from "../i18n/i18n";
 
+// CONFIG GENERALE
+
 export const MDP_LOBBY = import.meta.env.VITE_MDP_LOBBY;
 export const SERVER_URL = import.meta.env.VITE_SERVER_URL;
 export const UPLOADCARE_PUBLIC_KEY = import.meta.env.VITE_UPLOADCARE_PUBLIC_KEY;
@@ -9,7 +11,7 @@ export const GOOGLE_ANALYTICS_MEASUREMENT_ID = import.meta.env
   .VITE_GOOGLE_ANALYTICS_MEASUREMENT_ID;
 
 export const VERSION = {
-  beta: "0.4",
+  beta: "0.5",
   rc: "",
   release: "",
   testing: true,
@@ -23,7 +25,7 @@ export const color_complementary = "var(--color-complementary)";
 export const color_light = "var(--color-light)";
 export const color_black_alpha = "var(--color-black-alpha)";
 
-export const PIONEER_DATE = "2025-01-01T00:00:00.000Z";
+export const PIONEER_DATE = "2025-03-07T00:00:00.000Z";
 
 export const QUOTAS = {
   PLACES: 10,
@@ -50,6 +52,18 @@ export const MAX_LENGTH = {
     tags: 5,
   },
 };
+
+export const ELEMENTS_DISPLAYED_LIMIT = {
+  nations: 30,
+  citizens: 30,
+  places: 30,
+  coms: 30,
+};
+
+export const COM_GENERAL_DESTINATION = "-1";
+
+export const FLAG_MAKER_URL = "https://flagmakerjr.stg7.net/";
+export const COA_MAKER_URL = "https://coamaker.com/";
 
 export const COM_TYPE = {
   admin: { id: 0, label: i18n.t("listes.comType.admin") },
@@ -79,8 +93,3 @@ export const PLACE_TYPE = {
     label: i18n.t("components.searchBars.placesList.checkbox.nature"),
   },
 };
-
-export const COM_GENERAL_DESTINATION = "-1";
-
-export const FLAG_MAKER_URL = "https://flagmakerjr.stg7.net/";
-export const COA_MAKER_URL = "https://coamaker.com/";

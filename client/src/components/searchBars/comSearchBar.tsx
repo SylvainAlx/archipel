@@ -12,8 +12,8 @@ import { SetAtom, comFetchedListAtom, statsAtom } from "../../settings/store";
 import { useTranslation } from "react-i18next";
 import { useAtom } from "jotai";
 import { getPublicComs } from "../../api/communication/comAPI";
-import { comSearchSortOptions } from "../../settings/lists";
 import SearchButtons from "../form/searchButtons";
+import { COM_SORTING } from "../../settings/sorting";
 
 export interface SearchBarProps {
   type: string;
@@ -21,7 +21,7 @@ export interface SearchBarProps {
 }
 
 export default function ComSearchBar({ setList }: SearchBarProps) {
-  const [selectOption, setSelectOption] = useState("1");
+  const [selectOption, setSelectOption] = useState(COM_SORTING.descDate.id);
   const { t } = useTranslation();
   const [nationId, setNationId] = useState("");
   const [comList] = useAtom(comFetchedListAtom);
@@ -39,18 +39,18 @@ export default function ComSearchBar({ setList }: SearchBarProps) {
 
   const reset = () => {
     getPublicComs("");
-    setSelectOption("1");
+    setSelectOption(COM_SORTING.descDate.id);
   };
 
   const comSorting = () => {
     const sortedList = [...comList];
 
-    if (selectOption === "0") {
+    if (selectOption === COM_SORTING.ascDate.id) {
       sortedList.sort(
         (a, b) =>
           new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime(),
       );
-    } else if (selectOption === "1") {
+    } else if (selectOption === COM_SORTING.descDate.id) {
       sortedList.sort(
         (a, b) =>
           new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
@@ -83,9 +83,9 @@ export default function ComSearchBar({ setList }: SearchBarProps) {
       />
       <Select
         onChange={(e: ChangeEvent<HTMLSelectElement>) =>
-          setSelectOption(e.target.value)
+          setSelectOption(Number(e.target.value))
         }
-        options={comSearchSortOptions}
+        options={Object.values(COM_SORTING)}
         value={selectOption}
       />
       <SearchButtons reset={reset} />

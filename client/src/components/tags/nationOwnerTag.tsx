@@ -1,6 +1,6 @@
-import { GiLaurelCrown } from "react-icons/gi";
 import Tag from "./tag";
 import { useTranslation } from "react-i18next";
+import { FaUserEdit } from "react-icons/fa";
 
 export default function NationOwnerTag() {
   const { t } = useTranslation();
@@ -10,7 +10,7 @@ export default function NationOwnerTag() {
       text={t("components.hoverInfos.tags.nationOwner")}
       hover={t("components.hoverInfos.tags.role")}
       bgColor="bg-secondary2"
-      children={<GiLaurelCrown />}
+      children={<FaUserEdit />}
     />
   );
 }

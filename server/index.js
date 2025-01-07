@@ -18,6 +18,8 @@ import tileRouter from "./routers/tileRouter.js";
 import bodyParser from "body-parser";
 import { verifyCaptcha } from "./controllers/captchaController.js";
 import adminRouter from "./routers/adminRouter.js";
+import statsRouter from "./routers/statsRouter.js";
+import { pingBackend } from "./utils/functions.js";
 
 // config serveur
 const app = express();
@@ -45,28 +47,38 @@ const connectToDatabase = async () => {
   try {
     mongoose.set("strictQuery", false);
     await mongoose.connect(process.env.MONGO_DB_URI);
-    console.log("Database connection OK");
+    console.log(`${new Date().toISOString()} : Database connection OK`);
   } catch (error) {
-    console.error("Database connection KO :", error);
+    console.error(
+      `${new Date().toISOString()} : Database connection KO : `,
+      error,
+    );
   }
 };
 
 connectToDatabase();
 
 // Définition des routes
-app.use("/admin", [isAdmin], adminRouter);
+app.use("/admin", [verifyJwt], [isAdmin], adminRouter);
 app.use("/user", userRouter);
 app.use("/nation", nationRouter);
 app.use("/com", comRouter);
 app.use("/place", placeRouter);
-app.use("/param", paramRouter);
+app.use("/param", [verifyJwt], paramRouter);
 app.use("/relation", relationRouter);
 app.use("/tile", tileRouter);
+app.use("/stats", statsRouter);
 app.delete("/file/delete/:id", [verifyJwt], deleteUploadedFile);
 app.post("/captcha", verifyCaptcha);
 app.use("/", home);
 
 // Démarrage du serveur
 app.listen(PORT, () => {
-  console.log(`server running at PORT : ${PORT}`);
+  console.log(`${new Date().toISOString()} : Server running at PORT : ${PORT}`);
 });
+
+//Ping régulier
+const interval = process.env.PING_INTERVAL;
+if (interval > 0) {
+  setInterval(pingBackend, interval);
+}

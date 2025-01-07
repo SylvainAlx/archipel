@@ -11,6 +11,7 @@ import Select from "../form/select";
 import { useTranslation } from "react-i18next";
 import { COSTS, PLACE_TYPE } from "../../settings/consts";
 import { FaCoins } from "react-icons/fa";
+import RequiredStar from "../form/requiredStar";
 
 export default function NewPlaceModal() {
   const [newPlace, setNewPlace] = useAtom(newPlaceAtom);
@@ -62,6 +63,7 @@ export default function NewPlaceModal() {
               options={Object.values(PLACE_TYPE)}
               onChange={handleSelectChange}
             />
+            <RequiredStar />
             <Button
               type="submit"
               text={t("components.buttons.validate")}

@@ -10,7 +10,6 @@ import {
   recoveryKey,
   session,
   sessionAtom,
-  statsAtom,
 } from "../../settings/store";
 import { EmptyNation, Nation } from "../../types/typNation";
 import { Place } from "../../types/typPlace";
@@ -37,7 +36,6 @@ import {
   changeStatusFetch,
   deleteUserFetch,
   getAllCitizensFetch,
-  getCitizensCountFetch,
   getNationCitizensFetch,
   getOneUserFetch,
   loginFetch,
@@ -46,23 +44,6 @@ import {
   updateUserFetch,
   verifyCaptchaFetch,
 } from "./userFetch";
-
-export const getCitizensCount = () => {
-  const stats = myStore.get(statsAtom);
-  myStore.set(loadingAtom, true);
-  getCitizensCountFetch()
-    .then((response) => {
-      myStore.set(loadingAtom, false);
-      const updatedStats = { ...stats };
-      updatedStats.counts.citizens = response;
-      myStore.set(statsAtom, updatedStats);
-    })
-    .catch((error) => {
-      myStore.set(loadingAtom, false);
-      myStore.set(loadingAtom, false);
-      displayUserInfoByType(error.infoType);
-    });
-};
 
 export const register = ({ name, password, gender, language }: AuthPayload) => {
   myStore.set(loadingAtom, true);

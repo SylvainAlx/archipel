@@ -8,11 +8,14 @@ import BarreLoader from "../../components/loading/barreLoader";
 import { StringProps } from "../../types/typProp";
 import { Nation } from "../../types/typNation";
 import { useTranslation } from "react-i18next";
+import { ELEMENTS_DISPLAYED_LIMIT } from "../../settings/consts";
 // import AdBanner from "../../components/ads/adBanner";
 
 export default function NationList({ text }: StringProps) {
   const [nationsList, setNationsList] = useState<Nation[]>([]);
-  const [displayedNations, setDisplayedNations] = useState(10);
+  const [displayedNations, setDisplayedNations] = useState(
+    ELEMENTS_DISPLAYED_LIMIT.nations,
+  );
   const { t } = useTranslation();
   const NationTile = lazy(() => import("../../components/tiles/nationTile"));
 
@@ -52,7 +55,11 @@ export default function NationList({ text }: StringProps) {
       </section>
       {displayedNations < nationsList.length && (
         <Button
-          click={() => setDisplayedNations(displayedNations + 5)}
+          click={() =>
+            setDisplayedNations(
+              displayedNations + ELEMENTS_DISPLAYED_LIMIT.nations,
+            )
+          }
           text={t("components.buttons.showMore")}
         />
       )}

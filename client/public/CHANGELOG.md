@@ -1,5 +1,52 @@
 ## Version actuelle
 
+### BETA-0.5
+
+#### Ajouts
+
+- Ajout du concept d'"État-Nation" avec un champ dans le formulaire d'inscription et l'indication sur la nation
+- Ajout d'un tag "État-Nation" pour les nations concernées
+- Ajout d'un compteur dynamique pour l'onglet "statistiques" de la page "explorer"
+- Ajout d'un ping régulier sur le backend pour maintenir le serveur actif
+
+#### Suppressions
+
+aucune
+
+#### Modifications & Corrections
+
+- Optimisation du code source
+- Modification du tag "distinction"
+- Autorisation de la distinction "pionnier" pour les utilisateurs inscrits avant le 07/03/2025 (date de sortie prévue de la version 1.0.0)
+- Modification du tag "rôle du citoyen": le "leader de la nation" devient "éditeur de la nation"
+- Sécurisation des formulaires
+- Correction du bug d'affichage dans le champ d'édition des valeurs
+- Correction du bug d'affichage de crédits pour l'édition d'une tuile libre
+- Correction du bug pour poster une communication + blocage 24h étendu aux communications privée de la nation
+- Augmentation du nombre d'éléments visibles initialement dans les onglets de la page "explorer" (10 -> 30)
+- Correction du calcul des statistiques
+- Modification de la liste des communiqué en intégrant les annonce générales
+- Mise en forme des CGU
+
+## Développements à venir
+
+- Créer une organisation ou en rejoindre une
+- Créer des items et les proposer à l'acquisition aux citoyens
+- Ajouter les hymnes des nations
+- Créer une gazette des nations en se basant sur les communiqués
+- Montrer la répartitions des langues parlées dans chaque nation
+- Créer une aide pour les premiers pas d'un utilisateur
+- Améliorer le système de notifications
+- Exporter une carte d'identité virtuelle sous forme d'image
+- Améliorer le référencement et l'accessibilité
+- Étendre les fonctionnalités pour les utilisateurs mobile
+- Lier les lieux de la nation à un emplacement sur la carte
+- Améliorer des traductions
+- Carte virtuelle d'Archipel avec l'ensemble des nations représentées
+- Permettre les virements de crédits entre citoyens et entre nations
+
+## Versions précédentes
+
 ### BETA-0.4
 
 #### Ajouts
@@ -25,26 +72,6 @@
 - Amélioration des traductions anglaises
 - Amélioration des modals de modification
 - Amélioration du tag "langue"
-
-## Développements à venir
-
-- Créer une organisation ou en rejoindre une
-- Créer des items et les proposer à l'acquisition aux citoyens
-- Ajouter les hymnes des nations
-- Créer une gazette des nations en se basant sur les communiqués
-- Montrer la répartitions des langues parlées dans chaque nation
-- Ajouter la possibilité de partager la page "nation" via le partage natif des appareils
-- Créer une aide pour les premiers pas d'un utilisateur
-- Améliorer le système de notifications
-- Exporter une carte d'identité virtuelle sous forme d'image
-- Améliorer le référencement et l'accessibilité
-- Étendre les fonctionnalités pour les utilisateurs mobile
-- Lier les lieux de la nation à un emplacement sur la carte
-- Améliorer des traductions
-- Carte virtuelle d'Archipel avec l'ensemble des nations représentées
-- Permettre les virements de crédits entre citoyens et entre nations
-
-## Versions précédentes
 
 ### BETA-0.3
 

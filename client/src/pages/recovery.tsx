@@ -7,6 +7,7 @@ import TextArea from "../components/form/textArea";
 import { useTranslation } from "react-i18next";
 import { recoveryUser } from "../api/user/userAPI";
 import { useNavigate } from "react-router-dom";
+import RequiredStar from "../components/form/requiredStar";
 
 export default function Recovery() {
   const [name, setName] = useState("");
@@ -78,6 +79,7 @@ export default function Recovery() {
               placeholder={t("pages.recovery.confirmPassword")}
               value={confirmPassword}
             />
+            <RequiredStar />
             <div
               className={`${!passwordsMatch && "cursor-not-allowed"} w-full`}
             >

@@ -20,6 +20,7 @@ import { regimeList } from "../../settings/lists";
 import TreasuryTag from "../tags/treasuryTag";
 import BigFlag from "./bigFlag";
 import CoatOfArms from "./coatOfArms";
+import NationStateTag from "../tags/nationStateTag";
 
 export default function NationIdentity({
   selectedNation,
@@ -79,6 +80,9 @@ export default function NationIdentity({
                     <TreasuryTag
                       label={selectedNation.data.roleplay.treasury}
                     />
+                    {selectedNation.data.general.isNationState && (
+                      <NationStateTag />
+                    )}
                     <div className="flex items-center gap-2">
                       {selectedNation.data != undefined && (
                         <RegimeTag selectedNation={selectedNation} />

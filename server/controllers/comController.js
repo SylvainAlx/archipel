@@ -90,7 +90,9 @@ export const getPublicComsByOrigin = async (req, res) => {
 
 export const getPublicComs = async (req, res) => {
   try {
-    const coms = await Com.find({ comType: COMTYPE[3].id });
+    const coms = await Com.find({
+      comType: { $in: [COMTYPE[3].id, COMTYPE[1].id] },
+    });
     res.status(200).json(coms);
   } catch (error) {
     console.error(error);

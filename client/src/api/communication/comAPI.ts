@@ -5,7 +5,6 @@ import {
   comsListAtom,
   loadingAtom,
   myStore,
-  statsAtom,
 } from "../../settings/store";
 import { Com, ComPayload } from "../../types/typCom";
 import {
@@ -19,29 +18,11 @@ import {
 import {
   createComFetch,
   deleteComFetch,
-  getComsCountFetch,
   getComsByDestinationFetch,
   getAllPublicComsFetch,
   getPublicComsByOriginFetch,
   getComsFetch,
 } from "./comFetch";
-
-export const getComsCount = async () => {
-  const stats = myStore.get(statsAtom);
-  myStore.set(loadingAtom, true);
-  try {
-    const response = await getComsCountFetch();
-    const updatedStats = {
-      ...stats,
-      counts: { ...stats.counts, coms: response },
-    };
-    myStore.set(statsAtom, updatedStats);
-  } catch (error) {
-    comErrorCatching(error);
-  } finally {
-    myStore.set(loadingAtom, false);
-  }
-};
 
 export const getComs = async (
   originId: string,

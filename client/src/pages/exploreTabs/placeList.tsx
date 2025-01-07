@@ -8,10 +8,13 @@ import { StringProps } from "../../types/typProp";
 import { Place } from "../../types/typPlace";
 import PlaceSearchBar from "../../components/searchBars/placeSearchBar";
 import { useTranslation } from "react-i18next";
+import { ELEMENTS_DISPLAYED_LIMIT } from "../../settings/consts";
 
 export default function PlaceList({ text }: StringProps) {
   const [placesList, setPlacesList] = useState<Place[]>([]);
-  const [displayedPlaces, setDisplayedPlaces] = useState(10);
+  const [displayedPlaces, setDisplayedPlaces] = useState(
+    ELEMENTS_DISPLAYED_LIMIT.places,
+  );
   const { t } = useTranslation();
 
   const PlaceTile = lazy(() => import("../../components/tiles/placeTile"));
@@ -38,7 +41,11 @@ export default function PlaceList({ text }: StringProps) {
       </section>
       {displayedPlaces < placesList.length && (
         <Button
-          click={() => setDisplayedPlaces(displayedPlaces + 5)}
+          click={() =>
+            setDisplayedPlaces(
+              displayedPlaces + ELEMENTS_DISPLAYED_LIMIT.places,
+            )
+          }
           text={t("components.buttons.showMore")}
         />
       )}

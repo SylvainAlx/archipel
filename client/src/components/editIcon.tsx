@@ -2,18 +2,11 @@
 import { FaPen } from "react-icons/fa6";
 import { useAtom } from "jotai";
 import { editbox } from "../settings/store";
-import { LabelId, PoliticalSide, Regime } from "../types/typNation";
+import { LabelId, Regime } from "../types/typNation";
 
 export interface EditIconProps {
   target: string;
-  param:
-    | number
-    | string
-    | boolean
-    | Regime[]
-    | PoliticalSide[]
-    | LabelId[]
-    | any[];
+  param: number | string | boolean | Regime[] | LabelId[] | any[];
   path: string;
   indice?: number | string;
   canBeEmpty?: boolean;

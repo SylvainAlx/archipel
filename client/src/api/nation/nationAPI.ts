@@ -8,7 +8,6 @@ import {
   nationsListAtom,
   nationsListFetchedAtom,
   sessionAtom,
-  Stats,
   statsAtom,
   tagListAtom,
 } from "../../settings/store";
@@ -36,25 +35,9 @@ import {
   DeleteSelfFetch,
   getAllNationsFetch,
   getAllNationTagsFetch,
-  getNationsCountFetch,
   getOneNationFetch,
   updateNationFetch,
 } from "./nationFetch";
-
-export const getNationsCount = () => {
-  myStore.set(loadingAtom, true);
-  getNationsCountFetch()
-    .then((response: number) => {
-      const updatedStats: Stats = { ...myStore.get(statsAtom) };
-      updatedStats.counts.nations = response;
-      myStore.set(statsAtom, updatedStats);
-      myStore.set(loadingAtom, false);
-    })
-    .catch((error: { infoType: string }) => {
-      myStore.set(loadingAtom, false);
-      displayNationInfoByType(error.infoType);
-    });
-};
 
 export const createNation = (payload: NewNationPayload) => {
   myStore.set(loadingAtom, true);

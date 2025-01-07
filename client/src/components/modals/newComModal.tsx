@@ -11,6 +11,7 @@ import { useTranslation } from "react-i18next";
 import { emptyComPayload } from "../../types/typCom";
 import MarkdownEditor from "../form/markdownEditor";
 import { nationComTypeOptions } from "../../settings/lists";
+import RequiredStar from "../form/requiredStar";
 
 export default function NewComModal() {
   const [newCom, setNewCom] = useAtom(newComAtom);
@@ -69,11 +70,16 @@ export default function NewComModal() {
               }
               maxLength={MAX_LENGTH.text.comMessage}
             />
+            <RequiredStar />
             <Button
               type="submit"
               text={t("components.buttons.validate")}
               widthFull={true}
-              disabled={newCom.message.length > MAX_LENGTH.text.comMessage}
+              disabled={
+                newCom.title === "" ||
+                newCom.message.length === 0 ||
+                newCom.message.length > MAX_LENGTH.text.comMessage
+              }
             />
             <Button
               type="button"

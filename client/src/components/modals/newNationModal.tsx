@@ -13,6 +13,8 @@ import { errorMessage } from "../../utils/toasts";
 import HashTag from "../tags/hashTag";
 import { regimeList } from "../../settings/lists";
 import { MAX_LENGTH } from "../../settings/consts";
+import RequiredStar from "../form/requiredStar";
+import { Link } from "react-router-dom";
 
 export default function NewNationModal() {
   const [newNation, setNewNation] = useAtom(newNationAtom);
@@ -112,7 +114,6 @@ export default function NewNationModal() {
                 placeholder={t("components.hoverInfos.tags.hash")}
                 value={tagString}
                 disabled={tags.length === MAX_LENGTH.array.tags}
-                required={tags.length === 0}
               />
               <em className="text-sm">
                 {t("components.modals.newNationModal.tagsInfos")}
@@ -135,6 +136,26 @@ export default function NewNationModal() {
                 value={newNation.nationalDay}
               />
             </label>
+            <label className="w-full flex gap-2 items-center justify-center">
+              <Link
+                to="https://fr.wikipedia.org/wiki/%C3%89tat-nation"
+                target="_blank"
+                className="cursor-help text-sm"
+              >
+                {t("components.modals.newNationModal.isNationState")}
+              </Link>
+              <Input
+                type="checkbox"
+                name="nationState"
+                checked={newNation.isNationState}
+                onChange={() =>
+                  setNewNation({
+                    ...newNation,
+                    isNationState: !newNation.isNationState,
+                  })
+                }
+              />
+            </label>
             <Select
               id="regime"
               onChange={handleSelectChange}
@@ -142,11 +163,12 @@ export default function NewNationModal() {
               title={t("components.modals.newNationModal.regime")}
               required={newNation.regime === 0}
             />
-
+            <RequiredStar />
             <Button
               type="submit"
               text={t("components.buttons.validate")}
               widthFull={true}
+              disabled={newNation.name === "" || newNation.regime === 0}
             />
             <Button
               type="button"

@@ -1,107 +1,7 @@
 import i18n from "../i18n/i18n";
 import { StandardOption } from "../types/typAtom";
-import { PoliticalSide, Regime, RegimeType } from "../types/typNation";
+import { Regime, RegimeType } from "../types/typNation";
 import { COM_TYPE } from "./consts";
-
-export const nationSearchSortOptions: StandardOption[] = [
-  {
-    id: 0,
-    label: i18n.t("components.searchBars.nationsList.sortNations.ascAlpha"),
-  },
-  {
-    id: 1,
-    label: i18n.t("components.searchBars.nationsList.sortNations.descAlpha"),
-  },
-  {
-    id: 2,
-    label: i18n.t("components.searchBars.nationsList.sortNations.ascLoc"),
-  },
-  {
-    id: 3,
-    label: i18n.t("components.searchBars.nationsList.sortNations.descLoc"),
-  },
-  {
-    id: 4,
-    label: i18n.t("components.searchBars.nationsList.sortNations.ascCtz"),
-  },
-  {
-    id: 5,
-    label: i18n.t("components.searchBars.nationsList.sortNations.descCtz"),
-  },
-  // {
-  //   id: 6,
-  //   label: i18n.t("components.searchBars.nationsList.sortNations.ascTreasury"),
-  // },
-  // {
-  //   id: 7,
-  //   label: i18n.t("components.searchBars.nationsList.sortNations.descTreasury"),
-  // },
-  {
-    id: 8,
-    label: i18n.t("components.searchBars.nationsList.sortNations.ascDate"),
-  },
-  {
-    id: 9,
-    label: i18n.t("components.searchBars.nationsList.sortNations.descDate"),
-  },
-];
-
-export const citizenSearchSortOptions: StandardOption[] = [
-  {
-    id: 0,
-    label: i18n.t("components.searchBars.citizensList.sortCitizens.ascAlpha"),
-  },
-  {
-    id: 1,
-    label: i18n.t("components.searchBars.citizensList.sortCitizens.descAlpha"),
-  },
-  {
-    id: 2,
-    label: i18n.t("components.searchBars.citizensList.sortCitizens.ascDate"),
-  },
-  {
-    id: 3,
-    label: i18n.t("components.searchBars.citizensList.sortCitizens.descDate"),
-  },
-];
-
-export const placeSearchSortOptions: StandardOption[] = [
-  {
-    id: 0,
-    label: i18n.t("components.searchBars.placesList.sortPlaces.ascAlpha"),
-  },
-  {
-    id: 1,
-    label: i18n.t("components.searchBars.placesList.sortPlaces.descAlpha"),
-  },
-  // {
-  //   id: 2,
-  //   label: i18n.t("components.searchBars.placesList.sortPlaces.ascCtz"),
-  // },
-  // {
-  //   id: 3,
-  //   label: i18n.t("components.searchBars.placesList.sortPlaces.descCtz"),
-  // },
-  {
-    id: 4,
-    label: i18n.t("components.searchBars.placesList.sortPlaces.ascDate"),
-  },
-  {
-    id: 5,
-    label: i18n.t("components.searchBars.placesList.sortPlaces.descDate"),
-  },
-];
-
-export const comSearchSortOptions: StandardOption[] = [
-  {
-    id: 0,
-    label: i18n.t("components.searchBars.comsList.SortComs.ascDate"),
-  },
-  {
-    id: 1,
-    label: i18n.t("components.searchBars.comsList.SortComs.descDate"),
-  },
-];
 
 export const nationComTypeOptions = [
   COM_TYPE.nationPrivate,
@@ -259,14 +159,4 @@ export const religionList: StandardOption[] = [
   { id: 14, label: i18n.t("listes.religionList.atheist") },
   { id: 15, label: i18n.t("listes.religionList.agnostic") },
   { id: 16, label: i18n.t("listes.religionList.other") },
-];
-
-export const politicalSideList: PoliticalSide[] = [
-  { id: -90, label: "Extrême gauche" },
-  { id: -60, label: "Gauche radicale" },
-  { id: -20, label: "Gauche modérée" },
-  { id: 0, label: "Centriste" },
-  { id: 20, label: "Droite modérée" },
-  { id: 60, label: "Droite radicale" },
-  { id: 90, label: "Extrême droite" },
 ];

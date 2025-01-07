@@ -80,6 +80,10 @@ const nationSchema = mongoose.Schema(
           type: String,
           default: "",
         },
+        isNationState: {
+          type: Boolean,
+          default: false,
+        },
         regime: {
           type: Number,
           default: 0,

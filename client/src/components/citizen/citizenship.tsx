@@ -23,9 +23,9 @@ import { useAtom } from "jotai";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { PIONEER_DATE } from "../../settings/consts";
-import PioneerTag from "../tags/pioneerTag";
 import ReligionTag from "../tags/religionTag";
 import GenderTag from "../tags/genderTag";
+import HonorTag from "../tags/honorTag";
 
 interface CitizenshipProps {
   citizen: User;
@@ -129,7 +129,9 @@ export default function Citizenship({
             {citizen.role === "admin" && (
               <RoleTag label={t("pages.citizen.role.admin")} />
             )}
-            {citizenCreationDate < pioneerDate && <PioneerTag />}
+            {citizenCreationDate < pioneerDate && (
+              <HonorTag honor="honor_pioneer" />
+            )}
           </div>
           {nation != undefined &&
           nation.officialId != "" &&

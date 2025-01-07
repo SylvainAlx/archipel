@@ -8,6 +8,7 @@ import { lobbyAtom } from "../settings/store";
 import Form from "../components/form/form";
 import { errorMessage, successMessage } from "../utils/toasts";
 import LangButton from "../components/buttons/langButton";
+import RequiredStar from "../components/form/requiredStar";
 
 export default function Lobby() {
   const { t } = useTranslation();
@@ -43,6 +44,7 @@ export default function Lobby() {
               value={password}
               onChange={handleChange}
             />
+            <RequiredStar />
             <Button
               type="submit"
               text={t("components.buttons.validate")}
