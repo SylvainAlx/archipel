@@ -1,5 +1,39 @@
 ## Version actuelle
 
+### BETA-0.6
+
+#### Ajouts
+
+- Ajout d'un lien vers les comptes Instagram et Threads
+- Ajout d'un bouton de don en cryptomonnaie
+
+#### Suppressions
+
+aucune
+
+#### Modifications & Corrections
+
+aucune
+
+## Développements à venir
+
+- Créer une organisation ou en rejoindre une
+- Créer des items et les proposer à l'acquisition aux citoyens
+- Ajouter les hymnes des nations
+- Créer une gazette des nations en se basant sur les communiqués
+- Montrer la répartitions des langues parlées dans chaque nation
+- Créer une aide pour les premiers pas d'un utilisateur
+- Améliorer le système de notifications
+- Exporter une carte d'identité virtuelle sous forme d'image
+- Améliorer le référencement et l'accessibilité
+- Étendre les fonctionnalités pour les utilisateurs mobile
+- Lier les lieux de la nation à un emplacement sur la carte
+- Améliorer des traductions
+- Carte virtuelle d'Archipel avec l'ensemble des nations représentées
+- Permettre les virements de crédits entre citoyens et entre nations
+
+## Versions précédentes
+
 ### BETA-0.5
 
 #### Ajouts
@@ -27,25 +61,6 @@ aucune
 - Correction du calcul des statistiques
 - Modification de la liste des communiqué en intégrant les annonce générales
 - Mise en forme des CGU
-
-## Développements à venir
-
-- Créer une organisation ou en rejoindre une
-- Créer des items et les proposer à l'acquisition aux citoyens
-- Ajouter les hymnes des nations
-- Créer une gazette des nations en se basant sur les communiqués
-- Montrer la répartitions des langues parlées dans chaque nation
-- Créer une aide pour les premiers pas d'un utilisateur
-- Améliorer le système de notifications
-- Exporter une carte d'identité virtuelle sous forme d'image
-- Améliorer le référencement et l'accessibilité
-- Étendre les fonctionnalités pour les utilisateurs mobile
-- Lier les lieux de la nation à un emplacement sur la carte
-- Améliorer des traductions
-- Carte virtuelle d'Archipel avec l'ensemble des nations représentées
-- Permettre les virements de crédits entre citoyens et entre nations
-
-## Versions précédentes
 
 ### BETA-0.4
 

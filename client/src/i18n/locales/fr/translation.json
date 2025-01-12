@@ -165,7 +165,8 @@
       "cookiesConsent": "consentement des cookies",
       "accept": "ACCEPTER",
       "refuse": "REFUSER",
-      "break": "ROMPRE"
+      "break": "ROMPRE",
+      "donate": "Faire un don"
     },
     "form": {
       "input": {
@@ -266,6 +267,9 @@
         "title": "Nouveau communiqué",
         "comTitle": "Titre",
         "comMessage": "Message"
+      },
+      "infoModal": {
+        "title": "Information"
       }
     },
     "hoverInfos": {

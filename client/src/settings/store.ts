@@ -11,6 +11,7 @@ import {
   ConfirmBoxDefault,
   EditBoxDefault,
   EditPlaceParam,
+  InfoModal,
   Param,
   Session,
 } from "../types/typAtom";
@@ -44,7 +45,6 @@ export const lobbyAtom = atom(false);
 
 export const emptySession = { user: emptyUser, nation: EmptyNation, jwt: "" };
 export const sessionAtom = atom<Session>(emptySession);
-export const session = myStore.get(sessionAtom);
 
 // Stats
 
@@ -118,7 +118,7 @@ export const showLangModalAtom = atom(false);
 export const recoveryKey = atom("");
 export const confirmBox = atom(ConfirmBoxDefault);
 export const editbox = atom(EditBoxDefault);
-export const infoModalAtom = atom("");
+export const infoModalAtom = atom<InfoModal>({ text: "", image: "" });
 
 export const changePasswordModalAtom = atom(false);
 

@@ -52,6 +52,11 @@ export const EditBoxDefault: EditBox = {
   canBeEmpty: true,
 };
 
+export interface InfoModal {
+  text: string;
+  image?: string;
+}
+
 // Param
 
 export interface Param {

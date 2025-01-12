@@ -8,7 +8,6 @@ import {
   nationCitizenListAtom,
   nationFetchedAtom,
   recoveryKey,
-  session,
   sessionAtom,
 } from "../../settings/store";
 import { EmptyNation, Nation } from "../../types/typNation";
@@ -57,7 +56,7 @@ export const register = ({ name, password, gender, language }: AuthPayload) => {
         myStore.set(citizenFetchAtom, data.user);
         myStore.set(nationFetchedAtom, EmptyNation);
         myStore.set(sessionAtom, {
-          ...session,
+          ...myStore.get(sessionAtom),
           user: data.user,
           jwt: data.jwt,
         });
@@ -82,7 +81,11 @@ export const authentification = () => {
         if (data.user != undefined) {
           myStore.set(citizenFetchAtom, data.user);
           updateOrCreateCitizenInMemory(data.user);
-          myStore.set(sessionAtom, { ...session, user: data.user, jwt });
+          myStore.set(sessionAtom, {
+            ...myStore.get(sessionAtom),
+            user: data.user,
+            jwt,
+          });
         } else {
           myStore.set(sessionAtom, emptySession);
           myStore.set(loadingAtom, false);
@@ -92,12 +95,15 @@ export const authentification = () => {
       })
       .catch((error) => {
         console.error(error);
-        myStore.set(sessionAtom, { ...session, user: emptyUser });
+        myStore.set(sessionAtom, {
+          ...myStore.get(sessionAtom),
+          user: emptyUser,
+        });
         myStore.set(loadingAtom, false);
         displayUserInfoByType(error.infoType);
       });
   } else {
-    myStore.set(sessionAtom, { ...session, user: emptyUser });
+    myStore.set(sessionAtom, { ...myStore.get(sessionAtom), user: emptyUser });
   }
 };
 
@@ -111,7 +117,7 @@ export const login = ({ name, password }: AuthPayload) => {
         myStore.set(citizenFetchAtom, data.user);
         myStore.set(nationFetchedAtom, EmptyNation);
         myStore.set(sessionAtom, {
-          ...session,
+          ...myStore.get(sessionAtom),
           user: data.user,
           jwt: data.jwt,
         });
