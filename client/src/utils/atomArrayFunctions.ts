@@ -2,21 +2,17 @@
 
 import {
   citizenListAtom,
-  comsListAtom,
   myStore,
   nationsListAtom,
-  placesListAtom,
   relationListAtom,
   tileListAtom,
 } from "../settings/store";
-import { Com } from "../types/typCom";
 import { Nation } from "../types/typNation";
-import { Place } from "../types/typPlace";
 import { UpdateByOfficialIdProps } from "../types/typProp";
 import { DiplomaticRelationship } from "../types/typRelation";
 import { Tile } from "../types/typTile";
 import { User } from "../types/typUser";
-import { findElementByDBId, findElementOfAtomArray } from "./functions";
+import { findElementOfAtomArray } from "./functions";
 
 // _id MongoDB
 
@@ -109,26 +105,6 @@ export const updateOrCreateNationInMemory = (nation: Nation) => {
   }
 };
 
-export const updateOrCreatePlaceInMemory = (place: Place) => {
-  const savedPlace = findElementOfAtomArray(
-    place.officialId,
-    myStore.get(placesListAtom),
-  );
-  if (savedPlace === undefined) {
-    const tempArray = [...myStore.get(placesListAtom)];
-    tempArray.push(place);
-    myStore.set(placesListAtom, tempArray);
-  } else {
-    myStore.set(
-      placesListAtom,
-      getUpdateByOfficialId({
-        element: place,
-        array: myStore.get(placesListAtom),
-      }),
-    );
-  }
-};
-
 export const updateOrCreateTileInMemory = (tile: Tile) => {
   const savedTile = findElementOfAtomArray(
     tile.nationOfficialId,
@@ -140,17 +116,6 @@ export const updateOrCreateTileInMemory = (tile: Tile) => {
     myStore.set(tileListAtom, tempArray);
   } else {
     myStore.set(tileListAtom, updateByDBId(tile, myStore.get(tileListAtom)));
-  }
-};
-
-export const updateOrCreateComInMemory = (com: Com) => {
-  const savedCom = findElementByDBId(com._id, myStore.get(comsListAtom));
-  if (savedCom === undefined) {
-    const tempArray = [...myStore.get(comsListAtom)];
-    tempArray.push(com);
-    myStore.set(comsListAtom, tempArray);
-  } else {
-    myStore.set(comsListAtom, updateByDBId(com, myStore.get(comsListAtom)));
   }
 };
 

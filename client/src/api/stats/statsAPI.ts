@@ -1,5 +1,5 @@
 import { loadingAtom, myStore, statsAtom } from "../../settings/store";
-import { comErrorCatching } from "../../utils/displayInfos";
+import { errorCatching } from "../../utils/displayInfos";
 import { getCountsFetch } from "./statsFetch";
 
 export const getCounts = async () => {
@@ -10,7 +10,7 @@ export const getCounts = async () => {
     updatedStats.counts = response;
     myStore.set(statsAtom, updatedStats);
   } catch (error) {
-    comErrorCatching(error);
+    errorCatching(error);
   } finally {
     myStore.set(loadingAtom, false);
   }

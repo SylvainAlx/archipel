@@ -2,12 +2,19 @@ import MDEditor from "@uiw/react-md-editor";
 import { Com } from "../../types/typCom";
 import NationTag from "../tags/nationTag";
 import { useAtom } from "jotai";
-import { confirmBox, myStore, sessionAtom } from "../../settings/store";
+import {
+  confirmBox,
+  myStore,
+  nationComListAtomV2,
+  sessionAtom,
+} from "../../settings/store";
 import { useEffect, useState } from "react";
 import CrossButton from "../buttons/crossButton";
 import { useTranslation } from "react-i18next";
 import DateTag from "../tags/dateTag";
 import ReportPanel from "../reportPanel";
+import { ComModel } from "../../models/comModel";
+import { ComListModel } from "../../models/lists/comListModel";
 
 export interface ComTileProps {
   com: Com;
@@ -17,6 +24,7 @@ export interface ComTileProps {
 export default function ComTile({ com }: ComTileProps) {
   const [session] = useAtom(sessionAtom);
   const [owner, setOwner] = useState(false);
+  const [nationComList, setNationComList] = useAtom(nationComListAtomV2);
   const { t } = useTranslation();
   useEffect(() => {
     if (
@@ -35,7 +43,13 @@ export default function ComTile({ com }: ComTileProps) {
       action: "deleteCom",
       text: t("components.modals.confirmModal.deleteCom"),
       result: "",
-      target: com,
+      target: com._id,
+      actionToDo: () => {
+        const comToDelete = new ComModel();
+        comToDelete.baseDelete(com._id);
+        const updatedList = nationComList.removeByBaseId(com._id);
+        setNationComList(new ComListModel(updatedList));
+      },
     });
   };
 

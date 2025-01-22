@@ -6,40 +6,43 @@ import { getPlaceListByType, getPlaceName } from "../../utils/functions";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
-import { Place } from "../../types/typPlace";
 import { Nation } from "../../types/typNation";
-import { confirmBox, nationPlacesListAtom } from "../../settings/store";
+import { confirmBox, nationPlaceListAtomV2 } from "../../settings/store";
 import { useAtom } from "jotai";
 import { ConfirmBoxDefault } from "../../types/typAtom";
 import ShareButton from "../buttons/shareButton";
+import { PlaceModel } from "../../models/placeModel";
+import { PlaceListModel } from "../../models/lists/placeListModel";
 
 interface PlaceHeaderProps {
-  place: Place;
+  place: PlaceModel;
   nation: Nation;
   owner: boolean;
+  updatePath: (path: string, value: string) => void;
 }
 
 export default function PlaceHeader({
   place,
   nation,
   owner,
+  updatePath,
 }: PlaceHeaderProps) {
   const [refresh, setRefresh] = useState(false);
   const [parentName, setParentName] = useState("");
   const [confirm, setConfirm] = useAtom(confirmBox);
-  const [nationPlacesList] = useAtom(nationPlacesListAtom);
+  const [nationPlaceList, setNationPlaceList] = useAtom(nationPlaceListAtomV2);
   const { t } = useTranslation();
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (nationPlacesList != undefined) {
+    if (nationPlaceList != undefined) {
       setParentName(
-        getPlaceName(nationPlacesList, place.parentId, nation.name),
+        getPlaceName(nationPlaceList.getItems(), place.parentId, nation.name),
       );
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [nationPlacesList, place, nation]);
+  }, [nationPlaceList, place, nation]);
 
   useEffect(() => {
     if (confirm.action === "deletePlace" && confirm.result === "OK") {
@@ -53,7 +56,7 @@ export default function PlaceHeader({
     if (place.nation === place.parentId) {
       navigate(`/nation/${place.nation}`);
     } else {
-      nationPlacesList.forEach((loc) => {
+      nationPlaceList.getItems().forEach((loc) => {
         if (loc.officialId === place.parentId) {
           navigate(`/place/${loc.officialId}`);
           setRefresh(!refresh);
@@ -68,8 +71,17 @@ export default function PlaceHeader({
       text: t("components.modals.confirmModal.deletePlace"),
       result: "",
       target: place,
+      actionToDo: () => {
+        place.baseDelete();
+        const updatedList = nationPlaceList.removeByOfficialId(
+          place.officialId,
+        );
+        setNationPlaceList(new PlaceListModel(updatedList));
+        navigate(`/nation/${place.nation}`);
+      },
     });
   };
+
   return (
     <>
       <div className="w-full flex items-center justify-center flex-wrap gap-1">
@@ -79,11 +91,16 @@ export default function PlaceHeader({
       </div>
       <div className="flex items-center gap-2 text-complementary3">
         <FaSortAmountDownAlt />
-        <p>{`${nation.name != parentName ? nation.name + " > " + parentName : nation.name}`}</p>
+        <p>{`${nation.name != parentName ? parentName : nation.name}`}</p>
         {owner && (
           <EditIcon
             target="place"
-            param={getPlaceListByType(nation, nationPlacesList, [0, 1])}
+            param={getPlaceListByType(
+              nation,
+              nationPlaceList.getItems(),
+              [0, 1],
+            )}
+            action={updatePath}
             path="parentId"
           />
         )}

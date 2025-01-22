@@ -11,7 +11,7 @@ export interface Com {
   createdAt: Date;
 }
 
-export const EmptyCom: Com = {
+export const emptyCom: Com = {
   _id: "",
   officialId: "",
   origin: "",

@@ -1,54 +1,60 @@
+import { PlaceModel } from "../../models/placeModel";
 import { SERVER_URL } from "../../settings/consts";
 import {
   citizenFetchAtom,
   loadingAtom,
   myStore,
   nationFetchedAtom,
-  placeFetchedAtom,
 } from "../../settings/store";
 import { displayFileInfoByType } from "../../utils/displayInfos";
 import { GET_JWT } from "../../utils/functions";
 import { updateNation } from "../nation/nationAPI";
-import { updatePlace } from "../place/placeAPI";
 import { updateUser } from "../user/userAPI";
 
 export interface deleteFileAPIProps {
   url: string;
-  type: string;
+  type?: string;
+  path?: string;
+  place?: PlaceModel;
 }
 
-export const deleteUploadedFile = ({ url, type }: deleteFileAPIProps) => {
+export const deleteUploadedFile = ({
+  url,
+  type,
+  path,
+  place,
+}: deleteFileAPIProps) => {
   const uuid: string = url.replace("https://ucarecdn.com/", "");
   myStore.set(loadingAtom, true);
   deleteUploadedFileFetch(uuid)
     .then((resp) => {
       myStore.set(loadingAtom, false);
       if (resp.statut === 200) {
-        if (type === "avatar") {
-          const citizen = myStore.get(citizenFetchAtom);
-          const citizenUpdated = { ...citizen };
-          citizenUpdated.avatar = "";
-          updateUser(citizenUpdated);
-        } else if (type === "flag") {
-          const nation = myStore.get(nationFetchedAtom);
-          const nationUpdated = { ...nation };
-          nationUpdated.data.url.flag = "";
-          updateNation(nationUpdated);
-        } else if (type === "coatOfArms") {
-          const nation = myStore.get(nationFetchedAtom);
-          const nationUpdated = { ...nation };
-          nationUpdated.data.url.coatOfArms = "";
-          updateNation(nationUpdated);
-        } else if (type === "map") {
-          const nation = myStore.get(nationFetchedAtom);
-          const nationUpdated = { ...nation };
-          nationUpdated.data.url.map = "";
-          updateNation(nationUpdated);
-        } else if (type === "placeImage") {
-          const place = myStore.get(placeFetchedAtom);
-          const placeUpdated = { ...place };
-          placeUpdated.image = "";
-          updatePlace(placeUpdated);
+        if (place && path) {
+          place.updateOne(path, "");
+          place.baseUpdate();
+        } else {
+          if (type === "avatar") {
+            const citizen = myStore.get(citizenFetchAtom);
+            const citizenUpdated = { ...citizen };
+            citizenUpdated.avatar = "";
+            updateUser(citizenUpdated);
+          } else if (type === "flag") {
+            const nation = myStore.get(nationFetchedAtom);
+            const nationUpdated = { ...nation };
+            nationUpdated.data.url.flag = "";
+            updateNation(nationUpdated);
+          } else if (type === "coatOfArms") {
+            const nation = myStore.get(nationFetchedAtom);
+            const nationUpdated = { ...nation };
+            nationUpdated.data.url.coatOfArms = "";
+            updateNation(nationUpdated);
+          } else if (type === "map") {
+            const nation = myStore.get(nationFetchedAtom);
+            const nationUpdated = { ...nation };
+            nationUpdated.data.url.map = "";
+            updateNation(nationUpdated);
+          }
         }
       }
       displayFileInfoByType(resp.infoType);

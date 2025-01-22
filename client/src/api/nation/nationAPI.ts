@@ -1,4 +1,5 @@
 import i18n from "../../i18n/i18n";
+import { ComModel } from "../../models/comModel";
 import { COM_TYPE } from "../../settings/consts";
 import {
   citizenFetchAtom,
@@ -29,7 +30,6 @@ import {
   findElementsByName,
   findNationsByTag,
 } from "../../utils/functions";
-import { createNewCom } from "../communication/comAPI";
 import {
   createNationFetch,
   DeleteSelfFetch,
@@ -59,13 +59,14 @@ export const createNation = (payload: NewNationPayload) => {
       }
       myStore.set(loadingAtom, false);
       displayNationInfoByType(resp.infoType);
-      createNewCom({
+      const newCom = new ComModel({
         comType: COM_TYPE.userPrivate.id,
         origin: resp.nation.officialId,
         destination: resp.user.officialId,
         title: i18n.t("coms.nationCreate.title") + resp.nation.name,
         message: i18n.t("coms.nationCreate.message"),
       });
+      newCom.baseInsert();
     })
     .catch((error: { infoType: string }) => {
       myStore.set(loadingAtom, false);
@@ -182,13 +183,14 @@ export const deleteSelfNation = () => {
           user: resp.user,
           jwt: session.jwt,
         });
-        createNewCom({
+        const newCom = new ComModel({
           comType: COM_TYPE.userPrivate.id,
           origin: session.nation.officialId,
           destination: resp.user.officialId,
           title: i18n.t("coms.nationDelete.title") + session.nation.name,
           message: i18n.t("coms.nationDelete.message"),
         });
+        newCom.baseInsert();
       }
 
       myStore.set(loadingAtom, false);

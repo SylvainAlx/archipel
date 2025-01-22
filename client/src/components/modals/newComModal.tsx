@@ -12,6 +12,7 @@ import { emptyComPayload } from "../../types/typCom";
 import MarkdownEditor from "../form/markdownEditor";
 import { nationComTypeOptions } from "../../settings/lists";
 import RequiredStar from "../form/requiredStar";
+import { ComModel } from "../../models/comModel";
 
 export default function NewComModal() {
   const [newCom, setNewCom] = useAtom(newComAtom);
@@ -19,13 +20,17 @@ export default function NewComModal() {
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    setNewCom(emptyComPayload);
     myStore.set(confirmBox, {
       action: "createCom",
       text: t("components.modals.confirmModal.createCom"),
       result: "",
       payload: newCom,
+      actionToDo: () => {
+        const comToInsert = new ComModel(newCom);
+        comToInsert.baseInsert();
+      },
     });
+    setNewCom(emptyComPayload);
   };
 
   const handleChange = (

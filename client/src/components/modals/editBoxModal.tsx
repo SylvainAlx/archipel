@@ -1,7 +1,7 @@
 /* eslint-disable no-case-declarations */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useAtom } from "jotai";
-import { editPlaceAtom, editbox } from "../../settings/store";
+import { editbox } from "../../settings/store";
 import Button from "../buttons/button";
 import Input from "../form/input";
 import Select from "../form/select";
@@ -18,7 +18,6 @@ import { updateElement } from "../../utils/procedures";
 export default function EditBoxModal() {
   const [editBox, setEditBox] = useAtom(editbox);
   const [newElement, setNewElement] = useState("");
-  const [placeData] = useAtom(editPlaceAtom);
   const { t } = useTranslation();
 
   useEffect(() => {
@@ -48,13 +47,11 @@ export default function EditBoxModal() {
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    updateElement(
-      editBox.target,
-      editBox.path,
-      editBox.new,
-      placeData.place,
-      true,
-    );
+    if (editBox.action != undefined) {
+      editBox.action(editBox.path, editBox.new);
+    } else {
+      updateElement(editBox.target, editBox.path, editBox.new, true);
+    }
     setEditBox({ target: "", original: -1, new: -1, path: "" });
   };
 

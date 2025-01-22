@@ -1,9 +1,4 @@
-import {
-  editPlaceAtom,
-  myStore,
-  nationPlacesListAtom,
-  sessionAtom,
-} from "../../settings/store";
+import { nationPlaceListAtomV2, sessionAtom } from "../../settings/store";
 import { useAtom } from "jotai";
 import { GiCapitol } from "react-icons/gi";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -24,8 +19,8 @@ export interface PlaceTileProp {
   update?: number;
 }
 
-export default function PlaceTile({ place, owner }: PlaceTileProp) {
-  const [nationPlacesList] = useAtom(nationPlacesListAtom);
+export default function PlaceTile({ place }: PlaceTileProp) {
+  const [nationPlacesList] = useAtom(nationPlaceListAtomV2);
   const [childrenStats, setChildrenStats] = useState({
     population: 0,
     children: 0,
@@ -36,14 +31,13 @@ export default function PlaceTile({ place, owner }: PlaceTileProp) {
 
   const handleClick = (event: React.MouseEvent<HTMLDivElement>) => {
     if (event.target === event.currentTarget) {
-      myStore.set(editPlaceAtom, { place, owner });
       navigate(`/place/${place.officialId}`);
     }
   };
 
   useEffect(() => {
     const stats = { ...childrenStats };
-    nationPlacesList.forEach((e) => {
+    nationPlacesList.getItems().forEach((e) => {
       if (e.parentId === place.officialId) {
         stats.population += e.population;
         stats.children += 1;

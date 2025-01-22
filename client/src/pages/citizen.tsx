@@ -2,10 +2,9 @@ import { useAtom } from "jotai";
 import H1 from "../components/titles/h1";
 import {
   citizenFetchAtom,
-  comFetchedListAtom,
   confirmBox,
   nationFetchedAtom,
-  nationPlacesListAtom,
+  nationPlaceListAtomV2,
   sessionAtom,
 } from "../settings/store";
 import { useNavigate, useParams } from "react-router-dom";
@@ -18,7 +17,6 @@ import {
 } from "../utils/functions";
 import { ConfirmBoxDefault } from "../types/typAtom";
 import { getNation } from "../api/nation/nationAPI";
-import { getComs } from "../api/communication/comAPI";
 import ReportPanel from "../components/reportPanel";
 import { COM_GENERAL_DESTINATION, COM_TYPE } from "../settings/consts";
 import { getOneUser } from "../api/user/userAPI";
@@ -27,6 +25,7 @@ import Personal from "../components/citizen/personal";
 import Citizenship from "../components/citizen/citizenship";
 import Settings from "../components/citizen/settings";
 import { displayUnwatchedComs } from "../utils/procedures";
+import { ComListModel } from "../models/lists/comListModel";
 
 export default function Citizen() {
   const navigate = useNavigate();
@@ -34,11 +33,11 @@ export default function Citizen() {
 
   const [citizen, setCitizen] = useAtom(citizenFetchAtom);
   const [nation] = useAtom(nationFetchedAtom);
-  const [comList] = useAtom(comFetchedListAtom);
+  const [comList] = useState<ComListModel>(new ComListModel());
   const [session] = useAtom(sessionAtom);
   const [confirm, setConfirm] = useAtom(confirmBox);
 
-  const [nationPlaces] = useAtom(nationPlacesListAtom);
+  const [nationPlaces] = useAtom(nationPlaceListAtomV2);
   const [, setPlacesList] = useState<LabelId[]>([]);
 
   const owner = session.user.officialId === citizen.officialId;
@@ -47,7 +46,7 @@ export default function Citizen() {
     if (param.id) {
       if (session.user.officialId === param.id) {
         setCitizen(session.user);
-        getComs("", session.user.officialId, [
+        comList.loadComList("", session.user.officialId, [
           COM_TYPE.userPrivate.id,
           COM_TYPE.userUpdate.id,
           COM_TYPE.general.id,
@@ -78,17 +77,17 @@ export default function Citizen() {
   useEffect(() => {
     if (
       owner &&
-      comList.length > 0 &&
-      comList[0].destination === citizen.officialId
+      comList.getItems().length > 0 &&
+      comList.getItems()[0].destination === citizen.officialId
     ) {
-      displayUnwatchedComs(COM_GENERAL_DESTINATION, comList);
-      displayUnwatchedComs(citizen.officialId, comList);
+      displayUnwatchedComs(COM_GENERAL_DESTINATION, comList.getItems());
+      displayUnwatchedComs(citizen.officialId, comList.getItems());
     }
   }, [comList]);
 
   useEffect(() => {
     if (
-      nationPlaces.length > 0 &&
+      nationPlaces.getItems().length > 0 &&
       nation.officialId != undefined &&
       nation.officialId !== ""
     ) {
@@ -127,7 +126,7 @@ export default function Citizen() {
             <ReportPanel content={citizen} />
           </div>
         )}
-        {owner && <CitizensCom citizen={citizen} />}
+        {owner && <CitizensCom citizen={citizen} citizenComList={comList} />}
       </section>
     </>
   );

@@ -148,24 +148,6 @@ export const displayPlaceInfoByType = (type: string) => {
     case "delete":
       successMessage(i18n.t("toasts.place.delete"));
       break;
-    case "forbidden":
-      errorMessage(i18n.t("toasts.errors.forbidden"));
-      break;
-    case "11000":
-      errorMessage(i18n.t("toasts.errors.11000"));
-      break;
-    case "400":
-      errorMessage(i18n.t("toasts.errors.400"));
-      break;
-    case "404":
-      errorMessage(i18n.t("toasts.errors.404"));
-      break;
-    case "500":
-      errorMessage(i18n.t("toasts.errors.500"));
-      break;
-    case "miss":
-      errorMessage(i18n.t("toasts.errors.miss"));
-      break;
     default:
       break;
   }
@@ -198,26 +180,37 @@ export const displayComInfoByType = (type: string) => {
     case "delete":
       successMessage(i18n.t("toasts.com.delete"));
       break;
-    case "400":
-      errorMessage(i18n.t("toasts.errors.400"));
-      break;
-    case "500":
-      errorMessage(i18n.t("toasts.errors.500"));
-      break;
-    case "11000":
-      errorMessage(i18n.t("toasts.errors.11000"));
-      break;
     default:
       break;
   }
 };
 
-export const comErrorCatching = (error: unknown) => {
+export const displayErrorByCode = (code: string) => {
+  switch (code) {
+    case "400":
+      errorMessage(i18n.t("toasts.errors.400"));
+      break;
+    case "403":
+      errorMessage(i18n.t("toasts.errors.403"));
+      break;
+    case "404":
+      errorMessage(i18n.t("toasts.errors.404"));
+      break;
+    case "11000":
+      errorMessage(i18n.t("toasts.errors.11000"));
+      break;
+    default:
+      errorMessage(i18n.t("toasts.errors.500"));
+      break;
+  }
+};
+
+export const errorCatching = (error: unknown) => {
   try {
     if (error instanceof Error) {
       const parsedMessage = JSON.parse(error.message);
       if (parsedMessage?.infoType) {
-        displayComInfoByType(parsedMessage.infoType);
+        displayErrorByCode(parsedMessage.infoType);
         return;
       }
     }

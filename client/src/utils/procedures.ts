@@ -1,22 +1,27 @@
-import { createNewCom } from "../api/communication/comAPI";
 import { deleteFileAPIProps } from "../api/files/fileAPI";
 import { updateNation } from "../api/nation/nationAPI";
-import { updatePlace } from "../api/place/placeAPI";
 import { updateUser } from "../api/user/userAPI";
 import i18next from "../i18n/i18n";
 import i18n from "../i18n/i18n";
+import { ComModel } from "../models/comModel";
+import { deleteUploadedFileFetch } from "../services/fileServices";
 import { COM_TYPE } from "../settings/consts";
-import { confirmBox, myStore, sessionAtom } from "../settings/store";
-import { Com, ComPayload } from "../types/typCom";
+import {
+  confirmBox,
+  loadingAtom,
+  myStore,
+  sessionAtom,
+} from "../settings/store";
+import { Com } from "../types/typCom";
 import { LabelId, Nation, Regime } from "../types/typNation";
-import { Place } from "../types/typPlace";
 import { User } from "../types/typUser";
+import { errorCatching } from "./displayInfos";
 import {
   GET_LAST_WATCH,
   getComTypeLabelById,
   isDateLessThanOneMonthOld,
 } from "./functions";
-import { comMessage } from "./toasts";
+import { comMessage, successMessage } from "./toasts";
 
 export const SET_LAST_WATCH = (param: string, date: Date) => {
   localStorage.setItem(param, date.toString());
@@ -60,11 +65,25 @@ export const handleDeleteImage = ({ url, type }: deleteFileAPIProps) => {
   });
 };
 
+export const deleteImage = async (url: string): Promise<boolean> => {
+  const uuid: string = url.replace("https://ucarecdn.com/", "");
+  myStore.set(loadingAtom, true);
+  try {
+    const response = await deleteUploadedFileFetch(uuid);
+    successMessage(i18n.t("toasts.file.delete"));
+    return response.statut === 200;
+  } catch (error) {
+    errorCatching(error);
+    return false;
+  } finally {
+    myStore.set(loadingAtom, false);
+  }
+};
+
 export const updateElement = (
   destination: string,
   path: string,
   value: string | number | boolean | any[] | Regime[] | LabelId[],
-  place?: Place,
   confirm?: boolean,
 ) => {
   const session = myStore.get(sessionAtom);
@@ -142,40 +161,6 @@ export const updateElement = (
       }
 
       break;
-    case "place":
-      // eslint-disable-next-line no-case-declarations
-      const updatedPlace: any = structuredClone(place);
-      objetCourant = updatedPlace;
-      for (let i = 0; i < parties.length - 1; i++) {
-        if (typeof objetCourant === "object" && objetCourant !== null) {
-          objetCourant = objetCourant[parties[i]];
-        } else {
-          isOk = false;
-          console.error(
-            `Chemin incorrect. Propriété ${parties[i]} non trouvée.`,
-          );
-          break;
-        }
-      }
-      dernierePartie = parties[parties.length - 1];
-      if (typeof objetCourant === "object" && objetCourant !== null) {
-        objetCourant[dernierePartie] = value;
-      }
-
-      if (isOk) {
-        if (confirm) {
-          myStore.set(confirmBox, {
-            action: "updatePlace",
-            text: i18n.t("components.modals.confirmModal.updatePlace"),
-            result: "",
-            target: "",
-            payload: updatedPlace,
-          });
-        } else {
-          updatePlace(updatedPlace);
-        }
-      }
-      break;
   }
 };
 
@@ -208,40 +193,40 @@ export const createComByStatus = (
   user: User,
 ) => {
   if (status === 1) {
-    const newCom: ComPayload = {
+    const newCom = new ComModel({
       comType: COM_TYPE.nationPrivate.id,
       origin: nation.officialId,
       destination: nation.officialId,
       title: i18n.t("coms.nationJoin.title"),
       message: user.name + i18n.t("coms.nationJoin.message") + nation.name,
-    };
-    createNewCom(newCom);
+    });
+    newCom.baseInsert();
   } else if (user.citizenship.status === -1) {
-    const newCom: ComPayload = {
+    const newCom = new ComModel({
       comType: COM_TYPE.nationPrivate.id,
       origin: nation.officialId,
       destination: nation.officialId,
       title: i18n.t("coms.nationLeave.title"),
       message: user.name + i18n.t("coms.nationLeave.message") + nation.name,
-    };
-    createNewCom(newCom);
+    });
+    newCom.baseInsert();
   } else {
-    const newCom1: ComPayload = {
+    const newCom1 = new ComModel({
       comType: COM_TYPE.userPrivate.id,
       origin: nation.officialId,
       destination: nation.owner,
       title: i18n.t("coms.nationToAccept.title") + nation.name,
       message: user.name + i18n.t("coms.nationToAccept.message"),
-    };
-    createNewCom(newCom1);
-    const newCom2: ComPayload = {
+    });
+    newCom1.baseInsert();
+    const newCom2 = new ComModel({
       comType: COM_TYPE.userPrivate.id,
       origin: nation.officialId,
       destination: user.officialId,
       title: i18n.t("coms.nationToWait.title") + nation.name,
       message: i18n.t("coms.nationToWait.message"),
-    };
-    createNewCom(newCom2);
+    });
+    newCom2.baseInsert();
   }
 };
 

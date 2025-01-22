@@ -12,16 +12,16 @@ import {
 import { errorMessage } from "../utils/toasts";
 import "../assets/styles/uploader.css";
 import { useTranslation } from "react-i18next";
-import { createNewCom } from "../api/communication/comAPI";
-import { ComPayload } from "../types/typCom";
 import { loadingAtom, myStore, sessionAtom } from "../settings/store";
 import { updateElement } from "../utils/procedures";
+import { ComModel } from "../models/comModel";
 
 export interface UploaderProps {
   path: string;
   destination: string;
   maxSize: number;
   place?: Place;
+  updatePath?: (path: string, value: string, needConfirm?: boolean) => void;
 }
 
 export default function Upploader({
@@ -29,6 +29,7 @@ export default function Upploader({
   destination,
   maxSize,
   place,
+  updatePath,
 }: UploaderProps) {
   const [showUploader, setShowUploader] = useState(true);
   const { t } = useTranslation();
@@ -43,14 +44,14 @@ export default function Upploader({
 
     if (isNSFW) {
       errorMessage(t("toasts.errors.nsfw"));
-      const payload: ComPayload = {
+      const newCom = new ComModel({
         comType: 0,
         destination: "",
         origin: myStore.get(sessionAtom).user.officialId,
         title: "NSFW",
         message: highConfidencePredictions(predictions)[0].className,
-      };
-      createNewCom(payload);
+      });
+      newCom.baseInsert();
       setShowUploader(false);
       return false;
     }
@@ -58,7 +59,11 @@ export default function Upploader({
 
   const handleSubmit = async (AFileInfo: any) => {
     if (AFileInfo && AFileInfo.cdnUrl) {
-      updateElement(destination, path, AFileInfo.cdnUrl, place);
+      if (place != undefined) {
+        updatePath && updatePath("image", AFileInfo.cdnUrl, false);
+      } else {
+        updateElement(destination, path, AFileInfo.cdnUrl);
+      }
     } else {
       console.error("Impossible de récupérer l'UUID du fichier.");
     }

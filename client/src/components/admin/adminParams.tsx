@@ -4,14 +4,13 @@ import DashTile from "../dashTile";
 import TileContainer from "../tileContainer";
 import H2 from "../titles/h2";
 import { useEffect } from "react";
-import { getAdminComs, getBannedUsers } from "../../api/admin/adminAPI";
+import { getBannedUsers } from "../../api/admin/adminAPI";
 import { getAllParams } from "../../api/param/paramAPI";
 
 export default function AdminParams() {
   const [paramsList] = useAtom(paramsListAtom);
   const [bannedUsers] = useAtom(bannedCitizensAtom);
   useEffect(() => {
-    getAdminComs();
     if (paramsList.length === 0) {
       getAllParams();
     }

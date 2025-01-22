@@ -1,6 +1,6 @@
 import Tag from "./tag";
 import { GiCapitol } from "react-icons/gi";
-import { nationPlacesListAtom } from "../../settings/store";
+import { nationPlaceListAtomV2 } from "../../settings/store";
 import { useAtom } from "jotai";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -15,7 +15,7 @@ export interface CapitalTagProps {
 export default function CapitalTag({ selectedNation }: CapitalTagProps) {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const [nationPlaceList] = useAtom(nationPlacesListAtom);
+  const [nationPlaceList] = useAtom(nationPlaceListAtomV2);
   const [capital, setCapital] = useState<string>(
     t("pages.nation.nationIdentity.noCapital"),
   );
@@ -23,7 +23,7 @@ export default function CapitalTag({ selectedNation }: CapitalTagProps) {
   useEffect(() => {
     if (selectedNation.data.roleplay.capital != "") {
       const capitalName = getPlaceName(
-        nationPlaceList,
+        nationPlaceList.getItems(),
         selectedNation.data.roleplay.capital,
         t("pages.nation.nationIdentity.noCapital"),
       );

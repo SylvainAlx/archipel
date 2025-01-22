@@ -23,7 +23,6 @@ import {
 import {
   updateOrCreateCitizenInMemory,
   updateOrCreateNationInMemory,
-  updateOrCreatePlaceInMemory,
 } from "../../utils/atomArrayFunctions";
 import { displayUserInfoByType } from "../../utils/displayInfos";
 import { findElementOfAtomArray, GET_JWT } from "../../utils/functions";
@@ -282,8 +281,6 @@ export const updateUser = (payload: User) => {
             jwt: session.jwt,
           });
           updateOrCreateCitizenInMemory(resp.user);
-          resp.place != null && updateOrCreatePlaceInMemory(resp.place);
-          resp.oldPlace != null && updateOrCreatePlaceInMemory(resp.oldPlace);
           displayUserInfoByType(resp.infoType);
         } else {
           displayUserInfoByType(resp.infoType);

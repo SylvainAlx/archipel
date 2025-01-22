@@ -7,11 +7,11 @@ import BarreLoader from "../../components/loading/barreLoader";
 import { StringProps } from "../../types/typProp";
 import { useTranslation } from "react-i18next";
 import ComSearchBar from "../../components/searchBars/comSearchBar";
-import { Com } from "../../types/typCom";
 import { ELEMENTS_DISPLAYED_LIMIT } from "../../settings/consts";
+import { ComListModel } from "../../models/lists/comListModel";
 
 export default function ComList({ text }: StringProps) {
-  const [comList, setComList] = useState<Com[]>([]);
+  const [comList, setComList] = useState<ComListModel>(new ComListModel());
   const [displayedComs, setDisplayedComs] = useState(
     ELEMENTS_DISPLAYED_LIMIT.coms,
   );
@@ -21,11 +21,10 @@ export default function ComList({ text }: StringProps) {
   return (
     <>
       <H1 text={text} />
-      <ComSearchBar type="com" setList={setComList} />
+      <ComSearchBar type="com" list={comList} setList={setComList} />
       <section className="w-full flex gap-1 flex-wrap items-center flex-col ">
         {comList != undefined &&
-          comList.length > 0 &&
-          comList.map((com, i) => {
+          comList.getItems().map((com, i) => {
             if (i < displayedComs) {
               return (
                 <Suspense key={i} fallback={<BarreLoader />}>
@@ -38,7 +37,7 @@ export default function ComList({ text }: StringProps) {
             }
           })}
       </section>
-      {displayedComs < comList.length && (
+      {displayedComs < comList.getItems().length && (
         <Button
           click={() =>
             setDisplayedComs(displayedComs + ELEMENTS_DISPLAYED_LIMIT.coms)

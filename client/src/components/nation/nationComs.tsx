@@ -3,12 +3,11 @@ import DashTile from "../dashTile";
 import { SelectedNationProps } from "../../types/typProp";
 import { useAtom } from "jotai";
 import {
-  comFetchedListAtom,
   myStore,
+  nationComListAtomV2,
   newComAtom,
   sessionAtom,
 } from "../../settings/store";
-import { getComs, getPublicComs } from "../../api/communication/comAPI";
 import { lazy, Suspense, useEffect, useState } from "react";
 import BarreLoader from "../loading/barreLoader";
 import Button from "../buttons/button";
@@ -24,28 +23,20 @@ export default function NationComs({
   owner,
 }: SelectedNationProps) {
   const { t } = useTranslation();
-  const [nationComList, setNationComList] = useAtom(comFetchedListAtom);
+  const [nationComList, setNationComList] = useAtom(nationComListAtomV2);
   const [session] = useAtom(sessionAtom);
   const [allowPost, setAllowPost] = useState<boolean>(true);
   const [dueDate, setDueDate] = useState(new Date());
   const ComTile = lazy(() => import("../tiles/comTile"));
 
   useEffect(() => {
-    setNationComList([]);
-    if (selectedNation != undefined) {
-      session.user.citizenship.nationId === selectedNation.officialId &&
-      session.user.citizenship.status > 0
-        ? getComs(selectedNation.officialId, selectedNation.officialId, [
-            COM_TYPE.nationPrivate.id,
-            COM_TYPE.nationPublic.id,
-          ])
-        : getPublicComs(selectedNation.officialId);
-    }
+    loadNationComList();
   }, [selectedNation]);
 
   useEffect(() => {
-    if (nationComList.length > 0) {
-      const lastElement = nationComList[nationComList.length - 1];
+    if (nationComList.getItems().length > 0) {
+      const lastElement =
+        nationComList.getItems()[nationComList.getItems().length - 1];
       if (lastElement) {
         const isActivePlan =
           myStore.get(sessionAtom).user.plan != "free" &&
@@ -60,16 +51,19 @@ export default function NationComs({
         setAllowPost(true);
       }
       session.nation.officialId === selectedNation.officialId &&
-        displayUnwatchedComs(selectedNation.officialId, nationComList);
+        displayUnwatchedComs(
+          selectedNation.officialId,
+          nationComList.getItems(),
+        );
     } else {
       setAllowPost(true);
     }
   }, [nationComList]);
 
   useEffect(() => {
-    if (!allowPost && nationComList.length > 0) {
+    if (!allowPost && nationComList.getItems().length > 0) {
       const givenDate = new Date(
-        nationComList[nationComList.length - 1].createdAt,
+        nationComList.getItems()[nationComList.getItems().length - 1].createdAt,
       );
       const dateAfter24Hours = new Date(
         givenDate.getTime() + 24 * 60 * 60 * 1000,
@@ -80,15 +74,37 @@ export default function NationComs({
     }
   }, [allowPost, nationComList]);
 
+  const loadNationComList = async () => {
+    if (selectedNation != undefined) {
+      let updatedComList;
+      session.user.citizenship.nationId === selectedNation.officialId &&
+      session.user.citizenship.status > 0
+        ? (updatedComList = await nationComList.loadComList(
+            selectedNation.officialId,
+            selectedNation.officialId,
+            [COM_TYPE.nationPrivate.id, COM_TYPE.nationPublic.id],
+          ))
+        : (updatedComList = await nationComList.loadComList(
+            selectedNation.officialId,
+            selectedNation.officialId,
+            [COM_TYPE.nationPublic.id],
+            false,
+          ));
+      if (updatedComList != undefined) {
+        setNationComList(updatedComList);
+      }
+    }
+  };
+
   const handleClick = () => {
-    const newComPayload: ComPayload = {
+    const newCom: ComPayload = {
       comType: 10,
       message: emptyComPayload.message,
       origin: selectedNation.officialId,
       destination: selectedNation.officialId,
       title: emptyComPayload.title,
     };
-    myStore.set(newComAtom, newComPayload);
+    myStore.set(newComAtom, newCom);
   };
 
   return (
@@ -108,8 +124,8 @@ export default function NationComs({
             </div>
           )}
           <div className="w-full flex flex-col-reverse gap-2 items-center">
-            {nationComList.length > 0 ? (
-              nationComList.map((com, i) => {
+            {nationComList.getItems().length > 0 ? (
+              nationComList.getItems().map((com, i) => {
                 return (
                   <Suspense key={i} fallback={<BarreLoader />}>
                     <div className="relative w-full">

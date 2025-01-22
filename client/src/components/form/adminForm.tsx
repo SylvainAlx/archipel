@@ -11,6 +11,7 @@ import { useTranslation } from "react-i18next";
 import { confirmBox, myStore, sessionAtom } from "../../settings/store";
 import H2 from "../titles/h2";
 import TileContainer from "../tileContainer";
+import { ComModel } from "../../models/comModel";
 
 export default function AdminForm() {
   const [newCom, setNewCom] = useState(emptyComPayload);
@@ -31,7 +32,12 @@ export default function AdminForm() {
       text: t("components.modals.confirmModal.createCom"),
       result: "",
       payload: newCom,
+      actionToDo: () => {
+        const comToInsert = new ComModel(newCom);
+        comToInsert.baseInsert();
+      },
     });
+    setNewCom(emptyComPayload);
   };
 
   const handleChange = (
@@ -68,7 +74,7 @@ export default function AdminForm() {
                   required
                   type="text"
                   name="destination"
-                  value={newCom.destination}
+                  value={newCom.destination.toLowerCase()}
                   onChange={handleChange}
                   placeholder="Destinataire"
                   disabled={newCom.comType === 1}

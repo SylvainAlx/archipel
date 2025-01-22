@@ -1,5 +1,5 @@
 import Tag from "./tag";
-import { nationPlacesListAtom } from "../../settings/store";
+import { nationPlaceListAtomV2 } from "../../settings/store";
 import { useAtom } from "jotai";
 import { useEffect, useState } from "react";
 import { getPlaceName } from "../../utils/functions";
@@ -13,7 +13,7 @@ interface ResidenceTagProps {
 
 export default function ResidenceTag({ residenceId }: ResidenceTagProps) {
   const { t } = useTranslation();
-  const [nationPlaceList] = useAtom(nationPlacesListAtom);
+  const [nationPlaceList] = useAtom(nationPlaceListAtomV2);
   const [residence, setResidence] = useState<string>(
     t("pages.citizen.noResidence"),
   );
@@ -22,7 +22,7 @@ export default function ResidenceTag({ residenceId }: ResidenceTagProps) {
   useEffect(() => {
     if (residenceId != "") {
       const residenceName = getPlaceName(
-        nationPlaceList,
+        nationPlaceList.getItems(),
         residenceId,
         t("pages.citizen.noResidence"),
       );

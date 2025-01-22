@@ -5,7 +5,7 @@ import { Place } from "../../types/typPlace";
 import { Nation } from "../../types/typNation";
 import { useTranslation } from "react-i18next";
 import { useAtom } from "jotai";
-import { nationPlacesListAtom } from "../../settings/store";
+import { nationPlaceListAtomV2 } from "../../settings/store";
 
 interface PlaceChildrenProps {
   place: Place;
@@ -19,7 +19,7 @@ export default function PlaceChildren({
   owner,
 }: PlaceChildrenProps) {
   const [haveChildren, setHaveChildren] = useState(false);
-  const [nationPlacesList] = useAtom(nationPlacesListAtom);
+  const [nationPlacesList] = useAtom(nationPlaceListAtomV2);
   const PlaceTile = lazy(() => import("../tiles/placeTile"));
   const { t } = useTranslation();
 
@@ -27,8 +27,8 @@ export default function PlaceChildren({
     <section className="w-full px-2 flex flex-wrap justify-center gap-2">
       <div className="w-full py-4 flex flex-col gap-2">
         {nationPlacesList != undefined &&
-          nationPlacesList.length > 0 &&
-          nationPlacesList.map((loc, i) => {
+          nationPlacesList.getItems().length > 0 &&
+          nationPlacesList.getItems().map((loc, i) => {
             if (loc.parentId === place.officialId) {
               !haveChildren && setHaveChildren(true);
               return (

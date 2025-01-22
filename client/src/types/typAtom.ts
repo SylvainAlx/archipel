@@ -25,6 +25,7 @@ export interface ConfirmBox {
   result: string;
   target?: any;
   payload?: any;
+  actionToDo?: () => void;
 }
 
 export const ConfirmBoxDefault: ConfirmBox = {
@@ -42,6 +43,7 @@ export interface EditBox {
   path: string;
   indice?: number | string;
   canBeEmpty?: boolean;
+  action?: (path: string, value: any) => void;
 }
 
 export const EditBoxDefault: EditBox = {
