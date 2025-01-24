@@ -25,11 +25,11 @@ export class ComModel extends CommonModel implements Com {
   }
 
   private addToNationComListAtom = (com: Com) => {
-    const updatedList = myStore.get(nationComListAtomV2).add(com);
+    const updatedList = myStore.get(nationComListAtomV2).addOrUpdate(com);
     myStore.set(nationComListAtomV2, new ComListModel(updatedList));
   };
   private addToComListAtom = (com: Com) => {
-    const updatedList = myStore.get(comListAtomV2).add(com);
+    const updatedList = myStore.get(comListAtomV2).addOrUpdate(com);
     myStore.set(comListAtomV2, new ComListModel(updatedList));
   };
   private removeFromNationComListAtom = (com: Com) => {

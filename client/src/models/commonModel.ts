@@ -5,10 +5,10 @@ import {
 import { successMessage } from "../utils/toasts";
 
 export class CommonModel {
-  officialId!: string;
-  reported!: boolean;
-  banished!: boolean;
-  createdAt!: Date;
+  officialId: string = "";
+  reported: boolean = false;
+  banished: boolean = false;
+  createdAt: Date = new Date();
 
   reportContent = async (reverse = false) => {
     try {

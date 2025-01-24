@@ -3,7 +3,6 @@ import { atom, createStore } from "jotai";
 import {
   EmptyNation,
   emptyNewNationPayload,
-  Hashtag,
   Nation,
   NewNationPayload,
 } from "../types/typNation";
@@ -12,7 +11,7 @@ import {
   EditBoxDefault,
   InfoModal,
   Param,
-  Session,
+  Stats,
 } from "../types/typAtom";
 import { Place, emptyPlace } from "../types/typPlace";
 import { emptyUser, User } from "../types/typUser";
@@ -22,9 +21,10 @@ import {
   emptyDiplomaticRelationship,
 } from "../types/typRelation";
 import { emptyTile, Tile } from "../types/typTile";
-import { SessionModel } from "../models/sessionModel";
 import { ComListModel } from "../models/lists/comListModel";
 import { PlaceListModel } from "../models/lists/placeListModel";
+import { NationListModel } from "../models/lists/nationListModel";
+import { NationModel } from "../models/nationModel";
 
 export const myStore = createStore();
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -41,20 +41,21 @@ export const longLoadingAtom = atom(false);
 export const lobbyAtom = atom(false);
 
 // Session
-export const emptySession = { user: emptyUser, nation: EmptyNation, jwt: "" };
-export const sessionAtom = atom<Session>(emptySession);
+
+export const emptySession = {
+  user: emptyUser,
+  nation: new NationModel(),
+  jwt: "",
+};
+
+export interface Session {
+  user: User;
+  nation: NationModel;
+  jwt: string;
+}
 
 // Stats
-interface Counts {
-  nations: number;
-  citizens: number;
-  places: number;
-  tags: number;
-  coms: number;
-}
-export type Stats = {
-  counts: Counts;
-};
+
 export const statsAtom = atom<Stats>({
   counts: { nations: 0, citizens: 0, places: 0, tags: 0, coms: 0 },
 });
@@ -67,9 +68,6 @@ export const bannedCitizensAtom = atom<User[]>([]);
 
 // Nation
 export const nationFetchedAtom = atom<Nation>(EmptyNation);
-export const newNationAtom = atom<NewNationPayload>(emptyNewNationPayload);
-export const nationsListAtom = atom<Nation[]>([]);
-export const nationsListFetchedAtom = atom<Nation[]>([]);
 
 // Relation
 export const relationListAtom = atom<DiplomaticRelationship[]>([]);
@@ -86,9 +84,6 @@ export const tileListAtom = atom<Tile[]>([]);
 // Param
 export const paramsListAtom = atom<Param[]>([]);
 
-// tag
-export const tagListAtom = atom<Hashtag[]>([]);
-
 export const showLangModalAtom = atom(false);
 export const recoveryKey = atom("");
 export const confirmBox = atom(ConfirmBoxDefault);
@@ -104,14 +99,16 @@ export const showMenuAtom = atom(false);
 export const editTileAtom = atom(emptyTile);
 
 //---- V2 ----
-export const sessionAtomV2 = atom<SessionModel>(new SessionModel());
+export const sessionAtom = atom<Session>(emptySession);
 
 export const comListAtomV2 = atom<ComListModel>(new ComListModel());
 export const placeListAtomV2 = atom<PlaceListModel>(new PlaceListModel());
+export const nationListAtomV2 = atom<NationListModel>(new NationListModel());
 
 export const nationComListAtomV2 = atom<ComListModel>(new ComListModel());
 export const nationPlaceListAtomV2 = atom<PlaceListModel>(new PlaceListModel());
 
 export const newComAtom = atom<ComPayload>(emptyComPayload);
 export const newPlaceAtom = atom<Place>(emptyPlace);
+export const newNationAtom = atom<NewNationPayload>(emptyNewNationPayload);
 //---- V2 ----

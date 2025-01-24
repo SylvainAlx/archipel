@@ -1,13 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { LabelId, Nation, Regime } from "./typNation";
+import { LabelId, Regime } from "./typNation";
 import { Place } from "./typPlace";
-import { User } from "./typUser";
-
-export interface Session {
-  user: User;
-  nation: Nation;
-  jwt: string;
-}
 
 // editPlace
 
@@ -72,3 +65,14 @@ export interface StandardOption {
   id: number | string;
   label: string;
 }
+
+export interface Counts {
+  nations: number;
+  citizens: number;
+  places: number;
+  tags: number;
+  coms: number;
+}
+export type Stats = {
+  counts: Counts;
+};

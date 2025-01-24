@@ -1,14 +1,13 @@
 import {
   confirmBox,
   myStore,
-  nationFetchedAtom,
   nationPlaceListAtomV2,
+  placeListAtomV2,
   sessionAtom,
 } from "../settings/store";
 import { useAtom } from "jotai";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { getNation } from "../api/nation/nationAPI";
 import ReportPanel from "../components/reportPanel";
 import PlaceIdentity from "../components/place/placeIdentity";
 import PlaceChildren from "../components/place/placeChildren";
@@ -16,11 +15,13 @@ import PlaceHeader from "../components/place/placeHeader";
 import { getDocumentTitle } from "../utils/functions";
 import { PlaceModel } from "../models/placeModel";
 import { useTranslation } from "react-i18next";
+import { NationModel } from "../models/nationModel";
 
 export default function Place() {
   const [session] = useAtom(sessionAtom);
-  const [nation] = useAtom(nationFetchedAtom);
+  const [nation, setNation] = useState<NationModel>(new NationModel());
   const [place, setPlace] = useState<PlaceModel>(new PlaceModel());
+  const [placeList] = useAtom(placeListAtomV2);
   const [nationPlaceList, setNationPlacesList] = useAtom(nationPlaceListAtomV2);
   const param = useParams();
 
@@ -28,10 +29,18 @@ export default function Place() {
   const { t } = useTranslation();
 
   useEffect(() => {
+    console.log(placeList);
+  }, [placeList]);
+
+  useEffect(() => {
     loadPlace();
   }, [param.id]);
 
   useEffect(() => {
+    const loadNation = async (officialId: string) => {
+      const loadedNation = await nation.loadNation(officialId);
+      setNation(loadedNation);
+    };
     if (
       place.nation === session.user.citizenship.nationId &&
       session.user.citizenship.nationOwner
@@ -39,7 +48,7 @@ export default function Place() {
       setOwner(true);
     }
 
-    getNation(place.nation);
+    loadNation(place.nation);
 
     document.title = getDocumentTitle(place.name);
     return () => {

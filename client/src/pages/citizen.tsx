@@ -3,7 +3,6 @@ import H1 from "../components/titles/h1";
 import {
   citizenFetchAtom,
   confirmBox,
-  nationFetchedAtom,
   nationPlaceListAtomV2,
   sessionAtom,
 } from "../settings/store";
@@ -16,7 +15,6 @@ import {
   getLabelIdArrayFromNationPlaceList,
 } from "../utils/functions";
 import { ConfirmBoxDefault } from "../types/typAtom";
-import { getNation } from "../api/nation/nationAPI";
 import ReportPanel from "../components/reportPanel";
 import { COM_GENERAL_DESTINATION, COM_TYPE } from "../settings/consts";
 import { getOneUser } from "../api/user/userAPI";
@@ -26,13 +24,14 @@ import Citizenship from "../components/citizen/citizenship";
 import Settings from "../components/citizen/settings";
 import { displayUnwatchedComs } from "../utils/procedures";
 import { ComListModel } from "../models/lists/comListModel";
+import { NationModel } from "../models/nationModel";
 
 export default function Citizen() {
   const navigate = useNavigate();
   const param = useParams();
 
   const [citizen, setCitizen] = useAtom(citizenFetchAtom);
-  const [nation] = useAtom(nationFetchedAtom);
+  const [nation, setNation] = useState<NationModel>(new NationModel());
   const [comList] = useState<ComListModel>(new ComListModel());
   const [session] = useAtom(sessionAtom);
   const [confirm, setConfirm] = useAtom(confirmBox);
@@ -59,11 +58,15 @@ export default function Citizen() {
   }, [param.id, session.user]);
 
   useEffect(() => {
+    const loadNation = async (officialId: string) => {
+      const loadedNation = await nation.loadNation(officialId);
+      setNation(loadedNation);
+    };
     if (
       citizen.citizenship.nationId != "" &&
       nation.officialId != citizen.citizenship.nationId
     ) {
-      getNation(citizen.citizenship.nationId);
+      loadNation(citizen.citizenship.nationId);
     }
 
     document.title = getDocumentTitle(citizen.name);

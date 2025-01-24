@@ -9,12 +9,7 @@ import Header from "./layouts/header";
 import Footer from "./layouts/footer";
 import "./assets/styles/App.css";
 import { useAtom } from "jotai";
-import {
-  lobbyAtom,
-  nationFetchedAtom,
-  sessionAtom,
-  showCookiesModalAtom,
-} from "./settings/store";
+import { lobbyAtom, sessionAtom, showCookiesModalAtom } from "./settings/store";
 import { useEffect, useState } from "react";
 import ModalsRouter from "./router/modalsRouter";
 import { ArchipelRoute } from "./types/typReact";
@@ -29,7 +24,6 @@ export default function App() {
   const [access, setAccess] = useAtom(lobbyAtom);
   const [openPrivateRoads, setOpenPrivateRoads] = useState(false);
   const [session, setSession] = useAtom(sessionAtom);
-  const [nation] = useAtom(nationFetchedAtom);
   const [showModal] = useAtom(showCookiesModalAtom);
 
   const navigate = useNavigate();
@@ -49,26 +43,25 @@ export default function App() {
   }, []);
 
   useEffect(() => {
+    const loadNation = async () => {
+      const loadedNation = await session.nation.loadNation(
+        session.user.citizenship.nationId,
+      );
+      setSession({ ...session, nation: loadedNation });
+    };
     if (session.user.officialId != "") {
       setOpenPrivateRoads(true);
       if (location.pathname === "/login" || location.pathname === "/register") {
         navigate(`/citizen/${session.user.officialId}`);
+      }
+      if (session.user.citizenship.nationId != "") {
+        loadNation();
       }
     } else {
       setOpenPrivateRoads(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [session.user]);
-
-  useEffect(() => {
-    if (
-      nation != null &&
-      nation.officialId === session.user.citizenship.nationId
-    ) {
-      setSession({ ...session, nation });
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [nation]);
 
   return (
     <>

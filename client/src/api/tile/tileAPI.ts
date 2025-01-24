@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { NationModel } from "../../models/nationModel";
 import {
   loadingAtom,
   myStore,
@@ -12,7 +13,6 @@ import { Tile } from "../../types/typTile";
 import {
   spliceByDBId,
   updateByDBId,
-  updateOrCreateNationInMemory,
   updateOrCreateTileInMemory,
 } from "../../utils/atomArrayFunctions";
 import { displayTileInfoByType } from "../../utils/displayInfos";
@@ -36,11 +36,11 @@ export const createTile = (tile: Tile) => {
       }
       const session = myStore.get(sessionAtom);
       myStore.set(sessionAtom, {
-        nation: resp.nation,
+        nation: new NationModel(resp.nation),
         user: session.user,
         jwt: session.jwt,
       });
-      updateOrCreateNationInMemory(resp.nation);
+      // updateOrCreateNationInMemory(resp.nation);
       myStore.set(nationFetchedAtom, resp.nation);
       displayTileInfoByType(resp.infoType);
       myStore.set(loadingAtom, false);
@@ -93,11 +93,11 @@ export const deleteTile = (id: string) => {
         myStore.set(tileListAtom, tempArray);
         const session = myStore.get(sessionAtom);
         myStore.set(sessionAtom, {
-          nation: resp.nation,
+          nation: new NationModel(resp.nation),
           user: session.user,
           jwt: session.jwt,
         });
-        updateOrCreateNationInMemory(resp.nation);
+        // updateOrCreateNationInMemory(resp.nation);
         myStore.set(nationFetchedAtom, resp.nation);
       }
       displayTileInfoByType(resp.infoType);

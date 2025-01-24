@@ -1,7 +1,4 @@
-import { deleteFileAPIProps } from "../api/files/fileAPI";
-import { updateNation } from "../api/nation/nationAPI";
 import { updateUser } from "../api/user/userAPI";
-import i18next from "../i18n/i18n";
 import i18n from "../i18n/i18n";
 import { ComModel } from "../models/comModel";
 import { deleteUploadedFileFetch } from "../services/fileServices";
@@ -55,16 +52,6 @@ export const declineCitizenship = (citizen: User) => {
   });
 };
 
-export const handleDeleteImage = ({ url, type }: deleteFileAPIProps) => {
-  myStore.set(confirmBox, {
-    action: "deleteFile",
-    text: i18n.t("components.modals.confirmModal.deleteFile"),
-    payload: url,
-    result: "",
-    target: type,
-  });
-};
-
 export const deleteImage = async (url: string): Promise<boolean> => {
   const uuid: string = url.replace("https://ucarecdn.com/", "");
   myStore.set(loadingAtom, true);
@@ -92,40 +79,6 @@ export const updateElement = (
   let objetCourant;
   let dernierePartie;
   switch (destination) {
-    case "nation":
-      const updatedNation: any = structuredClone(session.nation);
-      objetCourant = updatedNation;
-      for (let i = 0; i < parties.length - 1; i++) {
-        if (typeof objetCourant === "object" && objetCourant !== null) {
-          objetCourant = objetCourant[parties[i]];
-        } else {
-          isOk = false;
-          console.error(
-            `Chemin incorrect. Propriété ${parties[i]} non trouvée.`,
-          );
-          break;
-        }
-      }
-      dernierePartie = parties[parties.length - 1];
-      if (typeof objetCourant === "object" && objetCourant !== null) {
-        objetCourant[dernierePartie] = value;
-      }
-
-      if (isOk) {
-        if (confirm) {
-          myStore.set(confirmBox, {
-            action: "updateNation",
-            text: i18next.t("components.modals.confirmModal.updateNation"),
-            result: "",
-            target: "",
-            payload: updatedNation,
-          });
-        } else {
-          updateNation(updatedNation);
-        }
-      }
-
-      break;
     case "citizen":
       // eslint-disable-next-line no-case-declarations
       const updatedUser: any = structuredClone(session.user);

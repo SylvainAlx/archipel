@@ -1,11 +1,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
-import { LabelId } from "../../types/typNation";
+import { LabelId, Nation } from "../../types/typNation";
 import RegimeTag from "../tags/regimeTag";
 import IdTag from "../tags/idTag";
 import CapitalTag from "../tags/capitalTag";
 import { useTranslation } from "react-i18next";
-import { SelectedNationProps } from "../../types/typProp";
 import TileContainer from "../tileContainer";
 import DashTile from "../dashTile";
 import EditIcon from "../editIcon";
@@ -22,10 +21,17 @@ import BigFlag from "./bigFlag";
 import CoatOfArms from "./coatOfArms";
 import NationStateTag from "../tags/nationStateTag";
 
+interface NationIdentityProps {
+  selectedNation: Nation;
+  owner: boolean;
+  updatePath: (path: string, value: string) => void;
+}
+
 export default function NationIdentity({
   selectedNation,
   owner,
-}: SelectedNationProps) {
+  updatePath,
+}: NationIdentityProps) {
   const { t } = useTranslation();
   const [placesList, setPlacesList] = useState<LabelId[]>([]);
 
@@ -48,11 +54,13 @@ export default function NationIdentity({
                     <BigFlag
                       nation={selectedNation}
                       owner={owner ? owner : false}
+                      updatePath={updatePath}
                     />
                     {(selectedNation.data.url.coatOfArms || owner) && (
                       <CoatOfArms
                         nation={selectedNation}
                         owner={owner ? owner : false}
+                        updatePath={updatePath}
                       />
                     )}
                   </div>
@@ -71,6 +79,7 @@ export default function NationIdentity({
                             : ""
                         }
                         path="data.general.motto"
+                        action={updatePath}
                       />
                     )}
                   </div>
@@ -93,6 +102,7 @@ export default function NationIdentity({
                           param={regimeList}
                           path="data.general.regime"
                           indice={selectedNation.data.general.regime}
+                          action={updatePath}
                         />
                       )}
                     </div>
@@ -115,6 +125,7 @@ export default function NationIdentity({
                               : ""
                           }
                           path="data.general.nationalDay"
+                          action={updatePath}
                         />
                       )}
                     </div>
@@ -133,6 +144,7 @@ export default function NationIdentity({
                               : ""
                           }
                           path="data.general.currency"
+                          action={updatePath}
                         />
                       )}
                     </div>
@@ -143,6 +155,7 @@ export default function NationIdentity({
                           target="nation"
                           param={placesList}
                           path="data.roleplay.capital"
+                          action={updatePath}
                         />
                       )}
                     </div>
@@ -174,6 +187,7 @@ export default function NationIdentity({
                             : ""
                         }
                         path="data.general.description"
+                        action={updatePath}
                       />
                     )}
                   </div>

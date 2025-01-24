@@ -1,6 +1,6 @@
 import { lazy, Suspense } from "react";
 import { Nation } from "../../types/typNation";
-import { handleDeleteImage } from "../../utils/procedures";
+import { deleteImage } from "../../utils/procedures";
 import Spinner from "../loading/spinner";
 import CrossButton from "../buttons/crossButton";
 import { GiBlackFlag } from "react-icons/gi";
@@ -9,13 +9,29 @@ import LinkButton from "../buttons/linkButton";
 import { FLAG_MAKER_URL } from "../../settings/consts";
 import { FaExternalLinkAlt } from "react-icons/fa";
 import { useTranslation } from "react-i18next";
+import { confirmBox, myStore } from "../../settings/store";
 
 interface FlagProps {
   nation: Nation;
   owner: boolean;
+  updatePath: (path: string, value: string, needConfirm?: boolean) => void;
 }
 
-export default function BigFlag({ nation, owner }: FlagProps) {
+export default function BigFlag({ nation, owner, updatePath }: FlagProps) {
+  const handleDeleteImage = async () => {
+    myStore.set(confirmBox, {
+      action: "",
+      text: t("components.modals.confirmModal.deleteFile"),
+      result: "",
+      actionToDo: async () => {
+        const result = await deleteImage(nation.data.url.flag);
+        if (result) {
+          updatePath("image", "", false);
+        }
+      },
+    });
+  };
+
   const { t } = useTranslation();
   const LazyImage = lazy(() => import("../lazy/lazyImage"));
   return (
@@ -31,17 +47,7 @@ export default function BigFlag({ nation, owner }: FlagProps) {
                 hover={t("components.hoverInfos.flag")}
               />
             </Suspense>
-            {owner && (
-              <CrossButton
-                small={true}
-                click={() =>
-                  handleDeleteImage({
-                    url: nation.data.url.flag,
-                    type: "flag",
-                  })
-                }
-              />
-            )}
+            {owner && <CrossButton small={true} click={handleDeleteImage} />}
           </div>
         ) : (
           <>

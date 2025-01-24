@@ -5,21 +5,13 @@ import { COSTS, PLACE_TYPE, QUOTAS } from "../settings/const.js";
 
 export const placesCount = async (req, res) => {
   try {
-    Place.countDocuments({ banished: false })
-      .then((count) => {
-        res.status(200).json(count);
-      })
-      .catch((error) => {
-        console.error(error);
-        res.status(400).json({
-          infoType: "400",
-        });
-      });
+    const response = await Place.countDocuments({ banished: false });
+    res.status(200).json(response);
   } catch (error) {
     console.error(error);
-    res.status(500).json({
-      infoType: "500",
-      error,
+    const statusCode = error.name === "ValidationError" ? 400 : 500;
+    res.status(statusCode).json({
+      infoType: statusCode.toString(),
     });
   }
 };
@@ -27,21 +19,13 @@ export const placesCount = async (req, res) => {
 export const getPlaces = async (req, res) => {
   const nationId = req.params.id;
   try {
-    await Place.find({ nation: nationId, banished: false })
-      .then((places) => {
-        res.status(200).json(places);
-      })
-      .catch((error) => {
-        console.error(error);
-        res.status(400).json({
-          infoType: "400",
-        });
-      });
+    const places = await Place.find({ nation: nationId, banished: false });
+    res.status(200).json(places);
   } catch (error) {
     console.error(error);
-    res.status(500).json({
-      infoType: "500",
-      error,
+    const statusCode = error.name === "ValidationError" ? 400 : 500;
+    res.status(statusCode).json({
+      infoType: statusCode.toString(),
     });
   }
 };
@@ -55,9 +39,9 @@ export const getOne = async (req, res) => {
     });
   } catch (error) {
     console.error(error);
-    res.status(500).json({
-      infoType: "500",
-      error,
+    const statusCode = error.name === "ValidationError" ? 400 : 500;
+    res.status(statusCode).json({
+      infoType: statusCode.toString(),
     });
   }
 };
@@ -77,9 +61,9 @@ export const getAllPlaces = async (req, res) => {
     }
   } catch (error) {
     console.error(error);
-    res.status(500).json({
-      infoType: "500",
-      error,
+    const statusCode = error.name === "ValidationError" ? 400 : 500;
+    res.status(statusCode).json({
+      infoType: statusCode.toString(),
     });
   }
 };
@@ -171,16 +155,16 @@ export const deletePlace = async (req, res) => {
     res.status(200).json({ place, nation, infoType: "delete" });
   } catch (error) {
     console.error(error);
-    res.status(500).json({
-      infoType: "500",
-      error,
+    const statusCode = error.name === "ValidationError" ? 400 : 500;
+    res.status(statusCode).json({
+      infoType: statusCode.toString(),
     });
   }
 };
 
 export const updatePlace = async (req, res) => {
-  const nation = await Nation.findOne({ owner: req.userId });
   try {
+    const nation = await Nation.findOne({ owner: req.userId });
     if (req.body.nation === nation.officialId) {
       const place = await Place.findOne({ _id: req.body._id });
       place.nation = req.body.nation;
@@ -190,28 +174,19 @@ export const updatePlace = async (req, res) => {
       place.name = req.body.name;
       place.description = req.body.description;
       place.image = req.body.image;
-      place
-        .save()
-        .then((place) => {
-          res.status(200).json({ place, infoType: "update" });
-        })
-        .catch((error) => {
-          console.error(error);
-          res.status(400).json({
-            infoType: "miss",
-          });
-        });
+      const placeInBase = await place.save();
+      res.status(200).json({ place: placeInBase, infoType: "update" });
     } else {
       console.error(error);
       res.status(403).json({
-        infoType: "forbidden",
+        infoType: "403",
       });
     }
   } catch (error) {
     console.error(error);
-    res.status(500).json({
-      infoType: "500",
-      error,
+    const statusCode = error.name === "ValidationError" ? 400 : 500;
+    res.status(statusCode).json({
+      infoType: statusCode.toString(),
     });
   }
 };

@@ -4,8 +4,8 @@ import { APP_NAME, COM_TYPE, MAX_LENGTH, PLACE_TYPE } from "../settings/consts";
 import { LabelId, Nation } from "../types/typNation";
 import { Place } from "../types/typPlace";
 import { myStore, nationPlaceListAtomV2 } from "../settings/store";
-import { User } from "../types/typUser";
 import { languageList, regimeList, regimeTypeList } from "../settings/lists";
+import { NationModel } from "../models/nationModel";
 
 export const GET_JWT = () => {
   const jwt = localStorage.getItem("jwt");
@@ -21,28 +21,8 @@ export const GET_LAST_WATCH = (param: string) => {
   }
 };
 
-export const dateToString = (date: Date) => {
-  const createdAtDate: Date = new Date(date);
-  return createdAtDate.toLocaleDateString("fr");
-};
-
-export const findNationCitizens = (nationId: string, citizenList: User[]) => {
-  const elements: User[] = [];
-  citizenList.forEach((citizen) => {
-    if (citizen.citizenship.nationId === nationId) {
-      elements.push(citizen);
-    }
-  });
-  return elements;
-};
-
 export const findElementOfAtomArray = (id: string, atom: any[]) => {
   const element = atom.find((objet) => objet.officialId === id);
-  return element;
-};
-
-export const findElementByDBId = (id: string, array: any[]) => {
-  const element = array.find((objet) => objet._id === id);
   return element;
 };
 
@@ -52,26 +32,12 @@ export const findElementsByName = (searchName: string, array: any[]) => {
   );
 };
 
-export const findNationsByTag = (searchTag: string, nations: Nation[]) => {
+export const findNationsByTag = (searchTag: string, nations: NationModel[]) => {
   return nations.filter((nation) =>
     nation.data.general.tags.some((tag) =>
       tag.toLowerCase().includes(searchTag.toLowerCase()),
     ),
   );
-};
-
-export const differenceEnMinutes = (date: Date) => {
-  const difference = new Date().getTime() - new Date(date).getTime();
-  const differenceMinutes: number = Math.round(difference / (1000 * 60));
-  return differenceMinutes;
-};
-
-export const formatTime = (totalMinutes: number): string => {
-  const days = Math.floor(totalMinutes / (24 * 60));
-  const hours = Math.floor((totalMinutes % (24 * 60)) / 60);
-  const minutes = Math.floor(totalMinutes % 60);
-
-  return `${days > 0 ? days + "j" : ""} ${hours > 0 ? hours + "h" : ""} ${minutes > 0 ? hours + "m" : ""}`;
 };
 
 export const getPlaceName = (

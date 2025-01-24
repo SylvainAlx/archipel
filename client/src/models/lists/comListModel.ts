@@ -28,6 +28,7 @@ export class ComListModel extends ListModel {
     comType: number[],
     isJwtRequired: boolean = true,
   ) => {
+    this.items = [];
     const savedComList: ComModel[] = [];
     myStore
       .get(comListAtomV2)
@@ -92,20 +93,20 @@ export class ComListModel extends ListModel {
     }
   };
 
-  add(item: Com) {
+  private add(item: Com) {
     this.items.push(new ComModel(item));
-    return this.items;
   }
   addMany(items: Com[]) {
     items.forEach((item) => this.addOrUpdate(item));
   }
-  private addOrUpdate(item: Com) {
+  addOrUpdate(item: Com) {
     const index = this.items.findIndex((i) => i.officialId === item.officialId);
     if (index > -1) {
       this.items[index] = new ComModel(item);
     } else {
       this.add(item);
     }
+    return this.items;
   }
 
   sortComs = (selectOption: number) => {

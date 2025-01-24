@@ -20,10 +20,7 @@ import {
   RecoveryPayload,
   User,
 } from "../../types/typUser";
-import {
-  updateOrCreateCitizenInMemory,
-  updateOrCreateNationInMemory,
-} from "../../utils/atomArrayFunctions";
+import { updateOrCreateCitizenInMemory } from "../../utils/atomArrayFunctions";
 import { displayUserInfoByType } from "../../utils/displayInfos";
 import { findElementOfAtomArray, GET_JWT } from "../../utils/functions";
 import { createComByStatus } from "../../utils/procedures";
@@ -184,9 +181,9 @@ export const deleteUser = (password: string) => {
         localStorage.removeItem("jwt");
       }
       displayUserInfoByType(resp.infoType);
-      if (resp.nation != null) {
-        updateOrCreateNationInMemory(resp.nation);
-      }
+      // if (resp.nation != null) {
+      //   updateOrCreateNationInMemory(resp.nation);
+      // }
     })
     .catch((error) => {
       myStore.set(loadingAtom, false);
@@ -302,7 +299,7 @@ export const changeStatus = (payload: changeStatusPayload) => {
       if (resp.user) {
         myStore.set(citizenFetchAtom, resp.user);
         myStore.set(nationFetchedAtom, resp.nation);
-        updateOrCreateNationInMemory(resp.nation);
+        // updateOrCreateNationInMemory(resp.nation);
         updateOrCreateCitizenInMemory(resp.user);
 
         const session = myStore.get(sessionAtom);

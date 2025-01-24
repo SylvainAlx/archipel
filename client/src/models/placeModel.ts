@@ -37,8 +37,18 @@ export class PlaceModel extends CommonModel implements Place {
   loadPlace = async (officialId: string) => {
     myStore.set(loadingAtom, true);
     try {
-      const response: { place: Place } = await getPlaceFetch(officialId);
-      this.updateFields(response.place);
+      const place = myStore
+        .get(placeListAtomV2)
+        .getItems()
+        .find((p) => p.officialId === officialId);
+      if (place) {
+        this.updateFields(place);
+      } else {
+        const response: { place: Place } = await getPlaceFetch(officialId);
+        this.updateFields(response.place);
+        this.addToNationPlaceListAtom(response.place);
+        this.addToPlaceListAtom(response.place);
+      }
     } catch (error) {
       errorCatching(error);
     } finally {
@@ -47,11 +57,11 @@ export class PlaceModel extends CommonModel implements Place {
     }
   };
   private addToNationPlaceListAtom = (place: Place) => {
-    const updatedList = myStore.get(nationPlaceListAtomV2).add(place);
+    const updatedList = myStore.get(nationPlaceListAtomV2).addOrUpdate(place);
     myStore.set(nationPlaceListAtomV2, new PlaceListModel(updatedList));
   };
   private addToPlaceListAtom = (place: Place) => {
-    const updatedList = myStore.get(placeListAtomV2).add(place);
+    const updatedList = myStore.get(placeListAtomV2).addOrUpdate(place);
     myStore.set(placeListAtomV2, new PlaceListModel(updatedList));
   };
   private removeFromNationPlaceListAtom = (place: Place) => {
@@ -72,25 +82,16 @@ export class PlaceModel extends CommonModel implements Place {
       .updateItemByOfficialId(new PlaceModel(place));
     myStore.set(nationPlaceListAtomV2, updatedList);
   };
+  private updatenPlaceListAtom = (place: Place) => {
+    const updatedList = myStore
+      .get(placeListAtomV2)
+      .updateItemByOfficialId(new PlaceModel(place));
+    myStore.set(placeListAtomV2, updatedList);
+  };
   updateFields(fields: Partial<PlaceModel | Place>) {
     Object.assign(this, fields);
     return this;
   }
-  baseUpdate = async () => {
-    myStore.set(loadingAtom, true);
-    try {
-      const response: { place: Place; infoType: string } =
-        await updatePlaceFetch(this);
-      this.updateFields(response.place);
-      displayPlaceInfoByType(response.infoType);
-      this.updateNationPlaceListAtom(response.place);
-    } catch (error) {
-      errorCatching(error);
-    } finally {
-      myStore.set(loadingAtom, false);
-      return new PlaceModel(this);
-    }
-  };
   baseInsert = async () => {
     myStore.set(loadingAtom, true);
     try {
@@ -100,6 +101,22 @@ export class PlaceModel extends CommonModel implements Place {
       displayPlaceInfoByType(response.infoType);
       this.addToNationPlaceListAtom(response.place);
       this.addToPlaceListAtom(response.place);
+    } catch (error) {
+      errorCatching(error);
+    } finally {
+      myStore.set(loadingAtom, false);
+      return new PlaceModel(this);
+    }
+  };
+  baseUpdate = async () => {
+    myStore.set(loadingAtom, true);
+    try {
+      const response: { place: Place; infoType: string } =
+        await updatePlaceFetch(this);
+      this.updateFields(response.place);
+      displayPlaceInfoByType(response.infoType);
+      this.updateNationPlaceListAtom(response.place);
+      this.updatenPlaceListAtom(response.place);
     } catch (error) {
       errorCatching(error);
     } finally {

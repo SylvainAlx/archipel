@@ -8,19 +8,13 @@ import { GIFTS } from "../settings/const.js";
 
 export const nationsCount = async (req, res) => {
   try {
-    Nation.countDocuments({ banished: false })
-      .then((count) => {
-        res.status(200).json(count);
-      })
-      .catch((error) => {
-        console.error(error.message);
-        res.status(400).json({ infoType: "serverError" });
-      });
+    const count = await Nation.countDocuments({ banished: false });
+    res.status(200).json(count);
   } catch (error) {
     console.error(error);
-    res.status(500).json({
-      infoType: "500",
-      error,
+    const statusCode = error.name === "ValidationError" ? 400 : 500;
+    res.status(statusCode).json({
+      infoType: statusCode.toString(),
     });
   }
 };
@@ -39,15 +33,12 @@ export const createNation = async (req, res) => {
     } = req.body;
 
     if (!name || !owner) {
-      return res.status(400).json({ infoType: "miss" });
+      return res.status(400).json({ infoType: "400" });
     }
-
     if (owner != req.userId) {
-      return res.status(403).json({ infoType: "forbidden" });
+      return res.status(403).json({ infoType: "403" });
     }
-
     const officialId = createOfficialId("n");
-
     let data = {
       roleplay: { citizens: 1, treasury: GIFTS.REGISTER },
       general: {},
@@ -85,15 +76,15 @@ export const createNation = async (req, res) => {
       } else {
         console.error(error.message);
         return res.status(400).json({
-          infoType: "miss",
+          infoType: "400",
         });
       }
     }
   } catch (error) {
     console.error(error);
-    res.status(500).json({
-      infoType: "500",
-      error,
+    const statusCode = error.name === "ValidationError" ? 400 : 500;
+    res.status(statusCode).json({
+      infoType: statusCode.toString(),
     });
   }
 };
@@ -124,9 +115,9 @@ export const getAllNations = async (req, res) => {
     }
   } catch (error) {
     console.error(error);
-    res.status(500).json({
-      infoType: "500",
-      error,
+    const statusCode = error.name === "ValidationError" ? 400 : 500;
+    res.status(statusCode).json({
+      infoType: statusCode.toString(),
     });
   }
 };
@@ -140,9 +131,9 @@ export const getTop100Nations = async (req, res) => {
     res.status(200).json(nations);
   } catch (error) {
     console.error(error);
-    res.status(500).json({
-      infoType: "500",
-      error,
+    const statusCode = error.name === "ValidationError" ? 400 : 500;
+    res.status(statusCode).json({
+      infoType: statusCode.toString(),
     });
   }
 };
@@ -157,9 +148,9 @@ export const getOneNation = async (req, res) => {
     res.status(200).json(nation);
   } catch (error) {
     console.error(error);
-    res.status(500).json({
-      infoType: "500",
-      error,
+    const statusCode = error.name === "ValidationError" ? 400 : 500;
+    res.status(statusCode).json({
+      infoType: statusCode.toString(),
     });
   }
 };
@@ -248,9 +239,9 @@ export const deleteSelfNation = async (req, res) => {
     }
   } catch (error) {
     console.error(error);
-    res.status(500).json({
-      infoType: "500",
-      error,
+    const statusCode = error.name === "ValidationError" ? 400 : 500;
+    res.status(statusCode).json({
+      infoType: statusCode.toString(),
     });
   }
 };
@@ -265,23 +256,16 @@ export const updateNation = async (req, res) => {
       );
       nation.name = name;
       nation.data = data;
-      nation
-        .save()
-        .then((nation) => {
-          res.status(200).json({ nation, infoType: "update" });
-        })
-        .catch((error) => {
-          console.error(error);
-          res.status(400).json({ infoType: "miss" });
-        });
+      const savedNation = await nation.save();
+      res.status(200).json({ nation: savedNation, infoType: "update" });
     } else {
-      res.sendStatus(403).json({ infoType: "forbidden" });
+      res.sendStatus(403).json({ infoType: "403" });
     }
   } catch (error) {
     console.error(error);
-    res.status(500).json({
-      infoType: "500",
-      error,
+    const statusCode = error.name === "ValidationError" ? 400 : 500;
+    res.status(statusCode).json({
+      infoType: statusCode.toString(),
     });
   }
 };
@@ -315,9 +299,9 @@ export const getTags = async (req, res) => {
     res.status(200).json(tags.length > 0 ? tags : []);
   } catch (error) {
     console.error(error);
-    res.status(500).json({
-      infoType: "500",
-      error,
+    const statusCode = error.name === "ValidationError" ? 400 : 500;
+    res.status(statusCode).json({
+      infoType: statusCode.toString(),
     });
   }
 };

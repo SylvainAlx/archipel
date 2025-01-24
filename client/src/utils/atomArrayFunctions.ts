@@ -3,11 +3,9 @@
 import {
   citizenListAtom,
   myStore,
-  nationsListAtom,
   relationListAtom,
   tileListAtom,
 } from "../settings/store";
-import { Nation } from "../types/typNation";
 import { UpdateByOfficialIdProps } from "../types/typProp";
 import { DiplomaticRelationship } from "../types/typRelation";
 import { Tile } from "../types/typTile";
@@ -80,26 +78,6 @@ export const updateOrCreateCitizenInMemory = (citizen: User) => {
       getUpdateByOfficialId({
         element: citizen,
         array: myStore.get(citizenListAtom),
-      }),
-    );
-  }
-};
-
-export const updateOrCreateNationInMemory = (nation: Nation) => {
-  const savedNation = findElementOfAtomArray(
-    nation.officialId,
-    myStore.get(nationsListAtom),
-  );
-  if (savedNation === undefined) {
-    const tempArray = [...myStore.get(nationsListAtom)];
-    tempArray.push(nation);
-    myStore.set(nationsListAtom, tempArray);
-  } else {
-    myStore.set(
-      nationsListAtom,
-      getUpdateByOfficialId({
-        element: nation,
-        array: myStore.get(nationsListAtom),
       }),
     );
   }

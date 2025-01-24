@@ -6,7 +6,6 @@ import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import Form from "../form/form";
 import Input from "../form/input";
 import { emptyNewNationPayload } from "../../types/typNation";
-import { createNation } from "../../api/nation/nationAPI";
 import Select from "../form/select";
 import { useTranslation } from "react-i18next";
 import { errorMessage } from "../../utils/toasts";
@@ -15,6 +14,7 @@ import { regimeList } from "../../settings/lists";
 import { MAX_LENGTH } from "../../settings/consts";
 import RequiredStar from "../form/requiredStar";
 import { Link } from "react-router-dom";
+import { NationModel } from "../../models/nationModel";
 
 export default function NewNationModal() {
   const [newNation, setNewNation] = useAtom(newNationAtom);
@@ -28,10 +28,11 @@ export default function NewNationModal() {
     setNewNation(updateNewNation);
   }, [tags]);
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     if (newNation.regime != 0 && newNation.name != "") {
-      createNation(newNation);
+      const newNationToInsert = new NationModel(newNation);
+      await newNationToInsert.baseInsert();
       setNewNation(emptyNewNationPayload);
     } else {
       errorMessage(t("components.form.missingField"));

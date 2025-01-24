@@ -28,6 +28,7 @@ export class PlaceListModel extends ListModel {
   loadPlaceList = async (searchName: string) => {
     myStore.set(loadingAtom, true);
     try {
+      this.items = [];
       const places: Place[] = await getAllPlacesFetch(searchName);
       const updatedList = myStore.get(placeListAtomV2).addMany(places);
       updatedList != undefined && myStore.set(placeListAtomV2, updatedList);
@@ -41,50 +42,50 @@ export class PlaceListModel extends ListModel {
   };
 
   loadNationPlaces = async (nation: Nation) => {
-    const savedNationPlacesList: Place[] = [];
-    myStore
-      .get(placeListAtomV2)
-      .getItems()
-      .forEach((place) => {
-        if (place.nation === nation.officialId) {
-          savedNationPlacesList.push(place);
-        }
-      });
-    if (
-      savedNationPlacesList.length > 0 &&
-      nation.data.roleplay.places === savedNationPlacesList.length
-    ) {
-      this.addMany(savedNationPlacesList);
-    } else {
-      myStore.set(loadingAtom, true);
-      try {
+    myStore.set(loadingAtom, true);
+    try {
+      const savedNationPlacesList: Place[] = [];
+      myStore
+        .get(placeListAtomV2)
+        .getItems()
+        .forEach((place) => {
+          if (place.nation === nation.officialId) {
+            savedNationPlacesList.push(place);
+          }
+        });
+      if (
+        savedNationPlacesList.length > 0 &&
+        nation.data.roleplay.places === savedNationPlacesList.length
+      ) {
+        this.addMany(savedNationPlacesList);
+      } else {
         const places: Place[] = await getNationPlacesFetch(nation.officialId);
         const updatedList = myStore.get(placeListAtomV2).addMany(places);
         updatedList != undefined && myStore.set(placeListAtomV2, updatedList);
         this.addMany(places);
-      } catch (error) {
-        errorCatching(error);
-      } finally {
-        myStore.set(loadingAtom, false);
-        return new PlaceListModel(this.items);
       }
+    } catch (error) {
+      errorCatching(error);
+    } finally {
+      myStore.set(loadingAtom, false);
+      return new PlaceListModel(this.items);
     }
   };
 
-  add(item: Place) {
+  private add(item: Place) {
     this.items.push(new PlaceModel(item));
-    return this.items;
   }
   addMany(items: Place[]) {
     items.forEach((item) => this.addOrUpdate(item));
   }
-  private addOrUpdate(item: Place) {
+  addOrUpdate(item: Place) {
     const index = this.items.findIndex((i) => i.officialId === item.officialId);
     if (index > -1) {
       this.items[index] = new PlaceModel(item);
     } else {
       this.add(item);
     }
+    return this.items;
   }
 
   sortPlaces = (selectOption: number) => {

@@ -1,5 +1,4 @@
 import { lazy, Suspense } from "react";
-import { SelectedNationProps } from "../../types/typProp";
 import DashTile from "../dashTile";
 import TileContainer from "../tileContainer";
 import Upploader from "../uploader";
@@ -7,15 +6,37 @@ import Spinner from "../loading/spinner";
 import CrossButton from "../buttons/crossButton";
 import { useTranslation } from "react-i18next";
 import { FaMapLocationDot } from "react-icons/fa6";
-import { handleDeleteImage } from "../../utils/procedures";
+import { deleteImage } from "../../utils/procedures";
+import { NationModel } from "../../models/nationModel";
+import { confirmBox, myStore } from "../../settings/store";
 
+interface NationMapProps {
+  selectedNation: NationModel;
+  owner: boolean;
+  updatePath: (path: string, value: string, needConfirm?: boolean) => void;
+}
 export default function NationMap({
   selectedNation,
   owner,
-}: SelectedNationProps) {
+  updatePath,
+}: NationMapProps) {
   const { t } = useTranslation();
 
   const LazyImage = lazy(() => import("../lazy/lazyImage"));
+
+  const handleDeleteImage = async () => {
+    myStore.set(confirmBox, {
+      action: "",
+      text: t("components.modals.confirmModal.deleteFile"),
+      result: "",
+      actionToDo: async () => {
+        const result = await deleteImage(selectedNation.data.url.map);
+        if (result) {
+          updatePath("image", "", false);
+        }
+      },
+    });
+  };
 
   return (
     <TileContainer
@@ -36,15 +57,7 @@ export default function NationMap({
                     />
                   </Suspense>
                   {owner && (
-                    <CrossButton
-                      small={true}
-                      click={() =>
-                        handleDeleteImage({
-                          url: selectedNation.data.url.map,
-                          type: "map",
-                        })
-                      }
-                    />
+                    <CrossButton small={true} click={handleDeleteImage} />
                   )}
                 </div>
               ) : (

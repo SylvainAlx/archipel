@@ -1,6 +1,7 @@
 import { BiSolidHide, BiShow } from "react-icons/bi";
 import Button from "./button";
 import { confirmBox, myStore } from "../../settings/store";
+import { CommonModel } from "../../models/commonModel";
 
 interface AdminReportButtonProps {
   contentOfficialId: string;
@@ -12,21 +13,16 @@ export default function AdminReportButton({
   reverse = false,
 }: AdminReportButtonProps) {
   const handleAdminReport = (reverse: boolean) => {
-    if (reverse) {
-      myStore.set(confirmBox, {
-        action: "adminReportReverse",
-        text: "Afficher le contenu ?",
-        result: "",
-        target: contentOfficialId,
-      });
-    } else {
-      myStore.set(confirmBox, {
-        action: "adminReport",
-        text: "Masquer le contenu ?",
-        result: "",
-        target: contentOfficialId,
-      });
-    }
+    myStore.set(confirmBox, {
+      action: "adminReport",
+      text: reverse ? "Afficher le contenu ?" : "Masquer le contenu ?",
+      result: "",
+      actionToDo: () => {
+        const content = new CommonModel();
+        content.officialId = contentOfficialId;
+        content.reportContent(reverse);
+      },
+    });
   };
 
   return (
