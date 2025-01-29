@@ -5,24 +5,23 @@ import Button from "../buttons/button";
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import Form from "../form/form";
 import Input from "../form/input";
-// import Select from "../form/select";
 import { emptyNewNationPayload } from "../../types/typNation";
-import { createNation } from "../../api/nation/nationAPI";
 import Select from "../form/select";
 import { useTranslation } from "react-i18next";
 import { errorMessage } from "../../utils/toasts";
 import HashTag from "../tags/hashTag";
 import { regimeList } from "../../settings/lists";
+import { MAX_LENGTH } from "../../settings/consts";
+import RequiredStar from "../form/requiredStar";
+import { Link, useNavigate } from "react-router-dom";
+import { NationModel } from "../../models/nationModel";
 
 export default function NewNationModal() {
   const [newNation, setNewNation] = useAtom(newNationAtom);
   const [tagString, setTagString] = useState<string>("");
-  const [tags, setTags] = useState<string[]>([]);
+  const [tags, setTags] = useState<string[]>(newNation.tags);
   const { t } = useTranslation();
-
-  useEffect(() => {
-    console.log(newNation.regime);
-  }, [newNation.regime]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const updateNewNation = { ...newNation };
@@ -30,10 +29,12 @@ export default function NewNationModal() {
     setNewNation(updateNewNation);
   }, [tags]);
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     if (newNation.regime != 0 && newNation.name != "") {
-      createNation(newNation);
+      const newNationToInsert = new NationModel(newNation);
+      const nationInBase = await newNationToInsert.baseInsert();
+      navigate(`/nation/${nationInBase.officialId}`);
       setNewNation(emptyNewNationPayload);
     } else {
       errorMessage(t("components.form.missingField"));
@@ -54,19 +55,20 @@ export default function NewNationModal() {
   };
 
   const handleChangeTag = (e: ChangeEvent<HTMLInputElement>) => {
-    const valeur = e.target.value;
-    setTagString(valeur);
+    const value = e.target.value;
+    if (value != " ") {
+      setTagString(value);
 
-    if (valeur.includes(" ")) {
-      const mots = valeur.trim().split(/\s+/); // Séparer par des espaces multiples
-      setTags([...tags, ...mots]); // Ajouter les mots au tableau de mots-clés
-      setTagString("");
+      if (value.includes(" ")) {
+        const word = value.trim().split(/\s+/); // Séparer par des espaces multiples
+        setTags([...tags, ...word]); // Ajouter les mots au tableau de mots-clés
+        setTagString("");
+      }
     }
   };
 
   const deleteTag = (value: string) => {
-    const updatedTags = tags.filter((tag) => tag !== value);
-    setTags(updatedTags);
+    setTags((currentTags) => currentTags.filter((tag) => tag !== value));
   };
 
   return (
@@ -102,7 +104,7 @@ export default function NewNationModal() {
                     key={i}
                     className="hover:text-danger"
                   >
-                    <HashTag label={tag} />
+                    <HashTag label={tag} occurrence={-1} />
                   </span>
                 );
               })}
@@ -114,8 +116,7 @@ export default function NewNationModal() {
                 name="tag"
                 placeholder={t("components.hoverInfos.tags.hash")}
                 value={tagString}
-                disabled={tags.length > 5}
-                required={tags.length === 0}
+                disabled={tags.length === MAX_LENGTH.array.tags}
               />
               <em className="text-sm">
                 {t("components.modals.newNationModal.tagsInfos")}
@@ -138,6 +139,26 @@ export default function NewNationModal() {
                 value={newNation.nationalDay}
               />
             </label>
+            <label className="w-full flex gap-2 items-center justify-center">
+              <Link
+                to="https://fr.wikipedia.org/wiki/%C3%89tat-nation"
+                target="_blank"
+                className="cursor-help text-sm"
+              >
+                {t("components.modals.newNationModal.isNationState")}
+              </Link>
+              <Input
+                type="checkbox"
+                name="nationState"
+                checked={newNation.isNationState}
+                onChange={() =>
+                  setNewNation({
+                    ...newNation,
+                    isNationState: !newNation.isNationState,
+                  })
+                }
+              />
+            </label>
             <Select
               id="regime"
               onChange={handleSelectChange}
@@ -145,11 +166,12 @@ export default function NewNationModal() {
               title={t("components.modals.newNationModal.regime")}
               required={newNation.regime === 0}
             />
-
+            <RequiredStar />
             <Button
               type="submit"
               text={t("components.buttons.validate")}
               widthFull={true}
+              disabled={newNation.name === "" || newNation.regime === 0}
             />
             <Button
               type="button"

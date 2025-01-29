@@ -1,13 +1,7 @@
 /* eslint-disable no-case-declarations */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useAtom } from "jotai";
-import {
-  confirmBox,
-  editPlaceAtom,
-  editbox,
-  myStore,
-  sessionAtom,
-} from "../../settings/store";
+import { editbox } from "../../settings/store";
 import Button from "../buttons/button";
 import Input from "../form/input";
 import Select from "../form/select";
@@ -23,21 +17,27 @@ import { MAX_LENGTH } from "../../settings/consts";
 export default function EditBoxModal() {
   const [editBox, setEditBox] = useAtom(editbox);
   const [newElement, setNewElement] = useState("");
-  const [placeData] = useAtom(editPlaceAtom);
-  const [, setConfirm] = useAtom(confirmBox);
   const { t } = useTranslation();
 
   useEffect(() => {
     if (Array.isArray(editBox.original)) {
       if (editBox.path === "data.roleplay.capital") {
-        setEditBox({ ...editBox, new: editBox.original[0].id });
+        setEditBox({ ...editBox, new: editBox.original });
       } else if (editBox.path === "citizenship.residence") {
         setEditBox({ ...editBox, new: editBox.original[0].id });
       } else if (editBox.path === "parentId") {
         setEditBox({ ...editBox, new: editBox.original[0].id });
-      } else setEditBox({ ...editBox, new: [] });
+      } else setEditBox({ ...editBox, new: editBox.original });
     }
-    if (typeof editBox.original == "string") {
+    if (
+      typeof editBox.indice == "string" ||
+      typeof editBox.indice == "number"
+    ) {
+      setEditBox({ ...editBox, new: editBox.indice });
+    } else if (
+      typeof editBox.original == "string" ||
+      typeof editBox.indice == "number"
+    ) {
       setEditBox({ ...editBox, new: editBox.original });
     }
 
@@ -45,98 +45,11 @@ export default function EditBoxModal() {
   }, [editBox.original]);
 
   const handleSubmit = (e: FormEvent) => {
-    const session = myStore.get(sessionAtom);
     e.preventDefault();
-    const parties: string[] = editBox.path.split(".");
-    let objetCourant;
-    let dernierePartie;
-    switch (editBox.target) {
-      case "nation":
-        const updatedNation: any = { ...session.nation };
-        objetCourant = updatedNation;
-        for (let i = 0; i < parties.length - 1; i++) {
-          if (typeof objetCourant === "object" && objetCourant !== null) {
-            objetCourant = objetCourant[parties[i]];
-          } else {
-            console.error(
-              `Chemin incorrect. Propriété ${parties[i]} non trouvée.`,
-            );
-            break;
-          }
-        }
-        dernierePartie = parties[parties.length - 1];
-        if (typeof objetCourant === "object" && objetCourant !== null) {
-          objetCourant[dernierePartie] = editBox.new;
-        }
-        // updatedNation.officialId = session.user.officialId;
-
-        setConfirm({
-          action: "updateNation",
-          text: t("components.modals.confirmModal.updateNation"),
-          result: "",
-          target: "",
-          payload: updatedNation,
-        });
-        break;
-      case "citizen":
-        const updatedCitizen: any = { ...session.user };
-        objetCourant = updatedCitizen;
-        for (let i = 0; i < parties.length - 1; i++) {
-          if (typeof objetCourant === "object" && objetCourant !== null) {
-            objetCourant = objetCourant[parties[i]];
-          } else {
-            console.error(
-              `Chemin incorrect. Propriété ${parties[i]} non trouvée.`,
-            );
-            break;
-          }
-        }
-        dernierePartie = parties[parties.length - 1];
-        if (typeof objetCourant === "object" && objetCourant !== null) {
-          objetCourant[dernierePartie] = editBox.new;
-        }
-        setConfirm({
-          action: "updateUser",
-          text: t("components.modals.confirmModal.updateCitizen"),
-          result: "",
-          target: "",
-          payload: updatedCitizen,
-        });
-        break;
-      case "place":
-        const updatedPlace: any = { ...placeData.place };
-        objetCourant = updatedPlace;
-        for (let i = 0; i < parties.length - 1; i++) {
-          if (typeof objetCourant === "object" && objetCourant !== null) {
-            objetCourant = objetCourant[parties[i]];
-          } else {
-            console.error(
-              `Chemin incorrect. Propriété ${parties[i]} non trouvée.`,
-            );
-            break;
-          }
-        }
-        dernierePartie = parties[parties.length - 1];
-        if (typeof objetCourant === "object" && objetCourant !== null) {
-          objetCourant[dernierePartie] = editBox.new;
-        }
-        setConfirm({
-          action: "updatePlace",
-          text: t("components.modals.confirmModal.updatePlace"),
-          result: "",
-          target: "",
-          payload: updatedPlace,
-        });
-        break;
-      default:
-        break;
+    if (editBox.action != undefined) {
+      editBox.action(editBox.path, editBox.new);
     }
-
     setEditBox({ target: "", original: -1, new: -1, path: "" });
-  };
-
-  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setEditBox({ ...editBox, new: e.target.value });
   };
 
   const handleInputChangeArray = (
@@ -150,11 +63,9 @@ export default function EditBoxModal() {
     }
   };
 
-  const handleTextChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-    setEditBox({ ...editBox, new: e.target.value });
-  };
-
-  const handleDateChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (
+    e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
+  ) => {
     setEditBox({ ...editBox, new: e.target.value });
   };
 
@@ -173,10 +84,21 @@ export default function EditBoxModal() {
   };
 
   const handleDeleteItem = (i: number) => {
-    const newArray = editBox.original;
+    const newArray = structuredClone(editBox.new);
     if (Array.isArray(newArray)) {
       newArray.splice(i, 1);
       setEditBox({ ...editBox, new: newArray });
+    }
+  };
+
+  const handleAddItem = () => {
+    if (newElement != "") {
+      const newArray = structuredClone(editBox.new);
+      if (Array.isArray(newArray)) {
+        newArray.push(newElement);
+        setEditBox({ ...editBox, new: newArray });
+        setNewElement("");
+      }
     }
   };
 
@@ -196,16 +118,16 @@ export default function EditBoxModal() {
           editBox.path != "data.general.nationalDay" ? (
             <TextArea
               required={!editBox.canBeEmpty}
-              maxLength={MAX_LENGTH.textArea}
+              maxLength={MAX_LENGTH.text.textArea}
               placeholder={t("components.modals.editModal.newValue")}
-              onChange={handleTextChange}
+              onChange={handleChange}
               value={editBox.new.toString()}
               name=""
               rows={1}
             />
           ) : editBox.path === "data.general.nationalDay" ? (
             <Input
-              onChange={handleDateChange}
+              onChange={handleChange}
               type="date"
               name="nationalDay"
               value={editBox.new.toString()}
@@ -222,15 +144,17 @@ export default function EditBoxModal() {
             required={!editBox.canBeEmpty}
             type="number"
             placeholder={t("components.modals.editModal.newValue")}
-            onChange={handleInputChange}
+            onChange={handleChange}
             value={editBox.new.toString()}
             name=""
           />
         )}
         {Array.isArray(editBox.original) &&
-        typeof editBox.original[0] == "string" ? (
+        Array.isArray(editBox.new) &&
+        (typeof editBox.original[0] == "string" ||
+          editBox.path === "data.general.tags") ? (
           <div className="flex flex-wrap justify-center items-center gap-2">
-            {editBox.original.map((_element, i) => {
+            {editBox.new.map((_element, i) => {
               return (
                 <div
                   className="w-full flex items-center gap-1 justify-center"
@@ -267,14 +191,7 @@ export default function EditBoxModal() {
               />
               <div
                 className="cursor-pointer text-xl hover:animate-pulse rounded-full transition-all"
-                onClick={() => {
-                  const newArray = editBox.original;
-                  if (Array.isArray(newArray)) {
-                    newArray.push(newElement);
-                    setEditBox({ ...editBox, new: newArray });
-                    setNewElement("");
-                  }
-                }}
+                onClick={handleAddItem}
               >
                 <MdCheckCircle />
               </div>
@@ -286,10 +203,10 @@ export default function EditBoxModal() {
               required
               options={editBox.original}
               onChange={handleSelectChange}
+              value={editBox.new.toString()}
             />
           )
         )}
-
         <Button
           text={t("components.buttons.cancel")}
           click={() =>
@@ -297,11 +214,11 @@ export default function EditBoxModal() {
           }
           widthFull={true}
         />
-
         <Button
           type="submit"
           text={t("components.buttons.validate")}
           widthFull={true}
+          disabled={editBox.new === editBox.indice}
         />
       </form>
     </div>

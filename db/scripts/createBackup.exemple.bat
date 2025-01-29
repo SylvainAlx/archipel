@@ -2,11 +2,10 @@
 setlocal
 
 :: Définir les variables
-set NOM_BASE_PROD=[NAME]
-set NOM_BASE_DEV=[NAME]
+set NOM_BASE_PROD="[NAME]"
+set NOM_BASE_DEV="[NAME]"
 set URL_PROD="[URI]/%NOM_BASE_PROD%?retryWrites=true&w=majority"
-set DOSSIER_BACKUP=..\backup
-set DOSSIER_RESTAURE=..\backup\%NOM_BASE_PROD%
+set DOSSIER_BACKUP= "[PATH-TO-FOLDER]"
 
 :: Création d'un dossier de backup local
 if not exist %DOSSIER_BACKUP% (
@@ -31,12 +30,15 @@ if %errorlevel% neq 0 (
     exit /b %errorlevel%
 )
 
-:: Suppression du dossier de backup non compressé pour économiser de l'espace
-rd /s /q %DOSSIER_RESTAURE%
+:: Vérification des chemins
+if not exist "%DOSSIER_BACKUP%\%NOM_BASE_PROD%" (
+    echo "Erreur : Le dossier de backup spécifié n'existe pas (%DOSSIER_BACKUP%\%NOM_BASE_PROD%)."
+    exit /b 1
+)
 
 :: Restauration de la base MongoDB en local
 echo Démarrage de la restauration en local...
-mongorestore --db %NOM_BASE_DEV% %DOSSIER_BACKUP%\%NOM_BASE_PROD%
+mongorestore --nsInclude=%NOM_BASE_PROD%.* --nsFrom=%NOM_BASE_PROD%.* --nsTo=%NOM_BASE_DEV%.* "%DOSSIER_BACKUP%\%NOM_BASE_PROD%"
 
 :: Vérifier si la restauration a réussi
 if %errorlevel% neq 0 (
@@ -45,6 +47,5 @@ if %errorlevel% neq 0 (
 )
 
 echo "Backup et restauration terminés avec succès !"
-:: Attendre que l'utilisateur appuie sur une touche pour fermer la console
 pause
 endlocal

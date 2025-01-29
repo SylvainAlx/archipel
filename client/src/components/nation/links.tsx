@@ -3,6 +3,7 @@ import { FaDiscord, FaInstagram, FaLink, FaWikipediaW } from "react-icons/fa6";
 import { SelectedNationProps } from "../../types/typProp";
 import ExternalLink from "../externalLink";
 import EditIcon from "../editIcon";
+import ShareButton from "../buttons/shareButton";
 
 export default function Links({ selectedNation, owner }: SelectedNationProps) {
   const { t } = useTranslation();
@@ -64,6 +65,7 @@ export default function Links({ selectedNation, owner }: SelectedNationProps) {
           />
         )}
       </span>
+      <ShareButton label={selectedNation.name} />
     </div>
   );
 }

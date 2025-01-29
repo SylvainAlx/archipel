@@ -7,18 +7,25 @@ import { confirmBox, editTileAtom, myStore } from "../../settings/store";
 import { useAtom } from "jotai";
 import { useTranslation } from "react-i18next";
 import TextArea from "../form/textArea";
+import { FaCoins } from "react-icons/fa";
+import { COSTS } from "../../settings/consts";
+import RequiredStar from "../form/requiredStar";
 
 export default function TileFormModal() {
-  const [newTile, setNewTile] = useState(false);
+  const [isNewTile, setIsNewTile] = useState(false);
   const [updatedTile, setUpdatedTile] = useState(emptyTile);
   const [tile, setTile] = useAtom(editTileAtom);
   const { t } = useTranslation();
 
   useEffect(() => {
     if (tile.nationOfficialId != "") {
-      setUpdatedTile(tile);
+      const tileToUpdated = structuredClone(tile);
+      if (tileToUpdated.isFree === undefined) {
+        tileToUpdated.isFree = true;
+      }
+      setUpdatedTile(tileToUpdated);
       if (tile.title === "") {
-        setNewTile(true);
+        setIsNewTile(true);
       }
     }
   }, [tile]);
@@ -33,7 +40,7 @@ export default function TileFormModal() {
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    if (newTile) {
+    if (isNewTile) {
       updatedTile.nationOfficialId = tile.nationOfficialId;
       myStore.set(confirmBox, {
         action: "createTile",
@@ -53,12 +60,18 @@ export default function TileFormModal() {
     }
   };
   return (
-    <div>
+    <div className="flex flex-col items-center">
       <h2 className="text-2xl text-center p-4">
-        {newTile
+        {isNewTile
           ? t("components.modals.tileModal.new")
           : t("components.modals.tileModal.update")}
       </h2>
+      {!updatedTile.isFree && (
+        <span className="flex items-center gap-1 text-gold">
+          <FaCoins />
+          {COSTS.TILE}
+        </span>
+      )}
       <Form
         submit={handleSubmit}
         children={
@@ -91,10 +104,16 @@ export default function TileFormModal() {
               placeholder={t("components.modals.tileModal.inputValue")}
               value={updatedTile.value}
             />
+            <RequiredStar />
             <Button
               type="submit"
               text={t("components.buttons.validate")}
               widthFull={true}
+              disabled={
+                updatedTile.title === tile.title &&
+                updatedTile.value === tile.value &&
+                updatedTile.description === tile.description
+              }
             />
             <Button
               type="button"

@@ -1,4 +1,4 @@
-import { Routes, Route, useNavigate } from "react-router-dom";
+import { Routes, Route, useNavigate, useLocation } from "react-router-dom";
 import {
   adminRoutes,
   authRoutes,
@@ -9,51 +9,35 @@ import Header from "./layouts/header";
 import Footer from "./layouts/footer";
 import "./assets/styles/App.css";
 import { useAtom } from "jotai";
-import { lobbyAtom, nationFetchedAtom, sessionAtom } from "./settings/store";
+import { lobbyAtom, sessionAtom, showCookiesModalAtom } from "./settings/store";
 import { useEffect, useState } from "react";
 import ModalsRouter from "./router/modalsRouter";
 import { ArchipelRoute } from "./types/typReact";
 import i18n from "./i18n/i18n";
-import { authentification } from "./api/user/userAPI";
-import { getNation } from "./api/nation/nationAPI";
 import { MDP_LOBBY } from "./settings/consts";
 import Lobby from "./pages/lobby";
-import { SpeedInsights } from "@vercel/speed-insights/react";
-import ReactGA from "react-ga4";
-import { GOOGLE_ANALYTICS_MEASUREMENT_ID } from "./settings/consts.ts";
 import CookiesModal from "./components/modals/cookiesModal.tsx";
+import { clearImagesInCache } from "./utils/procedures.ts";
 
 export default function App() {
   const [access, setAccess] = useAtom(lobbyAtom);
-  const [cookiesAccepted, setCookiesAccepted] = useState(false);
   const [openPrivateRoads, setOpenPrivateRoads] = useState(false);
-  const [session, setSession] = useAtom(sessionAtom);
-  const [nation] = useAtom(nationFetchedAtom);
+  const [session] = useAtom(sessionAtom);
+  const [showModal] = useAtom(showCookiesModalAtom);
 
   const navigate = useNavigate();
-
-  const handleAcceptCookies = () => {
-    setCookiesAccepted(true);
-    ReactGA.initialize(GOOGLE_ANALYTICS_MEASUREMENT_ID);
-    ReactGA.send("pageview");
-  };
-
-  const handleDeclineCookies = () => {
-    setCookiesAccepted(false);
-  };
+  const location = useLocation();
 
   useEffect(() => {
-    if (cookiesAccepted) {
-      ReactGA.initialize(GOOGLE_ANALYTICS_MEASUREMENT_ID);
-    }
-  }, [cookiesAccepted]);
-
-  useEffect(() => {
+    const auth = async () => {
+      await session.user.authentification();
+    };
+    clearImagesInCache();
     i18n.init();
     const lobbyToken = localStorage.getItem("lobbyToken");
     if (!access && lobbyToken === MDP_LOBBY) {
       setAccess(true);
-      session.user.officialId === "" && authentification();
+      session.user.officialId === "" && auth();
     } else {
       setAccess(false);
     }
@@ -62,30 +46,15 @@ export default function App() {
 
   useEffect(() => {
     if (session.user.officialId != "") {
-      if (
-        session.user.citizenship.nationId != "" &&
-        nation.officialId != session.user.citizenship.nationId
-      ) {
-        getNation(session.user.citizenship.nationId);
-      }
-      navigate(`/citizen/${session.user.officialId}`);
       setOpenPrivateRoads(true);
+      if (location.pathname === "/login" || location.pathname === "/register") {
+        navigate(`/citizen/${session.user.officialId}`);
+      }
     } else {
-      navigate(`/`);
       setOpenPrivateRoads(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [session.user]);
-
-  useEffect(() => {
-    if (
-      nation != null &&
-      nation.officialId === session.user.citizenship.nationId
-    ) {
-      setSession({ ...session, nation });
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [nation]);
 
   return (
     <>
@@ -112,13 +81,7 @@ export default function App() {
           <Lobby />
         )}
         <ModalsRouter />
-        {access && (
-          <CookiesModal
-            accept={handleAcceptCookies}
-            decline={handleDeclineCookies}
-          />
-        )}
-        <SpeedInsights />
+        {access && showModal && <CookiesModal />}
       </main>
       <Footer />
     </>

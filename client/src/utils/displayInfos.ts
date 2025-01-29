@@ -24,30 +24,6 @@ export const displayUserInfoByType = (type: string) => {
     case "changeStatus":
       successMessage(i18n.t("toasts.user.update"));
       break;
-    case "deleteKO":
-      errorMessage(i18n.t("toasts.user.deleteKO"));
-      break;
-    case "miss":
-      errorMessage(i18n.t("toasts.errors.miss"));
-      break;
-    case "badRecovery":
-      errorMessage(i18n.t("toasts.user.badRecovery"));
-      break;
-    case "forbidden":
-      errorMessage(i18n.t("toasts.errors.forbidden"));
-      break;
-    case "user":
-      errorMessage(i18n.t("toasts.user.badUser"));
-      break;
-    case "password":
-      errorMessage(i18n.t("toasts.user.badPassword"));
-      break;
-    case "11000":
-      errorMessage(i18n.t("toasts.errors.11000"));
-      break;
-    case "serverError":
-      errorMessage(i18n.t("toasts.user.serverError"));
-      break;
     default:
       break;
   }
@@ -70,9 +46,6 @@ export const displayNationInfoByType = (type: string) => {
     case "11000":
       errorMessage(i18n.t("toasts.errors.11000"));
       break;
-    case "serverError":
-      errorMessage(i18n.t("toasts.errors.sererError"));
-      break;
     case "update":
       successMessage(i18n.t("toasts.nation.update"));
       break;
@@ -84,6 +57,9 @@ export const displayNationInfoByType = (type: string) => {
       break;
     case "404":
       errorMessage(i18n.t("toasts.errors.404"));
+      break;
+    case "500":
+      errorMessage(i18n.t("toasts.errors.500"));
       break;
     default:
       break;
@@ -104,6 +80,9 @@ export const displayRelationInfoByType = (type: string) => {
     case "400":
       errorMessage(i18n.t("toasts.errors.400"));
       break;
+    case "500":
+      errorMessage(i18n.t("toasts.errors.500"));
+      break;
     default:
       break;
   }
@@ -123,8 +102,8 @@ export const displayTileInfoByType = (type: string) => {
     case "forbidden":
       errorMessage(i18n.t("toasts.errors.forbidden"));
       break;
-    case "serverError":
-      errorMessage(i18n.t("toasts.errors.serverError"));
+    case "500":
+      errorMessage(i18n.t("toasts.errors.500"));
       break;
     default:
       break;
@@ -142,24 +121,6 @@ export const displayPlaceInfoByType = (type: string) => {
     case "delete":
       successMessage(i18n.t("toasts.place.delete"));
       break;
-    case "forbidden":
-      errorMessage(i18n.t("toasts.errors.forbidden"));
-      break;
-    case "serverError":
-      errorMessage(i18n.t("toasts.errors.sererError"));
-      break;
-    case "11000":
-      errorMessage(i18n.t("toasts.errors.11000"));
-      break;
-    case "400":
-      errorMessage(i18n.t("toasts.errors.400"));
-      break;
-    case "404":
-      errorMessage(i18n.t("toasts.errors.404"));
-      break;
-    case "miss":
-      errorMessage(i18n.t("toasts.errors.miss"));
-      break;
     default:
       break;
   }
@@ -173,13 +134,12 @@ export const displayFileInfoByType = (type: string) => {
     case "miss":
       errorMessage(i18n.t("toasts.errors.miss"));
       break;
-    case "serverError":
-      errorMessage(i18n.t("toasts.errors.sererError"));
-      break;
     case "400":
       errorMessage(i18n.t("toasts.errors.400"));
       break;
-
+    case "500":
+      errorMessage(i18n.t("toasts.errors.500"));
+      break;
     default:
       break;
   }
@@ -187,19 +147,51 @@ export const displayFileInfoByType = (type: string) => {
 
 export const displayComInfoByType = (type: string) => {
   switch (type) {
-    case "new":
+    case "201":
       successMessage(i18n.t("toasts.com.new"));
       break;
     case "delete":
       successMessage(i18n.t("toasts.com.delete"));
       break;
+    default:
+      break;
+  }
+};
+
+export const displayErrorByCode = (code: string) => {
+  switch (code) {
     case "400":
       errorMessage(i18n.t("toasts.errors.400"));
+      break;
+    case "401":
+      errorMessage(i18n.t("toasts.errors.401"));
+      break;
+    case "403":
+      errorMessage(i18n.t("toasts.errors.403"));
+      break;
+    case "404":
+      errorMessage(i18n.t("toasts.errors.404"));
       break;
     case "11000":
       errorMessage(i18n.t("toasts.errors.11000"));
       break;
     default:
+      errorMessage(i18n.t("toasts.errors.500"));
       break;
+  }
+};
+
+export const errorCatching = (error: unknown) => {
+  try {
+    if (error instanceof Error) {
+      const parsedMessage = JSON.parse(error.message);
+      if (parsedMessage?.infoType) {
+        displayErrorByCode(parsedMessage.infoType);
+        return;
+      }
+    }
+    console.error(error);
+  } catch (e) {
+    console.error("Erreur lors de la gestion de l'erreur :", e, error);
   }
 };

@@ -1,17 +1,32 @@
+import CountUp from "react-countup";
 import Tag from "./tag";
-import { customTagProps } from "../../types/typProp";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 
-export default function HashTag({ label }: customTagProps) {
+interface HashtagProps {
+  label: string;
+  occurrence: number;
+}
+
+export default function HashTag({ label, occurrence }: HashtagProps) {
   const { t } = useTranslation();
   const navigate = useNavigate();
   return (
     <Tag
-      text={"#" + label.toString()}
+      text={`#${label}`}
       hover={t("components.hoverInfos.tags.hash")}
       bgColor="bg-complementary3"
-      click={() => navigate("/explore/2")}
+      click={() => navigate(`/explore/2#${label}`)}
+      children={
+        occurrence != -1 ? (
+          <CountUp
+            className="bg-complementary2 rounded-full px-1"
+            end={occurrence}
+          />
+        ) : (
+          <></>
+        )
+      }
     />
   );
 }

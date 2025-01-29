@@ -1,5 +1,6 @@
 import { useState } from "react";
 import HoverInfo from "./hoverInfo";
+import { Link } from "react-router-dom";
 
 export interface ExternalLinkProps {
   url: string;
@@ -20,13 +21,13 @@ export default function ExternalLink({
       className="relative text-3xl"
     >
       {url != "" ? (
-        <a
-          href={url}
+        <Link
+          to={url}
           target="_blank"
           className="cursor-pointer text-secondary hover:animate-pulse"
         >
           {children}
-        </a>
+        </Link>
       ) : (
         <div className="opacity-10">{children}</div>
       )}

@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next";
 import { MdReport } from "react-icons/md";
 import { confirmBox, myStore, sessionAtom } from "../../settings/store";
 import { ComPayload } from "../../types/typCom";
+import { ComModel } from "../../models/comModel";
 
 interface ReportButtonProps {
   contentOfficialId: string;
@@ -18,13 +19,17 @@ export default function ReportButton({ contentOfficialId }: ReportButtonProps) {
       destination: contentOfficialId,
       origin: myStore.get(sessionAtom).user.officialId,
       title: "Report",
-      message: "",
+      message: "Content reported and awaiting moderation",
     };
     myStore.set(confirmBox, {
       action: "reportContent",
       text: t("components.modals.confirmModal.reportContent"),
       result: "",
       payload,
+      actionToDo: () => {
+        const newCom = new ComModel(payload);
+        newCom.baseInsert();
+      },
     });
   };
   return (

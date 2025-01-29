@@ -1,116 +1,81 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import {
-  ChangeEvent,
-  FormEvent,
-  SetStateAction,
-  useEffect,
-  useState,
-} from "react";
+import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 
 import Input from "../form/input";
-import Button from "../buttons/button";
 import Select from "../form/select";
-import { SetAtom, placesListAtom, statsAtom } from "../../settings/store";
+import { placeListAtomV2, statsAtom } from "../../settings/store";
 import { useTranslation } from "react-i18next";
 import { useAtom } from "jotai";
-import { getPlaces } from "../../api/place/placeAPI";
-import { getPlaceTypeLabel, getTotalPopulation } from "../../utils/functions";
-import { Place } from "../../types/typPlace";
-import { placeSearchSortOptions } from "../../settings/lists";
+import { getPlaceTypeLabel } from "../../utils/functions";
+import SearchButtons from "../form/searchButtons";
+import { PLACE_SORTING } from "../../settings/sorting";
+import { PlaceListModel } from "../../models/lists/placeListModel";
 
-export interface SearchBarProps {
+export interface PlaceSearchBarProps {
   type: string;
-  list: any[];
-  setList: SetAtom<[SetStateAction<any>], void>;
+  list: PlaceListModel;
+  setList: React.Dispatch<React.SetStateAction<PlaceListModel>>;
 }
 
-export default function PlaceSearchBar({ list, setList }: SearchBarProps) {
+export default function PlaceSearchBar({ list, setList }: PlaceSearchBarProps) {
   const { t } = useTranslation();
   const [searchName, setSearchName] = useState("");
-  const [sorting, setSorting] = useState("3");
   const [placeType, setPlaceType] = useState({
     type_0: true,
     type_1: true,
     type_2: true,
     type_3: true,
   });
-  const [placeList] = useAtom(placesListAtom);
+  const [placeList] = useAtom(placeListAtomV2);
   const [stats] = useAtom(statsAtom);
 
   useEffect(() => {
-    if (placeList.length != stats.counts.places) {
-      getPlaces("");
+    if (
+      placeList.getItems().length != stats.counts.places ||
+      stats.counts.places === 0
+    ) {
+      loadPlaceList("");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [stats.counts.places]);
 
   useEffect(() => {
-    placesSorting(placeList, sorting);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [placeList]);
-
-  useEffect(() => {
-    const updatedList1 = placeList.filter(
-      (place) => place.type === 0 && placeType.type_0,
-    );
-    const updatedList2 = placeList.filter(
-      (place) => place.type === 1 && placeType.type_1,
-    );
-    const updatedList3 = placeList.filter(
-      (place) => place.type === 2 && placeType.type_2,
-    );
-    const updatedList4 = placeList.filter(
-      (place) => place.type === 3 && placeType.type_3,
-    );
+    const updatedList1 = placeList
+      .getItems()
+      .filter((place) => place.type === 0 && placeType.type_0);
+    const updatedList2 = placeList
+      .getItems()
+      .filter((place) => place.type === 1 && placeType.type_1);
+    const updatedList3 = placeList
+      .getItems()
+      .filter((place) => place.type === 2 && placeType.type_2);
+    const updatedList4 = placeList
+      .getItems()
+      .filter((place) => place.type === 3 && placeType.type_3);
     const newList = [
       ...updatedList1,
       ...updatedList2,
       ...updatedList3,
       ...updatedList4,
     ];
-    setList(newList);
-    placesSorting(newList, sorting);
+    setList(new PlaceListModel(newList, list.sorting));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [placeType]);
 
+  const loadPlaceList = async (searchName: string) => {
+    let updatedList = await list.loadPlaceList(searchName);
+    updatedList = updatedList.sortPlaces(list.sorting);
+    updatedList && setList(updatedList);
+  };
+
   const reset = () => {
-    getPlaces("");
+    loadPlaceList("");
     setPlaceType({
       type_0: true,
       type_1: true,
       type_2: true,
       type_3: true,
     });
-  };
-
-  const placesSorting = (Alist: Place[], selectOption: string) => {
-    const updatedList = [...Alist];
-    if (selectOption === "0") {
-      setList(
-        updatedList.sort(function (a, b) {
-          return a.name.localeCompare(b.name);
-        }),
-      );
-    } else if (selectOption === "1") {
-      setList(
-        updatedList.sort(function (a, b) {
-          return b.name.localeCompare(a.name);
-        }),
-      );
-    } else if (selectOption === "2") {
-      setList(
-        updatedList.sort(
-          (a, b) => getTotalPopulation(a) - getTotalPopulation(b),
-        ),
-      );
-    } else if (selectOption === "3") {
-      setList(
-        updatedList.sort(
-          (a, b) => getTotalPopulation(b) - getTotalPopulation(a),
-        ),
-      );
-    }
-    setSorting(selectOption);
   };
 
   const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
@@ -138,7 +103,12 @@ export default function PlaceSearchBar({ list, setList }: SearchBarProps) {
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    getPlaces(searchName);
+    loadPlaceList(searchName);
+  };
+
+  const handleChangeSorting = (e: ChangeEvent<HTMLSelectElement>) => {
+    const updatedList = list.sortPlaces(Number(e.target.value));
+    setList(updatedList);
   };
 
   return (
@@ -155,68 +125,25 @@ export default function PlaceSearchBar({ list, setList }: SearchBarProps) {
         value={searchName}
       />
       <Select
-        onChange={(e: ChangeEvent<HTMLSelectElement>) =>
-          placesSorting(list, e.target.value)
-        }
-        options={placeSearchSortOptions}
-        value={sorting}
+        onChange={handleChangeSorting}
+        options={Object.values(PLACE_SORTING)}
+        value={list.sorting}
       />
       <div className="flex flex-wrap flex-col md:flex-row gap-2 items-center justify-center md:justify-between">
         <fieldset className="flex gap-3">
-          <label className="flex gap-2 items-center">
-            {getPlaceTypeLabel(0)}
-            <input
-              type="checkbox"
-              id="0"
-              checked={placeType.type_0}
-              onChange={handleChangeCheckbox}
-            />
-          </label>
-          <label className="flex gap-2 items-center">
-            {getPlaceTypeLabel(1)}
-            <input
-              type="checkbox"
-              id="1"
-              checked={placeType.type_1}
-              onChange={handleChangeCheckbox}
-            />
-          </label>
-          <label className="flex gap-2 items-center">
-            {getPlaceTypeLabel(2)}
-            <input
-              type="checkbox"
-              id="2"
-              checked={placeType.type_2}
-              onChange={handleChangeCheckbox}
-            />
-          </label>
-          <label className="flex gap-2 items-center">
-            {getPlaceTypeLabel(3)}
-            <input
-              type="checkbox"
-              id="3"
-              checked={placeType.type_3}
-              onChange={handleChangeCheckbox}
-            />
-          </label>
+          {[0, 1, 2, 3].map((index) => (
+            <label key={index} className="flex gap-2 items-center">
+              {getPlaceTypeLabel(index)}
+              <input
+                type="checkbox"
+                id={String(index)}
+                checked={placeType[`type_${index}` as keyof typeof placeType]}
+                onChange={handleChangeCheckbox}
+              />
+            </label>
+          ))}
         </fieldset>
-        <div className="pb-2 flex flex-wrap gap-2 items-center justify-between md:justify-end">
-          <div className="w-[150px] flex justify-center">
-            <Button
-              type="submit"
-              disabled={false}
-              text={t("components.buttons.search")}
-            />
-          </div>
-          <div className="w-[150px] flex justify-center">
-            <Button
-              type="button"
-              disabled={false}
-              text={t("components.buttons.reset")}
-              click={reset}
-            />
-          </div>
-        </div>
+        <SearchButtons reset={reset} />
       </div>
     </form>
   );

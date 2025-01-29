@@ -1,3 +1,14 @@
+export enum Plans {
+  free = "free",
+  premium = "premium",
+  elite = "elite",
+}
+
+export enum Roles {
+  standard = "standard",
+  admin = "admin",
+}
+
 export interface User {
   officialId: string;
   name: string;
@@ -5,14 +16,17 @@ export interface User {
   gender: number;
   avatar: string;
   language: string;
+  religion: number;
   password?: string;
   recovery?: string;
   email: string;
   link: string;
-  role: "standard" | "admin";
+  role: Roles;
   credits: number;
-  plan: "free" | "premium" | "elite";
+  plan: Plans;
   expirationDate: string;
+  reported: boolean;
+  banished: boolean;
   citizenship: {
     status: number;
     nationId: string;
@@ -54,14 +68,17 @@ export const emptyUser: User = {
   gender: 0,
   avatar: "",
   language: "",
+  religion: 0,
   password: "",
   recovery: "",
   email: "",
   link: "",
-  role: "standard",
+  role: Roles.standard,
   credits: 0,
-  plan: "free",
+  plan: Plans.free,
   expirationDate: "",
+  reported: false,
+  banished: false,
   citizenship: {
     status: -1,
     nationId: "",

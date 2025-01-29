@@ -1,48 +1,46 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { Suspense, lazy, useEffect, useState } from "react";
-import { LabelId } from "../../types/typNation";
+import { useEffect, useState } from "react";
+import { LabelId, Nation } from "../../types/typNation";
 import RegimeTag from "../tags/regimeTag";
 import IdTag from "../tags/idTag";
 import CapitalTag from "../tags/capitalTag";
 import { useTranslation } from "react-i18next";
-import { COA_MAKER_URL, FLAG_MAKER_URL } from "../../settings/consts";
-import Spinner from "../loading/spinner";
-import { BsShieldShaded } from "react-icons/bs";
-import { GiBlackFlag } from "react-icons/gi";
-import { SelectedNationProps } from "../../types/typProp";
 import TileContainer from "../tileContainer";
 import DashTile from "../dashTile";
 import EditIcon from "../editIcon";
-import H3 from "../titles/h3";
-import Upploader from "../uploader";
-import CrossButton from "../buttons/crossButton";
 import TagList from "./tagList";
 import CurrencyTag from "../tags/currencyTag";
 import NationalDayTag from "../tags/nationalDayTag";
-import {
-  getLabelIdArrayFromNationPlaceList,
-  handleDeleteImage,
-} from "../../utils/functions";
+import { getLabelIdArrayFromNationPlaceList } from "../../utils/functions";
 import PopulationTag from "../tags/populationTag";
 import PlaceTag from "../tags/placeTag";
 import MDEditor from "@uiw/react-md-editor";
-import TreasuryTag from "../tags/treasuryTag";
-import LinkButton from "../buttons/linkButton";
-import { FaExternalLinkAlt } from "react-icons/fa";
 import { regimeList } from "../../settings/lists";
+import TreasuryTag from "../tags/treasuryTag";
+import BigFlag from "./bigFlag";
+import CoatOfArms from "./coatOfArms";
+import NationStateTag from "../tags/nationStateTag";
+import { placeListAtomV2 } from "../../settings/store";
+import { useAtom } from "jotai";
+
+interface NationIdentityProps {
+  selectedNation: Nation;
+  owner: boolean;
+  updatePath: (path: string, value: string) => void;
+}
 
 export default function NationIdentity({
   selectedNation,
   owner,
-}: SelectedNationProps) {
+  updatePath,
+}: NationIdentityProps) {
   const { t } = useTranslation();
-  const [placesList, setPlacesList] = useState<LabelId[]>([]);
-
-  const LazyImage = lazy(() => import("../lazy/lazyImage"));
+  const [placeList] = useAtom(placeListAtomV2);
+  const [nationPlaceList, setNationPlaceList] = useState<LabelId[]>([]);
 
   useEffect(() => {
-    const list = getLabelIdArrayFromNationPlaceList();
-    setPlacesList(list);
+    const list = getLabelIdArrayFromNationPlaceList(placeList);
+    setNationPlaceList(list);
   }, []);
 
   return (
@@ -55,112 +53,19 @@ export default function NationIdentity({
             children={
               <>
                 <div className="w-full p-4 flex flex-col gap-2 items-center">
-                  <div className="w-full relative flex items-center justify-center gap-2">
-                    <H3 text={selectedNation.name} />
-                    {owner && (
-                      <EditIcon
-                        target="nation"
-                        param={selectedNation.name}
-                        path="name"
-                        canBeEmpty={false}
+                  <div className="flex flex-row justify-center items-start flex-wrap gap-6">
+                    <BigFlag
+                      nation={selectedNation}
+                      owner={owner ? owner : false}
+                      updatePath={updatePath}
+                    />
+                    {(selectedNation.data.url.coatOfArms || owner) && (
+                      <CoatOfArms
+                        nation={selectedNation}
+                        owner={owner ? owner : false}
+                        updatePath={updatePath}
                       />
                     )}
-                  </div>
-                  <div className="flex flex-row justify-center items-start flex-wrap gap-6">
-                    <div className="relative">
-                      <div
-                        className={`w-[140px] h-full flex flex-col items-center justify-end gap-2`}
-                      >
-                        {selectedNation.data.url.flag ? (
-                          <div className="relative">
-                            <Suspense fallback={<Spinner />}>
-                              <LazyImage
-                                src={selectedNation.data.url.flag}
-                                alt={`flag of ${selectedNation.name}`}
-                                className="object-contain w-full h-full rounded cursor-zoom-in"
-                                hover={t("components.hoverInfos.flag")}
-                              />
-                            </Suspense>
-                            {owner && (
-                              <CrossButton
-                                small={true}
-                                click={() =>
-                                  handleDeleteImage({
-                                    url: selectedNation.data.url.flag,
-                                    type: "flag",
-                                  })
-                                }
-                              />
-                            )}
-                          </div>
-                        ) : (
-                          <>
-                            <div className="text-9xl">
-                              <GiBlackFlag />
-                            </div>
-                            {owner && (
-                              <Upploader
-                                path="data.url.flag"
-                                destination="nation"
-                                maxSize={500000}
-                              />
-                            )}
-                            <LinkButton
-                              text={t("components.buttons.generate")}
-                              path={FLAG_MAKER_URL}
-                              children={<FaExternalLinkAlt />}
-                            />
-                          </>
-                        )}
-                      </div>
-                    </div>
-                    <div className="relative">
-                      <div
-                        className={`w-[140px] h-full flex flex-col items-center justify-end gap-2`}
-                      >
-                        {selectedNation.data.url.coatOfArms ? (
-                          <>
-                            <Suspense fallback={<Spinner />}>
-                              <LazyImage
-                                src={selectedNation.data.url.coatOfArms}
-                                alt={`coatOfArms of ${selectedNation.name}`}
-                                className="object-contain w-full h-full cursor-zoom-in"
-                                hover={t("components.hoverInfos.coatOfArms")}
-                              />
-                            </Suspense>
-                            {owner && (
-                              <CrossButton
-                                small={true}
-                                click={() =>
-                                  handleDeleteImage({
-                                    url: selectedNation.data.url.coatOfArms,
-                                    type: "coatOfArms",
-                                  })
-                                }
-                              />
-                            )}
-                          </>
-                        ) : (
-                          <>
-                            <div className="text-9xl">
-                              <BsShieldShaded />
-                            </div>
-                            {owner && (
-                              <Upploader
-                                path="data.url.coatOfArms"
-                                destination="nation"
-                                maxSize={500000}
-                              />
-                            )}
-                            <LinkButton
-                              text={t("components.buttons.generate")}
-                              path={COA_MAKER_URL}
-                              children={<FaExternalLinkAlt />}
-                            />
-                          </>
-                        )}
-                      </div>
-                    </div>
                   </div>
                   <div className="flex items-center gap-2">
                     <em className="text-xl">
@@ -177,6 +82,7 @@ export default function NationIdentity({
                             : ""
                         }
                         path="data.general.motto"
+                        action={updatePath}
                       />
                     )}
                   </div>
@@ -186,6 +92,9 @@ export default function NationIdentity({
                     <TreasuryTag
                       label={selectedNation.data.roleplay.treasury}
                     />
+                    {selectedNation.data.general.isNationState && (
+                      <NationStateTag />
+                    )}
                     <div className="flex items-center gap-2">
                       {selectedNation.data != undefined && (
                         <RegimeTag selectedNation={selectedNation} />
@@ -196,6 +105,7 @@ export default function NationIdentity({
                           param={regimeList}
                           path="data.general.regime"
                           indice={selectedNation.data.general.regime}
+                          action={updatePath}
                         />
                       )}
                     </div>
@@ -218,6 +128,7 @@ export default function NationIdentity({
                               : ""
                           }
                           path="data.general.nationalDay"
+                          action={updatePath}
                         />
                       )}
                     </div>
@@ -236,16 +147,18 @@ export default function NationIdentity({
                               : ""
                           }
                           path="data.general.currency"
+                          action={updatePath}
                         />
                       )}
                     </div>
                     <div className="flex items-center gap-2">
                       <CapitalTag selectedNation={selectedNation} />
-                      {owner && (
+                      {owner && selectedNation.data.roleplay.capital != "" && (
                         <EditIcon
                           target="nation"
-                          param={placesList}
+                          param={nationPlaceList}
                           path="data.roleplay.capital"
+                          action={updatePath}
                         />
                       )}
                     </div>
@@ -259,9 +172,8 @@ export default function NationIdentity({
                   <div className="w-full mt-4 justify-center flex gap-2">
                     {selectedNation.data.general.description ? (
                       <MDEditor.Markdown
-                        className="bg-transparent text-light text-justify"
+                        className="bg-transparent text-light text-justify mde-markdown"
                         source={selectedNation.data.general.description}
-                        style={{ whiteSpace: "pre-wrap" }}
                       />
                     ) : (
                       <em className="text-center">
@@ -278,6 +190,7 @@ export default function NationIdentity({
                             : ""
                         }
                         path="data.general.description"
+                        action={updatePath}
                       />
                     )}
                   </div>

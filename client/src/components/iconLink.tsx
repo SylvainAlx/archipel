@@ -11,14 +11,21 @@ import Flag from "./flag";
 import Avatar from "./avatar";
 import { useLocation } from "react-router-dom";
 import { FaShieldAlt } from "react-icons/fa";
+import { NationModel } from "../models/nationModel";
 
 export interface IconLinkProps {
+  nation?: NationModel;
   destination: string;
   text: string;
   action?: MouseEventHandler<HTMLDivElement>;
 }
 
-export default function IconLink({ destination, text, action }: IconLinkProps) {
+export default function IconLink({
+  nation,
+  destination,
+  text,
+  action,
+}: IconLinkProps) {
   const [session] = useAtom(sessionAtom);
   const [focus, setFocus] = useState(false);
   const location = useLocation();
@@ -57,7 +64,7 @@ export default function IconLink({ destination, text, action }: IconLinkProps) {
 
   return (
     <div
-      className={`flex flex-col items-center text-5xl md:text-3xl hover:text-secondary transition-all cursor-pointer ${focus && "text-secondary"}`}
+      className={`flex flex-col items-center justify-center text-5xl md:text-3xl hover:text-secondary transition-all cursor-pointer ${focus && "text-secondary"}`}
       onClick={action}
     >
       {destination === "home" && <IoMdHome />}
@@ -67,10 +74,12 @@ export default function IconLink({ destination, text, action }: IconLinkProps) {
       {destination === "user" && (
         <Avatar isUser={true} url={session.user.avatar} isHeader={true} />
       )}
-      {destination === "nation" && (
-        <Flag nation={session.nation} isHeader={true} />
+      {destination === "nation" && nation && (
+        <Flag nation={nation} isHeader={true} />
       )}
-      {destination === "admin" && <FaShieldAlt className="text-2xl" />}
+      {destination === "admin" && (
+        <FaShieldAlt className="text-[40px] md:text-[25px]" />
+      )}
       <h2 className="hidden md:block text-[10px]">
         {text.toLocaleUpperCase()}
       </h2>

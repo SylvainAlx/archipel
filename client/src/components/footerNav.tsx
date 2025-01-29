@@ -1,6 +1,7 @@
+import { NationModel } from "../models/nationModel";
 import Nav from "./nav";
 
-export default function FooterNav() {
+export default function FooterNav({ nation }: { nation: NationModel }) {
   // const [prevScrollPos, setPrevScrollPos] = useState(0);
   // const [visible, setVisible] = useState(true);
 
@@ -24,9 +25,9 @@ export default function FooterNav() {
 
   return (
     <nav
-      className={`bottom-0 transition-all duration-500 fixed md:hidden w-full h-[70px] flex justify-evenly items-start pt-2 bg-black_alpha backdrop-blur-sm`}
+      className={`mb-[-1px] bottom-0 transition-all duration-500 fixed md:hidden w-full h-[70px] flex justify-evenly items-center bg-black_alpha backdrop-blur-sm`}
     >
-      <Nav />
+      <Nav nation={nation} />
     </nav>
   );
 }

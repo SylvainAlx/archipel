@@ -2,6 +2,11 @@ import mongoose from "mongoose";
 
 const ComSchema = mongoose.Schema(
   {
+    officialId: {
+      type: String,
+      required: true,
+      unique: true,
+    },
     origin: {
       type: String,
       default: "",
@@ -21,6 +26,15 @@ const ComSchema = mongoose.Schema(
     message: {
       type: String,
       default: "",
+      maxlength: [500, "Le texte ne peut pas dépasser 500 caractères."],
+    },
+    reported: {
+      type: Boolean,
+      default: false,
+    },
+    banished: {
+      type: Boolean,
+      default: false,
     },
   },
   {

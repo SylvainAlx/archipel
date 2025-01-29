@@ -5,29 +5,39 @@ import Input from "../components/form/input";
 import Button from "../components/buttons/button";
 import Form from "../components/form/form";
 import { useTranslation } from "react-i18next";
-import { register, verifyCaptcha } from "../api/user/userAPI";
 import Select from "../components/form/select";
 import { CAPTCHA_PUBLIC_KEY } from "../settings/consts";
 import { errorMessage } from "../utils/toasts";
 import ReCAPTCHA from "react-google-recaptcha";
 import { genderList, languageList } from "../settings/lists";
+import i18n from "../i18n/i18n";
+import RequiredStar from "../components/form/requiredStar";
+import { UserModel } from "../models/userModel";
 
 export default function Register() {
+  const { t } = useTranslation();
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
-  const [language, setLanguage] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [passwordsMatch, setPasswordsMatch] = useState(true);
+  const [language, setLanguage] = useState(i18n.language);
   const [gender, setGender] = useState(0);
   const [acceptCGU, setAcceptCGU] = useState(false);
   const [captchaOk, setCaptchaOk] = useState(false);
-  const { t } = useTranslation();
+
+  console.log(language);
 
   const navigate = useNavigate();
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    if (e.target.type == "text") {
+    if (e.target.name == "name") {
       setName(e.target.value);
-    } else {
+    } else if (e.target.name == "password") {
       setPassword(e.target.value);
+      setPasswordsMatch(confirmPassword === e.target.value);
+    } else if (e.target.name == "confirm") {
+      setConfirmPassword(e.target.value);
+      setPasswordsMatch(password === e.target.value);
     }
   };
 
@@ -44,14 +54,16 @@ export default function Register() {
   };
 
   const verifyToken = async (e: string | null) => {
-    const response = await verifyCaptcha(e);
+    const newUser = new UserModel();
+    const response = await newUser.verifyCaptcha(e);
     setCaptchaOk(response);
   };
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     if (name != "" && password != "") {
-      register({
+      const newUser = new UserModel();
+      await newUser.baseInsert({
         name: name.trimEnd(),
         password: password.trimEnd(),
         gender,
@@ -84,6 +96,14 @@ export default function Register() {
               placeholder={t("components.form.input.password")}
               value={password}
             />
+            <Input
+              required={true}
+              onChange={handleChange}
+              type="password"
+              name="confirm"
+              placeholder={t("pages.recovery.confirmPassword")}
+              value={confirmPassword}
+            />
             <Select
               title="Genre"
               options={genderList}
@@ -93,6 +113,7 @@ export default function Register() {
               title={t("components.form.select.language")}
               options={languageList}
               onChange={handleLanguageChange}
+              value={language}
             />
 
             <div className="flex justify-center text-sm gap-2">
@@ -112,16 +133,17 @@ export default function Register() {
               ></input>
               <p className="text-sm">
                 {t("pages.register.acceptTerms")}{" "}
-                <Link to="/termsofservice">
+                <Link to="/termsofservice" target="_blank">
                   <b>{t("pages.register.termsOfService")}</b>
                 </Link>
               </p>
             </div>
             <ReCAPTCHA sitekey={CAPTCHA_PUBLIC_KEY} onChange={verifyToken} />
+            <RequiredStar />
             <Button
               text={t("components.buttons.register")}
               type="submit"
-              disabled={!acceptCGU || !captchaOk}
+              disabled={!acceptCGU || !captchaOk || !passwordsMatch}
               widthFull={true}
             />
           </>

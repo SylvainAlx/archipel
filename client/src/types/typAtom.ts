@@ -1,13 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { LabelId, Nation, PoliticalSide, Regime } from "./typNation";
+import { Hashtag, LabelId, Regime } from "./typNation";
 import { Place } from "./typPlace";
-import { User } from "./typUser";
-
-export interface Session {
-  user: User;
-  nation: Nation;
-  jwt: string;
-}
 
 // editPlace
 
@@ -25,6 +18,7 @@ export interface ConfirmBox {
   result: string;
   target?: any;
   payload?: any;
+  actionToDo?: () => void;
 }
 
 export const ConfirmBoxDefault: ConfirmBox = {
@@ -37,25 +31,12 @@ export const ConfirmBoxDefault: ConfirmBox = {
 
 export interface EditBox {
   target: string;
-  original:
-    | string
-    | number
-    | boolean
-    | Regime[]
-    | PoliticalSide[]
-    | LabelId[]
-    | any[];
-  new:
-    | string
-    | number
-    | boolean
-    | Regime[]
-    | PoliticalSide[]
-    | LabelId[]
-    | any[];
+  original: string | number | boolean | Regime[] | LabelId[] | any[];
+  new: string | number | boolean | Regime[] | LabelId[] | any[];
   path: string;
   indice?: number | string;
   canBeEmpty?: boolean;
+  action?: (path: string, value: any) => void;
 }
 
 export const EditBoxDefault: EditBox = {
@@ -65,6 +46,11 @@ export const EditBoxDefault: EditBox = {
   path: "",
   canBeEmpty: true,
 };
+
+export interface InfoModal {
+  text: string;
+  image?: string;
+}
 
 // Param
 
@@ -79,3 +65,15 @@ export interface StandardOption {
   id: number | string;
   label: string;
 }
+
+export interface Counts {
+  nations: number;
+  citizens: number;
+  places: number;
+  tags: number;
+  coms: number;
+}
+export type Stats = {
+  counts: Counts;
+  tags: Hashtag[];
+};

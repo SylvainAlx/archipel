@@ -1,22 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import {
-  citizenListAtom,
-  comsListAtom,
-  myStore,
-  nationsListAtom,
-  placesListAtom,
-  relationListAtom,
-  tileListAtom,
-} from "../settings/store";
-import { Com } from "../types/typCom";
-import { Nation } from "../types/typNation";
-import { Place } from "../types/typPlace";
+import { myStore, relationListAtom, tileListAtom } from "../settings/store";
 import { UpdateByOfficialIdProps } from "../types/typProp";
 import { DiplomaticRelationship } from "../types/typRelation";
 import { Tile } from "../types/typTile";
-import { User } from "../types/typUser";
-import { findElementByDBId, findElementOfAtomArray } from "./functions";
+import { findElementOfAtomArray } from "./functions";
 
 // _id MongoDB
 
@@ -69,65 +57,25 @@ export const getUpdateByOfficialId = ({
   return tempArray;
 };
 
-export const updateOrCreateCitizenInMemory = (citizen: User) => {
-  const savedUser = findElementOfAtomArray(
-    citizen.officialId,
-    myStore.get(citizenListAtom),
-  );
-  if (savedUser === undefined) {
-    const tempArray = [...myStore.get(citizenListAtom)];
-    tempArray.push(citizen);
-    myStore.set(citizenListAtom, tempArray);
-  } else {
-    myStore.set(
-      citizenListAtom,
-      getUpdateByOfficialId({
-        element: citizen,
-        array: myStore.get(citizenListAtom),
-      }),
-    );
-  }
-};
-
-export const updateOrCreateNationInMemory = (nation: Nation) => {
-  const savedNation = findElementOfAtomArray(
-    nation.officialId,
-    myStore.get(nationsListAtom),
-  );
-  if (savedNation === undefined) {
-    const tempArray = [...myStore.get(nationsListAtom)];
-    tempArray.push(nation);
-    myStore.set(nationsListAtom, tempArray);
-  } else {
-    myStore.set(
-      nationsListAtom,
-      getUpdateByOfficialId({
-        element: nation,
-        array: myStore.get(nationsListAtom),
-      }),
-    );
-  }
-};
-
-export const updateOrCreatePlaceInMemory = (place: Place) => {
-  const savedPlace = findElementOfAtomArray(
-    place.officialId,
-    myStore.get(placesListAtom),
-  );
-  if (savedPlace === undefined) {
-    const tempArray = [...myStore.get(placesListAtom)];
-    tempArray.push(place);
-    myStore.set(placesListAtom, tempArray);
-  } else {
-    myStore.set(
-      placesListAtom,
-      getUpdateByOfficialId({
-        element: place,
-        array: myStore.get(placesListAtom),
-      }),
-    );
-  }
-};
+// export const updateOrCreateCitizenInMemory = (citizen: User) => {
+//   const savedUser = findElementOfAtomArray(
+//     citizen.officialId,
+//     myStore.get(citizenListAtom),
+//   );
+//   if (savedUser === undefined) {
+//     const tempArray = [...myStore.get(citizenListAtom)];
+//     tempArray.push(citizen);
+//     myStore.set(citizenListAtom, tempArray);
+//   } else {
+//     myStore.set(
+//       citizenListAtom,
+//       getUpdateByOfficialId({
+//         element: citizen,
+//         array: myStore.get(citizenListAtom),
+//       }),
+//     );
+//   }
+// };
 
 export const updateOrCreateTileInMemory = (tile: Tile) => {
   const savedTile = findElementOfAtomArray(
@@ -140,17 +88,6 @@ export const updateOrCreateTileInMemory = (tile: Tile) => {
     myStore.set(tileListAtom, tempArray);
   } else {
     myStore.set(tileListAtom, updateByDBId(tile, myStore.get(tileListAtom)));
-  }
-};
-
-export const updateOrCreateComInMemory = (com: Com) => {
-  const savedCom = findElementByDBId(com._id, myStore.get(comsListAtom));
-  if (savedCom === undefined) {
-    const tempArray = [...myStore.get(comsListAtom)];
-    tempArray.push(com);
-    myStore.set(comsListAtom, tempArray);
-  } else {
-    myStore.set(comsListAtom, updateByDBId(com, myStore.get(comsListAtom)));
   }
 };
 

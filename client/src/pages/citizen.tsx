@@ -1,129 +1,66 @@
 import { useAtom } from "jotai";
 import H1 from "../components/titles/h1";
-import {
-  changePasswordModalAtom,
-  citizenFetchAtom,
-  comFetchedListAtom,
-  confirmBox,
-  myStore,
-  nationFetchedAtom,
-  nationPlacesListAtom,
-  newNationAtom,
-  sessionAtom,
-} from "../settings/store";
-import Button from "../components/buttons/button";
+import { confirmBox, sessionAtom } from "../settings/store";
 import { useNavigate, useParams } from "react-router-dom";
-import { useTranslation } from "react-i18next";
-import Avatar from "../components/avatar";
-import { useEffect, useState } from "react";
-import DashTile from "../components/dashTile";
-import TileContainer from "../components/tileContainer";
-import { emptyNewNationPayload, LabelId } from "../types/typNation";
-import IdTag from "../components/tags/idTag";
-import RoleTag from "../components/tags/roleTag";
-import Upploader from "../components/uploader";
-import CrossButton from "../components/buttons/crossButton";
-import { GiBlackFlag } from "react-icons/gi";
-import ExternalLink from "../components/externalLink";
-import { FaLink } from "react-icons/fa";
+import { lazy, Suspense, useEffect, useState } from "react";
 import EditIcon from "../components/editIcon";
-import { BsFillEnvelopeAtFill } from "react-icons/bs";
-import NationOwnerTag from "../components/tags/nationOwnerTag";
-import {
-  dateIsExpired,
-  getLabelIdArrayFromNationPlaceList,
-} from "../utils/functions";
-import { getNationPlaces } from "../api/place/placeAPI";
+import { getDocumentTitle } from "../utils/functions";
 import { ConfirmBoxDefault } from "../types/typAtom";
-import { getNation } from "../api/nation/nationAPI";
-import MDEditor from "@uiw/react-md-editor";
-import CreditTag from "../components/tags/creditTag";
-import { IoDiamondOutline } from "react-icons/io5";
-import PlanButton from "../components/buttons/planButton";
-import { errorMessage } from "../utils/toasts";
-import LanguagesTag from "../components/tags/languagesTag";
-import { getComsByDestination } from "../api/communication/comAPI";
-import DateTag from "../components/tags/dateTag";
-import { languageList } from "../settings/lists";
-import ReportButton from "../components/buttons/reportButton";
+import ReportPanel from "../components/reportPanel";
+import { NationModel } from "../models/nationModel";
+import { UserModel } from "../models/userModel";
+import { useTranslation } from "react-i18next";
+import Spinner from "../components/loading/spinner";
 
 export default function Citizen() {
-  const { t } = useTranslation();
   const navigate = useNavigate();
   const param = useParams();
+  const { t } = useTranslation();
 
-  const [citizen, setCitizen] = useAtom(citizenFetchAtom);
-  const [nation] = useAtom(nationFetchedAtom);
-  const [comList] = useAtom(comFetchedListAtom);
-  const [session, setSession] = useAtom(sessionAtom);
+  const [citizen, setCitizen] = useState<UserModel>(new UserModel());
+  const [nation, setNation] = useState<NationModel>(new NationModel());
+  const [owner, setOwner] = useState<boolean>(false);
+
+  const [session] = useAtom(sessionAtom);
   const [confirm, setConfirm] = useAtom(confirmBox);
-  const [nationPlaces] = useAtom(nationPlacesListAtom);
-  const [, setPlacesList] = useState<LabelId[]>([]);
-  const [, setConfirmModal] = useAtom(confirmBox);
-  const [enableLeaving, setEnableLeaving] = useState(false);
-  const [userPlan, setUserPlan] = useState("free");
+
+  const Personal = lazy(() => import("../components/citizen/personal"));
+  const Citizenship = lazy(() => import("../components/citizen/citizenship"));
+  const Settings = lazy(() => import("../components/citizen/settings"));
+  const CitizenCom = lazy(() => import("../components/citizen/citizensCom"));
 
   useEffect(() => {
+    const loadCitizen = async (officialId: string) => {
+      const user: UserModel = new UserModel();
+      const loadedUser = await user.loadUser(officialId);
+      setCitizen(loadedUser);
+    };
     if (param.id) {
-      if (
-        session.user.officialId === param.id &&
-        citizen.officialId != session.user.officialId
-      ) {
-        setCitizen(session.user);
-      }
+      loadCitizen(param.id);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [param.id, session.user]);
+  }, [param.id]);
 
   useEffect(() => {
+    setOwner(session.user.officialId === citizen.officialId);
+    const loadNation = async (officialId: string) => {
+      const loadedNation = await nation.loadNation(officialId);
+      setNation(loadedNation);
+    };
     if (
-      session.user.officialId === citizen.officialId &&
-      !session.user.citizenship.nationOwner
+      citizen.citizenship.nationId != "" &&
+      nation.officialId != citizen.citizenship.nationId
     ) {
-      setEnableLeaving(true);
-    } else {
-      setEnableLeaving(false);
-    }
-    if (citizen.citizenship.nationId != "") {
-      getNation(citizen.citizenship.nationId);
+      loadNation(citizen.citizenship.nationId);
     }
 
-    if (citizen.plan != "free" && !dateIsExpired(citizen.expirationDate)) {
-      setUserPlan(citizen.plan);
-    } else {
-      setUserPlan("free");
-    }
-
-    citizen.officialId != "" && getComsByDestination(citizen.officialId);
+    document.title = getDocumentTitle(citizen.name);
+    return () => {
+      document.title = getDocumentTitle("");
+    };
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [citizen]);
-
-  useEffect(() => {
-    if (
-      nation.officialId != undefined &&
-      nation.officialId !== "" &&
-      nationPlaces.length === 0
-    ) {
-      getNationPlaces(nation);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [nation]);
-
-  useEffect(() => {
-    // console.log(comList);
-  }, [comList]);
-
-  useEffect(() => {
-    if (
-      nationPlaces.length > 0 &&
-      nation.officialId != undefined &&
-      nation.officialId !== ""
-    ) {
-      const list = getLabelIdArrayFromNationPlaceList();
-      setPlacesList(list);
-    }
-  }, [nation.officialId, nationPlaces]);
 
   useEffect(() => {
     if (confirm.action === "deleteUser" && confirm.result === "OK") {
@@ -133,264 +70,81 @@ export default function Citizen() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [confirm]);
 
-  const handleClick = (dest: string) => {
-    if (dest === "nation") {
-      navigate(`/nation/${nation.officialId}`);
-    } else if (dest === "new") {
-      myStore.set(newNationAtom, {
-        ...emptyNewNationPayload,
-        owner: citizen.officialId,
-      });
-    } else if (dest === "join") {
-      navigate(`/explore/2`);
-    }
-  };
+  const updatePath = (
+    path: string,
+    value: string,
+    needConfirm: boolean = true,
+  ) => {
+    const updatedUser = citizen.updateOne(path, value);
 
-  const logout = () => {
-    myStore.set(confirmBox, {
-      action: "logout",
-      text: t("components.modals.confirmModal.logout"),
-      result: "",
-    });
-  };
-
-  const handleDelete = () => {
-    myStore.set(confirmBox, {
-      action: "deleteUser",
-      text: t("components.modals.confirmModal.deleteUser"),
-      result: "",
-    });
-  };
-
-  const handleDeleteAvatar = () => {
-    myStore.set(confirmBox, {
-      action: "deleteFile",
-      text: t("components.modals.confirmModal.deleteFile"),
-      payload: citizen.avatar,
-      result: "",
-      target: "avatar",
-    });
-  };
-
-  const leaveNation = () => {
-    const payload = {
-      officialId: citizen.officialId,
-      nationId: citizen.citizenship.nationId,
-      status: -1,
+    const baseUpdate = async () => {
+      const citizenInBase = await updatedUser.updatedObject.baseUpdate();
+      if (citizenInBase) {
+        setCitizen(citizenInBase);
+      }
     };
-    setConfirmModal({
-      action: "changeStatus",
-      text:
-        session.user.citizenship.status > 0
-          ? t("components.modals.confirmModal.leaveNation")
-          : t("components.modals.confirmModal.cancelCitizenship"),
-      result: "",
-      payload,
-    });
-
-    const newSession = { ...session };
-    newSession.user.citizenship.nationId = "";
-    newSession.user.citizenship.status = -1;
-    setSession(newSession);
+    if (updatedUser.isSuccess) {
+      if (needConfirm) {
+        setConfirm({
+          action: "",
+          text: t("components.modals.confirmModal.updateUser"),
+          result: "",
+          actionToDo: baseUpdate,
+        });
+      } else {
+        baseUpdate();
+      }
+    }
   };
 
   return (
     <>
       <div className="flex items-center gap-1">
         <H1 text={citizen.name} />
-        {session.user.officialId === citizen.officialId && (
-          <EditIcon target="citizen" param={citizen.name} path="name" />
-        )}
-      </div>
-      <div className="relative flex flex-col items-center">
-        <Avatar url={citizen.avatar} isUser={true} bigSize={true} />
-        {session.user.officialId === citizen.officialId &&
-          (citizen.avatar != "" ? (
-            <CrossButton small={true} click={handleDeleteAvatar} />
-          ) : (
-            <Upploader path="avatar" destination="citizen" maxSize={500000} />
-          ))}
-      </div>
-      <div className="flex items-center justify-center gap-6">
-        <span className="flex items-center gap-1">
-          <ExternalLink
-            url={citizen.link}
-            children={<FaLink />}
-            hover={t("components.hoverInfos.links.website")}
-          />
-          {session.user.officialId === citizen.officialId && (
-            <EditIcon target="citizen" param={citizen.link} path="link" />
-          )}
-        </span>
-
-        <span className="flex items-center gap-1">
-          <ExternalLink
-            url={citizen.email != "" ? "mailto:" + citizen.email : ""}
-            children={<BsFillEnvelopeAtFill />}
-            hover={t("components.hoverInfos.links.email")}
-          />
-          {session.user.officialId === citizen.officialId && (
-            <EditIcon target="citizen" param={citizen.email} path="email" />
-          )}
-        </span>
-      </div>
-      <div className="w-full max-w-[300px] md:max-w-lg mt-4 justify-center flex gap-2">
-        {citizen.bio ? (
-          <MDEditor.Markdown
-            className="bg-transparent text-light text-justify"
-            source={citizen.bio}
-            style={{ whiteSpace: "pre-wrap" }}
-          />
-        ) : (
-          <em className="text-center">{t("pages.citizen.noBio")}</em>
-        )}
-
-        {session.user.officialId === citizen.officialId && (
+        {owner && (
           <EditIcon
             target="citizen"
-            param={citizen.bio ? citizen.bio : ""}
-            path="bio"
+            param={citizen.name}
+            path="name"
+            action={updatePath}
           />
         )}
       </div>
-
-      <TileContainer
-        children={
+      <section className="w-full flex flex-wrap gap-8 items-start justify-between">
+        {(!citizen.reported || owner) && (
           <>
-            <DashTile
-              title={t("pages.citizen.virtualCitizenship")}
-              children={
-                <>
-                  <div className="max-w-[90%] flex flex-wrap items-center justify-center gap-1">
-                    <IdTag label={citizen.officialId} />
-                    <span className="flex items-center gap-1">
-                      <LanguagesTag
-                        languages={
-                          citizen.language != "" ? [citizen.language] : []
-                        }
-                      />
-                      {session.user.officialId === citizen.officialId && (
-                        <EditIcon
-                          target="citizen"
-                          param={languageList}
-                          path="language"
-                          indice={citizen.language}
-                        />
-                      )}
-                    </span>
-                    {session.user.officialId === citizen.officialId && (
-                      <CreditTag label={citizen.credits} owner={true} />
-                    )}
-                    {citizen.citizenship.nationOwner && <NationOwnerTag />}
-                    {/* <div className="flex items-center gap-1">
-                      <ResidenceTag
-                        residenceId={citizen.citizenship.residence}
-                      />
-                      {placesList.length > 0 &&
-                        session.user.officialId === citizen.officialId && (
-                          <EditIcon
-                            target="citizen"
-                            param={placesList}
-                            path="citizenship.residence"
-                          />
-                        )}
-                    </div> */}
-                    {citizen.role === "admin" && (
-                      <RoleTag label={t("pages.citizen.role.admin")} />
-                    )}
-                  </div>
-                  {nation != undefined &&
-                  nation.officialId != "" &&
-                  citizen.citizenship.nationId != "" ? (
-                    <div className="w-full flex flex-col justify-center items-center gap-2">
-                      <div className="w-[300px] relative flex gap-2 items-center justify-center">
-                        <Button
-                          text={nation.name}
-                          click={() => handleClick("nation")}
-                          children={<GiBlackFlag />}
-                          widthFull={true}
-                        />
-                        {enableLeaving && (
-                          <CrossButton
-                            text=""
-                            small={true}
-                            click={leaveNation}
-                          />
-                        )}
-                      </div>
-                    </div>
-                  ) : (
-                    <>
-                      {session.user.officialId === citizen.officialId && (
-                        <>
-                          <Button
-                            text={t("components.buttons.createNation")}
-                            click={() => handleClick("new")}
-                            widthFull={true}
-                          />
-                          <Button
-                            text={t("components.buttons.joinNation")}
-                            click={() => handleClick("join")}
-                            widthFull={true}
-                          />
-                        </>
-                      )}
-                    </>
-                  )}
-                </>
-              }
-            />
-            {session.user.officialId === citizen.officialId ? (
-              <DashTile
-                title={t("pages.citizen.settings")}
-                children={
-                  <>
-                    {userPlan != "free" && (
-                      <div className="px-2 flex gap-1 items-center bg-gold rounded text-primary bold">
-                        <IoDiamondOutline />
-                        <span>
-                          {userPlan === "premium"
-                            ? t("pages.citizen.plans.premium")
-                            : t("pages.citizen.plans.elite")}
-                        </span>
-                        <DateTag date={citizen.expirationDate} due={true} />
-                      </div>
-                    )}
-                    {userPlan === "free" && (
-                      <PlanButton
-                        click={() =>
-                          errorMessage(t("toasts.user.subscriptionNotReady"))
-                        }
-                      />
-                    )}
-                    <Button
-                      text={t("components.buttons.changePassword")}
-                      click={() => myStore.set(changePasswordModalAtom, true)}
-                      widthFull={true}
-                    />
-                    <Button
-                      text={t("components.buttons.logout")}
-                      bgColor="bg-danger"
-                      click={logout}
-                      widthFull={true}
-                    />
-                    <Button
-                      text={t("components.buttons.deleteAccount")}
-                      bgColor="bg-danger"
-                      click={handleDelete}
-                      widthFull={true}
-                    />
-                  </>
-                }
+            <Suspense fallback={<Spinner />}>
+              <Personal
+                citizen={citizen}
+                owner={owner}
+                updatePath={updatePath}
               />
-            ) : (
-              <div className="flex items-center justify-center">
-                <ReportButton contentOfficialId={citizen.officialId} />
-              </div>
-            )}
+            </Suspense>
+            <Suspense fallback={<Spinner />}>
+              <Citizenship
+                citizen={citizen}
+                nation={nation}
+                owner={owner}
+                updatePath={updatePath}
+              />
+            </Suspense>
           </>
-        }
-      />
+        )}
+        {owner ? (
+          <Suspense fallback={<Spinner />}>
+            <Settings citizen={citizen} />
+          </Suspense>
+        ) : (
+          <div className="w-full flex justify-center">
+            <ReportPanel content={citizen} />
+          </div>
+        )}
+        {owner && (
+          <Suspense fallback={<Spinner />}>
+            <CitizenCom citizen={citizen} owner={owner} />
+          </Suspense>
+        )}
+      </section>
     </>
   );
 }

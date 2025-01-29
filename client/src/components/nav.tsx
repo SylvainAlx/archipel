@@ -5,9 +5,9 @@ import { useNavigate } from "react-router-dom";
 import { useAtom } from "jotai";
 import MenuButton from "./buttons/menuButton";
 import LangButton from "./buttons/langButton";
+import { NationModel } from "../models/nationModel";
 
-export default function Nav() {
-  // const user = myStore.get(userAtom);
+export default function Nav({ nation }: { nation: NationModel }) {
   const [session] = useAtom(sessionAtom);
   const { t } = useTranslation();
   const navigate = useNavigate();
@@ -49,11 +49,10 @@ export default function Nav() {
       {session.user.citizenship.nationId != "" &&
         session.user.citizenship.status > 0 && (
           <IconLink
+            nation={nation}
             destination="nation"
             text={t("components.buttons.nation")}
-            action={() =>
-              navigate(`/nation/${session.user.citizenship.nationId}`)
-            }
+            action={() => navigate(`/nation/${nation.officialId}`)}
           />
         )}
       {session.user.role === "admin" && (
@@ -63,7 +62,7 @@ export default function Nav() {
           action={() => navigate(`/admin`)}
         />
       )}
-      <div className="flex flex-col gap-1 self-start">
+      <div className="pt-2 flex flex-col self-start">
         <LangButton />
         <MenuButton />
       </div>

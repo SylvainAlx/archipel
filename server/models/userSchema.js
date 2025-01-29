@@ -21,6 +21,7 @@ const UserSchema = mongoose.Schema(
     bio: {
       type: String,
       default: "",
+      maxlength: [1000, "Le texte ne peut pas dépasser 1000 caractères."],
     },
     gender: {
       type: Number,
@@ -34,6 +35,10 @@ const UserSchema = mongoose.Schema(
       type: String,
       default: "",
     },
+    religion: {
+      type: Number,
+      default: 0,
+    },
     password: {
       type: String,
       required: true,
@@ -45,11 +50,18 @@ const UserSchema = mongoose.Schema(
     email: {
       type: String,
       default: "",
-      match: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+      match: [
+        /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+        "Le champ 'email' doit être une adresse email valide.",
+      ],
     },
     link: {
       type: String,
       default: "",
+      match: [
+        /^https?:\/\/[^\s$.?#].[^\s]*$/,
+        "Le champ 'website' doit être une URL valide.",
+      ],
     },
     role: {
       type: String,
@@ -85,6 +97,14 @@ const UserSchema = mongoose.Schema(
         default: "",
       },
     },
+    reported: {
+      type: Boolean,
+      default: false,
+    },
+    banished: {
+      type: Boolean,
+      default: false,
+    },
   },
   {
     timestamps: true,
@@ -118,11 +138,8 @@ UserSchema.methods.comparePassword = function (candidatePassword, cb) {
   });
 };
 
-UserSchema.methods.compare = function (candidatePassword, cb) {
-  bcrypt.compare(candidatePassword, this.recovery, (err, isMatch) => {
-    if (err) return cb(err);
-    cb(null, isMatch);
-  });
+UserSchema.methods.compare = async function (candidatePassword) {
+  return bcrypt.compare(candidatePassword, this.recovery);
 };
 
 //création du JWT pour le login et le register

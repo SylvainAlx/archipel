@@ -4,41 +4,48 @@ import Place from "../models/placeSchema.js";
 import Tile from "../models/tileSchema.js";
 import Relation from "../models/relationSchema.js";
 import { createOfficialId, deleteFile } from "../utils/functions.js";
+import { GIFTS } from "../settings/const.js";
 
 export const nationsCount = async (req, res) => {
   try {
-    Nation.countDocuments({})
-      .then((count) => {
-        res.status(200).json(count);
-      })
-      .catch((error) => {
-        console.error(error.message);
-        res.status(400).json({ infoType: "serverError" });
-      });
+    const count = await Nation.countDocuments({ banished: false });
+    res.status(200).json(count);
   } catch (error) {
-    console.error(error.message);
-    res.status(400).json({ infoType: "serverError" });
+    console.error(error);
+    const statusCode = error.name === "ValidationError" ? 400 : 500;
+    res.status(statusCode).json({
+      infoType: statusCode.toString(),
+    });
   }
 };
 
 export const createNation = async (req, res) => {
   try {
-    const { name, owner, motto, regime, currency, nationalDay, tags } =
-      req.body;
+    const {
+      name,
+      owner,
+      motto,
+      isNationState,
+      regime,
+      currency,
+      nationalDay,
+      tags,
+    } = req.body;
 
     if (!name || !owner) {
-      return res.status(400).json({ infoType: "miss" });
+      return res.status(400).json({ infoType: "400" });
     }
-
     if (owner != req.userId) {
-      return res.status(403).json({ infoType: "forbidden" });
+      return res.status(403).json({ infoType: "403" });
     }
-
     const officialId = createOfficialId("n");
-
-    let data = { roleplay: { citizens: 1, treasury: 10 }, general: {} };
+    let data = {
+      roleplay: { citizens: 1, treasury: GIFTS.REGISTER },
+      general: {},
+    };
     data.general.motto = motto;
     data.general.regime = regime;
+    data.general.isNationState = isNationState;
     data.general.currency = currency;
     data.general.nationalDay = nationalDay;
     data.general.tags = tags;
@@ -69,13 +76,16 @@ export const createNation = async (req, res) => {
       } else {
         console.error(error.message);
         return res.status(400).json({
-          infoType: "miss",
+          infoType: "400",
         });
       }
     }
   } catch (error) {
-    res.status(400).json({ infoType: "serverError" });
-    console.error(error.message);
+    console.error(error);
+    const statusCode = error.name === "ValidationError" ? 400 : 500;
+    res.status(statusCode).json({
+      infoType: statusCode.toString(),
+    });
   }
 };
 
@@ -88,14 +98,15 @@ export const getAllNations = async (req, res) => {
         {
           name: { $regex: searchText, $options: "i" },
           "data.general.tags": { $regex: searchTag, $options: "i" },
+          banished: false,
         },
-        "officialId name owner role data createdAt",
+        "officialId name owner role reported banished data createdAt",
       );
       res.status(200).json(nations);
     } else if (searchText === "" && searchTag === "") {
       const nations = await Nation.find(
-        {},
-        "officialId name owner role data createdAt",
+        { banished: false },
+        "officialId name owner role reported banished data createdAt",
       );
       res.status(200).json(nations);
     } else {
@@ -104,20 +115,26 @@ export const getAllNations = async (req, res) => {
     }
   } catch (error) {
     console.error(error);
-    res.status(400).json({ infoType: "400" });
+    const statusCode = error.name === "ValidationError" ? 400 : 500;
+    res.status(statusCode).json({
+      infoType: statusCode.toString(),
+    });
   }
 };
 
 export const getTop100Nations = async (req, res) => {
   try {
     const nations = await Nation.find(
-      {},
-      "officialId name owner role data createdAt",
+      { banished: false },
+      "officialId name owner role reported banished data createdAt",
     ).limit(100);
     res.status(200).json(nations);
   } catch (error) {
     console.error(error);
-    res.status(400).json({ infoType: "400" });
+    const statusCode = error.name === "ValidationError" ? 400 : 500;
+    res.status(statusCode).json({
+      infoType: statusCode.toString(),
+    });
   }
 };
 
@@ -125,13 +142,16 @@ export const getOneNation = async (req, res) => {
   const nationId = req.params.id;
   try {
     const nation = await Nation.findOne(
-      { officialId: nationId },
-      "officialId name owner role data createdAt",
+      { officialId: nationId, banished: false },
+      "officialId name owner role reported banished data createdAt",
     );
     res.status(200).json(nation);
   } catch (error) {
     console.error(error);
-    res.status(400).json({ infoType: "400" });
+    const statusCode = error.name === "ValidationError" ? 400 : 500;
+    res.status(statusCode).json({
+      infoType: statusCode.toString(),
+    });
   }
 };
 
@@ -178,6 +198,7 @@ export const deleteSelfNation = async (req, res) => {
       user.citizenship.nationId = "";
       user.citizenship.nationName = "";
       user.citizenship.nationOwner = false;
+      user.citizenship.status = -1;
       const savedUser = await user.save();
 
       // suppression de l'appartenance à la nation pour tous les citoyens
@@ -218,7 +239,10 @@ export const deleteSelfNation = async (req, res) => {
     }
   } catch (error) {
     console.error(error);
-    res.status(400).json({ infoType: "400" });
+    const statusCode = error.name === "ValidationError" ? 400 : 500;
+    res.status(statusCode).json({
+      infoType: statusCode.toString(),
+    });
   }
 };
 
@@ -228,31 +252,32 @@ export const updateNation = async (req, res) => {
     if (req.userId === owner) {
       const nation = await Nation.findOne(
         { officialId },
-        "officialId name owner role data createdAt",
+        "officialId name owner role reported banished data createdAt",
       );
       nation.name = name;
       nation.data = data;
-      nation
-        .save()
-        .then((nation) => {
-          res.status(200).json({ nation, infoType: "update" });
-        })
-        .catch((error) => {
-          console.error(error);
-          res.status(400).json({ infoType: "miss" });
-        });
+      const savedNation = await nation.save();
+      res.status(200).json({ nation: savedNation, infoType: "update" });
     } else {
-      res.sendStatus(403).json({ infoType: "forbidden" });
+      res.sendStatus(403).json({ infoType: "403" });
     }
   } catch (error) {
     console.error(error);
-    res.status(400).json({ infoType: "400" });
+    const statusCode = error.name === "ValidationError" ? 400 : 500;
+    res.status(statusCode).json({
+      infoType: statusCode.toString(),
+    });
   }
 };
 
 export const getTags = async (req, res) => {
   try {
     const tags = await Nation.aggregate([
+      {
+        $match: {
+          banished: false,
+        },
+      },
       {
         $project: {
           tags: "$data.general.tags",
@@ -263,17 +288,20 @@ export const getTags = async (req, res) => {
       },
       {
         $group: {
-          _id: null,
-          tousLesTags: { $addToSet: "$tags" },
+          _id: "$tags",
+          occurrence: { $sum: 1 },
         },
       },
       {
-        $sort: { tousLesTags: 1 },
+        $sort: { occurrence: -1 },
       },
     ]);
-    res.status(200).json(tags.length > 0 ? tags[0].tousLesTags : []);
+    res.status(200).json(tags.length > 0 ? tags : []);
   } catch (error) {
     console.error(error);
-    res.status(400).json({ infoType: "400" });
+    const statusCode = error.name === "ValidationError" ? 400 : 500;
+    res.status(statusCode).json({
+      infoType: statusCode.toString(),
+    });
   }
 };

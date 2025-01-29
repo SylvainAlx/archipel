@@ -31,10 +31,19 @@ const PlaceSchema = mongoose.Schema(
     description: {
       type: String,
       default: "",
+      maxlength: [2000, "Le texte ne peut pas dépasser 5000 caractères."],
     },
     image: {
       type: String,
       default: "",
+    },
+    reported: {
+      type: Boolean,
+      default: false,
+    },
+    banished: {
+      type: Boolean,
+      default: false,
     },
   },
   {

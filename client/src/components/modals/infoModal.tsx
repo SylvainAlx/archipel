@@ -8,20 +8,29 @@ export default function InfoModal() {
   const { t } = useTranslation();
 
   const handleClick = () => {
-    myStore.set(infoModalAtom, "");
+    myStore.set(infoModalAtom, { text: "", image: "" });
   };
 
   const handlePress = (e: React.KeyboardEvent) => {
     const { key } = e;
     if (key === "Enter") {
-      myStore.set(infoModalAtom, "");
+      myStore.set(infoModalAtom, { text: "", image: "" });
     }
   };
 
   return (
     <>
-      <h2 className="text-2xl text-center p-4">INFORMATION</h2>
-      <p className="text-center">{info}</p>
+      <h2 className="text-2xl text-center p-4">
+        {t("components.modals.infoModal.title")}
+      </h2>
+      <p className="text-center break-all">{info.text}</p>
+      {info.image && (
+        <img
+          src={info.image}
+          alt={info.text}
+          className="object-contain w-full h-full"
+        />
+      )}
       <Button
         text={t("components.buttons.close")}
         click={handleClick}

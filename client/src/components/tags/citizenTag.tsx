@@ -1,16 +1,16 @@
 import Tag from "./tag";
 import { FaPassport } from "react-icons/fa";
-import { User } from "../../types/typUser";
 import { useAtom } from "jotai";
 import { sessionAtom } from "../../settings/store";
 import { IoMdCloseCircle } from "react-icons/io";
 import { MdCheckCircle } from "react-icons/md";
-import { approveCitizenship, declineCitizenship } from "../../utils/functions";
 import { useTranslation } from "react-i18next";
+import { approveCitizenship, declineCitizenship } from "../../utils/procedures";
+import { UserModel } from "../../models/userModel";
 
 export interface CitizenTagProps {
   label: string;
-  citizen: User;
+  citizen: UserModel;
 }
 
 export default function CitizenTag({ label, citizen }: CitizenTagProps) {

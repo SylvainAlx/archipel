@@ -1,65 +1,59 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import {
-  ChangeEvent,
-  FormEvent,
-  SetStateAction,
-  useEffect,
-  useState,
-} from "react";
+import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import Input from "../form/input";
-import Button from "../buttons/button";
 import Select from "../form/select";
-import { SetAtom, citizenListAtom, statsAtom } from "../../settings/store";
+import { statsAtom } from "../../settings/store";
 import { useTranslation } from "react-i18next";
 import { useAtom } from "jotai";
-import { getCitizens } from "../../api/user/userAPI";
-import { citizenSearchSortOptions } from "../../settings/lists";
+import SearchButtons from "../form/searchButtons";
+import { CITIZEN_SORTING } from "../../settings/sorting";
+import { UserListModel } from "../../models/lists/userListModel";
 
-export interface SearchBarProps {
+export interface CitizenSearchBarProps {
   type: string;
-  list: any[];
-  setList: SetAtom<[SetStateAction<any>], void>;
+  list: UserListModel;
+  setList: React.Dispatch<React.SetStateAction<UserListModel>>;
 }
 
-export default function CitizenSearchBar({ list, setList }: SearchBarProps) {
-  const [selectOption, setSelectOption] = useState("0");
+export default function CitizenSearchBar({
+  list,
+  setList,
+}: CitizenSearchBarProps) {
   const { t } = useTranslation();
   const [searchName, setSearchName] = useState("");
-  const [citizenList] = useAtom(citizenListAtom);
+  const [isLeader, setIsLeader] = useState(false);
   const [stats] = useAtom(statsAtom);
 
   useEffect(() => {
-    if (citizenList.length != stats.counts.citizens) {
-      getCitizens("");
+    if (
+      list.getItems().length != stats.counts.citizens ||
+      stats.counts.citizens === 0
+    ) {
+      loadUserList("");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [stats.counts.citizens]);
 
   useEffect(() => {
-    citizensSorting();
+    if (isLeader) {
+      const updatedList = list
+        .getItems()
+        .filter((user) => user.citizenship.nationOwner === true);
+      setList(new UserListModel(updatedList));
+    } else {
+      loadUserList(searchName);
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectOption, citizenList]);
+  }, [isLeader]);
 
-  const reset = () => {
-    getCitizens("");
-    setSelectOption("0");
+  const loadUserList = async (searchName: string) => {
+    let updatedList = await list.loadUserList(searchName);
+    updatedList = updatedList.sortUsers(list.sorting);
+    updatedList && setList(updatedList);
   };
 
-  const citizensSorting = () => {
-    list = [...citizenList];
-    if (selectOption === "0") {
-      setList(
-        list.sort(function (a, b) {
-          return a.name.localeCompare(b.name);
-        }),
-      );
-    } else if (selectOption === "1") {
-      setList(
-        list.sort(function (a, b) {
-          return b.name.localeCompare(a.name);
-        }),
-      );
-    }
+  const reset = () => {
+    loadUserList("");
   };
 
   const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
@@ -68,7 +62,16 @@ export default function CitizenSearchBar({ list, setList }: SearchBarProps) {
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    getCitizens(searchName);
+    loadUserList(searchName);
+  };
+
+  const handleChangeCheckbox = () => {
+    setIsLeader(!isLeader);
+  };
+
+  const handleChangeSorting = (e: ChangeEvent<HTMLSelectElement>) => {
+    const updatedList = list.sortUsers(Number(e.target.value));
+    setList(updatedList);
   };
 
   return (
@@ -84,30 +87,25 @@ export default function CitizenSearchBar({ list, setList }: SearchBarProps) {
         placeholder={t("components.searchBars.citizensList.input")}
         value={searchName}
       />
-      <Select
-        onChange={(e: ChangeEvent<HTMLSelectElement>) =>
-          setSelectOption(e.target.value)
-        }
-        options={citizenSearchSortOptions}
-        value={selectOption}
-      />
 
-      <div className="pb-2 flex flex-wrap gap-2 items-center justify-center md:justify-end">
-        <div className="w-[150px] flex justify-center">
-          <Button
-            type="submit"
-            disabled={false}
-            text={t("components.buttons.search")}
-          />
-        </div>
-        <div className="w-[150px] flex justify-center">
-          <Button
-            type="button"
-            disabled={false}
-            text={t("components.buttons.reset")}
-            click={reset}
-          />
-        </div>
+      <Select
+        onChange={handleChangeSorting}
+        options={Object.values(CITIZEN_SORTING)}
+        value={list.sorting}
+      />
+      <div className="flex flex-wrap flex-col md:flex-row gap-2 items-center justify-center md:justify-between">
+        <fieldset className="flex gap-3">
+          <label className="flex gap-2 items-center">
+            {t("components.hoverInfos.tags.nationOwner")}
+            <input
+              type="checkbox"
+              id="0"
+              checked={isLeader}
+              onChange={handleChangeCheckbox}
+            />
+          </label>
+        </fieldset>
+        <SearchButtons reset={reset} />
       </div>
     </form>
   );

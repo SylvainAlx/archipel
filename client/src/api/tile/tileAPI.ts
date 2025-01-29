@@ -1,10 +1,7 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   loadingAtom,
   myStore,
-  nationFetchedAtom,
   nationTileListAtom,
-  sessionAtom,
   tileListAtom,
 } from "../../settings/store";
 import { Nation } from "../../types/typNation";
@@ -12,7 +9,6 @@ import { Tile } from "../../types/typTile";
 import {
   spliceByDBId,
   updateByDBId,
-  updateOrCreateNationInMemory,
   updateOrCreateTileInMemory,
 } from "../../utils/atomArrayFunctions";
 import { displayTileInfoByType } from "../../utils/displayInfos";
@@ -34,20 +30,20 @@ export const createTile = (tile: Tile) => {
         myStore.set(nationTileListAtom, tempArray);
         updateOrCreateTileInMemory(resp.tile);
       }
-      const session = myStore.get(sessionAtom);
-      myStore.set(sessionAtom, {
-        nation: resp.nation,
-        user: session.user,
-        jwt: session.jwt,
-      });
-      updateOrCreateNationInMemory(resp.nation);
-      myStore.set(nationFetchedAtom, resp.nation);
+      // const session = myStore.get(sessionAtom);
+      // myStore.set(sessionAtom, {
+      //   nation: new NationModel(resp.nation),
+      //   user: session.user,
+      //   jwt: session.jwt,
+      // });
+      // updateOrCreateNationInMemory(resp.nation);
+      // myStore.set(nationFetchedAtom, resp.nation);
       displayTileInfoByType(resp.infoType);
       myStore.set(loadingAtom, false);
     })
     .catch((error) => {
       myStore.set(loadingAtom, false);
-      console.log(error);
+      console.error(error);
     });
 };
 
@@ -74,7 +70,7 @@ export const getNationTiles = (nationOfficialId: string) => {
       })
       .catch((error) => {
         myStore.set(loadingAtom, false);
-        console.log(error);
+        console.error(error);
       });
   }
 };
@@ -91,14 +87,14 @@ export const deleteTile = (id: string) => {
         myStore.set(nationTileListAtom, tempArray);
         tempArray = spliceByDBId(resp.tile._id, myStore.get(tileListAtom));
         myStore.set(tileListAtom, tempArray);
-        const session = myStore.get(sessionAtom);
-        myStore.set(sessionAtom, {
-          nation: resp.nation,
-          user: session.user,
-          jwt: session.jwt,
-        });
-        updateOrCreateNationInMemory(resp.nation);
-        myStore.set(nationFetchedAtom, resp.nation);
+        // const session = myStore.get(sessionAtom);
+        // myStore.set(sessionAtom, {
+        //   nation: new NationModel(resp.nation),
+        //   user: session.user,
+        //   jwt: session.jwt,
+        // });
+        // updateOrCreateNationInMemory(resp.nation);
+        // myStore.set(nationFetchedAtom, resp.nation);
       }
       displayTileInfoByType(resp.infoType);
       myStore.set(loadingAtom, false);

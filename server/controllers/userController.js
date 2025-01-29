@@ -2,51 +2,54 @@ import User from "../models/userSchema.js";
 import Nation from "../models/nationSchema.js";
 import Param from "../models/paramSchema.js";
 import Place from "../models/placeSchema.js";
-import jwt from "jsonwebtoken";
 import { LoremIpsum } from "lorem-ipsum";
 import { addMonths, createOfficialId } from "../utils/functions.js";
 import { GIFTS } from "../settings/const.js";
+
+const IpIsBanished = async (AUserIp) => {
+  try {
+    const banned =
+      (await Param.findOne({
+        name: "banished",
+        props: { $elemMatch: { label: "ip", value: AUserIp } },
+      })) != null;
+    return banned;
+  } catch (error) {
+    console.error(error);
+    const statusCode = error.name === "ValidationError" ? 400 : 500;
+    res.status(statusCode).json({
+      infoType: statusCode.toString(),
+    });
+  }
+};
 
 export const register = async (req, res) => {
   try {
     const { name, password, gender, language } = req.body;
     const userIp = req.clientIp;
-
-    const IpIsBanished =
-      (await Param.findOne({
-        name: "banished",
-        props: { $elemMatch: { label: "ip", value: userIp } },
-      })) != null;
-
-    if (IpIsBanished) {
+    if (await IpIsBanished(userIp)) {
       return res.status(403).json({
-        infoType: "ip",
+        infoType: "403",
       });
     }
-
     if (!name || !password) {
-      return res.status(400).json({
-        infoType: "miss",
+      return res.status(401).json({
+        infoType: "401",
       });
     }
-
     const random = new LoremIpsum({
       sentencesPerParagraph: { max: 8, min: 4 },
       wordsPerSentence: { max: 16, min: 4 },
     });
-    const recovery = random.generateWords(15);
-
+    const recovery = random.generateWords(12);
     let role = "standard";
-
     const roles = await Param.findOne({ name: "role" });
     roles.props.forEach((prop) => {
       if (prop.value === "admin" && prop.label === name) {
         role = "admin";
       }
     });
-
     const officialId = createOfficialId("c");
-
     const user = new User({
       officialId,
       ip: [{ value: userIp, lastVisit: new Date() }],
@@ -58,7 +61,6 @@ export const register = async (req, res) => {
       role,
       credits: GIFTS.REGISTER,
     });
-
     try {
       const savedUser = await user.save();
       const jwt = savedUser.createJWT();
@@ -67,7 +69,6 @@ export const register = async (req, res) => {
         .json({ user: savedUser, recovery, jwt, infoType: "signup" });
     } catch (error) {
       console.error(error);
-
       if (error.code === 11000) {
         return res.status(400).json({
           error: error.keyValue,
@@ -76,103 +77,111 @@ export const register = async (req, res) => {
       } else {
         return res.status(400).json({
           error: error.message,
-          infoType: "error",
+          infoType: "400",
         });
       }
     }
   } catch (error) {
-    res.status(400).json({ message: error.message, infoType: "error" });
+    console.error(error);
+    const statusCode = error.name === "ValidationError" ? 400 : 500;
+    res.status(statusCode).json({
+      infoType: statusCode.toString(),
+    });
   }
 };
 
 export const login = async (req, res) => {
   try {
     const userIp = req.clientIp;
+
+    if (await IpIsBanished(userIp)) {
+      return res.status(403).json({
+        infoType: "403",
+      });
+    }
+
     const { name, password } = req.body;
 
-    const user = await User.findOne(
-      { name },
-      "officialId name bio gender avatar language password email link role credits plan expirationDate citizenship createdAt",
-    );
+    const user = await User.findOne({ name }, "-ip -recovery");
     if (!user) {
-      return res.status(404).json({ infoType: "user" });
+      return res.status(404).json({ infoType: "404" });
     }
     user.comparePassword(password, async (error, isMatch) => {
       if (error) {
         return res.status(400).json({
-          infoType: "error",
+          infoType: "400",
           error: error.message,
         });
       }
       if (!isMatch) {
-        return res.status(401).json({ infoType: "password" });
+        return res.status(401).json({ infoType: "401" });
       }
       const jwt = user.createJWT();
       updateUserIpAddress(user.officialId, userIp);
       res.status(200).json({ user, jwt, infoType: "signin" });
     });
   } catch (error) {
-    res.status(400).json({ message: error.message, infoType: "error" });
+    console.error(error);
+    const statusCode = error.name === "ValidationError" ? 400 : 500;
+    res.status(statusCode).json({
+      infoType: statusCode.toString(),
+    });
   }
 };
 
 export const verify = async (req, res) => {
   try {
     const userIp = req.clientIp;
-
-    const token = req.headers.authorization.split(" ")[1];
-    const secret = process.env.JWT_SECRET;
-
-    const decoded = jwt.verify(token, secret);
+    if (await IpIsBanished(userIp)) {
+      return res.status(403).json({
+        infoType: "ip",
+      });
+    }
+    const userId = req.userId;
 
     const user = await User.findOne(
-      { name: decoded.name },
-      "officialId name bio gender avatar language email link role credits plan expirationDate citizenship createdAt",
+      { officialId: userId },
+      "-ip -password -recovery",
     );
 
     if (user) {
       updateUserIpAddress(user.officialId, userIp);
       return res.status(200).json({ user, infoType: "verify" });
     } else {
-      return res.status(404).json({ infoType: "user" });
+      return res.status(401).json({ infoType: "401" });
     }
   } catch (error) {
-    res.status(401).json({ message: error.message, infoType: "jwt" });
+    console.error(error);
+    const statusCode = error.name === "ValidationError" ? 400 : 500;
+    res.status(statusCode).json({
+      infoType: statusCode.toString(),
+    });
   }
 };
 
 export const forgetPassword = async (req, res) => {
   try {
     const { name, recovery, newPassword } = req.body;
-
     const user = await User.findOne({ name });
-
     if (!user) {
-      return res.status(404).json({ infoType: "user" });
+      return res.status(404).json({ infoType: "404" });
     }
-
-    user.compare(recovery, async (error, isMatch) => {
-      if (error) {
-        return res
-          .status(500)
-          .json({ infoType: "serverError", error: error.message });
-      }
-      if (isMatch) {
-        user.password = newPassword;
-        await user.save();
-        return res.status(200).json({
-          infoType: "newPassword",
-        });
-      } else {
-        return res.status(401).json({
-          infoType: "badRecovery",
-        });
-      }
+    const isMatch = await user.compareRecoveryCode(recovery);
+    if (!isMatch) {
+      return res.status(401).json({
+        infoType: "401",
+      });
+    }
+    user.password = newPassword;
+    await user.save();
+    return res.status(200).json({
+      infoType: "newPassword",
     });
   } catch (error) {
-    res.status(400).json({
-      infoType: "error",
-      message: error.message,
+    console.error(error);
+    const statusCode = error.name === "ValidationError" ? 400 : 500;
+    res.status(statusCode).json({
+      infoType: statusCode.toString(),
     });
   }
 };
@@ -183,13 +192,11 @@ export const changePassword = async (req, res) => {
     const userId = req.userId;
     const user = await User.findOne({ officialId: userId });
     if (!user) {
-      return res.status(404).json({ infoType: "user" });
+      return res.status(404).json({ infoType: "404" });
     }
     user.comparePassword(oldPassword, async (error, isMatch) => {
       if (error) {
-        return res
-          .status(500)
-          .json({ infoType: "serverError", error: error.message });
+        return res.status(500).json({ infoType: "500", error: error.message });
       }
       if (isMatch) {
         user.password = newPassword;
@@ -198,15 +205,16 @@ export const changePassword = async (req, res) => {
           infoType: "newPassword",
         });
       } else {
-        return res.status(401).json({
-          infoType: "error",
+        return res.status(403).json({
+          infoType: "403",
         });
       }
     });
   } catch (error) {
-    res.status(400).json({
-      infoType: "error",
-      message: error.message,
+    console.error(error);
+    const statusCode = error.name === "ValidationError" ? 400 : 500;
+    res.status(statusCode).json({
+      infoType: statusCode.toString(),
     });
   }
 };
@@ -216,19 +224,23 @@ export const getAllUsers = async (req, res) => {
     const searchText = req.query.texteRecherche;
     if (searchText) {
       const users = await User.find(
-        { name: { $regex: searchText, $options: "i" } },
-        "officialId name bio gender avatar language email link role plan expirationDate citizenship createdAt",
+        { name: { $regex: searchText, $options: "i" }, banished: false },
+        "-ip -password -recovery",
       );
       res.status(200).json(users);
     } else {
       const users = await User.find(
-        {},
-        "officialId name bio gender avatar language email link role plan expirationDate citizenship createdAt",
+        { banished: false },
+        "-ip -password -recovery",
       );
       res.status(200).json(users);
     }
   } catch (error) {
-    res.status(404).json({ message: error.message, infoType: "noUser" });
+    console.error(error);
+    const statusCode = error.name === "ValidationError" ? 400 : 500;
+    res.status(statusCode).json({
+      infoType: statusCode.toString(),
+    });
   }
 };
 
@@ -236,16 +248,17 @@ export const getOneUser = async (req, res) => {
   const userId = req.params.id;
   try {
     const user = await User.findOne(
-      { officialId: userId },
-      "officialId name bio gender avatar language email link role plan expirationDate citizenship createdAt",
+      { officialId: userId, banished: false },
+      "-ip -password -recovery",
     );
     res.status(200).json({
       user,
     });
   } catch (error) {
-    res.status(404).json({
-      infoType: "noUser",
-      message: error.message,
+    console.error(error);
+    const statusCode = error.name === "ValidationError" ? 400 : 500;
+    res.status(statusCode).json({
+      infoType: statusCode.toString(),
     });
   }
 };
@@ -254,11 +267,12 @@ export const getSelfUser = async (req, res) => {
   const id = req.userId;
   try {
     const user = await User.findOne({ officialId: id });
-    res.status(200).json({ user });
+    res.status(200).json({ user }, "-ip -password -recovery");
   } catch (error) {
-    res.status(404).json({
-      infoType: "noUser",
-      message: error.message,
+    console.error(error);
+    const statusCode = error.name === "ValidationError" ? 400 : 500;
+    res.status(statusCode).json({
+      infoType: statusCode.toString(),
     });
   }
 };
@@ -266,23 +280,41 @@ export const getSelfUser = async (req, res) => {
 export const deleteSelfUser = async (req, res) => {
   try {
     const id = req.userId;
-    User.findOneAndDelete({ officialId: id }).then(async (user) => {
-      const nation = await Nation.findOne({
-        officialId: user.citizenship.nationId,
-      });
-      if (nation != null) {
-        if (nation.owner === user.officialId) {
-          nation.owner = "";
-        }
-        nation.data.roleplay.citizens -= 1;
-        nation.save();
+    const { password } = req.body;
+
+    const user = await User.findOne({ officialId: id });
+    if (!user) {
+      return res.status(404).json({ infoType: "404" });
+    }
+    user.comparePassword(password, async (error, isMatch) => {
+      if (error) {
+        return res.status(500).json({ infoType: "500", error: error.message });
       }
-      res.status(200).json({ nation, infoType: "delete" });
+      if (isMatch) {
+        User.findOneAndDelete({ officialId: id }).then(async (user) => {
+          const nation = await Nation.findOne({
+            officialId: user.citizenship.nationId,
+          });
+          if (nation != null) {
+            if (nation.owner === user.officialId) {
+              nation.owner = "";
+            }
+            nation.data.roleplay.citizens -= 1;
+            nation.save();
+          }
+          res.status(200).json({ nation, infoType: "delete" });
+        });
+      } else {
+        return res.status(403).json({
+          infoType: "403",
+        });
+      }
     });
   } catch (error) {
-    res.status(400).json({
-      message: error.message,
-      infoType: "deleteKO",
+    console.error(error);
+    const statusCode = error.name === "ValidationError" ? 400 : 500;
+    res.status(statusCode).json({
+      infoType: statusCode.toString(),
     });
   }
 };
@@ -290,29 +322,40 @@ export const deleteSelfUser = async (req, res) => {
 export const getUsersByNation = async (req, res) => {
   const nationId = req.params.id;
   try {
-    await User.find({ "citizenship.nationId": nationId })
+    await User.find(
+      { "citizenship.nationId": nationId, banished: false },
+      "-ip -password -recovery",
+    )
       .then((users) => {
         res.status(200).json(users);
       })
       .catch((error) => {
-        res.status(400).json({ message: error.message, infoType: "error" });
+        res.status(400).json({ message: error.message, infoType: "400" });
       });
   } catch (error) {
-    res.status(400).json({ message: error.message, infoType: "error" });
+    console.error(error);
+    const statusCode = error.name === "ValidationError" ? 400 : 500;
+    res.status(statusCode).json({
+      infoType: statusCode.toString(),
+    });
   }
 };
 
 export const usersCount = async (req, res) => {
   try {
-    User.countDocuments({})
+    User.countDocuments({ banished: false })
       .then((count) => {
         res.status(200).json(count);
       })
       .catch((error) => {
-        res.status(400).json({ message: error.message, infoType: "error" });
+        res.status(400).json({ message: error.message, infoType: "400" });
       });
   } catch (error) {
-    res.status(400).json({ message: error.message, infoType: "error" });
+    console.error(error);
+    const statusCode = error.name === "ValidationError" ? 400 : 500;
+    res.status(statusCode).json({
+      infoType: statusCode.toString(),
+    });
   }
 };
 
@@ -325,6 +368,7 @@ export const updateUser = async (req, res) => {
       gender,
       avatar,
       language,
+      religion,
       email,
       link,
       role,
@@ -335,7 +379,7 @@ export const updateUser = async (req, res) => {
     if (req.userId === officialId) {
       const user = await User.findOne(
         { officialId },
-        "officialId name surname gender avatar language email link role credits plan expirationDate citizenship createdAt",
+        "-ip -password -recovery",
       );
       let newResidence;
       let oldResidence;
@@ -366,6 +410,7 @@ export const updateUser = async (req, res) => {
       (user.bio = bio), (user.gender = gender);
       user.avatar = avatar;
       user.language = language;
+      user.religion = religion;
       user.email = email;
       user.link = link;
       user.role = role;
@@ -384,18 +429,19 @@ export const updateUser = async (req, res) => {
         .catch((error) => {
           console.error(error);
           res.status(400).json({
-            infoType: "miss",
+            infoType: "400",
           });
         });
     } else {
       res.status(403).json({
-        infoType: "forbidden",
+        infoType: "403",
       });
     }
   } catch (error) {
     console.error(error);
-    res.status(400).json({
-      infoType: "serverError",
+    const statusCode = error.name === "ValidationError" ? 400 : 500;
+    res.status(statusCode).json({
+      infoType: statusCode.toString(),
     });
   }
 };
@@ -407,19 +453,17 @@ export const changeStatus = async (req, res) => {
     if (req.userId === officialId || status != 0) {
       const user = await User.findOne(
         { officialId },
-        "officialId nofficialIdame bio gender avatar language email link role credits plan expirationDate citizenship createdAt",
+        "-ip -password -recovery",
       );
 
-      const nation = await Nation.findOne(
-        { officialId: nationId },
-        "officialId name data",
-      );
+      const nation = await Nation.findOne({ officialId: nationId });
 
       if (status === 0 || status === 1) {
         user.citizenship.nationId = nation.officialId;
         user.citizenship.nationName = nation.name;
         if (status === 1) {
           nation.data.roleplay.citizens += 1;
+          nation.data.roleplay.treasury += GIFTS.CITIZENSHIP;
           nation.save().catch((error) => {
             res.status(400).json({
               erreur: error.message,
@@ -431,9 +475,11 @@ export const changeStatus = async (req, res) => {
         user.citizenship.nationName = "";
         if (user.citizenship.status === 1) {
           nation.data.roleplay.citizens -= 1;
+          nation.data.roleplay.treasury -= GIFTS.CITIZENSHIP;
           nation.save().catch((error) => {
             res.status(400).json({
               erreur: error.message,
+              infoType: "400",
             });
           });
         }
@@ -451,21 +497,25 @@ export const changeStatus = async (req, res) => {
         .catch((error) => {
           console.error(error);
           res.status(400).json({
-            infoType: "miss",
+            infoType: "400",
           });
         });
     } else {
-      res.sendStatus(403).json({ infoType: "forbidden" });
+      res.sendStatus(403).json({ infoType: "403" });
     }
   } catch (error) {
-    res.status(400).json({ message: error.message, infoType: "error" });
+    console.error(error);
+    const statusCode = error.name === "ValidationError" ? 400 : 500;
+    res.status(statusCode).json({
+      infoType: statusCode.toString(),
+    });
   }
 };
 
 export const changePlan = async (req, res) => {
   try {
     const { officialId, plan, duration } = req.body;
-    const user = await User.findOne({ officialId });
+    const user = await User.findOne({ officialId }, "-ip -password -recovery");
     if (user) {
       user.plan = plan;
       user.expirationDate = addMonths(duration);
@@ -477,9 +527,9 @@ export const changePlan = async (req, res) => {
     }
   } catch (error) {
     console.error(error);
-    res.status(400).json({
-      message: error.message,
-      infoType: "error",
+    const statusCode = error.name === "ValidationError" ? 400 : 500;
+    res.status(statusCode).json({
+      infoType: statusCode.toString(),
     });
   }
 };
@@ -487,7 +537,10 @@ export const changePlan = async (req, res) => {
 const updateUserIpAddress = async (userOfficialId, ip) => {
   try {
     let isFind = false;
-    const user = await User.findOne({ officialId: userOfficialId });
+    const user = await User.findOne(
+      { officialId: userOfficialId },
+      "-password -recovery",
+    );
     for (const address of user.ip) {
       if (address.value === ip) {
         isFind = true;
@@ -500,5 +553,9 @@ const updateUserIpAddress = async (userOfficialId, ip) => {
     await user.save();
   } catch (error) {
     console.error(error);
+    const statusCode = error.name === "ValidationError" ? 400 : 500;
+    res.status(statusCode).json({
+      infoType: statusCode.toString(),
+    });
   }
 };

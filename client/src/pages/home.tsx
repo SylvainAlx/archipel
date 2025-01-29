@@ -6,6 +6,9 @@ import { sessionAtom } from "../settings/store";
 import { useAtom } from "jotai";
 import Illustration from "../components/illustration";
 import { IoMdAddCircleOutline, IoMdGlobe, IoMdLogIn } from "react-icons/io";
+import { RxAvatar } from "react-icons/rx";
+import { GiBlackFlag } from "react-icons/gi";
+import CryptoDonationButton from "../components/buttons/cryptoDonationButton";
 
 export default function Home() {
   const { t } = useTranslation();
@@ -24,44 +27,53 @@ export default function Home() {
                 __html: t("pages.home.presentation1"),
               }}
             />
-            {session.user.officialId === undefined ||
-            session.user.officialId === "" ? (
-              <div className="animate-fade w-full py-4 flex justify-center gap-4 flex-wrap">
-                <Button
-                  text={t("components.buttons.login")}
-                  type="button"
-                  click={() => navigate("/login")}
-                  children={<IoMdLogIn />}
-                />
-                <Button
-                  text={t("components.buttons.register")}
-                  type="button"
-                  click={() => navigate("/register")}
-                  children={<IoMdAddCircleOutline />}
-                />
-                <Button
-                  text={t("components.buttons.explore")}
-                  type="button"
-                  click={() => navigate("/explore")}
-                  children={<IoMdGlobe />}
-                />
-              </div>
-            ) : (
-              <div className="animate-fade w-full py-4 flex justify-center gap-4 flex-wrap">
-                <Button
-                  text={t("components.buttons.user")}
-                  type="button"
-                  click={() => navigate(`/citizen/${session.user.officialId}`)}
-                  widthFull={true}
-                />
-                <Button
-                  text={t("components.buttons.explore")}
-                  type="button"
-                  click={() => navigate("/explore")}
-                  widthFull={true}
-                />
-              </div>
-            )}
+            <div className="animate-fade w-full py-4 flex justify-center gap-2 flex-wrap">
+              {session.user.officialId === undefined ||
+              session.user.officialId === "" ? (
+                <>
+                  <Button
+                    text={t("components.buttons.login")}
+                    type="button"
+                    click={() => navigate("/login")}
+                    children={<IoMdLogIn />}
+                  />
+                  <Button
+                    text={t("components.buttons.register")}
+                    type="button"
+                    click={() => navigate("/register")}
+                    children={<IoMdAddCircleOutline />}
+                  />
+                </>
+              ) : (
+                <>
+                  <Button
+                    text={t("components.buttons.user")}
+                    type="button"
+                    click={() =>
+                      navigate(`/citizen/${session.user.officialId}`)
+                    }
+                    children={<RxAvatar />}
+                  />
+                  {session.user.citizenship.nationId != "" && (
+                    <Button
+                      text={t("components.buttons.nation")}
+                      type="button"
+                      click={() =>
+                        navigate(`/nation/${session.user.citizenship.nationId}`)
+                      }
+                      children={<GiBlackFlag />}
+                    />
+                  )}
+                </>
+              )}
+              <Button
+                text={t("components.buttons.explore")}
+                type="button"
+                click={() => navigate("/explore")}
+                children={<IoMdGlobe />}
+              />
+              <CryptoDonationButton />
+            </div>
           </div>
           <Illustration src="/archipelago.webp" />
         </article>

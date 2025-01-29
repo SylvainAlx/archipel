@@ -1,12 +1,12 @@
 import Tag from "./tag";
 import { GiCapitol } from "react-icons/gi";
-import { nationPlacesListAtom } from "../../settings/store";
-import { useAtom } from "jotai";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { getPlaceName } from "../../utils/functions";
 import { Nation } from "../../types/typNation";
 import { useNavigate } from "react-router-dom";
+import { placeListAtomV2 } from "../../settings/store";
+import { useAtom } from "jotai";
 
 export interface CapitalTagProps {
   selectedNation: Nation;
@@ -15,7 +15,7 @@ export interface CapitalTagProps {
 export default function CapitalTag({ selectedNation }: CapitalTagProps) {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const [nationPlaceList] = useAtom(nationPlacesListAtom);
+  const [placeList] = useAtom(placeListAtomV2);
   const [capital, setCapital] = useState<string>(
     t("pages.nation.nationIdentity.noCapital"),
   );
@@ -23,7 +23,7 @@ export default function CapitalTag({ selectedNation }: CapitalTagProps) {
   useEffect(() => {
     if (selectedNation.data.roleplay.capital != "") {
       const capitalName = getPlaceName(
-        nationPlaceList,
+        placeList.getItems(),
         selectedNation.data.roleplay.capital,
         t("pages.nation.nationIdentity.noCapital"),
       );
@@ -32,7 +32,7 @@ export default function CapitalTag({ selectedNation }: CapitalTagProps) {
       setCapital(t("pages.nation.nationIdentity.noCapital"));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [nationPlaceList, selectedNation]);
+  }, [placeList, selectedNation]);
 
   const handleClick = () => {
     if (typeof selectedNation.data.roleplay.capital === "string") {
@@ -45,12 +45,10 @@ export default function CapitalTag({ selectedNation }: CapitalTagProps) {
       hover={t("components.hoverInfos.tags.capital")}
       text={capital}
       bgColor="bg-info"
-      children={
-        <>
-          <GiCapitol />
-        </>
+      children={<GiCapitol />}
+      click={
+        selectedNation.data.roleplay.capital != "" ? handleClick : undefined
       }
-      click={handleClick}
     />
   );
 }

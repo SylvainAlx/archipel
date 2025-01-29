@@ -1,3 +1,6 @@
+import i18n from "../../i18n/i18n";
+import { ComModel } from "../../models/comModel";
+import { COM_TYPE } from "../../settings/consts";
 import { loadingAtom, myStore, relationListAtom } from "../../settings/store";
 import { DiplomaticRelationship } from "../../types/typRelation";
 import { updateOrCreateRelationInMemory } from "../../utils/atomArrayFunctions";
@@ -12,12 +15,28 @@ export const createRelation = (payload: DiplomaticRelationship) => {
   myStore.set(loadingAtom, true);
   createRelationFetch(payload)
     .then((resp: { relation: DiplomaticRelationship; infoType: string }) => {
-      if (resp.relation) {
+      if (resp.infoType === "new") {
         myStore.set(relationListAtom, [
           ...myStore.get(relationListAtom),
           resp.relation,
         ]);
         displayRelationInfoByType(resp.infoType);
+        const newCom1 = new ComModel({
+          comType: COM_TYPE.userPrivate.id,
+          origin: resp.relation.nations[1].OfficialId,
+          destination: resp.relation.nations[1].AmbassadorId,
+          title: i18n.t("coms.relationToAccept.title"),
+          message: i18n.t("coms.relationToAccept.message"),
+        });
+        newCom1.baseInsert();
+        const newCom2 = new ComModel({
+          comType: COM_TYPE.userPrivate.id,
+          origin: resp.relation.nations[0].OfficialId,
+          destination: resp.relation.nations[0].AmbassadorId,
+          title: i18n.t("coms.relationToWait.title"),
+          message: i18n.t("coms.relationToWait.message"),
+        });
+        newCom2.baseInsert();
       }
       myStore.set(loadingAtom, false);
     })
@@ -32,9 +51,25 @@ export const updateRelation = (payload: DiplomaticRelationship) => {
   myStore.set(loadingAtom, true);
   updateRelationFetch(payload)
     .then((resp: { relation: DiplomaticRelationship; infoType: string }) => {
-      if (resp.relation) {
+      if (resp.infoType === "update") {
         updateOrCreateRelationInMemory(resp.relation);
         displayRelationInfoByType(resp.infoType);
+        const newCom1 = new ComModel({
+          comType: COM_TYPE.nationPrivate.id,
+          origin: resp.relation.nations[0].OfficialId,
+          destination: resp.relation.nations[0].OfficialId,
+          title: i18n.t("coms.relationUpdate.title"),
+          message: i18n.t("coms.relationUpdate.message"),
+        });
+        newCom1.baseInsert();
+        const newCom2 = new ComModel({
+          comType: COM_TYPE.nationPrivate.id,
+          origin: resp.relation.nations[1].OfficialId,
+          destination: resp.relation.nations[1].OfficialId,
+          title: i18n.t("coms.relationUpdate.title"),
+          message: i18n.t("coms.relationUpdate.message"),
+        });
+        newCom2.baseInsert();
       }
       myStore.set(loadingAtom, false);
     })

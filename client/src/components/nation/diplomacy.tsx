@@ -58,18 +58,16 @@ export default function Diplomacy({
       emptyDiplomaticRelationship;
     const nation1: NationDiplomacyInfo = {
       OfficialId: session.user.citizenship.nationId,
-      AmbassadorId: "",
+      AmbassadorId: session.user.officialId,
       accepted: true,
     };
     const nation2: NationDiplomacyInfo = {
       OfficialId: selectedNation.officialId,
-      AmbassadorId: "",
+      AmbassadorId: selectedNation.owner,
       accepted: false,
     };
-    newRelationPayload.name = `${selectedNation.name} & ${session.nation.name}`;
-    newRelationPayload.nations = [];
-    newRelationPayload.nations.push(nation1);
-    newRelationPayload.nations.push(nation2);
+    newRelationPayload.name = `[A TRADUIRE] Nouvelle relation diplomatique`;
+    newRelationPayload.nations = [nation1, nation2];
     myStore.set(newRelationAtom, {
       relation: newRelationPayload,
       show: true,
@@ -86,11 +84,22 @@ export default function Diplomacy({
             <div className="w-full flex flex-col-reverse gap-2 items-center">
               {nationRelationList.length > 0 ? (
                 nationRelationList.map((relation, i) => {
-                  if (relation.nations.length > 1) {
+                  if (
+                    relation.nations.length > 1 &&
+                    (relation.nations[1].accepted ||
+                      relation.nations[1].AmbassadorId ===
+                        session.user.officialId)
+                  ) {
                     return (
                       <Suspense key={i} fallback={<BarreLoader />}>
                         <RelationTile relation={relation} />
                       </Suspense>
+                    );
+                  } else {
+                    return (
+                      <em key={i} className="text-center">
+                        {t("components.buttons.createRelation")}
+                      </em>
                     );
                   }
                 })

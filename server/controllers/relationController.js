@@ -31,7 +31,11 @@ export const createRelation = async (req, res) => {
       }
     }
   } catch (error) {
-    res.status(400).json({ error: error.message, infoType: "400" });
+    console.error(error);
+    res.status(500).json({
+      infoType: "500",
+      error,
+    });
   }
 };
 
@@ -48,7 +52,11 @@ export const getAllRelation = async (req, res) => {
       res.status(200).json(relations);
     }
   } catch (error) {
-    res.status(404).json({ error: error.message, infoType: "noRelation" });
+    console.error(error);
+    res.status(500).json({
+      infoType: "500",
+      error,
+    });
   }
 };
 
@@ -91,6 +99,10 @@ export const updateRelation = async (req, res) => {
       });
     }
   } catch (error) {
-    res.status(400).json({ message: error, infoType: "400" });
+    console.error(error);
+    res.status(500).json({
+      infoType: "500",
+      error,
+    });
   }
 };

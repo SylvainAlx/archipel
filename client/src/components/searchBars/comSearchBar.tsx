@@ -1,71 +1,64 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import {
-  ChangeEvent,
-  FormEvent,
-  SetStateAction,
-  useEffect,
-  useState,
-} from "react";
+import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import Input from "../form/input";
-import Button from "../buttons/button";
 import Select from "../form/select";
-import { SetAtom, comFetchedListAtom, statsAtom } from "../../settings/store";
+import { statsAtom } from "../../settings/store";
 import { useTranslation } from "react-i18next";
 import { useAtom } from "jotai";
-import { getPublicComs } from "../../api/communication/comAPI";
-import { comSearchSortOptions } from "../../settings/lists";
+import SearchButtons from "../form/searchButtons";
+import { COM_TYPE } from "../../settings/consts";
+import { ComListModel } from "../../models/lists/comListModel";
+import { COM_SORTING } from "../../settings/sorting";
 
-export interface SearchBarProps {
+export interface ComSearchBarProps {
   type: string;
-  setList: SetAtom<[SetStateAction<any>], void>;
+  list: ComListModel;
+  setList: React.Dispatch<React.SetStateAction<ComListModel>>;
 }
 
-export default function ComSearchBar({ setList }: SearchBarProps) {
-  const [selectOption, setSelectOption] = useState("1");
+export default function ComSearchBar({ list, setList }: ComSearchBarProps) {
   const { t } = useTranslation();
-  const [searchName, setSearchName] = useState("");
-  const [comList] = useAtom(comFetchedListAtom);
+  const [nationId, setNationId] = useState("");
   const [stats] = useAtom(statsAtom);
 
+  const loadList = async () => {
+    const updatedList = await list.loadComList(
+      "",
+      "",
+      [COM_TYPE.nationPublic.id, COM_TYPE.general.id],
+      false,
+    );
+    if (updatedList) {
+      updatedList.sortComs(updatedList.sorting);
+      setList(updatedList);
+    }
+  };
+
   useEffect(() => {
-    getPublicComs("");
+    loadList();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [stats.counts.coms]);
 
-  useEffect(() => {
-    comSorting();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectOption, comList]);
-
-  const reset = () => {
-    getPublicComs("");
-    setSelectOption("1");
-  };
-
-  const comSorting = () => {
-    const sortedList = [...comList];
-
-    if (selectOption === "0") {
-      sortedList.sort(
-        (a, b) =>
-          new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime(),
-      );
-    } else if (selectOption === "1") {
-      sortedList.sort(
-        (a, b) =>
-          new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
-      );
-    }
-    setList(sortedList);
+  const reset = async () => {
+    setNationId("");
+    loadList();
   };
 
   const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
-    setSearchName(e.target.value);
+    setNationId(e.target.value);
+  };
+
+  const handleChangeSorting = (e: ChangeEvent<HTMLSelectElement>) => {
+    const updatedList = list.sortComs(Number(e.target.value));
+    setList(updatedList);
   };
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    getPublicComs("");
+    const updatedList = new ComListModel(
+      list.getItems().filter((com) => com.origin === nationId.toLowerCase()),
+    );
+    setList(updatedList);
   };
 
   return (
@@ -77,35 +70,16 @@ export default function ComSearchBar({ setList }: SearchBarProps) {
         required={true}
         onChange={handleSearch}
         type="text"
-        name="title"
+        name="nationId"
         placeholder={t("components.searchBars.comsList.input")}
-        value={searchName}
+        value={nationId}
       />
       <Select
-        onChange={(e: ChangeEvent<HTMLSelectElement>) =>
-          setSelectOption(e.target.value)
-        }
-        options={comSearchSortOptions}
-        value={selectOption}
+        onChange={handleChangeSorting}
+        options={Object.values(COM_SORTING)}
+        value={list.sorting}
       />
-
-      <div className="pb-2 flex flex-wrap gap-2 items-center justify-center md:justify-end">
-        <div className="w-[150px] flex justify-center">
-          <Button
-            type="submit"
-            disabled={false}
-            text={t("components.buttons.search")}
-          />
-        </div>
-        <div className="w-[150px] flex justify-center">
-          <Button
-            type="button"
-            disabled={false}
-            text={t("components.buttons.reset")}
-            click={reset}
-          />
-        </div>
-      </div>
+      <SearchButtons reset={reset} />
     </form>
   );
 }

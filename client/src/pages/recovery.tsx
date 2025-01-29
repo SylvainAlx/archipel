@@ -5,8 +5,9 @@ import Button from "../components/buttons/button";
 import Form from "../components/form/form";
 import TextArea from "../components/form/textArea";
 import { useTranslation } from "react-i18next";
-import { recoveryUser } from "../api/user/userAPI";
 import { useNavigate } from "react-router-dom";
+import RequiredStar from "../components/form/requiredStar";
+import { UserModel } from "../models/userModel";
 
 export default function Recovery() {
   const [name, setName] = useState("");
@@ -24,15 +25,17 @@ export default function Recovery() {
       setName(e.target.value);
     } else if (e.target.type == "password") {
       setPassword(e.target.value);
+      setPasswordsMatch(confirmPassword === e.target.value);
     } else {
       setRecovery(e.target.value);
     }
   };
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    recoveryUser({ name, password, recovery });
-    navigate("/login");
+    const newUser = new UserModel();
+    const isOk = await newUser.recoveryUser({ name, recovery, password });
+    isOk && navigate("/login");
   };
 
   return (
@@ -77,20 +80,14 @@ export default function Recovery() {
               placeholder={t("pages.recovery.confirmPassword")}
               value={confirmPassword}
             />
-            {/* <button
-          disabled={!passwordsMatch}
-          type="submit"
-          className={`button ${!passwordsMatch && "cursor-not-allowed"}`}
-        >
-          CHANGER DE MOT DE PASSE
-        </button> */}
+            <RequiredStar />
             <div
               className={`${!passwordsMatch && "cursor-not-allowed"} w-full`}
             >
               <Button
                 text={t("pages.recovery.changePassword")}
                 type="submit"
-                disabled={!passwordsMatch}
+                disabled={!passwordsMatch || !confirmPassword}
                 widthFull={true}
               />
             </div>

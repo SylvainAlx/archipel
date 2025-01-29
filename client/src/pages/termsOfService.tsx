@@ -24,17 +24,17 @@ export default function TermsOfService() {
   };
 
   return (
-    <section className="w-full px-2 pb-2 flex flex-col items-center gap-2">
+    <section className="w-full max-w-xl px-2 pb-2 flex flex-col items-center gap-2">
       {lang === langOptions[1].id ? (
         <H1 text="Conditions générales d'utilisation" />
       ) : (
         <>
           <H1 text="Terms of service" />
-          <strong>ONLY IN FRENCH LANGUAGE</strong>
+          <strong className="animate-pulse">ONLY IN FRENCH LANGUAGE</strong>
         </>
       )}
       <MDEditor.Markdown
-        className="bg-transparent text-light text-justify"
+        className="bg-transparent text-light text-justify mde-markdown"
         source={markdownContent}
       />
     </section>

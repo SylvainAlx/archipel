@@ -13,19 +13,19 @@ export default function ReleaseNotes() {
   }, []);
 
   const fetchMarkdown = async () => {
-    const response = await fetch("/RELEASE-NOTES.md");
+    const response = await fetch("/CHANGELOG.md");
     const text = await response.text();
     setMarkdownContent(text);
   };
 
   return (
-    <section className="w-full px-2 pb-2 flex flex-col items-center gap-2">
+    <section className="w-full max-w-xl px-2 pb-2 flex flex-col items-center gap-2">
       <H1 text={t("pages.releaseNotes.title")} />
       {i18n.language === langOptions[0].id && (
-        <strong>ONLY IN FRENCH LANGUAGE</strong>
+        <strong className="animate-pulse">ONLY IN FRENCH LANGUAGE</strong>
       )}
       <MDEditor.Markdown
-        className="bg-transparent text-light text-justify"
+        className="bg-transparent text-light text-justify mde-markdown"
         source={markdownContent}
       />
     </section>

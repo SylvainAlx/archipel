@@ -1,31 +1,21 @@
 import { useTranslation } from "react-i18next";
 import TileContainer from "../tileContainer";
 import DashTile from "../dashTile";
-import { lazy, Suspense, useEffect } from "react";
-import { getNationCitizens } from "../../api/user/userAPI";
+import { lazy, Suspense } from "react";
 import { SelectedNationProps } from "../../types/typProp";
-import {
-  confirmBox,
-  nationCitizenListAtom,
-  sessionAtom,
-} from "../../settings/store";
+import { confirmBox, sessionAtom, userListAtomV2 } from "../../settings/store";
 import { useAtom } from "jotai";
 import BarreLoader from "../loading/barreLoader";
 import Button from "../buttons/button";
 import { FaPassport } from "react-icons/fa";
+import { UserListModel } from "../../models/lists/userListModel";
 
 export default function Citizens({ selectedNation }: SelectedNationProps) {
-  const [nationCitizenList] = useAtom(nationCitizenListAtom);
   const [session] = useAtom(sessionAtom);
+  const [userList] = useAtom<UserListModel>(userListAtomV2);
   const [, setConfirmModal] = useAtom(confirmBox);
   const { t } = useTranslation();
   const CitizenTile = lazy(() => import("../tiles/citizenTile"));
-
-  useEffect(() => {
-    if (selectedNation.officialId !== "") {
-      getNationCitizens(selectedNation);
-    }
-  }, [selectedNation]);
 
   const askCtz = () => {
     const payload = {
@@ -34,10 +24,12 @@ export default function Citizens({ selectedNation }: SelectedNationProps) {
       status: 0,
     };
     setConfirmModal({
-      action: "changeStatus",
+      action: "",
       text: t("components.modals.confirmModal.askCitizenship"),
       result: "",
-      payload,
+      actionToDo: async () => {
+        await session.user.changeStatus(payload);
+      },
     });
   };
 
@@ -58,15 +50,19 @@ export default function Citizens({ selectedNation }: SelectedNationProps) {
                   />
                 )}
               <div className="w-full flex flex-col-reverse gap-2 items-center">
-                {nationCitizenList.length > 0 ? (
-                  nationCitizenList.map((citizen, i) => {
-                    return (
-                      <Suspense key={i} fallback={<BarreLoader />}>
-                        <div className="relative w-full">
-                          <CitizenTile citizen={citizen} />
-                        </div>
-                      </Suspense>
-                    );
+                {userList.getItems().length > 0 ? (
+                  userList.getItems().map((citizen, i) => {
+                    if (
+                      citizen.citizenship.nationId === selectedNation.officialId
+                    ) {
+                      return (
+                        <Suspense key={i} fallback={<BarreLoader />}>
+                          <div className="relative w-full">
+                            <CitizenTile citizen={citizen} />
+                          </div>
+                        </Suspense>
+                      );
+                    }
                   })
                 ) : (
                   <em className="text-center">

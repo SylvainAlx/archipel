@@ -5,6 +5,7 @@ export interface Tile {
   description?: string;
   value: string | number;
   updatedAt: string;
+  isFree: boolean;
 }
 
 export const emptyTile: Tile = {
@@ -14,4 +15,5 @@ export const emptyTile: Tile = {
   description: "",
   value: "",
   updatedAt: "",
+  isFree: true,
 };

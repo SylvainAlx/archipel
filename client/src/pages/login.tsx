@@ -4,9 +4,9 @@ import H1 from "../components/titles/h1";
 import Input from "../components/form/input";
 import Button from "../components/buttons/button";
 import Form from "../components/form/form";
-
 import { useTranslation } from "react-i18next";
-import { login } from "../api/user/userAPI";
+import RequiredStar from "../components/form/requiredStar";
+import { myStore, sessionAtom } from "../settings/store";
 
 export default function Login() {
   const [name, setName] = useState("");
@@ -23,8 +23,13 @@ export default function Login() {
   };
 
   const handleSubmit = (e: FormEvent) => {
+    const login = async () => {
+      myStore
+        .get(sessionAtom)
+        .user.login({ name: name.trimEnd(), password: password.trimEnd() });
+    };
     e.preventDefault();
-    login({ name: name.trimEnd(), password: password.trimEnd() });
+    login();
   };
 
   return (
@@ -67,6 +72,7 @@ export default function Login() {
                 {t("pages.login.newUser")}
               </span>
             </div>
+            <RequiredStar />
             <Button
               text={t("components.buttons.login")}
               type="submit"

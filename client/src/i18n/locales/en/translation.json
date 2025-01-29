@@ -12,14 +12,17 @@
       "denied": "Access denied"
     },
     "nation": {
+      "noNation": "no nation to display",
       "title": "nation",
       "nationIdentity": {
         "title": "nation identity",
         "generalInformations": "general informations",
         "noCapital": "no capital",
+        "noTags": "no tags",
         "noMotto": "no motto",
         "externalLinks": "external links",
-        "noDescription": "no description"
+        "noDescription": "no description",
+        "nationState": "Nation-State"
       },
       "map": {
         "title": "nation map",
@@ -31,7 +34,8 @@
       },
       "relations": {
         "title": "diplomacy",
-        "noRelations": "no diplomatic relationship"
+        "noRelations": "no diplomatic relationship",
+        "pendingRelations": "diplomatic relations are pending approval"
       },
       "citizens": {
         "title": "citizens",
@@ -80,7 +84,8 @@
         "free": "hobby",
         "premium": "premium",
         "elite": "elite"
-      }
+      },
+      "privateCom": "private messages"
     },
     "coms": {
       "title": "communications"
@@ -99,10 +104,10 @@
     },
     "recovery": {
       "title": "reset password",
-      "placeholderName": "User name *",
-      "recoveryKey": "Recovery key *",
-      "newPassword": "New password *",
-      "confirmPassword": "Confirm new password *",
+      "placeholderName": "User name",
+      "recoveryKey": "Recovery key",
+      "newPassword": "New password",
+      "confirmPassword": "Confirm new password",
       "changePassword": "CHANGE PASSWORD"
     },
     "register": {
@@ -156,7 +161,12 @@
       "createCom": "post a press release",
       "contact": "contact",
       "generate": "generate",
-      "report": "REPORT"
+      "report": "REPORT",
+      "cookiesConsent": "cookies consent",
+      "accept": "ACCEPT",
+      "refuse": "REFUSE",
+      "break": "BREAK",
+      "donate": "Donate"
     },
     "form": {
       "input": {
@@ -174,7 +184,7 @@
       }
     },
     "logo": {
-      "title": "ARCHIPEL",
+      "title": "Archipel",
       "subtitle": "CITIZENS OF MICRONATIONS & VIRTUAL NATIONS"
     },
     "modals": {
@@ -190,15 +200,17 @@
         "askCitizenship": "Ask citizenship ?",
         "leaveNation": "Leave the nation ?",
         "cancelCitizenship": "Cancel citizenship application ?",
-        "leaveRelation": "Leave relation ?",
+        "acceptRelation": "Accept diplomatic relations ?",
+        "refuseRelation": "Refuse diplomatic relations ?",
+        "leaveRelation": "Leave diplomatic relations ?",
         "createTile": "Confirm new tile ?",
         "updateTile": "Update tile ?",
         "deleteTile": "Delete tile ?",
         "updateNation": "Update nation ?",
         "updatePlace": "Update place ?",
-        "updateCitizen": "Update profile ?",
-        "createCom": "Confirm new press release ?",
-        "deleteCom": "Delete press release ?",
+        "updateUser": "Update profile ?",
+        "createCom": "Confirm new communication ?",
+        "deleteCom": "Delete communication ?",
         "reportContent": "Confirm reporting the content to the administrator ?"
       },
       "cookiesModal": {
@@ -217,6 +229,7 @@
         "title": "NEW NATION",
         "nationName": "Nation name",
         "motto": "Motto",
+        "isNationState": "Check if it is a Nation-state",
         "currency": "Currency",
         "regime": "Regime",
         "tagsInfos": "Space to apply, click to delete"
@@ -239,7 +252,7 @@
       },
       "recoveryModal": {
         "title": "IMPORTANT INFORMATION",
-        "info": "Please keep your recovery phrase safe",
+        "info": "Please keep your recovery phrase safe, this one is unique !",
         "boldInfo": "IT WILL NOT BE COMMUNICATED TO YOU AFTERWARDS !",
         "confirm": "I have read this information"
       },
@@ -254,6 +267,9 @@
         "title": "New press release",
         "comTitle": "Title",
         "comMessage": "Message"
+      },
+      "infoModal": {
+        "title": "Information"
       }
     },
     "hoverInfos": {
@@ -261,7 +277,7 @@
       "noCoatOfArms": "no nation coat of arms",
       "flag": "nation flag",
       "noFlag": "no nation flag",
-      "dev": "under development",
+      "dev": "under testing & development",
       "links": {
         "website": "website",
         "instagram": "Instagram account",
@@ -287,10 +303,15 @@
         "nation": "nation",
         "currency": "currency",
         "nationalDay": "national day",
-        "nationOwner": "nation leader",
+        "nationOwner": "nation editor",
         "residence": "residence",
         "treasury": "treasury",
-        "date": "date"
+        "date": "date",
+        "honor": "honor",
+        "honor_pioneer": "pioneer",
+        "religion": "religion",
+        "gender": "gender",
+        "particularity": "particularity"
       },
       "avatar": "avatar",
       "relations": {
@@ -313,14 +334,18 @@
           "ascCtz": "Growing number of citizens",
           "descCtz": "Decreasing number of citizens",
           "ascTreasury": "Growing wealth",
-          "descTreasury": "Decreasing wealth"
+          "descTreasury": "Decreasing wealth",
+          "ascDate": "Creation date ascending",
+          "descDate": "Creation date descending"
         }
       },
       "citizensList": {
         "input": "Citizen name",
         "sortCitizens": {
           "ascAlpha": "Ascending alphabetical",
-          "descAlpha": "Descending alphabetical"
+          "descAlpha": "Descending alphabetical",
+          "ascDate": "Registration date ascending",
+          "descDate": "Registration date descending"
         }
       },
       "placesList": {
@@ -335,11 +360,13 @@
           "ascAlpha": "Ascending alphabetical",
           "descAlpha": "Descending alphabetical",
           "ascCtz": "Growing number of citizens",
-          "descCtz": "Decreasing number of citizens"
+          "descCtz": "Decreasing number of citizens",
+          "ascDate": "Creation date ascending",
+          "descDate": "Creation date descending"
         }
       },
       "comsList": {
-        "input": "Title",
+        "input": "Nation official ID",
         "SortComs": {
           "ascDate": "From oldest to newest",
           "descDate": "From newest to oldest"
@@ -355,7 +382,8 @@
         "semiPresidentialRepublic": "semi-presidential republic",
         "parliamentaryRepublic": "parliamentary republic",
         "onePartyRepublic": "one-party republic",
-        "directDemocracy": "direct democracy"
+        "directDemocracy": "direct democracy",
+        "illiberalDemocracy": "illiberal democracy"
       },
       "monarchies": {
         "constitutionalMonarchy": "constitutional monarchy",
@@ -371,22 +399,50 @@
         "other": "other"
       }
     },
+    "religionList": {
+      "preferNotToSay": "prefer not to say",
+      "christian": "Christian",
+      "muslim": "Muslim",
+      "jewish": "Jewish",
+      "buddhist": "Buddhist",
+      "hindu": "Hindu",
+      "sikh": "Sikh",
+      "shinto": "Shinto",
+      "bahai": "Bahai",
+      "jain": "Jain",
+      "zoroastrian": "Zoroastrian",
+      "taoist": "Taoist",
+      "confucian": "Confucian",
+      "indigenous": "Indigenous religion",
+      "atheist": "Atheist",
+      "agnostic": "Agnostic",
+      "other": "Other"
+    },
+    "genderList": {
+      "male": "male",
+      "female": "female",
+      "nonBinary": "non-binary",
+      "other": "other",
+      "preferNotToSay": "prefer not to say"
+    },
     "comType": {
       "admin": "administrator",
       "general": "global announcement",
-      "nationPrivate": "private announcement",
-      "nationPublic": "public announcement",
+      "nationPrivate": "nation private announcement",
+      "nationPublic": "nation public announcement",
       "nationUpdate": "nation update information",
-      "userUpdate": "user update information"
+      "userUpdate": "user update information",
+      "userPrivate": "private communication"
     }
   },
   "toasts": {
+    "reported": "Content reported and awaiting moderation",
     "errors": {
-      "400": "Unknown error",
+      "400": "Bad request",
+      "401": "Unauthorized",
+      "403": "Forbidden",
       "404": "Page not found",
-      "serverError": "Server error",
-      "miss": "Some information is wrong or missing",
-      "forbidden": "Delete action",
+      "500": "Server error",
       "11000": "Information already existing in the database",
       "nsfw": "Image contains NSFW content! Notification sent to admin"
     },
@@ -406,12 +462,14 @@
       "deleteKO": "Unable to delete the user",
       "update": "Update successful",
       "creditsNotReady": "Adding credits is not yet available",
-      "subscriptionNotReady": "Subscription is not yet available"
+      "subscriptionNotReady": "Subscription is not yet available",
+      "ipbanned": "Your IP address has been banned from Archipel"
     },
     "nation": {
       "create": "New nation created",
       "update": "Nation updated",
-      "delete": "Nation deleted"
+      "delete": "Nation deleted",
+      "notEnoughCredits": "Not enough credit"
     },
     "relation": {
       "create": "New diplomatic relationship created",
@@ -434,6 +492,44 @@
     "com": {
       "new": "Communication created",
       "delete": "Communication deleted"
+    }
+  },
+  "coms": {
+    "nationCreate": {
+      "title": "Life of the nation ",
+      "message": "Your nation has been created"
+    },
+    "nationDelete": {
+      "title": "Life of the nation ",
+      "message": "Your nation has been deleted"
+    },
+    "nationJoin": {
+      "title": "Life of the nation ",
+      "message": " has joined the nation"
+    },
+    "nationLeave": {
+      "title": "Life of the nation ",
+      "message": " has left the nation"
+    },
+    "nationToAccept": {
+      "title": "Life of the nation ",
+      "message": " requests citizenship for the nation"
+    },
+    "nationToWait": {
+      "title": "Life of the nation ",
+      "message": "Citizenship request pending approval"
+    },
+    "relationToAccept": {
+      "title": "Diplomacy",
+      "message": "Diplomatic relation request to validate"
+    },
+    "relationToWait": {
+      "title": "Diplomacy",
+      "message": "Diplomatic relation request pending approval"
+    },
+    "relationUpdate": {
+      "title": "Diplomacy",
+      "message": "Diplomatic relations updated"
     }
   }
 }

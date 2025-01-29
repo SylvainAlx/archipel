@@ -1,7 +1,12 @@
-import * as nsfwjs from "nsfwjs";
 import "@tensorflow/tfjs";
 
+const chargerNSFWJS = async () => {
+  const nsfwjs = await import("nsfwjs");
+  return nsfwjs;
+};
+
 const loadModel = async () => {
+  const nsfwjs = await chargerNSFWJS();
   const model = await nsfwjs.load();
   return model;
 };
@@ -20,7 +25,7 @@ export const verifyImage = async (AFile: File) => {
         const isNSFW = predictions.some(
           (prediction) =>
             prediction.className !== "Neutral" &&
-            // prediction.className !== "Drawing" &&
+            prediction.className !== "Drawing" &&
             prediction.probability > 0.7,
         );
 

@@ -51,7 +51,7 @@ export default function ModalsRouter() {
   if (
     recovery != "" ||
     confirm.text != "" ||
-    info != "" ||
+    info.text != "" ||
     loading ||
     editBox.original != -1 ||
     newPlace.nation != "" ||
@@ -80,7 +80,7 @@ export default function ModalsRouter() {
               ) : (
                 <>
                   {confirm.text != "" && <ConfirmModal />}
-                  {info != "" && <InfoModal />}
+                  {info.text != "" && <InfoModal />}
                   {editBox.original != -1 && <EditBoxModal />}
                   {newPlace.nation != "" && <NewPlaceModal />}
                   {newCom.origin != "" && <NewComModal />}
