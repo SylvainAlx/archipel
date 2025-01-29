@@ -1,10 +1,5 @@
 import { createComFetch, deleteComFetch } from "../services/comServices";
-import {
-  comListAtomV2,
-  loadingAtom,
-  myStore,
-  nationComListAtomV2,
-} from "../settings/store";
+import { comListAtomV2, loadingAtom, myStore } from "../settings/store";
 import { Com, ComPayload, emptyCom } from "../types/typCom";
 import { displayComInfoByType, errorCatching } from "../utils/displayInfos";
 import { CommonModel } from "./commonModel";
@@ -24,23 +19,17 @@ export class ComModel extends CommonModel implements Com {
     this.updateFields(defaultData);
   }
 
-  private addToNationComListAtom = (com: Com) => {
-    const updatedList = myStore.get(nationComListAtomV2).addOrUpdate(com);
-    myStore.set(nationComListAtomV2, new ComListModel(updatedList));
-  };
   private addToComListAtom = (com: Com) => {
     const updatedList = myStore.get(comListAtomV2).addOrUpdate(com);
     myStore.set(comListAtomV2, new ComListModel(updatedList));
   };
-  private removeFromNationComListAtom = (com: Com) => {
-    const updatedList = myStore
-      .get(nationComListAtomV2)
-      .removeByBaseId(com._id);
-    myStore.set(nationComListAtomV2, new ComListModel(updatedList));
-  };
   private removeFromComListAtom = (com: Com) => {
     const updatedList = myStore.get(comListAtomV2).removeByBaseId(com._id);
     myStore.set(comListAtomV2, new ComListModel(updatedList));
+  };
+  addToComList = (comList: ComListModel, com: Com) => {
+    const updatedList = comList.addOrUpdate(com);
+    return new ComListModel(updatedList);
   };
   updateFields(fields: Partial<ComModel>) {
     Object.assign(this, fields);
@@ -52,7 +41,6 @@ export class ComModel extends CommonModel implements Com {
       const resp: { com: Com; infoType: string } = await createComFetch(this);
       this.updateFields(resp.com);
       displayComInfoByType(resp.infoType);
-      this.origin?.charAt(2) === "n" && this.addToNationComListAtom(resp.com);
       this.addToComListAtom(resp.com);
     } catch (error) {
       errorCatching(error);
@@ -67,8 +55,6 @@ export class ComModel extends CommonModel implements Com {
       const resp: { com: Com; infoType: string } = await deleteComFetch(baseId);
       this.updateFields(emptyCom);
       displayComInfoByType(resp.infoType);
-      this.origin?.charAt(2) === "n" &&
-        this.removeFromNationComListAtom(resp.com);
       this.removeFromComListAtom(resp.com);
     } catch (error) {
       errorCatching(error);

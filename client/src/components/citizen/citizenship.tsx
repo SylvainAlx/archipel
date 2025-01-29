@@ -1,7 +1,6 @@
 import { useTranslation } from "react-i18next";
 import { genderList, languageList, religionList } from "../../settings/lists";
 import { emptyNewNationPayload, Nation } from "../../types/typNation";
-import { User } from "../../types/typUser";
 import DashTile from "../dashTile";
 import EditIcon from "../editIcon";
 import IdTag from "../tags/idTag";
@@ -26,17 +25,20 @@ import { PIONEER_DATE } from "../../settings/consts";
 import ReligionTag from "../tags/religionTag";
 import GenderTag from "../tags/genderTag";
 import HonorTag from "../tags/honorTag";
+import { UserModel } from "../../models/userModel";
 
 interface CitizenshipProps {
-  citizen: User;
+  citizen: UserModel;
   nation: Nation;
   owner: boolean;
+  updatePath: (path: string, value: string) => void;
 }
 
 export default function Citizenship({
   citizen,
   nation,
   owner,
+  updatePath,
 }: CitizenshipProps) {
   const { t } = useTranslation();
   const navigate = useNavigate();
@@ -61,13 +63,15 @@ export default function Citizenship({
       status: -1,
     };
     myStore.set(confirmBox, {
-      action: "changeStatus",
+      action: "",
       text:
         session.user.citizenship.status > 0
           ? t("components.modals.confirmModal.leaveNation")
           : t("components.modals.confirmModal.cancelCitizenship"),
       result: "",
-      payload,
+      actionToDo: async () => {
+        await citizen.changeStatus(payload);
+      },
     });
   };
 
@@ -99,6 +103,7 @@ export default function Citizenship({
                   param={genderList}
                   path="gender"
                   indice={citizen.gender}
+                  action={updatePath}
                 />
               )}
             </span>
@@ -110,6 +115,7 @@ export default function Citizenship({
                   param={languageList}
                   path="language"
                   indice={citizen.language}
+                  action={updatePath}
                 />
               )}
             </span>
@@ -121,6 +127,7 @@ export default function Citizenship({
                   param={religionList}
                   path="religion"
                   indice={citizen.religion}
+                  action={updatePath}
                 />
               )}
             </span>

@@ -4,18 +4,20 @@ import DashTile from "../dashTile";
 import TileContainer from "../tileContainer";
 import H2 from "../titles/h2";
 import { useEffect } from "react";
-import { getBannedUsers } from "../../api/admin/adminAPI";
 import { getAllParams } from "../../api/param/paramAPI";
 
 export default function AdminParams() {
   const [paramsList] = useAtom(paramsListAtom);
   const [bannedUsers] = useAtom(bannedCitizensAtom);
   useEffect(() => {
+    const getUsers = () => {
+      bannedUsers.loadBannedCitizensAtom();
+    };
     if (paramsList.length === 0) {
       getAllParams();
     }
-    if (bannedUsers.length === 0) {
-      getBannedUsers();
+    if (bannedUsers.getItems().length === 0) {
+      getUsers();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

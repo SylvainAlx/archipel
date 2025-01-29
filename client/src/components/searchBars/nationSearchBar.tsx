@@ -10,13 +10,16 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { NationListModel } from "../../models/lists/nationListModel";
 import { NATION_SORTING } from "../../settings/sorting";
 
-export interface SearchBarProps {
+export interface NationSearchBarProps {
   type: string;
   list: NationListModel;
   setList: React.Dispatch<React.SetStateAction<NationListModel>>;
 }
 
-export default function NationSearchBar({ list, setList }: SearchBarProps) {
+export default function NationSearchBar({
+  list,
+  setList,
+}: NationSearchBarProps) {
   const { t } = useTranslation();
   const [searchName, setSearchName] = useState("");
   const [searchTag, setSearchTag] = useState("");

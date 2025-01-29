@@ -3,17 +3,15 @@ import jwt from "jsonwebtoken";
 export const verifyJwt = (req, res, next) => {
   try {
     if (!req.headers.authorization) {
-      return res
-        .status(401)
-        .json({
-          erreur: "Token manquant dans l'en-tête Authorization",
-          infoType: "400",
-        });
+      return res.status(401).json({
+        erreur: "Token manquant dans l'en-tête Authorization",
+        infoType: "400",
+      });
     }
     const aToken = req.headers.authorization.split(" ")[1];
     if (!aToken) {
       return res
-        .status(401)
+        .status(400)
         .json({ erreur: "Token non fourni", infoType: "400" });
     }
     const aSecret = process.env.JWT_SECRET;
@@ -29,9 +27,9 @@ export const verifyJwt = (req, res, next) => {
     }
   } catch (aErreur) {
     if (aErreur.name === "JsonWebTokenError") {
-      return res.status(400).json({ erreur: "JWT invalide", infoType: "400" });
+      return res.status(401).json({ erreur: "JWT invalide", infoType: "401" });
     } else if (aErreur.name === "TokenExpiredError") {
-      return res.status(401).json({ erreur: "JWT expiré", infoType: "400" });
+      return res.status(401).json({ erreur: "JWT expiré", infoType: "401" });
     } else {
       console.error("Erreur serveur lors de la vérification du JWT :", aErreur);
       return res
@@ -45,22 +43,18 @@ export const isAdmin = (req, res, next) => {
   try {
     const aDecoded = req.decoded;
     if (!aDecoded || !aDecoded.role) {
-      return res
-        .status(403)
-        .json({
-          erreur: "Accès interdit : rôle utilisateur non défini",
-          infoType: "403",
-        });
+      return res.status(403).json({
+        erreur: "Accès interdit : rôle utilisateur non défini",
+        infoType: "403",
+      });
     }
     if (aDecoded.role === "admin") {
       return next();
     } else {
-      return res
-        .status(403)
-        .json({
-          erreur: "Accès interdit : rôle administrateur requis",
-          infoType: "403",
-        });
+      return res.status(403).json({
+        erreur: "Accès interdit : rôle administrateur requis",
+        infoType: "403",
+      });
     }
   } catch (aErreur) {
     console.error(

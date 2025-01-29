@@ -1,38 +1,34 @@
-import {
-  confirmBox,
-  myStore,
-  nationPlaceListAtomV2,
-  placeListAtomV2,
-  sessionAtom,
-} from "../settings/store";
+import { confirmBox, myStore, sessionAtom } from "../settings/store";
 import { useAtom } from "jotai";
-import { useEffect, useState } from "react";
+import { lazy, Suspense, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import ReportPanel from "../components/reportPanel";
-import PlaceIdentity from "../components/place/placeIdentity";
-import PlaceChildren from "../components/place/placeChildren";
-import PlaceHeader from "../components/place/placeHeader";
 import { getDocumentTitle } from "../utils/functions";
 import { PlaceModel } from "../models/placeModel";
 import { useTranslation } from "react-i18next";
 import { NationModel } from "../models/nationModel";
+import Spinner from "../components/loading/spinner";
 
 export default function Place() {
   const [session] = useAtom(sessionAtom);
   const [nation, setNation] = useState<NationModel>(new NationModel());
   const [place, setPlace] = useState<PlaceModel>(new PlaceModel());
-  const [placeList] = useAtom(placeListAtomV2);
-  const [nationPlaceList, setNationPlacesList] = useAtom(nationPlaceListAtomV2);
   const param = useParams();
 
   const [owner, setOwner] = useState(false);
   const { t } = useTranslation();
 
-  useEffect(() => {
-    console.log(placeList);
-  }, [placeList]);
+  const PlaceHeader = lazy(() => import("../components/place/placeHeader"));
+  const PlaceIdentity = lazy(() => import("../components/place/placeIdentity"));
+  const PlaceChildren = lazy(() => import("../components/place/placeChildren"));
 
   useEffect(() => {
+    const loadPlace = async () => {
+      if (param.id) {
+        const updatedPlace = await place.loadPlace(param.id);
+        updatedPlace && setPlace(updatedPlace);
+      }
+    };
     loadPlace();
   }, [param.id]);
 
@@ -47,8 +43,9 @@ export default function Place() {
     ) {
       setOwner(true);
     }
-
-    loadNation(place.nation);
+    if (nation.officialId === "") {
+      loadNation(place.nation);
+    }
 
     document.title = getDocumentTitle(place.name);
     return () => {
@@ -57,24 +54,6 @@ export default function Place() {
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [place]);
-
-  useEffect(() => {
-    if (nation != null && nation != undefined && nation.officialId != "") {
-      loadNationPlaces();
-    }
-  }, [nation]);
-
-  const loadPlace = async () => {
-    if (param.id != undefined) {
-      const updatedPlace = await place.loadPlace(param.id);
-      updatedPlace && setPlace(updatedPlace);
-    }
-  };
-
-  const loadNationPlaces = async () => {
-    const updatedList = await nationPlaceList.loadNationPlaces(nation);
-    updatedList && setNationPlacesList(updatedList);
-  };
 
   const updatePath = (
     path: string,
@@ -90,10 +69,9 @@ export default function Place() {
     if (updatedPlace.isSuccess) {
       if (needConfirm) {
         myStore.set(confirmBox, {
-          action: "updatePlace",
+          action: "",
           text: t("components.modals.confirmModal.updatePlace"),
           result: "",
-          target: "",
           actionToDo: baseUpdate,
         });
       } else {
@@ -105,17 +83,27 @@ export default function Place() {
   return (
     <>
       <section className="w-full px-2 pb-2 flex flex-col items-center gap-2">
-        <PlaceHeader
-          place={place}
-          nation={nation}
-          owner={owner}
-          updatePath={updatePath}
-        />
+        <Suspense fallback={<Spinner />}>
+          <PlaceHeader
+            place={place}
+            nation={nation}
+            owner={owner}
+            updatePath={updatePath}
+          />
+        </Suspense>
         {!place.reported && (
-          <PlaceIdentity place={place} owner={owner} updatePath={updatePath} />
+          <Suspense fallback={<Spinner />}>
+            <PlaceIdentity
+              place={place}
+              owner={owner}
+              updatePath={updatePath}
+            />
+          </Suspense>
         )}
       </section>
-      <PlaceChildren place={place} nation={nation} owner={owner} />
+      <Suspense fallback={<Spinner />}>
+        <PlaceChildren place={place} nation={nation} owner={owner} />
+      </Suspense>
       <ReportPanel content={place} />
     </>
   );

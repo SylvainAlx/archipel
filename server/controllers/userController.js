@@ -7,49 +7,49 @@ import { addMonths, createOfficialId } from "../utils/functions.js";
 import { GIFTS } from "../settings/const.js";
 
 const IpIsBanished = async (AUserIp) => {
-  const banned =
-    (await Param.findOne({
-      name: "banished",
-      props: { $elemMatch: { label: "ip", value: AUserIp } },
-    })) != null;
-
-  return banned;
+  try {
+    const banned =
+      (await Param.findOne({
+        name: "banished",
+        props: { $elemMatch: { label: "ip", value: AUserIp } },
+      })) != null;
+    return banned;
+  } catch (error) {
+    console.error(error);
+    const statusCode = error.name === "ValidationError" ? 400 : 500;
+    res.status(statusCode).json({
+      infoType: statusCode.toString(),
+    });
+  }
 };
 
 export const register = async (req, res) => {
   try {
     const { name, password, gender, language } = req.body;
     const userIp = req.clientIp;
-
     if (await IpIsBanished(userIp)) {
       return res.status(403).json({
-        infoType: "ip",
+        infoType: "403",
       });
     }
-
     if (!name || !password) {
-      return res.status(400).json({
-        infoType: "miss",
+      return res.status(401).json({
+        infoType: "401",
       });
     }
-
     const random = new LoremIpsum({
       sentencesPerParagraph: { max: 8, min: 4 },
       wordsPerSentence: { max: 16, min: 4 },
     });
     const recovery = random.generateWords(12);
-
     let role = "standard";
-
     const roles = await Param.findOne({ name: "role" });
     roles.props.forEach((prop) => {
       if (prop.value === "admin" && prop.label === name) {
         role = "admin";
       }
     });
-
     const officialId = createOfficialId("c");
-
     const user = new User({
       officialId,
       ip: [{ value: userIp, lastVisit: new Date() }],
@@ -61,7 +61,6 @@ export const register = async (req, res) => {
       role,
       credits: GIFTS.REGISTER,
     });
-
     try {
       const savedUser = await user.save();
       const jwt = savedUser.createJWT();
@@ -70,7 +69,6 @@ export const register = async (req, res) => {
         .json({ user: savedUser, recovery, jwt, infoType: "signup" });
     } catch (error) {
       console.error(error);
-
       if (error.code === 11000) {
         return res.status(400).json({
           error: error.keyValue,
@@ -79,15 +77,15 @@ export const register = async (req, res) => {
       } else {
         return res.status(400).json({
           error: error.message,
-          infoType: "error",
+          infoType: "400",
         });
       }
     }
   } catch (error) {
     console.error(error);
-    res.status(500).json({
-      infoType: "500",
-      error,
+    const statusCode = error.name === "ValidationError" ? 400 : 500;
+    res.status(statusCode).json({
+      infoType: statusCode.toString(),
     });
   }
 };
@@ -98,7 +96,7 @@ export const login = async (req, res) => {
 
     if (await IpIsBanished(userIp)) {
       return res.status(403).json({
-        infoType: "ip",
+        infoType: "403",
       });
     }
 
@@ -106,7 +104,7 @@ export const login = async (req, res) => {
 
     const user = await User.findOne({ name }, "-ip -recovery");
     if (!user) {
-      return res.status(404).json({ infoType: "user" });
+      return res.status(404).json({ infoType: "404" });
     }
     user.comparePassword(password, async (error, isMatch) => {
       if (error) {
@@ -116,7 +114,7 @@ export const login = async (req, res) => {
         });
       }
       if (!isMatch) {
-        return res.status(401).json({ infoType: "password" });
+        return res.status(401).json({ infoType: "401" });
       }
       const jwt = user.createJWT();
       updateUserIpAddress(user.officialId, userIp);
@@ -124,9 +122,9 @@ export const login = async (req, res) => {
     });
   } catch (error) {
     console.error(error);
-    res.status(500).json({
-      infoType: "500",
-      error,
+    const statusCode = error.name === "ValidationError" ? 400 : 500;
+    res.status(statusCode).json({
+      infoType: statusCode.toString(),
     });
   }
 };
@@ -150,42 +148,40 @@ export const verify = async (req, res) => {
       updateUserIpAddress(user.officialId, userIp);
       return res.status(200).json({ user, infoType: "verify" });
     } else {
-      return res.status(404).json({ infoType: "user" });
+      return res.status(401).json({ infoType: "401" });
     }
   } catch (error) {
-    res.status(401).json({ message: error.message, infoType: "jwt" });
+    console.error(error);
+    const statusCode = error.name === "ValidationError" ? 400 : 500;
+    res.status(statusCode).json({
+      infoType: statusCode.toString(),
+    });
   }
 };
 
 export const forgetPassword = async (req, res) => {
   try {
     const { name, recovery, newPassword } = req.body;
-
     const user = await User.findOne({ name });
-
     if (!user) {
-      return res.status(404).json({ infoType: "user" });
+      return res.status(404).json({ infoType: "404" });
     }
-
-    const isMatch = await user.compare(recovery);
-
+    const isMatch = await user.compareRecoveryCode(recovery);
     if (!isMatch) {
       return res.status(401).json({
-        infoType: "badRecovery",
+        infoType: "401",
       });
     }
-
     user.password = newPassword;
     await user.save();
-
     return res.status(200).json({
       infoType: "newPassword",
     });
   } catch (error) {
     console.error(error);
-    res.status(500).json({
-      infoType: "500",
-      error,
+    const statusCode = error.name === "ValidationError" ? 400 : 500;
+    res.status(statusCode).json({
+      infoType: statusCode.toString(),
     });
   }
 };
@@ -196,7 +192,7 @@ export const changePassword = async (req, res) => {
     const userId = req.userId;
     const user = await User.findOne({ officialId: userId });
     if (!user) {
-      return res.status(404).json({ infoType: "user" });
+      return res.status(404).json({ infoType: "404" });
     }
     user.comparePassword(oldPassword, async (error, isMatch) => {
       if (error) {
@@ -210,15 +206,15 @@ export const changePassword = async (req, res) => {
         });
       } else {
         return res.status(403).json({
-          infoType: "forbidden",
+          infoType: "403",
         });
       }
     });
   } catch (error) {
     console.error(error);
-    res.status(500).json({
-      infoType: "500",
-      error,
+    const statusCode = error.name === "ValidationError" ? 400 : 500;
+    res.status(statusCode).json({
+      infoType: statusCode.toString(),
     });
   }
 };
@@ -241,9 +237,9 @@ export const getAllUsers = async (req, res) => {
     }
   } catch (error) {
     console.error(error);
-    res.status(500).json({
-      infoType: "500",
-      error,
+    const statusCode = error.name === "ValidationError" ? 400 : 500;
+    res.status(statusCode).json({
+      infoType: statusCode.toString(),
     });
   }
 };
@@ -260,9 +256,9 @@ export const getOneUser = async (req, res) => {
     });
   } catch (error) {
     console.error(error);
-    res.status(500).json({
-      infoType: "500",
-      error,
+    const statusCode = error.name === "ValidationError" ? 400 : 500;
+    res.status(statusCode).json({
+      infoType: statusCode.toString(),
     });
   }
 };
@@ -274,9 +270,9 @@ export const getSelfUser = async (req, res) => {
     res.status(200).json({ user }, "-ip -password -recovery");
   } catch (error) {
     console.error(error);
-    res.status(500).json({
-      infoType: "500",
-      error,
+    const statusCode = error.name === "ValidationError" ? 400 : 500;
+    res.status(statusCode).json({
+      infoType: statusCode.toString(),
     });
   }
 };
@@ -310,15 +306,15 @@ export const deleteSelfUser = async (req, res) => {
         });
       } else {
         return res.status(403).json({
-          infoType: "forbidden",
+          infoType: "403",
         });
       }
     });
   } catch (error) {
     console.error(error);
-    res.status(500).json({
-      infoType: "500",
-      error,
+    const statusCode = error.name === "ValidationError" ? 400 : 500;
+    res.status(statusCode).json({
+      infoType: statusCode.toString(),
     });
   }
 };
@@ -334,13 +330,13 @@ export const getUsersByNation = async (req, res) => {
         res.status(200).json(users);
       })
       .catch((error) => {
-        res.status(400).json({ message: error.message, infoType: "error" });
+        res.status(400).json({ message: error.message, infoType: "400" });
       });
   } catch (error) {
     console.error(error);
-    res.status(500).json({
-      infoType: "500",
-      error,
+    const statusCode = error.name === "ValidationError" ? 400 : 500;
+    res.status(statusCode).json({
+      infoType: statusCode.toString(),
     });
   }
 };
@@ -352,13 +348,13 @@ export const usersCount = async (req, res) => {
         res.status(200).json(count);
       })
       .catch((error) => {
-        res.status(400).json({ message: error.message, infoType: "error" });
+        res.status(400).json({ message: error.message, infoType: "400" });
       });
   } catch (error) {
     console.error(error);
-    res.status(500).json({
-      infoType: "500",
-      error,
+    const statusCode = error.name === "ValidationError" ? 400 : 500;
+    res.status(statusCode).json({
+      infoType: statusCode.toString(),
     });
   }
 };
@@ -433,19 +429,19 @@ export const updateUser = async (req, res) => {
         .catch((error) => {
           console.error(error);
           res.status(400).json({
-            infoType: "miss",
+            infoType: "400",
           });
         });
     } else {
       res.status(403).json({
-        infoType: "forbidden",
+        infoType: "403",
       });
     }
   } catch (error) {
     console.error(error);
-    res.status(500).json({
-      infoType: "500",
-      error,
+    const statusCode = error.name === "ValidationError" ? 400 : 500;
+    res.status(statusCode).json({
+      infoType: statusCode.toString(),
     });
   }
 };
@@ -483,6 +479,7 @@ export const changeStatus = async (req, res) => {
           nation.save().catch((error) => {
             res.status(400).json({
               erreur: error.message,
+              infoType: "400",
             });
           });
         }
@@ -500,17 +497,17 @@ export const changeStatus = async (req, res) => {
         .catch((error) => {
           console.error(error);
           res.status(400).json({
-            infoType: "miss",
+            infoType: "400",
           });
         });
     } else {
-      res.sendStatus(403).json({ infoType: "forbidden" });
+      res.sendStatus(403).json({ infoType: "403" });
     }
   } catch (error) {
     console.error(error);
-    res.status(500).json({
-      infoType: "500",
-      error,
+    const statusCode = error.name === "ValidationError" ? 400 : 500;
+    res.status(statusCode).json({
+      infoType: statusCode.toString(),
     });
   }
 };
@@ -530,9 +527,9 @@ export const changePlan = async (req, res) => {
     }
   } catch (error) {
     console.error(error);
-    res.status(500).json({
-      infoType: "500",
-      error,
+    const statusCode = error.name === "ValidationError" ? 400 : 500;
+    res.status(statusCode).json({
+      infoType: statusCode.toString(),
     });
   }
 };
@@ -556,5 +553,9 @@ const updateUserIpAddress = async (userOfficialId, ip) => {
     await user.save();
   } catch (error) {
     console.error(error);
+    const statusCode = error.name === "ValidationError" ? 400 : 500;
+    res.status(statusCode).json({
+      infoType: statusCode.toString(),
+    });
   }
 };

@@ -1,15 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import {
-  citizenListAtom,
-  myStore,
-  relationListAtom,
-  tileListAtom,
-} from "../settings/store";
+import { myStore, relationListAtom, tileListAtom } from "../settings/store";
 import { UpdateByOfficialIdProps } from "../types/typProp";
 import { DiplomaticRelationship } from "../types/typRelation";
 import { Tile } from "../types/typTile";
-import { User } from "../types/typUser";
 import { findElementOfAtomArray } from "./functions";
 
 // _id MongoDB
@@ -63,25 +57,25 @@ export const getUpdateByOfficialId = ({
   return tempArray;
 };
 
-export const updateOrCreateCitizenInMemory = (citizen: User) => {
-  const savedUser = findElementOfAtomArray(
-    citizen.officialId,
-    myStore.get(citizenListAtom),
-  );
-  if (savedUser === undefined) {
-    const tempArray = [...myStore.get(citizenListAtom)];
-    tempArray.push(citizen);
-    myStore.set(citizenListAtom, tempArray);
-  } else {
-    myStore.set(
-      citizenListAtom,
-      getUpdateByOfficialId({
-        element: citizen,
-        array: myStore.get(citizenListAtom),
-      }),
-    );
-  }
-};
+// export const updateOrCreateCitizenInMemory = (citizen: User) => {
+//   const savedUser = findElementOfAtomArray(
+//     citizen.officialId,
+//     myStore.get(citizenListAtom),
+//   );
+//   if (savedUser === undefined) {
+//     const tempArray = [...myStore.get(citizenListAtom)];
+//     tempArray.push(citizen);
+//     myStore.set(citizenListAtom, tempArray);
+//   } else {
+//     myStore.set(
+//       citizenListAtom,
+//       getUpdateByOfficialId({
+//         element: citizen,
+//         array: myStore.get(citizenListAtom),
+//       }),
+//     );
+//   }
+// };
 
 export const updateOrCreateTileInMemory = (tile: Tile) => {
   const savedTile = findElementOfAtomArray(

@@ -5,9 +5,9 @@ import Button from "../components/buttons/button";
 import Form from "../components/form/form";
 import TextArea from "../components/form/textArea";
 import { useTranslation } from "react-i18next";
-import { recoveryUser } from "../api/user/userAPI";
 import { useNavigate } from "react-router-dom";
 import RequiredStar from "../components/form/requiredStar";
+import { UserModel } from "../models/userModel";
 
 export default function Recovery() {
   const [name, setName] = useState("");
@@ -31,10 +31,11 @@ export default function Recovery() {
     }
   };
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    recoveryUser({ name, recovery, password });
-    navigate("/login");
+    const newUser = new UserModel();
+    const isOk = await newUser.recoveryUser({ name, recovery, password });
+    isOk && navigate("/login");
   };
 
   return (

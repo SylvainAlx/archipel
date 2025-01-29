@@ -4,8 +4,8 @@ import { ChangeEvent, FormEvent, useState } from "react";
 import Form from "../form/form";
 import Input from "../form/input";
 import { useTranslation } from "react-i18next";
-import { changePassword } from "../../api/user/userAPI";
 import { ChangePasswordPayload } from "../../types/typUser";
+import { UserModel } from "../../models/userModel";
 
 export function ChangePasswordModal() {
   const [oldPassword, setOldPassword] = useState("");
@@ -26,10 +26,11 @@ export function ChangePasswordModal() {
     }
   };
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     const payload: ChangePasswordPayload = { oldPassword, newPassword };
-    changePassword(payload);
+    const newUser = new UserModel();
+    await newUser.changePassword(payload);
     myStore.set(changePasswordModalAtom, false);
   };
 

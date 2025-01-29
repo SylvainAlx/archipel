@@ -5,13 +5,15 @@ import H1 from "../../components/titles/h1";
 import IndexTag from "../../components/tags/indexTag";
 import BarreLoader from "../../components/loading/barreLoader";
 import { StringProps } from "../../types/typProp";
-import { User } from "../../types/typUser";
 import CitizenSearchBar from "../../components/searchBars/citizenSearchBar";
 import { useTranslation } from "react-i18next";
 import { ELEMENTS_DISPLAYED_LIMIT } from "../../settings/consts";
+import { UserListModel } from "../../models/lists/userListModel";
 
 export default function CitizenList({ text }: StringProps) {
-  const [citizensList, setCitizensList] = useState<User[]>([]);
+  const [citizensList, setCitizensList] = useState<UserListModel>(
+    new UserListModel(),
+  );
   const [displayedCitizens, setDisplayedCitizens] = useState(
     ELEMENTS_DISPLAYED_LIMIT.citizens,
   );
@@ -28,8 +30,8 @@ export default function CitizenList({ text }: StringProps) {
       />
       <section className="w-full flex gap-1 flex-wrap items-center flex-col ">
         {citizensList != undefined &&
-          citizensList.length > 0 &&
-          citizensList.map((citizen, i) => {
+          citizensList.getItems().length > 0 &&
+          citizensList.getItems().map((citizen, i) => {
             if (i < displayedCitizens) {
               return (
                 <Suspense key={i} fallback={<BarreLoader />}>
@@ -42,7 +44,7 @@ export default function CitizenList({ text }: StringProps) {
             }
           })}
       </section>
-      {displayedCitizens < citizensList.length && (
+      {displayedCitizens < citizensList.getItems().length && (
         <Button
           click={() =>
             setDisplayedCitizens(

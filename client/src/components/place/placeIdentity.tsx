@@ -71,13 +71,7 @@ export default function PlaceIdentity({
         <>
           <AiOutlinePicture className="text-9xl" />
           {owner && (
-            <Upploader
-              path="image"
-              destination="place"
-              place={place}
-              maxSize={2000000}
-              updatePath={updatePath}
-            />
+            <Upploader path="image" updatePath={updatePath} maxSize={2000000} />
           )}
           <em>{t("pages.place.noImage")}</em>
         </>

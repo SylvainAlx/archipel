@@ -11,7 +11,7 @@ import {
   loadingAtom,
   myStore,
   nationListAtomV2,
-  sessionAtom,
+  statsAtom,
 } from "../settings/store";
 import {
   EmptyNation,
@@ -24,7 +24,6 @@ import { displayNationInfoByType, errorCatching } from "../utils/displayInfos";
 import { ComModel } from "./comModel";
 import { CommonModel } from "./commonModel";
 import { NationListModel } from "./lists/nationListModel";
-import { PlaceListModel } from "./lists/placeListModel";
 
 export class NationModel extends CommonModel implements Nation {
   _id?: string | undefined;
@@ -56,7 +55,6 @@ export class NationModel extends CommonModel implements Nation {
       places: number;
     };
   };
-  placeList!: PlaceListModel;
 
   constructor(data: Partial<Nation | NationModel | NewNationPayload> = {}) {
     super();
@@ -76,8 +74,8 @@ export class NationModel extends CommonModel implements Nation {
       } else {
         const response: Nation = await getOneNationFetch(officialId);
         this.updateFields(response);
-        this.addToNationListAtom(response);
       }
+      this.addToNationListAtom(this);
     } catch (error) {
       errorCatching(error);
     } finally {
@@ -89,11 +87,21 @@ export class NationModel extends CommonModel implements Nation {
     myStore.set(loadingAtom, true);
     const inventory: Hashtag[] = [];
     try {
-      const tags: { _id: string; occurrence: number }[] =
-        await getAllNationTagsFetch();
-      tags.forEach((tag) => {
-        inventory.push({ label: tag._id, occurrence: tag.occurrence });
+      const savedTags = myStore.get(statsAtom).tags;
+      savedTags.forEach((tag) => {
+        inventory.push({ label: tag.label, occurrence: tag.occurrence });
       });
+      if (savedTags.length === 0) {
+        const tags: { _id: string; occurrence: number }[] =
+          await getAllNationTagsFetch();
+        tags.forEach((tag) => {
+          inventory.push({ label: tag._id, occurrence: tag.occurrence });
+        });
+        const updatedStats = { ...myStore.get(statsAtom) };
+        updatedStats.tags = inventory;
+        updatedStats.counts.tags = inventory.length;
+        myStore.set(statsAtom, updatedStats);
+      }
     } catch (error) {
       errorCatching(error);
     } finally {
@@ -117,14 +125,14 @@ export class NationModel extends CommonModel implements Nation {
       .updateItemByOfficialId(new NationModel(nation));
     myStore.set(nationListAtomV2, updatedList);
   };
-  private updateSessionAtom = (nation: Nation, user?: User) => {
-    const session = myStore.get(sessionAtom);
-    myStore.set(sessionAtom, {
-      ...session,
-      user: user ? user : session.user,
-      nation: new NationModel(nation),
-    });
-  };
+  // private updateSessionAtom = (nation: Nation, user?: User) => {
+  //   const session = myStore.get(sessionAtom);
+  //   myStore.set(sessionAtom, {
+  //     ...session,
+  //     user: new UserModel(user) ?? session.user,
+  //     nation: new NationModel(nation),
+  //   });
+  // };
   updateFields(fields: Partial<NationModel | Nation | NewNationPayload>) {
     Object.assign(this, fields);
     return this;
@@ -137,7 +145,7 @@ export class NationModel extends CommonModel implements Nation {
       this.updateFields(response.nation);
       displayNationInfoByType(response.infoType);
       this.addToNationListAtom(response.nation);
-      this.updateSessionAtom(response.nation, response.user);
+      // this.updateSessionAtom(response.nation, response.user);
       const newCom = new ComModel({
         comType: COM_TYPE.userPrivate.id,
         origin: response.nation.officialId,
@@ -160,13 +168,13 @@ export class NationModel extends CommonModel implements Nation {
         await updateNationFetch(this);
       this.updateFields(response.nation);
       this.updatenNationListAtom(response.nation);
-      this.updateSessionAtom(response.nation);
+      // this.updateSessionAtom(response.nation);
       displayNationInfoByType(response.infoType);
-      const session = myStore.get(sessionAtom);
-      myStore.set(sessionAtom, {
-        ...session,
-        nation: new NationModel(response.nation),
-      });
+      // const session = myStore.get(sessionAtom);
+      // myStore.set(sessionAtom, {
+      //   ...session,
+      //   nation: new NationModel(response.nation),
+      // });
     } catch (error) {
       errorCatching(error);
     } finally {
@@ -179,7 +187,7 @@ export class NationModel extends CommonModel implements Nation {
     try {
       const resp: { user: User; infoType: string } = await DeleteSelfFetch();
       this.removeFromNationListAtom(this);
-      this.updateSessionAtom(new NationModel(), resp.user);
+      // this.updateSessionAtom(new NationModel(), resp.user);
       const newCom = new ComModel({
         comType: COM_TYPE.userPrivate.id,
         origin: this.officialId,

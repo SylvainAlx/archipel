@@ -3,20 +3,12 @@ import { useAtom } from "jotai";
 import { confirmBox } from "../../settings/store";
 import Button from "../buttons/button";
 import { useTranslation } from "react-i18next";
-import {
-  changeStatus,
-  deleteUser,
-  logout,
-  updateUser,
-} from "../../api/user/userAPI";
-import { useNavigate } from "react-router-dom";
 import { updateRelation } from "../../api/relation/relationAPI";
 import { createTile, deleteTile, updateTile } from "../../api/tile/tileAPI";
 import { ConfirmBoxDefault } from "../../types/typAtom";
 
 export default function ConfirmModal() {
   const { t } = useTranslation();
-  const navigate = useNavigate();
   const [confirm, setConfirm] = useAtom(confirmBox);
 
   const handleClick = () => {
@@ -24,16 +16,6 @@ export default function ConfirmModal() {
     if (confirm.actionToDo) {
       confirm.actionToDo();
     } else {
-      if (confirm.action === "logout") {
-        logout();
-        navigate("/");
-      }
-      if (confirm.action === "deleteUser") {
-        deleteUser(confirm.payload);
-      }
-      if (confirm.action === "changeStatus") {
-        changeStatus(confirm.payload);
-      }
       if (confirm.action === "leave") {
         updateRelation(confirm.payload);
       }
@@ -48,9 +30,6 @@ export default function ConfirmModal() {
       }
       if (confirm.action === "updateTile") {
         updateTile(confirm.payload);
-      }
-      if (confirm.action === "updateUser") {
-        updateUser(confirm.payload);
       }
     }
   };

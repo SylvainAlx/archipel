@@ -5,7 +5,6 @@ import Input from "../components/form/input";
 import Button from "../components/buttons/button";
 import Form from "../components/form/form";
 import { useTranslation } from "react-i18next";
-import { register, verifyCaptcha } from "../api/user/userAPI";
 import Select from "../components/form/select";
 import { CAPTCHA_PUBLIC_KEY } from "../settings/consts";
 import { errorMessage } from "../utils/toasts";
@@ -13,6 +12,7 @@ import ReCAPTCHA from "react-google-recaptcha";
 import { genderList, languageList } from "../settings/lists";
 import i18n from "../i18n/i18n";
 import RequiredStar from "../components/form/requiredStar";
+import { UserModel } from "../models/userModel";
 
 export default function Register() {
   const { t } = useTranslation();
@@ -54,14 +54,16 @@ export default function Register() {
   };
 
   const verifyToken = async (e: string | null) => {
-    const response = await verifyCaptcha(e);
+    const newUser = new UserModel();
+    const response = await newUser.verifyCaptcha(e);
     setCaptchaOk(response);
   };
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     if (name != "" && password != "") {
-      register({
+      const newUser = new UserModel();
+      await newUser.baseInsert({
         name: name.trimEnd(),
         password: password.trimEnd(),
         gender,

@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { LabelId, Regime } from "./typNation";
+import { Hashtag, LabelId, Regime } from "./typNation";
 import { Place } from "./typPlace";
 
 // editPlace
@@ -75,4 +75,5 @@ export interface Counts {
 }
 export type Stats = {
   counts: Counts;
+  tags: Hashtag[];
 };

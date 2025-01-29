@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useAtom } from "jotai";
-import { newPlaceAtom } from "../../settings/store";
+import { newPlaceAtom, placeListAtomV2 } from "../../settings/store";
 import Button from "../buttons/button";
 import { ChangeEvent, FormEvent } from "react";
 import Form from "../form/form";
@@ -13,9 +13,11 @@ import { FaCoins } from "react-icons/fa";
 import RequiredStar from "../form/requiredStar";
 import { PlaceModel } from "../../models/placeModel";
 import { useNavigate } from "react-router-dom";
+import { PlaceListModel } from "../../models/lists/placeListModel";
 
 export default function NewPlaceModal() {
   const [newPlace, setNewPlace] = useAtom(newPlaceAtom);
+  const [placeList, setPlaceList] = useAtom(placeListAtomV2);
   const { t } = useTranslation();
   const navigate = useNavigate();
 
@@ -23,6 +25,8 @@ export default function NewPlaceModal() {
     e.preventDefault();
     const placeToInsert = new PlaceModel(newPlace);
     const placeInserted = await placeToInsert.baseInsert();
+    const listToUpdate = placeList.addOrUpdate(placeInserted);
+    setPlaceList(new PlaceListModel(listToUpdate));
     setNewPlace(emptyPlace);
     navigate(`/place/${placeInserted.officialId}`);
   };

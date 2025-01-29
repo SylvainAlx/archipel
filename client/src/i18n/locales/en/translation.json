@@ -208,7 +208,7 @@
         "deleteTile": "Delete tile ?",
         "updateNation": "Update nation ?",
         "updatePlace": "Update place ?",
-        "updateCitizen": "Update profile ?",
+        "updateUser": "Update profile ?",
         "createCom": "Confirm new communication ?",
         "deleteCom": "Delete communication ?",
         "reportContent": "Confirm reporting the content to the administrator ?"
@@ -438,11 +438,11 @@
   "toasts": {
     "reported": "Content reported and awaiting moderation",
     "errors": {
-      "400": "Unknown error",
+      "400": "Bad request",
+      "401": "Unauthorized",
+      "403": "Forbidden",
       "404": "Page not found",
       "500": "Server error",
-      "miss": "Some information is wrong or missing",
-      "forbidden": "Delete action",
       "11000": "Information already existing in the database",
       "nsfw": "Image contains NSFW content! Notification sent to admin"
     },

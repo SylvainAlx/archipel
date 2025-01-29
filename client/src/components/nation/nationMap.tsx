@@ -66,7 +66,7 @@ export default function NationMap({
                   {owner && (
                     <Upploader
                       path="data.url.map"
-                      destination="nation"
+                      updatePath={updatePath}
                       maxSize={2000000}
                     />
                   )}

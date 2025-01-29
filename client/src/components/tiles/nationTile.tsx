@@ -1,4 +1,3 @@
-import { Nation } from "../../types/typNation";
 import PopulationTag from "../tags/populationTag";
 import { useNavigate } from "react-router-dom";
 import RegimeTag from "../tags/regimeTag";
@@ -10,8 +9,13 @@ import { sessionAtom } from "../../settings/store";
 import { useAtom } from "jotai";
 import DateTag from "../tags/dateTag";
 import NationStateTag from "../tags/nationStateTag";
+import { NationModel } from "../../models/nationModel";
 
-export default function NationTile(nation: Nation) {
+interface NationTileProps {
+  nation: NationModel;
+}
+
+export default function NationTile({ nation }: NationTileProps) {
   const navigate = useNavigate();
   const [session] = useAtom(sessionAtom);
 

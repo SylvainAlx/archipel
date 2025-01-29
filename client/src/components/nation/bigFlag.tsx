@@ -26,7 +26,7 @@ export default function BigFlag({ nation, owner, updatePath }: FlagProps) {
       actionToDo: async () => {
         const result = await deleteImage(nation.data.url.flag);
         if (result) {
-          updatePath("image", "", false);
+          updatePath("nation.data.url.flag", "", false);
         }
       },
     });
@@ -58,7 +58,7 @@ export default function BigFlag({ nation, owner, updatePath }: FlagProps) {
               <>
                 <Upploader
                   path="data.url.flag"
-                  destination="nation"
+                  updatePath={updatePath}
                   maxSize={500000}
                 />
                 <LinkButton

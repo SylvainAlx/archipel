@@ -1,5 +1,4 @@
 import H1 from "../components/titles/h1";
-import NationIdentity from "../components/nation/nationIdentity";
 import {
   confirmBox,
   myStore,
@@ -7,34 +6,37 @@ import {
   sessionAtom,
 } from "../settings/store";
 import { useAtom } from "jotai";
-import Places from "../components/nation/places";
 import { useTranslation } from "react-i18next";
-import Diplomacy from "../components/nation/diplomacy";
 import Links from "../components/nation/links";
-import { useEffect, useState } from "react";
+import { lazy, Suspense, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import Citizens from "../components/nation/citizens";
 import { errorMessage } from "../utils/toasts";
 import CrossButton from "../components/buttons/crossButton";
-import FreeTiles from "../components/nation/freeTiles";
-import NationMap from "../components/nation/nationMap";
-import { ConfirmBoxDefault } from "../types/typAtom";
-import NationComs from "../components/nation/nationComs";
 import ReportPanel from "../components/reportPanel";
 import EditIcon from "../components/editIcon";
 import { getDocumentTitle } from "../utils/functions";
 import { NationModel } from "../models/nationModel";
 import { NationListModel } from "../models/lists/nationListModel";
+import Spinner from "../components/loading/spinner";
 
 export default function Nation() {
   const [nation, setNation] = useState<NationModel>(new NationModel());
   const [nationList, setNationList] = useAtom(nationListAtomV2);
   const [session] = useAtom(sessionAtom);
-  const [confirm, setConfirm] = useAtom(confirmBox);
   const [owner, setOwner] = useState(false);
   const { t } = useTranslation();
   const navigate = useNavigate();
   const param = useParams();
+
+  const NationIdentity = lazy(
+    () => import("../components/nation/nationIdentity"),
+  );
+  const NationMap = lazy(() => import("../components/nation/nationMap"));
+  const FreeTiles = lazy(() => import("../components/nation/freeTiles"));
+  const Diplomacy = lazy(() => import("../components/nation/diplomacy"));
+  const Citizens = lazy(() => import("../components/nation/citizens"));
+  const Places = lazy(() => import("../components/nation/places"));
+  const NationComs = lazy(() => import("../components/nation/nationComs"));
 
   useEffect(() => {
     if (
@@ -54,12 +56,8 @@ export default function Nation() {
 
   useEffect(() => {
     const loadNation = async (officialId: string) => {
-      if (session.nation.officialId === officialId) {
-        setNation(session.nation);
-      } else {
-        const loadedNation = await nation.loadNation(officialId);
-        setNation(loadedNation);
-      }
+      const loadedNation = await nation.loadNation(officialId);
+      setNation(loadedNation);
     };
     if (nation === null) {
       navigate(`/`);
@@ -73,15 +71,7 @@ export default function Nation() {
       loadNation(param.id);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [param.id, owner]);
-
-  useEffect(() => {
-    if (confirm.action === "deleteSelfNation" && confirm.result === "OK") {
-      navigate(`/citizen/${session.user.officialId}`);
-      setConfirm(ConfirmBoxDefault);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [confirm]);
+  }, [param.id]);
 
   const handleDelete = () => {
     myStore.set(confirmBox, {
@@ -92,6 +82,7 @@ export default function Nation() {
         nation.baseDelete();
         const updatedList = nationList.removeByOfficialId(nation.officialId);
         setNationList(new NationListModel(updatedList));
+        navigate(`/citizen/${session.user.officialId}`);
       },
     });
   };
@@ -110,10 +101,9 @@ export default function Nation() {
     if (updatedNation.isSuccess) {
       if (needConfirm) {
         myStore.set(confirmBox, {
-          action: "updateNation",
+          action: "",
           text: t("components.modals.confirmModal.updateNation"),
           result: "",
-          target: "",
           actionToDo: baseUpdate,
         });
       } else {
@@ -145,21 +135,35 @@ export default function Nation() {
                 </div>
                 {nation.officialId === param.id && (
                   <>
-                    <NationIdentity
-                      selectedNation={nation}
-                      owner={owner}
-                      updatePath={updatePath}
-                    />
-                    <NationMap
-                      selectedNation={nation}
-                      owner={owner}
-                      updatePath={updatePath}
-                    />
-                    <FreeTiles selectedNation={nation} owner={owner} />
-                    <Diplomacy selectedNation={nation} owner={owner} />
-                    <Citizens selectedNation={nation} owner={owner} />
-                    <Places selectedNation={nation} owner={owner} />
-                    <NationComs selectedNation={nation} owner={owner} />
+                    <Suspense fallback={<Spinner />}>
+                      <NationIdentity
+                        selectedNation={nation}
+                        owner={owner}
+                        updatePath={updatePath}
+                      />
+                    </Suspense>
+                    <Suspense fallback={<Spinner />}>
+                      <NationMap
+                        selectedNation={nation}
+                        owner={owner}
+                        updatePath={updatePath}
+                      />
+                    </Suspense>
+                    <Suspense fallback={<Spinner />}>
+                      <FreeTiles selectedNation={nation} owner={owner} />
+                    </Suspense>
+                    <Suspense fallback={<Spinner />}>
+                      <Diplomacy selectedNation={nation} owner={owner} />
+                    </Suspense>
+                    <Suspense fallback={<Spinner />}>
+                      <Citizens selectedNation={nation} owner={owner} />
+                    </Suspense>
+                    <Suspense fallback={<Spinner />}>
+                      <Places selectedNation={nation} owner={owner} />
+                    </Suspense>
+                    <Suspense fallback={<Spinner />}>
+                      <NationComs selectedNation={nation} owner={owner} />
+                    </Suspense>
                   </>
                 )}
               </section>

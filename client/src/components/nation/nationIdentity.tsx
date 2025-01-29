@@ -20,6 +20,8 @@ import TreasuryTag from "../tags/treasuryTag";
 import BigFlag from "./bigFlag";
 import CoatOfArms from "./coatOfArms";
 import NationStateTag from "../tags/nationStateTag";
+import { placeListAtomV2 } from "../../settings/store";
+import { useAtom } from "jotai";
 
 interface NationIdentityProps {
   selectedNation: Nation;
@@ -33,11 +35,12 @@ export default function NationIdentity({
   updatePath,
 }: NationIdentityProps) {
   const { t } = useTranslation();
-  const [placesList, setPlacesList] = useState<LabelId[]>([]);
+  const [placeList] = useAtom(placeListAtomV2);
+  const [nationPlaceList, setNationPlaceList] = useState<LabelId[]>([]);
 
   useEffect(() => {
-    const list = getLabelIdArrayFromNationPlaceList();
-    setPlacesList(list);
+    const list = getLabelIdArrayFromNationPlaceList(placeList);
+    setNationPlaceList(list);
   }, []);
 
   return (
@@ -153,7 +156,7 @@ export default function NationIdentity({
                       {owner && selectedNation.data.roleplay.capital != "" && (
                         <EditIcon
                           target="nation"
-                          param={placesList}
+                          param={nationPlaceList}
                           path="data.roleplay.capital"
                           action={updatePath}
                         />

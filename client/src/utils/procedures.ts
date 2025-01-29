@@ -1,16 +1,11 @@
-import { updateUser } from "../api/user/userAPI";
 import i18n from "../i18n/i18n";
 import { ComModel } from "../models/comModel";
+import { UserModel } from "../models/userModel";
 import { deleteUploadedFileFetch } from "../services/fileServices";
 import { COM_TYPE } from "../settings/consts";
-import {
-  confirmBox,
-  loadingAtom,
-  myStore,
-  sessionAtom,
-} from "../settings/store";
+import { confirmBox, loadingAtom, myStore } from "../settings/store";
 import { Com } from "../types/typCom";
-import { LabelId, Nation, Regime } from "../types/typNation";
+import { Nation } from "../types/typNation";
 import { User } from "../types/typUser";
 import { errorCatching } from "./displayInfos";
 import {
@@ -24,31 +19,35 @@ export const SET_LAST_WATCH = (param: string, date: Date) => {
   localStorage.setItem(param, date.toString());
 };
 
-export const approveCitizenship = (citizen: User) => {
+export const approveCitizenship = (citizen: UserModel) => {
   const payload = {
     officialId: citizen.officialId,
     nationId: citizen.citizenship.nationId,
     status: 1,
   };
   myStore.set(confirmBox, {
-    action: "changeStatus",
+    action: "",
     text: i18n.t("components.modals.confirmModal.approveCitizenship"),
     result: "",
-    payload,
+    actionToDo: async () => {
+      await citizen.changeStatus(payload);
+    },
   });
 };
 
-export const declineCitizenship = (citizen: User) => {
+export const declineCitizenship = (citizen: UserModel) => {
   const payload = {
     officialId: citizen.officialId,
     nationId: citizen.citizenship.nationId,
     status: -1,
   };
   myStore.set(confirmBox, {
-    action: "changeStatus",
+    action: "",
     text: i18n.t("components.modals.confirmModal.declineCitizenship"),
     result: "",
-    payload,
+    actionToDo: async () => {
+      await citizen.changeStatus(payload);
+    },
   });
 };
 
@@ -64,56 +63,6 @@ export const deleteImage = async (url: string): Promise<boolean> => {
     return false;
   } finally {
     myStore.set(loadingAtom, false);
-  }
-};
-
-export const updateElement = (
-  destination: string,
-  path: string,
-  value: string | number | boolean | any[] | Regime[] | LabelId[],
-  confirm?: boolean,
-) => {
-  const session = myStore.get(sessionAtom);
-  const parties: string[] = path.split(".");
-  let isOk = true;
-  let objetCourant;
-  let dernierePartie;
-  switch (destination) {
-    case "citizen":
-      // eslint-disable-next-line no-case-declarations
-      const updatedUser: any = structuredClone(session.user);
-      objetCourant = updatedUser;
-      for (let i = 0; i < parties.length - 1; i++) {
-        if (typeof objetCourant === "object" && objetCourant !== null) {
-          objetCourant = objetCourant[parties[i]];
-        } else {
-          isOk = false;
-          console.error(
-            `Chemin incorrect. Propriété ${parties[i]} non trouvée.`,
-          );
-          break;
-        }
-      }
-      dernierePartie = parties[parties.length - 1];
-      if (typeof objetCourant === "object" && objetCourant !== null) {
-        objetCourant[dernierePartie] = value;
-      }
-
-      if (isOk) {
-        if (confirm) {
-          myStore.set(confirmBox, {
-            action: "updateUser",
-            text: i18n.t("components.modals.confirmModal.updateCitizen"),
-            result: "",
-            target: "",
-            payload: updatedUser,
-          });
-        } else {
-          updateUser(updatedUser);
-        }
-      }
-
-      break;
   }
 };
 

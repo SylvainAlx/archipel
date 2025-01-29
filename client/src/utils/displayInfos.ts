@@ -24,33 +24,6 @@ export const displayUserInfoByType = (type: string) => {
     case "changeStatus":
       successMessage(i18n.t("toasts.user.update"));
       break;
-    case "deleteKO":
-      errorMessage(i18n.t("toasts.user.deleteKO"));
-      break;
-    case "miss":
-      errorMessage(i18n.t("toasts.errors.miss"));
-      break;
-    case "badRecovery":
-      errorMessage(i18n.t("toasts.user.badRecovery"));
-      break;
-    case "forbidden":
-      errorMessage(i18n.t("toasts.errors.forbidden"));
-      break;
-    case "user":
-      errorMessage(i18n.t("toasts.user.badUser"));
-      break;
-    case "password":
-      errorMessage(i18n.t("toasts.user.badPassword"));
-      break;
-    case "11000":
-      errorMessage(i18n.t("toasts.errors.11000"));
-      break;
-    case "ip":
-      errorMessage(i18n.t("toasts.user.ipbanned"));
-      break;
-    case "500":
-      errorMessage(i18n.t("toasts.errors.500"));
-      break;
     default:
       break;
   }
@@ -189,6 +162,9 @@ export const displayErrorByCode = (code: string) => {
   switch (code) {
     case "400":
       errorMessage(i18n.t("toasts.errors.400"));
+      break;
+    case "401":
+      errorMessage(i18n.t("toasts.errors.401"));
       break;
     case "403":
       errorMessage(i18n.t("toasts.errors.403"));

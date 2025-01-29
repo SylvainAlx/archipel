@@ -1,41 +1,39 @@
 import { Suspense, lazy, useEffect, useState } from "react";
-import { SelectedNationProps } from "../../types/typProp";
 import TileContainer from "../tileContainer";
 import NewPlaceButton from "../buttons/newPlaceButton";
 import { useTranslation } from "react-i18next";
 import DashTile from "../dashTile";
-import { Place } from "../../types/typPlace";
 import BarreLoader from "../loading/barreLoader";
-import { nationPlaceListAtomV2 } from "../../settings/store";
+import { PlaceListModel } from "../../models/lists/placeListModel";
+import { PlaceModel } from "../../models/placeModel";
+import { NationModel } from "../../models/nationModel";
+import { placeListAtomV2 } from "../../settings/store";
 import { useAtom } from "jotai";
 
-export default function Places({ selectedNation, owner }: SelectedNationProps) {
+interface PlacesProps {
+  selectedNation: NationModel;
+  owner: boolean;
+}
+
+export default function Places({ selectedNation, owner }: PlacesProps) {
   const { t } = useTranslation();
-  const [nationPlacesList, setNationPlaceList] = useAtom(nationPlaceListAtomV2);
-  const [places, setPlaces] = useState<Place[]>([]);
+  const [placeList] = useAtom(placeListAtomV2);
+  const [places, setPlaces] = useState<PlaceListModel>(new PlaceListModel());
   const PlaceTile = lazy(() => import("../tiles/placeTile"));
 
   useEffect(() => {
-    const loadNationPlaceList = async () => {
-      const updatedList =
-        await nationPlacesList.loadNationPlaces(selectedNation);
-      updatedList && setNationPlaceList(updatedList);
-    };
-
-    if (selectedNation != undefined) {
-      loadNationPlaceList();
+    if (placeList.getItems().length === 0) {
+      placeList.loadNationPlaces(selectedNation);
+    } else {
+      const updatedPlaces: PlaceModel[] = [];
+      placeList.getItems().forEach((place) => {
+        if (place.parentId === selectedNation.officialId) {
+          updatedPlaces.push(place);
+        }
+      });
+      setPlaces(new PlaceListModel(updatedPlaces));
     }
-  }, [selectedNation]);
-
-  useEffect(() => {
-    const updatedPlaces: Place[] = [];
-    nationPlacesList.getItems().forEach((place) => {
-      if (place.parentId === selectedNation.officialId) {
-        updatedPlaces.push(place);
-      }
-    });
-    setPlaces(updatedPlaces);
-  }, [nationPlacesList, selectedNation.officialId]);
+  }, [selectedNation, placeList]);
 
   return (
     <TileContainer
@@ -53,12 +51,16 @@ export default function Places({ selectedNation, owner }: SelectedNationProps) {
                     nation={selectedNation}
                   />
                 )}
-                {places.length > 0 ? (
-                  places.map((place, i) => {
+                {places.getItems().length > 0 ? (
+                  places.getItems().map((place, i) => {
                     return (
                       <Suspense key={i} fallback={<BarreLoader />}>
                         <div className="relative w-full">
-                          <PlaceTile owner={owner} place={place} />
+                          <PlaceTile
+                            owner={owner}
+                            place={place}
+                            nation={selectedNation}
+                          />
                         </div>
                       </Suspense>
                     );

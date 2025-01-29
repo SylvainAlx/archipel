@@ -5,27 +5,37 @@ import EditIcon from "../editIcon";
 import ExternalLink from "../externalLink";
 import Upploader from "../uploader";
 import MDEditor from "@uiw/react-md-editor";
-import { User } from "../../types/typUser";
 import { FaLink } from "react-icons/fa";
 import { confirmBox, myStore } from "../../settings/store";
 import { useTranslation } from "react-i18next";
 import ShareButton from "../buttons/shareButton";
+import { deleteImage } from "../../utils/procedures";
+import { UserModel } from "../../models/userModel";
 
 interface PersonalProps {
-  citizen: User;
+  citizen: UserModel;
   owner: boolean;
+  updatePath: (path: string, value: string, needConfirm?: boolean) => void;
 }
 
-export default function Personal({ citizen, owner }: PersonalProps) {
+export default function Personal({
+  citizen,
+  owner,
+  updatePath,
+}: PersonalProps) {
   const { t } = useTranslation();
 
-  const handleDeleteAvatar = () => {
+  const handleDeleteImage = async () => {
     myStore.set(confirmBox, {
-      action: "deleteFile",
+      action: "",
       text: t("components.modals.confirmModal.deleteFile"),
-      payload: citizen.avatar,
       result: "",
-      target: "avatar",
+      actionToDo: async () => {
+        const result = await deleteImage(citizen.avatar);
+        if (result) {
+          updatePath("avatar", "", false);
+        }
+      },
     });
   };
 
@@ -35,9 +45,9 @@ export default function Personal({ citizen, owner }: PersonalProps) {
         <Avatar url={citizen.avatar} isUser={true} bigSize={true} />
         {owner &&
           (citizen.avatar != "" ? (
-            <CrossButton small={true} click={handleDeleteAvatar} />
+            <CrossButton small={true} click={handleDeleteImage} />
           ) : (
-            <Upploader path="avatar" destination="citizen" maxSize={500000} />
+            <Upploader path="avatar" maxSize={500000} updatePath={updatePath} />
           ))}
       </div>
       <div className="flex items-center justify-center gap-6">
@@ -58,7 +68,12 @@ export default function Personal({ citizen, owner }: PersonalProps) {
             hover={t("components.hoverInfos.links.email")}
           />
           {owner && (
-            <EditIcon target="citizen" param={citizen.email} path="email" />
+            <EditIcon
+              target="citizen"
+              param={citizen.email}
+              path="email"
+              action={updatePath}
+            />
           )}
         </span>
         <ShareButton label={citizen.name} />
@@ -78,6 +93,7 @@ export default function Personal({ citizen, owner }: PersonalProps) {
             target="citizen"
             param={citizen.bio ? citizen.bio : ""}
             path="bio"
+            action={updatePath}
           />
         )}
       </div>

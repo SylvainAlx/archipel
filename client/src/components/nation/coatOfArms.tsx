@@ -33,7 +33,7 @@ export default function CoatOfArms({
       actionToDo: async () => {
         const result = await deleteImage(nation.data.url.coatOfArms);
         if (result) {
-          updatePath("image", "", false);
+          updatePath("nation.data.url.coatOfArms", "", false);
         }
       },
     });
@@ -65,7 +65,7 @@ export default function CoatOfArms({
               <>
                 <Upploader
                   path="data.url.coatOfArms"
-                  destination="nation"
+                  updatePath={updatePath}
                   maxSize={500000}
                 />
                 <LinkButton

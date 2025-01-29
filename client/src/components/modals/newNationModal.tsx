@@ -13,7 +13,7 @@ import HashTag from "../tags/hashTag";
 import { regimeList } from "../../settings/lists";
 import { MAX_LENGTH } from "../../settings/consts";
 import RequiredStar from "../form/requiredStar";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { NationModel } from "../../models/nationModel";
 
 export default function NewNationModal() {
@@ -21,6 +21,7 @@ export default function NewNationModal() {
   const [tagString, setTagString] = useState<string>("");
   const [tags, setTags] = useState<string[]>(newNation.tags);
   const { t } = useTranslation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const updateNewNation = { ...newNation };
@@ -32,7 +33,8 @@ export default function NewNationModal() {
     e.preventDefault();
     if (newNation.regime != 0 && newNation.name != "") {
       const newNationToInsert = new NationModel(newNation);
-      await newNationToInsert.baseInsert();
+      const nationInBase = await newNationToInsert.baseInsert();
+      navigate(`/nation/${nationInBase.officialId}`);
       setNewNation(emptyNewNationPayload);
     } else {
       errorMessage(t("components.form.missingField"));

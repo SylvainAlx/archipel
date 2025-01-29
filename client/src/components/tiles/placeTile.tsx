@@ -1,4 +1,4 @@
-import { nationPlaceListAtomV2, sessionAtom } from "../../settings/store";
+import { placeListAtomV2, sessionAtom } from "../../settings/store";
 import { useAtom } from "jotai";
 import { GiCapitol } from "react-icons/gi";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -12,15 +12,17 @@ import ReportPanel from "../reportPanel";
 import { PLACE_TYPE } from "../../settings/consts";
 import TreeTag from "../tags/treeTag";
 import DateTag from "../tags/dateTag";
+import { NationModel } from "../../models/nationModel";
 
 export interface PlaceTileProp {
   owner?: boolean;
   place: Place;
+  nation: NationModel;
   update?: number;
 }
 
-export default function PlaceTile({ place }: PlaceTileProp) {
-  const [nationPlacesList] = useAtom(nationPlaceListAtomV2);
+export default function PlaceTile({ place, nation }: PlaceTileProp) {
+  const [placeList] = useAtom(placeListAtomV2);
   const [childrenStats, setChildrenStats] = useState({
     population: 0,
     children: 0,
@@ -37,7 +39,7 @@ export default function PlaceTile({ place }: PlaceTileProp) {
 
   useEffect(() => {
     const stats = { ...childrenStats };
-    nationPlacesList.getItems().forEach((e) => {
+    placeList.getItems().forEach((e) => {
       if (e.parentId === place.officialId) {
         stats.population += e.population;
         stats.children += 1;
@@ -46,7 +48,7 @@ export default function PlaceTile({ place }: PlaceTileProp) {
     setChildrenStats(stats);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [nationPlacesList, place.officialId]);
+  }, [placeList, place.officialId]);
 
   return (
     <div
@@ -62,9 +64,7 @@ export default function PlaceTile({ place }: PlaceTileProp) {
           />
         </div>
         <span className="text-lg text-info">
-          {place.officialId === session.nation.data.roleplay.capital && (
-            <GiCapitol />
-          )}
+          {place.officialId === nation.data.roleplay.capital && <GiCapitol />}
         </span>
         <h3
           onClick={handleClick}

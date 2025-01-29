@@ -38,16 +38,7 @@ export default function NationList({ text }: StringProps) {
               return (
                 <Suspense key={i} fallback={<BarreLoader />}>
                   <div className="min-w-[300px] w-full relative transition-all duration-300 animate-fadeIn">
-                    <NationTile
-                      _id={nation._id}
-                      officialId={nation.officialId}
-                      name={nation.name}
-                      owner={nation.owner}
-                      reported={nation.reported}
-                      banished={nation.banished}
-                      data={nation.data}
-                      createdAt={nation.createdAt}
-                    />
+                    <NationTile nation={nation} />
                     <IndexTag text={i} />
                   </div>
                 </Suspense>

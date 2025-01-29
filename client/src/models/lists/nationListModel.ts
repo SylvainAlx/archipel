@@ -27,7 +27,9 @@ export class NationListModel extends ListModel {
     this.items = list;
     this.sorting = sorting;
   }
-
+  getNationByOfficialId = (officialId: string) => {
+    return this.items.find((nation) => nation.officialId === officialId);
+  };
   loadNationList = async (searchName: string, searchTag: string) => {
     myStore.set(loadingAtom, true);
     try {

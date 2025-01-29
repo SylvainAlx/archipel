@@ -1,5 +1,3 @@
-import { PlaceListModel } from "../models/lists/placeListModel";
-
 export interface Nation {
   _id?: string;
   officialId: string;
@@ -33,7 +31,6 @@ export interface Nation {
       places: number;
     };
   };
-  placeList?: PlaceListModel;
   createdAt: Date;
 }
 
@@ -69,7 +66,6 @@ export const EmptyNation: Nation = {
       places: 0,
     },
   },
-  placeList: new PlaceListModel(),
   createdAt: new Date(0),
 };
 

@@ -3,9 +3,9 @@ import i18n from "../i18n/i18n";
 import { APP_NAME, COM_TYPE, MAX_LENGTH, PLACE_TYPE } from "../settings/consts";
 import { LabelId, Nation } from "../types/typNation";
 import { Place } from "../types/typPlace";
-import { myStore, nationPlaceListAtomV2 } from "../settings/store";
 import { languageList, regimeList, regimeTypeList } from "../settings/lists";
 import { NationModel } from "../models/nationModel";
+import { PlaceListModel } from "../models/lists/placeListModel";
 
 export const GET_JWT = () => {
   const jwt = localStorage.getItem("jwt");
@@ -116,11 +116,12 @@ export const sortObjectKeys = (obj: any): any => {
   return sortedObj;
 };
 
-export const getLabelIdArrayFromNationPlaceList = () => {
+export const getLabelIdArrayFromNationPlaceList = (
+  placeList: PlaceListModel,
+) => {
   const updatedPlaces: LabelId[] = [];
-  const nationPlaces = myStore.get(nationPlaceListAtomV2);
 
-  nationPlaces.getItems().forEach((place) => {
+  placeList.getItems().forEach((place) => {
     if (place.type === 2) {
       const newPlace: LabelId = { id: place.officialId, label: place.name };
       updatedPlaces.push(newPlace);
@@ -129,16 +130,16 @@ export const getLabelIdArrayFromNationPlaceList = () => {
   return updatedPlaces;
 };
 
-export const getTotalPopulation = (place: Place): number => {
+export const getTotalPopulation = (
+  placeList: PlaceListModel,
+  place: Place,
+): number => {
   let total: number = 0;
-  myStore
-    .get(nationPlaceListAtomV2)
-    .getItems()
-    .forEach((e) => {
-      if (e.parentId === place.officialId) {
-        total += e.population;
-      }
-    });
+  placeList.getItems().forEach((e) => {
+    if (e.parentId === place.officialId) {
+      total += e.population;
+    }
+  });
   return total + place.population;
 };
 

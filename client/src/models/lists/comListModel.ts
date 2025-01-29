@@ -35,9 +35,9 @@ export class ComListModel extends ListModel {
       .getItems()
       .forEach((com) => {
         if (
-          com.origin === originId &&
-          com.destination === destinationId &&
-          comType.includes(com.comType)
+          com.origin === originId ||
+          (originId === "" && com.destination === destinationId) ||
+          (destinationId === "" && comType.includes(com.comType))
         ) {
           savedComList.push(com);
         }
@@ -54,7 +54,7 @@ export class ComListModel extends ListModel {
           coms = await getPublicComsByOriginFetch(originId);
         }
         const updatedList = myStore.get(comListAtomV2).addMany(coms);
-        updatedList != undefined && myStore.set(comListAtomV2, updatedList);
+        myStore.set(comListAtomV2, new ComListModel(updatedList));
         this.addMany(coms);
       } catch (error) {
         errorCatching(error);
@@ -82,8 +82,53 @@ export class ComListModel extends ListModel {
         myStore.set(loadingAtom, true);
         const response = await getAllAdminComsFetch();
         const updatedList = myStore.get(comListAtomV2).addMany(response);
-        updatedList != undefined && myStore.set(comListAtomV2, updatedList);
+        myStore.set(comListAtomV2, new ComListModel(updatedList));
         this.addMany(response);
+      } catch (error) {
+        errorCatching(error);
+      } finally {
+        myStore.set(loadingAtom, false);
+        return new ComListModel(this.items);
+      }
+    }
+  };
+  loadNationComList = async (
+    origin: string,
+    destination: string,
+    comTypes: number[],
+    isJwtRequired: boolean = true,
+  ) => {
+    const savedComList: ComListModel = new ComListModel();
+    myStore
+      .get(comListAtomV2)
+      .getItems()
+      .forEach((com) => {
+        if (
+          com.origin === origin &&
+          com.destination === destination &&
+          comTypes.includes(com.comType)
+        ) {
+          savedComList.addOrUpdate(com);
+        }
+      });
+    if (savedComList.getItems().length > 0) {
+      this.addMany(savedComList.getItems());
+    } else {
+      try {
+        myStore.set(loadingAtom, true);
+        const response = await savedComList.loadComList(
+          origin,
+          destination,
+          comTypes,
+          isJwtRequired,
+        );
+        if (response) {
+          this.addMany(response.getItems());
+          const updatedList = myStore
+            .get(comListAtomV2)
+            .addMany(response.getItems());
+          myStore.set(comListAtomV2, new ComListModel(updatedList));
+        }
       } catch (error) {
         errorCatching(error);
       } finally {
@@ -98,6 +143,7 @@ export class ComListModel extends ListModel {
   }
   addMany(items: Com[]) {
     items.forEach((item) => this.addOrUpdate(item));
+    return this.items;
   }
   addOrUpdate(item: Com) {
     const index = this.items.findIndex((i) => i.officialId === item.officialId);

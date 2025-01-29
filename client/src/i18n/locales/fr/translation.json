@@ -208,7 +208,7 @@
         "deleteTile": "Confirmez-vous la suppression de la tuile ?",
         "updateNation": "Confirmez-vous la mise à jour de la nation ?",
         "updatePlace": "Confirmez-vous la mise à jour du lieu ?",
-        "updateCitizen": "Confirmez-vous la mise à jour de votre profil ?",
+        "updateUser": "Confirmez-vous la mise à jour de votre profil ?",
         "createCom": "Confirmez-vous la création de la communication ?",
         "deleteCom": "Confirmez-vous la suppression définitive de la communication ?",
         "reportContent": "Confirmez-vous le signalement du contenu à l'administrateur ?"
@@ -438,11 +438,11 @@
   "toasts": {
     "reported": "Contenu signalé et en attente de modération",
     "errors": {
-      "400": "Erreur inconnue",
+      "400": "Erreur de formulaire",
+      "401": "Action non autorisée",
+      "403": "Action interdite",
       "404": "Page non trouvée",
       "500": "Erreur serveur",
-      "miss": "Certaines informations sont erronées ou manquantes",
-      "forbidden": "Action interdite",
       "11000": "Information déjà existante",
       "nsfw": "L'image contient du contenu NSFW ! Notification envoyée à l'administrateur"
     },

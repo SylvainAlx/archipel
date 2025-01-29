@@ -14,7 +14,6 @@ import { useEffect, useState } from "react";
 import ModalsRouter from "./router/modalsRouter";
 import { ArchipelRoute } from "./types/typReact";
 import i18n from "./i18n/i18n";
-import { authentification } from "./api/user/userAPI";
 import { MDP_LOBBY } from "./settings/consts";
 import Lobby from "./pages/lobby";
 import CookiesModal from "./components/modals/cookiesModal.tsx";
@@ -23,19 +22,22 @@ import { clearImagesInCache } from "./utils/procedures.ts";
 export default function App() {
   const [access, setAccess] = useAtom(lobbyAtom);
   const [openPrivateRoads, setOpenPrivateRoads] = useState(false);
-  const [session, setSession] = useAtom(sessionAtom);
+  const [session] = useAtom(sessionAtom);
   const [showModal] = useAtom(showCookiesModalAtom);
 
   const navigate = useNavigate();
   const location = useLocation();
 
   useEffect(() => {
+    const auth = async () => {
+      await session.user.authentification();
+    };
     clearImagesInCache();
     i18n.init();
     const lobbyToken = localStorage.getItem("lobbyToken");
     if (!access && lobbyToken === MDP_LOBBY) {
       setAccess(true);
-      session.user.officialId === "" && authentification();
+      session.user.officialId === "" && auth();
     } else {
       setAccess(false);
     }
@@ -43,19 +45,10 @@ export default function App() {
   }, []);
 
   useEffect(() => {
-    const loadNation = async () => {
-      const loadedNation = await session.nation.loadNation(
-        session.user.citizenship.nationId,
-      );
-      setSession({ ...session, nation: loadedNation });
-    };
     if (session.user.officialId != "") {
       setOpenPrivateRoads(true);
       if (location.pathname === "/login" || location.pathname === "/register") {
         navigate(`/citizen/${session.user.officialId}`);
-      }
-      if (session.user.citizenship.nationId != "") {
-        loadNation();
       }
     } else {
       setOpenPrivateRoads(false);

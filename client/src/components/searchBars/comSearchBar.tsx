@@ -10,13 +10,13 @@ import { COM_TYPE } from "../../settings/consts";
 import { ComListModel } from "../../models/lists/comListModel";
 import { COM_SORTING } from "../../settings/sorting";
 
-export interface SearchBarProps {
+export interface ComSearchBarProps {
   type: string;
   list: ComListModel;
   setList: React.Dispatch<React.SetStateAction<ComListModel>>;
 }
 
-export default function ComSearchBar({ list, setList }: SearchBarProps) {
+export default function ComSearchBar({ list, setList }: ComSearchBarProps) {
   const { t } = useTranslation();
   const [nationId, setNationId] = useState("");
   const [stats] = useAtom(statsAtom);

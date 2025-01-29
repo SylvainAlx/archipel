@@ -44,26 +44,11 @@ export class PlaceListModel extends ListModel {
   loadNationPlaces = async (nation: Nation) => {
     myStore.set(loadingAtom, true);
     try {
-      const savedNationPlacesList: Place[] = [];
-      myStore
-        .get(placeListAtomV2)
-        .getItems()
-        .forEach((place) => {
-          if (place.nation === nation.officialId) {
-            savedNationPlacesList.push(place);
-          }
-        });
-      if (
-        savedNationPlacesList.length > 0 &&
-        nation.data.roleplay.places === savedNationPlacesList.length
-      ) {
-        this.addMany(savedNationPlacesList);
-      } else {
-        const places: Place[] = await getNationPlacesFetch(nation.officialId);
-        const updatedList = myStore.get(placeListAtomV2).addMany(places);
-        updatedList != undefined && myStore.set(placeListAtomV2, updatedList);
-        this.addMany(places);
-      }
+      this.items = [];
+      const places: Place[] = await getNationPlacesFetch(nation.officialId);
+      const updatedList = myStore.get(placeListAtomV2).addMany(places);
+      updatedList != undefined && myStore.set(placeListAtomV2, updatedList);
+      this.addMany(places);
     } catch (error) {
       errorCatching(error);
     } finally {
@@ -87,7 +72,6 @@ export class PlaceListModel extends ListModel {
     }
     return this.items;
   }
-
   sortPlaces = (selectOption: number) => {
     switch (selectOption) {
       case PLACE_SORTING.ascAlpha.id:
@@ -97,10 +81,10 @@ export class PlaceListModel extends ListModel {
         sortByName(this.items, false);
         break;
       case 2:
-        sortPlacesByCitizen(this.items, true);
+        sortPlacesByCitizen(this, true);
         break;
       case 3:
-        sortPlacesByCitizen(this.items, false);
+        sortPlacesByCitizen(this, false);
         break;
       case PLACE_SORTING.ascDate.id:
         sortByCreatedAt(this.items, true);

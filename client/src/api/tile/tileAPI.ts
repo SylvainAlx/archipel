@@ -1,11 +1,7 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { NationModel } from "../../models/nationModel";
 import {
   loadingAtom,
   myStore,
-  nationFetchedAtom,
   nationTileListAtom,
-  sessionAtom,
   tileListAtom,
 } from "../../settings/store";
 import { Nation } from "../../types/typNation";
@@ -34,14 +30,14 @@ export const createTile = (tile: Tile) => {
         myStore.set(nationTileListAtom, tempArray);
         updateOrCreateTileInMemory(resp.tile);
       }
-      const session = myStore.get(sessionAtom);
-      myStore.set(sessionAtom, {
-        nation: new NationModel(resp.nation),
-        user: session.user,
-        jwt: session.jwt,
-      });
+      // const session = myStore.get(sessionAtom);
+      // myStore.set(sessionAtom, {
+      //   nation: new NationModel(resp.nation),
+      //   user: session.user,
+      //   jwt: session.jwt,
+      // });
       // updateOrCreateNationInMemory(resp.nation);
-      myStore.set(nationFetchedAtom, resp.nation);
+      // myStore.set(nationFetchedAtom, resp.nation);
       displayTileInfoByType(resp.infoType);
       myStore.set(loadingAtom, false);
     })
@@ -91,14 +87,14 @@ export const deleteTile = (id: string) => {
         myStore.set(nationTileListAtom, tempArray);
         tempArray = spliceByDBId(resp.tile._id, myStore.get(tileListAtom));
         myStore.set(tileListAtom, tempArray);
-        const session = myStore.get(sessionAtom);
-        myStore.set(sessionAtom, {
-          nation: new NationModel(resp.nation),
-          user: session.user,
-          jwt: session.jwt,
-        });
+        // const session = myStore.get(sessionAtom);
+        // myStore.set(sessionAtom, {
+        //   nation: new NationModel(resp.nation),
+        //   user: session.user,
+        //   jwt: session.jwt,
+        // });
         // updateOrCreateNationInMemory(resp.nation);
-        myStore.set(nationFetchedAtom, resp.nation);
+        // myStore.set(nationFetchedAtom, resp.nation);
       }
       displayTileInfoByType(resp.infoType);
       myStore.set(loadingAtom, false);

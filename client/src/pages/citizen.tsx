@@ -1,63 +1,48 @@
 import { useAtom } from "jotai";
 import H1 from "../components/titles/h1";
-import {
-  citizenFetchAtom,
-  confirmBox,
-  nationPlaceListAtomV2,
-  sessionAtom,
-} from "../settings/store";
+import { confirmBox, sessionAtom } from "../settings/store";
 import { useNavigate, useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
-import { LabelId } from "../types/typNation";
+import { lazy, Suspense, useEffect, useState } from "react";
 import EditIcon from "../components/editIcon";
-import {
-  getDocumentTitle,
-  getLabelIdArrayFromNationPlaceList,
-} from "../utils/functions";
+import { getDocumentTitle } from "../utils/functions";
 import { ConfirmBoxDefault } from "../types/typAtom";
 import ReportPanel from "../components/reportPanel";
-import { COM_GENERAL_DESTINATION, COM_TYPE } from "../settings/consts";
-import { getOneUser } from "../api/user/userAPI";
-import CitizensCom from "../components/citizen/citizensCom";
-import Personal from "../components/citizen/personal";
-import Citizenship from "../components/citizen/citizenship";
-import Settings from "../components/citizen/settings";
-import { displayUnwatchedComs } from "../utils/procedures";
-import { ComListModel } from "../models/lists/comListModel";
 import { NationModel } from "../models/nationModel";
+import { UserModel } from "../models/userModel";
+import { useTranslation } from "react-i18next";
+import Spinner from "../components/loading/spinner";
 
 export default function Citizen() {
   const navigate = useNavigate();
   const param = useParams();
+  const { t } = useTranslation();
 
-  const [citizen, setCitizen] = useAtom(citizenFetchAtom);
+  const [citizen, setCitizen] = useState<UserModel>(new UserModel());
   const [nation, setNation] = useState<NationModel>(new NationModel());
-  const [comList] = useState<ComListModel>(new ComListModel());
+  const [owner, setOwner] = useState<boolean>(false);
+
   const [session] = useAtom(sessionAtom);
   const [confirm, setConfirm] = useAtom(confirmBox);
 
-  const [nationPlaces] = useAtom(nationPlaceListAtomV2);
-  const [, setPlacesList] = useState<LabelId[]>([]);
-
-  const owner = session.user.officialId === citizen.officialId;
+  const Personal = lazy(() => import("../components/citizen/personal"));
+  const Citizenship = lazy(() => import("../components/citizen/citizenship"));
+  const Settings = lazy(() => import("../components/citizen/settings"));
+  const CitizenCom = lazy(() => import("../components/citizen/citizensCom"));
 
   useEffect(() => {
+    const loadCitizen = async (officialId: string) => {
+      const user: UserModel = new UserModel();
+      const loadedUser = await user.loadUser(officialId);
+      setCitizen(loadedUser);
+    };
     if (param.id) {
-      if (session.user.officialId === param.id) {
-        setCitizen(session.user);
-        comList.loadComList("", session.user.officialId, [
-          COM_TYPE.userPrivate.id,
-          COM_TYPE.userUpdate.id,
-          COM_TYPE.general.id,
-        ]);
-      } else if (citizen.officialId != param.id) {
-        getOneUser(param.id);
-      }
+      loadCitizen(param.id);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [param.id, session.user]);
+  }, [param.id]);
 
   useEffect(() => {
+    setOwner(session.user.officialId === citizen.officialId);
     const loadNation = async (officialId: string) => {
       const loadedNation = await nation.loadNation(officialId);
       setNation(loadedNation);
@@ -78,28 +63,6 @@ export default function Citizen() {
   }, [citizen]);
 
   useEffect(() => {
-    if (
-      owner &&
-      comList.getItems().length > 0 &&
-      comList.getItems()[0].destination === citizen.officialId
-    ) {
-      displayUnwatchedComs(COM_GENERAL_DESTINATION, comList.getItems());
-      displayUnwatchedComs(citizen.officialId, comList.getItems());
-    }
-  }, [comList]);
-
-  useEffect(() => {
-    if (
-      nationPlaces.getItems().length > 0 &&
-      nation.officialId != undefined &&
-      nation.officialId !== ""
-    ) {
-      const list = getLabelIdArrayFromNationPlaceList();
-      setPlacesList(list);
-    }
-  }, [nation.officialId, nationPlaces]);
-
-  useEffect(() => {
     if (confirm.action === "deleteUser" && confirm.result === "OK") {
       navigate(`/`);
       setConfirm(ConfirmBoxDefault);
@@ -107,29 +70,80 @@ export default function Citizen() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [confirm]);
 
+  const updatePath = (
+    path: string,
+    value: string,
+    needConfirm: boolean = true,
+  ) => {
+    const updatedUser = citizen.updateOne(path, value);
+
+    const baseUpdate = async () => {
+      const citizenInBase = await updatedUser.updatedObject.baseUpdate();
+      if (citizenInBase) {
+        setCitizen(citizenInBase);
+      }
+    };
+    if (updatedUser.isSuccess) {
+      if (needConfirm) {
+        setConfirm({
+          action: "",
+          text: t("components.modals.confirmModal.updateUser"),
+          result: "",
+          actionToDo: baseUpdate,
+        });
+      } else {
+        baseUpdate();
+      }
+    }
+  };
+
   return (
     <>
       <div className="flex items-center gap-1">
         <H1 text={citizen.name} />
         {owner && (
-          <EditIcon target="citizen" param={citizen.name} path="name" />
+          <EditIcon
+            target="citizen"
+            param={citizen.name}
+            path="name"
+            action={updatePath}
+          />
         )}
       </div>
       <section className="w-full flex flex-wrap gap-8 items-start justify-between">
         {(!citizen.reported || owner) && (
           <>
-            <Personal citizen={citizen} owner={owner} />
-            <Citizenship citizen={citizen} nation={nation} owner={owner} />
+            <Suspense fallback={<Spinner />}>
+              <Personal
+                citizen={citizen}
+                owner={owner}
+                updatePath={updatePath}
+              />
+            </Suspense>
+            <Suspense fallback={<Spinner />}>
+              <Citizenship
+                citizen={citizen}
+                nation={nation}
+                owner={owner}
+                updatePath={updatePath}
+              />
+            </Suspense>
           </>
         )}
         {owner ? (
-          <Settings citizen={citizen} />
+          <Suspense fallback={<Spinner />}>
+            <Settings citizen={citizen} />
+          </Suspense>
         ) : (
           <div className="w-full flex justify-center">
             <ReportPanel content={citizen} />
           </div>
         )}
-        {owner && <CitizensCom citizen={citizen} citizenComList={comList} />}
+        {owner && (
+          <Suspense fallback={<Spinner />}>
+            <CitizenCom citizen={citizen} owner={owner} />
+          </Suspense>
+        )}
       </section>
     </>
   );

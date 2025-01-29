@@ -1,19 +1,21 @@
 import Tag from "./tag";
-import { nationPlaceListAtomV2 } from "../../settings/store";
-import { useAtom } from "jotai";
 import { useEffect, useState } from "react";
 import { getPlaceName } from "../../utils/functions";
 import { FaLocationDot } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { PlaceListModel } from "../../models/lists/placeListModel";
 
 interface ResidenceTagProps {
+  nationPlaceList: PlaceListModel;
   residenceId: string;
 }
 
-export default function ResidenceTag({ residenceId }: ResidenceTagProps) {
+export default function ResidenceTag({
+  nationPlaceList,
+  residenceId,
+}: ResidenceTagProps) {
   const { t } = useTranslation();
-  const [nationPlaceList] = useAtom(nationPlaceListAtomV2);
   const [residence, setResidence] = useState<string>(
     t("pages.citizen.noResidence"),
   );

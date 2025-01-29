@@ -11,13 +11,13 @@ import SearchButtons from "../form/searchButtons";
 import { PLACE_SORTING } from "../../settings/sorting";
 import { PlaceListModel } from "../../models/lists/placeListModel";
 
-export interface SearchBarProps {
+export interface PlaceSearchBarProps {
   type: string;
   list: PlaceListModel;
   setList: React.Dispatch<React.SetStateAction<PlaceListModel>>;
 }
 
-export default function PlaceSearchBar({ list, setList }: SearchBarProps) {
+export default function PlaceSearchBar({ list, setList }: PlaceSearchBarProps) {
   const { t } = useTranslation();
   const [searchName, setSearchName] = useState("");
   const [placeType, setPlaceType] = useState({

@@ -1,5 +1,5 @@
+import { PlaceListModel } from "../models/lists/placeListModel";
 import { Nation } from "../types/typNation";
-import { Place } from "../types/typPlace";
 import { getTotalPopulation } from "./functions";
 
 export const sortByCreatedAt = (list: any[], ascending: boolean = true) => {
@@ -54,12 +54,12 @@ export const sortByTreasury = (list: Nation[], ascending: boolean = true) => {
 };
 
 export const sortPlacesByCitizen = (
-  list: Place[],
+  list: PlaceListModel,
   ascending: boolean = true,
 ) => {
-  return list.sort(function (a, b) {
+  return list.getItems().sort(function (a, b) {
     return ascending
-      ? getTotalPopulation(a) - getTotalPopulation(b)
-      : getTotalPopulation(b) - getTotalPopulation(a);
+      ? getTotalPopulation(list, a) - getTotalPopulation(list, b)
+      : getTotalPopulation(list, b) - getTotalPopulation(list, a);
   });
 };

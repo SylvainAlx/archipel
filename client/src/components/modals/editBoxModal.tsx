@@ -13,7 +13,6 @@ import { MdCheckCircle } from "react-icons/md";
 import MarkdownEditor from "../form/markdownEditor";
 import { getMaxLength } from "../../utils/functions";
 import { MAX_LENGTH } from "../../settings/consts";
-import { updateElement } from "../../utils/procedures";
 
 export default function EditBoxModal() {
   const [editBox, setEditBox] = useAtom(editbox);
@@ -49,8 +48,6 @@ export default function EditBoxModal() {
     e.preventDefault();
     if (editBox.action != undefined) {
       editBox.action(editBox.path, editBox.new);
-    } else {
-      updateElement(editBox.target, editBox.path, editBox.new, true);
     }
     setEditBox({ target: "", original: -1, new: -1, path: "" });
   };

@@ -9,6 +9,7 @@ import PlaceSearchBar from "../../components/searchBars/placeSearchBar";
 import { useTranslation } from "react-i18next";
 import { ELEMENTS_DISPLAYED_LIMIT } from "../../settings/consts";
 import { PlaceListModel } from "../../models/lists/placeListModel";
+import { NationModel } from "../../models/nationModel";
 
 export default function PlaceList({ text }: StringProps) {
   const [placesList, setPlacesList] = useState<PlaceListModel>(
@@ -33,7 +34,7 @@ export default function PlaceList({ text }: StringProps) {
               return (
                 <Suspense key={i} fallback={<BarreLoader />}>
                   <div className="min-w-[300px] w-full relative transition-all duration-300 animate-fadeIn">
-                    <PlaceTile place={place} />
+                    <PlaceTile place={place} nation={new NationModel()} />
                     <IndexTag text={i} />
                   </div>
                 </Suspense>
