@@ -1,4 +1,4 @@
-import { getAllNationsFetch } from "../../services/nationServices";
+import { getAllNationsFetch } from "../../services/nationService";
 import { NATION_SORTING } from "../../settings/sorting";
 import {
   loadingAtom,
@@ -27,6 +27,10 @@ export class NationListModel extends ListModel {
     this.items = list;
     this.sorting = sorting;
   }
+  addToNationListAtom = (list: Nation[]) => {
+    const updatedList = myStore.get(nationListAtomV2).addMany(list);
+    myStore.set(nationListAtomV2, new NationListModel(updatedList));
+  };
   getNationByOfficialId = (officialId: string) => {
     return this.items.find((nation) => nation.officialId === officialId);
   };
@@ -61,8 +65,7 @@ export class NationListModel extends ListModel {
           searchTag,
         );
         this.addMany(nations);
-        const updatedList = myStore.get(nationListAtomV2).addMany(nations);
-        updatedList != undefined && myStore.set(nationListAtomV2, updatedList);
+        this.addToNationListAtom(nations);
       }
     } catch (error) {
       errorCatching(error);
@@ -76,6 +79,7 @@ export class NationListModel extends ListModel {
   }
   addMany(items: Nation[]) {
     items.forEach((item) => this.addOrUpdate(item));
+    return this.items;
   }
   addOrUpdate(item: Nation) {
     const index = this.items.findIndex((i) => i.officialId === item.officialId);

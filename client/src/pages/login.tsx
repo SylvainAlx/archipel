@@ -7,12 +7,15 @@ import Form from "../components/form/form";
 import { useTranslation } from "react-i18next";
 import RequiredStar from "../components/form/requiredStar";
 import { myStore, sessionAtom } from "../settings/store";
+import { createPageTitle } from "../utils/procedures";
 
 export default function Login() {
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
   const { t } = useTranslation();
+
+  createPageTitle(t("pages.login.title"));
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.type == "text") {

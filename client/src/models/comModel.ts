@@ -1,4 +1,4 @@
-import { createComFetch, deleteComFetch } from "../services/comServices";
+import { createComFetch, deleteComFetch } from "../services/comService";
 import { comListAtomV2, loadingAtom, myStore } from "../settings/store";
 import { Com, ComPayload, emptyCom } from "../types/typCom";
 import { displayComInfoByType, errorCatching } from "../utils/displayInfos";

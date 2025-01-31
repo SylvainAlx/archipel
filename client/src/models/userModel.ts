@@ -10,11 +10,12 @@ import {
   registerFetch,
   updateUserFetch,
   verifyCaptchaFetch,
-} from "../services/userServices";
+} from "../services/userService";
 import {
   emptySession,
   loadingAtom,
   myStore,
+  nationListAtomV2,
   recoveryKey,
   sessionAtom,
   userListAtomV2,
@@ -36,7 +37,9 @@ import { GET_JWT } from "../utils/functions";
 import { createComByStatus } from "../utils/procedures";
 import { successMessage } from "../utils/toasts";
 import { CommonModel } from "./commonModel";
+import { NationListModel } from "./lists/nationListModel";
 import { UserListModel } from "./lists/userListModel";
+import { NationModel } from "./nationModel";
 
 export class UserModel extends CommonModel implements User {
   name!: string;
@@ -69,6 +72,14 @@ export class UserModel extends CommonModel implements User {
     const updatedList = myStore.get(userListAtomV2).addOrUpdate(user);
     myStore.set(userListAtomV2, new UserListModel(updatedList));
   };
+  private loadNationAndUpdateNationListAtom = async (
+    nationOfficialId: string,
+  ) => {
+    let nation = new NationModel();
+    nation = await nation.loadNation(nationOfficialId);
+    const updatedList = myStore.get(nationListAtomV2).addOrUpdate(nation);
+    myStore.set(nationListAtomV2, new NationListModel(updatedList));
+  };
   authentification = async () => {
     const jwt = GET_JWT();
     myStore.set(loadingAtom, true);
@@ -82,6 +93,11 @@ export class UserModel extends CommonModel implements User {
             jwt,
           });
           this.addOrUpdateUserListAtom(response.user);
+          if (response.user.citizenship.nationId != "") {
+            this.loadNationAndUpdateNationListAtom(
+              response.user.citizenship.nationId,
+            );
+          }
         } else {
           myStore.set(sessionAtom, emptySession);
           myStore.set(loadingAtom, false);

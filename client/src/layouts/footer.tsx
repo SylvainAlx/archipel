@@ -7,35 +7,19 @@ import {
   THREADS_URL,
 } from "../settings/consts";
 import { useTranslation } from "react-i18next";
-import { lobbyAtom, nationListAtomV2, sessionAtom } from "../settings/store";
+import { lobbyAtom } from "../settings/store";
 import { useAtom } from "jotai";
 import { BsFillEnvelopeAtFill, BsThreads } from "react-icons/bs";
 import ReleaseNotesLink from "../components/releaseNotesLink";
 import { FaInstagram } from "react-icons/fa6";
-import { useEffect, useState } from "react";
-import { NationModel } from "../models/nationModel";
 
 export default function Footer() {
   const { t } = useTranslation();
   const [access] = useAtom(lobbyAtom);
-  const [session] = useAtom(sessionAtom);
-  const [nationList] = useAtom(nationListAtomV2);
-  const [nation, setNation] = useState<NationModel>(new NationModel());
 
-  useEffect(() => {
-    const loadNation = async (officialId: string) => {
-      const loadedNation = nationList.getByOfficialId(officialId);
-      if (loadedNation) {
-        setNation(loadedNation);
-      }
-    };
-    if (session.user.citizenship.nationId != "") {
-      loadNation(session.user.citizenship.nationId);
-    }
-  }, [session]);
   return (
     <footer className="animate-slideInFromBottom flex flex-col items-center">
-      {access && <FooterNav nation={nation} />}
+      {access && <FooterNav />}
       <div className="hidden z-10 md:flex flex-col items-center gap-1">
         <div>
           {APP_NAME.toUpperCase()} - {new Date().getFullYear()}

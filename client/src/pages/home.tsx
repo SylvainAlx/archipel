@@ -9,11 +9,13 @@ import { IoMdAddCircleOutline, IoMdGlobe, IoMdLogIn } from "react-icons/io";
 import { RxAvatar } from "react-icons/rx";
 import { GiBlackFlag } from "react-icons/gi";
 import CryptoDonationButton from "../components/buttons/cryptoDonationButton";
+import { createPageTitle } from "../utils/procedures";
 
 export default function Home() {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const [session] = useAtom(sessionAtom);
+  createPageTitle(t("components.buttons.home"));
 
   return (
     <>

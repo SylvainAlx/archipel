@@ -21,6 +21,15 @@ export default function ComSearchBar({ list, setList }: ComSearchBarProps) {
   const [nationId, setNationId] = useState("");
   const [stats] = useAtom(statsAtom);
 
+  useEffect(() => {
+    loadList();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [stats.counts.coms]);
+
+  const reset = async () => {
+    setNationId("");
+    loadList();
+  };
   const loadList = async () => {
     const updatedList = await list.loadComList(
       "",
@@ -33,26 +42,13 @@ export default function ComSearchBar({ list, setList }: ComSearchBarProps) {
       setList(updatedList);
     }
   };
-
-  useEffect(() => {
-    loadList();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [stats.counts.coms]);
-
-  const reset = async () => {
-    setNationId("");
-    loadList();
-  };
-
   const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
     setNationId(e.target.value);
   };
-
   const handleChangeSorting = (e: ChangeEvent<HTMLSelectElement>) => {
     const updatedList = list.sortComs(Number(e.target.value));
     setList(updatedList);
   };
-
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     const updatedList = new ComListModel(

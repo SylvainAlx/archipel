@@ -7,8 +7,6 @@ import BarreLoader from "../loading/barreLoader";
 import { PlaceListModel } from "../../models/lists/placeListModel";
 import { PlaceModel } from "../../models/placeModel";
 import { NationModel } from "../../models/nationModel";
-import { placeListAtomV2 } from "../../settings/store";
-import { useAtom } from "jotai";
 
 interface PlacesProps {
   selectedNation: NationModel;
@@ -17,23 +15,27 @@ interface PlacesProps {
 
 export default function Places({ selectedNation, owner }: PlacesProps) {
   const { t } = useTranslation();
-  const [placeList] = useAtom(placeListAtomV2);
   const [places, setPlaces] = useState<PlaceListModel>(new PlaceListModel());
   const PlaceTile = lazy(() => import("../tiles/placeTile"));
 
   useEffect(() => {
-    if (placeList.getItems().length === 0) {
-      placeList.loadNationPlaces(selectedNation);
-    } else {
+    const filterMainPlaces = (list: PlaceListModel) => {
       const updatedPlaces: PlaceModel[] = [];
-      placeList.getItems().forEach((place) => {
+      list.getItems().forEach((place) => {
         if (place.parentId === selectedNation.officialId) {
           updatedPlaces.push(place);
         }
       });
       setPlaces(new PlaceListModel(updatedPlaces));
-    }
-  }, [selectedNation, placeList]);
+    };
+    const loadNationPlaceList = async () => {
+      const list = await places.loadNationPlaces(selectedNation);
+      if (list) {
+        filterMainPlaces(list);
+      }
+    };
+    loadNationPlaceList();
+  }, [selectedNation]);
 
   return (
     <TileContainer

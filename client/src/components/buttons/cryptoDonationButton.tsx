@@ -8,7 +8,9 @@ export default function CryptoDonationButton() {
   const { t } = useTranslation();
   const handleDonationClick = () => {
     myStore.set(infoModalAtom, {
-      text: `Wallet Ethereum : ${WALLET_PUBLIC_KEY}`,
+      text: WALLET_PUBLIC_KEY,
+      subtitle: "Wallet Ethereum",
+      copy: true,
     });
   };
 

@@ -24,16 +24,17 @@ export default function CitizensCom({ citizen, owner }: CitizensComProps) {
 
   useEffect(() => {
     const loadComList = async () => {
-      const comList = await citizenComList.loadComList("", citizen.officialId, [
-        COM_TYPE.userPrivate.id,
-        COM_TYPE.userUpdate.id,
-      ]);
+      const comList = await citizenComList.loadComList(
+        "",
+        session.user.officialId,
+        [COM_TYPE.userPrivate.id, COM_TYPE.userUpdate.id],
+      );
       comList && setCitizenComList(comList);
     };
-    if (session.user.officialId != "" && owner) {
+    if (owner) {
       loadComList();
     }
-  }, [citizen, session.user.officialId]);
+  }, [citizen.officialId]);
 
   useEffect(() => {
     if (

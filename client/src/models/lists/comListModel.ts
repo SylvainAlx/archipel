@@ -4,7 +4,7 @@ import {
   getAllAdminComsFetch,
   getComsFetch,
   getPublicComsByOriginFetch,
-} from "../../services/comServices";
+} from "../../services/comService";
 import { errorCatching } from "../../utils/displayInfos";
 import { COM_SORTING } from "../../settings/sorting";
 import { ListModel } from "./listModel";
@@ -21,14 +21,17 @@ export class ComListModel extends ListModel {
     this.items = list;
     this.sorting = sorting;
   }
-
+  addToComListAtom = (list: Com[]) => {
+    const updatedList = myStore.get(comListAtomV2).addMany(list);
+    myStore.set(comListAtomV2, new ComListModel(updatedList));
+  };
   loadComList = async (
     originId: string,
     destinationId: string,
     comType: number[],
     isJwtRequired: boolean = true,
+    useSavedComs: boolean = true,
   ) => {
-    this.items = [];
     const savedComList: ComModel[] = [];
     myStore
       .get(comListAtomV2)
@@ -42,7 +45,7 @@ export class ComListModel extends ListModel {
           savedComList.push(com);
         }
       });
-    if (savedComList.length > 0) {
+    if (useSavedComs && savedComList.length > 0) {
       this.addMany(savedComList);
     } else {
       myStore.set(loadingAtom, true);
@@ -53,18 +56,16 @@ export class ComListModel extends ListModel {
         } else {
           coms = await getPublicComsByOriginFetch(originId);
         }
-        const updatedList = myStore.get(comListAtomV2).addMany(coms);
-        myStore.set(comListAtomV2, new ComListModel(updatedList));
         this.addMany(coms);
+        this.addToComListAtom(coms);
       } catch (error) {
         errorCatching(error);
       } finally {
         myStore.set(loadingAtom, false);
-        return new ComListModel(this.items);
       }
     }
+    return new ComListModel(this.items);
   };
-
   loadAdminComList = async () => {
     const savedComList: ComModel[] = [];
     myStore
@@ -81,9 +82,8 @@ export class ComListModel extends ListModel {
       try {
         myStore.set(loadingAtom, true);
         const response = await getAllAdminComsFetch();
-        const updatedList = myStore.get(comListAtomV2).addMany(response);
-        myStore.set(comListAtomV2, new ComListModel(updatedList));
         this.addMany(response);
+        this.addToComListAtom(response);
       } catch (error) {
         errorCatching(error);
       } finally {
@@ -98,46 +98,25 @@ export class ComListModel extends ListModel {
     comTypes: number[],
     isJwtRequired: boolean = true,
   ) => {
-    const savedComList: ComListModel = new ComListModel();
-    myStore
-      .get(comListAtomV2)
-      .getItems()
-      .forEach((com) => {
-        if (
-          com.origin === origin &&
-          com.destination === destination &&
-          comTypes.includes(com.comType)
-        ) {
-          savedComList.addOrUpdate(com);
-        }
-      });
-    if (savedComList.getItems().length > 0) {
-      this.addMany(savedComList.getItems());
-    } else {
-      try {
-        myStore.set(loadingAtom, true);
-        const response = await savedComList.loadComList(
-          origin,
-          destination,
-          comTypes,
-          isJwtRequired,
-        );
-        if (response) {
-          this.addMany(response.getItems());
-          const updatedList = myStore
-            .get(comListAtomV2)
-            .addMany(response.getItems());
-          myStore.set(comListAtomV2, new ComListModel(updatedList));
-        }
-      } catch (error) {
-        errorCatching(error);
-      } finally {
-        myStore.set(loadingAtom, false);
-        return new ComListModel(this.items);
+    try {
+      myStore.set(loadingAtom, true);
+      const response = await this.loadComList(
+        origin,
+        destination,
+        comTypes,
+        isJwtRequired,
+        false,
+      );
+      if (response) {
+        this.addMany(response.getItems());
       }
+    } catch (error) {
+      errorCatching(error);
+    } finally {
+      myStore.set(loadingAtom, false);
+      return new ComListModel(this.items);
     }
   };
-
   private add(item: Com) {
     this.items.push(new ComModel(item));
   }
@@ -154,7 +133,6 @@ export class ComListModel extends ListModel {
     }
     return this.items;
   }
-
   sortComs = (selectOption: number) => {
     switch (selectOption) {
       case COM_SORTING.ascDate.id:

@@ -32,7 +32,7 @@ export default function PlaceSearchBar({ list, setList }: PlaceSearchBarProps) {
   useEffect(() => {
     if (
       placeList.getItems().length != stats.counts.places ||
-      stats.counts.places === 0
+      placeList.getItems().length === 0
     ) {
       loadPlaceList("");
     }

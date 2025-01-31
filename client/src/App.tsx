@@ -14,19 +14,28 @@ import { useEffect, useState } from "react";
 import ModalsRouter from "./router/modalsRouter";
 import { ArchipelRoute } from "./types/typReact";
 import i18n from "./i18n/i18n";
-import { MDP_LOBBY } from "./settings/consts";
+import { MDP_LOBBY, SERVER_URL } from "./settings/consts";
 import Lobby from "./pages/lobby";
 import CookiesModal from "./components/modals/cookiesModal.tsx";
 import { clearImagesInCache } from "./utils/procedures.ts";
+import useOnlineStatus from "./hooks/useOnlineStatus.tsx";
+import { errorMessage, successMessage } from "./utils/toasts.ts";
+import { useTranslation } from "react-i18next";
+import useDebugAtom from "./hooks/useDebugAtom.tsx";
 
 export default function App() {
   const [access, setAccess] = useAtom(lobbyAtom);
   const [openPrivateRoads, setOpenPrivateRoads] = useState(false);
   const [session] = useAtom(sessionAtom);
   const [showModal] = useAtom(showCookiesModalAtom);
+  const isOnlineHook = useOnlineStatus();
+  const [offline, setOffline] = useState(false);
+  const { t } = useTranslation();
 
   const navigate = useNavigate();
   const location = useLocation();
+
+  SERVER_URL.includes("localhost") && useDebugAtom();
 
   useEffect(() => {
     const auth = async () => {
@@ -55,6 +64,18 @@ export default function App() {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [session.user]);
+
+  useEffect(() => {
+    if (!isOnlineHook) {
+      errorMessage(t("toasts.errors.offline"));
+      setOffline(true);
+    } else {
+      if (offline) {
+        successMessage(t("toasts.connected"));
+        setOffline(false);
+      }
+    }
+  }, [isOnlineHook]);
 
   return (
     <>

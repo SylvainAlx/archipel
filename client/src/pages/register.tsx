@@ -13,6 +13,7 @@ import { genderList, languageList } from "../settings/lists";
 import i18n from "../i18n/i18n";
 import RequiredStar from "../components/form/requiredStar";
 import { UserModel } from "../models/userModel";
+import { createPageTitle } from "../utils/procedures";
 
 export default function Register() {
   const { t } = useTranslation();
@@ -25,7 +26,7 @@ export default function Register() {
   const [acceptCGU, setAcceptCGU] = useState(false);
   const [captchaOk, setCaptchaOk] = useState(false);
 
-  console.log(language);
+  createPageTitle(t("pages.register.title"));
 
   const navigate = useNavigate();
 

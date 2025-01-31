@@ -8,6 +8,7 @@ import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import RequiredStar from "../components/form/requiredStar";
 import { UserModel } from "../models/userModel";
+import { createPageTitle } from "../utils/procedures";
 
 export default function Recovery() {
   const [name, setName] = useState("");
@@ -17,6 +18,8 @@ export default function Recovery() {
   const [passwordsMatch, setPasswordsMatch] = useState(true);
   const { t } = useTranslation();
   const navigate = useNavigate();
+
+  createPageTitle(t("pages.recovery.title"));
 
   const handleChange = (
     e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>,

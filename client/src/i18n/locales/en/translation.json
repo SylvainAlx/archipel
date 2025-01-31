@@ -35,7 +35,8 @@
       "relations": {
         "title": "diplomacy",
         "noRelations": "no diplomatic relationship",
-        "pendingRelations": "diplomatic relations are pending approval"
+        "pendingRelations": "diplomatic relationships are pending approval",
+        "defaultNewRelationTitle": "New diplomatic relationship"
       },
       "citizens": {
         "title": "citizens",
@@ -436,7 +437,10 @@
     }
   },
   "toasts": {
+    "successCopy": "Copied text !",
+    "failedCopy": "Unable to copy",
     "reported": "Content reported and awaiting moderation",
+    "connected": "Connection restored !",
     "errors": {
       "400": "Bad request",
       "401": "Unauthorized",
@@ -444,7 +448,8 @@
       "404": "Page not found",
       "500": "Server error",
       "11000": "Information already existing in the database",
-      "nsfw": "Image contains NSFW content! Notification sent to admin"
+      "nsfw": "Image contains NSFW content! Notification sent to admin",
+      "offline": "You are offline !"
     },
     "user": {
       "signIn": "Sign In successful",

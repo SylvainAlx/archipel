@@ -14,10 +14,10 @@ import { errorMessage } from "../utils/toasts";
 import CrossButton from "../components/buttons/crossButton";
 import ReportPanel from "../components/reportPanel";
 import EditIcon from "../components/editIcon";
-import { getDocumentTitle } from "../utils/functions";
 import { NationModel } from "../models/nationModel";
 import { NationListModel } from "../models/lists/nationListModel";
 import Spinner from "../components/loading/spinner";
+import { createPageTitle } from "../utils/procedures";
 
 export default function Nation() {
   const [nation, setNation] = useState<NationModel>(new NationModel());
@@ -27,6 +27,8 @@ export default function Nation() {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const param = useParams();
+
+  createPageTitle(nation.name);
 
   const NationIdentity = lazy(
     () => import("../components/nation/nationIdentity"),
@@ -47,11 +49,6 @@ export default function Nation() {
     } else {
       setOwner(false);
     }
-
-    document.title = getDocumentTitle(nation.name);
-    return () => {
-      document.title = getDocumentTitle("");
-    };
   }, [session.user, nation, param.id]);
 
   useEffect(() => {

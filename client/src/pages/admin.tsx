@@ -3,8 +3,10 @@ import AdminForm from "../components/form/adminForm";
 import AdminParams from "../components/admin/adminParams";
 import AdminBanned from "../components/admin/adminBanned";
 import AdminComs from "../components/admin/adminComs";
+import { createPageTitle } from "../utils/procedures";
 
 export default function Admin() {
+  createPageTitle("Administration");
   return (
     <>
       <H1 text="Administration" />

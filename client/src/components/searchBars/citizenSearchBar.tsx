@@ -27,7 +27,7 @@ export default function CitizenSearchBar({
   useEffect(() => {
     if (
       list.getItems().length != stats.counts.citizens ||
-      stats.counts.citizens === 0
+      list.getItems().length === 0
     ) {
       loadUserList("");
     }

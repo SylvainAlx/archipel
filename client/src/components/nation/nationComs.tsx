@@ -2,12 +2,7 @@ import { useTranslation } from "react-i18next";
 import DashTile from "../dashTile";
 import { SelectedNationProps } from "../../types/typProp";
 import { useAtom } from "jotai";
-import {
-  comListAtomV2,
-  myStore,
-  newComAtom,
-  sessionAtom,
-} from "../../settings/store";
+import { myStore, newComAtom, sessionAtom } from "../../settings/store";
 import { lazy, Suspense, useEffect, useState } from "react";
 import BarreLoader from "../loading/barreLoader";
 import Button from "../buttons/button";
@@ -26,7 +21,6 @@ export default function NationComs({
 }: SelectedNationProps) {
   const { t } = useTranslation();
   const [session] = useAtom(sessionAtom);
-  const [comList] = useAtom(comListAtomV2);
   const [coms, setComs] = useState<ComListModel>(new ComListModel());
   const [allowPost, setAllowPost] = useState<boolean>(true);
   const [dueDate, setDueDate] = useState(new Date());
@@ -37,14 +31,7 @@ export default function NationComs({
     : [COM_TYPE.nationPublic.id];
 
   useEffect(() => {
-    if (comList.getItems().length === 0) {
-      comList.loadNationComList(
-        selectedNation.officialId,
-        selectedNation.officialId,
-        comTypes,
-        owner,
-      );
-    } else {
+    const filterComs = (comList: ComListModel) => {
       const list: ComModel[] = [];
       comList.getItems().forEach((com) => {
         if (
@@ -56,8 +43,20 @@ export default function NationComs({
         }
       });
       setComs(new ComListModel(list));
-    }
-  }, [selectedNation, comList]);
+    };
+    const loadNationComList = async () => {
+      const list = await coms.loadNationComList(
+        selectedNation.officialId,
+        selectedNation.officialId,
+        comTypes,
+        owner,
+      );
+      if (list) {
+        filterComs(list);
+      }
+    };
+    loadNationComList();
+  }, [selectedNation]);
 
   useEffect(() => {
     if (coms.getItems().length > 0) {

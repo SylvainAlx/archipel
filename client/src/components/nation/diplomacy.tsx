@@ -66,7 +66,9 @@ export default function Diplomacy({
       AmbassadorId: selectedNation.owner,
       accepted: false,
     };
-    newRelationPayload.name = `[A TRADUIRE] Nouvelle relation diplomatique`;
+    newRelationPayload.name = t(
+      "pages.nation.relations.defaultNewRelationTitle",
+    );
     newRelationPayload.nations = [nation1, nation2];
     myStore.set(newRelationAtom, {
       relation: newRelationPayload,

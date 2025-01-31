@@ -3,17 +3,19 @@ import { useAtom } from "jotai";
 import { lazy, Suspense, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import ReportPanel from "../components/reportPanel";
-import { getDocumentTitle } from "../utils/functions";
 import { PlaceModel } from "../models/placeModel";
 import { useTranslation } from "react-i18next";
 import { NationModel } from "../models/nationModel";
 import Spinner from "../components/loading/spinner";
+import { createPageTitle } from "../utils/procedures";
 
 export default function Place() {
   const [session] = useAtom(sessionAtom);
   const [nation, setNation] = useState<NationModel>(new NationModel());
   const [place, setPlace] = useState<PlaceModel>(new PlaceModel());
   const param = useParams();
+
+  createPageTitle(place.name);
 
   const [owner, setOwner] = useState(false);
   const { t } = useTranslation();
@@ -46,12 +48,6 @@ export default function Place() {
     if (nation.officialId === "") {
       loadNation(place.nation);
     }
-
-    document.title = getDocumentTitle(place.name);
-    return () => {
-      document.title = getDocumentTitle("");
-    };
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [place]);
 

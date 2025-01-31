@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import { StandardOption } from "../types/typAtom";
 import { useParams } from "react-router-dom";
 import Spinner from "../components/loading/spinner";
+import { createPageTitle } from "../utils/procedures";
 
 export default function Explore() {
   const { t } = useTranslation();
@@ -23,6 +24,8 @@ export default function Explore() {
   const CitizenList = lazy(() => import("./exploreTabs/citizenList"));
   const PlaceList = lazy(() => import("./exploreTabs/placeList"));
   const ComList = lazy(() => import("./exploreTabs/comList"));
+
+  createPageTitle(tab.label);
 
   useEffect(() => {
     if (param.id != undefined) {

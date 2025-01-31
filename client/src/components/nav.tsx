@@ -1,16 +1,31 @@
 import IconLink from "./iconLink";
-import { sessionAtom } from "../settings/store";
+import { nationListAtomV2, sessionAtom } from "../settings/store";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { useAtom } from "jotai";
 import MenuButton from "./buttons/menuButton";
 import LangButton from "./buttons/langButton";
 import { NationModel } from "../models/nationModel";
+import { useEffect, useState } from "react";
 
-export default function Nav({ nation }: { nation: NationModel }) {
+export default function Nav() {
   const [session] = useAtom(sessionAtom);
+  const [nationList] = useAtom(nationListAtomV2);
+  const [nation, setNation] = useState<NationModel>(new NationModel());
   const { t } = useTranslation();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const loadNation = async (officialId: string) => {
+      const loadedNation = nationList.getByOfficialId(officialId);
+      if (loadedNation) {
+        setNation(loadedNation);
+      }
+    };
+    if (session.user.citizenship.nationId != "") {
+      loadNation(session.user.citizenship.nationId);
+    }
+  }, [session.user, nationList]);
 
   return (
     <>

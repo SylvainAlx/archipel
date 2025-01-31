@@ -4,6 +4,7 @@ import { emptyNewNationPayload, NewNationPayload } from "../types/typNation";
 import {
   ConfirmBoxDefault,
   EditBoxDefault,
+  emptyInfo,
   InfoModal,
   Param,
   Stats,
@@ -69,7 +70,7 @@ export const showLangModalAtom = atom(false);
 export const recoveryKey = atom("");
 export const confirmBox = atom(ConfirmBoxDefault);
 export const editbox = atom(EditBoxDefault);
-export const infoModalAtom = atom<InfoModal>({ text: "", image: "" });
+export const infoModalAtom = atom<InfoModal>(emptyInfo);
 export const changePasswordModalAtom = atom(false);
 export const imageAtom = atom("");
 export const showMenuAtom = atom(false);

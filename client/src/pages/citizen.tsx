@@ -4,13 +4,14 @@ import { confirmBox, sessionAtom } from "../settings/store";
 import { useNavigate, useParams } from "react-router-dom";
 import { lazy, Suspense, useEffect, useState } from "react";
 import EditIcon from "../components/editIcon";
-import { getDocumentTitle } from "../utils/functions";
+// import { getDocumentTitle } from "../utils/functions";
 import { ConfirmBoxDefault } from "../types/typAtom";
 import ReportPanel from "../components/reportPanel";
 import { NationModel } from "../models/nationModel";
 import { UserModel } from "../models/userModel";
 import { useTranslation } from "react-i18next";
 import Spinner from "../components/loading/spinner";
+import { createPageTitle } from "../utils/procedures";
 
 export default function Citizen() {
   const navigate = useNavigate();
@@ -28,6 +29,8 @@ export default function Citizen() {
   const Citizenship = lazy(() => import("../components/citizen/citizenship"));
   const Settings = lazy(() => import("../components/citizen/settings"));
   const CitizenCom = lazy(() => import("../components/citizen/citizensCom"));
+
+  createPageTitle(citizen.name);
 
   useEffect(() => {
     const loadCitizen = async (officialId: string) => {
@@ -53,12 +56,6 @@ export default function Citizen() {
     ) {
       loadNation(citizen.citizenship.nationId);
     }
-
-    document.title = getDocumentTitle(citizen.name);
-    return () => {
-      document.title = getDocumentTitle("");
-    };
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [citizen]);
 

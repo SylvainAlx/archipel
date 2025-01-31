@@ -35,7 +35,8 @@
       "relations": {
         "title": "diplomatie",
         "noRelations": "aucune relation diplomatique",
-        "pendingRelations": "des relations sont en attente d'approbation"
+        "pendingRelations": "des relations sont en attente d'approbation",
+        "defaultNewRelationTitle": "Nouvelle relation diplomatique"
       },
       "citizens": {
         "title": "citoyens",
@@ -436,7 +437,10 @@
     }
   },
   "toasts": {
+    "successCopy": "Texte copié !",
+    "failedCopy": "Copie impossible",
     "reported": "Contenu signalé et en attente de modération",
+    "connected": "Connexion rétablie !",
     "errors": {
       "400": "Erreur de formulaire",
       "401": "Action non autorisée",
@@ -444,7 +448,8 @@
       "404": "Page non trouvée",
       "500": "Erreur serveur",
       "11000": "Information déjà existante",
-      "nsfw": "L'image contient du contenu NSFW ! Notification envoyée à l'administrateur"
+      "nsfw": "L'image contient du contenu NSFW ! Notification envoyée à l'administrateur",
+      "offline": "Vous êtes hors ligne !"
     },
     "user": {
       "signIn": "Connexion réussie",

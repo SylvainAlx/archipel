@@ -1,7 +1,4 @@
-import {
-  banContentFetch,
-  reportContentFetch,
-} from "../services/commonServices";
+import { banContentFetch, reportContentFetch } from "../services/commonService";
 import { successMessage } from "../utils/toasts";
 
 export class CommonModel {

@@ -2,7 +2,7 @@ import {
   getAllCitizensFetch,
   getBannedUsersFetch,
   getNationCitizensFetch,
-} from "../../services/userServices";
+} from "../../services/userService";
 import { CITIZEN_SORTING } from "../../settings/sorting";
 import {
   bannedCitizensAtom,
@@ -29,10 +29,14 @@ export class UserListModel extends ListModel {
     this.items = list;
     this.sorting = sorting;
   }
+
+  addToUserListAtom = (list: User[]) => {
+    const updatedList = myStore.get(userListAtomV2).addMany(list);
+    myStore.set(userListAtomV2, new UserListModel(updatedList));
+  };
   loadUserList = async (searchName: string) => {
     myStore.set(loadingAtom, true);
     try {
-      this.items = [];
       let savedUsers: UserModel[] = [];
       if (searchName != "") {
         savedUsers = findElementsByName(
@@ -50,9 +54,8 @@ export class UserListModel extends ListModel {
         this.addMany(savedUsers);
       } else {
         const users: User[] = await getAllCitizensFetch(searchName);
-        const updatedList = myStore.get(userListAtomV2).addMany(users);
-        updatedList != undefined && myStore.set(userListAtomV2, updatedList);
         this.addMany(users);
+        this.addToUserListAtom(users);
       }
     } catch (error) {
       errorCatching(error);
@@ -80,6 +83,7 @@ export class UserListModel extends ListModel {
         const resp: User[] = await getNationCitizensFetch(nation.officialId);
         if (resp.length > 0) {
           this.addMany(resp);
+          this.addToUserListAtom(resp);
         }
       }
     } catch (error) {
@@ -105,6 +109,7 @@ export class UserListModel extends ListModel {
   }
   addMany(items: User[]) {
     items.forEach((item) => this.addOrUpdate(item));
+    return this.items;
   }
   addOrUpdate(item: User) {
     const index = this.items.findIndex((i) => i.officialId === item.officialId);

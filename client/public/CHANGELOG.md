@@ -6,14 +6,16 @@
 
 - Ajout d'un lien vers les comptes Instagram et Threads
 - Ajout d'un bouton de don en cryptomonnaie
+- Ajout d'une notification d'alerte si l'application est hors ligne
 
 #### Suppressions
 
-aucune
+- Mise en retrait de l'IA d'analyse d'image suite à des complications
 
 #### Modifications & Corrections
 
-aucune
+- Importante refonte du code source côté client
+- Chargement plus progressif des composants d'une page pour améliorer la rapidité générale
 
 ## Développements à venir
 

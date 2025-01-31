@@ -32,7 +32,13 @@ export default function NationSearchBar({
   }, [location]);
 
   useEffect(() => {
-    loadList(searchName, searchTag);
+    if (
+      list.getItems().length != stats.counts.nations ||
+      list.getItems().length === 0
+    ) {
+      loadList(searchName, searchTag);
+    }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [stats.counts.nations]);
 

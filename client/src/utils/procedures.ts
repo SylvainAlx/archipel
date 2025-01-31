@@ -1,7 +1,7 @@
 import i18n from "../i18n/i18n";
 import { ComModel } from "../models/comModel";
 import { UserModel } from "../models/userModel";
-import { deleteUploadedFileFetch } from "../services/fileServices";
+import { deleteUploadedFileFetch } from "../services/fileService";
 import { COM_TYPE } from "../settings/consts";
 import { confirmBox, loadingAtom, myStore } from "../settings/store";
 import { Com } from "../types/typCom";
@@ -11,6 +11,7 @@ import { errorCatching } from "./displayInfos";
 import {
   GET_LAST_WATCH,
   getComTypeLabelById,
+  getDocumentTitle,
   isDateLessThanOneMonthOld,
 } from "./functions";
 import { comMessage, successMessage } from "./toasts";
@@ -158,4 +159,8 @@ export const handleShare = async (label: string) => {
       "Votre navigateur ne prend pas en charge la fonctionnalité de partage.",
     );
   }
+};
+
+export const createPageTitle = (aTitre: string) => {
+  document.title = getDocumentTitle(aTitre);
 };

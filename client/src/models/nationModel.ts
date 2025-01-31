@@ -5,7 +5,7 @@ import {
   getAllNationTagsFetch,
   getOneNationFetch,
   updateNationFetch,
-} from "../services/nationServices";
+} from "../services/nationService";
 import { COM_TYPE } from "../settings/consts";
 import {
   loadingAtom,

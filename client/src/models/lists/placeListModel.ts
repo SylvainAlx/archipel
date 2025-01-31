@@ -1,7 +1,7 @@
 import {
   getAllPlacesFetch,
   getNationPlacesFetch,
-} from "../../services/placeServices";
+} from "../../services/placeService";
 import { PLACE_SORTING } from "../../settings/sorting";
 import { loadingAtom, myStore, placeListAtomV2 } from "../../settings/store";
 import { Nation } from "../../types/typNation";
@@ -24,15 +24,17 @@ export class PlaceListModel extends ListModel {
     this.items = list;
     this.sorting = sorting;
   }
-
+  addToPlaceListAtom = (list: Place[]) => {
+    const updatedList = myStore.get(placeListAtomV2).addMany(list);
+    myStore.set(placeListAtomV2, new PlaceListModel(updatedList));
+  };
   loadPlaceList = async (searchName: string) => {
     myStore.set(loadingAtom, true);
     try {
       this.items = [];
       const places: Place[] = await getAllPlacesFetch(searchName);
-      const updatedList = myStore.get(placeListAtomV2).addMany(places);
-      updatedList != undefined && myStore.set(placeListAtomV2, updatedList);
       this.addMany(places);
+      this.addToPlaceListAtom(places);
     } catch (error) {
       errorCatching(error);
     } finally {
@@ -40,15 +42,25 @@ export class PlaceListModel extends ListModel {
       return new PlaceListModel(this.items);
     }
   };
-
   loadNationPlaces = async (nation: Nation) => {
     myStore.set(loadingAtom, true);
     try {
-      this.items = [];
-      const places: Place[] = await getNationPlacesFetch(nation.officialId);
-      const updatedList = myStore.get(placeListAtomV2).addMany(places);
-      updatedList != undefined && myStore.set(placeListAtomV2, updatedList);
-      this.addMany(places);
+      const savedPlaces: PlaceModel[] = [];
+      myStore
+        .get(placeListAtomV2)
+        .getItems()
+        .forEach((place) => {
+          if (place.nation === nation.officialId) {
+            savedPlaces.push(place);
+          }
+        });
+      if (savedPlaces.length > 0) {
+        this.addMany(savedPlaces);
+      } else {
+        const places: Place[] = await getNationPlacesFetch(nation.officialId);
+        this.addMany(places);
+        this.addToPlaceListAtom(places);
+      }
     } catch (error) {
       errorCatching(error);
     } finally {
@@ -56,12 +68,12 @@ export class PlaceListModel extends ListModel {
       return new PlaceListModel(this.items);
     }
   };
-
   private add(item: Place) {
     this.items.push(new PlaceModel(item));
   }
   addMany(items: Place[]) {
     items.forEach((item) => this.addOrUpdate(item));
+    return this.items;
   }
   addOrUpdate(item: Place) {
     const index = this.items.findIndex((i) => i.officialId === item.officialId);

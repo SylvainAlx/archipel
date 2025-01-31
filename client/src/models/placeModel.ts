@@ -3,7 +3,7 @@ import {
   deletePlaceFetch,
   getPlaceFetch,
   updatePlaceFetch,
-} from "../services/placeServices";
+} from "../services/placeService";
 import { loadingAtom, myStore, placeListAtomV2 } from "../settings/store";
 import { Nation } from "../types/typNation";
 import { emptyPlace, Place } from "../types/typPlace";
