@@ -34,34 +34,22 @@ export const createTile = async (req, res) => {
       } else {
         updatedNation = nation;
       }
-
       const tile = new Tile({
         nationOfficialId,
         title,
         description,
         value,
       });
-      tile
-        .save()
-        .then(() =>
-          res
-            .status(201)
-            .json({ tile, nation: updatedNation, infoType: "new" }),
-        )
-        .catch((error) => {
-          console.error(error);
-          res.status(400).json({
-            infoType: "serverError",
-          });
-        });
+      await tile.save();
+      res.status(201).json({ tile, nation: updatedNation, infoType: "new" });
     } else {
-      return res.status(403).json({ infoType: "forbidden" });
+      return res.status(403).json({ infoType: "403" });
     }
   } catch (error) {
     console.error(error);
-    res.status(500).json({
-      infoType: "500",
-      error,
+    const statusCode = error.name === "ValidationError" ? 400 : 500;
+    res.status(statusCode).json({
+      infoType: statusCode.toString(),
     });
   }
 };
@@ -73,9 +61,9 @@ export const getNationTile = async (req, res) => {
     res.status(200).json(tiles);
   } catch (error) {
     console.error(error);
-    res.status(500).json({
-      infoType: "500",
-      error,
+    const statusCode = error.name === "ValidationError" ? 400 : 500;
+    res.status(statusCode).json({
+      infoType: statusCode.toString(),
     });
   }
 };
@@ -101,16 +89,16 @@ export const deleteTile = async (req, res) => {
           .status(200)
           .json({ tile, nation: updatedNation, infoType: `delete` });
       } else {
-        return res.status(403).json({ infoType: "forbidden" });
+        return res.status(403).json({ infoType: "403" });
       }
     } else {
       return res.status(404).json({ infoType: "404" });
     }
   } catch (error) {
     console.error(error);
-    res.status(500).json({
-      infoType: "500",
-      error,
+    const statusCode = error.name === "ValidationError" ? 400 : 500;
+    res.status(statusCode).json({
+      infoType: statusCode.toString(),
     });
   }
 };
@@ -128,13 +116,13 @@ export const updateTile = async (req, res) => {
       const updatedTile = await tile.save();
       res.status(200).json({ tile: updatedTile, infoType: "update" });
     } else {
-      return res.status(403).json({ infoType: "forbidden" });
+      return res.status(403).json({ infoType: "403" });
     }
   } catch (error) {
     console.error(error);
-    res.status(500).json({
-      infoType: "500",
-      error,
+    const statusCode = error.name === "ValidationError" ? 400 : 500;
+    res.status(statusCode).json({
+      infoType: statusCode.toString(),
     });
   }
 };

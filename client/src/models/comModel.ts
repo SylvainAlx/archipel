@@ -18,15 +18,6 @@ export class ComModel extends CommonModel implements Com {
     const defaultData = { ...emptyCom, ...data };
     this.updateFields(defaultData);
   }
-
-  private addToComListAtom = (com: Com) => {
-    const updatedList = myStore.get(comListAtomV2).addOrUpdate(com);
-    myStore.set(comListAtomV2, new ComListModel(updatedList));
-  };
-  private removeFromComListAtom = (com: Com) => {
-    const updatedList = myStore.get(comListAtomV2).removeByBaseId(com._id);
-    myStore.set(comListAtomV2, new ComListModel(updatedList));
-  };
   addToComList = (comList: ComListModel, com: Com) => {
     const updatedList = comList.addOrUpdate(com);
     return new ComListModel(updatedList);
@@ -41,7 +32,7 @@ export class ComModel extends CommonModel implements Com {
       const resp: { com: Com; infoType: string } = await createComFetch(this);
       this.updateFields(resp.com);
       displayComInfoByType(resp.infoType);
-      this.addToComListAtom(resp.com);
+      myStore.get(comListAtomV2).addToComListAtom([resp.com]);
     } catch (error) {
       errorCatching(error);
     } finally {
@@ -55,7 +46,10 @@ export class ComModel extends CommonModel implements Com {
       const resp: { com: Com; infoType: string } = await deleteComFetch(baseId);
       this.updateFields(emptyCom);
       displayComInfoByType(resp.infoType);
-      this.removeFromComListAtom(resp.com);
+      const updatedList = myStore
+        .get(comListAtomV2)
+        .removeByBaseId(resp.com._id);
+      myStore.set(comListAtomV2, new ComListModel(updatedList));
     } catch (error) {
       errorCatching(error);
     } finally {

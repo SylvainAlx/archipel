@@ -107,15 +107,6 @@ export const createTagRegime = (id: number) => {
   return tagRegime;
 };
 
-export const sortObjectKeys = (obj: any): any => {
-  const sortedKeys = Object.keys(obj).sort();
-  const sortedObj: any = {};
-  sortedKeys.forEach((key) => {
-    sortedObj[key] = obj[key];
-  });
-  return sortedObj;
-};
-
 export const getLabelIdArrayFromNationPlaceList = (
   placeList: PlaceListModel,
 ) => {

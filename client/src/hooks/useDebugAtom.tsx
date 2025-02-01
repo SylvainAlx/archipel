@@ -4,23 +4,26 @@ import {
   nationListAtomV2,
   placeListAtomV2,
   sessionAtom,
+  tileListAtomV2,
   userListAtomV2,
 } from "../settings/store";
 import { useAtom } from "jotai";
 
 const useDebugAtom = () => {
   const DEBUG_ATOM = {
-    session: true,
-    nations: true,
-    users: true,
-    places: true,
-    coms: true,
+    session: false,
+    nations: false,
+    users: false,
+    places: false,
+    coms: false,
+    tiles: true,
   };
   const [session] = useAtom(sessionAtom);
   const [nationList] = useAtom(nationListAtomV2);
   const [placeList] = useAtom(placeListAtomV2);
   const [userList] = useAtom(userListAtomV2);
   const [comList] = useAtom(comListAtomV2);
+  const [tileList] = useAtom(tileListAtomV2);
   useEffect(() => {
     DEBUG_ATOM.session && console.log(session);
   }, [session]);
@@ -56,6 +59,14 @@ const useDebugAtom = () => {
           comList.getItems().length,
       );
   }, [comList]);
+  useEffect(() => {
+    DEBUG_ATOM.tiles &&
+      console.log(
+        new Date().toLocaleTimeString() +
+          " tuiles : " +
+          tileList.getItems().length,
+      );
+  }, [tileList]);
 };
 
 export default useDebugAtom;

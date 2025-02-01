@@ -1,47 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { myStore, relationListAtom, tileListAtom } from "../settings/store";
+import { myStore, relationListAtom } from "../settings/store";
 import { UpdateByOfficialIdProps } from "../types/typProp";
 import { DiplomaticRelationship } from "../types/typRelation";
-import { Tile } from "../types/typTile";
 import { findElementOfAtomArray } from "./functions";
-
-// _id MongoDB
-
-export const spliceByDBId = (id: string, atoms: any[]) => {
-  const tempArray: any[] = [...atoms];
-  for (let i = 0; i < atoms.length; i++) {
-    if (atoms[i]._id === id) {
-      tempArray.splice(i, 1);
-      break;
-    }
-  }
-  return tempArray;
-};
-
-export const updateByDBId = (element: any, array: any[]): any[] => {
-  const tempArray: any[] = [...array];
-  for (let i = 0; i < array.length; i++) {
-    if (array[i]._id === element._id) {
-      tempArray[i] = element;
-      break;
-    }
-  }
-  return tempArray;
-};
-
-// officialId
-
-export const spliceByOfficialId = (id: string, atoms: any[]) => {
-  const tempArray: any[] = [...atoms];
-  for (let i = 0; i < atoms.length; i++) {
-    if (atoms[i].officialId === id) {
-      tempArray.splice(i, 1);
-      break;
-    }
-  }
-  return tempArray;
-};
 
 export const getUpdateByOfficialId = ({
   element,
@@ -55,40 +17,6 @@ export const getUpdateByOfficialId = ({
     }
   }
   return tempArray;
-};
-
-// export const updateOrCreateCitizenInMemory = (citizen: User) => {
-//   const savedUser = findElementOfAtomArray(
-//     citizen.officialId,
-//     myStore.get(citizenListAtom),
-//   );
-//   if (savedUser === undefined) {
-//     const tempArray = [...myStore.get(citizenListAtom)];
-//     tempArray.push(citizen);
-//     myStore.set(citizenListAtom, tempArray);
-//   } else {
-//     myStore.set(
-//       citizenListAtom,
-//       getUpdateByOfficialId({
-//         element: citizen,
-//         array: myStore.get(citizenListAtom),
-//       }),
-//     );
-//   }
-// };
-
-export const updateOrCreateTileInMemory = (tile: Tile) => {
-  const savedTile = findElementOfAtomArray(
-    tile.nationOfficialId,
-    myStore.get(tileListAtom),
-  );
-  if (savedTile === undefined) {
-    const tempArray = [...myStore.get(tileListAtom)];
-    tempArray.push(tile);
-    myStore.set(tileListAtom, tempArray);
-  } else {
-    myStore.set(tileListAtom, updateByDBId(tile, myStore.get(tileListAtom)));
-  }
 };
 
 export const updateOrCreateRelationInMemory = (

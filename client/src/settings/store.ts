@@ -15,12 +15,13 @@ import {
   DiplomaticRelationship,
   emptyDiplomaticRelationship,
 } from "../types/typRelation";
-import { emptyTile, Tile } from "../types/typTile";
 import { ComListModel } from "../models/lists/comListModel";
 import { PlaceListModel } from "../models/lists/placeListModel";
 import { NationListModel } from "../models/lists/nationListModel";
 import { UserListModel } from "../models/lists/userListModel";
 import { UserModel } from "../models/userModel";
+import { TileListModel } from "../models/lists/tileListModel";
+import { TileModel } from "../models/tileModel";
 
 export const myStore = createStore();
 
@@ -59,10 +60,6 @@ export const newRelationAtom = atom({
   relation: emptyDiplomaticRelationship,
 });
 
-// tile
-export const nationTileListAtom = atom<Tile[]>([]);
-export const tileListAtom = atom<Tile[]>([]);
-
 // Param
 export const paramsListAtom = atom<Param[]>([]);
 
@@ -74,7 +71,6 @@ export const infoModalAtom = atom<InfoModal>(emptyInfo);
 export const changePasswordModalAtom = atom(false);
 export const imageAtom = atom("");
 export const showMenuAtom = atom(false);
-export const editTileAtom = atom(emptyTile);
 
 //---- V2 ----
 export const sessionAtom = atom<Session>(emptySession);
@@ -83,10 +79,12 @@ export const comListAtomV2 = atom<ComListModel>(new ComListModel());
 export const placeListAtomV2 = atom<PlaceListModel>(new PlaceListModel());
 export const nationListAtomV2 = atom<NationListModel>(new NationListModel());
 export const userListAtomV2 = atom<UserListModel>(new UserListModel());
+export const tileListAtomV2 = atom<TileListModel>(new TileListModel());
 
 export const bannedCitizensAtom = atom<UserListModel>(new UserListModel());
 
 export const newComAtom = atom<ComPayload>(emptyComPayload);
 export const newPlaceAtom = atom<Place>(emptyPlace);
 export const newNationAtom = atom<NewNationPayload>(emptyNewNationPayload);
+export const editTileAtom = atom<TileModel>(new TileModel());
 //---- V2 ----

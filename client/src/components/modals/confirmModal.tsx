@@ -4,7 +4,6 @@ import { confirmBox } from "../../settings/store";
 import Button from "../buttons/button";
 import { useTranslation } from "react-i18next";
 import { updateRelation } from "../../api/relation/relationAPI";
-import { createTile, deleteTile, updateTile } from "../../api/tile/tileAPI";
 import { ConfirmBoxDefault } from "../../types/typAtom";
 
 export default function ConfirmModal() {
@@ -21,15 +20,6 @@ export default function ConfirmModal() {
       }
       if (confirm.action === "acceptRelation") {
         updateRelation(confirm.payload);
-      }
-      if (confirm.action === "deleteTile") {
-        deleteTile(confirm.payload);
-      }
-      if (confirm.action === "createTile") {
-        createTile(confirm.payload);
-      }
-      if (confirm.action === "updateTile") {
-        updateTile(confirm.payload);
       }
     }
   };
