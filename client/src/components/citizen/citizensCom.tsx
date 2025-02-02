@@ -3,11 +3,11 @@ import DashTile from "../dashTile";
 import { useAtom } from "jotai";
 import { sessionAtom } from "../../settings/store";
 import { lazy, Suspense, useEffect, useState } from "react";
-import BarreLoader from "../loading/barreLoader";
 import { COM_GENERAL_DESTINATION, COM_TYPE } from "../../settings/consts";
 import { User } from "../../types/typUser";
 import { ComListModel } from "../../models/lists/comListModel";
 import { displayUnwatchedComs } from "../../utils/procedures";
+import TileSkeleton from "../loading/skeletons/tileSkeleton";
 
 interface CitizensComProps {
   citizen: User;
@@ -56,7 +56,7 @@ export default function CitizensCom({ citizen, owner }: CitizensComProps) {
             {citizenComList.getItems().length > 0 ? (
               citizenComList.getItems().map((com, i) => {
                 return (
-                  <Suspense key={i} fallback={<BarreLoader />}>
+                  <Suspense key={i} fallback={<TileSkeleton />}>
                     <div className="relative w-full">
                       <ComTile com={com} />
                     </div>

@@ -4,11 +4,11 @@ import { useState, lazy, Suspense } from "react";
 import H1 from "../../components/titles/h1";
 import IndexTag from "../../components/tags/indexTag";
 import NationSearchBar from "../../components/searchBars/nationSearchBar";
-import BarreLoader from "../../components/loading/barreLoader";
 import { StringProps } from "../../types/typProp";
 import { useTranslation } from "react-i18next";
 import { ELEMENTS_DISPLAYED_LIMIT } from "../../settings/consts";
 import { NationListModel } from "../../models/lists/nationListModel";
+import TileSkeleton from "../../components/loading/skeletons/tileSkeleton";
 // import AdBanner from "../../components/ads/adBanner";
 
 export default function NationList({ text }: StringProps) {
@@ -36,7 +36,7 @@ export default function NationList({ text }: StringProps) {
           nationsList.getItems().map((nation, i) => {
             if (i < displayedNations) {
               return (
-                <Suspense key={i} fallback={<BarreLoader />}>
+                <Suspense key={i} fallback={<TileSkeleton />}>
                   <div className="min-w-[300px] w-full relative transition-all duration-300 animate-fadeIn">
                     <NationTile nation={nation} />
                     <IndexTag text={i} />

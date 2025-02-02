@@ -5,10 +5,10 @@ import { lazy, Suspense, useEffect, useState } from "react";
 import { SelectedNationProps } from "../../types/typProp";
 import { confirmBox, sessionAtom } from "../../settings/store";
 import { useAtom } from "jotai";
-import BarreLoader from "../loading/barreLoader";
 import Button from "../buttons/button";
 import { FaPassport } from "react-icons/fa";
 import { UserListModel } from "../../models/lists/userListModel";
+import TileSkeleton from "../loading/skeletons/tileSkeleton";
 
 export default function Citizens({ selectedNation }: SelectedNationProps) {
   const [session] = useAtom(sessionAtom);
@@ -72,7 +72,7 @@ export default function Citizens({ selectedNation }: SelectedNationProps) {
                       citizen.citizenship.nationId === selectedNation.officialId
                     ) {
                       return (
-                        <Suspense key={i} fallback={<BarreLoader />}>
+                        <Suspense key={i} fallback={<TileSkeleton />}>
                           <div className="relative w-full">
                             <CitizenTile citizen={citizen} />
                           </div>

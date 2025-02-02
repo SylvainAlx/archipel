@@ -98,6 +98,10 @@ h5 {
   font-family: var(--secondary-font);
 }
 
+.wmde-markdown {
+  background: none !important;
+}
+
 .mde-markdown {
   line-height: 1.2;
   padding-left: 20px;

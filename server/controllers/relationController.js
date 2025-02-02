@@ -1,5 +1,5 @@
 import Relation from "../models/relationSchema.js";
-import { createOfficialId } from "../utils/functions.js";
+import { createOfficialId, handleError } from "../utils/functions.js";
 
 export const createRelation = async (req, res) => {
   try {
@@ -31,11 +31,7 @@ export const createRelation = async (req, res) => {
       }
     }
   } catch (error) {
-    console.error(error);
-    const statusCode = error.name === "ValidationError" ? 400 : 500;
-    res.status(statusCode).json({
-      infoType: statusCode.toString(),
-    });
+    handleError(error, res);
   }
 };
 
@@ -52,11 +48,7 @@ export const getAllRelation = async (req, res) => {
       res.status(200).json(relations);
     }
   } catch (error) {
-    console.error(error);
-    const statusCode = error.name === "ValidationError" ? 400 : 500;
-    res.status(statusCode).json({
-      infoType: statusCode.toString(),
-    });
+    handleError(error, res);
   }
 };
 
@@ -90,10 +82,6 @@ export const updateRelation = async (req, res) => {
       });
     }
   } catch (error) {
-    console.error(error);
-    const statusCode = error.name === "ValidationError" ? 400 : 500;
-    res.status(statusCode).json({
-      infoType: statusCode.toString(),
-    });
+    handleError(error, res);
   }
 };

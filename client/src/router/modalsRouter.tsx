@@ -19,7 +19,6 @@ import {
 import { RecoveryModal } from "../components/modals/recoveryModal";
 import ConfirmModal from "../components/modals/confirmModal";
 import InfoModal from "../components/modals/infoModal";
-import LoadingSpinner from "../components/modals/loadingSpinner";
 import EditBoxModal from "../components/modals/editBoxModal";
 import NewPlaceModal from "../components/modals/newPlaceModal";
 import LangModal from "../components/modals/langModal";
@@ -72,7 +71,7 @@ export default function ModalsRouter() {
           className={`min-w-[350px] max-w-[90%] ${(!loading || longLoading) && "bg-slate-800"} rounded-md p-3 flex flex-col items-center gap-4`}
         >
           {loading ? (
-            <LoadingSpinner />
+            <>{/* <LoadingSpinner /> */}</>
           ) : (
             <>
               {recovery != "" ? (

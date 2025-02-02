@@ -10,8 +10,10 @@ import ReportPanel from "../components/reportPanel";
 import { NationModel } from "../models/nationModel";
 import { UserModel } from "../models/userModel";
 import { useTranslation } from "react-i18next";
-import Spinner from "../components/loading/spinner";
 import { createPageTitle } from "../utils/procedures";
+import IdSkeleton from "../components/loading/skeletons/idSkeleton";
+import TileSkeleton from "../components/loading/skeletons/tileSkeleton";
+import ParamSkeleton from "../components/loading/skeletons/paramSkeleton";
 
 export default function Citizen() {
   const navigate = useNavigate();
@@ -110,14 +112,14 @@ export default function Citizen() {
       <section className="w-full flex flex-wrap gap-8 items-start justify-between">
         {(!citizen.reported || owner) && (
           <>
-            <Suspense fallback={<Spinner />}>
+            <Suspense fallback={<IdSkeleton />}>
               <Personal
                 citizen={citizen}
                 owner={owner}
                 updatePath={updatePath}
               />
             </Suspense>
-            <Suspense fallback={<Spinner />}>
+            <Suspense fallback={<ParamSkeleton />}>
               <Citizenship
                 citizen={citizen}
                 nation={nation}
@@ -128,7 +130,7 @@ export default function Citizen() {
           </>
         )}
         {owner ? (
-          <Suspense fallback={<Spinner />}>
+          <Suspense fallback={<ParamSkeleton />}>
             <Settings citizen={citizen} />
           </Suspense>
         ) : (
@@ -137,7 +139,7 @@ export default function Citizen() {
           </div>
         )}
         {owner && (
-          <Suspense fallback={<Spinner />}>
+          <Suspense fallback={<TileSkeleton />}>
             <CitizenCom citizen={citizen} owner={owner} />
           </Suspense>
         )}

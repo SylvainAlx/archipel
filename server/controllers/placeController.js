@@ -8,11 +8,7 @@ export const placesCount = async (req, res) => {
     const response = await Place.countDocuments({ banished: false });
     res.status(200).json(response);
   } catch (error) {
-    console.error(error);
-    const statusCode = error.name === "ValidationError" ? 400 : 500;
-    res.status(statusCode).json({
-      infoType: statusCode.toString(),
-    });
+    handleError(error, res);
   }
 };
 
@@ -22,11 +18,7 @@ export const getPlaces = async (req, res) => {
     const places = await Place.find({ nation: nationId, banished: false });
     res.status(200).json(places);
   } catch (error) {
-    console.error(error);
-    const statusCode = error.name === "ValidationError" ? 400 : 500;
-    res.status(statusCode).json({
-      infoType: statusCode.toString(),
-    });
+    handleError(error, res);
   }
 };
 
@@ -38,11 +30,7 @@ export const getOne = async (req, res) => {
       place,
     });
   } catch (error) {
-    console.error(error);
-    const statusCode = error.name === "ValidationError" ? 400 : 500;
-    res.status(statusCode).json({
-      infoType: statusCode.toString(),
-    });
+    handleError(error, res);
   }
 };
 
@@ -60,11 +48,7 @@ export const getAllPlaces = async (req, res) => {
       res.status(200).json(places);
     }
   } catch (error) {
-    console.error(error);
-    const statusCode = error.name === "ValidationError" ? 400 : 500;
-    res.status(statusCode).json({
-      infoType: statusCode.toString(),
-    });
+    handleError(error, res);
   }
 };
 
@@ -154,11 +138,7 @@ export const deletePlace = async (req, res) => {
     await Place.findByIdAndDelete(place._id);
     res.status(200).json({ place, nation, infoType: "delete" });
   } catch (error) {
-    console.error(error);
-    const statusCode = error.name === "ValidationError" ? 400 : 500;
-    res.status(statusCode).json({
-      infoType: statusCode.toString(),
-    });
+    handleError(error, res);
   }
 };
 
@@ -183,10 +163,6 @@ export const updatePlace = async (req, res) => {
       });
     }
   } catch (error) {
-    console.error(error);
-    const statusCode = error.name === "ValidationError" ? 400 : 500;
-    res.status(statusCode).json({
-      infoType: statusCode.toString(),
-    });
+    handleError(error, res);
   }
 };

@@ -70,7 +70,6 @@ export default function PlaceHeader({
       action: "deletePlace",
       text: t("components.modals.confirmModal.deletePlace"),
       result: "",
-      target: place,
       actionToDo: () => {
         place.baseDelete();
         const listToUpdate = placeList.removeByOfficialId(place.officialId);

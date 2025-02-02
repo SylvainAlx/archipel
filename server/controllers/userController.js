@@ -3,10 +3,14 @@ import Nation from "../models/nationSchema.js";
 import Param from "../models/paramSchema.js";
 import Place from "../models/placeSchema.js";
 import { LoremIpsum } from "lorem-ipsum";
-import { addMonths, createOfficialId } from "../utils/functions.js";
+import {
+  addMonths,
+  createOfficialId,
+  handleError,
+} from "../utils/functions.js";
 import { GIFTS } from "../settings/const.js";
 
-const IpIsBanished = async (AUserIp) => {
+const IpIsBanished = async (AUserIp, res) => {
   try {
     const banned =
       (await Param.findOne({
@@ -15,11 +19,7 @@ const IpIsBanished = async (AUserIp) => {
       })) != null;
     return banned;
   } catch (error) {
-    console.error(error);
-    const statusCode = error.name === "ValidationError" ? 400 : 500;
-    res.status(statusCode).json({
-      infoType: statusCode.toString(),
-    });
+    handleError(error, res);
   }
 };
 
@@ -82,11 +82,7 @@ export const register = async (req, res) => {
       }
     }
   } catch (error) {
-    console.error(error);
-    const statusCode = error.name === "ValidationError" ? 400 : 500;
-    res.status(statusCode).json({
-      infoType: statusCode.toString(),
-    });
+    handleError(error, res);
   }
 };
 
@@ -121,11 +117,7 @@ export const login = async (req, res) => {
       res.status(200).json({ user, jwt, infoType: "signin" });
     });
   } catch (error) {
-    console.error(error);
-    const statusCode = error.name === "ValidationError" ? 400 : 500;
-    res.status(statusCode).json({
-      infoType: statusCode.toString(),
-    });
+    handleError(error, res);
   }
 };
 
@@ -151,11 +143,7 @@ export const verify = async (req, res) => {
       return res.status(401).json({ infoType: "401" });
     }
   } catch (error) {
-    console.error(error);
-    const statusCode = error.name === "ValidationError" ? 400 : 500;
-    res.status(statusCode).json({
-      infoType: statusCode.toString(),
-    });
+    handleError(error, res);
   }
 };
 
@@ -178,11 +166,7 @@ export const forgetPassword = async (req, res) => {
       infoType: "newPassword",
     });
   } catch (error) {
-    console.error(error);
-    const statusCode = error.name === "ValidationError" ? 400 : 500;
-    res.status(statusCode).json({
-      infoType: statusCode.toString(),
-    });
+    handleError(error, res);
   }
 };
 
@@ -211,11 +195,7 @@ export const changePassword = async (req, res) => {
       }
     });
   } catch (error) {
-    console.error(error);
-    const statusCode = error.name === "ValidationError" ? 400 : 500;
-    res.status(statusCode).json({
-      infoType: statusCode.toString(),
-    });
+    handleError(error, res);
   }
 };
 
@@ -236,11 +216,7 @@ export const getAllUsers = async (req, res) => {
       res.status(200).json(users);
     }
   } catch (error) {
-    console.error(error);
-    const statusCode = error.name === "ValidationError" ? 400 : 500;
-    res.status(statusCode).json({
-      infoType: statusCode.toString(),
-    });
+    handleError(error, res);
   }
 };
 
@@ -255,11 +231,7 @@ export const getOneUser = async (req, res) => {
       user,
     });
   } catch (error) {
-    console.error(error);
-    const statusCode = error.name === "ValidationError" ? 400 : 500;
-    res.status(statusCode).json({
-      infoType: statusCode.toString(),
-    });
+    handleError(error, res);
   }
 };
 
@@ -269,11 +241,7 @@ export const getSelfUser = async (req, res) => {
     const user = await User.findOne({ officialId: id });
     res.status(200).json({ user }, "-ip -password -recovery");
   } catch (error) {
-    console.error(error);
-    const statusCode = error.name === "ValidationError" ? 400 : 500;
-    res.status(statusCode).json({
-      infoType: statusCode.toString(),
-    });
+    handleError(error, res);
   }
 };
 
@@ -311,11 +279,7 @@ export const deleteSelfUser = async (req, res) => {
       }
     });
   } catch (error) {
-    console.error(error);
-    const statusCode = error.name === "ValidationError" ? 400 : 500;
-    res.status(statusCode).json({
-      infoType: statusCode.toString(),
-    });
+    handleError(error, res);
   }
 };
 
@@ -333,11 +297,7 @@ export const getUsersByNation = async (req, res) => {
         res.status(400).json({ message: error.message, infoType: "400" });
       });
   } catch (error) {
-    console.error(error);
-    const statusCode = error.name === "ValidationError" ? 400 : 500;
-    res.status(statusCode).json({
-      infoType: statusCode.toString(),
-    });
+    handleError(error, res);
   }
 };
 
@@ -351,11 +311,7 @@ export const usersCount = async (req, res) => {
         res.status(400).json({ message: error.message, infoType: "400" });
       });
   } catch (error) {
-    console.error(error);
-    const statusCode = error.name === "ValidationError" ? 400 : 500;
-    res.status(statusCode).json({
-      infoType: statusCode.toString(),
-    });
+    handleError(error, res);
   }
 };
 
@@ -438,11 +394,7 @@ export const updateUser = async (req, res) => {
       });
     }
   } catch (error) {
-    console.error(error);
-    const statusCode = error.name === "ValidationError" ? 400 : 500;
-    res.status(statusCode).json({
-      infoType: statusCode.toString(),
-    });
+    handleError(error, res);
   }
 };
 
@@ -504,11 +456,7 @@ export const changeStatus = async (req, res) => {
       res.sendStatus(403).json({ infoType: "403" });
     }
   } catch (error) {
-    console.error(error);
-    const statusCode = error.name === "ValidationError" ? 400 : 500;
-    res.status(statusCode).json({
-      infoType: statusCode.toString(),
-    });
+    handleError(error, res);
   }
 };
 
@@ -526,11 +474,7 @@ export const changePlan = async (req, res) => {
       });
     }
   } catch (error) {
-    console.error(error);
-    const statusCode = error.name === "ValidationError" ? 400 : 500;
-    res.status(statusCode).json({
-      infoType: statusCode.toString(),
-    });
+    handleError(error, res);
   }
 };
 
@@ -552,10 +496,6 @@ const updateUserIpAddress = async (userOfficialId, ip) => {
     }
     await user.save();
   } catch (error) {
-    console.error(error);
-    const statusCode = error.name === "ValidationError" ? 400 : 500;
-    res.status(statusCode).json({
-      infoType: statusCode.toString(),
-    });
+    handleError(error, res);
   }
 };

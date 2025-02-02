@@ -5,7 +5,6 @@ import { SelectedNationProps } from "../../types/typProp";
 import { useAtom } from "jotai";
 import { myStore, newRelationAtom, sessionAtom } from "../../settings/store";
 import { lazy, Suspense, useEffect, useState } from "react";
-import BarreLoader from "../loading/barreLoader";
 import Button from "../buttons/button";
 import { FaHandshakeSimple } from "react-icons/fa6";
 import {
@@ -15,6 +14,7 @@ import {
 } from "../../types/typRelation";
 import { RelationListModel } from "../../models/lists/relationListModel";
 import { RelationModel } from "../../models/relationModel";
+import TileSkeleton from "../loading/skeletons/tileSkeleton";
 
 export default function Diplomacy({
   selectedNation,
@@ -82,7 +82,7 @@ export default function Diplomacy({
                         session.user.officialId)
                   ) {
                     return (
-                      <Suspense key={i} fallback={<BarreLoader />}>
+                      <Suspense key={i} fallback={<TileSkeleton />}>
                         <RelationTile relation={relation} />
                       </Suspense>
                     );

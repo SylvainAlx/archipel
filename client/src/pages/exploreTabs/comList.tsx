@@ -3,12 +3,12 @@ import Button from "../../components/buttons/button";
 import { useState, Suspense, lazy } from "react";
 import H1 from "../../components/titles/h1";
 import IndexTag from "../../components/tags/indexTag";
-import BarreLoader from "../../components/loading/barreLoader";
 import { StringProps } from "../../types/typProp";
 import { useTranslation } from "react-i18next";
 import ComSearchBar from "../../components/searchBars/comSearchBar";
 import { ELEMENTS_DISPLAYED_LIMIT } from "../../settings/consts";
 import { ComListModel } from "../../models/lists/comListModel";
+import TileSkeleton from "../../components/loading/skeletons/tileSkeleton";
 
 export default function ComList({ text }: StringProps) {
   const [comList, setComList] = useState<ComListModel>(new ComListModel());
@@ -26,7 +26,7 @@ export default function ComList({ text }: StringProps) {
         {comList.getItems().map((com, i) => {
           if (i < displayedComs) {
             return (
-              <Suspense key={i} fallback={<BarreLoader />}>
+              <Suspense key={i} fallback={<TileSkeleton />}>
                 <div className="min-w-[300px] w-full relative transition-all duration-300 animate-fadeIn">
                   <ComTile com={com} />
                   <IndexTag text={i} />

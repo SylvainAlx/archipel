@@ -2,6 +2,7 @@ import Tile from "../models/tileSchema.js";
 import User from "../models/userSchema.js";
 import Nation from "../models/nationSchema.js";
 import { COSTS, QUOTAS } from "../settings/const.js";
+import { handleError } from "../utils/functions.js";
 
 const verifyNationOwner = async (userId, nationId) => {
   const user = await User.findOne({
@@ -46,11 +47,7 @@ export const createTile = async (req, res) => {
       return res.status(403).json({ infoType: "403" });
     }
   } catch (error) {
-    console.error(error);
-    const statusCode = error.name === "ValidationError" ? 400 : 500;
-    res.status(statusCode).json({
-      infoType: statusCode.toString(),
-    });
+    handleError(error, res);
   }
 };
 
@@ -60,11 +57,7 @@ export const getNationTile = async (req, res) => {
     const tiles = await Tile.find({ nationOfficialId: nationId });
     res.status(200).json(tiles);
   } catch (error) {
-    console.error(error);
-    const statusCode = error.name === "ValidationError" ? 400 : 500;
-    res.status(statusCode).json({
-      infoType: statusCode.toString(),
-    });
+    handleError(error, res);
   }
 };
 
@@ -95,11 +88,7 @@ export const deleteTile = async (req, res) => {
       return res.status(404).json({ infoType: "404" });
     }
   } catch (error) {
-    console.error(error);
-    const statusCode = error.name === "ValidationError" ? 400 : 500;
-    res.status(statusCode).json({
-      infoType: statusCode.toString(),
-    });
+    handleError(error, res);
   }
 };
 
@@ -119,10 +108,6 @@ export const updateTile = async (req, res) => {
       return res.status(403).json({ infoType: "403" });
     }
   } catch (error) {
-    console.error(error);
-    const statusCode = error.name === "ValidationError" ? 400 : 500;
-    res.status(statusCode).json({
-      infoType: statusCode.toString(),
-    });
+    handleError(error, res);
   }
 };

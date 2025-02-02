@@ -1,4 +1,5 @@
 import axios from "axios";
+import { handleError } from "../utils/functions.js";
 
 export const verifyCaptcha = async (req, res) => {
   const { token } = req.body;
@@ -34,10 +35,6 @@ export const verifyCaptcha = async (req, res) => {
         .json({ success: false, message: "CAPTCHA verification failed." });
     }
   } catch (error) {
-    console.error(error);
-    res.status(500).json({
-      infoType: "500",
-      error,
-    });
+    handleError(error, res);
   }
 };

@@ -1,4 +1,4 @@
-import { deleteFile } from "../utils/functions.js";
+import { deleteFile, handleError } from "../utils/functions.js";
 
 export const deleteUploadedFile = async (req, res) => {
   try {
@@ -19,10 +19,6 @@ export const deleteUploadedFile = async (req, res) => {
       });
     }
   } catch (error) {
-    console.error(error);
-    res.status(500).json({
-      infoType: "500",
-      error,
-    });
+    handleError(error, res);
   }
 };

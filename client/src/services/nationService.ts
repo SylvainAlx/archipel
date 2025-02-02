@@ -1,6 +1,7 @@
 import { NationModel } from "../models/nationModel";
 import { SERVER_URL } from "../settings/consts";
 import { GET_JWT } from "../utils/functions";
+import { handleFetchError } from "../utils/procedures";
 
 export const createNationFetch = async (payload: NationModel) => {
   const jwt = GET_JWT();
@@ -13,10 +14,7 @@ export const createNationFetch = async (payload: NationModel) => {
       },
       body: JSON.stringify(payload),
     });
-    if (!resp.ok) {
-      const errorPayload = await resp.json();
-      throw new Error(JSON.stringify(errorPayload));
-    }
+    await handleFetchError(resp);
     const result = await resp.json();
     return result;
   } catch (error) {
@@ -31,10 +29,7 @@ export const DeleteSelfFetch = async () => {
       method: "DELETE",
       headers: { authorization: `Bearer ${jwt}` },
     });
-    if (!resp.ok) {
-      const errorPayload = await resp.json();
-      throw new Error(JSON.stringify(errorPayload));
-    }
+    await handleFetchError(resp);
     const result = await resp.json();
     return result;
   } catch (error) {
@@ -45,10 +40,7 @@ export const DeleteSelfFetch = async () => {
 export const getOneNationFetch = async (id: string) => {
   try {
     const resp = await fetch(`${SERVER_URL}/nation/${id}`);
-    if (!resp.ok) {
-      const errorPayload = await resp.json();
-      throw new Error(JSON.stringify(errorPayload));
-    }
+    await handleFetchError(resp);
     const result = await resp.json();
     return result;
   } catch (error) {
@@ -64,10 +56,7 @@ export const getAllNationsFetch = async (
     const resp = await fetch(
       `${SERVER_URL}/nation/getall?name=${encodeURIComponent(searchText)}&tag=${encodeURIComponent(searchTag)}`,
     );
-    if (!resp.ok) {
-      const errorPayload = await resp.json();
-      throw new Error(JSON.stringify(errorPayload));
-    }
+    await handleFetchError(resp);
     const result = await resp.json();
     return result;
   } catch (error) {
@@ -86,10 +75,7 @@ export const updateNationFetch = async (payload: NationModel) => {
       },
       body: JSON.stringify(payload),
     });
-    if (!resp.ok) {
-      const errorPayload = await resp.json();
-      throw new Error(JSON.stringify(errorPayload));
-    }
+    await handleFetchError(resp);
     const result = await resp.json();
     return result;
   } catch (error) {
@@ -100,10 +86,7 @@ export const updateNationFetch = async (payload: NationModel) => {
 export const getAllNationTagsFetch = async () => {
   try {
     const resp = await fetch(`${SERVER_URL}/nation/gettags`);
-    if (!resp.ok) {
-      const errorPayload = await resp.json();
-      throw new Error(JSON.stringify(errorPayload));
-    }
+    await handleFetchError(resp);
     const result = await resp.json();
     return result;
   } catch (error) {

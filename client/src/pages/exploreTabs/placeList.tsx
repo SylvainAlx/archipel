@@ -3,13 +3,13 @@ import Button from "../../components/buttons/button";
 import { useState, lazy, Suspense } from "react";
 import H1 from "../../components/titles/h1";
 import IndexTag from "../../components/tags/indexTag";
-import BarreLoader from "../../components/loading/barreLoader";
 import { StringProps } from "../../types/typProp";
 import PlaceSearchBar from "../../components/searchBars/placeSearchBar";
 import { useTranslation } from "react-i18next";
 import { ELEMENTS_DISPLAYED_LIMIT } from "../../settings/consts";
 import { PlaceListModel } from "../../models/lists/placeListModel";
 import { NationModel } from "../../models/nationModel";
+import TileSkeleton from "../../components/loading/skeletons/tileSkeleton";
 
 export default function PlaceList({ text }: StringProps) {
   const [placesList, setPlacesList] = useState<PlaceListModel>(
@@ -32,7 +32,7 @@ export default function PlaceList({ text }: StringProps) {
           placesList.getItems().map((place, i) => {
             if (i < displayedPlaces) {
               return (
-                <Suspense key={i} fallback={<BarreLoader />}>
+                <Suspense key={i} fallback={<TileSkeleton />}>
                   <div className="min-w-[300px] w-full relative transition-all duration-300 animate-fadeIn">
                     <PlaceTile place={place} nation={new NationModel()} />
                     <IndexTag text={i} />

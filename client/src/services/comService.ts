@@ -1,6 +1,7 @@
 import { ComModel } from "../models/comModel";
 import { SERVER_URL } from "../settings/consts";
 import { GET_JWT } from "../utils/functions";
+import { handleFetchError } from "../utils/procedures";
 
 export const createComFetch = async (payload: ComModel) => {
   const jwt = GET_JWT();
@@ -13,10 +14,7 @@ export const createComFetch = async (payload: ComModel) => {
       },
       body: JSON.stringify(payload),
     });
-    if (!resp.ok) {
-      const errorPayload = await resp.json();
-      throw new Error(JSON.stringify(errorPayload));
-    }
+    await handleFetchError(resp);
     const result = await resp.json();
     return result;
   } catch (error) {
@@ -41,10 +39,7 @@ export const getComsFetch = async (
         },
       },
     );
-    if (!resp.ok) {
-      const errorPayload = await resp.json();
-      throw new Error(JSON.stringify(errorPayload));
-    }
+    await handleFetchError(resp);
     const result = await resp.json();
     return result;
   } catch (error) {
@@ -65,10 +60,7 @@ export const getComsByDestinationFetch = async (officialId: string) => {
         },
       },
     );
-    if (!resp.ok) {
-      const errorPayload = await resp.json();
-      throw new Error(JSON.stringify(errorPayload));
-    }
+    await handleFetchError(resp);
     const result = await resp.json();
     return result;
   } catch (error) {
@@ -79,10 +71,7 @@ export const getComsByDestinationFetch = async (officialId: string) => {
 export const getAllPublicComsFetch = async () => {
   try {
     const resp = await fetch(`${SERVER_URL}/com/getpubliccoms`);
-    if (!resp.ok) {
-      const errorPayload = await resp.json();
-      throw new Error(JSON.stringify(errorPayload));
-    }
+    await handleFetchError(resp);
     const result = await resp.json();
     return result;
   } catch (error) {
@@ -93,10 +82,7 @@ export const getAllPublicComsFetch = async () => {
 export const getPublicComsByOriginFetch = async (nationId: string) => {
   try {
     const resp = await fetch(`${SERVER_URL}/com/getpubliccoms/${nationId}`);
-    if (!resp.ok) {
-      const errorPayload = await resp.json();
-      throw new Error(JSON.stringify(errorPayload));
-    }
+    await handleFetchError(resp);
     const result = await resp.json();
     return result;
   } catch (error) {
@@ -106,15 +92,20 @@ export const getPublicComsByOriginFetch = async (nationId: string) => {
 
 export const getAllAdminComsFetch = async () => {
   const jwt = GET_JWT();
-  const resp = await fetch(`${SERVER_URL}/admin/getadmincoms`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      authorization: "Bearer " + jwt,
-    },
-  });
-  const result = await resp.json();
-  return result;
+  try {
+    const resp = await fetch(`${SERVER_URL}/admin/getadmincoms`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        authorization: "Bearer " + jwt,
+      },
+    });
+    await handleFetchError(resp);
+    const result = await resp.json();
+    return result;
+  } catch (error) {
+    throw error;
+  }
 };
 
 export const deleteComFetch = async (id: string) => {
@@ -124,10 +115,7 @@ export const deleteComFetch = async (id: string) => {
       method: "DELETE",
       headers: { authorization: `Bearer ${jwt}` },
     });
-    if (!resp.ok) {
-      const errorPayload = await resp.json();
-      throw new Error(JSON.stringify(errorPayload));
-    }
+    await handleFetchError(resp);
     const result = await resp.json();
     return result;
   } catch (error) {

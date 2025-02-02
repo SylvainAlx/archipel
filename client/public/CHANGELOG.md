@@ -7,6 +7,7 @@
 - Ajout d'un lien vers les comptes Instagram et Threads
 - Ajout d'un bouton de don en cryptomonnaie
 - Ajout d'une notification d'alerte si l'application est hors ligne
+- Ajout de "skeletons" pour les éléments en cours de chargement
 
 #### Suppressions
 

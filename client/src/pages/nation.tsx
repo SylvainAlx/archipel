@@ -16,8 +16,10 @@ import ReportPanel from "../components/reportPanel";
 import EditIcon from "../components/editIcon";
 import { NationModel } from "../models/nationModel";
 import { NationListModel } from "../models/lists/nationListModel";
-import Spinner from "../components/loading/spinner";
 import { createPageTitle } from "../utils/procedures";
+import IdSkeleton from "../components/loading/skeletons/idSkeleton";
+import MapSkeleton from "../components/loading/skeletons/mapSkeleton";
+import TileSkeleton from "../components/loading/skeletons/tileSkeleton";
 
 export default function Nation() {
   const [nation, setNation] = useState<NationModel>(new NationModel());
@@ -132,33 +134,33 @@ export default function Nation() {
                 </div>
                 {nation.officialId === param.id && (
                   <>
-                    <Suspense fallback={<Spinner />}>
+                    <Suspense fallback={<IdSkeleton />}>
                       <NationIdentity
                         selectedNation={nation}
                         owner={owner}
                         updatePath={updatePath}
                       />
                     </Suspense>
-                    <Suspense fallback={<Spinner />}>
+                    <Suspense fallback={<MapSkeleton />}>
                       <NationMap
                         selectedNation={nation}
                         owner={owner}
                         updatePath={updatePath}
                       />
                     </Suspense>
-                    <Suspense fallback={<Spinner />}>
+                    <Suspense fallback={<TileSkeleton />}>
                       <FreeTiles selectedNation={nation} owner={owner} />
                     </Suspense>
-                    <Suspense fallback={<Spinner />}>
+                    <Suspense fallback={<TileSkeleton />}>
                       <Diplomacy selectedNation={nation} owner={owner} />
                     </Suspense>
-                    <Suspense fallback={<Spinner />}>
+                    <Suspense fallback={<TileSkeleton />}>
                       <Citizens selectedNation={nation} owner={owner} />
                     </Suspense>
-                    <Suspense fallback={<Spinner />}>
+                    <Suspense fallback={<TileSkeleton />}>
                       <Places selectedNation={nation} owner={owner} />
                     </Suspense>
-                    <Suspense fallback={<Spinner />}>
+                    <Suspense fallback={<TileSkeleton />}>
                       <NationComs selectedNation={nation} owner={owner} />
                     </Suspense>
                   </>

@@ -1,4 +1,5 @@
 import Param from "../models/paramSchema.js";
+import { handleError } from "../utils/functions.js";
 
 export const createParam = async (req, res) => {
   try {
@@ -10,11 +11,7 @@ export const createParam = async (req, res) => {
     param.save();
     res.status(201).json({ param, message: "paramètre créé" });
   } catch (error) {
-    console.error(error);
-    res.status(500).json({
-      infoType: "500",
-      error,
-    });
+    handleError(error, res);
   }
 };
 
@@ -23,11 +20,7 @@ export const getParam = async (req, res) => {
     const param = await Param.findOne({ name: req.params.name });
     res.status(200).json({ param });
   } catch (error) {
-    console.error(error);
-    res.status(500).json({
-      infoType: "500",
-      error,
-    });
+    handleError(error, res);
   }
 };
 
@@ -36,10 +29,6 @@ export const getAllParams = async (req, res) => {
     const params = await Param.find();
     res.status(200).json(params);
   } catch (error) {
-    console.error(error);
-    res.status(500).json({
-      infoType: "500",
-      error,
-    });
+    handleError(error, res);
   }
 };

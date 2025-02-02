@@ -6,8 +6,10 @@ import ReportPanel from "../components/reportPanel";
 import { PlaceModel } from "../models/placeModel";
 import { useTranslation } from "react-i18next";
 import { NationModel } from "../models/nationModel";
-import Spinner from "../components/loading/spinner";
 import { createPageTitle } from "../utils/procedures";
+import MapSkeleton from "../components/loading/skeletons/mapSkeleton";
+import TileSkeleton from "../components/loading/skeletons/tileSkeleton";
+import ParamSkeleton from "../components/loading/skeletons/paramSkeleton";
 
 export default function Place() {
   const [session] = useAtom(sessionAtom);
@@ -79,7 +81,7 @@ export default function Place() {
   return (
     <>
       <section className="w-full px-2 pb-2 flex flex-col items-center gap-2">
-        <Suspense fallback={<Spinner />}>
+        <Suspense fallback={<ParamSkeleton />}>
           <PlaceHeader
             place={place}
             nation={nation}
@@ -88,7 +90,7 @@ export default function Place() {
           />
         </Suspense>
         {!place.reported && (
-          <Suspense fallback={<Spinner />}>
+          <Suspense fallback={<MapSkeleton />}>
             <PlaceIdentity
               place={place}
               owner={owner}
@@ -97,7 +99,7 @@ export default function Place() {
           </Suspense>
         )}
       </section>
-      <Suspense fallback={<Spinner />}>
+      <Suspense fallback={<TileSkeleton />}>
         <PlaceChildren place={place} nation={nation} owner={owner} />
       </Suspense>
       <ReportPanel content={place} />

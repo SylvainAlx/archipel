@@ -1,6 +1,7 @@
 import { TileModel } from "../models/tileModel";
 import { SERVER_URL } from "../settings/consts";
 import { GET_JWT } from "../utils/functions";
+import { handleFetchError } from "../utils/procedures";
 
 export const createTileFetch = async (payload: TileModel) => {
   const jwt = GET_JWT();
@@ -13,10 +14,7 @@ export const createTileFetch = async (payload: TileModel) => {
       },
       body: JSON.stringify(payload),
     });
-    if (!resp.ok) {
-      const errorPayload = await resp.json();
-      throw new Error(JSON.stringify(errorPayload));
-    }
+    await handleFetchError(resp);
     const result = await resp.json();
     return result;
   } catch (error) {
@@ -27,10 +25,7 @@ export const createTileFetch = async (payload: TileModel) => {
 export const getAllTileFetch = async () => {
   try {
     const resp = await fetch(`${SERVER_URL}/tile/getall`);
-    if (!resp.ok) {
-      const errorPayload = await resp.json();
-      throw new Error(JSON.stringify(errorPayload));
-    }
+    await handleFetchError(resp);
     const result = await resp.json();
     return result;
   } catch (error) {
@@ -41,10 +36,7 @@ export const getAllTileFetch = async () => {
 export const getNationTileFetch = async (nationOfficialId: string) => {
   try {
     const resp = await fetch(`${SERVER_URL}/tile/${nationOfficialId}`);
-    if (!resp.ok) {
-      const errorPayload = await resp.json();
-      throw new Error(JSON.stringify(errorPayload));
-    }
+    await handleFetchError(resp);
     const result = await resp.json();
     return result;
   } catch (error) {
@@ -59,10 +51,7 @@ export const deleteTileFetch = async (id: string) => {
       method: "DELETE",
       headers: { authorization: `Bearer ${jwt}` },
     });
-    if (!resp.ok) {
-      const errorPayload = await resp.json();
-      throw new Error(JSON.stringify(errorPayload));
-    }
+    await handleFetchError(resp);
     const result = await resp.json();
     return result;
   } catch (error) {
@@ -81,12 +70,8 @@ export const updateTileFetch = async (payload: TileModel) => {
       },
       body: JSON.stringify(payload),
     });
-    if (!resp.ok) {
-      const errorPayload = await resp.json();
-      throw new Error(JSON.stringify(errorPayload));
-    }
+    await handleFetchError(resp);
     const result = await resp.json();
-
     return result;
   } catch (error) {
     throw error;

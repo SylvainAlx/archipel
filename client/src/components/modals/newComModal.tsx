@@ -24,7 +24,6 @@ export default function NewComModal() {
       action: "createCom",
       text: t("components.modals.confirmModal.createCom"),
       result: "",
-      payload: newCom,
       actionToDo: () => {
         const comToInsert = new ComModel(newCom);
         comToInsert.baseInsert();

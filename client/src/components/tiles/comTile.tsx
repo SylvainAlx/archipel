@@ -40,10 +40,9 @@ export default function ComTile({ nation, com }: ComTileProps) {
 
   const handleDelete = () => {
     myStore.set(confirmBox, {
-      action: "deleteCom",
+      action: "",
       text: t("components.modals.confirmModal.deleteCom"),
       result: "",
-      target: com._id,
       actionToDo: async () => {
         const comToDelete = new ComModel();
         comToDelete.baseDelete(com._id);

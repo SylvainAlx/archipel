@@ -1,16 +1,14 @@
 import { PlaceModel } from "../models/placeModel";
 import { SERVER_URL } from "../settings/consts";
 import { GET_JWT } from "../utils/functions";
+import { handleFetchError } from "../utils/procedures";
 
 export const getAllPlacesFetch = async (searchText: string) => {
   try {
     const resp = await fetch(
       `${SERVER_URL}/place/getall?texteRecherche=${encodeURIComponent(searchText)}`,
     );
-    if (!resp.ok) {
-      const errorPayload = await resp.json();
-      throw new Error(JSON.stringify(errorPayload));
-    }
+    await handleFetchError(resp);
     const result = await resp.json();
     return result;
   } catch (error) {
@@ -21,10 +19,7 @@ export const getAllPlacesFetch = async (searchText: string) => {
 export const getNationPlacesFetch = async (id: string) => {
   try {
     const resp = await fetch(`${SERVER_URL}/place/bynation/${id}`);
-    if (!resp.ok) {
-      const errorPayload = await resp.json();
-      throw new Error(JSON.stringify(errorPayload));
-    }
+    await handleFetchError(resp);
     const result = await resp.json();
     return result;
   } catch (error) {
@@ -35,10 +30,7 @@ export const getNationPlacesFetch = async (id: string) => {
 export const getPlaceFetch = async (id: string) => {
   try {
     const resp = await fetch(`${SERVER_URL}/place/${id}`);
-    if (!resp.ok) {
-      const errorPayload = await resp.json();
-      throw new Error(JSON.stringify(errorPayload));
-    }
+    await handleFetchError(resp);
     const result = await resp.json();
     return result;
   } catch (error) {
@@ -57,10 +49,7 @@ export const createPlaceFetch = async (payload: PlaceModel) => {
       },
       body: JSON.stringify(payload),
     });
-    if (!resp.ok) {
-      const errorPayload = await resp.json();
-      throw new Error(JSON.stringify(errorPayload));
-    }
+    await handleFetchError(resp);
     const result = await resp.json();
     return result;
   } catch (error) {
@@ -75,10 +64,7 @@ export const deletePlaceFetch = async (id: string) => {
       method: "DELETE",
       headers: { authorization: `Bearer ${jwt}` },
     });
-    if (!resp.ok) {
-      const errorPayload = await resp.json();
-      throw new Error(JSON.stringify(errorPayload));
-    }
+    await handleFetchError(resp);
     const result = await resp.json();
     return result;
   } catch (error) {
@@ -97,10 +83,7 @@ export const updatePlaceFetch = async (payload: PlaceModel) => {
       },
       body: JSON.stringify(payload),
     });
-    if (!resp.ok) {
-      const errorPayload = await resp.json();
-      throw new Error(JSON.stringify(errorPayload));
-    }
+    await handleFetchError(resp);
     const result = await resp.json();
     return result;
   } catch (error) {

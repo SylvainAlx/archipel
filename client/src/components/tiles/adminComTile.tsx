@@ -5,6 +5,7 @@ import CrossButton from "../buttons/crossButton";
 import { useTranslation } from "react-i18next";
 import DateTag from "../tags/dateTag";
 import LinkButton from "../buttons/linkButton";
+import { ComModel } from "../../models/comModel";
 
 export interface ComTileProps {
   com: Com;
@@ -16,10 +17,13 @@ export default function AdminComTile({ com }: ComTileProps) {
 
   const handleDelete = () => {
     myStore.set(confirmBox, {
-      action: "deleteCom",
+      action: "",
       text: t("components.modals.confirmModal.deleteCom"),
       result: "",
-      target: com,
+      actionToDo: async () => {
+        const comToDelete = new ComModel();
+        comToDelete.baseDelete(com._id);
+      },
     });
   };
 

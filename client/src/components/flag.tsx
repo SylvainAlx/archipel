@@ -1,8 +1,8 @@
 import { Nation } from "../types/typNation";
 import { GiBlackFlag } from "react-icons/gi";
 import { lazy, Suspense } from "react";
-import Spinner from "./loading/spinner";
 import { useTranslation } from "react-i18next";
+import ImageSkeleton from "./loading/skeletons/imageSkeleton";
 
 interface FlagProps {
   nation: Nation;
@@ -22,7 +22,7 @@ export default function Flag({ nation, isHeader }: FlagProps) {
       }
     >
       {nation.data.url.flag != "" ? (
-        <Suspense fallback={<Spinner showClock={false} />}>
+        <Suspense fallback={<ImageSkeleton />}>
           <LazyImage
             src={nation.data.url.flag}
             alt={`flag of ${nation.name}`}

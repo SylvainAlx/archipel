@@ -3,7 +3,11 @@ import User from "../models/userSchema.js";
 import Place from "../models/placeSchema.js";
 import Tile from "../models/tileSchema.js";
 import Relation from "../models/relationSchema.js";
-import { createOfficialId, deleteFile } from "../utils/functions.js";
+import {
+  createOfficialId,
+  deleteFile,
+  handleError,
+} from "../utils/functions.js";
 import { GIFTS } from "../settings/const.js";
 
 export const nationsCount = async (req, res) => {
@@ -11,11 +15,7 @@ export const nationsCount = async (req, res) => {
     const count = await Nation.countDocuments({ banished: false });
     res.status(200).json(count);
   } catch (error) {
-    console.error(error);
-    const statusCode = error.name === "ValidationError" ? 400 : 500;
-    res.status(statusCode).json({
-      infoType: statusCode.toString(),
-    });
+    handleError(error, res);
   }
 };
 
@@ -81,11 +81,7 @@ export const createNation = async (req, res) => {
       }
     }
   } catch (error) {
-    console.error(error);
-    const statusCode = error.name === "ValidationError" ? 400 : 500;
-    res.status(statusCode).json({
-      infoType: statusCode.toString(),
-    });
+    handleError(error, res);
   }
 };
 
@@ -114,11 +110,7 @@ export const getAllNations = async (req, res) => {
       res.status(404).json({ infoType: "404" });
     }
   } catch (error) {
-    console.error(error);
-    const statusCode = error.name === "ValidationError" ? 400 : 500;
-    res.status(statusCode).json({
-      infoType: statusCode.toString(),
-    });
+    handleError(error, res);
   }
 };
 
@@ -130,11 +122,7 @@ export const getTop100Nations = async (req, res) => {
     ).limit(100);
     res.status(200).json(nations);
   } catch (error) {
-    console.error(error);
-    const statusCode = error.name === "ValidationError" ? 400 : 500;
-    res.status(statusCode).json({
-      infoType: statusCode.toString(),
-    });
+    handleError(error, res);
   }
 };
 
@@ -147,11 +135,7 @@ export const getOneNation = async (req, res) => {
     );
     res.status(200).json(nation);
   } catch (error) {
-    console.error(error);
-    const statusCode = error.name === "ValidationError" ? 400 : 500;
-    res.status(statusCode).json({
-      infoType: statusCode.toString(),
-    });
+    handleError(error, res);
   }
 };
 
@@ -238,11 +222,7 @@ export const deleteSelfNation = async (req, res) => {
       });
     }
   } catch (error) {
-    console.error(error);
-    const statusCode = error.name === "ValidationError" ? 400 : 500;
-    res.status(statusCode).json({
-      infoType: statusCode.toString(),
-    });
+    handleError(error, res);
   }
 };
 
@@ -262,11 +242,7 @@ export const updateNation = async (req, res) => {
       res.sendStatus(403).json({ infoType: "403" });
     }
   } catch (error) {
-    console.error(error);
-    const statusCode = error.name === "ValidationError" ? 400 : 500;
-    res.status(statusCode).json({
-      infoType: statusCode.toString(),
-    });
+    handleError(error, res);
   }
 };
 
@@ -298,10 +274,6 @@ export const getTags = async (req, res) => {
     ]);
     res.status(200).json(tags.length > 0 ? tags : []);
   } catch (error) {
-    console.error(error);
-    const statusCode = error.name === "ValidationError" ? 400 : 500;
-    res.status(statusCode).json({
-      infoType: statusCode.toString(),
-    });
+    handleError(error, res);
   }
 };

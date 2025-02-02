@@ -8,12 +8,12 @@ import Button from "../buttons/button";
 import { emptyTile } from "../../types/typTile";
 import { GiSBrick } from "react-icons/gi";
 import { useTranslation } from "react-i18next";
-import BarreLoader from "../loading/barreLoader";
 import { COSTS, QUOTAS } from "../../settings/consts";
 import { FaCoins } from "react-icons/fa";
 import { errorMessage } from "../../utils/toasts";
 import { TileListModel } from "../../models/lists/tileListModel";
 import { TileModel } from "../../models/tileModel";
+import TileSkeleton from "../loading/skeletons/tileSkeleton";
 
 export default function FreeTiles({
   selectedNation,
@@ -85,7 +85,7 @@ export default function FreeTiles({
                 {nationTileList.getItems().length > 0 ? (
                   nationTileList.getItems().map((tile, i) => {
                     return (
-                      <Suspense key={i} fallback={<BarreLoader />}>
+                      <Suspense key={i} fallback={<TileSkeleton />}>
                         <FreeTile
                           key={i}
                           tile={tile}

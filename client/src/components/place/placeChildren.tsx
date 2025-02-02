@@ -1,11 +1,11 @@
 import { lazy, Suspense, useState } from "react";
-import Spinner from "../loading/spinner";
 import NewPlaceButton from "../buttons/newPlaceButton";
 import { useTranslation } from "react-i18next";
 import { NationModel } from "../../models/nationModel";
 import { PlaceModel } from "../../models/placeModel";
 import { placeListAtomV2 } from "../../settings/store";
 import { useAtom } from "jotai";
+import TileSkeleton from "../loading/skeletons/tileSkeleton";
 
 interface PlaceChildrenProps {
   place: PlaceModel;
@@ -31,7 +31,7 @@ export default function PlaceChildren({
             if (loc.parentId === place.officialId) {
               !haveChildren && setHaveChildren(true);
               return (
-                <Suspense key={i} fallback={<Spinner />}>
+                <Suspense key={i} fallback={<TileSkeleton />}>
                   <div className="relative w-full">
                     <PlaceTile owner={false} place={loc} nation={nation} />
                   </div>

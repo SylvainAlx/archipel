@@ -1,6 +1,7 @@
 import { RelationModel } from "../models/relationModel";
 import { SERVER_URL } from "../settings/consts";
 import { GET_JWT } from "../utils/functions";
+import { handleFetchError } from "../utils/procedures";
 
 export const createRelationFetch = async (payload: RelationModel) => {
   const jwt = GET_JWT();
@@ -13,10 +14,7 @@ export const createRelationFetch = async (payload: RelationModel) => {
       },
       body: JSON.stringify(payload),
     });
-    if (!resp.ok) {
-      const errorPayload = await resp.json();
-      throw new Error(JSON.stringify(errorPayload));
-    }
+    await handleFetchError(resp);
     const result = await resp.json();
     return result;
   } catch (error) {
@@ -35,10 +33,7 @@ export const updateRelationFetch = async (payload: RelationModel) => {
       },
       body: JSON.stringify(payload),
     });
-    if (!resp.ok) {
-      const errorPayload = await resp.json();
-      throw new Error(JSON.stringify(errorPayload));
-    }
+    await handleFetchError(resp);
     const result = await resp.json();
     return result;
   } catch (error) {
@@ -51,10 +46,7 @@ export const getAllRelationsFetch = async (searchText: string) => {
     const resp = await fetch(
       `${SERVER_URL}/relation/getall?texteRecherche=${encodeURIComponent(searchText)}`,
     );
-    if (!resp.ok) {
-      const errorPayload = await resp.json();
-      throw new Error(JSON.stringify(errorPayload));
-    }
+    await handleFetchError(resp);
     const result = await resp.json();
     return result;
   } catch (error) {

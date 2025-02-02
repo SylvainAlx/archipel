@@ -3,10 +3,10 @@ import TileContainer from "../tileContainer";
 import NewPlaceButton from "../buttons/newPlaceButton";
 import { useTranslation } from "react-i18next";
 import DashTile from "../dashTile";
-import BarreLoader from "../loading/barreLoader";
 import { PlaceListModel } from "../../models/lists/placeListModel";
 import { PlaceModel } from "../../models/placeModel";
 import { NationModel } from "../../models/nationModel";
+import TileSkeleton from "../loading/skeletons/tileSkeleton";
 
 interface PlacesProps {
   selectedNation: NationModel;
@@ -56,7 +56,7 @@ export default function Places({ selectedNation, owner }: PlacesProps) {
                 {places.getItems().length > 0 ? (
                   places.getItems().map((place, i) => {
                     return (
-                      <Suspense key={i} fallback={<BarreLoader />}>
+                      <Suspense key={i} fallback={<TileSkeleton />}>
                         <div className="relative w-full">
                           <PlaceTile
                             owner={owner}

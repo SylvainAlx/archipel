@@ -7,16 +7,14 @@ import {
   RecoveryPayload,
 } from "../types/typUser";
 import { GET_JWT } from "../utils/functions";
+import { handleFetchError } from "../utils/procedures";
 
 export const authGet = async (token: string) => {
   try {
     const resp = await fetch(`${SERVER_URL}/user/verify`, {
       headers: { authorization: `Bearer ${token}` },
     });
-    if (!resp.ok) {
-      const errorPayload = await resp.json();
-      throw new Error(JSON.stringify(errorPayload));
-    }
+    await handleFetchError(resp);
     const result = await resp.json();
     return result;
   } catch (error) {
@@ -34,10 +32,7 @@ export const getBannedUsersFetch = async () => {
         authorization: "Bearer " + jwt,
       },
     });
-    if (!resp.ok) {
-      const errorPayload = await resp.json();
-      throw new Error(JSON.stringify(errorPayload));
-    }
+    await handleFetchError(resp);
     const result = await resp.json();
     return result;
   } catch (error) {
@@ -54,10 +49,7 @@ export const registerFetch = async (payload: AuthPayload) => {
       },
       body: JSON.stringify(payload),
     });
-    if (!resp.ok) {
-      const errorPayload = await resp.json();
-      throw new Error(JSON.stringify(errorPayload));
-    }
+    await handleFetchError(resp);
     const result = await resp.json();
     return result;
   } catch (error) {
@@ -74,10 +66,7 @@ export const loginFetch = async (payload: AuthPayload) => {
       },
       body: JSON.stringify(payload),
     });
-    if (!resp.ok) {
-      const errorPayload = await resp.json();
-      throw new Error(JSON.stringify(errorPayload));
-    }
+    await handleFetchError(resp);
     const result = await resp.json();
     return result;
   } catch (error) {
@@ -94,10 +83,7 @@ export const recoveryFetch = async (payload: RecoveryPayload) => {
       },
       body: JSON.stringify(payload),
     });
-    if (!resp.ok) {
-      const errorPayload = await resp.json();
-      throw new Error(JSON.stringify(errorPayload));
-    }
+    await handleFetchError(resp);
     const result = await resp.json();
     return result;
   } catch (error) {
@@ -116,10 +102,7 @@ export const changePasswordFetch = async (payload: ChangePasswordPayload) => {
       },
       body: JSON.stringify(payload),
     });
-    if (!resp.ok) {
-      const errorPayload = await resp.json();
-      throw new Error(JSON.stringify(errorPayload));
-    }
+    await handleFetchError(resp);
     const result = await resp.json();
     return result;
   } catch (error) {
@@ -138,10 +121,7 @@ export const deleteUserFetch = async (password: string) => {
       },
       body: JSON.stringify({ password }),
     });
-    if (!resp.ok) {
-      const errorPayload = await resp.json();
-      throw new Error(JSON.stringify(errorPayload));
-    }
+    await handleFetchError(resp);
     const result = await resp.json();
     return result;
   } catch (error) {
@@ -160,10 +140,7 @@ export const updateUserFetch = async (payload: UserModel) => {
       },
       body: JSON.stringify(payload),
     });
-    if (!resp.ok) {
-      const errorPayload = await resp.json();
-      throw new Error(JSON.stringify(errorPayload));
-    }
+    await handleFetchError(resp);
     const result = await resp.json();
     return result;
   } catch (error) {
@@ -174,10 +151,7 @@ export const updateUserFetch = async (payload: UserModel) => {
 export const getOneUserFetch = async (id: string) => {
   try {
     const resp = await fetch(`${SERVER_URL}/user/${id}`);
-    if (!resp.ok) {
-      const errorPayload = await resp.json();
-      throw new Error(JSON.stringify(errorPayload));
-    }
+    await handleFetchError(resp);
     const result = await resp.json();
     return result;
   } catch (error) {
@@ -188,10 +162,7 @@ export const getOneUserFetch = async (id: string) => {
 export const getNationCitizensFetch = async (id: string) => {
   try {
     const resp = await fetch(`${SERVER_URL}/user/bynation/${id}`);
-    if (!resp.ok) {
-      const errorPayload = await resp.json();
-      throw new Error(JSON.stringify(errorPayload));
-    }
+    await handleFetchError(resp);
     const result = await resp.json();
     return result;
   } catch (error) {
@@ -204,10 +175,7 @@ export const getAllCitizensFetch = async (searchText: string) => {
     const resp = await fetch(
       `${SERVER_URL}/user/getall?texteRecherche=${encodeURIComponent(searchText)}`,
     );
-    if (!resp.ok) {
-      const errorPayload = await resp.json();
-      throw new Error(JSON.stringify(errorPayload));
-    }
+    await handleFetchError(resp);
     const result = await resp.json();
     return result;
   } catch (error) {
@@ -226,10 +194,7 @@ export const changeStatusFetch = async (payload: changeStatusPayload) => {
       },
       body: JSON.stringify(payload),
     });
-    if (!resp.ok) {
-      const errorPayload = await resp.json();
-      throw new Error(JSON.stringify(errorPayload));
-    }
+    await handleFetchError(resp);
     const result = await resp.json();
     return result;
   } catch (error) {
@@ -246,10 +211,7 @@ export const verifyCaptchaFetch = async (token: string | null) => {
       },
       body: JSON.stringify({ token }),
     });
-    if (!resp.ok) {
-      const errorPayload = await resp.json();
-      throw new Error(JSON.stringify(errorPayload));
-    }
+    await handleFetchError(resp);
     const result = await resp.json();
     return result;
   } catch (error) {

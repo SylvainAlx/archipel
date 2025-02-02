@@ -164,3 +164,10 @@ export const handleShare = async (label: string) => {
 export const createPageTitle = (aTitre: string) => {
   document.title = getDocumentTitle(aTitre);
 };
+
+export const handleFetchError = async (AResponse: Response) => {
+  if (!AResponse.ok) {
+    const errorPayload = await AResponse.json();
+    throw new Error(JSON.stringify(errorPayload));
+  }
+};
