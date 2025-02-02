@@ -11,10 +11,6 @@ import {
 } from "../types/typAtom";
 import { Place, emptyPlace } from "../types/typPlace";
 import { ComPayload, emptyComPayload } from "../types/typCom";
-import {
-  DiplomaticRelationship,
-  emptyDiplomaticRelationship,
-} from "../types/typRelation";
 import { ComListModel } from "../models/lists/comListModel";
 import { PlaceListModel } from "../models/lists/placeListModel";
 import { NationListModel } from "../models/lists/nationListModel";
@@ -22,6 +18,9 @@ import { UserListModel } from "../models/lists/userListModel";
 import { UserModel } from "../models/userModel";
 import { TileListModel } from "../models/lists/tileListModel";
 import { TileModel } from "../models/tileModel";
+import { RelationListModel } from "../models/lists/relationListModel";
+import { RelationModel } from "../models/relationModel";
+import { emptyDiplomaticRelationship } from "../types/typRelation";
 
 export const myStore = createStore();
 
@@ -52,14 +51,6 @@ export const statsAtom = atom<Stats>({
   tags: [],
 });
 
-// Relation
-export const relationListAtom = atom<DiplomaticRelationship[]>([]);
-export const newRelationAtom = atom({
-  update: false,
-  show: false,
-  relation: emptyDiplomaticRelationship,
-});
-
 // Param
 export const paramsListAtom = atom<Param[]>([]);
 
@@ -80,6 +71,9 @@ export const placeListAtomV2 = atom<PlaceListModel>(new PlaceListModel());
 export const nationListAtomV2 = atom<NationListModel>(new NationListModel());
 export const userListAtomV2 = atom<UserListModel>(new UserListModel());
 export const tileListAtomV2 = atom<TileListModel>(new TileListModel());
+export const relationListAtomV2 = atom<RelationListModel>(
+  new RelationListModel(),
+);
 
 export const bannedCitizensAtom = atom<UserListModel>(new UserListModel());
 
@@ -87,4 +81,9 @@ export const newComAtom = atom<ComPayload>(emptyComPayload);
 export const newPlaceAtom = atom<Place>(emptyPlace);
 export const newNationAtom = atom<NewNationPayload>(emptyNewNationPayload);
 export const editTileAtom = atom<TileModel>(new TileModel());
+export const newRelationAtom = atom({
+  update: false,
+  show: false,
+  relation: new RelationModel(emptyDiplomaticRelationship),
+});
 //---- V2 ----

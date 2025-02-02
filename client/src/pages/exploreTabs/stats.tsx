@@ -8,9 +8,9 @@ import { useTranslation } from "react-i18next";
 import { StringProps } from "../../types/typProp";
 import HashTag from "../../components/tags/hashTag";
 import CountUp from "react-countup";
-import { getCounts } from "../../api/stats/statsAPI";
 import { Hashtag } from "../../types/typNation";
 import { NationModel } from "../../models/nationModel";
+import { getCounts } from "../../services/statService";
 
 export default function Stats({ text }: StringProps) {
   const [stats] = useAtom(statsAtom);

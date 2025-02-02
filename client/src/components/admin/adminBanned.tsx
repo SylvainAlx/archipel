@@ -1,4 +1,4 @@
-import { lazy, Suspense, useState } from "react";
+import { lazy, Suspense, useEffect, useState } from "react";
 import TileContainer from "../tileContainer";
 import H2 from "../titles/h2";
 import BarreLoader from "../loading/barreLoader";
@@ -13,6 +13,15 @@ export default function AdminBanned() {
   const [bannedUsers] = useAtom(bannedCitizensAtom);
   const [displayedCitizens, setDisplayedCitizens] = useState(10);
   const CitizenTile = lazy(() => import("../tiles/citizenTile"));
+  useEffect(() => {
+    const getUsers = () => {
+      bannedUsers.loadBannedCitizensAtom();
+    };
+    if (bannedUsers.getItems().length === 0) {
+      getUsers();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   return (
     <TileContainer
       children={

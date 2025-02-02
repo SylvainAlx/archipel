@@ -1,9 +1,9 @@
 import { useTranslation } from "react-i18next";
 import TileContainer from "../tileContainer";
 import DashTile from "../dashTile";
-import { lazy, Suspense } from "react";
+import { lazy, Suspense, useEffect, useState } from "react";
 import { SelectedNationProps } from "../../types/typProp";
-import { confirmBox, sessionAtom, userListAtomV2 } from "../../settings/store";
+import { confirmBox, sessionAtom } from "../../settings/store";
 import { useAtom } from "jotai";
 import BarreLoader from "../loading/barreLoader";
 import Button from "../buttons/button";
@@ -12,10 +12,26 @@ import { UserListModel } from "../../models/lists/userListModel";
 
 export default function Citizens({ selectedNation }: SelectedNationProps) {
   const [session] = useAtom(sessionAtom);
-  const [userList] = useAtom<UserListModel>(userListAtomV2);
+  const [nationUsers, setNationUsers] = useState<UserListModel>(
+    new UserListModel(),
+  );
+  const [listChecked, setListChecked] = useState<boolean>(false);
   const [, setConfirmModal] = useAtom(confirmBox);
   const { t } = useTranslation();
   const CitizenTile = lazy(() => import("../tiles/citizenTile"));
+
+  useEffect(() => {
+    const loadRelationList = async () => {
+      if (nationUsers.getItems().length === 0) {
+        const list = await nationUsers.loadNationUserList(selectedNation);
+        setNationUsers(list);
+        setListChecked(true);
+      }
+    };
+    if (selectedNation.officialId !== "" && !listChecked) {
+      loadRelationList();
+    }
+  }, [selectedNation.officialId]);
 
   const askCtz = () => {
     const payload = {
@@ -50,8 +66,8 @@ export default function Citizens({ selectedNation }: SelectedNationProps) {
                   />
                 )}
               <div className="w-full flex flex-col-reverse gap-2 items-center">
-                {userList.getItems().length > 0 ? (
-                  userList.getItems().map((citizen, i) => {
+                {nationUsers.getItems().length > 0 ? (
+                  nationUsers.getItems().map((citizen, i) => {
                     if (
                       citizen.citizenship.nationId === selectedNation.officialId
                     ) {

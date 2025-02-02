@@ -32,9 +32,9 @@ export const createRelation = async (req, res) => {
     }
   } catch (error) {
     console.error(error);
-    res.status(500).json({
-      infoType: "500",
-      error,
+    const statusCode = error.name === "ValidationError" ? 400 : 500;
+    res.status(statusCode).json({
+      infoType: statusCode.toString(),
     });
   }
 };
@@ -53,9 +53,9 @@ export const getAllRelation = async (req, res) => {
     }
   } catch (error) {
     console.error(error);
-    res.status(500).json({
-      infoType: "500",
-      error,
+    const statusCode = error.name === "ValidationError" ? 400 : 500;
+    res.status(statusCode).json({
+      infoType: statusCode.toString(),
     });
   }
 };
@@ -72,20 +72,11 @@ export const updateRelation = async (req, res) => {
         relation.nations = nations;
         relation.kind = kind;
 
-        relation
-          .save()
-          .then((relation) => {
-            res.status(200).json({
-              relation,
-              infoType: "update",
-            });
-          })
-          .catch((error) => {
-            console.error(error);
-            res.status(400).json({
-              infoType: "400",
-            });
-          });
+        const relationInBase = await relation.save();
+        res.status(200).json({
+          relation: relationInBase,
+          infoType: "update",
+        });
       } else {
         console.error(error);
         res.status(400).json({ infoType: "400" });
@@ -100,9 +91,9 @@ export const updateRelation = async (req, res) => {
     }
   } catch (error) {
     console.error(error);
-    res.status(500).json({
-      infoType: "500",
-      error,
+    const statusCode = error.name === "ValidationError" ? 400 : 500;
+    res.status(statusCode).json({
+      infoType: statusCode.toString(),
     });
   }
 };

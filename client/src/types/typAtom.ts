@@ -16,8 +16,6 @@ export interface ConfirmBox {
   action: string;
   text: string;
   result: string;
-  target?: any;
-  payload?: any;
   actionToDo?: () => void;
 }
 

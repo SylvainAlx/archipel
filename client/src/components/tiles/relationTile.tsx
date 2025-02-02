@@ -1,4 +1,3 @@
-import { DiplomaticRelationship } from "../../types/typRelation";
 import {
   FaBriefcase,
   FaCoins,
@@ -15,9 +14,10 @@ import { useTranslation } from "react-i18next";
 import NationTag from "../tags/nationTag";
 import HoverInfo from "../hoverInfo";
 import Button from "../buttons/button";
+import { RelationModel } from "../../models/relationModel";
 
 export interface RelationTileProps {
-  relation: DiplomaticRelationship;
+  relation: RelationModel;
 }
 
 export default function RelationTile({ relation }: RelationTileProps) {
@@ -40,35 +40,41 @@ export default function RelationTile({ relation }: RelationTileProps) {
   }, [relation, session.user.citizenship]);
 
   const handleAccept = () => {
-    const updatedRelation = structuredClone(relation);
+    const updatedRelation = new RelationModel(relation);
     updatedRelation.nations[nationIndex].accepted = true;
     myStore.set(confirmBox, {
-      action: "acceptRelation",
+      action: "",
       text: t("components.modals.confirmModal.acceptRelation"),
-      payload: updatedRelation,
       result: "",
+      actionToDo: async () => {
+        await updatedRelation.baseUpdate(updatedRelation);
+      },
     });
   };
 
   const handleRefuse = () => {
-    const updatedRelation = structuredClone(relation);
+    const updatedRelation = new RelationModel(relation);
     updatedRelation.nations[nationIndex].accepted = true;
     myStore.set(confirmBox, {
-      action: "leave",
+      action: "",
       text: t("components.modals.confirmModal.refuseRelation"),
-      payload: updatedRelation,
       result: "",
+      actionToDo: async () => {
+        await updatedRelation.baseUpdate(updatedRelation);
+      },
     });
   };
 
   const handleLeave = () => {
-    const updatedRelation: DiplomaticRelationship = { ...relation };
+    const updatedRelation = new RelationModel(relation);
     updatedRelation.nations.splice(nationIndex, 1);
     myStore.set(confirmBox, {
-      action: "leave",
+      action: "",
       text: t("components.modals.confirmModal.leaveRelation"),
-      payload: updatedRelation,
       result: "",
+      actionToDo: async () => {
+        await updatedRelation.baseUpdate(updatedRelation);
+      },
     });
   };
 

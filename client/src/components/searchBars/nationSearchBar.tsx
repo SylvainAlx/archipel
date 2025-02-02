@@ -21,10 +21,10 @@ export default function NationSearchBar({
   setList,
 }: NationSearchBarProps) {
   const { t } = useTranslation();
-  const [searchName, setSearchName] = useState("");
-  const [searchTag, setSearchTag] = useState("");
-  const [stats] = useAtom(statsAtom);
   const location = useLocation();
+  const [searchName, setSearchName] = useState("");
+  const [searchTag, setSearchTag] = useState(location.hash.replace("#", ""));
+  const [stats] = useAtom(statsAtom);
   const navigate = useNavigate();
 
   useEffect(() => {

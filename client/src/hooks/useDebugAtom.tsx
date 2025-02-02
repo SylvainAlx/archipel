@@ -3,6 +3,7 @@ import {
   comListAtomV2,
   nationListAtomV2,
   placeListAtomV2,
+  relationListAtomV2,
   sessionAtom,
   tileListAtomV2,
   userListAtomV2,
@@ -16,7 +17,8 @@ const useDebugAtom = () => {
     users: false,
     places: false,
     coms: false,
-    tiles: true,
+    tiles: false,
+    relations: false,
   };
   const [session] = useAtom(sessionAtom);
   const [nationList] = useAtom(nationListAtomV2);
@@ -24,6 +26,7 @@ const useDebugAtom = () => {
   const [userList] = useAtom(userListAtomV2);
   const [comList] = useAtom(comListAtomV2);
   const [tileList] = useAtom(tileListAtomV2);
+  const [relations] = useAtom(relationListAtomV2);
   useEffect(() => {
     DEBUG_ATOM.session && console.log(session);
   }, [session]);
@@ -67,6 +70,14 @@ const useDebugAtom = () => {
           tileList.getItems().length,
       );
   }, [tileList]);
+  useEffect(() => {
+    DEBUG_ATOM.relations &&
+      console.log(
+        new Date().toLocaleTimeString() +
+          " relations : " +
+          relations.getItems().length,
+      );
+  }, [relations]);
 };
 
 export default useDebugAtom;
