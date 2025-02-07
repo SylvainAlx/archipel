@@ -20,14 +20,14 @@ export const PLACE_SORTING = {
     id: 1,
     label: i18n.t("components.searchBars.placesList.sortPlaces.descAlpha"),
   },
-  // ascCtz: {
-  //   id: 2,
-  //   label: i18n.t("components.searchBars.placesList.sortPlaces.ascCtz"),
-  // },
-  // descCtz: {
-  //   id: 3,
-  //   label: i18n.t("components.searchBars.placesList.sortPlaces.descCtz"),
-  // },
+  ascCtz: {
+    id: 2,
+    label: i18n.t("components.searchBars.placesList.sortPlaces.ascCtz"),
+  },
+  descCtz: {
+    id: 3,
+    label: i18n.t("components.searchBars.placesList.sortPlaces.descCtz"),
+  },
   ascDate: {
     id: 4,
     label: i18n.t("components.searchBars.placesList.sortPlaces.ascDate"),
@@ -82,14 +82,14 @@ export const NATION_SORTING = {
     id: 5,
     label: i18n.t("components.searchBars.nationsList.sortNations.descCtz"),
   },
-  // ascTreasury: {
-  //   id: 6,
-  //   label: i18n.t("components.searchBars.nationsList.sortNations.ascTreasury"),
-  // },
-  // descTreasury: {
-  //   id: 7,
-  //   label: i18n.t("components.searchBars.nationsList.sortNations.descTreasury"),
-  // },
+  ascTreasury: {
+    id: 6,
+    label: i18n.t("components.searchBars.nationsList.sortNations.ascTreasury"),
+  },
+  descTreasury: {
+    id: 7,
+    label: i18n.t("components.searchBars.nationsList.sortNations.descTreasury"),
+  },
   ascDate: {
     id: 8,
     label: i18n.t("components.searchBars.nationsList.sortNations.ascDate"),

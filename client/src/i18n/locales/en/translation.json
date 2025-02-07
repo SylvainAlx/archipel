@@ -35,7 +35,8 @@
       "relations": {
         "title": "diplomacy",
         "noRelations": "no diplomatic relationship",
-        "pendingRelations": "diplomatic relations are pending approval"
+        "pendingRelations": "diplomatic relationships are pending approval",
+        "defaultNewRelationTitle": "New diplomatic relationship"
       },
       "citizens": {
         "title": "citizens",
@@ -61,14 +62,14 @@
         "title": "Locations"
       },
       "comsList": {
-        "title": "Press releases"
+        "title": "News"
       },
       "stats": {
         "title": "Statistics",
         "nations": "Virtual nations",
         "locations": "Locations",
         "citizens": "Citizens",
-        "coms": "Press releases",
+        "coms": "News",
         "tags": "hashtags"
       }
     },
@@ -165,7 +166,8 @@
       "cookiesConsent": "cookies consent",
       "accept": "ACCEPT",
       "refuse": "REFUSE",
-      "break": "BREAK"
+      "break": "BREAK",
+      "donate": "Donate"
     },
     "form": {
       "input": {
@@ -207,7 +209,7 @@
         "deleteTile": "Delete tile ?",
         "updateNation": "Update nation ?",
         "updatePlace": "Update place ?",
-        "updateCitizen": "Update profile ?",
+        "updateUser": "Update profile ?",
         "createCom": "Confirm new communication ?",
         "deleteCom": "Delete communication ?",
         "reportContent": "Confirm reporting the content to the administrator ?"
@@ -266,6 +268,9 @@
         "title": "New press release",
         "comTitle": "Title",
         "comMessage": "Message"
+      },
+      "infoModal": {
+        "title": "Information"
       }
     },
     "hoverInfos": {
@@ -301,7 +306,7 @@
         "nationalDay": "national day",
         "nationOwner": "nation editor",
         "residence": "residence",
-        "treasury": "treasury",
+        "treasury": "wealth",
         "date": "date",
         "honor": "honor",
         "honor_pioneer": "pioneer",
@@ -432,15 +437,19 @@
     }
   },
   "toasts": {
+    "successCopy": "Copied text !",
+    "failedCopy": "Unable to copy",
     "reported": "Content reported and awaiting moderation",
+    "connected": "Connection restored !",
     "errors": {
-      "400": "Unknown error",
-      "404": "Page not found",
+      "400": "Bad request",
+      "401": "Unauthorized",
+      "403": "Forbidden",
+      "404": "Information not found",
       "500": "Server error",
-      "miss": "Some information is wrong or missing",
-      "forbidden": "Delete action",
       "11000": "Information already existing in the database",
-      "nsfw": "Image contains NSFW content! Notification sent to admin"
+      "nsfw": "Image contains NSFW content! Notification sent to admin",
+      "offline": "You are offline !"
     },
     "user": {
       "signIn": "Sign In successful",
@@ -491,6 +500,10 @@
     }
   },
   "coms": {
+    "register": {
+      "title": "Welcome to ",
+      "message": "Your account has been successfully created. We welcome you to the application and wish you a pleasant experience !"
+    },
     "nationCreate": {
       "title": "Life of the nation ",
       "message": "Your nation has been created"

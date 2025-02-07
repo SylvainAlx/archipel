@@ -9,11 +9,14 @@ import Form from "../components/form/form";
 import { errorMessage, successMessage } from "../utils/toasts";
 import LangButton from "../components/buttons/langButton";
 import RequiredStar from "../components/form/requiredStar";
+import { createPageTitle } from "../utils/procedures";
 
 export default function Lobby() {
   const { t } = useTranslation();
   const [password, setPassword] = useState("");
   const [, setAccess] = useAtom(lobbyAtom);
+
+  createPageTitle("");
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value);

@@ -1,26 +1,34 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useAtom } from "jotai";
-import { newPlaceAtom } from "../../settings/store";
+import { newPlaceAtom, placeListAtomV2 } from "../../settings/store";
 import Button from "../buttons/button";
 import { ChangeEvent, FormEvent } from "react";
 import Form from "../form/form";
 import Input from "../form/input";
 import { emptyPlace } from "../../types/typPlace";
-import { createNewPlace } from "../../api/place/placeAPI";
 import Select from "../form/select";
 import { useTranslation } from "react-i18next";
 import { COSTS, PLACE_TYPE } from "../../settings/consts";
 import { FaCoins } from "react-icons/fa";
 import RequiredStar from "../form/requiredStar";
+import { PlaceModel } from "../../models/placeModel";
+import { useNavigate } from "react-router-dom";
+import { PlaceListModel } from "../../models/lists/placeListModel";
 
 export default function NewPlaceModal() {
   const [newPlace, setNewPlace] = useAtom(newPlaceAtom);
+  const [placeList, setPlaceList] = useAtom(placeListAtomV2);
   const { t } = useTranslation();
+  const navigate = useNavigate();
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    createNewPlace(newPlace);
+    const placeToInsert = new PlaceModel(newPlace);
+    const placeInserted = await placeToInsert.baseInsert();
+    const listToUpdate = placeList.addOrUpdate(placeInserted);
+    setPlaceList(new PlaceListModel(listToUpdate));
     setNewPlace(emptyPlace);
+    navigate(`/place/${placeInserted.officialId}`);
   };
 
   const handleChange = (

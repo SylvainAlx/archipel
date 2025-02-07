@@ -3,10 +3,13 @@ import H1 from "../components/titles/h1";
 import MDEditor from "@uiw/react-md-editor";
 import { useEffect, useState } from "react";
 import { langOptions } from "../i18n/i18n";
+import { createPageTitle } from "../utils/procedures";
 
 export default function ReleaseNotes() {
   const { t, i18n } = useTranslation();
   const [markdownContent, setMarkdownContent] = useState("");
+
+  createPageTitle(t("pages.releaseNotes.title"));
 
   useEffect(() => {
     fetchMarkdown();

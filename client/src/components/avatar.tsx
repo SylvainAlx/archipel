@@ -1,9 +1,9 @@
 import { lazy, Suspense } from "react";
 import { RxAvatar } from "react-icons/rx";
-import Spinner from "./loading/spinner";
 import { useTranslation } from "react-i18next";
 import { AiOutlinePicture } from "react-icons/ai";
 import { FaCity } from "react-icons/fa";
+import ImageSkeleton from "./loading/skeletons/imageSkeleton";
 
 export interface AvatarProps {
   url: string;
@@ -32,7 +32,7 @@ export default function Avatar({
       }
     >
       {url ? (
-        <Suspense fallback={<Spinner showClock={false} />}>
+        <Suspense fallback={<ImageSkeleton />}>
           <LazyImage
             src={url}
             alt="avatar"

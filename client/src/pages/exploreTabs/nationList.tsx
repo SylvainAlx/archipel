@@ -4,15 +4,17 @@ import { useState, lazy, Suspense } from "react";
 import H1 from "../../components/titles/h1";
 import IndexTag from "../../components/tags/indexTag";
 import NationSearchBar from "../../components/searchBars/nationSearchBar";
-import BarreLoader from "../../components/loading/barreLoader";
 import { StringProps } from "../../types/typProp";
-import { Nation } from "../../types/typNation";
 import { useTranslation } from "react-i18next";
 import { ELEMENTS_DISPLAYED_LIMIT } from "../../settings/consts";
+import { NationListModel } from "../../models/lists/nationListModel";
+import TileSkeleton from "../../components/loading/skeletons/tileSkeleton";
 // import AdBanner from "../../components/ads/adBanner";
 
 export default function NationList({ text }: StringProps) {
-  const [nationsList, setNationsList] = useState<Nation[]>([]);
+  const [nationsList, setNationsList] = useState<NationListModel>(
+    new NationListModel(),
+  );
   const [displayedNations, setDisplayedNations] = useState(
     ELEMENTS_DISPLAYED_LIMIT.nations,
   );
@@ -30,22 +32,13 @@ export default function NationList({ text }: StringProps) {
       />
       <section className="w-full flex gap-1 flex-wrap items-center flex-col ">
         {nationsList != undefined &&
-          nationsList.length > 0 &&
-          nationsList.map((nation, i) => {
+          nationsList.getItems().length > 0 &&
+          nationsList.getItems().map((nation, i) => {
             if (i < displayedNations) {
               return (
-                <Suspense key={i} fallback={<BarreLoader />}>
+                <Suspense key={i} fallback={<TileSkeleton />}>
                   <div className="min-w-[300px] w-full relative transition-all duration-300 animate-fadeIn">
-                    <NationTile
-                      _id={nation._id}
-                      officialId={nation.officialId}
-                      name={nation.name}
-                      owner={nation.owner}
-                      reported={nation.reported}
-                      banished={nation.banished}
-                      data={nation.data}
-                      createdAt={nation.createdAt}
-                    />
+                    <NationTile nation={nation} />
                     <IndexTag text={i} />
                   </div>
                 </Suspense>
@@ -53,7 +46,7 @@ export default function NationList({ text }: StringProps) {
             }
           })}
       </section>
-      {displayedNations < nationsList.length && (
+      {displayedNations < nationsList.getItems().length && (
         <Button
           click={() =>
             setDisplayedNations(

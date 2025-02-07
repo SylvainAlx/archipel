@@ -3,53 +3,53 @@ import Nation from "../models/nationSchema.js";
 import Param from "../models/paramSchema.js";
 import Place from "../models/placeSchema.js";
 import { LoremIpsum } from "lorem-ipsum";
-import { addMonths, createOfficialId } from "../utils/functions.js";
+import {
+  addMonths,
+  createOfficialId,
+  handleError,
+} from "../utils/functions.js";
 import { GIFTS } from "../settings/const.js";
 
-const IpIsBanished = async (AUserIp) => {
-  const banned =
-    (await Param.findOne({
-      name: "banished",
-      props: { $elemMatch: { label: "ip", value: AUserIp } },
-    })) != null;
-
-  return banned;
+const IpIsBanished = async (AUserIp, res) => {
+  try {
+    const banned =
+      (await Param.findOne({
+        name: "banished",
+        props: { $elemMatch: { label: "ip", value: AUserIp } },
+      })) != null;
+    return banned;
+  } catch (error) {
+    handleError(error, res);
+  }
 };
 
 export const register = async (req, res) => {
   try {
     const { name, password, gender, language } = req.body;
     const userIp = req.clientIp;
-
     if (await IpIsBanished(userIp)) {
       return res.status(403).json({
-        infoType: "ip",
+        infoType: "403",
       });
     }
-
     if (!name || !password) {
-      return res.status(400).json({
-        infoType: "miss",
+      return res.status(401).json({
+        infoType: "401",
       });
     }
-
     const random = new LoremIpsum({
       sentencesPerParagraph: { max: 8, min: 4 },
       wordsPerSentence: { max: 16, min: 4 },
     });
     const recovery = random.generateWords(12);
-
     let role = "standard";
-
     const roles = await Param.findOne({ name: "role" });
     roles.props.forEach((prop) => {
       if (prop.value === "admin" && prop.label === name) {
         role = "admin";
       }
     });
-
     const officialId = createOfficialId("c");
-
     const user = new User({
       officialId,
       ip: [{ value: userIp, lastVisit: new Date() }],
@@ -61,7 +61,6 @@ export const register = async (req, res) => {
       role,
       credits: GIFTS.REGISTER,
     });
-
     try {
       const savedUser = await user.save();
       const jwt = savedUser.createJWT();
@@ -70,7 +69,6 @@ export const register = async (req, res) => {
         .json({ user: savedUser, recovery, jwt, infoType: "signup" });
     } catch (error) {
       console.error(error);
-
       if (error.code === 11000) {
         return res.status(400).json({
           error: error.keyValue,
@@ -79,16 +77,12 @@ export const register = async (req, res) => {
       } else {
         return res.status(400).json({
           error: error.message,
-          infoType: "error",
+          infoType: "400",
         });
       }
     }
   } catch (error) {
-    console.error(error);
-    res.status(500).json({
-      infoType: "500",
-      error,
-    });
+    handleError(error, res);
   }
 };
 
@@ -98,15 +92,15 @@ export const login = async (req, res) => {
 
     if (await IpIsBanished(userIp)) {
       return res.status(403).json({
-        infoType: "ip",
+        infoType: "403",
       });
     }
 
     const { name, password } = req.body;
 
-    const user = await User.findOne({ name }, "-ip -recovery");
+    const user = await User.findOne({ name }, "-recovery");
     if (!user) {
-      return res.status(404).json({ infoType: "user" });
+      return res.status(404).json({ infoType: "404" });
     }
     user.comparePassword(password, async (error, isMatch) => {
       if (error) {
@@ -116,18 +110,15 @@ export const login = async (req, res) => {
         });
       }
       if (!isMatch) {
-        return res.status(401).json({ infoType: "password" });
+        return res.status(401).json({ infoType: "401" });
       }
       const jwt = user.createJWT();
-      updateUserIpAddress(user.officialId, userIp);
-      res.status(200).json({ user, jwt, infoType: "signin" });
+      const lastVisitDate = getLastVisitDate(user, userIp);
+      updateUserIpAddress(user, userIp);
+      res.status(200).json({ user, lastVisitDate, jwt, infoType: "signin" });
     });
   } catch (error) {
-    console.error(error);
-    res.status(500).json({
-      infoType: "500",
-      error,
-    });
+    handleError(error, res);
   }
 };
 
@@ -143,50 +134,41 @@ export const verify = async (req, res) => {
 
     const user = await User.findOne(
       { officialId: userId },
-      "-ip -password -recovery",
+      "-password -recovery",
     );
 
     if (user) {
-      updateUserIpAddress(user.officialId, userIp);
-      return res.status(200).json({ user, infoType: "verify" });
+      const lastVisitDate = getLastVisitDate(user, userIp);
+      updateUserIpAddress(user, userIp);
+      return res.status(200).json({ user, lastVisitDate, infoType: "verify" });
     } else {
-      return res.status(404).json({ infoType: "user" });
+      return res.status(401).json({ infoType: "401" });
     }
   } catch (error) {
-    res.status(401).json({ message: error.message, infoType: "jwt" });
+    handleError(error, res);
   }
 };
 
 export const forgetPassword = async (req, res) => {
   try {
     const { name, recovery, newPassword } = req.body;
-
     const user = await User.findOne({ name });
-
     if (!user) {
-      return res.status(404).json({ infoType: "user" });
+      return res.status(404).json({ infoType: "404" });
     }
-
-    const isMatch = await user.compare(recovery);
-
+    const isMatch = await user.compareRecoveryCode(recovery);
     if (!isMatch) {
       return res.status(401).json({
-        infoType: "badRecovery",
+        infoType: "401",
       });
     }
-
     user.password = newPassword;
     await user.save();
-
     return res.status(200).json({
       infoType: "newPassword",
     });
   } catch (error) {
-    console.error(error);
-    res.status(500).json({
-      infoType: "500",
-      error,
-    });
+    handleError(error, res);
   }
 };
 
@@ -196,7 +178,7 @@ export const changePassword = async (req, res) => {
     const userId = req.userId;
     const user = await User.findOne({ officialId: userId });
     if (!user) {
-      return res.status(404).json({ infoType: "user" });
+      return res.status(404).json({ infoType: "404" });
     }
     user.comparePassword(oldPassword, async (error, isMatch) => {
       if (error) {
@@ -210,16 +192,12 @@ export const changePassword = async (req, res) => {
         });
       } else {
         return res.status(403).json({
-          infoType: "forbidden",
+          infoType: "403",
         });
       }
     });
   } catch (error) {
-    console.error(error);
-    res.status(500).json({
-      infoType: "500",
-      error,
-    });
+    handleError(error, res);
   }
 };
 
@@ -240,11 +218,7 @@ export const getAllUsers = async (req, res) => {
       res.status(200).json(users);
     }
   } catch (error) {
-    console.error(error);
-    res.status(500).json({
-      infoType: "500",
-      error,
-    });
+    handleError(error, res);
   }
 };
 
@@ -259,11 +233,7 @@ export const getOneUser = async (req, res) => {
       user,
     });
   } catch (error) {
-    console.error(error);
-    res.status(500).json({
-      infoType: "500",
-      error,
-    });
+    handleError(error, res);
   }
 };
 
@@ -273,11 +243,7 @@ export const getSelfUser = async (req, res) => {
     const user = await User.findOne({ officialId: id });
     res.status(200).json({ user }, "-ip -password -recovery");
   } catch (error) {
-    console.error(error);
-    res.status(500).json({
-      infoType: "500",
-      error,
-    });
+    handleError(error, res);
   }
 };
 
@@ -310,16 +276,12 @@ export const deleteSelfUser = async (req, res) => {
         });
       } else {
         return res.status(403).json({
-          infoType: "forbidden",
+          infoType: "403",
         });
       }
     });
   } catch (error) {
-    console.error(error);
-    res.status(500).json({
-      infoType: "500",
-      error,
-    });
+    handleError(error, res);
   }
 };
 
@@ -334,14 +296,10 @@ export const getUsersByNation = async (req, res) => {
         res.status(200).json(users);
       })
       .catch((error) => {
-        res.status(400).json({ message: error.message, infoType: "error" });
+        res.status(400).json({ message: error.message, infoType: "400" });
       });
   } catch (error) {
-    console.error(error);
-    res.status(500).json({
-      infoType: "500",
-      error,
-    });
+    handleError(error, res);
   }
 };
 
@@ -352,14 +310,10 @@ export const usersCount = async (req, res) => {
         res.status(200).json(count);
       })
       .catch((error) => {
-        res.status(400).json({ message: error.message, infoType: "error" });
+        res.status(400).json({ message: error.message, infoType: "400" });
       });
   } catch (error) {
-    console.error(error);
-    res.status(500).json({
-      infoType: "500",
-      error,
-    });
+    handleError(error, res);
   }
 };
 
@@ -420,33 +374,20 @@ export const updateUser = async (req, res) => {
       user.role = role;
       user.plan = plan;
       user.citizenship = citizenship;
-      user
-        .save()
-        .then((user) => {
-          res.status(200).json({
-            user,
-            place: newResidence,
-            oldPlace: oldResidence,
-            infoType: "update",
-          });
-        })
-        .catch((error) => {
-          console.error(error);
-          res.status(400).json({
-            infoType: "miss",
-          });
-        });
+      await user.save();
+      res.status(200).json({
+        user,
+        place: newResidence,
+        oldPlace: oldResidence,
+        infoType: "update",
+      });
     } else {
       res.status(403).json({
-        infoType: "forbidden",
+        infoType: "403",
       });
     }
   } catch (error) {
-    console.error(error);
-    res.status(500).json({
-      infoType: "500",
-      error,
-    });
+    handleError(error, res);
   }
 };
 
@@ -468,11 +409,7 @@ export const changeStatus = async (req, res) => {
         if (status === 1) {
           nation.data.roleplay.citizens += 1;
           nation.data.roleplay.treasury += GIFTS.CITIZENSHIP;
-          nation.save().catch((error) => {
-            res.status(400).json({
-              erreur: error.message,
-            });
-          });
+          await nation.save();
         }
       } else {
         user.citizenship.nationId = "";
@@ -480,38 +417,21 @@ export const changeStatus = async (req, res) => {
         if (user.citizenship.status === 1) {
           nation.data.roleplay.citizens -= 1;
           nation.data.roleplay.treasury -= GIFTS.CITIZENSHIP;
-          nation.save().catch((error) => {
-            res.status(400).json({
-              erreur: error.message,
-            });
-          });
+          await nation.save();
         }
       }
       user.citizenship.status = status;
-      user
-        .save()
-        .then((user) => {
-          res.status(200).json({
-            user,
-            nation,
-            infoType: "update",
-          });
-        })
-        .catch((error) => {
-          console.error(error);
-          res.status(400).json({
-            infoType: "miss",
-          });
-        });
+      await user.save();
+      res.status(200).json({
+        user,
+        nation,
+        infoType: "update",
+      });
     } else {
-      res.sendStatus(403).json({ infoType: "forbidden" });
+      res.sendStatus(403).json({ infoType: "403" });
     }
   } catch (error) {
-    console.error(error);
-    res.status(500).json({
-      infoType: "500",
-      error,
-    });
+    handleError(error, res);
   }
 };
 
@@ -522,28 +442,20 @@ export const changePlan = async (req, res) => {
     if (user) {
       user.plan = plan;
       user.expirationDate = addMonths(duration);
-      user.save();
+      await user.save();
       res.status(200).json({
         user,
         infoType: "update",
       });
     }
   } catch (error) {
-    console.error(error);
-    res.status(500).json({
-      infoType: "500",
-      error,
-    });
+    handleError(error, res);
   }
 };
 
-const updateUserIpAddress = async (userOfficialId, ip) => {
+const updateUserIpAddress = async (user, ip) => {
   try {
     let isFind = false;
-    const user = await User.findOne(
-      { officialId: userOfficialId },
-      "-password -recovery",
-    );
     for (const address of user.ip) {
       if (address.value === ip) {
         isFind = true;
@@ -555,6 +467,16 @@ const updateUserIpAddress = async (userOfficialId, ip) => {
     }
     await user.save();
   } catch (error) {
-    console.error(error);
+    handleError(error, res);
   }
+};
+
+const getLastVisitDate = (user, ip) => {
+  let date = new Date();
+  for (const address of user.ip) {
+    if (address.value === ip) {
+      date = new Date(address.lastVisit);
+    }
+  }
+  return date;
 };

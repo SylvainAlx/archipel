@@ -80,5 +80,6 @@ app.listen(PORT, () => {
 //Ping régulier
 const interval = process.env.PING_INTERVAL;
 if (interval > 0) {
+  console.log(`${new Date().toISOString()} : Ping every ${interval}ms`);
   setInterval(pingBackend, interval);
 }

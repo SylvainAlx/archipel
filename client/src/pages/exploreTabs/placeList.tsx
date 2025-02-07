@@ -3,15 +3,18 @@ import Button from "../../components/buttons/button";
 import { useState, lazy, Suspense } from "react";
 import H1 from "../../components/titles/h1";
 import IndexTag from "../../components/tags/indexTag";
-import BarreLoader from "../../components/loading/barreLoader";
 import { StringProps } from "../../types/typProp";
-import { Place } from "../../types/typPlace";
 import PlaceSearchBar from "../../components/searchBars/placeSearchBar";
 import { useTranslation } from "react-i18next";
 import { ELEMENTS_DISPLAYED_LIMIT } from "../../settings/consts";
+import { PlaceListModel } from "../../models/lists/placeListModel";
+import { NationModel } from "../../models/nationModel";
+import TileSkeleton from "../../components/loading/skeletons/tileSkeleton";
 
 export default function PlaceList({ text }: StringProps) {
-  const [placesList, setPlacesList] = useState<Place[]>([]);
+  const [placesList, setPlacesList] = useState<PlaceListModel>(
+    new PlaceListModel(),
+  );
   const [displayedPlaces, setDisplayedPlaces] = useState(
     ELEMENTS_DISPLAYED_LIMIT.places,
   );
@@ -25,13 +28,13 @@ export default function PlaceList({ text }: StringProps) {
       <PlaceSearchBar type="nation" list={placesList} setList={setPlacesList} />
       <section className="w-full flex gap-1 flex-wrap items-center flex-col ">
         {placesList != undefined &&
-          placesList.length > 0 &&
-          placesList.map((place, i) => {
+          placesList.getItems().length > 0 &&
+          placesList.getItems().map((place, i) => {
             if (i < displayedPlaces) {
               return (
-                <Suspense key={i} fallback={<BarreLoader />}>
+                <Suspense key={i} fallback={<TileSkeleton />}>
                   <div className="min-w-[300px] w-full relative transition-all duration-300 animate-fadeIn">
-                    <PlaceTile place={place} />
+                    <PlaceTile place={place} nation={new NationModel()} />
                     <IndexTag text={i} />
                   </div>
                 </Suspense>
@@ -39,7 +42,7 @@ export default function PlaceList({ text }: StringProps) {
             }
           })}
       </section>
-      {displayedPlaces < placesList.length && (
+      {displayedPlaces < placesList.getItems().length && (
         <Button
           click={() =>
             setDisplayedPlaces(

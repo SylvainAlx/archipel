@@ -7,6 +7,7 @@ import { useAtom } from "jotai";
 import { confirmBox, editTileAtom, myStore } from "../../settings/store";
 import { MdOutlineUpdate } from "react-icons/md";
 import { useTranslation } from "react-i18next";
+import { TileModel } from "../../models/tileModel";
 
 export interface FreeTileProps {
   tile: Tile;
@@ -25,15 +26,18 @@ export default function FreeTile({ tile, owner }: FreeTileProps) {
   }, [updatedAt]);
 
   const handleEdit = (tile: Tile) => {
-    setUpdatedTile(tile);
+    setUpdatedTile(new TileModel(tile));
   };
 
-  const handleDelete = (tile: Tile) => {
+  const handleDelete = () => {
     myStore.set(confirmBox, {
-      action: "deleteTile",
+      action: "",
       text: t("components.modals.confirmModal.deleteTile"),
-      payload: tile._id,
       result: "",
+      actionToDo: () => {
+        const newTile = new TileModel(tile);
+        newTile.baseDelete();
+      },
     });
   };
 
@@ -48,7 +52,7 @@ export default function FreeTile({ tile, owner }: FreeTileProps) {
         <MdOutlineUpdate />
         <span>{stringDate}</span>
       </em>
-      {owner && <CrossButton small={true} click={() => handleDelete(tile)} />}
+      {owner && <CrossButton small={true} click={handleDelete} />}
       {owner && <EditButton click={() => handleEdit(tile)} />}
     </div>
   );

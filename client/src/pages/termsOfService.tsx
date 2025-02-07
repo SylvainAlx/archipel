@@ -3,11 +3,14 @@ import H1 from "../components/titles/h1";
 import { useEffect, useState } from "react";
 import { langOptions } from "../i18n/i18n";
 import MDEditor from "@uiw/react-md-editor";
+import { createPageTitle } from "../utils/procedures";
 
 export default function TermsOfService() {
   const t = useTranslation();
   const [lang, setLang] = useState("");
   const [markdownContent, setMarkdownContent] = useState("");
+
+  createPageTitle("CGU");
 
   useEffect(() => {
     setLang(t.i18n.language);

@@ -35,7 +35,8 @@
       "relations": {
         "title": "diplomatie",
         "noRelations": "aucune relation diplomatique",
-        "pendingRelations": "des relations sont en attente d'approbation"
+        "pendingRelations": "des relations sont en attente d'approbation",
+        "defaultNewRelationTitle": "Nouvelle relation diplomatique"
       },
       "citizens": {
         "title": "citoyens",
@@ -61,14 +62,14 @@
         "title": "Lieux"
       },
       "comsList": {
-        "title": "Communiqués"
+        "title": "Actualités"
       },
       "stats": {
         "title": "Statistiques",
         "nations": "Nations virtuelles",
         "locations": "Lieux",
         "citizens": "Citoyens",
-        "coms": "Communiqués",
+        "coms": "Actualités",
         "tags": "Mots clés"
       }
     },
@@ -165,7 +166,8 @@
       "cookiesConsent": "consentement des cookies",
       "accept": "ACCEPTER",
       "refuse": "REFUSER",
-      "break": "ROMPRE"
+      "break": "ROMPRE",
+      "donate": "Faire un don"
     },
     "form": {
       "input": {
@@ -207,7 +209,7 @@
         "deleteTile": "Confirmez-vous la suppression de la tuile ?",
         "updateNation": "Confirmez-vous la mise à jour de la nation ?",
         "updatePlace": "Confirmez-vous la mise à jour du lieu ?",
-        "updateCitizen": "Confirmez-vous la mise à jour de votre profil ?",
+        "updateUser": "Confirmez-vous la mise à jour de votre profil ?",
         "createCom": "Confirmez-vous la création de la communication ?",
         "deleteCom": "Confirmez-vous la suppression définitive de la communication ?",
         "reportContent": "Confirmez-vous le signalement du contenu à l'administrateur ?"
@@ -266,6 +268,9 @@
         "title": "Nouveau communiqué",
         "comTitle": "Titre",
         "comMessage": "Message"
+      },
+      "infoModal": {
+        "title": "Information"
       }
     },
     "hoverInfos": {
@@ -301,7 +306,7 @@
         "nationalDay": "fête nationale",
         "nationOwner": "éditeur de la nation",
         "residence": "résidence",
-        "treasury": "trésor public",
+        "treasury": "richesse",
         "date": "date",
         "honor": "distinction",
         "honor_pioneer": "pionnier",
@@ -432,15 +437,19 @@
     }
   },
   "toasts": {
+    "successCopy": "Texte copié !",
+    "failedCopy": "Copie impossible",
     "reported": "Contenu signalé et en attente de modération",
+    "connected": "Connexion rétablie !",
     "errors": {
-      "400": "Erreur inconnue",
-      "404": "Page non trouvée",
+      "400": "Erreur de formulaire",
+      "401": "Action non autorisée",
+      "403": "Action interdite",
+      "404": "Information non trouvée",
       "500": "Erreur serveur",
-      "miss": "Certaines informations sont erronées ou manquantes",
-      "forbidden": "Action interdite",
       "11000": "Information déjà existante",
-      "nsfw": "L'image contient du contenu NSFW ! Notification envoyée à l'administrateur"
+      "nsfw": "L'image contient du contenu NSFW ! Notification envoyée à l'administrateur",
+      "offline": "Vous êtes hors ligne !"
     },
     "user": {
       "signIn": "Connexion réussie",
@@ -491,6 +500,10 @@
     }
   },
   "coms": {
+    "register": {
+      "title": "Bienvenue sur ",
+      "message": "Votre compte a bien été créé, nous vous souhaitons la bienvenue sur l'application et vous souhaitons une agéable expérience !"
+    },
     "nationCreate": {
       "title": "Vie de la nation ",
       "message": "Votre nation a été créée"

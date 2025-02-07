@@ -1,7 +1,6 @@
 import { useTranslation } from "react-i18next";
 import { genderList, languageList, religionList } from "../../settings/lists";
-import { emptyNewNationPayload, Nation } from "../../types/typNation";
-import { User } from "../../types/typUser";
+import { emptyNewNationPayload } from "../../types/typNation";
 import DashTile from "../dashTile";
 import EditIcon from "../editIcon";
 import IdTag from "../tags/idTag";
@@ -22,25 +21,37 @@ import {
 import { useAtom } from "jotai";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { PIONEER_DATE } from "../../settings/consts";
+import { PIONEER_DATE, PLACE_TYPE } from "../../settings/consts";
 import ReligionTag from "../tags/religionTag";
 import GenderTag from "../tags/genderTag";
 import HonorTag from "../tags/honorTag";
+import { UserModel } from "../../models/userModel";
+import ResidenceTag from "../tags/residenceTag";
+import { NationModel } from "../../models/nationModel";
+import { useLoadNationPlaces } from "../../hooks/useLoadNationPlaces";
+import { PlaceListModel } from "../../models/lists/placeListModel";
+import CreditTag from "../tags/creditTag";
 
 interface CitizenshipProps {
-  citizen: User;
-  nation: Nation;
+  citizen: UserModel;
+  setCitizen: React.Dispatch<React.SetStateAction<UserModel>>;
+  nation: NationModel;
   owner: boolean;
+  updatePath: (path: string, value: string) => void;
 }
 
 export default function Citizenship({
   citizen,
+  setCitizen,
   nation,
   owner,
+  updatePath,
 }: CitizenshipProps) {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const [session] = useAtom(sessionAtom);
+  const nationPlaceList = useLoadNationPlaces(nation);
+  const [cities, setCities] = useState(new PlaceListModel());
   const [enableLeaving, setEnableLeaving] = useState(false);
 
   const pioneerDate = new Date(PIONEER_DATE);
@@ -54,6 +65,10 @@ export default function Citizenship({
     }
   }, [citizen]);
 
+  useEffect(() => {
+    setCities(nationPlaceList.getCities());
+  }, [nationPlaceList]);
+
   const leaveNation = () => {
     const payload = {
       officialId: citizen.officialId,
@@ -61,13 +76,15 @@ export default function Citizenship({
       status: -1,
     };
     myStore.set(confirmBox, {
-      action: "changeStatus",
+      action: "",
       text:
         session.user.citizenship.status > 0
           ? t("components.modals.confirmModal.leaveNation")
           : t("components.modals.confirmModal.cancelCitizenship"),
       result: "",
-      payload,
+      actionToDo: async () => {
+        setCitizen(await citizen.changeStatus(payload));
+      },
     });
   };
 
@@ -99,6 +116,7 @@ export default function Citizenship({
                   param={genderList}
                   path="gender"
                   indice={citizen.gender}
+                  action={updatePath}
                 />
               )}
             </span>
@@ -110,6 +128,7 @@ export default function Citizenship({
                   param={languageList}
                   path="language"
                   indice={citizen.language}
+                  action={updatePath}
                 />
               )}
             </span>
@@ -121,10 +140,24 @@ export default function Citizenship({
                   param={religionList}
                   path="religion"
                   indice={citizen.religion}
+                  action={updatePath}
                 />
               )}
             </span>
-            {/* {owner && <CreditTag label={citizen.credits} owner={true} />} */}
+            <ResidenceTag
+              residenceId={citizen.citizenship.residence}
+              nationPlaces={cities}
+            />
+            {owner && cities.getItems().length > 0 && (
+              <EditIcon
+                target="citizen"
+                param={cities.getLabelIdPlaceList([PLACE_TYPE.city.id])}
+                path="citizenship.residence"
+                indice={citizen.citizenship.residence}
+                action={updatePath}
+              />
+            )}
+            {owner && <CreditTag label={citizen.credits} owner={true} />}
             {citizen.citizenship.nationOwner && <NationOwnerTag />}
             {citizen.role === "admin" && (
               <RoleTag label={t("pages.citizen.role.admin")} />

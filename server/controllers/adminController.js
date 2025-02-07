@@ -4,17 +4,14 @@ import Nation from "../models/nationSchema.js";
 import User from "../models/userSchema.js";
 import Place from "../models/placeSchema.js";
 import Param from "../models/paramSchema.js";
+import { handleError } from "../utils/functions.js";
 
 export const getAdminComs = async (req, res) => {
   try {
     const coms = await Com.find({ comType: COMTYPE[0].id });
     res.status(200).json(coms);
   } catch (error) {
-    console.error(error);
-    res.status(500).json({
-      infoType: "500",
-      error,
-    });
+    handleError(error, res);
   }
 };
 
@@ -60,11 +57,7 @@ const modifierReportOuBan = async (
 
     res.status(200).json(entite);
   } catch (error) {
-    console.error(`Erreur lors de la modification du statut :`, error);
-    res.status(500).json({
-      infoType: "500",
-      error,
-    });
+    handleError(error, res);
   }
 };
 
@@ -91,11 +84,7 @@ const banIp = async (AContent) => {
       await banishedParam.save();
     }
   } catch (error) {
-    console.error(error);
-    res.status(500).json({
-      infoType: "500",
-      error,
-    });
+    handleError(error, res);
   }
 };
 
@@ -114,11 +103,7 @@ export const banContent = async (req, res) => {
     const AContent = req.params.id;
     await modifierReportOuBan(AContent, null, true, res);
   } catch (error) {
-    console.error(error);
-    res.status(500).json({
-      infoType: "500",
-      error,
-    });
+    handleError(error, res);
   }
 };
 
@@ -135,10 +120,6 @@ export const getBannedUsers = async (req, res) => {
     );
     res.status(200).json(users);
   } catch (error) {
-    console.error(error);
-    res.status(500).json({
-      infoType: "500",
-      error,
-    });
+    handleError(error, res);
   }
 };

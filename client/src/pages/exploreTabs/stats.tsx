@@ -2,21 +2,27 @@
 import { useAtom } from "jotai";
 import DashTile from "../../components/dashTile";
 import H1 from "../../components/titles/h1";
-import { statsAtom, tagListAtom } from "../../settings/store";
-import { useEffect } from "react";
-import { getAllNationTags } from "../../api/nation/nationAPI";
+import { statsAtom } from "../../settings/store";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { StringProps } from "../../types/typProp";
 import HashTag from "../../components/tags/hashTag";
 import CountUp from "react-countup";
-import { getCounts } from "../../api/stats/statsAPI";
+import { Hashtag } from "../../types/typNation";
+import { NationModel } from "../../models/nationModel";
+import { getCounts } from "../../services/statService";
 
 export default function Stats({ text }: StringProps) {
   const [stats] = useAtom(statsAtom);
-  const [tagList] = useAtom(tagListAtom);
+  const [tagList, setTagList] = useState<Hashtag[]>([]);
   const { t } = useTranslation();
 
   useEffect(() => {
+    const getTags = async () => {
+      const nation = new NationModel();
+      const tags = await nation.getAllNationTags();
+      setTagList(tags);
+    };
     if (
       stats.counts.nations === 0 ||
       stats.counts.places === 0 ||
@@ -26,7 +32,7 @@ export default function Stats({ text }: StringProps) {
       getCounts();
     }
     if (tagList.length === 0) {
-      getAllNationTags();
+      getTags();
     }
   }, []);
 

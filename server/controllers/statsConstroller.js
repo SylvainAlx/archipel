@@ -3,6 +3,7 @@ import User from "../models/userSchema.js";
 import Place from "../models/placeSchema.js";
 import Com from "../models/comSchema.js";
 import { COMTYPE } from "../settings/const.js";
+import { handleError } from "../utils/functions.js";
 
 export const getCounts = async (req, res) => {
   try {
@@ -21,10 +22,6 @@ export const getCounts = async (req, res) => {
     };
     res.status(200).json(counts);
   } catch (error) {
-    console.error(error);
-    const statusCode = error.name === "ValidationError" ? 400 : 500;
-    res.status(statusCode).json({
-      infoType: statusCode.toString(),
-    });
+    handleError(error, res);
   }
 };

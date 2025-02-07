@@ -6,12 +6,10 @@ import { useAtom } from "jotai";
 import {
   myStore,
   newRelationAtom,
-  relationListAtom,
+  relationListAtomV2,
   sessionAtom,
 } from "../../settings/store";
 import { lazy, Suspense, useEffect, useState } from "react";
-import { getRelations } from "../../api/relation/relationAPI";
-import BarreLoader from "../loading/barreLoader";
 import Button from "../buttons/button";
 import { FaHandshakeSimple } from "react-icons/fa6";
 import {
@@ -19,39 +17,48 @@ import {
   emptyDiplomaticRelationship,
   NationDiplomacyInfo,
 } from "../../types/typRelation";
-import { getNationRelationListFromMemory } from "../../utils/atomArrayFunctions";
+import { RelationListModel } from "../../models/lists/relationListModel";
+import { RelationModel } from "../../models/relationModel";
+import TileSkeleton from "../loading/skeletons/tileSkeleton";
 
 export default function Diplomacy({
   selectedNation,
   owner,
 }: SelectedNationProps) {
   const { t } = useTranslation();
-  const [relationList] = useAtom<DiplomaticRelationship[]>(relationListAtom);
-  const [nationRelationList, setNationRelationList] = useState<
-    DiplomaticRelationship[]
-  >([]);
+  const [relationList] = useAtom(relationListAtomV2);
+  const [nationRelationList, setNationRelationList] =
+    useState<RelationListModel>(new RelationListModel());
+  const [listChecked, setListChecked] = useState<boolean>(false);
   const [session] = useAtom(sessionAtom);
   const RelationTile = lazy(() => import("../tiles/relationTile"));
 
   useEffect(() => {
-    getRelations();
-  }, []);
-
-  useEffect(() => {
-    const tempRelations = getNationRelationListFromMemory(
-      selectedNation.officialId,
-    );
-    setNationRelationList(tempRelations);
-    // const tempRelations: DiplomaticRelationship[] = [];
-    // relationList.forEach((relation) => {
-    //   relation.nations.forEach((element) => {
-    //     if (element.OfficialId === selectedNation.officialId) {
-    //       tempRelations.push(relation);
-    //     }
-    //   });
-    // });
-    // setNationRelationList(tempRelations);
-  }, [relationList, selectedNation.officialId]);
+    const filterList = (list: RelationListModel) => {
+      const updatedList = list
+        .getItems()
+        .filter((relation) =>
+          relation.nations.some(
+            (nation: { OfficialId: string; AmbassadorId: string }) =>
+              nation.OfficialId === selectedNation.officialId ||
+              nation.AmbassadorId === selectedNation.owner,
+          ),
+        );
+      setNationRelationList(new RelationListModel(updatedList));
+    };
+    const loadRelationList = async () => {
+      if (nationRelationList.getItems().length === 0) {
+        const list = await nationRelationList.loadRelationList(
+          selectedNation.officialId,
+        );
+        setNationRelationList(list);
+        setListChecked(true);
+      }
+    };
+    if (selectedNation.officialId !== "") {
+      !listChecked ? loadRelationList() : filterList(relationList);
+    }
+  }, [selectedNation.officialId, relationList]);
 
   const handleClick = () => {
     const newRelationPayload: DiplomaticRelationship =
@@ -66,10 +73,12 @@ export default function Diplomacy({
       AmbassadorId: selectedNation.owner,
       accepted: false,
     };
-    newRelationPayload.name = `${selectedNation.name} & ${session.nation.name}`;
+    newRelationPayload.name = t(
+      "pages.nation.relations.defaultNewRelationTitle",
+    );
     newRelationPayload.nations = [nation1, nation2];
     myStore.set(newRelationAtom, {
-      relation: newRelationPayload,
+      relation: new RelationModel(newRelationPayload),
       show: true,
       update: false,
     });
@@ -82,8 +91,8 @@ export default function Diplomacy({
           title={t("pages.nation.relations.title")}
           children={
             <div className="w-full flex flex-col-reverse gap-2 items-center">
-              {nationRelationList.length > 0 ? (
-                nationRelationList.map((relation, i) => {
+              {nationRelationList.getItems().length > 0 ? (
+                nationRelationList.getItems().map((relation, i) => {
                   if (
                     relation.nations.length > 1 &&
                     (relation.nations[1].accepted ||
@@ -91,7 +100,7 @@ export default function Diplomacy({
                         session.user.officialId)
                   ) {
                     return (
-                      <Suspense key={i} fallback={<BarreLoader />}>
+                      <Suspense key={i} fallback={<TileSkeleton />}>
                         <RelationTile relation={relation} />
                       </Suspense>
                     );

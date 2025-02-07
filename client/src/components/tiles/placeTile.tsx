@@ -1,31 +1,28 @@
-import {
-  editPlaceAtom,
-  myStore,
-  nationPlacesListAtom,
-  sessionAtom,
-} from "../../settings/store";
+import { placeListAtomV2, sessionAtom } from "../../settings/store";
 import { useAtom } from "jotai";
 import { GiCapitol } from "react-icons/gi";
 import { useLocation, useNavigate } from "react-router-dom";
-import { getPlaceTypeLabel } from "../../utils/functions";
 import PlaceTag from "../tags/placeTag";
 import { useEffect, useState } from "react";
-import { Place } from "../../types/typPlace";
 import NationTag from "../tags/nationTag";
 import Avatar from "../avatar";
 import ReportPanel from "../reportPanel";
 import { PLACE_TYPE } from "../../settings/consts";
 import TreeTag from "../tags/treeTag";
 import DateTag from "../tags/dateTag";
+import { NationModel } from "../../models/nationModel";
+import { PlaceModel } from "../../models/placeModel";
+import PopulationTag from "../tags/populationTag";
 
 export interface PlaceTileProp {
   owner?: boolean;
-  place: Place;
+  place: PlaceModel;
+  nation: NationModel;
   update?: number;
 }
 
-export default function PlaceTile({ place, owner }: PlaceTileProp) {
-  const [nationPlacesList] = useAtom(nationPlacesListAtom);
+export default function PlaceTile({ place, nation }: PlaceTileProp) {
+  const [placeList] = useAtom(placeListAtomV2);
   const [childrenStats, setChildrenStats] = useState({
     population: 0,
     children: 0,
@@ -36,14 +33,16 @@ export default function PlaceTile({ place, owner }: PlaceTileProp) {
 
   const handleClick = (event: React.MouseEvent<HTMLDivElement>) => {
     if (event.target === event.currentTarget) {
-      myStore.set(editPlaceAtom, { place, owner });
       navigate(`/place/${place.officialId}`);
     }
   };
 
   useEffect(() => {
-    const stats = { ...childrenStats };
-    nationPlacesList.forEach((e) => {
+    const stats = {
+      population: 0,
+      children: 0,
+    };
+    placeList.getItems().forEach((e) => {
       if (e.parentId === place.officialId) {
         stats.population += e.population;
         stats.children += 1;
@@ -52,7 +51,7 @@ export default function PlaceTile({ place, owner }: PlaceTileProp) {
     setChildrenStats(stats);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [nationPlacesList, place.officialId]);
+  }, [placeList, place.officialId]);
 
   return (
     <div
@@ -68,9 +67,7 @@ export default function PlaceTile({ place, owner }: PlaceTileProp) {
           />
         </div>
         <span className="text-lg text-info">
-          {place.officialId === session.nation.data.roleplay.capital && (
-            <GiCapitol />
-          )}
+          {place.officialId === nation.data.roleplay.capital && <GiCapitol />}
         </span>
         <h3
           onClick={handleClick}
@@ -85,12 +82,16 @@ export default function PlaceTile({ place, owner }: PlaceTileProp) {
         )}
       </div>
       <div className="max-w-[90%] flex flex-wrap items-center self-end justify-end gap-1">
-        <PlaceTag label={getPlaceTypeLabel(place.type)} />
-        {/* <PopulationTag label={getTotalPopulation(place)} /> */}
-        {emplacement.pathname != `/nation/${place.nation}` ? (
+        <PlaceTag label={place.getPlaceTypeLabel()} />
+        {place.type === PLACE_TYPE.city.id && (
+          <PopulationTag label={place.population} />
+        )}
+        {emplacement.pathname === `/explore/4` ? (
           <NationTag label={place.nation} />
         ) : (
-          <TreeTag label={childrenStats.children} />
+          place.type != PLACE_TYPE.city.id && (
+            <TreeTag label={childrenStats.children} />
+          )
         )}
         {place.createdAt && <DateTag date={place.createdAt} />}
       </div>

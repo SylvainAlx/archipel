@@ -11,14 +11,21 @@ import Flag from "./flag";
 import Avatar from "./avatar";
 import { useLocation } from "react-router-dom";
 import { FaShieldAlt } from "react-icons/fa";
+import { NationModel } from "../models/nationModel";
 
 export interface IconLinkProps {
+  nation?: NationModel;
   destination: string;
   text: string;
   action?: MouseEventHandler<HTMLDivElement>;
 }
 
-export default function IconLink({ destination, text, action }: IconLinkProps) {
+export default function IconLink({
+  nation,
+  destination,
+  text,
+  action,
+}: IconLinkProps) {
   const [session] = useAtom(sessionAtom);
   const [focus, setFocus] = useState(false);
   const location = useLocation();
@@ -67,8 +74,8 @@ export default function IconLink({ destination, text, action }: IconLinkProps) {
       {destination === "user" && (
         <Avatar isUser={true} url={session.user.avatar} isHeader={true} />
       )}
-      {destination === "nation" && (
-        <Flag nation={session.nation} isHeader={true} />
+      {destination === "nation" && nation && (
+        <Flag nation={nation} isHeader={true} />
       )}
       {destination === "admin" && (
         <FaShieldAlt className="text-[40px] md:text-[25px]" />

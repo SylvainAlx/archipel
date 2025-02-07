@@ -2,6 +2,7 @@ import { RiArrowGoBackFill } from "react-icons/ri";
 import Button from "./button";
 import { confirmBox, myStore } from "../../settings/store";
 import { FaBan } from "react-icons/fa";
+import { CommonModel } from "../../models/commonModel";
 
 interface AdminBanButtonProps {
   contentOfficialId: string;
@@ -13,21 +14,16 @@ export default function AdminBanButton({
   reverse = false,
 }: AdminBanButtonProps) {
   const handleAdminBan = (reverse: boolean) => {
-    if (reverse) {
-      myStore.set(confirmBox, {
-        action: "adminBanReverse",
-        text: "Réindexer le contenu ?",
-        result: "",
-        target: contentOfficialId,
-      });
-    } else {
-      myStore.set(confirmBox, {
-        action: "adminBan",
-        text: "Désindexer le contenu ?",
-        result: "",
-        target: contentOfficialId,
-      });
-    }
+    myStore.set(confirmBox, {
+      action: "adminBan",
+      text: reverse ? "Réindexer le contenu ?" : "Désindexer le contenu ?",
+      result: "",
+      actionToDo: () => {
+        const content = new CommonModel();
+        content.officialId = contentOfficialId;
+        content.banContent(reverse);
+      },
+    });
   };
 
   return (

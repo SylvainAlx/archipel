@@ -1,5 +1,51 @@
 ## Version actuelle
 
+### BETA-0.6
+
+#### Ajouts
+
+- Ajout d'un lien vers les comptes Instagram et Threads
+- Ajout d'un bouton de don en cryptomonnaie
+- Ajout d'une notification d'alerte si l'application est hors ligne
+- Ajout de "skeletons" pour les éléments en cours de chargement
+- Le citoyen d'une nation peut choisir un lieu de résidence parmi les villes existantes de sa nation
+- Ajout du tag de richesse sur les tuiles "nation"
+- Tri possible des nations par richesse
+
+#### Suppressions
+
+- Mise en retrait de l'IA d'analyse d'image suite à des complications
+- Mise en retrait de la limitation de durée entre chaque communication postée
+
+#### Modifications & Corrections
+
+- Importante refonte du code source côté client
+- Amélioration de l'interception d'erreur côté serveur
+- Chargement plus progressif des composants d'une page pour améliorer la rapidité générale
+- Correction de la recherche des nations par mot-clé
+- Modification du nom de l'onglet "Communiqués" par "Actualités" sur la page "Explorer"
+- Correction du bouton de consentement des cookies
+- Amélioration des notifications de communications
+
+## Développements à venir
+
+- Créer une organisation ou en rejoindre une
+- Créer des items et les proposer à l'acquisition aux citoyens
+- Ajouter les hymnes des nations
+- Créer une gazette des nations en se basant sur les communiqués
+- Montrer la répartitions des langues parlées dans chaque nation
+- Créer une aide pour les premiers pas d'un utilisateur
+- Améliorer le système de notifications
+- Exporter une carte d'identité virtuelle sous forme d'image
+- Améliorer le référencement et l'accessibilité
+- Étendre les fonctionnalités pour les utilisateurs mobile
+- Lier les lieux de la nation à un emplacement sur la carte
+- Améliorer des traductions
+- Carte virtuelle d'Archipel avec l'ensemble des nations représentées
+- Permettre les virements de crédits entre citoyens et entre nations
+
+## Versions précédentes
+
 ### BETA-0.5
 
 #### Ajouts
@@ -27,25 +73,6 @@ aucune
 - Correction du calcul des statistiques
 - Modification de la liste des communiqué en intégrant les annonce générales
 - Mise en forme des CGU
-
-## Développements à venir
-
-- Créer une organisation ou en rejoindre une
-- Créer des items et les proposer à l'acquisition aux citoyens
-- Ajouter les hymnes des nations
-- Créer une gazette des nations en se basant sur les communiqués
-- Montrer la répartitions des langues parlées dans chaque nation
-- Créer une aide pour les premiers pas d'un utilisateur
-- Améliorer le système de notifications
-- Exporter une carte d'identité virtuelle sous forme d'image
-- Améliorer le référencement et l'accessibilité
-- Étendre les fonctionnalités pour les utilisateurs mobile
-- Lier les lieux de la nation à un emplacement sur la carte
-- Améliorer des traductions
-- Carte virtuelle d'Archipel avec l'ensemble des nations représentées
-- Permettre les virements de crédits entre citoyens et entre nations
-
-## Versions précédentes
 
 ### BETA-0.4
 

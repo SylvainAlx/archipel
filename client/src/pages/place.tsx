@@ -1,82 +1,114 @@
-import {
-  comFetchedListAtom,
-  editPlaceAtom,
-  nationFetchedAtom,
-  placeFetchedAtom,
-  sessionAtom,
-} from "../settings/store";
+import { confirmBox, myStore, sessionAtom } from "../settings/store";
 import { useAtom } from "jotai";
-import { useEffect, useState } from "react";
+import { lazy, Suspense, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { getNationPlaces, getPlace } from "../api/place/placeAPI";
-import { getNation } from "../api/nation/nationAPI";
 import ReportPanel from "../components/reportPanel";
-import { getComsByDestination } from "../api/communication/comAPI";
-import PlaceIdentity from "../components/place/placeIdentity";
-import PlaceChildren from "../components/place/placeChildren";
-import PlaceHeader from "../components/place/placeHeader";
-import { displayUnwatchedComs } from "../utils/procedures";
-import { getDocumentTitle } from "../utils/functions";
+import { PlaceModel } from "../models/placeModel";
+import { useTranslation } from "react-i18next";
+import { NationModel } from "../models/nationModel";
+import { createPageTitle } from "../utils/procedures";
+import MapSkeleton from "../components/loading/skeletons/mapSkeleton";
+import TileSkeleton from "../components/loading/skeletons/tileSkeleton";
+import ParamSkeleton from "../components/loading/skeletons/paramSkeleton";
+import { useLoadNationPlaces } from "../hooks/useLoadNationPlaces";
 
 export default function Place() {
   const [session] = useAtom(sessionAtom);
-  const [nation] = useAtom(nationFetchedAtom);
-  const [place] = useAtom(placeFetchedAtom);
-  const [comList] = useAtom(comFetchedListAtom);
-  const [, setEditPlace] = useAtom(editPlaceAtom);
+  const [nation, setNation] = useState<NationModel>(new NationModel());
+  const [place, setPlace] = useState<PlaceModel>(new PlaceModel());
+  const nationPlaceList = useLoadNationPlaces(nation);
   const param = useParams();
 
+  createPageTitle(place.name);
+
   const [owner, setOwner] = useState(false);
+  const { t } = useTranslation();
+
+  const PlaceHeader = lazy(() => import("../components/place/placeHeader"));
+  const PlaceIdentity = lazy(() => import("../components/place/placeIdentity"));
+  const PlaceChildren = lazy(() => import("../components/place/placeChildren"));
 
   useEffect(() => {
-    if (param.id != undefined) {
-      getPlace(param.id);
-    }
+    const loadPlace = async () => {
+      if (param.id) {
+        const updatedPlace = await place.loadPlace(param.id);
+        updatedPlace && setPlace(updatedPlace);
+      }
+    };
+    loadPlace();
   }, [param.id]);
 
   useEffect(() => {
-    setEditPlace({ place });
+    const loadNation = async (officialId: string) => {
+      const loadedNation = await nation.loadNation(officialId);
+      setNation(loadedNation);
+    };
     if (
       place.nation === session.user.citizenship.nationId &&
       session.user.citizenship.nationOwner
     ) {
       setOwner(true);
-      getComsByDestination(place.officialId);
     }
-
-    getNation(place.nation);
-
-    document.title = getDocumentTitle(place.name);
-    return () => {
-      document.title = getDocumentTitle("");
-    };
-
+    if (nation.officialId === "" && place.nation != "") {
+      loadNation(place.nation);
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [place]);
 
-  useEffect(() => {
-    if (nation != null && nation != undefined && nation.officialId != "") {
-      getNationPlaces(nation);
-    }
-  }, [nation]);
+  const updatePath = (
+    path: string,
+    value: string,
+    needConfirm: boolean = true,
+  ) => {
+    const updatedPlace = place.updateOne(path, value);
 
-  useEffect(() => {
-    if (
-      owner &&
-      comList.length > 0 &&
-      comList[0].destination === place.officialId
-    ) {
-      displayUnwatchedComs(place.officialId, comList);
+    const baseUpdate = async () => {
+      const placeInBase = await updatedPlace.updatedObject.baseUpdate();
+      setPlace(placeInBase);
+    };
+    if (updatedPlace.isSuccess) {
+      if (needConfirm) {
+        myStore.set(confirmBox, {
+          action: "",
+          text: t("components.modals.confirmModal.updatePlace"),
+          result: "",
+          actionToDo: baseUpdate,
+        });
+      } else {
+        baseUpdate();
+      }
     }
-  }, [comList]);
+  };
 
   return (
     <>
       <section className="w-full px-2 pb-2 flex flex-col items-center gap-2">
-        <PlaceHeader place={place} nation={nation} owner={owner} />
-        {!place.reported && <PlaceIdentity place={place} owner={owner} />}
+        <Suspense fallback={<ParamSkeleton />}>
+          <PlaceHeader
+            place={place}
+            nation={nation}
+            owner={owner}
+            updatePath={updatePath}
+          />
+        </Suspense>
+        {!place.reported && (
+          <Suspense fallback={<MapSkeleton />}>
+            <PlaceIdentity
+              place={place}
+              owner={owner}
+              updatePath={updatePath}
+            />
+          </Suspense>
+        )}
       </section>
-      <PlaceChildren place={place} nation={nation} owner={owner} />
+      <Suspense fallback={<TileSkeleton />}>
+        <PlaceChildren
+          place={place}
+          nation={nation}
+          owner={owner}
+          nationPlaceList={nationPlaceList}
+        />
+      </Suspense>
       <ReportPanel content={place} />
     </>
   );

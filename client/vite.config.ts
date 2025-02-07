@@ -4,6 +4,22 @@ import { VitePWA } from "vite-plugin-pwa";
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  build: {
+    chunkSizeWarningLimit: 1500,
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          vendor: ["react", "react-dom"],
+          // tensorflow: ["@tensorflow/tfjs"],
+          // nsfw: ["nsfwjs"],
+          uploader: ["@uploadcare/react-uploader"],
+          i18n: ["i18next", "react-i18next"],
+          markdown: ["react-markdown", "@uiw/react-md-editor"],
+          utils: ["react-icons", "react-toastify"],
+        },
+      },
+    },
+  },
   plugins: [
     react(),
     VitePWA({

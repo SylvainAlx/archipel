@@ -1,80 +1,59 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import {
-  ChangeEvent,
-  FormEvent,
-  SetStateAction,
-  useEffect,
-  useState,
-} from "react";
+import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import Input from "../form/input";
 import Select from "../form/select";
-import { SetAtom, citizenListAtom, statsAtom } from "../../settings/store";
+import { statsAtom } from "../../settings/store";
 import { useTranslation } from "react-i18next";
 import { useAtom } from "jotai";
-import { getCitizens } from "../../api/user/userAPI";
 import SearchButtons from "../form/searchButtons";
-import { sortByCreatedAt, sortByName } from "../../utils/sorting";
 import { CITIZEN_SORTING } from "../../settings/sorting";
+import { UserListModel } from "../../models/lists/userListModel";
 
-export interface SearchBarProps {
+export interface CitizenSearchBarProps {
   type: string;
-  list: any[];
-  setList: SetAtom<[SetStateAction<any>], void>;
+  list: UserListModel;
+  setList: React.Dispatch<React.SetStateAction<UserListModel>>;
 }
 
-export default function CitizenSearchBar({ list, setList }: SearchBarProps) {
-  const [selectOption, setSelectOption] = useState(CITIZEN_SORTING.descDate.id);
+export default function CitizenSearchBar({
+  list,
+  setList,
+}: CitizenSearchBarProps) {
   const { t } = useTranslation();
   const [searchName, setSearchName] = useState("");
   const [isLeader, setIsLeader] = useState(false);
-  const [citizenList] = useAtom(citizenListAtom);
   const [stats] = useAtom(statsAtom);
 
   useEffect(() => {
-    if (citizenList.length != stats.counts.citizens) {
-      getCitizens("");
+    if (
+      list.getItems().length != stats.counts.citizens ||
+      list.getItems().length === 0
+    ) {
+      loadUserList("");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [stats.counts.citizens]);
 
   useEffect(() => {
-    if (citizenList.length > 0) {
-      citizensSorting();
+    if (isLeader) {
+      const updatedList = list
+        .getItems()
+        .filter((user) => user.citizenship.nationOwner === true);
+      setList(new UserListModel(updatedList));
+    } else {
+      loadUserList(searchName);
     }
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectOption, citizenList, isLeader]);
+  }, [isLeader]);
 
-  const reset = () => {
-    getCitizens("");
-    setSelectOption(CITIZEN_SORTING.descDate.id);
+  const loadUserList = async (searchName: string) => {
+    let updatedList = await list.loadUserList(searchName);
+    updatedList = updatedList.sortUsers(list.sorting);
+    updatedList && setList(updatedList);
   };
 
-  const citizensSorting = () => {
-    list = [...citizenList];
-    switch (selectOption) {
-      case CITIZEN_SORTING.ascAlpha.id:
-        setList(sortByName(list, true));
-        break;
-      case CITIZEN_SORTING.descAlpha.id:
-        setList(sortByName(list, false));
-        break;
-      case CITIZEN_SORTING.ascDate.id:
-        setList(sortByCreatedAt(list, true));
-        break;
-      case CITIZEN_SORTING.descDate.id:
-        setList(sortByCreatedAt(list, false));
-        break;
-      default:
-        break;
-    }
-
-    if (isLeader) {
-      const updatedList = list.filter(
-        (citizen) => citizen.citizenship.nationOwner === true,
-      );
-      setList(updatedList);
-    }
+  const reset = () => {
+    loadUserList("");
   };
 
   const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
@@ -83,11 +62,16 @@ export default function CitizenSearchBar({ list, setList }: SearchBarProps) {
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    getCitizens(searchName);
+    loadUserList(searchName);
   };
 
   const handleChangeCheckbox = () => {
     setIsLeader(!isLeader);
+  };
+
+  const handleChangeSorting = (e: ChangeEvent<HTMLSelectElement>) => {
+    const updatedList = list.sortUsers(Number(e.target.value));
+    setList(updatedList);
   };
 
   return (
@@ -105,11 +89,9 @@ export default function CitizenSearchBar({ list, setList }: SearchBarProps) {
       />
 
       <Select
-        onChange={(e: ChangeEvent<HTMLSelectElement>) =>
-          setSelectOption(Number(e.target.value))
-        }
+        onChange={handleChangeSorting}
         options={Object.values(CITIZEN_SORTING)}
-        value={selectOption}
+        value={list.sorting}
       />
       <div className="flex flex-wrap flex-col md:flex-row gap-2 items-center justify-center md:justify-between">
         <fieldset className="flex gap-3">

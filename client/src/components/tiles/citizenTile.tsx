@@ -1,15 +1,8 @@
 import { useLocation, useNavigate } from "react-router-dom";
-import { User } from "../../types/typUser";
 import RoleTag from "../tags/roleTag";
 import Avatar from "../avatar";
 import CitizenTag from "../tags/citizenTag";
-import {
-  citizenFetchAtom,
-  myStore,
-  nationFetchedAtom,
-  sessionAtom,
-} from "../../settings/store";
-import { EmptyNation } from "../../types/typNation";
+import { sessionAtom } from "../../settings/store";
 import { dateIsExpired } from "../../utils/functions";
 import CrossButton from "../buttons/crossButton";
 import { useAtom } from "jotai";
@@ -22,11 +15,11 @@ import LanguagesTag from "../tags/languagesTag";
 import ReportPanel from "../reportPanel";
 import DateTag from "../tags/dateTag";
 import { PIONEER_DATE } from "../../settings/consts";
-import { declineCitizenship } from "../../utils/procedures";
 import HonorTag from "../tags/honorTag";
+import { UserModel } from "../../models/userModel";
 
 export interface CitizenTileProps {
-  citizen: User;
+  citizen: UserModel;
 }
 
 export default function CitizenTile({ citizen }: CitizenTileProps) {
@@ -40,8 +33,6 @@ export default function CitizenTile({ citizen }: CitizenTileProps) {
 
   const handleClick = (event: React.MouseEvent<HTMLDivElement>) => {
     if (event.target === event.currentTarget) {
-      myStore.set(citizenFetchAtom, citizen);
-      myStore.set(nationFetchedAtom, EmptyNation);
       navigate(`/citizen/${citizen.officialId}`);
     }
   };
@@ -93,7 +84,7 @@ export default function CitizenTile({ citizen }: CitizenTileProps) {
         emplacement.pathname != "/explore" &&
         citizen.citizenship.status > 0 && (
           <div className="w-max self-end">
-            <CrossButton click={() => declineCitizenship(citizen)} />
+            <CrossButton click={() => citizen.declineCitizenship()} />
           </div>
         )}
 

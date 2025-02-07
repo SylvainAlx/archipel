@@ -16,7 +16,11 @@ export default function HashTag({ label, occurrence }: HashtagProps) {
       text={`#${label}`}
       hover={t("components.hoverInfos.tags.hash")}
       bgColor="bg-complementary3"
-      click={() => navigate(`/explore/2#${label}`)}
+      click={() => {
+        if (!label.includes(" ")) {
+          navigate(`/explore/2#${label}`);
+        }
+      }}
       children={
         occurrence != -1 ? (
           <CountUp

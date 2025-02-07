@@ -1,6 +1,6 @@
 import { lazy, Suspense } from "react";
 import { Nation } from "../../types/typNation";
-import { handleDeleteImage } from "../../utils/procedures";
+import { deleteImage } from "../../utils/procedures";
 import Spinner from "../loading/spinner";
 import CrossButton from "../buttons/crossButton";
 import { useTranslation } from "react-i18next";
@@ -9,15 +9,36 @@ import Upploader from "../uploader";
 import LinkButton from "../buttons/linkButton";
 import { COA_MAKER_URL } from "../../settings/consts";
 import { FaExternalLinkAlt } from "react-icons/fa";
+import { confirmBox, myStore } from "../../settings/store";
 
 interface CoatOfArmsProps {
   nation: Nation;
   owner: boolean;
+  updatePath: (path: string, value: string, needConfirm?: boolean) => void;
 }
 
-export default function CoatOfArms({ nation, owner }: CoatOfArmsProps) {
+export default function CoatOfArms({
+  nation,
+  owner,
+  updatePath,
+}: CoatOfArmsProps) {
   const { t } = useTranslation();
   const LazyImage = lazy(() => import("../lazy/lazyImage"));
+
+  const handleDeleteImage = async () => {
+    myStore.set(confirmBox, {
+      action: "",
+      text: t("components.modals.confirmModal.deleteFile"),
+      result: "",
+      actionToDo: async () => {
+        const result = await deleteImage(nation.data.url.coatOfArms);
+        if (result) {
+          updatePath("data.url.coatOfArms", "", false);
+        }
+      },
+    });
+  };
+
   return (
     <div className="relative">
       <div
@@ -33,17 +54,7 @@ export default function CoatOfArms({ nation, owner }: CoatOfArmsProps) {
                 hover={t("components.hoverInfos.coatOfArms")}
               />
             </Suspense>
-            {owner && (
-              <CrossButton
-                small={true}
-                click={() =>
-                  handleDeleteImage({
-                    url: nation.data.url.coatOfArms,
-                    type: "coatOfArms",
-                  })
-                }
-              />
-            )}
+            {owner && <CrossButton small={true} click={handleDeleteImage} />}
           </>
         ) : (
           <>
@@ -54,7 +65,7 @@ export default function CoatOfArms({ nation, owner }: CoatOfArmsProps) {
               <>
                 <Upploader
                   path="data.url.coatOfArms"
-                  destination="nation"
+                  updatePath={updatePath}
                   maxSize={500000}
                 />
                 <LinkButton

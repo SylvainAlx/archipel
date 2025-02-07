@@ -1,36 +1,25 @@
-import { Suspense, lazy, useEffect, useState } from "react";
-import { SelectedNationProps } from "../../types/typProp";
+import { Suspense, lazy } from "react";
 import TileContainer from "../tileContainer";
-import { nationPlacesListAtom } from "../../settings/store";
-import { useAtom } from "jotai";
-import { getNationPlaces } from "../../api/place/placeAPI";
 import NewPlaceButton from "../buttons/newPlaceButton";
 import { useTranslation } from "react-i18next";
 import DashTile from "../dashTile";
-import { Place } from "../../types/typPlace";
-import BarreLoader from "../loading/barreLoader";
+import { NationModel } from "../../models/nationModel";
+import TileSkeleton from "../loading/skeletons/tileSkeleton";
+import { PlaceListModel } from "../../models/lists/placeListModel";
 
-export default function Places({ selectedNation, owner }: SelectedNationProps) {
+interface PlacesProps {
+  selectedNation: NationModel;
+  nationPlaceList: PlaceListModel;
+  owner: boolean;
+}
+
+export default function Places({
+  selectedNation,
+  nationPlaceList,
+  owner,
+}: PlacesProps) {
   const { t } = useTranslation();
-  const [nationPlacesList] = useAtom(nationPlacesListAtom);
-  const [places, setPlaces] = useState<Place[]>([]);
   const PlaceTile = lazy(() => import("../tiles/placeTile"));
-
-  useEffect(() => {
-    if (selectedNation != undefined) {
-      getNationPlaces(selectedNation);
-    }
-  }, [selectedNation]);
-
-  useEffect(() => {
-    const updatedPlaces: Place[] = [];
-    nationPlacesList.forEach((place) => {
-      if (place.parentId === selectedNation.officialId) {
-        updatedPlaces.push(place);
-      }
-    });
-    setPlaces(updatedPlaces);
-  }, [nationPlacesList, selectedNation.officialId]);
 
   return (
     <TileContainer
@@ -48,16 +37,25 @@ export default function Places({ selectedNation, owner }: SelectedNationProps) {
                     nation={selectedNation}
                   />
                 )}
-                {places.length > 0 ? (
-                  places.map((place, i) => {
-                    return (
-                      <Suspense key={i} fallback={<BarreLoader />}>
-                        <div className="relative w-full">
-                          <PlaceTile owner={owner} place={place} />
-                        </div>
-                      </Suspense>
-                    );
-                  })
+                {nationPlaceList
+                  .getPlacesByParentId(selectedNation.officialId)
+                  .getItems().length > 0 ? (
+                  nationPlaceList
+                    .getPlacesByParentId(selectedNation.officialId)
+                    .getItems()
+                    .map((place, i) => {
+                      return (
+                        <Suspense key={i} fallback={<TileSkeleton />}>
+                          <div className="relative w-full">
+                            <PlaceTile
+                              owner={owner}
+                              place={place}
+                              nation={selectedNation}
+                            />
+                          </div>
+                        </Suspense>
+                      );
+                    })
                 ) : (
                   <em className="text-center">
                     {t("pages.nation.places.noPlaces")}

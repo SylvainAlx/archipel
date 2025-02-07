@@ -1,3 +1,14 @@
+export enum Plans {
+  free = "free",
+  premium = "premium",
+  elite = "elite",
+}
+
+export enum Roles {
+  standard = "standard",
+  admin = "admin",
+}
+
 export interface User {
   officialId: string;
   name: string;
@@ -10,9 +21,9 @@ export interface User {
   recovery?: string;
   email: string;
   link: string;
-  role: "standard" | "admin";
+  role: Roles;
   credits: number;
-  plan: "free" | "premium" | "elite";
+  plan: Plans;
   expirationDate: string;
   reported: boolean;
   banished: boolean;
@@ -23,6 +34,7 @@ export interface User {
     residence: string;
   };
   createdAt: Date;
+  lastVisitDate: Date;
 }
 
 export interface AuthPayload {
@@ -62,9 +74,9 @@ export const emptyUser: User = {
   recovery: "",
   email: "",
   link: "",
-  role: "standard",
+  role: Roles.standard,
   credits: 0,
-  plan: "free",
+  plan: Plans.free,
   expirationDate: "",
   reported: false,
   banished: false,
@@ -75,4 +87,5 @@ export const emptyUser: User = {
     residence: "",
   },
   createdAt: new Date(),
+  lastVisitDate: new Date(),
 };

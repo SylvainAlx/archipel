@@ -4,7 +4,6 @@ import { StandardOption } from "../types/typAtom";
 export interface TabNavProps {
   tabs: Array<StandardOption>;
   tabId: number | string;
-  owner: boolean;
 }
 
 export default function TabNav({ tabs, tabId }: TabNavProps) {

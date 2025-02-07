@@ -99,3 +99,9 @@ export const pingBackend = async () => {
     console.error(`${new Date().toISOString()} : Ping error :`, erreur.message);
   }
 };
+
+export const handleError = (AError, ARes) => {
+  console.error(AError);
+  const statusCode = AError.name === "ValidationError" ? 400 : 500;
+  ARes.status(statusCode).json({ infoType: statusCode.toString() });
+};

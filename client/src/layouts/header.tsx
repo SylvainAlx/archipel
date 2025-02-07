@@ -9,6 +9,7 @@ import { VERSION } from "../settings/consts";
 export default function Header() {
   const { t } = useTranslation();
   const [access] = useAtom(lobbyAtom);
+
   return (
     <header className="animate-slideInFromTop py-4 px-4 mx-auto md:m-0 lg:flex md:justify-around flex-wrap items-center gap-6">
       <div className="mb-6 lg:mb-0 flex flex-col lg:flex-row gap-2 items-center">

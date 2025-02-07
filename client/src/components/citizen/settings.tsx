@@ -7,7 +7,6 @@ import {
   changePasswordModalAtom,
   confirmBox,
   myStore,
-  sessionAtom,
   showCookiesModalAtom,
 } from "../../settings/store";
 import { RiLockPasswordFill } from "react-icons/ri";
@@ -15,22 +14,23 @@ import { FaCookieBite } from "react-icons/fa";
 import { IoMdLogOut } from "react-icons/io";
 import CrossButton from "../buttons/crossButton";
 import { useTranslation } from "react-i18next";
-import { User } from "../../types/typUser";
 import { useAtom } from "jotai";
 import { resetCookieConsentValue } from "react-cookie-consent";
 import { useEffect, useState } from "react";
 import { dateIsExpired } from "../../utils/functions";
 import CookiesModal from "../modals/cookiesModal";
+import { useNavigate } from "react-router-dom";
+import { UserModel } from "../../models/userModel";
 
 interface SettingsProps {
-  citizen: User;
+  citizen: UserModel;
 }
 
 export default function Settings({ citizen }: SettingsProps) {
   const { t } = useTranslation();
-  const [session] = useAtom(sessionAtom);
   const [userPlan, setUserPlan] = useState("free");
   const [showCookiesModal, setShowCookiesModal] = useAtom(showCookiesModalAtom);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (citizen.plan != "free" && !dateIsExpired(citizen.expirationDate)) {
@@ -44,10 +44,13 @@ export default function Settings({ citizen }: SettingsProps) {
     const payload = window.prompt(t("components.form.input.password"));
     if (payload) {
       myStore.set(confirmBox, {
-        action: "deleteUser",
+        action: "",
         text: t("components.modals.confirmModal.deleteUser"),
-        payload,
         result: "",
+        actionToDo: async () => {
+          await citizen.baseDelete(payload);
+          navigate("/");
+        },
       });
     }
   };
@@ -59,9 +62,13 @@ export default function Settings({ citizen }: SettingsProps) {
 
   const logout = () => {
     myStore.set(confirmBox, {
-      action: "logout",
+      action: "",
       text: t("components.modals.confirmModal.logout"),
       result: "",
+      actionToDo: () => {
+        citizen.logout();
+        navigate("/");
+      },
     });
   };
 
@@ -71,7 +78,7 @@ export default function Settings({ citizen }: SettingsProps) {
         title={t("pages.citizen.settings")}
         children={
           <>
-            {session.user.reported && <ReportedFlag />}
+            {citizen.reported && <ReportedFlag />}
             {userPlan != "free" && (
               <div className="px-2 flex gap-1 items-center bg-gold rounded text-primary bold">
                 <IoDiamondOutline />

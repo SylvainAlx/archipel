@@ -1,5 +1,4 @@
 import { lazy, Suspense } from "react";
-import { Place } from "../../types/typPlace";
 import EditIcon from "../editIcon";
 import H2 from "../titles/h2";
 import Spinner from "../loading/spinner";
@@ -8,24 +7,54 @@ import { AiOutlinePicture } from "react-icons/ai";
 import Upploader from "../uploader";
 import IdTag from "../tags/idTag";
 import PlaceTag from "../tags/placeTag";
-import { getPlaceTypeLabel } from "../../utils/functions";
 import MDEditor from "@uiw/react-md-editor";
 import { useTranslation } from "react-i18next";
-import { handleDeleteImage } from "../../utils/procedures";
+import { PlaceModel } from "../../models/placeModel";
+import { deleteImage } from "../../utils/procedures";
+import { confirmBox, myStore } from "../../settings/store";
+import { PLACE_TYPE } from "../../settings/consts";
+import PopulationTag from "../tags/populationTag";
 
 interface PlaceIdentityProps {
-  place: Place;
+  place: PlaceModel;
   owner: boolean;
+  updatePath: (path: string, value: string, needConfirm?: boolean) => void;
 }
 
-export default function PlaceIdentity({ place, owner }: PlaceIdentityProps) {
+export default function PlaceIdentity({
+  place,
+  owner,
+  updatePath,
+}: PlaceIdentityProps) {
   const LazyImage = lazy(() => import("../lazy/lazyImage"));
   const { t } = useTranslation();
+
+  const handleDeleteImage = async () => {
+    myStore.set(confirmBox, {
+      action: "",
+      text: t("components.modals.confirmModal.deleteFile"),
+      result: "",
+      actionToDo: async () => {
+        const result = await deleteImage(place.image);
+        if (result) {
+          updatePath("image", "", false);
+        }
+      },
+    });
+  };
+
   return (
     <section className="w-full flex flex-col items-center rounded gap-4">
       <div className="flex items-center gap-2">
         <H2 text={`${place.name}`} />
-        {owner && <EditIcon target="place" param={place.name} path="name" />}
+        {owner && (
+          <EditIcon
+            target="place"
+            param={place.name}
+            path="name"
+            action={updatePath}
+          />
+        )}
       </div>
       {place.image != undefined && place.image != "" ? (
         <div className="relative max-w-[800px]">
@@ -37,36 +66,23 @@ export default function PlaceIdentity({ place, owner }: PlaceIdentityProps) {
               hover={t("pages.place.image")}
             />
           </Suspense>
-          {owner && (
-            <CrossButton
-              small={true}
-              click={() =>
-                handleDeleteImage({
-                  url: place.image,
-                  type: "placeImage",
-                })
-              }
-            />
-          )}
+          {owner && <CrossButton small={true} click={handleDeleteImage} />}
         </div>
       ) : (
         <>
           <AiOutlinePicture className="text-9xl" />
           {owner && (
-            <Upploader
-              path="image"
-              destination="place"
-              place={place}
-              maxSize={2000000}
-            />
+            <Upploader path="image" updatePath={updatePath} maxSize={2000000} />
           )}
           <em>{t("pages.place.noImage")}</em>
         </>
       )}
       <div className="flex items-center justify-center flex-wrap gap-1">
         {place.officialId && <IdTag label={place.officialId} />}
-        <PlaceTag label={getPlaceTypeLabel(place.type)} />
-        {/* <PopulationTag label={getTotalPopulation(place)} /> */}
+        <PlaceTag label={place.getPlaceTypeLabel()} />
+        {place.type === PLACE_TYPE.city.id && (
+          <PopulationTag label={place.population} />
+        )}
       </div>
       <div className="flex items-center gap-2">
         {place.description != "" ? (
@@ -82,6 +98,7 @@ export default function PlaceIdentity({ place, owner }: PlaceIdentityProps) {
             target="place"
             param={place.description}
             path="description"
+            action={updatePath}
           />
         )}
       </div>

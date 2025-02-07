@@ -2,9 +2,8 @@
 import { COSTS, PLACE_TYPE, QUOTAS } from "../../settings/consts";
 import Button from "./button";
 import { Place, emptyPlace } from "../../types/typPlace";
-import { myStore, newPlaceAtom, sessionAtom } from "../../settings/store";
+import { myStore, newPlaceAtom } from "../../settings/store";
 import { useTranslation } from "react-i18next";
-import { useAtom } from "jotai";
 import { MdLandscape } from "react-icons/md";
 import { Nation } from "../../types/typNation";
 import { FaCoins } from "react-icons/fa";
@@ -22,17 +21,16 @@ export default function NewPlaceButton({
   owner,
 }: newPlaceProps) {
   const { t } = useTranslation();
-  const [session] = useAtom(sessionAtom);
 
   const handleClick = () => {
     if (
-      session.nation.data.roleplay.treasury >= COSTS.PLACE ||
+      nation.data.roleplay.treasury >= COSTS.PLACE ||
       nation.data.roleplay.places < QUOTAS.PLACES
     ) {
       const newPlace: Place = {
         officialId: emptyPlace.officialId,
         parentId,
-        nation: session.nation.officialId,
+        nation: nation.officialId,
         type: PLACE_TYPE.state.id,
         population: emptyPlace.population,
         name: emptyPlace.name,

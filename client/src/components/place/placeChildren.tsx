@@ -1,46 +1,47 @@
-import { lazy, Suspense, useState } from "react";
-import Spinner from "../loading/spinner";
+import { lazy, Suspense, useEffect, useState } from "react";
 import NewPlaceButton from "../buttons/newPlaceButton";
-import { Place } from "../../types/typPlace";
-import { Nation } from "../../types/typNation";
 import { useTranslation } from "react-i18next";
-import { useAtom } from "jotai";
-import { nationPlacesListAtom } from "../../settings/store";
+import { NationModel } from "../../models/nationModel";
+import { PlaceModel } from "../../models/placeModel";
+import TileSkeleton from "../loading/skeletons/tileSkeleton";
+import { PlaceListModel } from "../../models/lists/placeListModel";
 
 interface PlaceChildrenProps {
-  place: Place;
-  nation: Nation;
+  place: PlaceModel;
+  nation: NationModel;
   owner: boolean;
+  nationPlaceList: PlaceListModel;
 }
 
 export default function PlaceChildren({
   place,
   nation,
   owner,
+  nationPlaceList,
 }: PlaceChildrenProps) {
-  const [haveChildren, setHaveChildren] = useState(false);
-  const [nationPlacesList] = useAtom(nationPlacesListAtom);
   const PlaceTile = lazy(() => import("../tiles/placeTile"));
   const { t } = useTranslation();
+  const [children, setChildren] = useState<PlaceListModel>(nationPlaceList);
+
+  useEffect(() => {
+    setChildren(nationPlaceList.getPlacesByParentId(place.officialId));
+  }, [nationPlaceList, place.officialId]);
+
+  // useEffect(() => console.log(children), []);
 
   return (
     <section className="w-full px-2 flex flex-wrap justify-center gap-2">
       <div className="w-full py-4 flex flex-col gap-2">
-        {nationPlacesList != undefined &&
-          nationPlacesList.length > 0 &&
-          nationPlacesList.map((loc, i) => {
-            if (loc.parentId === place.officialId) {
-              !haveChildren && setHaveChildren(true);
-              return (
-                <Suspense key={i} fallback={<Spinner />}>
-                  <div className="relative w-full">
-                    <PlaceTile owner={false} place={loc} />
-                  </div>
-                </Suspense>
-              );
-            }
-          })}
-        {!haveChildren && (
+        {children.getItems().map((loc, i) => {
+          return (
+            <Suspense key={i} fallback={<TileSkeleton />}>
+              <div className="relative w-full">
+                <PlaceTile owner={false} place={loc} nation={nation} />
+              </div>
+            </Suspense>
+          );
+        })}
+        {children.getItems().length === 0 && (
           <em className="text-center">{t("pages.place.noChildrenPlaces")}</em>
         )}
       </div>

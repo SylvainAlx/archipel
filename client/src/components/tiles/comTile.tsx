@@ -2,20 +2,28 @@ import MDEditor from "@uiw/react-md-editor";
 import { Com } from "../../types/typCom";
 import NationTag from "../tags/nationTag";
 import { useAtom } from "jotai";
-import { confirmBox, myStore, sessionAtom } from "../../settings/store";
+import {
+  comListAtomV2,
+  confirmBox,
+  myStore,
+  sessionAtom,
+} from "../../settings/store";
 import { useEffect, useState } from "react";
 import CrossButton from "../buttons/crossButton";
 import { useTranslation } from "react-i18next";
 import DateTag from "../tags/dateTag";
 import ReportPanel from "../reportPanel";
+import { ComModel } from "../../models/comModel";
+import { NationModel } from "../../models/nationModel";
 
 export interface ComTileProps {
+  nation?: NationModel;
   com: Com;
-  owner: boolean;
 }
 
-export default function ComTile({ com }: ComTileProps) {
+export default function ComTile({ nation, com }: ComTileProps) {
   const [session] = useAtom(sessionAtom);
+  const [comList] = useAtom(comListAtomV2);
   const [owner, setOwner] = useState(false);
   const { t } = useTranslation();
   useEffect(() => {
@@ -32,10 +40,14 @@ export default function ComTile({ com }: ComTileProps) {
 
   const handleDelete = () => {
     myStore.set(confirmBox, {
-      action: "deleteCom",
+      action: "",
       text: t("components.modals.confirmModal.deleteCom"),
       result: "",
-      target: com,
+      actionToDo: async () => {
+        const comToDelete = new ComModel();
+        comToDelete.baseDelete(com._id);
+        nation && (await comList.removeByBaseId(com._id));
+      },
     });
   };
 

@@ -1,71 +1,60 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import {
-  ChangeEvent,
-  FormEvent,
-  SetStateAction,
-  useEffect,
-  useState,
-} from "react";
+import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import Input from "../form/input";
 import Select from "../form/select";
-import { SetAtom, comFetchedListAtom, statsAtom } from "../../settings/store";
+import { statsAtom } from "../../settings/store";
 import { useTranslation } from "react-i18next";
 import { useAtom } from "jotai";
-import { getPublicComs } from "../../api/communication/comAPI";
 import SearchButtons from "../form/searchButtons";
+import { COM_TYPE } from "../../settings/consts";
+import { ComListModel } from "../../models/lists/comListModel";
 import { COM_SORTING } from "../../settings/sorting";
 
-export interface SearchBarProps {
+export interface ComSearchBarProps {
   type: string;
-  setList: SetAtom<[SetStateAction<any>], void>;
+  list: ComListModel;
+  setList: React.Dispatch<React.SetStateAction<ComListModel>>;
 }
 
-export default function ComSearchBar({ setList }: SearchBarProps) {
-  const [selectOption, setSelectOption] = useState(COM_SORTING.descDate.id);
+export default function ComSearchBar({ list, setList }: ComSearchBarProps) {
   const { t } = useTranslation();
   const [nationId, setNationId] = useState("");
-  const [comList] = useAtom(comFetchedListAtom);
   const [stats] = useAtom(statsAtom);
 
   useEffect(() => {
-    getPublicComs("");
+    loadList();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [stats.counts.coms]);
 
-  useEffect(() => {
-    comSorting();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectOption, comList]);
-
-  const reset = () => {
-    getPublicComs("");
-    setSelectOption(COM_SORTING.descDate.id);
+  const reset = async () => {
+    setNationId("");
+    loadList();
   };
-
-  const comSorting = () => {
-    const sortedList = [...comList];
-
-    if (selectOption === COM_SORTING.ascDate.id) {
-      sortedList.sort(
-        (a, b) =>
-          new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime(),
-      );
-    } else if (selectOption === COM_SORTING.descDate.id) {
-      sortedList.sort(
-        (a, b) =>
-          new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
-      );
+  const loadList = async () => {
+    const updatedList = await list.loadComList(
+      "",
+      "",
+      [COM_TYPE.nationPublic.id, COM_TYPE.general.id],
+      false,
+    );
+    if (updatedList) {
+      updatedList.sortComs(updatedList.sorting);
+      setList(updatedList);
     }
-    setList(sortedList);
   };
-
   const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
     setNationId(e.target.value);
   };
-
+  const handleChangeSorting = (e: ChangeEvent<HTMLSelectElement>) => {
+    const updatedList = list.sortComs(Number(e.target.value));
+    setList(updatedList);
+  };
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    setList(comList.filter((com) => com.origin === nationId));
+    const updatedList = new ComListModel(
+      list.getItems().filter((com) => com.origin === nationId.toLowerCase()),
+    );
+    setList(updatedList);
   };
 
   return (
@@ -82,11 +71,9 @@ export default function ComSearchBar({ setList }: SearchBarProps) {
         value={nationId}
       />
       <Select
-        onChange={(e: ChangeEvent<HTMLSelectElement>) =>
-          setSelectOption(Number(e.target.value))
-        }
+        onChange={handleChangeSorting}
         options={Object.values(COM_SORTING)}
-        value={selectOption}
+        value={list.sorting}
       />
       <SearchButtons reset={reset} />
     </form>

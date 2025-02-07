@@ -13,13 +13,13 @@ import {
   newPlaceAtom,
   newRelationAtom,
   recoveryKey,
+  showCookiesModalAtom,
   showLangModalAtom,
   showMenuAtom,
 } from "../settings/store";
 import { RecoveryModal } from "../components/modals/recoveryModal";
 import ConfirmModal from "../components/modals/confirmModal";
 import InfoModal from "../components/modals/infoModal";
-import LoadingSpinner from "../components/modals/loadingSpinner";
 import EditBoxModal from "../components/modals/editBoxModal";
 import NewPlaceModal from "../components/modals/newPlaceModal";
 import LangModal from "../components/modals/langModal";
@@ -30,6 +30,7 @@ import { ChangePasswordModal } from "../components/modals/changePasswordModal";
 import NewRelationModal from "../components/modals/newRelationModal";
 import TileFormModal from "../components/modals/tileFormModal";
 import NewComModal from "../components/modals/newComModal";
+import CookiesModal from "../components/modals/cookiesModal";
 
 export default function ModalsRouter() {
   const [recovery] = useAtom(recoveryKey);
@@ -47,11 +48,12 @@ export default function ModalsRouter() {
   const [newRelation] = useAtom(newRelationAtom);
   const [tile] = useAtom(editTileAtom);
   const [newCom] = useAtom(newComAtom);
+  const [showCookiesModal] = useAtom(showCookiesModalAtom);
 
   if (
     recovery != "" ||
     confirm.text != "" ||
-    info != "" ||
+    info.text != "" ||
     loading ||
     editBox.original != -1 ||
     newPlace.nation != "" ||
@@ -72,7 +74,7 @@ export default function ModalsRouter() {
           className={`min-w-[350px] max-w-[90%] ${(!loading || longLoading) && "bg-slate-800"} rounded-md p-3 flex flex-col items-center gap-4`}
         >
           {loading ? (
-            <LoadingSpinner />
+            <>{/* <LoadingSpinner /> */}</>
           ) : (
             <>
               {recovery != "" ? (
@@ -80,7 +82,7 @@ export default function ModalsRouter() {
               ) : (
                 <>
                   {confirm.text != "" && <ConfirmModal />}
-                  {info != "" && <InfoModal />}
+                  {info.text != "" && <InfoModal />}
                   {editBox.original != -1 && <EditBoxModal />}
                   {newPlace.nation != "" && <NewPlaceModal />}
                   {newCom.origin != "" && <NewComModal />}
@@ -93,6 +95,7 @@ export default function ModalsRouter() {
                     <NewRelationModal update={newRelation.update} />
                   )}
                   {tile.nationOfficialId != "" && <TileFormModal />}
+                  {showCookiesModal && <CookiesModal />}
                 </>
               )}
             </>

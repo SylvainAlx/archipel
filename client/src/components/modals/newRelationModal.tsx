@@ -10,8 +10,8 @@ import { errorMessage } from "../../utils/toasts";
 import { emptyDiplomaticRelationship } from "../../types/typRelation";
 import { FaBriefcase, FaCoins, FaFlask } from "react-icons/fa";
 import { FaMasksTheater, FaPersonMilitaryPointing } from "react-icons/fa6";
-import { createRelation, updateRelation } from "../../api/relation/relationAPI";
 import HoverInfo from "../hoverInfo";
+import { RelationModel } from "../../models/relationModel";
 
 export interface NewRelationModalProps {
   update: boolean;
@@ -22,20 +22,20 @@ export default function NewRelationModal({ update }: NewRelationModalProps) {
   const [hoverInfo, setHoverInfo] = useState("");
   const { t } = useTranslation();
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     if (
       newRelation.relation.name != "" &&
       newRelation.relation.nations.length > 0
     ) {
       if (update) {
-        updateRelation(newRelation.relation);
+        await newRelation.relation.baseUpdate(newRelation.relation);
       } else {
-        createRelation(newRelation.relation);
+        await newRelation.relation.baseInsert(newRelation.relation);
       }
 
       setNewRelation({
-        relation: emptyDiplomaticRelationship,
+        relation: new RelationModel(emptyDiplomaticRelationship),
         show: false,
         update: false,
       });
@@ -46,9 +46,12 @@ export default function NewRelationModal({ update }: NewRelationModalProps) {
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
-    const updatedRelation = { ...newRelation.relation };
+    const updatedRelation = new RelationModel(newRelation.relation);
     updatedRelation.name = value;
-    setNewRelation({ ...newRelation, relation: updatedRelation });
+    setNewRelation({
+      ...newRelation,
+      relation: updatedRelation,
+    });
   };
 
   const handleCheck = (e: ChangeEvent<HTMLInputElement>) => {
@@ -74,12 +77,17 @@ export default function NewRelationModal({ update }: NewRelationModalProps) {
       default:
         break;
     }
-    setNewRelation({ ...newRelation, relation: updatedRelation });
+    setNewRelation({
+      ...newRelation,
+      relation: new RelationModel(updatedRelation),
+    });
   };
 
   return (
     <div className="flex flex-col items-center justify-center">
-      <h2 className="text-2xl text-center p-4">Relation diplomatique</h2>
+      <h2 className="text-2xl text-center p-4">
+        [A TRADUIRE] Relation diplomatique
+      </h2>
       <Form
         submit={handleSubmit}
         children={
@@ -90,7 +98,7 @@ export default function NewRelationModal({ update }: NewRelationModalProps) {
               name="name"
               value={newRelation.relation.name}
               onChange={handleChange}
-              placeholder="Titre de la relation"
+              placeholder="[A TRADUIRE] Titre de la relation"
               maxLength={100}
             />
             <fieldset className="w-full p-2 flex flex-wrap justify-center items-center gap-2 bg-complementary2 text-2xl">
@@ -178,7 +186,7 @@ export default function NewRelationModal({ update }: NewRelationModalProps) {
               text={t("components.buttons.cancel")}
               click={() =>
                 setNewRelation({
-                  relation: emptyDiplomaticRelationship,
+                  relation: new RelationModel(emptyDiplomaticRelationship),
                   show: false,
                   update: false,
                 })

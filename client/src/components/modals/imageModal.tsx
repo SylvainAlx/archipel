@@ -3,13 +3,15 @@ import Button from "../buttons/button";
 import { imageAtom } from "../../settings/store";
 import { GiBlackFlag } from "react-icons/gi";
 import { useTranslation } from "react-i18next";
+import useClickOutside from "../../hooks/useClickOutside";
 
 export default function ImageModal() {
   const [image, setImage] = useAtom(imageAtom);
   const { t } = useTranslation();
+  const ref = useClickOutside(() => setImage(""));
 
   return (
-    <>
+    <div className="flex flex-col items-center gap-4" ref={ref}>
       <a
         className={`max-w-screen-sm max-h-screen bg-complementary flex flex-col items-center justify-center overflow-hidden rounded cursor-zoom-in`}
         href={image}
@@ -28,6 +30,6 @@ export default function ImageModal() {
         )}
       </a>
       <Button text={t("components.buttons.close")} click={() => setImage("")} />
-    </>
+    </div>
   );
 }

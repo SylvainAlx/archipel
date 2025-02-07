@@ -3,92 +3,72 @@ import DashTile from "../dashTile";
 import { SelectedNationProps } from "../../types/typProp";
 import { useAtom } from "jotai";
 import {
-  comFetchedListAtom,
+  comListAtomV2,
   myStore,
   newComAtom,
   sessionAtom,
 } from "../../settings/store";
-import { getComs, getPublicComs } from "../../api/communication/comAPI";
-import { lazy, Suspense, useEffect, useState } from "react";
-import BarreLoader from "../loading/barreLoader";
+import { lazy, Suspense, useEffect, useMemo, useState } from "react";
 import Button from "../buttons/button";
 import { FaComment } from "react-icons/fa";
 import { ComPayload, emptyComPayload } from "../../types/typCom";
-import Countdown from "../countdown";
+import { ComListModel } from "../../models/lists/comListModel";
 import { COM_TYPE } from "../../settings/consts";
-import { displayUnwatchedComs } from "../../utils/procedures";
-import { isMoreThan24Hours } from "../../utils/functions";
+import TileSkeleton from "../loading/skeletons/tileSkeleton";
 
 export default function NationComs({
   selectedNation,
   owner,
 }: SelectedNationProps) {
   const { t } = useTranslation();
-  const [nationComList, setNationComList] = useAtom(comFetchedListAtom);
   const [session] = useAtom(sessionAtom);
-  const [allowPost, setAllowPost] = useState<boolean>(true);
-  const [dueDate, setDueDate] = useState(new Date());
+  const [comList] = useAtom(comListAtomV2);
+  const [coms, setComs] = useState<ComListModel>(new ComListModel());
+  // const { allowPost, dueDate } = useAllowPost(coms, selectedNation);
   const ComTile = lazy(() => import("../tiles/comTile"));
 
-  useEffect(() => {
-    setNationComList([]);
-    if (selectedNation != undefined) {
-      session.user.citizenship.nationId === selectedNation.officialId &&
-      session.user.citizenship.status > 0
-        ? getComs(selectedNation.officialId, selectedNation.officialId, [
-            COM_TYPE.nationPrivate.id,
-            COM_TYPE.nationPublic.id,
-          ])
-        : getPublicComs(selectedNation.officialId);
-    }
-  }, [selectedNation]);
+  const comTypes: number[] =
+    session.user.citizenship.nationId === selectedNation.officialId
+      ? [COM_TYPE.nationPublic.id, COM_TYPE.nationPrivate.id]
+      : [COM_TYPE.nationPublic.id];
+
+  const filterComList = useMemo(() => {
+    const list = comList
+      .getItems()
+      .filter(
+        (com) =>
+          com.origin === selectedNation.officialId &&
+          com.destination === selectedNation.officialId &&
+          comTypes.includes(com.comType),
+      );
+    return new ComListModel(list);
+  }, [comList]);
 
   useEffect(() => {
-    if (nationComList.length > 0) {
-      const lastElement = nationComList[nationComList.length - 1];
-      if (lastElement) {
-        const isActivePlan =
-          myStore.get(sessionAtom).user.plan != "free" &&
-          myStore.get(sessionAtom).user.expirationDate >
-            new Date().toLocaleDateString();
-        if (isMoreThan24Hours(lastElement.createdAt) || isActivePlan) {
-          setAllowPost(true);
-        } else {
-          setAllowPost(false);
-        }
-      } else {
-        setAllowPost(true);
-      }
-      session.nation.officialId === selectedNation.officialId &&
-        displayUnwatchedComs(selectedNation.officialId, nationComList);
-    } else {
-      setAllowPost(true);
-    }
-  }, [nationComList]);
+    const loadNationComList = async () => {
+      await coms.loadNationComList(
+        selectedNation.officialId,
+        selectedNation.officialId,
+        comTypes,
+        session.user.citizenship.nationId === selectedNation.officialId,
+      );
+    };
+    loadNationComList();
+  }, []);
 
   useEffect(() => {
-    if (!allowPost && nationComList.length > 0) {
-      const givenDate = new Date(
-        nationComList[nationComList.length - 1].createdAt,
-      );
-      const dateAfter24Hours = new Date(
-        givenDate.getTime() + 24 * 60 * 60 * 1000,
-      );
-      setDueDate(dateAfter24Hours);
-    } else {
-      setDueDate(new Date());
-    }
-  }, [allowPost, nationComList]);
+    setComs(filterComList);
+  }, [filterComList]);
 
   const handleClick = () => {
-    const newComPayload: ComPayload = {
+    const newCom: ComPayload = {
       comType: 10,
       message: emptyComPayload.message,
       origin: selectedNation.officialId,
       destination: selectedNation.officialId,
       title: emptyComPayload.title,
     };
-    myStore.set(newComAtom, newComPayload);
+    myStore.set(newComAtom, newCom);
   };
 
   return (
@@ -102,18 +82,18 @@ export default function NationComs({
                 text={t("components.buttons.createCom")}
                 children={<FaComment />}
                 click={handleClick}
-                disabled={!allowPost}
+                // disabled={!allowPost}
               />
-              {dueDate > new Date() && <Countdown targetDate={dueDate} />}
+              {/* {dueDate > new Date() && <Countdown targetDate={dueDate} />} */}
             </div>
           )}
           <div className="w-full flex flex-col-reverse gap-2 items-center">
-            {nationComList.length > 0 ? (
-              nationComList.map((com, i) => {
+            {coms.getItems().length > 0 ? (
+              coms.getItems().map((com, i) => {
                 return (
-                  <Suspense key={i} fallback={<BarreLoader />}>
+                  <Suspense key={i} fallback={<TileSkeleton />}>
                     <div className="relative w-full">
-                      <ComTile com={com} owner={owner ? owner : false} />
+                      <ComTile com={com} />
                     </div>
                   </Suspense>
                 );
