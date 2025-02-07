@@ -47,7 +47,9 @@ export class RelationListModel extends ListModel {
     myStore.set(relationListAtomV2, new RelationListModel(updatedList));
   };
   private add(item: DiplomaticRelationship) {
-    this.items.push(new RelationModel(item));
+    if (!this.items.some((i) => i.officialId === item.officialId)) {
+      this.items.push(new RelationModel(item));
+    }
   }
   addMany(items: DiplomaticRelationship[]) {
     items.forEach((item) => this.addOrUpdate(item));

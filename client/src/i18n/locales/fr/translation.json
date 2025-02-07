@@ -62,14 +62,14 @@
         "title": "Lieux"
       },
       "comsList": {
-        "title": "Communiqués"
+        "title": "Actualités"
       },
       "stats": {
         "title": "Statistiques",
         "nations": "Nations virtuelles",
         "locations": "Lieux",
         "citizens": "Citoyens",
-        "coms": "Communiqués",
+        "coms": "Actualités",
         "tags": "Mots clés"
       }
     },
@@ -306,7 +306,7 @@
         "nationalDay": "fête nationale",
         "nationOwner": "éditeur de la nation",
         "residence": "résidence",
-        "treasury": "trésor public",
+        "treasury": "richesse",
         "date": "date",
         "honor": "distinction",
         "honor_pioneer": "pionnier",
@@ -445,7 +445,7 @@
       "400": "Erreur de formulaire",
       "401": "Action non autorisée",
       "403": "Action interdite",
-      "404": "Page non trouvée",
+      "404": "Information non trouvée",
       "500": "Erreur serveur",
       "11000": "Information déjà existante",
       "nsfw": "L'image contient du contenu NSFW ! Notification envoyée à l'administrateur",
@@ -500,6 +500,10 @@
     }
   },
   "coms": {
+    "register": {
+      "title": "Bienvenue sur ",
+      "message": "Votre compte a bien été créé, nous vous souhaitons la bienvenue sur l'application et vous souhaitons une agéable expérience !"
+    },
     "nationCreate": {
       "title": "Vie de la nation ",
       "message": "Votre nation a été créée"

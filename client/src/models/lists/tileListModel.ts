@@ -41,7 +41,9 @@ export class TileListModel extends ListModel {
     myStore.set(tileListAtomV2, new TileListModel(updatedList));
   };
   private add(item: Tile) {
-    this.items.push(new TileModel(item));
+    if (!this.items.some((i) => i._id === item._id)) {
+      this.items.push(new TileModel(item));
+    }
   }
   addMany(items: Tile[]) {
     items.forEach((item) => this.addOrUpdate(item));

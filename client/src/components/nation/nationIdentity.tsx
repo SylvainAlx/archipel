@@ -1,6 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect, useState } from "react";
-import { LabelId, Nation } from "../../types/typNation";
 import RegimeTag from "../tags/regimeTag";
 import IdTag from "../tags/idTag";
 import CapitalTag from "../tags/capitalTag";
@@ -11,7 +8,6 @@ import EditIcon from "../editIcon";
 import TagList from "./tagList";
 import CurrencyTag from "../tags/currencyTag";
 import NationalDayTag from "../tags/nationalDayTag";
-import { getLabelIdArrayFromNationPlaceList } from "../../utils/functions";
 import PopulationTag from "../tags/populationTag";
 import PlaceTag from "../tags/placeTag";
 import MDEditor from "@uiw/react-md-editor";
@@ -20,28 +16,24 @@ import TreasuryTag from "../tags/treasuryTag";
 import BigFlag from "./bigFlag";
 import CoatOfArms from "./coatOfArms";
 import NationStateTag from "../tags/nationStateTag";
-import { placeListAtomV2 } from "../../settings/store";
-import { useAtom } from "jotai";
+import { NationModel } from "../../models/nationModel";
+import { PLACE_TYPE } from "../../settings/consts";
+import { PlaceListModel } from "../../models/lists/placeListModel";
 
 interface NationIdentityProps {
-  selectedNation: Nation;
+  selectedNation: NationModel;
+  nationPlaceList: PlaceListModel;
   owner: boolean;
   updatePath: (path: string, value: string) => void;
 }
 
 export default function NationIdentity({
   selectedNation,
+  nationPlaceList,
   owner,
   updatePath,
 }: NationIdentityProps) {
   const { t } = useTranslation();
-  const [placeList] = useAtom(placeListAtomV2);
-  const [nationPlaceList, setNationPlaceList] = useState<LabelId[]>([]);
-
-  useEffect(() => {
-    const list = getLabelIdArrayFromNationPlaceList(placeList);
-    setNationPlaceList(list);
-  }, []);
 
   return (
     <TileContainer
@@ -153,22 +145,29 @@ export default function NationIdentity({
                     </div>
                     <div className="flex items-center gap-2">
                       <CapitalTag selectedNation={selectedNation} />
-                      {owner && selectedNation.data.roleplay.capital != "" && (
-                        <EditIcon
-                          target="nation"
-                          param={nationPlaceList}
-                          path="data.roleplay.capital"
-                          action={updatePath}
-                        />
-                      )}
+                      {owner &&
+                        nationPlaceList
+                          .getCities()
+                          .getLabelIdPlaceList([PLACE_TYPE.city.id]).length >
+                          0 && (
+                          <EditIcon
+                            target="nation"
+                            param={nationPlaceList
+                              .getCities()
+                              .getLabelIdPlaceList([PLACE_TYPE.city.id])}
+                            path="data.roleplay.capital"
+                            indice={selectedNation.data.roleplay.capital}
+                            action={updatePath}
+                          />
+                        )}
                     </div>
                     <TagList
                       nation={selectedNation}
                       owner={owner}
                       isTile={false}
+                      updatePath={updatePath}
                     />
                   </div>
-
                   <div className="w-full mt-4 justify-center flex gap-2">
                     {selectedNation.data.general.description ? (
                       <MDEditor.Markdown

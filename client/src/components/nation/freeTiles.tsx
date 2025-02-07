@@ -1,4 +1,4 @@
-import { lazy, Suspense, useEffect, useState } from "react";
+import { lazy, Suspense, useEffect, useMemo, useState } from "react";
 import DashTile from "../dashTile";
 import TileContainer from "../tileContainer";
 import { SelectedNationProps } from "../../types/typProp";
@@ -28,6 +28,13 @@ export default function FreeTiles({
 
   const FreeTile = lazy(() => import("../tiles/freeTile"));
 
+  const filteredTileList = useMemo(() => {
+    const list = tileList
+      .getItems()
+      .filter((tile) => tile.nationOfficialId === selectedNation.officialId);
+    return new TileListModel(list);
+  }, [tileList]);
+
   useEffect(() => {
     const loadTileList = async () => {
       await nationTileList.loadTiles(selectedNation.officialId);
@@ -35,15 +42,11 @@ export default function FreeTiles({
     if (selectedNation.officialId != "") {
       loadTileList();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedNation.officialId]);
+  }, []);
 
   useEffect(() => {
-    const list = tileList
-      .getItems()
-      .filter((tile) => tile.nationOfficialId === selectedNation.officialId);
-    setNationTileList(new TileListModel(list));
-  }, [tileList]);
+    setNationTileList(filteredTileList);
+  }, [filteredTileList]);
 
   const handleClick = () => {
     if (

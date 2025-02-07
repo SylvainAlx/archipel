@@ -7,12 +7,13 @@ import { AiOutlinePicture } from "react-icons/ai";
 import Upploader from "../uploader";
 import IdTag from "../tags/idTag";
 import PlaceTag from "../tags/placeTag";
-import { getPlaceTypeLabel } from "../../utils/functions";
 import MDEditor from "@uiw/react-md-editor";
 import { useTranslation } from "react-i18next";
 import { PlaceModel } from "../../models/placeModel";
 import { deleteImage } from "../../utils/procedures";
 import { confirmBox, myStore } from "../../settings/store";
+import { PLACE_TYPE } from "../../settings/consts";
+import PopulationTag from "../tags/populationTag";
 
 interface PlaceIdentityProps {
   place: PlaceModel;
@@ -78,8 +79,10 @@ export default function PlaceIdentity({
       )}
       <div className="flex items-center justify-center flex-wrap gap-1">
         {place.officialId && <IdTag label={place.officialId} />}
-        <PlaceTag label={getPlaceTypeLabel(place.type)} />
-        {/* <PopulationTag label={getTotalPopulation(place)} /> */}
+        <PlaceTag label={place.getPlaceTypeLabel()} />
+        {place.type === PLACE_TYPE.city.id && (
+          <PopulationTag label={place.population} />
+        )}
       </div>
       <div className="flex items-center gap-2">
         {place.description != "" ? (

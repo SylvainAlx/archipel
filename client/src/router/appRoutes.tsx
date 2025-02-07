@@ -3,7 +3,6 @@ import { publicRoutes, privateRoutes, authRoutes, adminRoutes } from "./routes";
 
 import Lobby from "../pages/lobby";
 import ModalsRouter from "./modalsRouter";
-import CookiesModal from "../components/modals/cookiesModal";
 import { useAuth } from "../hooks/useAuth";
 
 const Layout = () => (
@@ -16,7 +15,9 @@ const Layout = () => (
 const AppRoutes = () => {
   const { user, access, openPrivateRoads } = useAuth();
 
-  if (!access) return <Lobby />;
+  if (!access) {
+    return <Lobby />;
+  }
 
   return (
     <>
@@ -39,8 +40,6 @@ const AppRoutes = () => {
           <Route path="*" element={<Navigate to="/" />} />
         </Route>
       </Routes>
-
-      {access && <CookiesModal />}
     </>
   );
 };

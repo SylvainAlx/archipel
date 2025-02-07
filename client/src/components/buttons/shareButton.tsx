@@ -6,7 +6,7 @@ export default function ShareButton({ label }: { label: string }) {
   return (
     <Button
       text=""
-      children={<RiShareBoxFill className="text-3xl" />}
+      children={<RiShareBoxFill className="text-3xl text-secondary" />}
       click={() => handleShare(label)}
       bgColor="bg-invisible"
     />

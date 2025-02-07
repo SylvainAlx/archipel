@@ -13,6 +13,7 @@ import {
   sortByCreatedAt,
   sortByName,
   sortByPlaces,
+  sortByTreasury,
   sortNationsByCitizens,
 } from "../../utils/sorting";
 import { NationModel } from "../nationModel";
@@ -75,7 +76,9 @@ export class NationListModel extends ListModel {
     }
   };
   private add(item: Nation) {
-    this.items.push(new NationModel(item));
+    if (!this.items.some((i) => i.officialId === item.officialId)) {
+      this.items.push(new NationModel(item));
+    }
   }
   addMany(items: Nation[]) {
     items.forEach((item) => this.addOrUpdate(item));
@@ -110,12 +113,12 @@ export class NationListModel extends ListModel {
       case NATION_SORTING.descCtz.id:
         sortNationsByCitizens(this.items, false);
         break;
-      // case NATION_SORTING.ascTreasury.id:
-      //   setList(sortByTreasury(list, true));
-      //   break;
-      // case NATION_SORTING.descTreasury.id:
-      //   setList(sortByTreasury(list, false));
-      //   break;
+      case NATION_SORTING.ascTreasury.id:
+        sortByTreasury(this.items, true);
+        break;
+      case NATION_SORTING.descTreasury.id:
+        sortByTreasury(this.items, false);
+        break;
       case NATION_SORTING.ascDate.id:
         sortByCreatedAt(this.items, true);
         break;

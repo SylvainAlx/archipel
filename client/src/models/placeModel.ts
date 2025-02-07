@@ -1,14 +1,17 @@
+import i18n from "../i18n/i18n";
 import {
   createPlaceFetch,
   deletePlaceFetch,
   getPlaceFetch,
   updatePlaceFetch,
 } from "../services/placeService";
+import { PLACE_TYPE } from "../settings/consts";
 import { loadingAtom, myStore, placeListAtomV2 } from "../settings/store";
 import { Nation } from "../types/typNation";
 import { emptyPlace, Place } from "../types/typPlace";
-import { displayPlaceInfoByType, errorCatching } from "../utils/displayInfos";
+import { errorCatching } from "../utils/displayInfos";
 import { deleteImage } from "../utils/procedures";
+import { successMessage } from "../utils/toasts";
 import { CommonModel } from "./commonModel";
 import { PlaceListModel } from "./lists/placeListModel";
 
@@ -50,6 +53,12 @@ export class PlaceModel extends CommonModel implements Place {
       return new PlaceModel(this);
     }
   };
+  getPlaceTypeLabel = () => {
+    const foundType = Object.values(PLACE_TYPE).find(
+      (type) => type.id === this.type,
+    );
+    return foundType ? foundType.label : "";
+  };
   updateFields(fields: Partial<PlaceModel | Place>) {
     Object.assign(this, fields);
     return this;
@@ -60,7 +69,7 @@ export class PlaceModel extends CommonModel implements Place {
       const response: { place: Place; nation: Nation; infoType: string } =
         await createPlaceFetch(this);
       this.updateFields(response.place);
-      displayPlaceInfoByType(response.infoType);
+      this.displayPlaceInfoByType(response.infoType);
       myStore.get(placeListAtomV2).addToPlaceListAtom([response.place]);
     } catch (error) {
       errorCatching(error);
@@ -75,11 +84,8 @@ export class PlaceModel extends CommonModel implements Place {
       const response: { place: Place; infoType: string } =
         await updatePlaceFetch(this);
       this.updateFields(response.place);
-      displayPlaceInfoByType(response.infoType);
-      const updatedList = myStore
-        .get(placeListAtomV2)
-        .updateItemByOfficialId(new PlaceModel(response.place));
-      myStore.set(placeListAtomV2, updatedList);
+      this.displayPlaceInfoByType(response.infoType);
+      myStore.get(placeListAtomV2).addToPlaceListAtom([response.place]);
     } catch (error) {
       errorCatching(error);
     } finally {
@@ -92,7 +98,7 @@ export class PlaceModel extends CommonModel implements Place {
     try {
       const response: { place: Place; nation: Nation; infoType: string } =
         await deletePlaceFetch(this.officialId);
-      displayPlaceInfoByType(response.infoType);
+      this.displayPlaceInfoByType(response.infoType);
       const updatedList = myStore
         .get(placeListAtomV2)
         .removeByOfficialId(response.place.officialId);
@@ -103,6 +109,21 @@ export class PlaceModel extends CommonModel implements Place {
     } finally {
       myStore.set(loadingAtom, false);
       return new PlaceModel(this);
+    }
+  };
+  displayPlaceInfoByType = (type: string) => {
+    switch (type) {
+      case "new":
+        successMessage(i18n.t("toasts.place.new"));
+        break;
+      case "update":
+        successMessage(i18n.t("toasts.place.update"));
+        break;
+      case "delete":
+        successMessage(i18n.t("toasts.place.delete"));
+        break;
+      default:
+        break;
     }
   };
 }

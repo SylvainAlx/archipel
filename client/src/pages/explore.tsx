@@ -3,8 +3,8 @@ import TabNav from "../components/tabNav";
 import { useTranslation } from "react-i18next";
 import { StandardOption } from "../types/typAtom";
 import { useParams } from "react-router-dom";
-import Spinner from "../components/loading/spinner";
 import { createPageTitle } from "../utils/procedures";
+import ParamSkeleton from "../components/loading/skeletons/paramSkeleton";
 
 export default function Explore() {
   const { t } = useTranslation();
@@ -39,27 +39,27 @@ export default function Explore() {
         <TabNav tabs={nationTabs} tabId={tab.id} />
       </div>
       {tab.id === 1 && (
-        <Suspense fallback={<Spinner />}>
+        <Suspense fallback={<ParamSkeleton />}>
           <Stats text={tab.label} />
         </Suspense>
       )}
       {tab.id === 2 && (
-        <Suspense fallback={<Spinner />}>
+        <Suspense fallback={<ParamSkeleton />}>
           <NationList text={tab.label} />
         </Suspense>
       )}
       {tab.id === 3 && (
-        <Suspense fallback={<Spinner />}>
+        <Suspense fallback={<ParamSkeleton />}>
           <CitizenList text={tab.label} />
         </Suspense>
       )}
       {tab.id === 4 && (
-        <Suspense fallback={<Spinner />}>
+        <Suspense fallback={<ParamSkeleton />}>
           <PlaceList text={tab.label} />
         </Suspense>
       )}
       {tab.id === 5 && (
-        <Suspense fallback={<Spinner />}>
+        <Suspense fallback={<ParamSkeleton />}>
           <ComList text={tab.label} />
         </Suspense>
       )}

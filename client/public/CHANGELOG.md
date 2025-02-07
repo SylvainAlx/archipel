@@ -8,15 +8,24 @@
 - Ajout d'un bouton de don en cryptomonnaie
 - Ajout d'une notification d'alerte si l'application est hors ligne
 - Ajout de "skeletons" pour les éléments en cours de chargement
+- Le citoyen d'une nation peut choisir un lieu de résidence parmi les villes existantes de sa nation
+- Ajout du tag de richesse sur les tuiles "nation"
+- Tri possible des nations par richesse
 
 #### Suppressions
 
 - Mise en retrait de l'IA d'analyse d'image suite à des complications
+- Mise en retrait de la limitation de durée entre chaque communication postée
 
 #### Modifications & Corrections
 
 - Importante refonte du code source côté client
+- Amélioration de l'interception d'erreur côté serveur
 - Chargement plus progressif des composants d'une page pour améliorer la rapidité générale
+- Correction de la recherche des nations par mot-clé
+- Modification du nom de l'onglet "Communiqués" par "Actualités" sur la page "Explorer"
+- Correction du bouton de consentement des cookies
+- Amélioration des notifications de communications
 
 ## Développements à venir
 

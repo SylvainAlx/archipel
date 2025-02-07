@@ -6,7 +6,6 @@ import {
   EditBoxDefault,
   emptyInfo,
   InfoModal,
-  Param,
   Stats,
 } from "../types/typAtom";
 import { Place, emptyPlace } from "../types/typPlace";
@@ -50,9 +49,6 @@ export const statsAtom = atom<Stats>({
   counts: { nations: 0, citizens: 0, places: 0, tags: 0, coms: 0 },
   tags: [],
 });
-
-// Param
-export const paramsListAtom = atom<Param[]>([]);
 
 export const showLangModalAtom = atom(false);
 export const recoveryKey = atom("");

@@ -15,7 +15,6 @@ import LanguagesTag from "../tags/languagesTag";
 import ReportPanel from "../reportPanel";
 import DateTag from "../tags/dateTag";
 import { PIONEER_DATE } from "../../settings/consts";
-import { declineCitizenship } from "../../utils/procedures";
 import HonorTag from "../tags/honorTag";
 import { UserModel } from "../../models/userModel";
 
@@ -85,7 +84,7 @@ export default function CitizenTile({ citizen }: CitizenTileProps) {
         emplacement.pathname != "/explore" &&
         citizen.citizenship.status > 0 && (
           <div className="w-max self-end">
-            <CrossButton click={() => declineCitizenship(citizen)} />
+            <CrossButton click={() => citizen.declineCitizenship()} />
           </div>
         )}
 

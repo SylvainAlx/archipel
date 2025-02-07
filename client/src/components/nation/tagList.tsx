@@ -7,9 +7,15 @@ interface TagListProps {
   nation: Nation;
   owner?: boolean;
   isTile: boolean;
+  updatePath?: (path: string, value: string) => void;
 }
 
-export default function TagList({ nation, owner, isTile }: TagListProps) {
+export default function TagList({
+  nation,
+  owner,
+  isTile,
+  updatePath,
+}: TagListProps) {
   const { t } = useTranslation();
   return (
     <div
@@ -29,11 +35,13 @@ export default function TagList({ nation, owner, isTile }: TagListProps) {
           occurrence={-1}
         />
       )}
-      {owner && (
+      {owner && updatePath && (
         <EditIcon
           target="nation"
           param={nation.data.general.tags}
           path="data.general.tags"
+          indice="tags"
+          action={updatePath}
         />
       )}
     </div>

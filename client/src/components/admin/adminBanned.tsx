@@ -1,12 +1,12 @@
 import { lazy, Suspense, useEffect, useState } from "react";
 import TileContainer from "../tileContainer";
 import H2 from "../titles/h2";
-import BarreLoader from "../loading/barreLoader";
 import IndexTag from "../tags/indexTag";
 import Button from "../buttons/button";
 import { useAtom } from "jotai";
 import { bannedCitizensAtom } from "../../settings/store";
 import { useTranslation } from "react-i18next";
+import TileSkeleton from "../loading/skeletons/tileSkeleton";
 
 export default function AdminBanned() {
   const { t } = useTranslation();
@@ -33,7 +33,7 @@ export default function AdminBanned() {
               bannedUsers.getItems().map((citizen, i) => {
                 if (i < displayedCitizens) {
                   return (
-                    <Suspense key={i} fallback={<BarreLoader />}>
+                    <Suspense key={i} fallback={<TileSkeleton />}>
                       <div className="min-w-[300px] w-full relative transition-all duration-300 animate-fadeIn">
                         <CitizenTile citizen={citizen} />
                         <IndexTag text={i} />

@@ -2,7 +2,6 @@ import Tag from "./tag";
 import { GiCapitol } from "react-icons/gi";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { getPlaceName } from "../../utils/functions";
 import { Nation } from "../../types/typNation";
 import { useNavigate } from "react-router-dom";
 import { placeListAtomV2 } from "../../settings/store";
@@ -22,12 +21,12 @@ export default function CapitalTag({ selectedNation }: CapitalTagProps) {
 
   useEffect(() => {
     if (selectedNation.data.roleplay.capital != "") {
-      const capitalName = getPlaceName(
-        placeList.getItems(),
-        selectedNation.data.roleplay.capital,
-        t("pages.nation.nationIdentity.noCapital"),
+      setCapital(
+        placeList.findPlaceName(
+          selectedNation.data.roleplay.capital,
+          t("pages.nation.nationIdentity.noCapital"),
+        ),
       );
-      setCapital(capitalName);
     } else {
       setCapital(t("pages.nation.nationIdentity.noCapital"));
     }

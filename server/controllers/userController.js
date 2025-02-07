@@ -98,7 +98,7 @@ export const login = async (req, res) => {
 
     const { name, password } = req.body;
 
-    const user = await User.findOne({ name }, "-ip -recovery");
+    const user = await User.findOne({ name }, "-recovery");
     if (!user) {
       return res.status(404).json({ infoType: "404" });
     }
@@ -113,8 +113,9 @@ export const login = async (req, res) => {
         return res.status(401).json({ infoType: "401" });
       }
       const jwt = user.createJWT();
-      updateUserIpAddress(user.officialId, userIp);
-      res.status(200).json({ user, jwt, infoType: "signin" });
+      const lastVisitDate = getLastVisitDate(user, userIp);
+      updateUserIpAddress(user, userIp);
+      res.status(200).json({ user, lastVisitDate, jwt, infoType: "signin" });
     });
   } catch (error) {
     handleError(error, res);
@@ -133,12 +134,13 @@ export const verify = async (req, res) => {
 
     const user = await User.findOne(
       { officialId: userId },
-      "-ip -password -recovery",
+      "-password -recovery",
     );
 
     if (user) {
-      updateUserIpAddress(user.officialId, userIp);
-      return res.status(200).json({ user, infoType: "verify" });
+      const lastVisitDate = getLastVisitDate(user, userIp);
+      updateUserIpAddress(user, userIp);
+      return res.status(200).json({ user, lastVisitDate, infoType: "verify" });
     } else {
       return res.status(401).json({ infoType: "401" });
     }
@@ -372,22 +374,13 @@ export const updateUser = async (req, res) => {
       user.role = role;
       user.plan = plan;
       user.citizenship = citizenship;
-      user
-        .save()
-        .then((user) => {
-          res.status(200).json({
-            user,
-            place: newResidence,
-            oldPlace: oldResidence,
-            infoType: "update",
-          });
-        })
-        .catch((error) => {
-          console.error(error);
-          res.status(400).json({
-            infoType: "400",
-          });
-        });
+      await user.save();
+      res.status(200).json({
+        user,
+        place: newResidence,
+        oldPlace: oldResidence,
+        infoType: "update",
+      });
     } else {
       res.status(403).json({
         infoType: "403",
@@ -416,11 +409,7 @@ export const changeStatus = async (req, res) => {
         if (status === 1) {
           nation.data.roleplay.citizens += 1;
           nation.data.roleplay.treasury += GIFTS.CITIZENSHIP;
-          nation.save().catch((error) => {
-            res.status(400).json({
-              erreur: error.message,
-            });
-          });
+          await nation.save();
         }
       } else {
         user.citizenship.nationId = "";
@@ -428,30 +417,16 @@ export const changeStatus = async (req, res) => {
         if (user.citizenship.status === 1) {
           nation.data.roleplay.citizens -= 1;
           nation.data.roleplay.treasury -= GIFTS.CITIZENSHIP;
-          nation.save().catch((error) => {
-            res.status(400).json({
-              erreur: error.message,
-              infoType: "400",
-            });
-          });
+          await nation.save();
         }
       }
       user.citizenship.status = status;
-      user
-        .save()
-        .then((user) => {
-          res.status(200).json({
-            user,
-            nation,
-            infoType: "update",
-          });
-        })
-        .catch((error) => {
-          console.error(error);
-          res.status(400).json({
-            infoType: "400",
-          });
-        });
+      await user.save();
+      res.status(200).json({
+        user,
+        nation,
+        infoType: "update",
+      });
     } else {
       res.sendStatus(403).json({ infoType: "403" });
     }
@@ -467,7 +442,7 @@ export const changePlan = async (req, res) => {
     if (user) {
       user.plan = plan;
       user.expirationDate = addMonths(duration);
-      user.save();
+      await user.save();
       res.status(200).json({
         user,
         infoType: "update",
@@ -478,13 +453,9 @@ export const changePlan = async (req, res) => {
   }
 };
 
-const updateUserIpAddress = async (userOfficialId, ip) => {
+const updateUserIpAddress = async (user, ip) => {
   try {
     let isFind = false;
-    const user = await User.findOne(
-      { officialId: userOfficialId },
-      "-password -recovery",
-    );
     for (const address of user.ip) {
       if (address.value === ip) {
         isFind = true;
@@ -498,4 +469,14 @@ const updateUserIpAddress = async (userOfficialId, ip) => {
   } catch (error) {
     handleError(error, res);
   }
+};
+
+const getLastVisitDate = (user, ip) => {
+  let date = new Date();
+  for (const address of user.ip) {
+    if (address.value === ip) {
+      date = new Date(address.lastVisit);
+    }
+  }
+  return date;
 };

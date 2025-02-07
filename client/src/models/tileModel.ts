@@ -1,3 +1,4 @@
+import i18n from "../i18n/i18n";
 import {
   createTileFetch,
   deleteTileFetch,
@@ -11,7 +12,8 @@ import {
 } from "../settings/store";
 import { Nation } from "../types/typNation";
 import { emptyTile, Tile } from "../types/typTile";
-import { displayTileInfoByType, errorCatching } from "../utils/displayInfos";
+import { errorCatching } from "../utils/displayInfos";
+import { errorMessage, successMessage } from "../utils/toasts";
 import { TileListModel } from "./lists/tileListModel";
 
 export class TileModel implements Tile {
@@ -42,7 +44,7 @@ export class TileModel implements Tile {
       this.updateFields(resp.tile);
       myStore.get(tileListAtomV2).addToTileListAtom([resp.tile]);
       myStore.get(nationListAtomV2).addToNationListAtom([resp.nation]);
-      displayTileInfoByType(resp.infoType);
+      this.displayTileInfoByType(resp.infoType);
     } catch (error) {
       errorCatching(error);
     } finally {
@@ -58,7 +60,7 @@ export class TileModel implements Tile {
       );
       this.updateFields(resp.tile);
       myStore.get(tileListAtomV2).addToTileListAtom([resp.tile]);
-      displayTileInfoByType(resp.infoType);
+      this.displayTileInfoByType(resp.infoType);
     } catch (error) {
       errorCatching(error);
     } finally {
@@ -76,11 +78,32 @@ export class TileModel implements Tile {
         .removeByBaseId(resp.tile._id);
       myStore.set(tileListAtomV2, new TileListModel(updatedList));
       myStore.get(nationListAtomV2).addToNationListAtom([resp.nation]);
-      displayTileInfoByType(resp.infoType);
+      this.displayTileInfoByType(resp.infoType);
     } catch (error) {
       errorCatching(error);
     } finally {
       myStore.set(loadingAtom, false);
+    }
+  };
+  displayTileInfoByType = (type: string) => {
+    switch (type) {
+      case "new":
+        successMessage(i18n.t("toasts.tile.new"));
+        break;
+      case "update":
+        successMessage(i18n.t("toasts.tile.update"));
+        break;
+      case "delete":
+        successMessage(i18n.t("toasts.tile.delete"));
+        break;
+      case "forbidden":
+        errorMessage(i18n.t("toasts.errors.forbidden"));
+        break;
+      case "500":
+        errorMessage(i18n.t("toasts.errors.500"));
+        break;
+      default:
+        break;
     }
   };
 }

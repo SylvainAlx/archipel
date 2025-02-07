@@ -20,6 +20,7 @@ import { createPageTitle } from "../utils/procedures";
 import IdSkeleton from "../components/loading/skeletons/idSkeleton";
 import MapSkeleton from "../components/loading/skeletons/mapSkeleton";
 import TileSkeleton from "../components/loading/skeletons/tileSkeleton";
+import { useLoadNationPlaces } from "../hooks/useLoadNationPlaces";
 
 export default function Nation() {
   const [nation, setNation] = useState<NationModel>(new NationModel());
@@ -29,6 +30,7 @@ export default function Nation() {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const param = useParams();
+  const nationPlaceList = useLoadNationPlaces(nation);
 
   createPageTitle(nation.name);
 
@@ -137,6 +139,7 @@ export default function Nation() {
                     <Suspense fallback={<IdSkeleton />}>
                       <NationIdentity
                         selectedNation={nation}
+                        nationPlaceList={nationPlaceList}
                         owner={owner}
                         updatePath={updatePath}
                       />
@@ -158,7 +161,11 @@ export default function Nation() {
                       <Citizens selectedNation={nation} owner={owner} />
                     </Suspense>
                     <Suspense fallback={<TileSkeleton />}>
-                      <Places selectedNation={nation} owner={owner} />
+                      <Places
+                        selectedNation={nation}
+                        nationPlaceList={nationPlaceList}
+                        owner={owner}
+                      />
                     </Suspense>
                     <Suspense fallback={<TileSkeleton />}>
                       <NationComs selectedNation={nation} owner={owner} />

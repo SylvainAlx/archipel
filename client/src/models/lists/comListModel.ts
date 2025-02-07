@@ -118,7 +118,9 @@ export class ComListModel extends ListModel {
     }
   };
   private add(item: Com) {
-    this.items.push(new ComModel(item));
+    if (!this.items.some((i) => i.officialId === item.officialId)) {
+      this.items.push(new ComModel(item));
+    }
   }
   addMany(items: Com[]) {
     items.forEach((item) => this.addOrUpdate(item));

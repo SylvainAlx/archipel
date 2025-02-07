@@ -1,5 +1,4 @@
 import { Suspense, useEffect, useState } from "react";
-import BarreLoader from "../loading/barreLoader";
 import TileContainer from "../tileContainer";
 import AdminComTile from "../tiles/adminComTile";
 import H2 from "../titles/h2";
@@ -7,6 +6,7 @@ import IndexTag from "../tags/indexTag";
 import Button from "../buttons/button";
 import { useTranslation } from "react-i18next";
 import { ComListModel } from "../../models/lists/comListModel";
+import TileSkeleton from "../loading/skeletons/tileSkeleton";
 
 export default function AdminComs() {
   const [adminComList, setAdminComList] = useState<ComListModel>(
@@ -33,7 +33,7 @@ export default function AdminComs() {
               adminComList.getItems().map((com, i) => {
                 if (i < displayedComs) {
                   return (
-                    <Suspense key={i} fallback={<BarreLoader />}>
+                    <Suspense key={i} fallback={<TileSkeleton />}>
                       <div className="min-w-[300px] w-full relative transition-all duration-300 animate-fadeIn">
                         <AdminComTile com={com} />
                         <IndexTag text={i} />

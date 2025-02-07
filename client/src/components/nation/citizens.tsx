@@ -15,7 +15,6 @@ export default function Citizens({ selectedNation }: SelectedNationProps) {
   const [nationUsers, setNationUsers] = useState<UserListModel>(
     new UserListModel(),
   );
-  const [listChecked, setListChecked] = useState<boolean>(false);
   const [, setConfirmModal] = useAtom(confirmBox);
   const { t } = useTranslation();
   const CitizenTile = lazy(() => import("../tiles/citizenTile"));
@@ -25,13 +24,12 @@ export default function Citizens({ selectedNation }: SelectedNationProps) {
       if (nationUsers.getItems().length === 0) {
         const list = await nationUsers.loadNationUserList(selectedNation);
         setNationUsers(list);
-        setListChecked(true);
       }
     };
-    if (selectedNation.officialId !== "" && !listChecked) {
+    if (selectedNation.officialId !== "") {
       loadRelationList();
     }
-  }, [selectedNation.officialId]);
+  }, []);
 
   const askCtz = () => {
     const payload = {

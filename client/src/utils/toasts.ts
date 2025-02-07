@@ -10,5 +10,5 @@ export const errorMessage = (message: string) =>
   });
 
 export const comMessage = (message: string) => {
-  toast.info(message, { autoClose: false });
+  toast.info(message, { autoClose: 5000 });
 };

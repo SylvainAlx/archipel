@@ -33,7 +33,7 @@ export default function CoatOfArms({
       actionToDo: async () => {
         const result = await deleteImage(nation.data.url.coatOfArms);
         if (result) {
-          updatePath("nation.data.url.coatOfArms", "", false);
+          updatePath("data.url.coatOfArms", "", false);
         }
       },
     });

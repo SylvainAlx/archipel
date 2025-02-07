@@ -1,19 +1,18 @@
 import Tag from "./tag";
 import { useEffect, useState } from "react";
-import { getPlaceName } from "../../utils/functions";
 import { FaLocationDot } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { PlaceListModel } from "../../models/lists/placeListModel";
 
 interface ResidenceTagProps {
-  nationPlaceList: PlaceListModel;
   residenceId: string;
+  nationPlaces: PlaceListModel;
 }
 
 export default function ResidenceTag({
-  nationPlaceList,
   residenceId,
+  nationPlaces,
 }: ResidenceTagProps) {
   const { t } = useTranslation();
   const [residence, setResidence] = useState<string>(
@@ -23,17 +22,14 @@ export default function ResidenceTag({
 
   useEffect(() => {
     if (residenceId != "") {
-      const residenceName = getPlaceName(
-        nationPlaceList.getItems(),
-        residenceId,
-        t("pages.citizen.noResidence"),
+      setResidence(
+        nationPlaces.findPlaceName(residenceId, t("pages.citizen.noResidence")),
       );
-      setResidence(residenceName);
     } else {
       setResidence(t("pages.citizen.noResidence"));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [residenceId, nationPlaceList]);
+  }, [residenceId, nationPlaces]);
 
   return (
     <Tag

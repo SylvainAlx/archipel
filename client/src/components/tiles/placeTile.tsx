@@ -2,10 +2,8 @@ import { placeListAtomV2, sessionAtom } from "../../settings/store";
 import { useAtom } from "jotai";
 import { GiCapitol } from "react-icons/gi";
 import { useLocation, useNavigate } from "react-router-dom";
-import { getPlaceTypeLabel } from "../../utils/functions";
 import PlaceTag from "../tags/placeTag";
 import { useEffect, useState } from "react";
-import { Place } from "../../types/typPlace";
 import NationTag from "../tags/nationTag";
 import Avatar from "../avatar";
 import ReportPanel from "../reportPanel";
@@ -13,10 +11,12 @@ import { PLACE_TYPE } from "../../settings/consts";
 import TreeTag from "../tags/treeTag";
 import DateTag from "../tags/dateTag";
 import { NationModel } from "../../models/nationModel";
+import { PlaceModel } from "../../models/placeModel";
+import PopulationTag from "../tags/populationTag";
 
 export interface PlaceTileProp {
   owner?: boolean;
-  place: Place;
+  place: PlaceModel;
   nation: NationModel;
   update?: number;
 }
@@ -38,7 +38,10 @@ export default function PlaceTile({ place, nation }: PlaceTileProp) {
   };
 
   useEffect(() => {
-    const stats = { ...childrenStats };
+    const stats = {
+      population: 0,
+      children: 0,
+    };
     placeList.getItems().forEach((e) => {
       if (e.parentId === place.officialId) {
         stats.population += e.population;
@@ -79,12 +82,16 @@ export default function PlaceTile({ place, nation }: PlaceTileProp) {
         )}
       </div>
       <div className="max-w-[90%] flex flex-wrap items-center self-end justify-end gap-1">
-        <PlaceTag label={getPlaceTypeLabel(place.type)} />
-        {/* <PopulationTag label={getTotalPopulation(place)} /> */}
-        {emplacement.pathname != `/nation/${place.nation}` ? (
+        <PlaceTag label={place.getPlaceTypeLabel()} />
+        {place.type === PLACE_TYPE.city.id && (
+          <PopulationTag label={place.population} />
+        )}
+        {emplacement.pathname === `/explore/4` ? (
           <NationTag label={place.nation} />
         ) : (
-          <TreeTag label={childrenStats.children} />
+          place.type != PLACE_TYPE.city.id && (
+            <TreeTag label={childrenStats.children} />
+          )
         )}
         {place.createdAt && <DateTag date={place.createdAt} />}
       </div>

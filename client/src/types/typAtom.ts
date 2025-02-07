@@ -1,14 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Hashtag, LabelId, Regime } from "./typNation";
-import { Place } from "./typPlace";
-
-// editPlace
-
-export interface EditPlaceParam {
-  place: Place;
-  update?: number;
-  owner?: boolean;
-}
 
 // confirmBox
 
@@ -58,13 +49,6 @@ export const emptyInfo: InfoModal = {
   image: "",
   copy: false,
 };
-
-// Param
-
-export interface Param {
-  name: string;
-  props: Array<{ label: string; value: string | number }>;
-}
 
 //  Others
 

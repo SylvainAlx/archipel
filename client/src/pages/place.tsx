@@ -10,11 +10,13 @@ import { createPageTitle } from "../utils/procedures";
 import MapSkeleton from "../components/loading/skeletons/mapSkeleton";
 import TileSkeleton from "../components/loading/skeletons/tileSkeleton";
 import ParamSkeleton from "../components/loading/skeletons/paramSkeleton";
+import { useLoadNationPlaces } from "../hooks/useLoadNationPlaces";
 
 export default function Place() {
   const [session] = useAtom(sessionAtom);
   const [nation, setNation] = useState<NationModel>(new NationModel());
   const [place, setPlace] = useState<PlaceModel>(new PlaceModel());
+  const nationPlaceList = useLoadNationPlaces(nation);
   const param = useParams();
 
   createPageTitle(place.name);
@@ -47,7 +49,7 @@ export default function Place() {
     ) {
       setOwner(true);
     }
-    if (nation.officialId === "") {
+    if (nation.officialId === "" && place.nation != "") {
       loadNation(place.nation);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -100,7 +102,12 @@ export default function Place() {
         )}
       </section>
       <Suspense fallback={<TileSkeleton />}>
-        <PlaceChildren place={place} nation={nation} owner={owner} />
+        <PlaceChildren
+          place={place}
+          nation={nation}
+          owner={owner}
+          nationPlaceList={nationPlaceList}
+        />
       </Suspense>
       <ReportPanel content={place} />
     </>

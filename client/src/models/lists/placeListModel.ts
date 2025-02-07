@@ -2,9 +2,10 @@ import {
   getAllPlacesFetch,
   getNationPlacesFetch,
 } from "../../services/placeService";
+import { PLACE_TYPE } from "../../settings/consts";
 import { PLACE_SORTING } from "../../settings/sorting";
 import { loadingAtom, myStore, placeListAtomV2 } from "../../settings/store";
-import { Nation } from "../../types/typNation";
+import { LabelId, Nation } from "../../types/typNation";
 import { Place } from "../../types/typPlace";
 import { errorCatching } from "../../utils/displayInfos";
 import {
@@ -12,6 +13,7 @@ import {
   sortByName,
   sortPlacesByCitizen,
 } from "../../utils/sorting";
+import { NationModel } from "../nationModel";
 import { PlaceModel } from "../placeModel";
 import { ListModel } from "./listModel";
 
@@ -54,7 +56,10 @@ export class PlaceListModel extends ListModel {
             savedPlaces.push(place);
           }
         });
-      if (savedPlaces.length > 0) {
+      if (
+        savedPlaces.length > 0 &&
+        savedPlaces.length === nation.data.roleplay.places
+      ) {
         this.addMany(savedPlaces);
       } else {
         const places: Place[] = await getNationPlacesFetch(nation.officialId);
@@ -68,8 +73,57 @@ export class PlaceListModel extends ListModel {
       return new PlaceListModel(this.items);
     }
   };
+  getLabelIdPlaceList = (
+    types: number[],
+    nation?: NationModel,
+    idToOmit?: string,
+  ): LabelId[] => {
+    const result: LabelId[] = [];
+    this.items.forEach((place) => {
+      types.forEach((type) => {
+        if (place.type === type && place.officialId != idToOmit) {
+          result.push({ id: place.officialId, label: place.name });
+        }
+      });
+    });
+    nation && result.push({ id: nation.officialId, label: nation.name });
+    return result;
+  };
+  getTotalPopulation = (place: PlaceModel): number => {
+    let total: number = 0;
+    this.getItems().forEach((e) => {
+      if (e.parentId === place.officialId) {
+        total += e.population;
+      }
+    });
+    return total + place.population;
+  };
+  getPlacesByParentId = (parentId: string) => {
+    const places = this.getItems().filter(
+      (place) => place.parentId === parentId,
+    );
+    return new PlaceListModel(places);
+  };
+  findPlaceName = (officialId: string, defaultName: string): string => {
+    let name = defaultName;
+    const foundPlace = this.getItems().find(
+      (place) => place.officialId === officialId,
+    );
+    if (foundPlace) {
+      name = foundPlace.name;
+    }
+    return name;
+  };
+  getCities = () => {
+    const cities = this.getItems().filter(
+      (place) => place.type === PLACE_TYPE.city.id,
+    );
+    return new PlaceListModel(cities);
+  };
   private add(item: Place) {
-    this.items.push(new PlaceModel(item));
+    if (!this.items.some((i) => i.officialId === item.officialId)) {
+      this.items.push(new PlaceModel(item));
+    }
   }
   addMany(items: Place[]) {
     items.forEach((item) => this.addOrUpdate(item));
@@ -92,10 +146,10 @@ export class PlaceListModel extends ListModel {
       case PLACE_SORTING.descAlpha.id:
         sortByName(this.items, false);
         break;
-      case 2:
+      case PLACE_SORTING.ascCtz.id:
         sortPlacesByCitizen(this, true);
         break;
-      case 3:
+      case PLACE_SORTING.descCtz.id:
         sortPlacesByCitizen(this, false);
         break;
       case PLACE_SORTING.ascDate.id:

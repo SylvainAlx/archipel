@@ -5,7 +5,6 @@ import { sessionAtom } from "../../settings/store";
 import { IoMdCloseCircle } from "react-icons/io";
 import { MdCheckCircle } from "react-icons/md";
 import { useTranslation } from "react-i18next";
-import { approveCitizenship, declineCitizenship } from "../../utils/procedures";
 import { UserModel } from "../../models/userModel";
 
 export interface CitizenTagProps {
@@ -29,13 +28,13 @@ export default function CitizenTag({ label, citizen }: CitizenTagProps) {
             session.user.citizenship.nationOwner && (
               <div className="flex items-center bg-light rounded-full px-1">
                 <div
-                  onClick={() => approveCitizenship(citizen)}
+                  onClick={() => citizen.approveCitizenship()}
                   className="cursor-pointer text-xl text-success"
                 >
                   <MdCheckCircle />
                 </div>
                 <div
-                  onClick={() => declineCitizenship(citizen)}
+                  onClick={() => citizen.declineCitizenship()}
                   className="cursor-pointer text-xl text-danger"
                 >
                   <IoMdCloseCircle />

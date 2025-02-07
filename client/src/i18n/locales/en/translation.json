@@ -62,14 +62,14 @@
         "title": "Locations"
       },
       "comsList": {
-        "title": "Press releases"
+        "title": "News"
       },
       "stats": {
         "title": "Statistics",
         "nations": "Virtual nations",
         "locations": "Locations",
         "citizens": "Citizens",
-        "coms": "Press releases",
+        "coms": "News",
         "tags": "hashtags"
       }
     },
@@ -306,7 +306,7 @@
         "nationalDay": "national day",
         "nationOwner": "nation editor",
         "residence": "residence",
-        "treasury": "treasury",
+        "treasury": "wealth",
         "date": "date",
         "honor": "honor",
         "honor_pioneer": "pioneer",
@@ -445,7 +445,7 @@
       "400": "Bad request",
       "401": "Unauthorized",
       "403": "Forbidden",
-      "404": "Page not found",
+      "404": "Information not found",
       "500": "Server error",
       "11000": "Information already existing in the database",
       "nsfw": "Image contains NSFW content! Notification sent to admin",
@@ -500,6 +500,10 @@
     }
   },
   "coms": {
+    "register": {
+      "title": "Welcome to ",
+      "message": "Your account has been successfully created. We welcome you to the application and wish you a pleasant experience !"
+    },
     "nationCreate": {
       "title": "Life of the nation ",
       "message": "Your nation has been created"

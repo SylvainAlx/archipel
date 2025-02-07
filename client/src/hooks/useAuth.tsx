@@ -1,6 +1,11 @@
 import { useAtom } from "jotai";
 import { useState, useEffect } from "react";
-import { lobbyAtom, sessionAtom } from "../settings/store";
+import {
+  lobbyAtom,
+  myStore,
+  sessionAtom,
+  showCookiesModalAtom,
+} from "../settings/store";
 import { useLocation, useNavigate } from "react-router-dom";
 import { MDP_LOBBY } from "../settings/consts";
 import useOnlineStatus from "../hooks/useOnlineStatus";
@@ -25,6 +30,7 @@ export const useAuth = () => {
     const lobbyToken = localStorage.getItem("lobbyToken");
     if (!access && lobbyToken === MDP_LOBBY) {
       setAccess(true);
+      myStore.set(showCookiesModalAtom, access);
       if (!session.user.officialId) authenticateUser();
     } else {
       setAccess(false);

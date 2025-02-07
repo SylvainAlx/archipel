@@ -13,6 +13,7 @@ import {
   newPlaceAtom,
   newRelationAtom,
   recoveryKey,
+  showCookiesModalAtom,
   showLangModalAtom,
   showMenuAtom,
 } from "../settings/store";
@@ -29,6 +30,7 @@ import { ChangePasswordModal } from "../components/modals/changePasswordModal";
 import NewRelationModal from "../components/modals/newRelationModal";
 import TileFormModal from "../components/modals/tileFormModal";
 import NewComModal from "../components/modals/newComModal";
+import CookiesModal from "../components/modals/cookiesModal";
 
 export default function ModalsRouter() {
   const [recovery] = useAtom(recoveryKey);
@@ -46,6 +48,7 @@ export default function ModalsRouter() {
   const [newRelation] = useAtom(newRelationAtom);
   const [tile] = useAtom(editTileAtom);
   const [newCom] = useAtom(newComAtom);
+  const [showCookiesModal] = useAtom(showCookiesModalAtom);
 
   if (
     recovery != "" ||
@@ -92,6 +95,7 @@ export default function ModalsRouter() {
                     <NewRelationModal update={newRelation.update} />
                   )}
                   {tile.nationOfficialId != "" && <TileFormModal />}
+                  {showCookiesModal && <CookiesModal />}
                 </>
               )}
             </>

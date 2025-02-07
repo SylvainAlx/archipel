@@ -6,10 +6,10 @@ import Select from "../form/select";
 import { placeListAtomV2, statsAtom } from "../../settings/store";
 import { useTranslation } from "react-i18next";
 import { useAtom } from "jotai";
-import { getPlaceTypeLabel } from "../../utils/functions";
 import SearchButtons from "../form/searchButtons";
 import { PLACE_SORTING } from "../../settings/sorting";
 import { PlaceListModel } from "../../models/lists/placeListModel";
+import { PlaceModel } from "../../models/placeModel";
 
 export interface PlaceSearchBarProps {
   type: string;
@@ -133,7 +133,7 @@ export default function PlaceSearchBar({ list, setList }: PlaceSearchBarProps) {
         <fieldset className="flex gap-3">
           {[0, 1, 2, 3].map((index) => (
             <label key={index} className="flex gap-2 items-center">
-              {getPlaceTypeLabel(index)}
+              {new PlaceModel({ type: index }).getPlaceTypeLabel()}
               <input
                 type="checkbox"
                 id={String(index)}

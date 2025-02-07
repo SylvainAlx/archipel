@@ -3,7 +3,12 @@ import TileContainer from "../tileContainer";
 import DashTile from "../dashTile";
 import { SelectedNationProps } from "../../types/typProp";
 import { useAtom } from "jotai";
-import { myStore, newRelationAtom, sessionAtom } from "../../settings/store";
+import {
+  myStore,
+  newRelationAtom,
+  relationListAtomV2,
+  sessionAtom,
+} from "../../settings/store";
 import { lazy, Suspense, useEffect, useState } from "react";
 import Button from "../buttons/button";
 import { FaHandshakeSimple } from "react-icons/fa6";
@@ -21,6 +26,7 @@ export default function Diplomacy({
   owner,
 }: SelectedNationProps) {
   const { t } = useTranslation();
+  const [relationList] = useAtom(relationListAtomV2);
   const [nationRelationList, setNationRelationList] =
     useState<RelationListModel>(new RelationListModel());
   const [listChecked, setListChecked] = useState<boolean>(false);
@@ -28,6 +34,18 @@ export default function Diplomacy({
   const RelationTile = lazy(() => import("../tiles/relationTile"));
 
   useEffect(() => {
+    const filterList = (list: RelationListModel) => {
+      const updatedList = list
+        .getItems()
+        .filter((relation) =>
+          relation.nations.some(
+            (nation: { OfficialId: string; AmbassadorId: string }) =>
+              nation.OfficialId === selectedNation.officialId ||
+              nation.AmbassadorId === selectedNation.owner,
+          ),
+        );
+      setNationRelationList(new RelationListModel(updatedList));
+    };
     const loadRelationList = async () => {
       if (nationRelationList.getItems().length === 0) {
         const list = await nationRelationList.loadRelationList(
@@ -37,10 +55,10 @@ export default function Diplomacy({
         setListChecked(true);
       }
     };
-    if (selectedNation.officialId !== "" && !listChecked) {
-      loadRelationList();
+    if (selectedNation.officialId !== "") {
+      !listChecked ? loadRelationList() : filterList(relationList);
     }
-  }, [selectedNation.officialId]);
+  }, [selectedNation.officialId, relationList]);
 
   const handleClick = () => {
     const newRelationPayload: DiplomaticRelationship =

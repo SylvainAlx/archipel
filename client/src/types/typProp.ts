@@ -3,6 +3,7 @@ import { Nation } from "./typNation";
 import { Place } from "./typPlace";
 import { DiplomaticRelationship } from "./typRelation";
 import { User } from "./typUser";
+import { NationModel } from "../models/nationModel";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
@@ -29,7 +30,7 @@ export interface ClickProps {
 }
 
 export interface SelectedNationProps {
-  selectedNation: Nation;
+  selectedNation: NationModel;
   setSelectedNation?: React.Dispatch<React.SetStateAction<Nation>>;
   owner?: boolean;
 }

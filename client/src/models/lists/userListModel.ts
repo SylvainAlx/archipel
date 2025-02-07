@@ -77,7 +77,10 @@ export class UserListModel extends ListModel {
             savedNationCitizenList.push(user);
           }
         });
-      if (savedNationCitizenList.length > 0) {
+      if (
+        savedNationCitizenList.length > 0 &&
+        savedNationCitizenList.length === nation.data.roleplay.citizens
+      ) {
         this.items = savedNationCitizenList;
       } else {
         const resp: User[] = await getNationCitizensFetch(nation.officialId);

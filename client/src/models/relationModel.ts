@@ -11,10 +11,8 @@ import {
   NationDiplomacyInfo,
   RelationKind,
 } from "../types/typRelation";
-import {
-  displayRelationInfoByType,
-  errorCatching,
-} from "../utils/displayInfos";
+import { errorCatching } from "../utils/displayInfos";
+import { errorMessage, successMessage } from "../utils/toasts";
 import { ComModel } from "./comModel";
 import { CommonModel } from "./commonModel";
 
@@ -43,7 +41,7 @@ export class RelationModel
         await createRelationFetch(newRelation);
       this.updateFields(resp.relation);
       myStore.get(relationListAtomV2).addToRelationListAtom([resp.relation]);
-      displayRelationInfoByType(resp.infoType);
+      this.displayRelationInfoByType(resp.infoType);
       const newCom1 = new ComModel({
         comType: COM_TYPE.userPrivate.id,
         origin: resp.relation.nations[1].OfficialId,
@@ -74,7 +72,7 @@ export class RelationModel
         await updateRelationFetch(newRelation);
       this.updateFields(resp.relation);
       myStore.get(relationListAtomV2).addToRelationListAtom([resp.relation]);
-      displayRelationInfoByType(resp.infoType);
+      this.displayRelationInfoByType(resp.infoType);
       const newCom1 = new ComModel({
         comType: COM_TYPE.nationPrivate.id,
         origin: resp.relation.nations[0].OfficialId,
@@ -94,6 +92,27 @@ export class RelationModel
     } catch (error) {
     } finally {
       myStore.set(loadingAtom, false);
+    }
+  };
+  displayRelationInfoByType = (type: string) => {
+    switch (type) {
+      case "new":
+        successMessage(i18n.t("toasts.relation.create"));
+        break;
+      case "update":
+        successMessage(i18n.t("toasts.relation.update"));
+        break;
+      case "serverError":
+        errorMessage(i18n.t("toasts.errors.serverError"));
+        break;
+      case "400":
+        errorMessage(i18n.t("toasts.errors.400"));
+        break;
+      case "500":
+        errorMessage(i18n.t("toasts.errors.500"));
+        break;
+      default:
+        break;
     }
   };
 }

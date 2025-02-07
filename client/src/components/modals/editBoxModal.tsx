@@ -20,23 +20,21 @@ export default function EditBoxModal() {
   const { t } = useTranslation();
 
   useEffect(() => {
-    if (Array.isArray(editBox.original)) {
-      if (editBox.path === "data.roleplay.capital") {
-        setEditBox({ ...editBox, new: editBox.original });
-      } else if (editBox.path === "citizenship.residence") {
-        setEditBox({ ...editBox, new: editBox.original[0].id });
-      } else if (editBox.path === "parentId") {
-        setEditBox({ ...editBox, new: editBox.original[0].id });
-      } else setEditBox({ ...editBox, new: editBox.original });
-    }
     if (
-      typeof editBox.indice == "string" ||
-      typeof editBox.indice == "number"
+      (typeof editBox.indice == "string" ||
+        typeof editBox.indice == "number") &&
+      Array.isArray(editBox.original)
     ) {
-      setEditBox({ ...editBox, new: editBox.indice });
+      if (editBox.indice === "tags") {
+        setEditBox({ ...editBox, new: editBox.original });
+      } else if (editBox.indice != "") {
+        setEditBox({ ...editBox, new: editBox.indice });
+      } else {
+        setEditBox({ ...editBox, new: editBox.original[0].id });
+      }
     } else if (
       typeof editBox.original == "string" ||
-      typeof editBox.indice == "number"
+      typeof editBox.original == "number"
     ) {
       setEditBox({ ...editBox, new: editBox.original });
     }
@@ -70,13 +68,14 @@ export default function EditBoxModal() {
   };
 
   const handleSelectChange = (e: ChangeEvent<HTMLSelectElement>) => {
-    if (editBox.path === "data.roleplay.capital") {
-      setEditBox({ ...editBox, new: e.target.value });
-    } else if (editBox.path === "parentId") {
-      setEditBox({ ...editBox, new: e.target.value });
-    } else if (editBox.path === "citizenship.residence") {
-      setEditBox({ ...editBox, new: e.target.value });
-    } else if (editBox.path === "language") {
+    if (
+      [
+        "data.roleplay.capital",
+        "parentId",
+        "citizenship.residence",
+        "language",
+      ].includes(editBox.path)
+    ) {
       setEditBox({ ...editBox, new: e.target.value });
     } else {
       setEditBox({ ...editBox, new: Number(e.target.value) });
@@ -92,13 +91,11 @@ export default function EditBoxModal() {
   };
 
   const handleAddItem = () => {
-    if (newElement != "") {
-      const newArray = structuredClone(editBox.new);
-      if (Array.isArray(newArray)) {
-        newArray.push(newElement);
-        setEditBox({ ...editBox, new: newArray });
-        setNewElement("");
-      }
+    if (newElement != "" && Array.isArray(editBox.new)) {
+      const newArray = [...editBox.new];
+      newArray.push(newElement);
+      setEditBox({ ...editBox, new: newArray });
+      setNewElement("");
     }
   };
 
@@ -150,37 +147,37 @@ export default function EditBoxModal() {
           />
         )}
         {Array.isArray(editBox.original) &&
-        Array.isArray(editBox.new) &&
-        (typeof editBox.original[0] == "string" ||
-          editBox.path === "data.general.tags") ? (
+        editBox.path === "data.general.tags" ? (
           <div className="flex flex-wrap justify-center items-center gap-2">
-            {editBox.new.map((_element, i) => {
-              return (
-                <div
-                  className="w-full flex items-center gap-1 justify-center"
-                  key={i}
-                >
-                  <Input
-                    required
-                    type="string"
-                    placeholder={t("components.modals.editModal.newValue")}
-                    onChange={(e) => handleInputChangeArray(e, i)}
-                    value={
-                      Array.isArray(editBox.new)
-                        ? editBox.new[i]
-                        : Array.isArray(editBox.original) && editBox.original[i]
-                    }
-                    name=""
-                  />
+            {Array.isArray(editBox.new) &&
+              editBox.new.map((_element, i) => {
+                return (
                   <div
-                    onClick={() => handleDeleteItem(i)}
-                    className="cursor-pointer text-xl hover:animate-pulse rounded-full transition-all"
+                    className="w-full flex items-center gap-1 justify-center"
+                    key={i}
                   >
-                    <IoMdCloseCircle />
+                    <Input
+                      required
+                      type="string"
+                      placeholder={t("components.modals.editModal.newValue")}
+                      onChange={(e) => handleInputChangeArray(e, i)}
+                      value={
+                        Array.isArray(editBox.new)
+                          ? editBox.new[i]
+                          : Array.isArray(editBox.original) &&
+                            editBox.original[i]
+                      }
+                      name=""
+                    />
+                    <div
+                      onClick={() => handleDeleteItem(i)}
+                      className="cursor-pointer text-xl hover:animate-pulse rounded-full transition-all"
+                    >
+                      <IoMdCloseCircle />
+                    </div>
                   </div>
-                </div>
-              );
-            })}
+                );
+              })}
             <div className="w-full flex items-center gap-1 justify-center">
               <Input
                 type="string"
@@ -203,7 +200,11 @@ export default function EditBoxModal() {
               required
               options={editBox.original}
               onChange={handleSelectChange}
-              value={editBox.new.toString()}
+              value={
+                editBox.new != ""
+                  ? editBox.new.toString()
+                  : editBox.original[0].id.toString()
+              }
             />
           )
         )}
@@ -218,7 +219,11 @@ export default function EditBoxModal() {
           type="submit"
           text={t("components.buttons.validate")}
           widthFull={true}
-          disabled={editBox.new === editBox.indice}
+          disabled={
+            (editBox.new === editBox.indice ||
+              editBox.new === editBox.original) &&
+            editBox.indice != ""
+          }
         />
       </form>
     </div>

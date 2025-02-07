@@ -32,7 +32,7 @@ export default function NationMap({
       actionToDo: async () => {
         const result = await deleteImage(selectedNation.data.url.map);
         if (result) {
-          updatePath("image", "", false);
+          updatePath("data.url.map", "", false);
         }
       },
     });

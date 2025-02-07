@@ -7,7 +7,6 @@ import {
   changePasswordModalAtom,
   confirmBox,
   myStore,
-  sessionAtom,
   showCookiesModalAtom,
 } from "../../settings/store";
 import { RiLockPasswordFill } from "react-icons/ri";
@@ -29,7 +28,6 @@ interface SettingsProps {
 
 export default function Settings({ citizen }: SettingsProps) {
   const { t } = useTranslation();
-  const [session] = useAtom(sessionAtom);
   const [userPlan, setUserPlan] = useState("free");
   const [showCookiesModal, setShowCookiesModal] = useAtom(showCookiesModalAtom);
   const navigate = useNavigate();
@@ -80,7 +78,7 @@ export default function Settings({ citizen }: SettingsProps) {
         title={t("pages.citizen.settings")}
         children={
           <>
-            {session.user.reported && <ReportedFlag />}
+            {citizen.reported && <ReportedFlag />}
             {userPlan != "free" && (
               <div className="px-2 flex gap-1 items-center bg-gold rounded text-primary bold">
                 <IoDiamondOutline />

@@ -26,7 +26,7 @@ export default function BigFlag({ nation, owner, updatePath }: FlagProps) {
       actionToDo: async () => {
         const result = await deleteImage(nation.data.url.flag);
         if (result) {
-          updatePath("nation.data.url.flag", "", false);
+          updatePath("data.url.flag", "", false);
         }
       },
     });

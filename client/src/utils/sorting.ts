@@ -1,6 +1,5 @@
 import { PlaceListModel } from "../models/lists/placeListModel";
 import { Nation } from "../types/typNation";
-import { getTotalPopulation } from "./functions";
 
 export const sortByCreatedAt = (list: any[], ascending: boolean = true) => {
   return list.sort((a, b) => {
@@ -59,7 +58,7 @@ export const sortPlacesByCitizen = (
 ) => {
   return list.getItems().sort(function (a, b) {
     return ascending
-      ? getTotalPopulation(list, a) - getTotalPopulation(list, b)
-      : getTotalPopulation(list, b) - getTotalPopulation(list, a);
+      ? list.getTotalPopulation(a) - list.getTotalPopulation(b)
+      : list.getTotalPopulation(b) - list.getTotalPopulation(a);
   });
 };

@@ -122,6 +122,7 @@ export default function Citizen() {
             <Suspense fallback={<ParamSkeleton />}>
               <Citizenship
                 citizen={citizen}
+                setCitizen={setCitizen}
                 nation={nation}
                 owner={owner}
                 updatePath={updatePath}
@@ -140,7 +141,7 @@ export default function Citizen() {
         )}
         {owner && (
           <Suspense fallback={<TileSkeleton />}>
-            <CitizenCom citizen={citizen} owner={owner} />
+            <CitizenCom citizen={citizen} />
           </Suspense>
         )}
       </section>
