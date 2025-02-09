@@ -7,7 +7,7 @@
       "presentation3": "Tissez des liens diplomatiques et créez des alliances ! Notre plateforme vous offre l’opportunité d’interagir avec d’autres nations, qu’elles soient réelles ou virtuelles. Initiez des relations diplomatiques, négociez des accords, formez des alliances stratégiques ou organisez des événements communs. Élargissez l’influence de votre nation en construisant des ponts entre les cultures et en collaborant avec d’autres leaders. Ensemble, donnez une nouvelle dimension à vos ambitions !"
     },
     "lobby": {
-      "description": "Renseignez le mot de passe pour accéder à l'application",
+      "password": "Renseignez le mot de passe pour accéder à l'application",
       "allowed": "accès autorisé",
       "denied": "accès reffusé"
     },
@@ -442,7 +442,7 @@
     "reported": "Contenu signalé et en attente de modération",
     "connected": "Connexion rétablie !",
     "errors": {
-      "400": "Erreur de formulaire",
+      "400": "Erreur de requête",
       "401": "Action non autorisée",
       "403": "Action interdite",
       "404": "Information non trouvée",

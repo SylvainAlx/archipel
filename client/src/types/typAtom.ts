@@ -37,17 +37,12 @@ export const EditBoxDefault: EditBox = {
 };
 
 export interface InfoModal {
-  text: string;
-  subtitle?: string;
-  image?: string;
-  copy?: boolean;
+  subtitle: string;
+  children?: JSX.Element;
 }
 
 export const emptyInfo: InfoModal = {
-  text: "",
   subtitle: "",
-  image: "",
-  copy: false,
 };
 
 //  Others

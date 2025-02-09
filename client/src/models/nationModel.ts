@@ -141,14 +141,22 @@ export class NationModel extends CommonModel implements Nation {
       this.addToNationListAtom(response.nation);
       myStore.get(sessionAtom).user.addOrUpdateUserListAtom(response.user);
       myStore.get(sessionAtom).user.updateSessionAtom(response.user);
-      const newCom = new ComModel({
+      const newCom1 = new ComModel({
         comType: COM_TYPE.userPrivate.id,
         origin: response.nation.officialId,
         destination: response.user.officialId,
         title: i18n.t("coms.nationCreate.title") + response.nation.name,
         message: i18n.t("coms.nationCreate.message"),
       });
-      newCom.baseInsert();
+      newCom1.baseInsert();
+      const newCom2 = new ComModel({
+        comType: COM_TYPE.nationPrivate.id,
+        origin: response.nation.officialId,
+        destination: response.nation.officialId,
+        title: i18n.t("coms.nationCreate.title") + response.nation.name,
+        message: i18n.t("coms.nationCreate.message"),
+      });
+      newCom2.baseInsert();
     } catch (error) {
       errorCatching(error);
     } finally {
@@ -176,7 +184,6 @@ export class NationModel extends CommonModel implements Nation {
     try {
       const resp: { user: User; infoType: string } = await DeleteSelfFetch();
       this.removeFromNationListAtom(this);
-      // this.updateSessionAtom(new NationModel(), resp.user);
       const newCom = new ComModel({
         comType: COM_TYPE.userPrivate.id,
         origin: this.officialId,
@@ -186,6 +193,8 @@ export class NationModel extends CommonModel implements Nation {
       });
       newCom.baseInsert();
       this.updateFields(EmptyNation);
+      myStore.get(sessionAtom).user.addOrUpdateUserListAtom(resp.user);
+      myStore.get(sessionAtom).user.updateSessionAtom(resp.user);
       this.displayNationInfoByType(resp.infoType);
     } catch (error) {
       errorCatching(error);

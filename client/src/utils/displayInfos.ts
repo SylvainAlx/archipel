@@ -31,6 +31,7 @@ export const errorCatching = (error: unknown) => {
     }
     console.error(error);
   } catch (e) {
+    errorMessage(i18n.t("toasts.errors.400"));
     console.error("Erreur lors de la gestion de l'erreur :", e, error);
   }
 };

@@ -8,6 +8,7 @@ import { ComListModel } from "../../models/lists/comListModel";
 import { displayUnwatchedComs } from "../../utils/procedures";
 import TileSkeleton from "../loading/skeletons/tileSkeleton";
 import { UserModel } from "../../models/userModel";
+import useNotification from "../../hooks/useNotification";
 
 const ComTile = lazy(() => import("../tiles/comTile"));
 
@@ -21,6 +22,7 @@ export default function CitizensCom({ citizen }: CitizensComProps) {
   const [listChecked, setListChecked] = useState(false);
   const [comShowed, setComShowed] = useState(false);
   const [citizenComList, setCitizenComList] = useState(new ComListModel());
+  const { permission, showNotification } = useNotification();
 
   const filteredComList = useMemo(() => {
     const list = comList
@@ -52,17 +54,20 @@ export default function CitizensCom({ citizen }: CitizensComProps) {
 
   useEffect(() => {
     if (
+      permission &&
       !comShowed &&
       citizenComList.getItems().length > 0 &&
       citizenComList.getItems()[0].destination === citizen.officialId
     ) {
-      displayUnwatchedComs(citizen, citizenComList.getItems(), [
-        citizen.officialId,
-        COM_GENERAL_DESTINATION,
-      ]);
+      displayUnwatchedComs(
+        citizen,
+        citizenComList.getItems(),
+        [citizen.officialId, COM_GENERAL_DESTINATION],
+        showNotification,
+      );
       setComShowed(true);
     }
-  }, [citizenComList, citizen.officialId]);
+  }, [permission, citizenComList, citizen.officialId]);
 
   return (
     <DashTile title={t("pages.citizen.privateCom")}>

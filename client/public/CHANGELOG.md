@@ -1,5 +1,42 @@
 ## Version actuelle
 
+### BETA-0.7
+
+#### Ajouts
+
+aucuns
+
+#### Suppressions
+
+aucunes
+
+#### Modifications & Corrections
+
+- amélioration du modal de donation
+- amélioration de la page d'attente
+- mise à jour importante des dépendances du code source
+- Amélioration des notifications de communications
+- Amélioration de la gestion des erreurs
+
+## Développements à venir
+
+- Créer une organisation ou en rejoindre une
+- Créer des items et les proposer à l'acquisition aux citoyens
+- Ajouter les hymnes des nations
+- Créer une gazette des nations en se basant sur les communiqués
+- Montrer la répartitions des langues parlées dans chaque nation
+- Créer une aide pour les premiers pas d'un utilisateur
+- Améliorer le système de notifications
+- Exporter une carte d'identité virtuelle sous forme d'image
+- Améliorer le référencement et l'accessibilité
+- Étendre les fonctionnalités pour les utilisateurs mobile
+- Lier les lieux de la nation à un emplacement sur la carte
+- Améliorer des traductions
+- Carte virtuelle d'Archipel avec l'ensemble des nations représentées
+- Permettre les virements de crédits entre citoyens et entre nations
+
+## Versions précédentes
+
 ### BETA-0.6
 
 #### Ajouts
@@ -26,25 +63,6 @@
 - Modification du nom de l'onglet "Communiqués" par "Actualités" sur la page "Explorer"
 - Correction du bouton de consentement des cookies
 - Amélioration des notifications de communications
-
-## Développements à venir
-
-- Créer une organisation ou en rejoindre une
-- Créer des items et les proposer à l'acquisition aux citoyens
-- Ajouter les hymnes des nations
-- Créer une gazette des nations en se basant sur les communiqués
-- Montrer la répartitions des langues parlées dans chaque nation
-- Créer une aide pour les premiers pas d'un utilisateur
-- Améliorer le système de notifications
-- Exporter une carte d'identité virtuelle sous forme d'image
-- Améliorer le référencement et l'accessibilité
-- Étendre les fonctionnalités pour les utilisateurs mobile
-- Lier les lieux de la nation à un emplacement sur la carte
-- Améliorer des traductions
-- Carte virtuelle d'Archipel avec l'ensemble des nations représentées
-- Permettre les virements de crédits entre citoyens et entre nations
-
-## Versions précédentes
 
 ### BETA-0.5
 

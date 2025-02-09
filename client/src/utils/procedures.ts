@@ -1,3 +1,4 @@
+import { NotificationOptionsExtended } from "../hooks/useNotification";
 import i18n from "../i18n/i18n";
 import { ComModel } from "../models/comModel";
 import { UserModel } from "../models/userModel";
@@ -8,7 +9,7 @@ import { Nation } from "../types/typNation";
 import { User } from "../types/typUser";
 import { errorCatching } from "./displayInfos";
 import { getDocumentTitle } from "./functions";
-import { comMessage, successMessage } from "./toasts";
+import { successMessage } from "./toasts";
 
 export const deleteImage = async (url: string): Promise<boolean> => {
   const uuid: string = url.replace("https://ucarecdn.com/", "");
@@ -29,6 +30,10 @@ export const displayUnwatchedComs = (
   user: UserModel,
   comList: ComModel[],
   destinations: string[],
+  showNotification: (
+    Atitre: string,
+    Aoptions?: NotificationOptionsExtended,
+  ) => void,
 ) => {
   comList.forEach((com) => {
     if (
@@ -38,9 +43,20 @@ export const displayUnwatchedComs = (
     ) {
       const comDate = new Date(com.createdAt);
       const comType = com.getComTypeLabel();
-      comMessage(
-        `${comDate.toLocaleString(i18n.language)} - [${comType && comType.label}] - ${com.title} - ${com.message}`,
-      );
+      showNotification(com.title, {
+        body: `${comDate.toLocaleString(i18n.language)} - [${comType && comType.label}] - ${com.message}`,
+        icon: "/android-chrome-192x192.png",
+        silent: true,
+        actions: [
+          {
+            action: "dismiss",
+            title: "Fermer",
+          },
+        ],
+      });
+      // comMessage(
+      //   `${comDate.toLocaleString(i18n.language)} - [${comType && comType.label}] - ${com.title} - ${com.message}`,
+      // );
     }
   });
 };

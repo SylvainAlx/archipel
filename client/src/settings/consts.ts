@@ -1,6 +1,7 @@
 import i18n from "../i18n/i18n";
 
 export const MDP_LOBBY = import.meta.env.VITE_MDP_LOBBY;
+export const LOBBY_INFO = import.meta.env.VITE_LOBBY_INFO;
 export const SERVER_URL: string = import.meta.env.VITE_SERVER_URL;
 export const UPLOADCARE_PUBLIC_KEY = import.meta.env.VITE_UPLOADCARE_PUBLIC_KEY;
 export const ADMIN_EMAIL = import.meta.env.VITE_ADMIN_EMAIL;
@@ -9,10 +10,13 @@ export const GOOGLE_ANALYTICS_MEASUREMENT_ID = import.meta.env
   .VITE_GOOGLE_ANALYTICS_MEASUREMENT_ID;
 export const INSTAGRAM_URL = import.meta.env.VITE_INSTAGRAM_URL;
 export const THREADS_URL = import.meta.env.VITE_THREADS_URL;
-export const WALLET_PUBLIC_KEY = import.meta.env.VITE_WALLET_PUBLIC_KEY;
+export const BTC_PUBLIC_KEY = import.meta.env.VITE_BTC_PUBLIC_KEY;
+export const ETH_PUBLIC_KEY = import.meta.env.VITE_ETH_PUBLIC_KEY;
+export const SOL_PUBLIC_KEY = import.meta.env.VITE_SOL_PUBLIC_KEY;
+export const ADA_PUBLIC_KEY = import.meta.env.VITE_ADA_PUBLIC_KEY;
 
 export const VERSION = {
-  beta: "0.6",
+  beta: "0.7",
   rc: "",
   release: "",
   testing: true,

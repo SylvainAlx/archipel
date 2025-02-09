@@ -7,7 +7,7 @@ import {
   showCookiesModalAtom,
 } from "../settings/store";
 import { useLocation, useNavigate } from "react-router-dom";
-import { MDP_LOBBY } from "../settings/consts";
+import { LOBBY_INFO, MDP_LOBBY } from "../settings/consts";
 import useOnlineStatus from "../hooks/useOnlineStatus";
 import { errorMessage, successMessage } from "../utils/toasts";
 import { useTranslation } from "react-i18next";
@@ -28,7 +28,10 @@ export const useAuth = () => {
     };
 
     const lobbyToken = localStorage.getItem("lobbyToken");
-    if (!access && lobbyToken === MDP_LOBBY) {
+    if (
+      !access &&
+      (lobbyToken === MDP_LOBBY || (MDP_LOBBY === "" && LOBBY_INFO === ""))
+    ) {
       setAccess(true);
       myStore.set(showCookiesModalAtom, access);
       if (!session.user.officialId) authenticateUser();
