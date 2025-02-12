@@ -3,13 +3,14 @@ import { createOfficialId, handleError } from "../utils/functions.js";
 
 export const createRelation = async (req, res) => {
   try {
-    const { name, nations, kind } = req.body;
+    const { name, description, nations, kind } = req.body;
 
     const officialId = createOfficialId("d");
 
     const relation = new Relation({
       officialId,
       name,
+      description,
       nations,
       kind,
     });
@@ -53,7 +54,7 @@ export const getAllRelation = async (req, res) => {
 };
 
 export const updateRelation = async (req, res) => {
-  const { officialId, name, nations, kind } = req.body;
+  const { officialId, name, description, nations, kind } = req.body;
   try {
     if (nations.length >= 2) {
       const relation = await Relation.findOne({
@@ -61,6 +62,7 @@ export const updateRelation = async (req, res) => {
       });
       if (relation != undefined && relation != null) {
         relation.name = name;
+        relation.description = description;
         relation.nations = nations;
         relation.kind = kind;
 

@@ -12,12 +12,14 @@ import { FaBriefcase, FaCoins, FaFlask } from "react-icons/fa";
 import { FaMasksTheater, FaPersonMilitaryPointing } from "react-icons/fa6";
 import HoverInfo from "../hoverInfo";
 import { RelationModel } from "../../models/relationModel";
+import { MAX_LENGTH } from "../../settings/consts";
+import TextArea from "../form/textArea";
 
-export interface NewRelationModalProps {
+export interface RelationModalProps {
   update: boolean;
 }
 
-export default function NewRelationModal({ update }: NewRelationModalProps) {
+export default function RelationModal({ update }: RelationModalProps) {
   const [newRelation, setNewRelation] = useAtom(newRelationAtom);
   const [hoverInfo, setHoverInfo] = useState("");
   const { t } = useTranslation();
@@ -44,10 +46,15 @@ export default function NewRelationModal({ update }: NewRelationModalProps) {
     }
   };
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => {
     const value = e.target.value;
-    const updatedRelation = new RelationModel(newRelation.relation);
-    updatedRelation.name = value;
+    const name = e.target.name;
+    const updatedRelation = new RelationModel({
+      ...newRelation.relation,
+      [name]: value,
+    });
     setNewRelation({
       ...newRelation,
       relation: updatedRelation,
@@ -86,7 +93,9 @@ export default function NewRelationModal({ update }: NewRelationModalProps) {
   return (
     <div className="flex flex-col items-center justify-center">
       <h2 className="text-2xl text-center p-4">
-        [A TRADUIRE] Relation diplomatique
+        {update
+          ? t("components.modals.relationModal.update")
+          : t("components.modals.relationModal.new")}
       </h2>
       <Form
         submit={handleSubmit}
@@ -98,8 +107,16 @@ export default function NewRelationModal({ update }: NewRelationModalProps) {
               name="name"
               value={newRelation.relation.name}
               onChange={handleChange}
-              placeholder="[A TRADUIRE] Titre de la relation"
+              placeholder={t("components.modals.relationModal.nameInput")}
               maxLength={100}
+            />
+            <TextArea
+              required
+              name="description"
+              value={newRelation.relation.description}
+              onChange={handleChange}
+              placeholder={t("components.modals.relationModal.description")}
+              maxLength={MAX_LENGTH.text.relationDescription}
             />
             <fieldset className="w-full p-2 flex flex-wrap justify-center items-center gap-2 bg-complementary2 text-2xl">
               <label className="flex gap-1">

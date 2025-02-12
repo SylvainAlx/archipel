@@ -69,9 +69,7 @@ export default function Place() {
     if (updatedPlace.isSuccess) {
       if (needConfirm) {
         myStore.set(confirmBox, {
-          action: "",
           text: t("components.modals.confirmModal.updatePlace"),
-          result: "",
           actionToDo: baseUpdate,
         });
       } else {

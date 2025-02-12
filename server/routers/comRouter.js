@@ -7,6 +7,7 @@ import {
   getDestinationComs,
   getPublicComs,
   getPublicComsByOrigin,
+  readCom,
 } from "../controllers/comController.js";
 import { verifyJwt } from "../middlewares/authMiddleware.js";
 
@@ -18,6 +19,7 @@ comRouter.get("/getbydestination/:id", [verifyJwt], getDestinationComs);
 comRouter.get("/getpubliccoms", getPublicComs);
 comRouter.get("/getpubliccoms/:id", getPublicComsByOrigin);
 comRouter.post("/create", [verifyJwt], createCom);
+comRouter.post("/read", [verifyJwt], readCom);
 comRouter.delete("/delete/:id", [verifyJwt], deleteCom);
 
 export default comRouter;

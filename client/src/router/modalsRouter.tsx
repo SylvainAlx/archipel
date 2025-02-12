@@ -27,7 +27,7 @@ import ImageModal from "../components/modals/imageModal";
 import MenuModal from "../components/modals/menuModal";
 import NewNationModal from "../components/modals/newNationModal";
 import { ChangePasswordModal } from "../components/modals/changePasswordModal";
-import NewRelationModal from "../components/modals/newRelationModal";
+import RelationModal from "../components/modals/relationModal";
 import TileFormModal from "../components/modals/tileFormModal";
 import NewComModal from "../components/modals/newComModal";
 import CookiesModal from "../components/modals/cookiesModal";
@@ -92,7 +92,7 @@ export default function ModalsRouter() {
                   {newNation.owner != "" && <NewNationModal />}
                   {changePassword && <ChangePasswordModal />}
                   {newRelation.show && (
-                    <NewRelationModal update={newRelation.update} />
+                    <RelationModal update={newRelation.update} />
                   )}
                   {tile.nationOfficialId != "" && <TileFormModal />}
                   {showCookiesModal && <CookiesModal />}

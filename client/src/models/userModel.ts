@@ -196,9 +196,7 @@ export class UserModel extends CommonModel implements User {
   }
   approveCitizenship = () => {
     myStore.set(confirmBox, {
-      action: "",
       text: i18n.t("components.modals.confirmModal.approveCitizenship"),
-      result: "",
       actionToDo: async () => {
         await this.changeStatus({
           officialId: this.officialId,
@@ -210,9 +208,7 @@ export class UserModel extends CommonModel implements User {
   };
   declineCitizenship = () => {
     myStore.set(confirmBox, {
-      action: "",
       text: i18n.t("components.modals.confirmModal.declineCitizenship"),
-      result: "",
       actionToDo: async () => {
         await this.changeStatus({
           officialId: this.officialId,

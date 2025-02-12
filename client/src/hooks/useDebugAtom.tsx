@@ -27,57 +27,65 @@ const useDebugAtom = () => {
   const [comList] = useAtom(comListAtomV2);
   const [tileList] = useAtom(tileListAtomV2);
   const [relations] = useAtom(relationListAtomV2);
-  useEffect(() => {
-    DEBUG_ATOM.session && console.log(session);
-  }, [session]);
-  useEffect(() => {
-    DEBUG_ATOM.nations &&
+
+  DEBUG_ATOM.session &&
+    useEffect(() => {
+      console.log(session);
+    }, [session]);
+
+  DEBUG_ATOM.nations &&
+    useEffect(() => {
       console.log(
         new Date().toLocaleTimeString() +
           " nations : " +
           nationList.getItems().length,
       );
-  }, [nationList]);
-  useEffect(() => {
-    DEBUG_ATOM.places &&
+    }, [nationList]);
+
+  DEBUG_ATOM.places &&
+    useEffect(() => {
       console.log(
         new Date().toLocaleTimeString() +
           " lieux : " +
           placeList.getItems().length,
       );
-  }, [placeList]);
-  useEffect(() => {
-    DEBUG_ATOM.users &&
+    }, [placeList]);
+
+  DEBUG_ATOM.users &&
+    useEffect(() => {
       console.log(
         new Date().toLocaleTimeString() +
           " utilisateurs : " +
           userList.getItems().length,
       );
-  }, [userList]);
-  useEffect(() => {
-    DEBUG_ATOM.coms &&
+    }, [userList]);
+
+  DEBUG_ATOM.coms &&
+    useEffect(() => {
       console.log(
         new Date().toLocaleTimeString() +
           " coms : " +
           comList.getItems().length,
       );
-  }, [comList]);
-  useEffect(() => {
-    DEBUG_ATOM.tiles &&
+    }, [comList]);
+
+  DEBUG_ATOM.tiles &&
+    useEffect(() => {
       console.log(
         new Date().toLocaleTimeString() +
           " tuiles : " +
           tileList.getItems().length,
       );
-  }, [tileList]);
-  useEffect(() => {
-    DEBUG_ATOM.relations &&
+    }, [tileList]);
+
+  DEBUG_ATOM.relations &&
+    useEffect(() => {
       console.log(
         new Date().toLocaleTimeString() +
           " relations : " +
           relations.getItems().length,
       );
-  }, [relations]);
+    }, [relations]);
 };
 
 export default useDebugAtom;

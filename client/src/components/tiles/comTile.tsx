@@ -1,5 +1,4 @@
 import MDEditor from "@uiw/react-md-editor";
-import { Com } from "../../types/typCom";
 import NationTag from "../tags/nationTag";
 import { useAtom } from "jotai";
 import {
@@ -15,34 +14,41 @@ import DateTag from "../tags/dateTag";
 import ReportPanel from "../reportPanel";
 import { ComModel } from "../../models/comModel";
 import { NationModel } from "../../models/nationModel";
+import { FaCheckSquare } from "react-icons/fa";
+import Button from "../buttons/button";
 
 export interface ComTileProps {
   nation?: NationModel;
-  com: Com;
+  com: ComModel;
 }
 
 export default function ComTile({ nation, com }: ComTileProps) {
   const [session] = useAtom(sessionAtom);
   const [comList] = useAtom(comListAtomV2);
-  const [owner, setOwner] = useState(false);
+  const [nationOwner, setNationOwner] = useState(false);
+  const [comOwner, setComOwner] = useState(false);
+  const [read, setRead] = useState(com.read);
   const { t } = useTranslation();
+
   useEffect(() => {
     if (
-      (session.user.citizenship.nationId === com.origin &&
-        session.user.citizenship.nationOwner) ||
-      session.user.officialId === com.origin
+      session.user.citizenship.nationId === com.origin &&
+      session.user.citizenship.nationOwner
     ) {
-      setOwner(true);
+      setNationOwner(true);
     } else {
-      setOwner(false);
+      setNationOwner(false);
+    }
+    if (session.user.officialId === com.destination) {
+      setComOwner(true);
+    } else {
+      setComOwner(false);
     }
   }, [com.origin, session]);
 
   const handleDelete = () => {
     myStore.set(confirmBox, {
-      action: "",
       text: t("components.modals.confirmModal.deleteCom"),
-      result: "",
       actionToDo: async () => {
         const comToDelete = new ComModel();
         comToDelete.baseDelete(com._id);
@@ -51,12 +57,18 @@ export default function ComTile({ nation, com }: ComTileProps) {
     });
   };
 
+  const handleRead = async () => {
+    await com.readCom(!read);
+    setRead(!read);
+  };
+
   return (
     <div
-      className={`p-2 rounded flex flex-col items-center gap-3 bg-complementary shadow-xl`}
+      onClick={handleRead}
+      className={`${(comOwner || nationOwner) && !com.read ? "animate-pulse bg-complementary2" : "bg-complementary"} p-2 rounded flex flex-col items-center gap-3 shadow-xl `}
     >
       <div className="w-full flex justify-between">
-        <h3 className="text-light text-xl pl-4 pr-6">{com.title}</h3>
+        <h3 className="pl-4 pr-6 text-light text-xl">{com.title}</h3>
         <div className="flex gap-1 items-center flex-wrap justify-end">
           <DateTag date={com.createdAt} />
           {com.origin != undefined && com.origin.charAt(2) === "n" && (
@@ -71,8 +83,19 @@ export default function ComTile({ nation, com }: ComTileProps) {
           style={{ whiteSpace: "pre-wrap" }}
         />
       </div>
-      <div className="w-max self-end">
-        {owner ? (
+      <div className="w-max self-end flex items-center gap-2">
+        {(comOwner || nationOwner) && (
+          <Button
+            click={handleRead}
+            text={
+              read
+                ? t("components.buttons.markAsUnread")
+                : t("components.buttons.markAsRead")
+            }
+            children={<FaCheckSquare />}
+          />
+        )}
+        {comOwner ? (
           <CrossButton click={handleDelete} />
         ) : (
           <ReportPanel content={com} center={false} />

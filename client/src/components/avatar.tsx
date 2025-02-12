@@ -25,11 +25,12 @@ export default function Avatar({
 
   return (
     <div
-      className={
-        isHeader
-          ? "rounded-full w-[45px] h-[45px] md:w-[28px] md:h-[28px] overflow-hidden"
-          : "animate-fadeIn h-[150px] w-[150px] flex flex-col justify-center rounded-full overflow-hidden"
-      }
+      className={`relative rounded-full overflow-hidden
+        ${
+          isHeader
+            ? "w-[45px] h-[45px] md:w-[28px] md:h-[28px]"
+            : "animate-fadeIn h-[150px] w-[150px] flex flex-col justify-center"
+        }`}
     >
       {url ? (
         <Suspense fallback={<ImageSkeleton />}>

@@ -1,7 +1,5 @@
-import { NotificationOptionsExtended } from "../hooks/useNotification";
 import i18n from "../i18n/i18n";
 import { ComModel } from "../models/comModel";
-import { UserModel } from "../models/userModel";
 import { deleteUploadedFileFetch } from "../services/fileService";
 import { COM_TYPE, UPLOADCARE_URL } from "../settings/consts";
 import { loadingAtom, myStore } from "../settings/store";
@@ -24,41 +22,6 @@ export const deleteImage = async (url: string): Promise<boolean> => {
   } finally {
     myStore.set(loadingAtom, false);
   }
-};
-
-export const displayUnwatchedComs = (
-  user: UserModel,
-  comList: ComModel[],
-  destinations: string[],
-  showNotification: (
-    Atitre: string,
-    Aoptions?: NotificationOptionsExtended,
-  ) => void,
-) => {
-  comList.forEach((com) => {
-    if (
-      com.createdAt.toString() > user.lastVisitDate.toISOString() &&
-      com.destination &&
-      destinations.includes(com.destination)
-    ) {
-      const comDate = new Date(com.createdAt);
-      const comType = com.getComTypeLabel();
-      showNotification(com.title, {
-        body: `${comDate.toLocaleString(i18n.language)} - [${comType && comType.label}] - ${com.message}`,
-        icon: "/android-chrome-192x192.png",
-        silent: true,
-        actions: [
-          {
-            action: "dismiss",
-            title: "Fermer",
-          },
-        ],
-      });
-      // comMessage(
-      //   `${comDate.toLocaleString(i18n.language)} - [${comType && comType.label}] - ${com.title} - ${com.message}`,
-      // );
-    }
-  });
 };
 
 export const createComByStatus = (

@@ -31,9 +31,7 @@ export default function PlaceIdentity({
 
   const handleDeleteImage = async () => {
     myStore.set(confirmBox, {
-      action: "",
       text: t("components.modals.confirmModal.deleteFile"),
-      result: "",
       actionToDo: async () => {
         const result = await deleteImage(place.image);
         if (result) {

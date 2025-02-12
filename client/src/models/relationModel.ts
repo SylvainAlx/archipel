@@ -21,6 +21,7 @@ export class RelationModel
   implements DiplomaticRelationship
 {
   name!: string;
+  description!: string;
   nations!: NationDiplomacyInfo[];
   kind!: RelationKind;
 
@@ -73,23 +74,18 @@ export class RelationModel
       this.updateFields(resp.relation);
       myStore.get(relationListAtomV2).addToRelationListAtom([resp.relation]);
       this.displayRelationInfoByType(resp.infoType);
-      const newCom1 = new ComModel({
-        comType: COM_TYPE.nationPrivate.id,
-        origin: resp.relation.nations[0].OfficialId,
-        destination: resp.relation.nations[0].OfficialId,
-        title: i18n.t("coms.relationUpdate.title"),
-        message: i18n.t("coms.relationUpdate.message"),
+      resp.relation.nations.forEach((nation) => {
+        const newCom = new ComModel({
+          comType: COM_TYPE.nationPrivate.id,
+          origin: nation.OfficialId,
+          destination: nation.OfficialId,
+          title: i18n.t("coms.relationUpdate.title"),
+          message: i18n.t("coms.relationUpdate.message"),
+        });
+        newCom.baseInsert();
       });
-      newCom1.baseInsert();
-      const newCom2 = new ComModel({
-        comType: COM_TYPE.nationPrivate.id,
-        origin: resp.relation.nations[1].OfficialId,
-        destination: resp.relation.nations[1].OfficialId,
-        title: i18n.t("coms.relationUpdate.title"),
-        message: i18n.t("coms.relationUpdate.message"),
-      });
-      newCom2.baseInsert();
     } catch (error) {
+      errorCatching(error);
     } finally {
       myStore.set(loadingAtom, false);
     }

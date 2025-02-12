@@ -4,7 +4,8 @@
 
 #### Ajouts
 
-aucuns
+- Ajout d'une description lors de la création d'une nouvelle relation diplomatique
+- Pouvoir modifier une relation diplomatique
 
 #### Suppressions
 
@@ -12,11 +13,13 @@ aucunes
 
 #### Modifications & Corrections
 
+- Optimisation du code source
 - amélioration du modal de donation
 - amélioration de la page d'attente
 - mise à jour importante des dépendances du code source
-- Amélioration des notifications de communications
+- Refonte du système de notifications
 - Amélioration de la gestion des erreurs
+- Modification des liens de nouveau possible
 
 ## Développements à venir
 

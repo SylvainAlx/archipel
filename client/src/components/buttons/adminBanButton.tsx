@@ -15,9 +15,7 @@ export default function AdminBanButton({
 }: AdminBanButtonProps) {
   const handleAdminBan = (reverse: boolean) => {
     myStore.set(confirmBox, {
-      action: "adminBan",
       text: reverse ? "Réindexer le contenu ?" : "Désindexer le contenu ?",
-      result: "",
       actionToDo: () => {
         const content = new CommonModel();
         content.officialId = contentOfficialId;

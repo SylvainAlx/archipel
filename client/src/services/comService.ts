@@ -108,6 +108,24 @@ export const getAllAdminComsFetch = async () => {
   }
 };
 
+export const readComFetch = async (id: string, isRead: boolean) => {
+  const jwt = GET_JWT();
+  try {
+    const resp = await fetch(
+      `${SERVER_URL}/com/read/?id=${id}&isread=${encodeURIComponent(isRead)}`,
+      {
+        method: "POST",
+        headers: { authorization: `Bearer ${jwt}` },
+      },
+    );
+    await handleFetchError(resp);
+    const result = await resp.json();
+    return result;
+  } catch (error) {
+    throw error;
+  }
+};
+
 export const deleteComFetch = async (id: string) => {
   const jwt = GET_JWT();
   try {

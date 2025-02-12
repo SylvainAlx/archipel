@@ -20,9 +20,7 @@ interface FlagProps {
 export default function BigFlag({ nation, owner, updatePath }: FlagProps) {
   const handleDeleteImage = async () => {
     myStore.set(confirmBox, {
-      action: "",
       text: t("components.modals.confirmModal.deleteFile"),
-      result: "",
       actionToDo: async () => {
         const result = await deleteImage(nation.data.url.flag);
         if (result) {

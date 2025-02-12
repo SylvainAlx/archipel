@@ -17,9 +17,7 @@ export default function AdminComTile({ com }: ComTileProps) {
 
   const handleDelete = () => {
     myStore.set(confirmBox, {
-      action: "",
       text: t("components.modals.confirmModal.deleteCom"),
-      result: "",
       actionToDo: async () => {
         const comToDelete = new ComModel();
         comToDelete.baseDelete(com._id);

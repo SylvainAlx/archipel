@@ -38,9 +38,7 @@ export default function Citizens({ selectedNation }: SelectedNationProps) {
       status: 0,
     };
     setConfirmModal({
-      action: "",
       text: t("components.modals.confirmModal.askCitizenship"),
-      result: "",
       actionToDo: async () => {
         await session.user.changeStatus(payload);
       },

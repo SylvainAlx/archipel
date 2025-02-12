@@ -76,9 +76,7 @@ export default function Nation() {
 
   const handleDelete = () => {
     myStore.set(confirmBox, {
-      action: "deleteSelfNation",
       text: t("components.modals.confirmModal.deleteNation"),
-      result: "",
       actionToDo: () => {
         nation.baseDelete();
         const updatedList = nationList.removeByOfficialId(nation.officialId);
@@ -102,9 +100,7 @@ export default function Nation() {
     if (updatedNation.isSuccess) {
       if (needConfirm) {
         myStore.set(confirmBox, {
-          action: "",
           text: t("components.modals.confirmModal.updateNation"),
-          result: "",
           actionToDo: baseUpdate,
         });
       } else {
@@ -132,7 +128,11 @@ export default function Nation() {
             <>
               <section className="w-full flex flex-wrap gap-8 items-start justify-between">
                 <div className="w-full flex flex-col gap-3 items-center justify-center">
-                  <Links selectedNation={nation} owner={owner} />
+                  <Links
+                    selectedNation={nation}
+                    owner={owner}
+                    updatePath={updatePath}
+                  />
                 </div>
                 {nation.officialId === param.id && (
                   <>

@@ -21,9 +21,7 @@ export default function NewComModal() {
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     myStore.set(confirmBox, {
-      action: "createCom",
       text: t("components.modals.confirmModal.createCom"),
-      result: "",
       actionToDo: () => {
         const comToInsert = new ComModel(newCom);
         comToInsert.baseInsert();

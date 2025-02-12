@@ -27,9 +27,7 @@ export default function Personal({
 
   const handleDeleteImage = async () => {
     myStore.set(confirmBox, {
-      action: "",
       text: t("components.modals.confirmModal.deleteFile"),
-      result: "",
       actionToDo: async () => {
         const result = await deleteImage(citizen.avatar);
         if (result) {
@@ -58,7 +56,12 @@ export default function Personal({
             hover={t("components.hoverInfos.links.website")}
           />
           {owner && (
-            <EditIcon target="citizen" param={citizen.link} path="link" />
+            <EditIcon
+              target="citizen"
+              param={citizen.link}
+              path="link"
+              action={updatePath}
+            />
           )}
         </span>
         <span className="flex items-center gap-1">

@@ -22,9 +22,7 @@ export default function ReportButton({ contentOfficialId }: ReportButtonProps) {
       message: "Content reported and awaiting moderation",
     };
     myStore.set(confirmBox, {
-      action: "",
       text: t("components.modals.confirmModal.reportContent"),
-      result: "",
       actionToDo: () => {
         const newCom = new ComModel(payload);
         newCom.baseInsert();

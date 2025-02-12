@@ -76,12 +76,10 @@ export default function Citizenship({
       status: -1,
     };
     myStore.set(confirmBox, {
-      action: "",
       text:
         session.user.citizenship.status > 0
           ? t("components.modals.confirmModal.leaveNation")
           : t("components.modals.confirmModal.cancelCitizenship"),
-      result: "",
       actionToDo: async () => {
         setCitizen(await citizen.changeStatus(payload));
       },

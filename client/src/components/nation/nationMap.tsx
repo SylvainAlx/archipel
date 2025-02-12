@@ -26,9 +26,7 @@ export default function NationMap({
 
   const handleDeleteImage = async () => {
     myStore.set(confirmBox, {
-      action: "",
       text: t("components.modals.confirmModal.deleteFile"),
-      result: "",
       actionToDo: async () => {
         const result = await deleteImage(selectedNation.data.url.map);
         if (result) {

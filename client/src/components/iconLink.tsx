@@ -4,7 +4,7 @@ import {
   IoMdGlobe,
   IoMdHome,
 } from "react-icons/io";
-import { sessionAtom } from "../settings/store";
+import { comListAtomV2, sessionAtom } from "../settings/store";
 import { useAtom } from "jotai";
 import { MouseEventHandler, useEffect, useState } from "react";
 import Flag from "./flag";
@@ -12,6 +12,8 @@ import Avatar from "./avatar";
 import { useLocation } from "react-router-dom";
 import { FaShieldAlt } from "react-icons/fa";
 import { NationModel } from "../models/nationModel";
+import UnwatchedCountDot from "./unwatchedCountDot";
+import { COM_TYPE } from "../settings/consts";
 
 export interface IconLinkProps {
   nation?: NationModel;
@@ -27,6 +29,7 @@ export default function IconLink({
   action,
 }: IconLinkProps) {
   const [session] = useAtom(sessionAtom);
+  const [comList] = useAtom(comListAtomV2);
   const [focus, setFocus] = useState(false);
   const location = useLocation();
   const currentURL = location.pathname;
@@ -72,10 +75,30 @@ export default function IconLink({
       {destination === "login" && <IoMdLogIn />}
       {destination === "register" && <IoMdAddCircleOutline />}
       {destination === "user" && (
-        <Avatar isUser={true} url={session.user.avatar} isHeader={true} />
+        <div className="relative">
+          <UnwatchedCountDot
+            count={comList.getUnreadCountByType(
+              [COM_TYPE.userPrivate.id],
+              session.user.officialId,
+            )}
+          />
+          <Avatar isUser={true} url={session.user.avatar} isHeader={true} />
+        </div>
       )}
       {destination === "nation" && nation && (
-        <Flag nation={nation} isHeader={true} />
+        <div className="relative">
+          {nation.officialId === session.user.citizenship.nationId &&
+            session.user.citizenship.nationOwner && (
+              <UnwatchedCountDot
+                count={comList.getUnreadCountByType(
+                  [COM_TYPE.nationPrivate.id, COM_TYPE.nationPrivate.id],
+                  nation.officialId,
+                )}
+              />
+            )}
+
+          <Flag nation={nation} isHeader={true} />
+        </div>
       )}
       {destination === "admin" && (
         <FaShieldAlt className="text-[40px] md:text-[25px]" />

@@ -4,16 +4,12 @@ import { Hashtag, LabelId, Regime } from "./typNation";
 // confirmBox
 
 export interface ConfirmBox {
-  action: string;
   text: string;
-  result: string;
   actionToDo?: () => void;
 }
 
 export const ConfirmBoxDefault: ConfirmBox = {
-  action: "",
   text: "",
-  result: "",
 };
 
 // editBox

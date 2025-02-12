@@ -2,13 +2,19 @@ import User from "../models/userSchema.js";
 import Nation from "../models/nationSchema.js";
 import Param from "../models/paramSchema.js";
 import Place from "../models/placeSchema.js";
-import { LoremIpsum } from "lorem-ipsum";
+
 import {
   addMonths,
   createOfficialId,
   handleError,
 } from "../utils/functions.js";
 import { GIFTS } from "../settings/const.js";
+import {
+  getUserByName,
+  getLastVisitDate,
+  getRecoveryWords,
+  getUserByOfficialId,
+} from "../services/userService.js";
 
 const IpIsBanished = async (AUserIp, res) => {
   try {
@@ -17,7 +23,11 @@ const IpIsBanished = async (AUserIp, res) => {
         name: "banished",
         props: { $elemMatch: { label: "ip", value: AUserIp } },
       })) != null;
-    return banned;
+    if (banned) {
+      let error = new Error();
+      error.code = 403;
+      throw error;
+    }
   } catch (error) {
     handleError(error, res);
   }
@@ -27,21 +37,12 @@ export const register = async (req, res) => {
   try {
     const { name, password, gender, language } = req.body;
     const userIp = req.clientIp;
-    if (await IpIsBanished(userIp)) {
-      return res.status(403).json({
-        infoType: "403",
-      });
-    }
+    await IpIsBanished(userIp);
     if (!name || !password) {
       return res.status(401).json({
         infoType: "401",
       });
     }
-    const random = new LoremIpsum({
-      sentencesPerParagraph: { max: 8, min: 4 },
-      wordsPerSentence: { max: 16, min: 4 },
-    });
-    const recovery = random.generateWords(12);
     let role = "standard";
     const roles = await Param.findOne({ name: "role" });
     roles.props.forEach((prop) => {
@@ -49,9 +50,9 @@ export const register = async (req, res) => {
         role = "admin";
       }
     });
-    const officialId = createOfficialId("c");
+    const recovery = getRecoveryWords();
     const user = new User({
-      officialId,
+      officialId: createOfficialId("c"),
       ip: [{ value: userIp, lastVisit: new Date() }],
       name,
       password,
@@ -75,10 +76,7 @@ export const register = async (req, res) => {
           infoType: "11000",
         });
       } else {
-        return res.status(400).json({
-          error: error.message,
-          infoType: "400",
-        });
+        handleError(error, res);
       }
     }
   } catch (error) {
@@ -89,19 +87,9 @@ export const register = async (req, res) => {
 export const login = async (req, res) => {
   try {
     const userIp = req.clientIp;
-
-    if (await IpIsBanished(userIp)) {
-      return res.status(403).json({
-        infoType: "403",
-      });
-    }
-
+    await IpIsBanished(userIp);
     const { name, password } = req.body;
-
-    const user = await User.findOne({ name }, "-recovery");
-    if (!user) {
-      return res.status(404).json({ infoType: "404" });
-    }
+    const user = await getUserByName(name);
     user.comparePassword(password, async (error, isMatch) => {
       if (error) {
         return res.status(400).json({
@@ -112,11 +100,11 @@ export const login = async (req, res) => {
       if (!isMatch) {
         return res.status(401).json({ infoType: "401" });
       }
-      const jwt = user.createJWT();
-      const lastVisitDate = getLastVisitDate(user, userIp);
-      updateUserIpAddress(user, userIp);
-      res.status(200).json({ user, lastVisitDate, jwt, infoType: "signin" });
     });
+    const jwt = user.createJWT();
+    const lastVisitDate = getLastVisitDate(user, userIp);
+    updateUserIpAddress(user, userIp);
+    res.status(200).json({ user, lastVisitDate, jwt, infoType: "signin" });
   } catch (error) {
     handleError(error, res);
   }
@@ -125,25 +113,12 @@ export const login = async (req, res) => {
 export const verify = async (req, res) => {
   try {
     const userIp = req.clientIp;
-    if (await IpIsBanished(userIp)) {
-      return res.status(403).json({
-        infoType: "ip",
-      });
-    }
+    await IpIsBanished(userIp);
     const userId = req.userId;
-
-    const user = await User.findOne(
-      { officialId: userId },
-      "-password -recovery",
-    );
-
-    if (user) {
-      const lastVisitDate = getLastVisitDate(user, userIp);
-      updateUserIpAddress(user, userIp);
-      return res.status(200).json({ user, lastVisitDate, infoType: "verify" });
-    } else {
-      return res.status(401).json({ infoType: "401" });
-    }
+    const user = await getUserByOfficialId(userId, 401, true);
+    const lastVisitDate = getLastVisitDate(user, userIp);
+    updateUserIpAddress(user, userIp);
+    return res.status(200).json({ user, lastVisitDate, infoType: "verify" });
   } catch (error) {
     handleError(error, res);
   }
@@ -152,10 +127,7 @@ export const verify = async (req, res) => {
 export const forgetPassword = async (req, res) => {
   try {
     const { name, recovery, newPassword } = req.body;
-    const user = await User.findOne({ name });
-    if (!user) {
-      return res.status(404).json({ infoType: "404" });
-    }
+    const user = await getUserByName(name);
     const isMatch = await user.compareRecoveryCode(recovery);
     if (!isMatch) {
       return res.status(401).json({
@@ -176,10 +148,7 @@ export const changePassword = async (req, res) => {
   try {
     const { oldPassword, newPassword } = req.body;
     const userId = req.userId;
-    const user = await User.findOne({ officialId: userId });
-    if (!user) {
-      return res.status(404).json({ infoType: "404" });
-    }
+    const user = await getUserByOfficialId(userId, 404, true);
     user.comparePassword(oldPassword, async (error, isMatch) => {
       if (error) {
         return res.status(500).json({ infoType: "500", error: error.message });
@@ -225,10 +194,7 @@ export const getAllUsers = async (req, res) => {
 export const getOneUser = async (req, res) => {
   const userId = req.params.id;
   try {
-    const user = await User.findOne(
-      { officialId: userId, banished: false },
-      "-ip -password -recovery",
-    );
+    const user = await getUserByOfficialId(userId, 404);
     res.status(200).json({
       user,
     });
@@ -240,7 +206,7 @@ export const getOneUser = async (req, res) => {
 export const getSelfUser = async (req, res) => {
   const id = req.userId;
   try {
-    const user = await User.findOne({ officialId: id });
+    const user = await getUserByOfficialId(id, 404, true);
     res.status(200).json({ user }, "-ip -password -recovery");
   } catch (error) {
     handleError(error, res);
@@ -252,7 +218,7 @@ export const deleteSelfUser = async (req, res) => {
     const id = req.userId;
     const { password } = req.body;
 
-    const user = await User.findOne({ officialId: id });
+    const user = await getUserByOfficialId(id, 404, true);
     if (!user) {
       return res.status(404).json({ infoType: "404" });
     }
@@ -335,10 +301,7 @@ export const updateUser = async (req, res) => {
     } = req.body;
 
     if (req.userId === officialId) {
-      const user = await User.findOne(
-        { officialId },
-        "-ip -password -recovery",
-      );
+      const user = await getUserByOfficialId(officialId, 404);
       let newResidence;
       let oldResidence;
       if (user.citizenship.residence != citizenship.residence) {
@@ -396,11 +359,7 @@ export const changeStatus = async (req, res) => {
     const { officialId, nationId, status } = req.body;
 
     if (req.userId === officialId || status != 0) {
-      const user = await User.findOne(
-        { officialId },
-        "-ip -password -recovery",
-      );
-
+      const user = await getUserByOfficialId(officialId, 404);
       const nation = await Nation.findOne({ officialId: nationId });
 
       if (status === 0 || status === 1) {
@@ -438,7 +397,7 @@ export const changeStatus = async (req, res) => {
 export const changePlan = async (req, res) => {
   try {
     const { officialId, plan, duration } = req.body;
-    const user = await User.findOne({ officialId }, "-ip -password -recovery");
+    const user = await getUserByOfficialId(officialId, 404);
     if (user) {
       user.plan = plan;
       user.expirationDate = addMonths(duration);
@@ -469,14 +428,4 @@ const updateUserIpAddress = async (user, ip) => {
   } catch (error) {
     handleError(error, res);
   }
-};
-
-const getLastVisitDate = (user, ip) => {
-  let date = new Date();
-  for (const address of user.ip) {
-    if (address.value === ip) {
-      date = new Date(address.lastVisit);
-    }
-  }
-  return date;
 };

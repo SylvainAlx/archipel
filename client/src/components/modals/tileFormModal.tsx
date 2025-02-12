@@ -52,9 +52,7 @@ export default function TileFormModal() {
     // }
     if (isNewTile) {
       myStore.set(confirmBox, {
-        action: "",
         text: t("components.modals.confirmModal.createTile"),
-        result: "",
         actionToDo: async () => {
           const tileInserted = await localTile.baseInsert(localTile);
           tileList.addToTileListAtom([tileInserted]);
@@ -62,9 +60,7 @@ export default function TileFormModal() {
       });
     } else {
       myStore.set(confirmBox, {
-        action: "",
         text: t("components.modals.confirmModal.updateTile"),
-        result: "",
         actionToDo: async () => {
           const tileUpdated = await localTile.baseUpdate(localTile);
           tileList.addToTileListAtom([tileUpdated]);
