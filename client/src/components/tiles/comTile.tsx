@@ -16,6 +16,8 @@ import { ComModel } from "../../models/comModel";
 import { NationModel } from "../../models/nationModel";
 import { FaCheckSquare } from "react-icons/fa";
 import Button from "../buttons/button";
+import { ImCheckboxUnchecked } from "react-icons/im";
+import { isNation } from "../../utils/functions";
 
 export interface ComTileProps {
   nation?: NationModel;
@@ -32,7 +34,8 @@ export default function ComTile({ nation, com }: ComTileProps) {
 
   useEffect(() => {
     if (
-      session.user.citizenship.nationId === com.origin &&
+      (session.user.citizenship.nationId === com.origin ||
+        session.user.citizenship.nationId === com.destination) &&
       session.user.citizenship.nationOwner
     ) {
       setNationOwner(true);
@@ -64,26 +67,30 @@ export default function ComTile({ nation, com }: ComTileProps) {
 
   return (
     <div
-      onClick={handleRead}
-      className={`${(comOwner || nationOwner) && !com.read ? "animate-pulse bg-complementary2" : "bg-complementary"} p-2 rounded flex flex-col items-center gap-3 shadow-xl `}
+      className={`${(comOwner || nationOwner) && !com.read ? "bg-complementary2" : "bg-complementary"} p-2 rounded flex flex-col items-center gap-3 shadow-xl `}
     >
       <div className="w-full flex justify-between">
         <h3 className="pl-4 pr-6 text-light text-xl">{com.title}</h3>
         <div className="flex gap-1 items-center flex-wrap justify-end">
           <DateTag date={com.createdAt} />
-          {com.origin != undefined && com.origin.charAt(2) === "n" && (
+          {com.origin != undefined && isNation(com.origin) && (
             <NationTag label={com.origin} />
           )}
         </div>
       </div>
-      <div className="flex items-center gap-2">
-        <MDEditor.Markdown
-          className="bg-transparent text-light text-justify"
-          source={com.message}
-          style={{ whiteSpace: "pre-wrap" }}
-        />
+      <div className="flex flex-col justify-center items-center gap-2">
+        {com.message.split("|").map((message, i) => {
+          return (
+            <MDEditor.Markdown
+              key={i}
+              className="bg-transparent text-light text-justify"
+              source={message}
+              style={{ whiteSpace: "wrap" }}
+            />
+          );
+        })}
       </div>
-      <div className="w-max self-end flex items-center gap-2">
+      <div className="w-full flex items-center justify-end gap-2">
         {(comOwner || nationOwner) && (
           <Button
             click={handleRead}
@@ -92,7 +99,7 @@ export default function ComTile({ nation, com }: ComTileProps) {
                 ? t("components.buttons.markAsUnread")
                 : t("components.buttons.markAsRead")
             }
-            children={<FaCheckSquare />}
+            children={read ? <FaCheckSquare /> : <ImCheckboxUnchecked />}
           />
         )}
         {comOwner ? (

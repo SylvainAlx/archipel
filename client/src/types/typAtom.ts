@@ -59,3 +59,16 @@ export type Stats = {
   counts: Counts;
   tags: Hashtag[];
 };
+
+export const emptyCreditTransfert = {
+  sender: {
+    name: "",
+    officialId: "",
+  },
+  recipient: {
+    name: "",
+    officialId: "",
+  },
+  amount: 0,
+  comment: "",
+};

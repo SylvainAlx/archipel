@@ -6,6 +6,7 @@
 
 - Ajout d'une description lors de la création d'une nouvelle relation diplomatique
 - Pouvoir modifier une relation diplomatique
+- Virements de crédits possiblent entre citoyens et entre nations
 
 #### Suppressions
 
@@ -36,7 +37,6 @@ aucunes
 - Lier les lieux de la nation à un emplacement sur la carte
 - Améliorer des traductions
 - Carte virtuelle d'Archipel avec l'ensemble des nations représentées
-- Permettre les virements de crédits entre citoyens et entre nations
 
 ## Versions précédentes
 

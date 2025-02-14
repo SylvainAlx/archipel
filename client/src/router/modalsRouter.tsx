@@ -2,6 +2,7 @@ import { useAtom } from "jotai";
 import {
   changePasswordModalAtom,
   confirmBox,
+  creditTransferAtom,
   editbox,
   editTileAtom,
   imageAtom,
@@ -31,6 +32,7 @@ import RelationModal from "../components/modals/relationModal";
 import TileFormModal from "../components/modals/tileFormModal";
 import NewComModal from "../components/modals/newComModal";
 import CookiesModal from "../components/modals/cookiesModal";
+import CreditTransferModal from "../components/modals/creditTransferModal";
 
 export default function ModalsRouter() {
   const [recovery] = useAtom(recoveryKey);
@@ -49,6 +51,7 @@ export default function ModalsRouter() {
   const [tile] = useAtom(editTileAtom);
   const [newCom] = useAtom(newComAtom);
   const [showCookiesModal] = useAtom(showCookiesModalAtom);
+  const [creditTransfer] = useAtom(creditTransferAtom);
 
   if (
     recovery != "" ||
@@ -64,7 +67,8 @@ export default function ModalsRouter() {
     changePassword ||
     newRelation.show ||
     tile.nationOfficialId != "" ||
-    newCom.origin != ""
+    newCom.origin != "" ||
+    creditTransfer.recipient.officialId != ""
   ) {
     return (
       <div
@@ -95,6 +99,9 @@ export default function ModalsRouter() {
                     <RelationModal update={newRelation.update} />
                   )}
                   {tile.nationOfficialId != "" && <TileFormModal />}
+                  {creditTransfer.recipient.officialId != "" && (
+                    <CreditTransferModal />
+                  )}
                   {showCookiesModal && <CookiesModal />}
                 </>
               )}

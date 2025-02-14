@@ -97,3 +97,7 @@ export const isMoreThan24Hours = (stringDate: Date) => {
   const date2 = new Date();
   return date1.getTime() < date2.getTime() - 24 * 60 * 60 * 1000;
 };
+
+export const isNation = (officialId: string): boolean => {
+  return officialId.charAt(2) === "n";
+};

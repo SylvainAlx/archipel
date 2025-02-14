@@ -4,6 +4,7 @@ import {
   DeleteSelfFetch,
   getAllNationTagsFetch,
   getOneNationFetch,
+  transferCreditsFetch,
   updateNationFetch,
 } from "../services/nationService";
 import { COM_TYPE } from "../settings/consts";
@@ -13,16 +14,19 @@ import {
   nationListAtomV2,
   sessionAtom,
   statsAtom,
+  userListAtomV2,
 } from "../settings/store";
 import {
   EmptyNation,
   Hashtag,
   Nation,
   NewNationPayload,
+  TranferCreditPayload,
 } from "../types/typNation";
 import { User } from "../types/typUser";
 import { errorCatching } from "../utils/displayInfos";
-import { errorMessage, successMessage } from "../utils/toasts";
+import { isNation } from "../utils/functions";
+import { successMessage } from "../utils/toasts";
 import { ComModel } from "./comModel";
 import { CommonModel } from "./commonModel";
 import { NationListModel } from "./lists/nationListModel";
@@ -131,6 +135,67 @@ export class NationModel extends CommonModel implements Nation {
     Object.assign(this, fields);
     return this;
   }
+  transferCredits = async (
+    { nationOwnerId, recipientId, amount }: TranferCreditPayload,
+    senderName: string,
+    recipientName: string,
+    comment: string,
+  ) => {
+    myStore.set(loadingAtom, true);
+    try {
+      const resp: {
+        sender: Nation;
+        recipientUser: User;
+        recipientNation: Nation;
+        infoType: string;
+      } = await transferCreditsFetch({ nationOwnerId, recipientId, amount });
+      this.updateFields(resp.sender);
+      if (resp.recipientNation) {
+        myStore
+          .get(nationListAtomV2)
+          .addToNationListAtom([resp.recipientNation]);
+      } else if (resp.recipientUser) {
+        myStore.get(userListAtomV2).addToUserListAtom([resp.recipientUser]);
+      }
+      const newCom1 = new ComModel({
+        comType: isNation(recipientId)
+          ? COM_TYPE.nationPrivate.id
+          : COM_TYPE.userPrivate.id,
+        origin: this.officialId,
+        destination: recipientId,
+        title: i18n.t("coms.creditTransfer.title"),
+        message:
+          senderName +
+          " > " +
+          recipientName +
+          i18n.t("coms.creditTransfer.amount") +
+          amount +
+          i18n.t("coms.creditTransfer.comment") +
+          comment,
+      });
+      newCom1.baseInsert();
+      const newCom2 = new ComModel({
+        comType: COM_TYPE.nationPrivate.id,
+        origin: this.officialId,
+        destination: this.officialId,
+        title: i18n.t("coms.creditTransfer.title"),
+        message:
+          senderName +
+          " > " +
+          recipientName +
+          i18n.t("coms.creditTransfer.amount") +
+          amount +
+          i18n.t("coms.creditTransfer.comment") +
+          comment,
+      });
+      newCom2.baseInsert();
+      this.displayNationInfoByType(resp.infoType);
+    } catch (error) {
+      errorCatching(error);
+    } finally {
+      myStore.set(loadingAtom, false);
+    }
+  };
   baseInsert = async () => {
     myStore.set(loadingAtom, true);
     try {
@@ -208,32 +273,14 @@ export class NationModel extends CommonModel implements Nation {
       case "new":
         successMessage(i18n.t("toasts.nation.create"));
         break;
-      case "miss":
-        errorMessage(i18n.t("toasts.errors.miss"));
-        break;
-      case "unknown":
-        errorMessage(i18n.t("toasts.errors.400"));
-        break;
-      case "forbidden":
-        errorMessage(i18n.t("toasts.errors.forbidden"));
-        break;
-      case "11000":
-        errorMessage(i18n.t("toasts.errors.11000"));
-        break;
       case "update":
         successMessage(i18n.t("toasts.nation.update"));
         break;
       case "delete":
         successMessage(i18n.t("toasts.nation.delete"));
         break;
-      case "400":
-        errorMessage(i18n.t("toasts.errors.400"));
-        break;
-      case "404":
-        errorMessage(i18n.t("toasts.errors.404"));
-        break;
-      case "500":
-        errorMessage(i18n.t("toasts.errors.500"));
+      case "transfer":
+        successMessage(i18n.t("toasts.creditTransferSuccess"));
         break;
       default:
         break;

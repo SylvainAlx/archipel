@@ -37,7 +37,6 @@ export default function NationComs({
       .getItems()
       .filter(
         (com) =>
-          com.origin === selectedNation.officialId &&
           com.destination === selectedNation.officialId &&
           comTypes.includes(com.comType),
       );
@@ -47,7 +46,7 @@ export default function NationComs({
   useEffect(() => {
     const loadNationComList = async () => {
       await coms.loadNationComList(
-        selectedNation.officialId,
+        "",
         selectedNation.officialId,
         comTypes,
         session.user.citizenship.nationId === selectedNation.officialId,

@@ -42,8 +42,19 @@ export default function CookiesModal() {
         enableDeclineButton
         onAccept={handleAcceptCookies}
         onDecline={handleDeclineCookies}
-        style={{ background: "rgb(0, 99, 138)" }}
-        buttonStyle={{ background: "#4CAF50", color: "#ffffff" }}
+        style={{ background: "var(--color-complementary2)" }}
+        buttonStyle={{
+          background: "var(--color-secondary)",
+          color: "var(--color-light)",
+          borderRadius: 100,
+          padding: "5px 20px",
+        }}
+        declineButtonStyle={{
+          background: "var(--color-danger)",
+          color: "var(--color-light)",
+          borderRadius: 100,
+          padding: "5px 20px",
+        }}
       >
         {t("components.modals.cookiesModal.text")}
       </CookieConsent>

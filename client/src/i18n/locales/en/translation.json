@@ -36,7 +36,8 @@
         "title": "diplomacy",
         "noRelations": "no diplomatic relationship",
         "pendingRelations": "diplomatic relationships are pending approval",
-        "defaultNewRelationTitle": "new diplomatic relationship"
+        "defaultNewRelationTitle": "new diplomatic relationship",
+        "noDescription": "no description"
       },
       "citizens": {
         "title": "citizens",
@@ -170,7 +171,8 @@
       "donate": "donate",
       "edit": "edit",
       "markAsRead": "mark as read",
-      "markAsUnread": "mark as unread"
+      "markAsUnread": "mark as unread",
+      "transferCredits": "transfer credits"
     },
     "form": {
       "input": {
@@ -215,7 +217,8 @@
         "updateUser": "update profile ?",
         "createCom": "confirm new communication ?",
         "deleteCom": "delete communication ?",
-        "reportContent": "confirm reporting the content to the administrator ?"
+        "reportContent": "confirm reporting the content to the administrator ?",
+        "transferCredits": "confirm credit transfer ?"
       },
       "cookiesModal": {
         "text": "this site uses cookies to improve your user experience",
@@ -280,6 +283,12 @@
         "update": "update diplomatic relationship",
         "nameInput": "relationship naming",
         "description": "description"
+      },
+      "creditTransferModal": {
+        "title": "credit transfer",
+        "recipient": "recipient",
+        "comment": "comment",
+        "amount": "amount"
       }
     },
     "hoverInfos": {
@@ -450,6 +459,7 @@
     "failedCopy": "Unable to copy",
     "reported": "Content reported and awaiting moderation",
     "connected": "Connection restored !",
+    "creditTransferSuccess": "Credit transfer successfully completed",
     "errors": {
       "400": "Bad request",
       "401": "Unauthorized",
@@ -548,6 +558,11 @@
     "relationUpdate": {
       "title": "Diplomacy",
       "message": "Diplomatic relations updated"
+    },
+    "creditTransfer": {
+      "title": "credit transfer",
+      "amount": "|amount : ",
+      "comment": "|comment : "
     }
   }
 }

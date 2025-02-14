@@ -4,6 +4,7 @@ import { emptyNewNationPayload, NewNationPayload } from "../types/typNation";
 import {
   ConfirmBoxDefault,
   EditBoxDefault,
+  emptyCreditTransfert,
   emptyInfo,
   InfoModal,
   Stats,
@@ -82,4 +83,5 @@ export const newRelationAtom = atom({
   show: false,
   relation: new RelationModel(emptyDiplomaticRelationship),
 });
+export const creditTransferAtom = atom(emptyCreditTransfert);
 //---- V2 ----

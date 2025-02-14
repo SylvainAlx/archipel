@@ -88,19 +88,22 @@ export const login = async (req, res) => {
   try {
     const userIp = req.clientIp;
     await IpIsBanished(userIp);
+
     const { name, password } = req.body;
     const user = await getUserByName(name);
-    user.comparePassword(password, async (error, isMatch) => {
-      if (error) {
-        return res.status(400).json({
-          infoType: "400",
-          error: error.message,
-        });
-      }
-      if (!isMatch) {
-        return res.status(401).json({ infoType: "401" });
-      }
+    if (!user) {
+      return res.status(404).json({ infoType: "404" });
+    }
+    const isMatch = await new Promise((resolve, reject) => {
+      user.comparePassword(password, (error, match) => {
+        if (error) return reject(error);
+        resolve(match);
+      });
     });
+    if (!isMatch) {
+      return res.status(401).json({ infoType: "401" });
+    }
+
     const jwt = user.createJWT();
     const lastVisitDate = getLastVisitDate(user, userIp);
     updateUserIpAddress(user, userIp);
@@ -127,18 +130,21 @@ export const verify = async (req, res) => {
 export const forgetPassword = async (req, res) => {
   try {
     const { name, recovery, newPassword } = req.body;
+
     const user = await getUserByName(name);
+    if (!user) {
+      return res.status(404).json({ infoType: "404" });
+    }
+
     const isMatch = await user.compareRecoveryCode(recovery);
     if (!isMatch) {
-      return res.status(401).json({
-        infoType: "401",
-      });
+      return res.status(401).json({ infoType: "401" });
     }
+
     user.password = newPassword;
     await user.save();
-    return res.status(200).json({
-      infoType: "newPassword",
-    });
+
+    return res.status(200).json({ infoType: "newPassword" });
   } catch (error) {
     handleError(error, res);
   }
@@ -149,22 +155,18 @@ export const changePassword = async (req, res) => {
     const { oldPassword, newPassword } = req.body;
     const userId = req.userId;
     const user = await getUserByOfficialId(userId, 404, true);
-    user.comparePassword(oldPassword, async (error, isMatch) => {
-      if (error) {
-        return res.status(500).json({ infoType: "500", error: error.message });
-      }
-      if (isMatch) {
-        user.password = newPassword;
-        await user.save();
-        return res.status(200).json({
-          infoType: "newPassword",
-        });
-      } else {
-        return res.status(403).json({
-          infoType: "403",
-        });
-      }
+    const isMatch = await new Promise((resolve, reject) => {
+      user.comparePassword(oldPassword, (error, match) => {
+        if (error) return reject(error);
+        resolve(match);
+      });
     });
+    if (!isMatch) {
+      return res.status(403).json({ infoType: "403" });
+    }
+    user.password = newPassword;
+    await user.save();
+    return res.status(200).json({ infoType: "newPassword" });
   } catch (error) {
     handleError(error, res);
   }
@@ -222,30 +224,44 @@ export const deleteSelfUser = async (req, res) => {
     if (!user) {
       return res.status(404).json({ infoType: "404" });
     }
-    user.comparePassword(password, async (error, isMatch) => {
-      if (error) {
-        return res.status(500).json({ infoType: "500", error: error.message });
-      }
-      if (isMatch) {
-        User.findOneAndDelete({ officialId: id }).then(async (user) => {
-          const nation = await Nation.findOne({
-            officialId: user.citizenship.nationId,
-          });
-          if (nation != null) {
-            if (nation.owner === user.officialId) {
-              nation.owner = "";
-            }
-            nation.data.roleplay.citizens -= 1;
-            nation.save();
-          }
-          res.status(200).json({ nation, infoType: "delete" });
-        });
-      } else {
-        return res.status(403).json({
-          infoType: "403",
-        });
-      }
+
+    const isMatch = await new Promise((resolve, reject) => {
+      user.comparePassword(password, (error, match) => {
+        if (error) return reject(error);
+        resolve(match);
+      });
     });
+
+    if (!isMatch) {
+      return res.status(403).json({ infoType: "403" });
+    }
+
+    // Sauvegarder l'ID de la nation avant de supprimer l'utilisateur
+    const nationId = user.citizenship?.nationId;
+
+    // Suppression de l'utilisateur
+    const deletedUser = await User.findOneAndDelete({ officialId: id });
+    if (!deletedUser) {
+      return res.status(500).json({ infoType: "500" });
+    }
+
+    // Mise à jour de la nation si l'utilisateur en faisait partie
+    if (nationId) {
+      const nation = await Nation.findOne({ officialId: nationId });
+      if (nation) {
+        if (nation.owner === id) {
+          nation.owner = "";
+        }
+        nation.data.roleplay.citizens = Math.max(
+          0,
+          nation.data.roleplay.citizens - 1,
+        );
+        await nation.save();
+        return res.status(200).json({ nation, infoType: "delete" });
+      }
+    }
+
+    return res.status(200).json({ infoType: "delete" });
   } catch (error) {
     handleError(error, res);
   }
@@ -407,6 +423,60 @@ export const changePlan = async (req, res) => {
         infoType: "update",
       });
     }
+  } catch (error) {
+    handleError(error, res);
+  }
+};
+
+export const transferCredits = async (req, res) => {
+  try {
+    const { recipientId, amount } = req.body;
+
+    if (!recipientId || !amount || amount <= 0) {
+      return res
+        .status(400)
+        .json({ infoType: "400", message: "Montant invalide" });
+    }
+
+    const sender = await getUserByOfficialId(req.userId, 404);
+    if (sender.credits < amount) {
+      return res
+        .status(403)
+        .json({ infoType: "403", message: "Crédits insuffisants" });
+    }
+
+    let recipientUser = null;
+    let recipientNation = null;
+
+    if (recipientId.charAt(2) === "n") {
+      recipientNation = await Nation.findOne({ officialId: recipientId });
+      if (!recipientNation) {
+        return res
+          .status(404)
+          .json({ infoType: "404", message: "Nation introuvable" });
+      }
+      recipientNation.data.roleplay.treasury += amount;
+    } else if (recipientId.charAt(2) === "c") {
+      recipientUser = await getUserByOfficialId(recipientId, 404);
+      recipientUser.credits += amount;
+    } else {
+      return res
+        .status(400)
+        .json({ infoType: "400", message: "ID de destinataire invalide" });
+    }
+
+    sender.credits -= amount;
+    await sender.save();
+    if (recipientUser) await recipientUser.save();
+    if (recipientNation) await recipientNation.save();
+
+    return res.status(200).json({
+      sender,
+      recipientUser: recipientUser || undefined,
+      recipientNation: recipientNation || undefined,
+      infoType: "transfer",
+      message: "Transfert réussi",
+    });
   } catch (error) {
     handleError(error, res);
   }

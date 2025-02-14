@@ -31,6 +31,7 @@ import { NationModel } from "../../models/nationModel";
 import { useLoadNationPlaces } from "../../hooks/useLoadNationPlaces";
 import { PlaceListModel } from "../../models/lists/placeListModel";
 import CreditTag from "../tags/creditTag";
+import CreditTransferButton from "../buttons/creditTransferButton";
 
 interface CitizenshipProps {
   citizen: UserModel;
@@ -63,7 +64,7 @@ export default function Citizenship({
     } else {
       setEnableLeaving(false);
     }
-  }, [citizen]);
+  }, [citizen, session.user]);
 
   useEffect(() => {
     setCities(nationPlaceList.getCities());
@@ -164,22 +165,24 @@ export default function Citizenship({
               <HonorTag honor="honor_pioneer" />
             )}
           </div>
+          {session.user.officialId != citizen.officialId &&
+            session.user.officialId != "" && (
+              <CreditTransferButton target={citizen} />
+            )}
           {nation != undefined &&
           nation.officialId != "" &&
           citizen.citizenship.nationId != "" ? (
             <div className="w-full flex flex-col justify-center items-center gap-2">
-              <div className="w-[300px] relative flex gap-2 items-center justify-center">
-                <Button
-                  text={nation.name}
-                  click={() => handleClick("nation")}
-                  children={<GiBlackFlag />}
-                  widthFull={true}
-                  lowerCase={false}
-                />
-                {enableLeaving && (
-                  <CrossButton text="" small={true} click={leaveNation} />
-                )}
-              </div>
+              <Button
+                text={nation.name}
+                click={() => handleClick("nation")}
+                children={<GiBlackFlag />}
+                widthFull={true}
+                lowerCase={false}
+              />
+              {enableLeaving && (
+                <CrossButton text="" small={true} click={leaveNation} />
+              )}
             </div>
           ) : (
             <>

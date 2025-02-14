@@ -111,3 +111,9 @@ export interface Hashtag {
   label: string;
   occurrence: number;
 }
+
+export interface TranferCreditPayload {
+  nationOwnerId: string;
+  recipientId: string;
+  amount: number;
+}

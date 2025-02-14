@@ -36,7 +36,8 @@
         "title": "diplomatie",
         "noRelations": "aucune relation diplomatique",
         "pendingRelations": "des relations sont en attente d'approbation",
-        "defaultNewRelationTitle": "nouvelle relation diplomatique"
+        "defaultNewRelationTitle": "nouvelle relation diplomatique",
+        "noDescription": "pas de description"
       },
       "citizens": {
         "title": "citoyens",
@@ -169,8 +170,9 @@
       "break": "rompre",
       "donate": "faire un don",
       "edit": "éditer",
-      "markAsRead": "marquer comme lu",
-      "markAsUnread": "marquer comme non lu"
+      "markAsRead": "non lu",
+      "markAsUnread": "lu",
+      "transferCredits": "envoyer des credits"
     },
     "form": {
       "input": {
@@ -215,7 +217,8 @@
         "updateUser": "confirmez-vous la mise à jour de votre profil ?",
         "createCom": "confirmez-vous la création de la communication ?",
         "deleteCom": "confirmez-vous la suppression définitive de la communication ?",
-        "reportContent": "confirmez-vous le signalement du contenu à l'administrateur ?"
+        "reportContent": "confirmez-vous le signalement du contenu à l'administrateur ?",
+        "transferCredits": "confirmez-vous le virement ?"
       },
       "cookiesModal": {
         "text": "ce site utilise des cookies pour améliorer votre expérience utilisateur",
@@ -280,6 +283,12 @@
         "update": "modifier la relation diplomatique",
         "nameInput": "dénomination de la relation",
         "description": "description"
+      },
+      "creditTransferModal": {
+        "title": "transfert de crédit",
+        "recipient": "bénéficiaire",
+        "comment": "commentaire",
+        "amount": "montant"
       }
     },
     "hoverInfos": {
@@ -450,6 +459,7 @@
     "failedCopy": "Copie impossible",
     "reported": "Contenu signalé et en attente de modération",
     "connected": "Connexion rétablie !",
+    "creditTransferSuccess": "Transfert de crédits réalisé avec succès",
     "errors": {
       "400": "Erreur de requête",
       "401": "Action non autorisée",
@@ -548,6 +558,11 @@
     "relationUpdate": {
       "title": "Diplomatie",
       "message": "Mise à jour des relations diplomatiques"
+    },
+    "creditTransfer": {
+      "title": "Transfert de crédits",
+      "amount": "|montant : ",
+      "comment": "|commentaire : "
     }
   }
 }

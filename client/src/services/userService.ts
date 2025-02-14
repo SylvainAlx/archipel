@@ -5,6 +5,7 @@ import {
   ChangePasswordPayload,
   changeStatusPayload,
   RecoveryPayload,
+  TranferCreditPayload,
 } from "../types/typUser";
 import { GET_JWT } from "../utils/functions";
 import { handleFetchError } from "../utils/procedures";
@@ -187,6 +188,25 @@ export const changeStatusFetch = async (payload: changeStatusPayload) => {
   const jwt = GET_JWT();
   try {
     const resp = await fetch(`${SERVER_URL}/user/changestatus`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        authorization: "Bearer " + jwt,
+      },
+      body: JSON.stringify(payload),
+    });
+    await handleFetchError(resp);
+    const result = await resp.json();
+    return result;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const transferCreditsFetch = async (payload: TranferCreditPayload) => {
+  const jwt = GET_JWT();
+  try {
+    const resp = await fetch(`${SERVER_URL}/user/transfer`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

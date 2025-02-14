@@ -89,3 +89,8 @@ export const emptyUser: User = {
   createdAt: new Date(),
   lastVisitDate: new Date(),
 };
+
+export interface TranferCreditPayload {
+  recipientId: string;
+  amount: number;
+}

@@ -8,6 +8,7 @@ import {
   loginFetch,
   recoveryFetch,
   registerFetch,
+  transferCreditsFetch,
   updateUserFetch,
   verifyCaptchaFetch,
 } from "../services/userService";
@@ -33,10 +34,11 @@ import {
   Plans,
   RecoveryPayload,
   Roles,
+  TranferCreditPayload,
   User,
 } from "../types/typUser";
 import { errorCatching } from "../utils/displayInfos";
-import { GET_JWT } from "../utils/functions";
+import { GET_JWT, isNation } from "../utils/functions";
 import { createComByStatus } from "../utils/procedures";
 import { successMessage } from "../utils/toasts";
 import { ComModel } from "./comModel";
@@ -269,6 +271,70 @@ export class UserModel extends CommonModel implements User {
       return new UserModel(this);
     }
   };
+  transferCredits = async (
+    { recipientId, amount }: TranferCreditPayload,
+    senderName: string,
+    recipientName: string,
+    comment: string,
+  ) => {
+    myStore.set(loadingAtom, true);
+    try {
+      const resp: {
+        sender: User;
+        recipientUser: User;
+        recipientNation: Nation;
+        infoType: string;
+      } = await transferCreditsFetch({ recipientId, amount });
+      this.updateFields(resp.sender);
+      this.updateSessionAtom(resp.sender);
+      if (resp.recipientNation) {
+        myStore
+          .get(nationListAtomV2)
+          .addToNationListAtom([resp.recipientNation]);
+      } else if (resp.recipientUser) {
+        myStore.get(userListAtomV2).addToUserListAtom([resp.recipientUser]);
+      }
+      const newCom1 = new ComModel({
+        comType: isNation(recipientId)
+          ? COM_TYPE.nationPrivate.id
+          : COM_TYPE.userPrivate.id,
+        origin: this.officialId,
+        destination: recipientId,
+        title: i18n.t("coms.creditTransfer.title"),
+        message:
+          senderName +
+          " > " +
+          recipientName +
+          i18n.t("coms.creditTransfer.amount") +
+          amount +
+          i18n.t("coms.creditTransfer.comment") +
+          comment,
+      });
+      newCom1.baseInsert();
+      const newCom2 = new ComModel({
+        comType: COM_TYPE.userPrivate.id,
+        origin: this.officialId,
+        destination: this.officialId,
+        title: i18n.t("coms.creditTransfer.title"),
+        message:
+          senderName +
+          " > " +
+          recipientName +
+          "  " +
+          i18n.t("coms.creditTransfer.amount") +
+          amount +
+          "  " +
+          i18n.t("coms.creditTransfer.comment") +
+          comment,
+      });
+      newCom2.baseInsert();
+      this.displayUserInfoByType(resp.infoType);
+    } catch (error) {
+      errorCatching(error);
+    } finally {
+      myStore.set(loadingAtom, false);
+    }
+  };
   verifyCaptcha = async (token: string | null): Promise<boolean> => {
     let result = false;
     myStore.set(loadingAtom, true);
@@ -370,6 +436,9 @@ export class UserModel extends CommonModel implements User {
         break;
       case "changeStatus":
         successMessage(i18n.t("toasts.user.update"));
+        break;
+      case "transfer":
+        successMessage(i18n.t("toasts.creditTransferSuccess"));
         break;
       default:
         break;

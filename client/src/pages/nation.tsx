@@ -21,6 +21,7 @@ import IdSkeleton from "../components/loading/skeletons/idSkeleton";
 import MapSkeleton from "../components/loading/skeletons/mapSkeleton";
 import TileSkeleton from "../components/loading/skeletons/tileSkeleton";
 import { useLoadNationPlaces } from "../hooks/useLoadNationPlaces";
+import CreditTransferButton from "../components/buttons/creditTransferButton";
 
 export default function Nation() {
   const [nation, setNation] = useState<NationModel>(new NationModel());
@@ -133,6 +134,7 @@ export default function Nation() {
                     owner={owner}
                     updatePath={updatePath}
                   />
+                  <CreditTransferButton target={nation} />
                 </div>
                 {nation.officialId === param.id && (
                   <>

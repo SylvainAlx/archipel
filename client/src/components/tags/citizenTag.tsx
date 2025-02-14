@@ -21,7 +21,6 @@ export default function CitizenTag({ label, citizen }: CitizenTagProps) {
       text={label.toString().toUpperCase()}
       hover={t("components.hoverInfos.tags.pendingCitizenship")}
       bgColor="bg-complementary3"
-      // textStyle="uppercase"
       children={
         <div className="flex gap-2 items-center">
           {session.user.citizenship.nationId === citizen.citizenship.nationId &&

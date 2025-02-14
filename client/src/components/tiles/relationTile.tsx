@@ -85,7 +85,7 @@ export default function RelationTile({ relation }: RelationTileProps) {
 
   return (
     <div
-      className={`${needResponse ? "animate-pulse bg-complementary2" : "bg-complementary"} w-full p-2 rounded flex flex-col items-center gap-3 shadow-xl`}
+      className={`${needResponse ? "bg-complementary2" : "bg-complementary"} w-full p-2 rounded flex flex-col items-center gap-3 shadow-xl`}
     >
       <div className="w-full text-xl flex items-center justify-between gap-2">
         <div className="flex justify-center items-center gap-2 text-2xl text-info">
@@ -149,7 +149,9 @@ export default function RelationTile({ relation }: RelationTileProps) {
         {relation.description != "" ? (
           <p className="text-justify">{relation.description}</p>
         ) : (
-          <em className="text-center">[A TRADUIRE] pas de description</em>
+          <em className="text-center">
+            {t("pages.nation.relations.noDescription")}
+          </em>
         )}
       </div>
       <div className="w-full flex flex-wrap items-center justify-end gap-1">
