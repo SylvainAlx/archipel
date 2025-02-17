@@ -150,6 +150,7 @@ export class NationModel extends CommonModel implements Nation {
         infoType: string;
       } = await transferCreditsFetch({ nationOwnerId, recipientId, amount });
       this.updateFields(resp.sender);
+      myStore.get(nationListAtomV2).addToNationListAtom([resp.sender]);
       if (resp.recipientNation) {
         myStore
           .get(nationListAtomV2)

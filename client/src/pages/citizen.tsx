@@ -3,7 +3,7 @@ import H1 from "../components/titles/h1";
 import { confirmBox, myStore, sessionAtom } from "../settings/store";
 import { useParams } from "react-router-dom";
 import { lazy, Suspense, useEffect, useState } from "react";
-import EditIcon from "../components/editIcon";
+import EditButton from "../components/buttons/editButton";
 import ReportPanel from "../components/reportPanel";
 import { NationModel } from "../models/nationModel";
 import { UserModel } from "../models/userModel";
@@ -87,11 +87,15 @@ export default function Citizen() {
       <div className="flex items-center gap-1">
         <H1 text={citizen.name} />
         {owner && (
-          <EditIcon
-            target="citizen"
-            param={citizen.name}
-            path="name"
-            action={updatePath}
+          <EditButton
+            editBox={{
+              target: "citizen",
+              original: citizen.name,
+              new: citizen.name,
+              path: "name",
+              action: updatePath,
+              canBeEmpty: false,
+            }}
           />
         )}
       </div>

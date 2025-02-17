@@ -5,11 +5,15 @@ import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { errorMessage, successMessage } from "../../utils/toasts";
 import { FaRegCopy } from "react-icons/fa6";
+import { useModal } from "../../hooks/useModal";
 
 export function RecoveryModal() {
   const [recovery, setRecovery] = useAtom(recoveryKey);
   const [checked, setChecked] = useState(false);
   const { t } = useTranslation();
+  const modalRef = useModal(() =>
+    console.error(t("components.modals.recoveryModal.confirm")),
+  );
   const handleClick = async () => {
     try {
       await navigator.clipboard.writeText(recovery);
@@ -19,7 +23,11 @@ export function RecoveryModal() {
     }
   };
   return (
-    <>
+    <div
+      ref={modalRef}
+      tabIndex={-1}
+      className="flex flex-col items-center gap-2"
+    >
       <h2 className="text-2xl text-center p-4">
         {t("components.modals.recoveryModal.title")}
       </h2>
@@ -49,6 +57,6 @@ export function RecoveryModal() {
           <Button text={t("components.buttons.validate")} />
         </div>
       )}
-    </>
+    </div>
   );
 }

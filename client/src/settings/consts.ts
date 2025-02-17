@@ -48,13 +48,14 @@ export const COSTS = {
 
 export const MAX_LENGTH = {
   text: {
-    default: 2000,
+    defaultMD: 2000,
     comMessage: 500,
     userPresentation: 1000,
     nationDescription: 5000,
     placeDescription: 2000,
     relationDescription: 100,
     textArea: 60,
+    input: 20,
   },
   array: {
     tags: 5,

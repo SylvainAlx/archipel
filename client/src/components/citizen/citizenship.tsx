@@ -2,7 +2,7 @@ import { useTranslation } from "react-i18next";
 import { genderList, languageList, religionList } from "../../settings/lists";
 import { emptyNewNationPayload } from "../../types/typNation";
 import DashTile from "../dashTile";
-import EditIcon from "../editIcon";
+import EditButton from "../buttons/editButton";
 import IdTag from "../tags/idTag";
 import LanguagesTag from "../tags/languagesTag";
 import NationOwnerTag from "../tags/nationOwnerTag";
@@ -110,36 +110,45 @@ export default function Citizenship({
             <span className="flex items-center gap-1">
               <GenderTag genderId={citizen.gender} />
               {owner && (
-                <EditIcon
-                  target="citizen"
-                  param={genderList}
-                  path="gender"
-                  indice={citizen.gender}
-                  action={updatePath}
+                <EditButton
+                  editBox={{
+                    target: "citizen",
+                    original: genderList,
+                    new: citizen.gender,
+                    path: "gender",
+                    indice: citizen.gender,
+                    action: updatePath,
+                  }}
                 />
               )}
             </span>
             <span className="flex items-center gap-1">
               <LanguagesTag language={citizen.language} />
               {owner && (
-                <EditIcon
-                  target="citizen"
-                  param={languageList}
-                  path="language"
-                  indice={citizen.language}
-                  action={updatePath}
+                <EditButton
+                  editBox={{
+                    target: "citizen",
+                    original: languageList,
+                    new: citizen.language,
+                    path: "language",
+                    indice: citizen.language,
+                    action: updatePath,
+                  }}
                 />
               )}
             </span>
             <span className="flex items-center gap-1">
               <ReligionTag religionId={citizen.religion} />
               {owner && (
-                <EditIcon
-                  target="citizen"
-                  param={religionList}
-                  path="religion"
-                  indice={citizen.religion}
-                  action={updatePath}
+                <EditButton
+                  editBox={{
+                    target: "citizen",
+                    original: religionList,
+                    new: citizen.religion,
+                    path: "religion",
+                    indice: citizen.religion,
+                    action: updatePath,
+                  }}
                 />
               )}
             </span>
@@ -148,12 +157,17 @@ export default function Citizenship({
               nationPlaces={cities}
             />
             {owner && cities.getItems().length > 0 && (
-              <EditIcon
-                target="citizen"
-                param={cities.getLabelIdPlaceList([PLACE_TYPE.city.id])}
-                path="citizenship.residence"
-                indice={citizen.citizenship.residence}
-                action={updatePath}
+              <EditButton
+                editBox={{
+                  target: "citizen",
+                  original: cities.getLabelIdPlaceList([PLACE_TYPE.city.id]),
+                  new:
+                    citizen.citizenship.residence != ""
+                      ? citizen.citizenship.residence
+                      : cities.getLabelIdPlaceList([PLACE_TYPE.city.id])[0].id,
+                  path: "citizenship.residence",
+                  action: updatePath,
+                }}
               />
             )}
             {owner && <CreditTag label={citizen.credits} owner={true} />}
@@ -172,16 +186,18 @@ export default function Citizenship({
           {nation != undefined &&
           nation.officialId != "" &&
           citizen.citizenship.nationId != "" ? (
-            <div className="w-full flex flex-col justify-center items-center gap-2">
+            <div className="w-full flex justify-center items-center flex-wrap gap-2">
               <Button
                 text={nation.name}
                 click={() => handleClick("nation")}
                 children={<GiBlackFlag />}
-                widthFull={true}
                 lowerCase={false}
               />
               {enableLeaving && (
-                <CrossButton text="" small={true} click={leaveNation} />
+                <CrossButton
+                  text={t("components.buttons.leaveNation")}
+                  click={leaveNation}
+                />
               )}
             </div>
           ) : (

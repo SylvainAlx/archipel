@@ -15,6 +15,7 @@ import { MAX_LENGTH } from "../../settings/consts";
 import RequiredStar from "../form/requiredStar";
 import { Link, useNavigate } from "react-router-dom";
 import { NationModel } from "../../models/nationModel";
+import { useModal } from "../../hooks/useModal";
 
 export default function NewNationModal() {
   const [newNation, setNewNation] = useAtom(newNationAtom);
@@ -22,6 +23,7 @@ export default function NewNationModal() {
   const [tags, setTags] = useState<string[]>(newNation.tags);
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const modalRef = useModal(() => setNewNation(emptyNewNationPayload));
 
   useEffect(() => {
     const updateNewNation = { ...newNation };
@@ -38,6 +40,7 @@ export default function NewNationModal() {
       setNewNation(emptyNewNationPayload);
     } else {
       errorMessage(t("components.form.missingField"));
+      setNewNation(emptyNewNationPayload);
     }
   };
 
@@ -72,7 +75,7 @@ export default function NewNationModal() {
   };
 
   return (
-    <div>
+    <div ref={modalRef} tabIndex={-1}>
       <h2 className="text-2xl text-center p-4">
         {t("components.modals.newNationModal.title")}
       </h2>

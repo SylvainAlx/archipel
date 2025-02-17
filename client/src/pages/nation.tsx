@@ -13,7 +13,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { errorMessage } from "../utils/toasts";
 import CrossButton from "../components/buttons/crossButton";
 import ReportPanel from "../components/reportPanel";
-import EditIcon from "../components/editIcon";
+import EditButton from "../components/buttons/editButton";
 import { NationModel } from "../models/nationModel";
 import { NationListModel } from "../models/lists/nationListModel";
 import { createPageTitle } from "../utils/procedures";
@@ -115,11 +115,15 @@ export default function Nation() {
       <div className="w-full relative flex items-center justify-center gap-2">
         <H1 text={nation.name} />
         {owner && (
-          <EditIcon
-            target="nation"
-            param={nation.name}
-            path="name"
-            canBeEmpty={false}
+          <EditButton
+            editBox={{
+              target: "nation",
+              original: nation.name,
+              new: nation.name,
+              path: "name",
+              action: updatePath,
+              canBeEmpty: false,
+            }}
           />
         )}
       </div>

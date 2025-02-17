@@ -1,4 +1,4 @@
-import { MouseEventHandler, useState } from "react";
+import { useState } from "react";
 import HoverInfo from "../hoverInfo";
 
 export interface TagProps {
@@ -8,7 +8,7 @@ export interface TagProps {
   textColor?: string;
   textStyle?: string;
   children?: JSX.Element;
-  click?: MouseEventHandler<HTMLDivElement>;
+  click?: () => void;
 }
 
 export default function Tag({
@@ -21,10 +21,18 @@ export default function Tag({
   click,
 }: TagProps) {
   const [showInfo, setShowInfo] = useState(false);
+
   return (
     <div
+      role={click && "button"}
+      tabIndex={click && 0}
       onMouseEnter={() => setShowInfo(true)}
       onMouseLeave={() => setShowInfo(false)}
+      onKeyDown={(e) => {
+        if ((e.key === "Enter" || e.key === " ") && click) {
+          click != undefined && click();
+        }
+      }}
       onClick={click && click}
       className={`relative min-h-[30px] py-1 px-2 rounded-md text-sm flex items-center gap-1 ${bgColor && bgColor} ${textStyle && textStyle} ${textColor && textColor} shadow-md ${click ? "cursor-pointer hover:bg-secondary transition-all" : "cursor-default"}`}
     >

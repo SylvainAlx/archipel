@@ -145,6 +145,7 @@
       "validate": "validate",
       "createNation": "create your nation",
       "joinNation": "join a nation",
+      "leaveNation": "leave the nation",
       "deleteNation": "delete your nation",
       "deleteAccount": "delete your account",
       "changePassword": "change password",
@@ -288,7 +289,9 @@
         "title": "credit transfer",
         "recipient": "recipient",
         "comment": "comment",
-        "amount": "amount"
+        "amount": "amount",
+        "accountToBeDebited": "account to be debited",
+        "remainingBalance": "remaining balance"
       }
     },
     "hoverInfos": {
@@ -325,7 +328,8 @@
         "nationOwner": "nation editor",
         "residence": "residence",
         "treasury": "wealth",
-        "date": "date",
+        "registration": "registration",
+        "lastVisitDate": "last visit date",
         "honor": "honor",
         "honor_pioneer": "pioneer",
         "religion": "religion",
@@ -474,7 +478,7 @@
       "signIn": "Sign In successful",
       "signUp": "Sign Up Successful",
       "verify": "Profile recovery successful",
-      "logout": "Logout successful",
+      "logout": "Logout",
       "delete": "Delete successful",
       "save": "Save successful",
       "add": "Add successful",

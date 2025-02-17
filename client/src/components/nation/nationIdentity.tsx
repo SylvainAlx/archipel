@@ -4,7 +4,7 @@ import CapitalTag from "../tags/capitalTag";
 import { useTranslation } from "react-i18next";
 import TileContainer from "../tileContainer";
 import DashTile from "../dashTile";
-import EditIcon from "../editIcon";
+import EditButton from "../buttons/editButton";
 import TagList from "./tagList";
 import CurrencyTag from "../tags/currencyTag";
 import NationalDayTag from "../tags/nationalDayTag";
@@ -66,15 +66,16 @@ export default function NationIdentity({
                         : t("pages.nation.nationIdentity.noMotto")}
                     </em>
                     {owner && (
-                      <EditIcon
-                        target="nation"
-                        param={
-                          selectedNation.data.general.motto
+                      <EditButton
+                        editBox={{
+                          target: "nation",
+                          original: selectedNation.data.general.motto
                             ? selectedNation.data.general.motto
-                            : ""
-                        }
-                        path="data.general.motto"
-                        action={updatePath}
+                            : "",
+                          new: selectedNation.data.general.motto,
+                          path: "data.general.motto",
+                          action: updatePath,
+                        }}
                       />
                     )}
                   </div>
@@ -92,12 +93,14 @@ export default function NationIdentity({
                         <RegimeTag selectedNation={selectedNation} />
                       )}
                       {owner && (
-                        <EditIcon
-                          target="nation"
-                          param={regimeList}
-                          path="data.general.regime"
-                          indice={selectedNation.data.general.regime}
-                          action={updatePath}
+                        <EditButton
+                          editBox={{
+                            target: "nation",
+                            original: regimeList,
+                            new: selectedNation.data.general.regime,
+                            path: "data.general.regime",
+                            action: updatePath,
+                          }}
                         />
                       )}
                     </div>
@@ -112,15 +115,16 @@ export default function NationIdentity({
                         />
                       )}
                       {owner && (
-                        <EditIcon
-                          target="nation"
-                          param={
-                            selectedNation.data.general.nationalDay
+                        <EditButton
+                          editBox={{
+                            target: "nation",
+                            original: selectedNation.data.general.nationalDay
                               ? selectedNation.data.general.nationalDay
-                              : ""
-                          }
-                          path="data.general.nationalDay"
-                          action={updatePath}
+                              : "",
+                            new: selectedNation.data.general.nationalDay,
+                            path: "data.general.nationalDay",
+                            action: updatePath,
+                          }}
                         />
                       )}
                     </div>
@@ -131,15 +135,16 @@ export default function NationIdentity({
                         />
                       )}
                       {owner && (
-                        <EditIcon
-                          target="nation"
-                          param={
-                            selectedNation.data.general.currency
+                        <EditButton
+                          editBox={{
+                            target: "nation",
+                            original: selectedNation.data.general.currency
                               ? selectedNation.data.general.currency
-                              : ""
-                          }
-                          path="data.general.currency"
-                          action={updatePath}
+                              : "",
+                            new: selectedNation.data.general.currency,
+                            path: "data.general.currency",
+                            action: updatePath,
+                          }}
                         />
                       )}
                     </div>
@@ -150,14 +155,23 @@ export default function NationIdentity({
                           .getCities()
                           .getLabelIdPlaceList([PLACE_TYPE.city.id]).length >
                           0 && (
-                          <EditIcon
-                            target="nation"
-                            param={nationPlaceList
-                              .getCities()
-                              .getLabelIdPlaceList([PLACE_TYPE.city.id])}
-                            path="data.roleplay.capital"
-                            indice={selectedNation.data.roleplay.capital}
-                            action={updatePath}
+                          <EditButton
+                            editBox={{
+                              target: "nation",
+                              original: nationPlaceList
+                                .getCities()
+                                .getLabelIdPlaceList([PLACE_TYPE.city.id]),
+                              new:
+                                selectedNation.data.roleplay.capital != ""
+                                  ? selectedNation.data.roleplay.capital
+                                  : nationPlaceList
+                                      .getCities()
+                                      .getLabelIdPlaceList([
+                                        PLACE_TYPE.city.id,
+                                      ])[0].id,
+                              path: "data.roleplay.capital",
+                              action: updatePath,
+                            }}
                           />
                         )}
                     </div>
@@ -181,15 +195,16 @@ export default function NationIdentity({
                     )}
 
                     {owner && (
-                      <EditIcon
-                        target="nation"
-                        param={
-                          selectedNation.data.general.description
+                      <EditButton
+                        editBox={{
+                          target: "nation",
+                          original: selectedNation.data.general.description
                             ? selectedNation.data.general.description
-                            : ""
-                        }
-                        path="data.general.description"
-                        action={updatePath}
+                            : "",
+                          new: selectedNation.data.general.description,
+                          path: "data.general.description",
+                          action: updatePath,
+                        }}
                       />
                     )}
                   </div>

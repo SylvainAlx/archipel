@@ -34,7 +34,7 @@ export interface User {
     residence: string;
   };
   createdAt: Date;
-  lastVisitDate: Date;
+  updatedAt: Date;
 }
 
 export interface AuthPayload {
@@ -87,7 +87,7 @@ export const emptyUser: User = {
     residence: "",
   },
   createdAt: new Date(),
-  lastVisitDate: new Date(),
+  updatedAt: new Date(),
 };
 
 export interface TranferCreditPayload {

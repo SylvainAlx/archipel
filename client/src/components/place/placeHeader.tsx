@@ -1,7 +1,7 @@
 import { FaSortAmountDownAlt } from "react-icons/fa";
 import CrossButton from "../buttons/crossButton";
 import ParentButton from "../buttons/parentButton";
-import EditIcon from "../editIcon";
+import EditButton from "../buttons/editButton";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
@@ -70,16 +70,18 @@ export default function PlaceHeader({
         <FaSortAmountDownAlt />
         <p>{parentName}</p>
         {owner && (
-          <EditIcon
-            target="place"
-            param={placeList.getLabelIdPlaceList(
-              [PLACE_TYPE.state.id, PLACE_TYPE.county.id],
-              nation,
-              place.officialId,
-            )}
-            action={updatePath}
-            indice={place.parentId}
-            path="parentId"
+          <EditButton
+            editBox={{
+              target: "place",
+              original: placeList.getLabelIdPlaceList(
+                [PLACE_TYPE.state.id, PLACE_TYPE.county.id],
+                nation,
+                place.officialId,
+              ),
+              new: place.parentId,
+              path: "parentId",
+              action: updatePath,
+            }}
           />
         )}
       </div>

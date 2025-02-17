@@ -1,4 +1,5 @@
 import { ChangeEvent } from "react";
+import { MAX_LENGTH } from "../../settings/consts";
 
 export interface TextAreaProps {
   required?: boolean;
@@ -6,7 +7,7 @@ export interface TextAreaProps {
   name: string;
   placeholder: string;
   value: string;
-  maxLength: number;
+  maxLength?: number;
   rows?: number;
 }
 
@@ -16,7 +17,7 @@ export default function TextArea({
   name,
   placeholder,
   value,
-  maxLength,
+  maxLength = MAX_LENGTH.text.textArea,
   rows,
 }: TextAreaProps) {
   return (
@@ -25,7 +26,9 @@ export default function TextArea({
       onChange={onChange}
       required={required}
       name={name}
-      placeholder={placeholder + (required ? " *" : "")}
+      placeholder={
+        placeholder + (required ? " *" : "") + " (max " + maxLength + ")"
+      }
       value={value}
       maxLength={maxLength}
       rows={rows}

@@ -68,7 +68,6 @@ export class UserModel extends CommonModel implements User {
     nationOwner: boolean;
     residence: string;
   };
-  lastVisitDate!: Date;
 
   constructor(data: Partial<UserModel | User> = {}) {
     super();
@@ -92,20 +91,15 @@ export class UserModel extends CommonModel implements User {
     myStore.set(loadingAtom, true);
     try {
       if (jwt) {
-        const response: { user: User; lastVisitDate: Date; infoType: string } =
-          await authGet(jwt);
+        const response: { user: User; infoType: string } = await authGet(jwt);
         if (response.user != undefined) {
-          const userToUpdate = {
-            ...response.user,
-            lastVisitDate: new Date(response.lastVisitDate),
-          };
           myStore.set(sessionAtom, {
             ...myStore.get(sessionAtom),
-            user: new UserModel(userToUpdate),
+            user: new UserModel(response.user),
             jwt,
           });
-          this.updateFields(userToUpdate);
-          this.addOrUpdateUserListAtom(userToUpdate);
+          this.updateFields(response.user);
+          this.addOrUpdateUserListAtom(response.user);
           if (response.user.citizenship.nationId != "") {
             this.loadNationAndUpdateNationListAtom(
               response.user.citizenship.nationId,
@@ -134,19 +128,14 @@ export class UserModel extends CommonModel implements User {
     try {
       const response: {
         user: User;
-        lastVisitDate: Date;
         jwt: string;
         infoType: string;
       } = await loginFetch({ name, password });
       if (response.user != undefined) {
-        const userToUpdate = {
-          ...response.user,
-          lastVisitDate: new Date(response.lastVisitDate),
-        };
         localStorage.setItem("jwt", response.jwt);
         myStore.set(sessionAtom, {
           ...myStore.get(sessionAtom),
-          user: new UserModel(userToUpdate),
+          user: new UserModel(response.user),
           jwt: response.jwt,
         });
       }
@@ -287,6 +276,7 @@ export class UserModel extends CommonModel implements User {
       } = await transferCreditsFetch({ recipientId, amount });
       this.updateFields(resp.sender);
       this.updateSessionAtom(resp.sender);
+      myStore.get(userListAtomV2).addToUserListAtom([resp.sender]);
       if (resp.recipientNation) {
         myStore
           .get(nationListAtomV2)
@@ -406,8 +396,8 @@ export class UserModel extends CommonModel implements User {
       const response = await deleteUserFetch(password);
       myStore.set(sessionAtom, emptySession);
       this.updateFields(emptyUser);
-      localStorage.removeItem("jwt");
       this.displayUserInfoByType(response.infoType);
+      this.logout();
     } catch (error) {
       errorCatching(error);
     } finally {

@@ -1,7 +1,7 @@
 import { useTranslation } from "react-i18next";
 import { FaDiscord, FaInstagram, FaLink, FaWikipediaW } from "react-icons/fa6";
 import ExternalLink from "../externalLink";
-import EditIcon from "../editIcon";
+import EditButton from "../buttons/editButton";
 import ShareButton from "../buttons/shareButton";
 import { NationModel } from "../../models/nationModel";
 
@@ -26,11 +26,14 @@ export default function Links({
           hover={t("components.hoverInfos.links.website")}
         />
         {owner && (
-          <EditIcon
-            target="nation"
-            param={selectedNation.data.url.website}
-            path="data.url.website"
-            action={updatePath}
+          <EditButton
+            editBox={{
+              target: "nation",
+              original: selectedNation.data.url.website,
+              new: selectedNation.data.url.website,
+              path: "data.url.website",
+              action: updatePath,
+            }}
           />
         )}
       </span>
@@ -41,11 +44,14 @@ export default function Links({
           hover={t("components.hoverInfos.links.instagram")}
         />
         {owner && (
-          <EditIcon
-            target="nation"
-            param={selectedNation.data.url.instagram}
-            path="data.url.instagram"
-            action={updatePath}
+          <EditButton
+            editBox={{
+              target: "nation",
+              original: selectedNation.data.url.instagram,
+              new: selectedNation.data.url.instagram,
+              path: "data.url.instagram",
+              action: updatePath,
+            }}
           />
         )}
       </span>
@@ -56,11 +62,14 @@ export default function Links({
           hover={t("components.hoverInfos.links.wiki")}
         />
         {owner && (
-          <EditIcon
-            target="nation"
-            param={selectedNation.data.url.wiki}
-            path="data.url.wiki"
-            action={updatePath}
+          <EditButton
+            editBox={{
+              target: "nation",
+              original: selectedNation.data.url.wiki,
+              new: selectedNation.data.url.wiki,
+              path: "data.url.wiki",
+              action: updatePath,
+            }}
           />
         )}
       </span>
@@ -71,11 +80,14 @@ export default function Links({
           hover={t("components.hoverInfos.links.discord")}
         />
         {owner && (
-          <EditIcon
-            target="nation"
-            param={selectedNation.data.url.discord}
-            path="data.url.discord"
-            action={updatePath}
+          <EditButton
+            editBox={{
+              target: "nation",
+              original: selectedNation.data.url.discord,
+              new: selectedNation.data.url.discord,
+              path: "data.url.discord",
+              action: updatePath,
+            }}
           />
         )}
       </span>

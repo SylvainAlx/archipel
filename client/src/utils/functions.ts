@@ -98,6 +98,22 @@ export const isMoreThan24Hours = (stringDate: Date) => {
   return date1.getTime() < date2.getTime() - 24 * 60 * 60 * 1000;
 };
 
+export const isOlderThan30Minutes = (stringDate: Date) => {
+  const THIRTY_MINUTES = 30 * 60 * 1000;
+  const now = new Date();
+  return stringDate.getTime() < now.getTime() - THIRTY_MINUTES;
+};
+
+export const getFormatedDate = (date: Date | string) => {
+  return new Date(date).toLocaleString(i18n.language, {
+    year: "2-digit",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+};
+
 export const isNation = (officialId: string): boolean => {
   return officialId.charAt(2) === "n";
 };

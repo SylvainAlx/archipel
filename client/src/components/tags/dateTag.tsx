@@ -1,8 +1,8 @@
 import { useTranslation } from "react-i18next";
-import i18n from "../../i18n/i18n";
 import Tag from "./tag";
 import { FaCalendarAlt } from "react-icons/fa";
 import { MdOutlineUpdate } from "react-icons/md";
+import { getFormatedDate } from "../../utils/functions";
 
 interface DateTagProps {
   date: Date | string;
@@ -13,14 +13,8 @@ export default function DateTag({ date, due = false }: DateTagProps) {
   const { t } = useTranslation();
   return (
     <Tag
-      text={new Date(date).toLocaleString(i18n.language, {
-        year: "2-digit",
-        month: "2-digit",
-        day: "2-digit",
-        hour: "2-digit",
-        minute: "2-digit",
-      })}
-      hover={t("components.hoverInfos.tags.date")}
+      text={getFormatedDate(date)}
+      hover={t("components.hoverInfos.tags.registration")}
       bgColor="bg-complementary3"
       children={due ? <MdOutlineUpdate /> : <FaCalendarAlt />}
     />

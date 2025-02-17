@@ -6,6 +6,7 @@ import Input from "../form/input";
 import { useTranslation } from "react-i18next";
 import { ChangePasswordPayload } from "../../types/typUser";
 import { UserModel } from "../../models/userModel";
+import { useModal } from "../../hooks/useModal";
 
 export function ChangePasswordModal() {
   const [oldPassword, setOldPassword] = useState("");
@@ -13,6 +14,7 @@ export function ChangePasswordModal() {
   const [passwordsMatch, setPasswordsMatch] = useState(false);
   const [confirmPassword, setConfirmPassword] = useState("");
   const { t } = useTranslation();
+  const modalRef = useModal(() => myStore.set(changePasswordModalAtom, false));
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.name == "OldPassword") {
@@ -35,7 +37,7 @@ export function ChangePasswordModal() {
   };
 
   return (
-    <>
+    <div className="flex flex-col items-center" ref={modalRef} tabIndex={-1}>
       <h2 className="text-2xl text-center p-4">
         {t("components.modals.changePasswordModal.title")}
       </h2>
@@ -89,6 +91,6 @@ export function ChangePasswordModal() {
           </>
         }
       />
-    </>
+    </div>
   );
 }

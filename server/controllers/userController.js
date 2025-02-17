@@ -94,20 +94,14 @@ export const login = async (req, res) => {
     if (!user) {
       return res.status(404).json({ infoType: "404" });
     }
-    const isMatch = await new Promise((resolve, reject) => {
-      user.comparePassword(password, (error, match) => {
-        if (error) return reject(error);
-        resolve(match);
-      });
-    });
+    const isMatch = await user.comparePassword(password);
     if (!isMatch) {
       return res.status(401).json({ infoType: "401" });
     }
 
     const jwt = user.createJWT();
-    const lastVisitDate = getLastVisitDate(user, userIp);
-    updateUserIpAddress(user, userIp);
-    res.status(200).json({ user, lastVisitDate, jwt, infoType: "signin" });
+    await updateUserIpAddress(user, userIp);
+    res.status(200).json({ user, jwt, infoType: "signin" });
   } catch (error) {
     handleError(error, res);
   }
@@ -119,9 +113,8 @@ export const verify = async (req, res) => {
     await IpIsBanished(userIp);
     const userId = req.userId;
     const user = await getUserByOfficialId(userId, 401, true);
-    const lastVisitDate = getLastVisitDate(user, userIp);
-    updateUserIpAddress(user, userIp);
-    return res.status(200).json({ user, lastVisitDate, infoType: "verify" });
+    await updateUserIpAddress(user, userIp);
+    return res.status(200).json({ user, infoType: "verify" });
   } catch (error) {
     handleError(error, res);
   }
@@ -136,7 +129,8 @@ export const forgetPassword = async (req, res) => {
       return res.status(404).json({ infoType: "404" });
     }
 
-    const isMatch = await user.compareRecoveryCode(recovery);
+    const isMatch = await user.compareRecovery(recovery);
+
     if (!isMatch) {
       return res.status(401).json({ infoType: "401" });
     }
@@ -155,12 +149,7 @@ export const changePassword = async (req, res) => {
     const { oldPassword, newPassword } = req.body;
     const userId = req.userId;
     const user = await getUserByOfficialId(userId, 404, true);
-    const isMatch = await new Promise((resolve, reject) => {
-      user.comparePassword(oldPassword, (error, match) => {
-        if (error) return reject(error);
-        resolve(match);
-      });
-    });
+    const isMatch = await user.comparePassword(oldPassword);
     if (!isMatch) {
       return res.status(403).json({ infoType: "403" });
     }
@@ -224,14 +213,7 @@ export const deleteSelfUser = async (req, res) => {
     if (!user) {
       return res.status(404).json({ infoType: "404" });
     }
-
-    const isMatch = await new Promise((resolve, reject) => {
-      user.comparePassword(password, (error, match) => {
-        if (error) return reject(error);
-        resolve(match);
-      });
-    });
-
+    const isMatch = await user.comparePassword(password);
     if (!isMatch) {
       return res.status(403).json({ infoType: "403" });
     }

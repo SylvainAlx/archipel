@@ -17,6 +17,7 @@ import DateTag from "../tags/dateTag";
 import { PIONEER_DATE } from "../../settings/consts";
 import HonorTag from "../tags/honorTag";
 import { UserModel } from "../../models/userModel";
+import OnlineStatusTag from "../tags/onlineStatusTag";
 
 export interface CitizenTileProps {
   citizen: UserModel;
@@ -32,6 +33,7 @@ export default function CitizenTile({ citizen }: CitizenTileProps) {
   const [userPlan, setUserPlan] = useState("free");
   const pioneerDate = new Date(PIONEER_DATE);
   const citizenCreationDate = new Date(citizen.createdAt);
+  const citizenLastVisitDate = new Date(citizen.updatedAt);
 
   const handleClick = (event: React.MouseEvent<HTMLDivElement>) => {
     if (event.target === event.currentTarget) {
@@ -126,6 +128,7 @@ export default function CitizenTile({ citizen }: CitizenTileProps) {
           )}
         <LanguagesTag language={citizen.language} />
         <DateTag date={citizen.createdAt} />
+        <OnlineStatusTag citizenLastVisitDate={citizenLastVisitDate} />
       </div>
     </div>
   );

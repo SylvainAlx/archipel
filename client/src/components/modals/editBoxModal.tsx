@@ -13,35 +13,19 @@ import { MdCheckCircle } from "react-icons/md";
 import MarkdownEditor from "../form/markdownEditor";
 import { getMaxLength } from "../../utils/functions";
 import { MAX_LENGTH } from "../../settings/consts";
+import { useModal } from "../../hooks/useModal";
 
 export default function EditBoxModal() {
   const [editBox, setEditBox] = useAtom(editbox);
   const [newElement, setNewElement] = useState("");
   const { t } = useTranslation();
+  const modalRef = useModal(() =>
+    setEditBox({ target: "", original: -1, new: -1, path: "" }),
+  );
 
   useEffect(() => {
-    if (
-      (typeof editBox.indice == "string" ||
-        typeof editBox.indice == "number") &&
-      Array.isArray(editBox.original)
-    ) {
-      if (editBox.indice === "tags") {
-        setEditBox({ ...editBox, new: editBox.original });
-      } else if (editBox.indice != "") {
-        setEditBox({ ...editBox, new: editBox.indice });
-      } else {
-        setEditBox({ ...editBox, new: editBox.original[0].id });
-      }
-    } else if (
-      typeof editBox.original == "string" ||
-      typeof editBox.original == "number"
-    ) {
-      setEditBox({ ...editBox, new: editBox.original });
-    }
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [editBox.original]);
-
+    console.log(editBox.new);
+  }, [editBox]);
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     if (editBox.action != undefined) {
@@ -100,7 +84,11 @@ export default function EditBoxModal() {
   };
 
   return (
-    <div className="max-w-[600px] flex flex-col justify-center items-center gap-2">
+    <div
+      ref={modalRef}
+      tabIndex={-1}
+      className="max-w-[600px] flex flex-col justify-center items-center gap-2"
+    >
       <h2 className="text-2xl text-center p-4">
         {t("components.modals.editModal.title")}
       </h2>
@@ -114,7 +102,7 @@ export default function EditBoxModal() {
           editBox.path != "bio" &&
           editBox.path != "data.general.nationalDay" ? (
             <TextArea
-              required={!editBox.canBeEmpty}
+              required={editBox.canBeEmpty != undefined && !editBox.canBeEmpty}
               maxLength={MAX_LENGTH.text.textArea}
               placeholder={t("components.modals.editModal.newValue")}
               onChange={handleChange}
@@ -200,11 +188,7 @@ export default function EditBoxModal() {
               required
               options={editBox.original}
               onChange={handleSelectChange}
-              value={
-                editBox.new != ""
-                  ? editBox.new.toString()
-                  : editBox.original[0].id.toString()
-              }
+              value={editBox.new.toString()}
             />
           )
         )}

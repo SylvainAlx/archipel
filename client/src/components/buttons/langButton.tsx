@@ -4,19 +4,13 @@ import { myStore, showLangModalAtom } from "../../settings/store";
 
 export default function LangButton() {
   return (
-    <>
-      <div className={`h-full hover:text-secondary`}>
-        <Button
-          text=""
-          children={
-            <div className="flex items-center gap-1">
-              <IoLanguage />
-            </div>
-          }
-          click={() => myStore.set(showLangModalAtom, true)}
-          bgColor="bg-invisible"
-        />
-      </div>
-    </>
+    <Button
+      text=""
+      children={
+        <IoLanguage className="flex items-center gap-1 hover:text-secondary transition-all" />
+      }
+      click={() => myStore.set(showLangModalAtom, true)}
+      bgColor="bg-invisible"
+    />
   );
 }

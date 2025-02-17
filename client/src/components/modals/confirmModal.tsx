@@ -5,10 +5,12 @@ import Button from "../buttons/button";
 import { useTranslation } from "react-i18next";
 import { ConfirmBoxDefault } from "../../types/typAtom";
 import { FormEvent } from "react";
+import { useModal } from "../../hooks/useModal";
 
 export default function ConfirmModal() {
   const { t } = useTranslation();
   const [confirm, setConfirm] = useAtom(confirmBox);
+  const modalRef = useModal(() => setConfirm({ text: "" }));
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
@@ -19,7 +21,7 @@ export default function ConfirmModal() {
   };
 
   return (
-    <>
+    <div ref={modalRef} tabIndex={-1}>
       <h2 className="text-2xl text-center p-4">
         {t("components.modals.confirmModal.title")}
       </h2>
@@ -31,6 +33,6 @@ export default function ConfirmModal() {
           click={() => setConfirm(ConfirmBoxDefault)}
         />
       </form>
-    </>
+    </div>
   );
 }

@@ -1,9 +1,10 @@
 import User from "../models/userSchema.js";
 import { LoremIpsum } from "lorem-ipsum";
+import bip39 from "bip39";
 
 export const getUserByName = async (name) => {
   try {
-    const user = await User.findOne({ name }, "-recovery");
+    const user = await User.findOne({ name });
     if (!user) {
       let error = new Error();
       error.code = 404;
@@ -47,9 +48,6 @@ export const getLastVisitDate = (user, ip) => {
 };
 
 export const getRecoveryWords = () => {
-  const random = new LoremIpsum({
-    sentencesPerParagraph: { max: 8, min: 4 },
-    wordsPerSentence: { max: 16, min: 4 },
-  });
-  return random.generateWords(12);
+  const recovery = bip39.generateMnemonic();
+  return recovery;
 };

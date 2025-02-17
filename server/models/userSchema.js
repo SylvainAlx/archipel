@@ -131,15 +131,20 @@ UserSchema.pre("save", async function (next) {
 });
 
 //methode pour vérifier que le mot de passe ou la clé de récupération envoyés correspondent à ceux de la BDD
-UserSchema.methods.comparePassword = function (candidatePassword, cb) {
-  bcrypt.compare(candidatePassword, this.password, (err, isMatch) => {
-    if (err) return cb(err);
-    cb(null, isMatch);
-  });
+UserSchema.methods.comparePassword = async function (candidatePassword) {
+  try {
+    return await bcrypt.compare(candidatePassword, this.password);
+  } catch (err) {
+    throw err;
+  }
 };
 
-UserSchema.methods.compare = async function (candidatePassword) {
-  return bcrypt.compare(candidatePassword, this.recovery);
+UserSchema.methods.compareRecovery = async function (candidateRecovery) {
+  try {
+    return await bcrypt.compare(candidateRecovery, this.recovery);
+  } catch (err) {
+    throw err;
+  }
 };
 
 //création du JWT pour le login et le register

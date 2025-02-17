@@ -1,7 +1,7 @@
 import { BsFillEnvelopeAtFill } from "react-icons/bs";
 import Avatar from "../avatar";
 import CrossButton from "../buttons/crossButton";
-import EditIcon from "../editIcon";
+import EditButton from "../buttons/editButton";
 import ExternalLink from "../externalLink";
 import Upploader from "../uploader";
 import MDEditor from "@uiw/react-md-editor";
@@ -56,11 +56,14 @@ export default function Personal({
             hover={t("components.hoverInfos.links.website")}
           />
           {owner && (
-            <EditIcon
-              target="citizen"
-              param={citizen.link}
-              path="link"
-              action={updatePath}
+            <EditButton
+              editBox={{
+                target: "citizen",
+                original: citizen.link,
+                new: citizen.link,
+                path: "link",
+                action: updatePath,
+              }}
             />
           )}
         </span>
@@ -71,11 +74,14 @@ export default function Personal({
             hover={t("components.hoverInfos.links.email")}
           />
           {owner && (
-            <EditIcon
-              target="citizen"
-              param={citizen.email}
-              path="email"
-              action={updatePath}
+            <EditButton
+              editBox={{
+                target: "citizen",
+                original: citizen.email,
+                new: citizen.email,
+                path: "email",
+                action: updatePath,
+              }}
             />
           )}
         </span>
@@ -92,11 +98,14 @@ export default function Personal({
         )}
 
         {owner && (
-          <EditIcon
-            target="citizen"
-            param={citizen.bio ? citizen.bio : ""}
-            path="bio"
-            action={updatePath}
+          <EditButton
+            editBox={{
+              target: "citizen",
+              original: citizen.bio ? citizen.bio : "",
+              new: "",
+              path: "bio",
+              action: updatePath,
+            }}
           />
         )}
       </div>

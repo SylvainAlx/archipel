@@ -12,7 +12,7 @@ export default function TabNav({ tabs, tabId }: TabNavProps) {
     <nav className="w-max flex flex-col md:flex-row justify-center items-center gap-[2px] rounded overflow-hidden">
       {tabs.map((tab, i) => {
         return (
-          <div
+          <button
             key={i}
             className={`relative ${
               tab.id === tabId
@@ -22,7 +22,7 @@ export default function TabNav({ tabs, tabId }: TabNavProps) {
             onClick={() => navigate("/explore/" + tab.id.toString())}
           >
             {tab.label.toUpperCase()}
-          </div>
+          </button>
         );
       })}
     </nav>

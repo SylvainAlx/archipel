@@ -14,6 +14,7 @@ import Select from "../form/select";
 import { LabelId } from "../../types/typNation";
 import { FaCoins } from "react-icons/fa";
 import { emptyCreditTransfert } from "../../types/typAtom";
+import { useModal } from "../../hooks/useModal";
 
 export default function CreditTransferModal() {
   const { t } = useTranslation();
@@ -24,6 +25,7 @@ export default function CreditTransferModal() {
     { id: session.user.officialId, label: session.user.name },
   ]);
   const [maxAmount, setMaxAmount] = useState(0);
+  const modalRef = useModal(() => setNewTransfer(emptyCreditTransfert));
 
   useEffect(() => {
     const loadNation = async (nationOfficialId: string) => {
@@ -103,12 +105,10 @@ export default function CreditTransferModal() {
         e.target.value = e.target.value.slice(1);
       }
       const amount = Number(e.target.value);
-      if (amount >= 0 && amount <= maxAmount) {
-        setNewTransfer({
-          ...newTransfer,
-          amount,
-        });
-      }
+      setNewTransfer({
+        ...newTransfer,
+        amount: amount >= 0 && amount <= maxAmount ? amount : maxAmount,
+      });
     } else {
       setNewTransfer({
         ...newTransfer,
@@ -133,7 +133,7 @@ export default function CreditTransferModal() {
   };
 
   return (
-    <>
+    <div ref={modalRef} tabIndex={-1}>
       <h2 className="text-2xl text-center p-4">
         {t("components.modals.creditTransferModal.title")}
       </h2>
@@ -142,25 +142,6 @@ export default function CreditTransferModal() {
           " : " +
           newTransfer.recipient.name}
       </p>
-      <div className="flex flex-col justify-center flex-wrap gap-4">
-        <div className="flex flex-col items-center gap-1">
-          <span>{session.user.name}</span>
-          <span className="flex gap-1 items-center text-gold">
-            {session.user.credits}
-            <FaCoins />
-          </span>
-        </div>
-        {selfNation.officialId != "" && (
-          <div className="flex flex-col items-center gap-1">
-            <span>{selfNation.name}</span>
-            <span className="flex gap-1 items-center text-gold">
-              {selfNation.data.roleplay.treasury}
-              <FaCoins />
-            </span>
-          </div>
-        )}
-      </div>
-
       <form
         onSubmit={handleSubmit}
         className="flex flex-col gap-2 items-center justify-center my-4"
@@ -170,15 +151,41 @@ export default function CreditTransferModal() {
           value={newTransfer.sender.officialId}
           options={accounts}
           onChange={handleSelectChange}
+          title={t("components.modals.creditTransferModal.accountToBeDebited")}
         />
-        <Input
-          onChange={handleChange}
-          name="amount"
-          type="number"
-          value={newTransfer.amount}
-          placeholder={t("components.modals.creditTransferModal.amount")}
-          required
-        />
+        <label className="w-full max-w-[300px]">
+          <span>
+            {t("components.modals.creditTransferModal.amount") +
+              " * (" +
+              t("components.hoverInfos.tags.credits") +
+              ")"}
+          </span>
+          <Input
+            onChange={handleChange}
+            name="amount"
+            type="number"
+            value={newTransfer.amount}
+            required
+          />
+        </label>
+        <div className="flex items-center justify-center gap-2">
+          <span>
+            {t("components.modals.creditTransferModal.remainingBalance")} :
+          </span>
+          <span>
+            {newTransfer.sender.officialId === selfNation.officialId ? (
+              <span className="flex gap-1 items-center text-gold">
+                {selfNation.data.roleplay.treasury - newTransfer.amount}
+                <FaCoins />
+              </span>
+            ) : (
+              <span className="flex gap-1 items-center text-gold">
+                {session.user.credits - newTransfer.amount}
+                <FaCoins />
+              </span>
+            )}
+          </span>
+        </div>
         <Input
           onChange={handleChange}
           name="comment"
@@ -211,6 +218,6 @@ export default function CreditTransferModal() {
           widthFull={true}
         />
       </form>
-    </>
+    </div>
   );
 }

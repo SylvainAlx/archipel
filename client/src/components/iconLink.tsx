@@ -19,7 +19,7 @@ export interface IconLinkProps {
   nation?: NationModel;
   destination: string;
   text: string;
-  action?: MouseEventHandler<HTMLDivElement>;
+  action?: MouseEventHandler<HTMLButtonElement>;
 }
 
 export default function IconLink({
@@ -66,7 +66,7 @@ export default function IconLink({
   }, [currentURL, destination, session.user.officialId]);
 
   return (
-    <div
+    <button
       className={`flex flex-col items-center justify-center text-5xl md:text-3xl hover:text-secondary transition-all cursor-pointer ${focus && "text-secondary"}`}
       onClick={action}
     >
@@ -91,7 +91,7 @@ export default function IconLink({
             session.user.citizenship.nationOwner && (
               <UnwatchedCountDot
                 count={comList.getUnreadCountByType(
-                  [COM_TYPE.nationPrivate.id, COM_TYPE.nationPrivate.id],
+                  [COM_TYPE.nationPublic.id, COM_TYPE.nationPrivate.id],
                   nation.officialId,
                 )}
               />
@@ -106,6 +106,6 @@ export default function IconLink({
       <h2 className="hidden md:block text-[10px]">
         {text.toLocaleUpperCase()}
       </h2>
-    </div>
+    </button>
   );
 }

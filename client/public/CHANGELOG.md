@@ -7,6 +7,7 @@
 - Ajout d'une description lors de la création d'une nouvelle relation diplomatique
 - Pouvoir modifier une relation diplomatique
 - Virements de crédits possiblent entre citoyens et entre nations
+- Ajout du status en ligne et date de dernière visite des utilisateurs
 
 #### Suppressions
 
@@ -21,6 +22,9 @@ aucunes
 - Refonte du système de notifications
 - Amélioration de la gestion des erreurs
 - Modification des liens de nouveau possible
+- Amélioration du comportement des fenêtres modales
+- Amélioration de l'accessibilité
+- Modification du générateur de clés de récupération de compte
 
 ## Développements à venir
 

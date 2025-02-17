@@ -14,6 +14,7 @@ import HoverInfo from "../hoverInfo";
 import { RelationModel } from "../../models/relationModel";
 import { MAX_LENGTH } from "../../settings/consts";
 import TextArea from "../form/textArea";
+import { useModal } from "../../hooks/useModal";
 
 export interface RelationModalProps {
   update: boolean;
@@ -23,6 +24,13 @@ export default function RelationModal({ update }: RelationModalProps) {
   const [newRelation, setNewRelation] = useAtom(newRelationAtom);
   const [hoverInfo, setHoverInfo] = useState("");
   const { t } = useTranslation();
+  const modalRef = useModal(() =>
+    setNewRelation({
+      relation: new RelationModel(emptyDiplomaticRelationship),
+      show: false,
+      update: false,
+    }),
+  );
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -91,7 +99,11 @@ export default function RelationModal({ update }: RelationModalProps) {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center">
+    <div
+      ref={modalRef}
+      tabIndex={-1}
+      className="flex flex-col items-center justify-center"
+    >
       <h2 className="text-2xl text-center p-4">
         {update
           ? t("components.modals.relationModal.update")
