@@ -103,6 +103,19 @@ export const createCom = async (req, res) => {
   }
 };
 
+export const readCom = async (req, res) => {
+  try {
+    const comId = req.query.id;
+    const isRead = req.query.isread;
+    const com = await Com.findById(comId);
+    com.read = isRead;
+    await com.save();
+    res.status(200).json({ com, infoType: `update` });
+  } catch (error) {
+    handleError(error, res);
+  }
+};
+
 export const deleteCom = async (req, res) => {
   try {
     const comId = req.params.id;

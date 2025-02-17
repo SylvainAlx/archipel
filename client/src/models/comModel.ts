@@ -1,5 +1,9 @@
 import i18n from "../i18n/i18n";
-import { createComFetch, deleteComFetch } from "../services/comService";
+import {
+  createComFetch,
+  deleteComFetch,
+  readComFetch,
+} from "../services/comService";
 import { COM_TYPE } from "../settings/consts";
 import { comListAtomV2, loadingAtom, myStore } from "../settings/store";
 import { Com, ComPayload, emptyCom } from "../types/typCom";
@@ -15,6 +19,7 @@ export class ComModel extends CommonModel implements Com {
   title!: string;
   comType!: number;
   message!: string;
+  read: boolean = false;
 
   constructor(data: Partial<ComModel | Com | ComPayload> = {}) {
     super();
@@ -46,6 +51,22 @@ export class ComModel extends CommonModel implements Com {
     } finally {
       myStore.set(loadingAtom, false);
       return new ComModel(this);
+    }
+  };
+  readCom = async (isRead: boolean) => {
+    myStore.set(loadingAtom, true);
+    try {
+      const resp: { com: Com; infoType: string } = await readComFetch(
+        this._id,
+        isRead,
+      );
+      this.updateFields(resp.com);
+      this.displayComInfoByType(resp.infoType);
+      myStore.get(comListAtomV2).addToComListAtom([resp.com]);
+    } catch (error) {
+      errorCatching(error);
+    } finally {
+      myStore.set(loadingAtom, false);
     }
   };
   baseDelete = async (baseId: string) => {

@@ -60,7 +60,7 @@ export default function Upploader({
           maxLocalFileSizeBytes={maxSize}
           multiple={false}
           imgOnly={true}
-          sourceList="local, url, gdrive, instagram"
+          sourceList="local, url, gdrive"
           useCloudImageEditor={false}
           classNameUploader="uploader"
           confirmUpload={true}

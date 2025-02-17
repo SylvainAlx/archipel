@@ -5,6 +5,7 @@
 /client/.env
 /client/node_modules
 /client/dist
+/client/dev-dist
 
 /db/backup
 /db/extracted

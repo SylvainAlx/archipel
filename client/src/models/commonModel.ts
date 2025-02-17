@@ -6,6 +6,7 @@ export class CommonModel {
   reported: boolean = false;
   banished: boolean = false;
   createdAt: Date = new Date();
+  updatedAt: Date = new Date();
 
   reportContent = async (reverse = false) => {
     try {

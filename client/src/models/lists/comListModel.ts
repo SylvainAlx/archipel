@@ -25,6 +25,14 @@ export class ComListModel extends ListModel {
     const updatedList = myStore.get(comListAtomV2).addMany(list);
     myStore.set(comListAtomV2, new ComListModel(updatedList));
   };
+  getUnreadCountByType(comTypes: number[], destinationId: string): number {
+    return this.items.filter(
+      (com) =>
+        comTypes.includes(com.comType) &&
+        !com.read &&
+        com.destination === destinationId,
+    ).length;
+  }
   loadComList = async (
     originId: string,
     destinationId: string,

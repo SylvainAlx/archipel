@@ -10,52 +10,6 @@ export const createOfficialId = (type) => {
   return lastTwoDigits + type + genRanHex(8);
 };
 
-export const findElementInMemory = (array, id, officialId) => {
-  array.forEach((element) => {
-    if (element._id === id && !officialId) {
-      return element;
-    }
-    if (element.officialId === id && officialId) {
-      return element;
-    }
-  });
-  return null;
-};
-
-export const findNationElements = (array, nationId) => {
-  const elements = [];
-  array.forEach((element) => {
-    if (element.nation === nationId) {
-      elements.push(element);
-    }
-  });
-  return elements;
-};
-
-export const createElementInMemory = (array, element) => {
-  array.push(element);
-};
-
-export const deleteElementInMemory = (array, id) => {
-  let updatedArray = [...array];
-  array.forEach((element, i) => {
-    if (element._id === id) {
-      updatedArray.splice(i, 1);
-    }
-  });
-  array = updatedArray;
-};
-
-export const updateElementInMemory = (array, element) => {
-  let updatedArray = [...array];
-  array.forEach((e, i) => {
-    if (e._id === element._id) {
-      updatedArray[i] = element;
-    }
-  });
-  array = updatedArray;
-};
-
 export const deleteFile = async (uuid) => {
   const authorization = `${process.env.UPLOADCARE_PUBLIC_KEY}:${process.env.UPLOADCARE_SECRET_KEY}`;
 
@@ -86,11 +40,7 @@ export const addMonths = (months) => {
 export const pingBackend = async () => {
   try {
     const reponse = await fetch(process.env.BACKEND_URL);
-    if (reponse.ok) {
-      console.log(
-        `${new Date().toISOString()} : Ping with code ${reponse.status}`,
-      );
-    } else {
+    if (!reponse.ok) {
       console.error(
         `${new Date().toISOString()} : Ping error with code ${reponse.status}`,
       );
@@ -102,6 +52,11 @@ export const pingBackend = async () => {
 
 export const handleError = (AError, ARes) => {
   console.error(AError);
-  const statusCode = AError.name === "ValidationError" ? 400 : 500;
+  let statusCode;
+  if (AError.code) {
+    statusCode = AError.code;
+  } else {
+    statusCode = AError.name === "ValidationError" ? 400 : 500;
+  }
   ARes.status(statusCode).json({ infoType: statusCode.toString() });
 };

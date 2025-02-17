@@ -1,4 +1,5 @@
 import { ChangeEvent } from "react";
+import { MAX_LENGTH } from "../../settings/consts";
 
 export interface InputProps {
   required?: boolean;
@@ -22,7 +23,7 @@ export default function Input({
   checked,
   name,
   id,
-  maxLength,
+  maxLength = MAX_LENGTH.text.input,
   disabled,
 }: InputProps) {
   return (

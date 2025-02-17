@@ -1,6 +1,6 @@
 import { ChangeEvent, FormEvent, useState } from "react";
 import Input from "../components/form/input";
-import { MDP_LOBBY } from "../settings/consts";
+import { LOBBY_INFO, MDP_LOBBY } from "../settings/consts";
 import Button from "../components/buttons/button";
 import { useAtom } from "jotai";
 import { useTranslation } from "react-i18next";
@@ -34,29 +34,36 @@ export default function Lobby() {
   };
   return (
     <main className="flex flex-col items-center justify-start gap-4 h-[70vh]">
-      <p className="max-w-[80%] text-center">{t("pages.lobby.description")}</p>
-      <Form
-        submit={handleSubmit}
-        children={
-          <>
-            <Input
-              type="password"
-              placeholder={t("components.form.input.password")}
-              name="password"
-              required
-              value={password}
-              onChange={handleChange}
-            />
-            <RequiredStar />
-            <Button
-              type="submit"
-              text={t("components.buttons.validate")}
-              widthFull={true}
-            />
-            <LangButton />
-          </>
-        }
-      />
+      {LOBBY_INFO != "" && (
+        <strong className="animate-pulse">{LOBBY_INFO}</strong>
+      )}
+      {MDP_LOBBY != "" && (
+        <Form
+          submit={handleSubmit}
+          children={
+            <>
+              <p className="max-w-[80%] text-center">
+                {t("pages.lobby.password")}
+              </p>
+              <Input
+                type="password"
+                placeholder={t("components.form.input.password")}
+                name="password"
+                required
+                value={password}
+                onChange={handleChange}
+              />
+              <RequiredStar />
+              <Button
+                type="submit"
+                text={t("components.buttons.validate")}
+                widthFull={true}
+              />
+              <LangButton />
+            </>
+          }
+        />
+      )}
     </main>
   );
 }

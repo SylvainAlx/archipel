@@ -8,6 +8,7 @@ import {
   loginFetch,
   recoveryFetch,
   registerFetch,
+  transferCreditsFetch,
   updateUserFetch,
   verifyCaptchaFetch,
 } from "../services/userService";
@@ -33,10 +34,11 @@ import {
   Plans,
   RecoveryPayload,
   Roles,
+  TranferCreditPayload,
   User,
 } from "../types/typUser";
 import { errorCatching } from "../utils/displayInfos";
-import { GET_JWT } from "../utils/functions";
+import { GET_JWT, isNation } from "../utils/functions";
 import { createComByStatus } from "../utils/procedures";
 import { successMessage } from "../utils/toasts";
 import { ComModel } from "./comModel";
@@ -66,7 +68,6 @@ export class UserModel extends CommonModel implements User {
     nationOwner: boolean;
     residence: string;
   };
-  lastVisitDate!: Date;
 
   constructor(data: Partial<UserModel | User> = {}) {
     super();
@@ -90,20 +91,15 @@ export class UserModel extends CommonModel implements User {
     myStore.set(loadingAtom, true);
     try {
       if (jwt) {
-        const response: { user: User; lastVisitDate: Date; infoType: string } =
-          await authGet(jwt);
+        const response: { user: User; infoType: string } = await authGet(jwt);
         if (response.user != undefined) {
-          const userToUpdate = {
-            ...response.user,
-            lastVisitDate: new Date(response.lastVisitDate),
-          };
           myStore.set(sessionAtom, {
             ...myStore.get(sessionAtom),
-            user: new UserModel(userToUpdate),
+            user: new UserModel(response.user),
             jwt,
           });
-          this.updateFields(userToUpdate);
-          this.addOrUpdateUserListAtom(userToUpdate);
+          this.updateFields(response.user);
+          this.addOrUpdateUserListAtom(response.user);
           if (response.user.citizenship.nationId != "") {
             this.loadNationAndUpdateNationListAtom(
               response.user.citizenship.nationId,
@@ -132,19 +128,14 @@ export class UserModel extends CommonModel implements User {
     try {
       const response: {
         user: User;
-        lastVisitDate: Date;
         jwt: string;
         infoType: string;
       } = await loginFetch({ name, password });
       if (response.user != undefined) {
-        const userToUpdate = {
-          ...response.user,
-          lastVisitDate: new Date(response.lastVisitDate),
-        };
         localStorage.setItem("jwt", response.jwt);
         myStore.set(sessionAtom, {
           ...myStore.get(sessionAtom),
-          user: new UserModel(userToUpdate),
+          user: new UserModel(response.user),
           jwt: response.jwt,
         });
       }
@@ -196,9 +187,7 @@ export class UserModel extends CommonModel implements User {
   }
   approveCitizenship = () => {
     myStore.set(confirmBox, {
-      action: "",
       text: i18n.t("components.modals.confirmModal.approveCitizenship"),
-      result: "",
       actionToDo: async () => {
         await this.changeStatus({
           officialId: this.officialId,
@@ -210,9 +199,7 @@ export class UserModel extends CommonModel implements User {
   };
   declineCitizenship = () => {
     myStore.set(confirmBox, {
-      action: "",
       text: i18n.t("components.modals.confirmModal.declineCitizenship"),
-      result: "",
       actionToDo: async () => {
         await this.changeStatus({
           officialId: this.officialId,
@@ -271,6 +258,71 @@ export class UserModel extends CommonModel implements User {
     } finally {
       myStore.set(loadingAtom, false);
       return new UserModel(this);
+    }
+  };
+  transferCredits = async (
+    { recipientId, amount }: TranferCreditPayload,
+    senderName: string,
+    recipientName: string,
+    comment: string,
+  ) => {
+    myStore.set(loadingAtom, true);
+    try {
+      const resp: {
+        sender: User;
+        recipientUser: User;
+        recipientNation: Nation;
+        infoType: string;
+      } = await transferCreditsFetch({ recipientId, amount });
+      this.updateFields(resp.sender);
+      this.updateSessionAtom(resp.sender);
+      myStore.get(userListAtomV2).addToUserListAtom([resp.sender]);
+      if (resp.recipientNation) {
+        myStore
+          .get(nationListAtomV2)
+          .addToNationListAtom([resp.recipientNation]);
+      } else if (resp.recipientUser) {
+        myStore.get(userListAtomV2).addToUserListAtom([resp.recipientUser]);
+      }
+      const newCom1 = new ComModel({
+        comType: isNation(recipientId)
+          ? COM_TYPE.nationPrivate.id
+          : COM_TYPE.userPrivate.id,
+        origin: this.officialId,
+        destination: recipientId,
+        title: i18n.t("coms.creditTransfer.title"),
+        message:
+          senderName +
+          " > " +
+          recipientName +
+          i18n.t("coms.creditTransfer.amount") +
+          amount +
+          i18n.t("coms.creditTransfer.comment") +
+          comment,
+      });
+      newCom1.baseInsert();
+      const newCom2 = new ComModel({
+        comType: COM_TYPE.userPrivate.id,
+        origin: this.officialId,
+        destination: this.officialId,
+        title: i18n.t("coms.creditTransfer.title"),
+        message:
+          senderName +
+          " > " +
+          recipientName +
+          "  " +
+          i18n.t("coms.creditTransfer.amount") +
+          amount +
+          "  " +
+          i18n.t("coms.creditTransfer.comment") +
+          comment,
+      });
+      newCom2.baseInsert();
+      this.displayUserInfoByType(resp.infoType);
+    } catch (error) {
+      errorCatching(error);
+    } finally {
+      myStore.set(loadingAtom, false);
     }
   };
   verifyCaptcha = async (token: string | null): Promise<boolean> => {
@@ -344,8 +396,8 @@ export class UserModel extends CommonModel implements User {
       const response = await deleteUserFetch(password);
       myStore.set(sessionAtom, emptySession);
       this.updateFields(emptyUser);
-      localStorage.removeItem("jwt");
       this.displayUserInfoByType(response.infoType);
+      this.logout();
     } catch (error) {
       errorCatching(error);
     } finally {
@@ -374,6 +426,9 @@ export class UserModel extends CommonModel implements User {
         break;
       case "changeStatus":
         successMessage(i18n.t("toasts.user.update"));
+        break;
+      case "transfer":
+        successMessage(i18n.t("toasts.creditTransferSuccess"));
         break;
       default:
         break;

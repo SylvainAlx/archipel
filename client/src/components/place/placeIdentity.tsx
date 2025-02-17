@@ -1,5 +1,5 @@
 import { lazy, Suspense } from "react";
-import EditIcon from "../editIcon";
+import EditButton from "../buttons/editButton";
 import H2 from "../titles/h2";
 import Spinner from "../loading/spinner";
 import CrossButton from "../buttons/crossButton";
@@ -31,9 +31,7 @@ export default function PlaceIdentity({
 
   const handleDeleteImage = async () => {
     myStore.set(confirmBox, {
-      action: "",
       text: t("components.modals.confirmModal.deleteFile"),
-      result: "",
       actionToDo: async () => {
         const result = await deleteImage(place.image);
         if (result) {
@@ -48,11 +46,15 @@ export default function PlaceIdentity({
       <div className="flex items-center gap-2">
         <H2 text={`${place.name}`} />
         {owner && (
-          <EditIcon
-            target="place"
-            param={place.name}
-            path="name"
-            action={updatePath}
+          <EditButton
+            editBox={{
+              target: "place",
+              original: place.name,
+              new: place.name,
+              path: "name",
+              action: updatePath,
+              canBeEmpty: false,
+            }}
           />
         )}
       </div>
@@ -94,11 +96,14 @@ export default function PlaceIdentity({
           <em className="text-center">{t("pages.place.noDescription")}</em>
         )}
         {owner && (
-          <EditIcon
-            target="place"
-            param={place.description}
-            path="description"
-            action={updatePath}
+          <EditButton
+            editBox={{
+              target: "place",
+              original: place.description,
+              new: place.description,
+              path: "description",
+              action: updatePath,
+            }}
           />
         )}
       </div>

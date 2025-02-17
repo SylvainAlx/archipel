@@ -28,6 +28,10 @@ const ComSchema = mongoose.Schema(
       default: "",
       maxlength: [500, "Le texte ne peut pas dépasser 500 caractères."],
     },
+    read: {
+      type: Boolean,
+      default: false,
+    },
     reported: {
       type: Boolean,
       default: false,

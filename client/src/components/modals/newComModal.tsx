@@ -13,17 +13,17 @@ import MarkdownEditor from "../form/markdownEditor";
 import { nationComTypeOptions } from "../../settings/lists";
 import RequiredStar from "../form/requiredStar";
 import { ComModel } from "../../models/comModel";
+import { useModal } from "../../hooks/useModal";
 
 export default function NewComModal() {
   const [newCom, setNewCom] = useAtom(newComAtom);
   const { t } = useTranslation();
+  const modalRef = useModal(() => setNewCom(emptyComPayload));
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     myStore.set(confirmBox, {
-      action: "createCom",
       text: t("components.modals.confirmModal.createCom"),
-      result: "",
       actionToDo: () => {
         const comToInsert = new ComModel(newCom);
         comToInsert.baseInsert();
@@ -46,7 +46,11 @@ export default function NewComModal() {
   };
 
   return (
-    <div className="max-w-[600px] flex flex-col justify-center items-center gap-2">
+    <div
+      ref={modalRef}
+      tabIndex={-1}
+      className="max-w-[600px] flex flex-col justify-center items-center gap-2"
+    >
       <h2 className="text-2xl text-center p-4">
         {t("components.modals.newComModal.title")}
       </h2>

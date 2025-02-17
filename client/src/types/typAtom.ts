@@ -4,16 +4,12 @@ import { Hashtag, LabelId, Regime } from "./typNation";
 // confirmBox
 
 export interface ConfirmBox {
-  action: string;
   text: string;
-  result: string;
   actionToDo?: () => void;
 }
 
 export const ConfirmBoxDefault: ConfirmBox = {
-  action: "",
   text: "",
-  result: "",
 };
 
 // editBox
@@ -37,17 +33,12 @@ export const EditBoxDefault: EditBox = {
 };
 
 export interface InfoModal {
-  text: string;
-  subtitle?: string;
-  image?: string;
-  copy?: boolean;
+  subtitle: string;
+  children?: JSX.Element;
 }
 
 export const emptyInfo: InfoModal = {
-  text: "",
   subtitle: "",
-  image: "",
-  copy: false,
 };
 
 //  Others
@@ -67,4 +58,17 @@ export interface Counts {
 export type Stats = {
   counts: Counts;
   tags: Hashtag[];
+};
+
+export const emptyCreditTransfert = {
+  sender: {
+    name: "",
+    officialId: "",
+  },
+  recipient: {
+    name: "",
+    officialId: "",
+  },
+  amount: 0,
+  comment: "",
 };

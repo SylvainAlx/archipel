@@ -27,9 +27,7 @@ export default function CoatOfArms({
 
   const handleDeleteImage = async () => {
     myStore.set(confirmBox, {
-      action: "",
       text: t("components.modals.confirmModal.deleteFile"),
-      result: "",
       actionToDo: async () => {
         const result = await deleteImage(nation.data.url.coatOfArms);
         if (result) {

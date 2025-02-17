@@ -9,6 +9,7 @@ import {
   createNation,
   nationsCount,
   getTags,
+  transferCredits,
 } from "../controllers/nationController.js";
 
 const nationRouter = express.Router();
@@ -20,6 +21,7 @@ nationRouter.get("/getnations", getTop100Nations);
 nationRouter.get("/:id", getOneNation);
 nationRouter.post("/create", [verifyJwt], createNation);
 nationRouter.post("/update", [verifyJwt], updateNation);
+nationRouter.post("/transfer", [verifyJwt], transferCredits);
 nationRouter.delete("/delete", [verifyJwt], deleteSelfNation);
 
 export default nationRouter;

@@ -15,6 +15,7 @@ import { FaCoins } from "react-icons/fa";
 import { COSTS } from "../../settings/consts";
 import RequiredStar from "../form/requiredStar";
 import { TileModel } from "../../models/tileModel";
+import { useModal } from "../../hooks/useModal";
 
 export default function TileFormModal() {
   const [isNewTile, setIsNewTile] = useState(false);
@@ -22,6 +23,7 @@ export default function TileFormModal() {
   const [localTile, setLocalTile] = useState(new TileModel(tile));
   const [tileList] = useAtom(tileListAtomV2);
   const { t } = useTranslation();
+  const modalRef = useModal(() => setTile(new TileModel()));
 
   useEffect(() => {
     if (
@@ -52,9 +54,7 @@ export default function TileFormModal() {
     // }
     if (isNewTile) {
       myStore.set(confirmBox, {
-        action: "",
         text: t("components.modals.confirmModal.createTile"),
-        result: "",
         actionToDo: async () => {
           const tileInserted = await localTile.baseInsert(localTile);
           tileList.addToTileListAtom([tileInserted]);
@@ -62,9 +62,7 @@ export default function TileFormModal() {
       });
     } else {
       myStore.set(confirmBox, {
-        action: "",
         text: t("components.modals.confirmModal.updateTile"),
-        result: "",
         actionToDo: async () => {
           const tileUpdated = await localTile.baseUpdate(localTile);
           tileList.addToTileListAtom([tileUpdated]);
@@ -74,7 +72,7 @@ export default function TileFormModal() {
     setTile(new TileModel());
   };
   return (
-    <div className="flex flex-col items-center">
+    <div ref={modalRef} tabIndex={-1} className="flex flex-col items-center">
       <h2 className="text-2xl text-center p-4">
         {isNewTile
           ? t("components.modals.tileModal.new")

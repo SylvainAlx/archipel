@@ -33,6 +33,10 @@ export default defineConfig({
       workbox: {
         maximumFileSizeToCacheInBytes: 5700000,
       },
+      devOptions: {
+        enabled: true, // Active le SW en mode développement
+        type: "module", // Assure la compatibilité
+      },
       manifest: {
         name: "Archipel",
         short_name: "Archipel",

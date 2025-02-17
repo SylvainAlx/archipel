@@ -1,11 +1,9 @@
 import { useAtom } from "jotai";
 import H1 from "../components/titles/h1";
-import { confirmBox, sessionAtom } from "../settings/store";
-import { useNavigate, useParams } from "react-router-dom";
+import { confirmBox, myStore, sessionAtom } from "../settings/store";
+import { useParams } from "react-router-dom";
 import { lazy, Suspense, useEffect, useState } from "react";
-import EditIcon from "../components/editIcon";
-// import { getDocumentTitle } from "../utils/functions";
-import { ConfirmBoxDefault } from "../types/typAtom";
+import EditButton from "../components/buttons/editButton";
 import ReportPanel from "../components/reportPanel";
 import { NationModel } from "../models/nationModel";
 import { UserModel } from "../models/userModel";
@@ -16,7 +14,6 @@ import TileSkeleton from "../components/loading/skeletons/tileSkeleton";
 import ParamSkeleton from "../components/loading/skeletons/paramSkeleton";
 
 export default function Citizen() {
-  const navigate = useNavigate();
   const param = useParams();
   const { t } = useTranslation();
 
@@ -25,7 +22,6 @@ export default function Citizen() {
   const [owner, setOwner] = useState<boolean>(false);
 
   const [session] = useAtom(sessionAtom);
-  const [confirm, setConfirm] = useAtom(confirmBox);
 
   const Personal = lazy(() => import("../components/citizen/personal"));
   const Citizenship = lazy(() => import("../components/citizen/citizenship"));
@@ -61,14 +57,6 @@ export default function Citizen() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [citizen]);
 
-  useEffect(() => {
-    if (confirm.action === "deleteUser" && confirm.result === "OK") {
-      navigate(`/`);
-      setConfirm(ConfirmBoxDefault);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [confirm]);
-
   const updatePath = (
     path: string,
     value: string,
@@ -84,10 +72,8 @@ export default function Citizen() {
     };
     if (updatedUser.isSuccess) {
       if (needConfirm) {
-        setConfirm({
-          action: "",
+        myStore.set(confirmBox, {
           text: t("components.modals.confirmModal.updateUser"),
-          result: "",
           actionToDo: baseUpdate,
         });
       } else {
@@ -101,11 +87,15 @@ export default function Citizen() {
       <div className="flex items-center gap-1">
         <H1 text={citizen.name} />
         {owner && (
-          <EditIcon
-            target="citizen"
-            param={citizen.name}
-            path="name"
-            action={updatePath}
+          <EditButton
+            editBox={{
+              target: "citizen",
+              original: citizen.name,
+              new: citizen.name,
+              path: "name",
+              action: updatePath,
+              canBeEmpty: false,
+            }}
           />
         )}
       </div>

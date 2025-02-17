@@ -5,11 +5,16 @@ const RelationSchema = mongoose.Schema(
     officialId: {
       type: String,
       default: "",
+      unique: true,
     },
     name: {
       type: String,
       default: "",
       unique: true,
+    },
+    description: {
+      type: String,
+      default: "",
     },
     nations: {
       type: [{ OfficialId: String, AmbassadorId: String, accepted: Boolean }],

@@ -15,6 +15,7 @@ export interface RelationKind {
 export interface DiplomaticRelationship {
   officialId: string;
   name: string;
+  description: string;
   nations: NationDiplomacyInfo[];
   kind: RelationKind;
   createdAt?: Date;
@@ -23,6 +24,7 @@ export interface DiplomaticRelationship {
 export const emptyDiplomaticRelationship: DiplomaticRelationship = {
   officialId: "",
   name: "",
+  description: "",
   nations: [],
   kind: {
     business: false,

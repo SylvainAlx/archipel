@@ -15,11 +15,11 @@ import {
   updateUser,
   changeStatus,
   changePlan,
+  transferCredits,
 } from "../controllers/userController.js";
 
 const userRouter = express.Router();
 
-userRouter.get("/count", usersCount);
 userRouter.post("/signup", register);
 userRouter.post("/signin", login);
 userRouter.post("/forgetpassword", forgetPassword);
@@ -27,11 +27,13 @@ userRouter.post("/changepassword", [verifyJwt], changePassword);
 userRouter.post("/update", [verifyJwt], updateUser);
 userRouter.post("/changestatus", [verifyJwt], changeStatus);
 userRouter.post("/changeplan", changePlan);
+userRouter.post("/transfer", [verifyJwt], transferCredits);
 userRouter.get("/verify", [verifyJwt], verify);
 userRouter.get("/getall", getAllUsers);
 userRouter.get("/self", [verifyJwt], getSelfUser);
 userRouter.get("/:id", getOneUser);
 userRouter.get("/bynation/:id", getUsersByNation);
+userRouter.get("/count", usersCount);
 userRouter.delete("/delete", [verifyJwt], deleteSelfUser);
 
 export default userRouter;

@@ -14,9 +14,7 @@ export default function AdminReportButton({
 }: AdminReportButtonProps) {
   const handleAdminReport = (reverse: boolean) => {
     myStore.set(confirmBox, {
-      action: "adminReport",
       text: reverse ? "Afficher le contenu ?" : "Masquer le contenu ?",
-      result: "",
       actionToDo: () => {
         const content = new CommonModel();
         content.officialId = contentOfficialId;

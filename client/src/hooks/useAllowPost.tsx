@@ -1,15 +1,11 @@
 import { useState, useEffect } from "react";
 import { isMoreThan24Hours } from "../utils/functions";
 import { myStore, sessionAtom } from "../settings/store";
-import { displayUnwatchedComs } from "../utils/procedures";
-import { NationModel } from "../models/nationModel";
 import { ComListModel } from "../models/lists/comListModel";
-import { useAtom } from "jotai";
 
-export function useAllowPost(coms: ComListModel, selectedNation: NationModel) {
+export function useAllowPost(coms: ComListModel) {
   const [allowPost, setAllowPost] = useState(true);
   const [dueDate, setDueDate] = useState(new Date());
-  const [session] = useAtom(sessionAtom);
 
   useEffect(() => {
     if (coms.getItems().length > 0) {
@@ -25,11 +21,11 @@ export function useAllowPost(coms: ComListModel, selectedNation: NationModel) {
         setAllowPost(true);
       }
 
-      if (session.user.citizenship.nationId === selectedNation.officialId) {
-        displayUnwatchedComs(session.user, coms.getItems(), [
-          selectedNation.officialId,
-        ]);
-      }
+      // if (session.user.citizenship.nationId === selectedNation.officialId) {
+      //   displayUnwatchedComs(session.user, coms.getItems(), [
+      //     selectedNation.officialId,
+      //   ]);
+      // }
     } else {
       setAllowPost(true);
     }

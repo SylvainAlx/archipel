@@ -1,11 +1,11 @@
 import { FaSortAmountDownAlt } from "react-icons/fa";
 import CrossButton from "../buttons/crossButton";
 import ParentButton from "../buttons/parentButton";
-import EditIcon from "../editIcon";
+import EditButton from "../buttons/editButton";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
-import { confirmBox, placeListAtomV2 } from "../../settings/store";
+import { confirmBox, myStore, placeListAtomV2 } from "../../settings/store";
 import { useAtom } from "jotai";
 import { ConfirmBoxDefault } from "../../types/typAtom";
 import ShareButton from "../buttons/shareButton";
@@ -28,7 +28,6 @@ export default function PlaceHeader({
   updatePath,
 }: PlaceHeaderProps) {
   const [parentName, setParentName] = useState("");
-  const [confirm, setConfirm] = useAtom(confirmBox);
   const [placeList, setPlaceList] = useAtom(placeListAtomV2);
   const { t } = useTranslation();
   const navigate = useNavigate();
@@ -39,13 +38,6 @@ export default function PlaceHeader({
     }
   }, [placeList, place, nation]);
 
-  useEffect(() => {
-    if (confirm.action === "deletePlace" && confirm.result === "OK") {
-      navigate(`/nation/${place.nation}`);
-      setConfirm(ConfirmBoxDefault);
-    }
-  }, [confirm]);
-
   const handleClick = () => {
     if (place.nation === place.parentId) {
       navigate(`/nation/${place.nation}`);
@@ -55,15 +47,14 @@ export default function PlaceHeader({
   };
 
   const handleDelete = () => {
-    setConfirm({
-      action: "deletePlace",
+    myStore.set(confirmBox, {
       text: t("components.modals.confirmModal.deletePlace"),
-      result: "",
       actionToDo: () => {
         place.baseDelete();
         const listToUpdate = placeList.removeByOfficialId(place.officialId);
         setPlaceList(new PlaceListModel(listToUpdate));
         navigate(`/nation/${place.nation}`);
+        myStore.set(confirmBox, ConfirmBoxDefault);
       },
     });
   };
@@ -79,16 +70,18 @@ export default function PlaceHeader({
         <FaSortAmountDownAlt />
         <p>{parentName}</p>
         {owner && (
-          <EditIcon
-            target="place"
-            param={placeList.getLabelIdPlaceList(
-              [PLACE_TYPE.state.id, PLACE_TYPE.county.id],
-              nation,
-              place.officialId,
-            )}
-            action={updatePath}
-            indice={place.parentId}
-            path="parentId"
+          <EditButton
+            editBox={{
+              target: "place",
+              original: placeList.getLabelIdPlaceList(
+                [PLACE_TYPE.state.id, PLACE_TYPE.county.id],
+                nation,
+                place.officialId,
+              ),
+              new: place.parentId,
+              path: "parentId",
+              action: updatePath,
+            }}
           />
         )}
       </div>

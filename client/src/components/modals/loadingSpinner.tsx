@@ -5,10 +5,12 @@ import Button from "../buttons/button";
 import Spinner from "../loading/spinner";
 import { useEffect } from "react";
 import { useAtom } from "jotai";
+import { useModal } from "../../hooks/useModal";
 
 export default function LoadingSpinner() {
   const { t } = useTranslation();
   const [longLoading, setLongLoading] = useAtom(longLoadingAtom);
+  const modalRef = useModal(() => myStore.set(loadingAtom, false));
 
   useEffect(() => {
     setTimeout(() => {
@@ -20,7 +22,10 @@ export default function LoadingSpinner() {
   }, []);
 
   return (
-    <div className="flex flex-col justify-center items-center gap-4">
+    <div
+      ref={modalRef}
+      className="flex flex-col justify-center items-center gap-4"
+    >
       {longLoading && (
         <div className="animate-fadeIn">
           <h2 className="text-2xl text-center p-4">

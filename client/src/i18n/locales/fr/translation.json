@@ -1,13 +1,13 @@
 {
   "pages": {
     "home": {
-      "title": "Bienvenue",
+      "title": "bienvenue",
       "presentation1": "Bienvenue dans votre espace dédié aux micronations et nations virtuelles ! Que vous soyez membre d'une micronation sérieuse ou passionné de role-play dans des univers imaginaires, notre application est là pour vous. Rejoignez une communauté dynamique, échangez, collaborez et faites briller votre nation dans un espace conçu pour vous rapprocher. Créez des liens, partagez vos projets, et faites vivre votre vision !",
       "presentation2": "En tant que leader, vous avez la possibilité de façonner votre nation à votre image. Ajoutez un drapeau qui incarne vos valeurs, définissez une devise qui inspire votre communauté, rédigez une description détaillée pour présenter votre vision. Vous pouvez également cartographier votre territoire en ajoutant des lieux importants et marquer ainsi l’identité unique de votre nation. Transformez votre rêve en une réalité virtuelle, et faites rayonner votre nation auprès des autres !",
       "presentation3": "Tissez des liens diplomatiques et créez des alliances ! Notre plateforme vous offre l’opportunité d’interagir avec d’autres nations, qu’elles soient réelles ou virtuelles. Initiez des relations diplomatiques, négociez des accords, formez des alliances stratégiques ou organisez des événements communs. Élargissez l’influence de votre nation en construisant des ponts entre les cultures et en collaborant avec d’autres leaders. Ensemble, donnez une nouvelle dimension à vos ambitions !"
     },
     "lobby": {
-      "description": "Renseignez le mot de passe pour accéder à l'application",
+      "password": "Renseignez le mot de passe pour accéder à l'application",
       "allowed": "accès autorisé",
       "denied": "accès reffusé"
     },
@@ -36,7 +36,8 @@
         "title": "diplomatie",
         "noRelations": "aucune relation diplomatique",
         "pendingRelations": "des relations sont en attente d'approbation",
-        "defaultNewRelationTitle": "Nouvelle relation diplomatique"
+        "defaultNewRelationTitle": "nouvelle relation diplomatique",
+        "noDescription": "pas de description"
       },
       "citizens": {
         "title": "citoyens",
@@ -47,30 +48,30 @@
         "noPlaces": "aucun lieu à afficher"
       },
       "coms": {
-        "title": "Communiqués",
-        "noComs": "aucun communiqué à afficher"
+        "title": "actualités",
+        "noComs": "aucune actualité à afficher"
       }
     },
     "explore": {
       "nationsList": {
-        "title": "Nations"
+        "title": "nations"
       },
       "citizensList": {
-        "title": "Citoyens"
+        "title": "citoyens"
       },
       "placesList": {
-        "title": "Lieux"
+        "title": "lieux"
       },
       "comsList": {
-        "title": "Actualités"
+        "title": "actualités"
       },
       "stats": {
-        "title": "Statistiques",
-        "nations": "Nations virtuelles",
-        "locations": "Lieux",
-        "citizens": "Citoyens",
-        "coms": "Actualités",
-        "tags": "Mots clés"
+        "title": "statistiques",
+        "nations": "nations virtuelles",
+        "locations": "lieux",
+        "citizens": "citoyens",
+        "coms": "actualités",
+        "tags": "mots clés"
       }
     },
     "citizen": {
@@ -92,10 +93,10 @@
       "title": "communications"
     },
     "login": {
-      "title": "S'identifier",
-      "forgottenPassword": "Mot de passe oublié ?",
-      "firstVisit": "Première visite ?",
-      "newUser": "Créez un compte utilisateur"
+      "title": "s'identifier",
+      "forgottenPassword": "mot de passe oublié ?",
+      "firstVisit": "première visite ?",
+      "newUser": "créez un compte utilisateur"
     },
     "place": {
       "noChildrenPlaces": "aucun lieu enfant à afficher",
@@ -109,7 +110,7 @@
       "recoveryKey": "Phrase de récupération",
       "newPassword": "Nouveau mot de passe",
       "confirmPassword": "Confirmez le mot de passe",
-      "changePassword": "CHANGER LE MOT DE PASSE"
+      "changePassword": "changer le mot de passe"
     },
     "register": {
       "title": "créer un compte",
@@ -130,30 +131,31 @@
       "nation": "LA PUBLICITÉ POUR VOTRE NATION ICI !"
     },
     "buttons": {
-      "home": "ACCUEIL",
+      "home": "accueil",
       "login": "se connecter",
       "logout": "se déconnecter",
       "register": "s'inscrire",
       "explore": "explorer",
       "dashboard": "tableau de bord",
-      "close": "FERMER",
-      "cancel": "ANNULER",
-      "nation": "NATION",
-      "user": "MON COMPTE",
-      "admin": "ADMINISTRATION",
-      "validate": "VALIDER",
+      "close": "fermer",
+      "cancel": "annuler",
+      "nation": "nation",
+      "user": "mon compte",
+      "admin": "administration",
+      "validate": "valider",
       "createNation": "créer une nation",
       "joinNation": "rejoindre une nation",
       "deleteNation": "supprimer votre nation",
+      "leaveNation": "quitter la nation",
       "deleteAccount": "supprimer votre compte",
       "changePassword": "changer le mot de passe",
-      "search": "RECHERCHER",
-      "reset": "RÉINITIALISER",
+      "search": "rechercher",
+      "reset": "réinitialiser",
       "access": "voir",
       "delete": "supprimer",
       "back": "retour",
       "newPlace": "nouveau lieu",
-      "showMore": "VOIR PLUS",
+      "showMore": "voir plus",
       "askCitizenship": "demander la nationnalité",
       "createRelation": "créer une relation diplomatique",
       "parent": "parent",
@@ -162,23 +164,27 @@
       "createCom": "poster un communiqué",
       "contact": "contact",
       "generate": "générer",
-      "report": "SIGNALER",
+      "report": "signaler",
       "cookiesConsent": "consentement des cookies",
-      "accept": "ACCEPTER",
-      "refuse": "REFUSER",
-      "break": "ROMPRE",
-      "donate": "Faire un don"
+      "accept": "accepter",
+      "refuse": "refuser",
+      "break": "rompre",
+      "donate": "faire un don",
+      "edit": "éditer",
+      "markAsRead": "non lu",
+      "markAsUnread": "lu",
+      "transferCredits": "envoyer des credits"
     },
     "form": {
       "input": {
-        "name": "Nom",
-        "password": "Mot de passe"
+        "name": "nom",
+        "password": "mot de passe"
       },
       "select": {
-        "choose": "CHOISIR",
-        "language": "Langue parlée"
+        "choose": "choisir",
+        "language": "langue parlée"
       },
-      "missingField": "Champ(s) manquant(s)",
+      "missingField": "champ(s) manquant(s)",
       "mdEditor": {
         "reached": "La longueur maximale de texte est atteinte",
         "character": "caractères"
@@ -190,87 +196,102 @@
     },
     "modals": {
       "confirmModal": {
-        "title": "DEMANDE DE CONFIRMATION",
-        "logout": "Souhaitez-vous vous déconnecter ?",
-        "deleteNation": "Confirmez-vous la suppression définitive de votre nation ?",
-        "deletePlace": "Confirmez-vous la suppression définitive du lieu ?",
-        "deleteUser": "Confirmez-vous la suppression définitive de votre compte ?",
-        "deleteFile": "Confirmez-vous la suppression du fichier ?",
-        "approveCitizenship": "Accorder la citoyenneté ?",
-        "declineCitizenship": "Rejeter la citoyenneté ?",
-        "askCitizenship": "Demander la nationnalité ?",
-        "leaveNation": "Quitter la nation ?",
-        "cancelCitizenship": "Annuler la demande de citoyenneté ?",
-        "acceptRelation": "Accepter la relation diplomatique ?",
-        "refuseRelation": "Refuser la relation diplomatique ?",
-        "leaveRelation": "Rompre la relation diplomatique ?",
-        "createTile": "Confirmez-vous la création de la tuile ?",
-        "updateTile": "Confirmez-vous la mise à jour de la tuile ?",
-        "deleteTile": "Confirmez-vous la suppression de la tuile ?",
-        "updateNation": "Confirmez-vous la mise à jour de la nation ?",
-        "updatePlace": "Confirmez-vous la mise à jour du lieu ?",
-        "updateUser": "Confirmez-vous la mise à jour de votre profil ?",
-        "createCom": "Confirmez-vous la création de la communication ?",
-        "deleteCom": "Confirmez-vous la suppression définitive de la communication ?",
-        "reportContent": "Confirmez-vous le signalement du contenu à l'administrateur ?"
+        "title": "demande de confirmation",
+        "logout": "souhaitez-vous vous déconnecter ?",
+        "deleteNation": "confirmez-vous la suppression définitive de votre nation ?",
+        "deletePlace": "confirmez-vous la suppression définitive du lieu ?",
+        "deleteUser": "confirmez-vous la suppression définitive de votre compte ?",
+        "deleteFile": "confirmez-vous la suppression du fichier ?",
+        "approveCitizenship": "accorder la citoyenneté ?",
+        "declineCitizenship": "rejeter la citoyenneté ?",
+        "askCitizenship": "demander la nationnalité ?",
+        "leaveNation": "quitter la nation ?",
+        "cancelCitizenship": "annuler la demande de citoyenneté ?",
+        "acceptRelation": "accepter la relation diplomatique ?",
+        "refuseRelation": "refuser la relation diplomatique ?",
+        "leaveRelation": "rompre la relation diplomatique ?",
+        "createTile": "confirmez-vous la création de la tuile ?",
+        "updateTile": "confirmez-vous la mise à jour de la tuile ?",
+        "deleteTile": "confirmez-vous la suppression de la tuile ?",
+        "updateNation": "confirmez-vous la mise à jour de la nation ?",
+        "updatePlace": "confirmez-vous la mise à jour du lieu ?",
+        "updateUser": "confirmez-vous la mise à jour de votre profil ?",
+        "createCom": "confirmez-vous la création de la communication ?",
+        "deleteCom": "confirmez-vous la suppression définitive de la communication ?",
+        "reportContent": "confirmez-vous le signalement du contenu à l'administrateur ?",
+        "transferCredits": "confirmez-vous le virement ?"
       },
       "cookiesModal": {
-        "text": "Ce site utilise des cookies pour améliorer votre expérience utilisateur",
+        "text": "ce site utilise des cookies pour améliorer votre expérience utilisateur",
         "accept": "je comprends",
         "decline": "je refuse"
       },
       "langModal": {
-        "title": "CHOIX DE LA LANGUE"
+        "title": "choix de la langue"
       },
       "loadingModal": {
-        "title": "PATIENTEZ",
+        "title": "patientez",
         "information": "Démarrage du serveur, merci de patienter quelques instants"
       },
       "newNationModal": {
-        "title": "NOUVELLE NATION",
-        "nationName": "Nom de la nation",
-        "motto": "Devise",
-        "currency": "Monnaie",
+        "title": "nouvelle nation",
+        "nationName": "nom de la nation",
+        "motto": "devise",
+        "currency": "monnaie",
         "isNationState": "Cocher s'il s'agit d'un État-nation",
-        "regime": "Regime",
+        "regime": "régime",
         "tagsInfos": "Espace pour valider, cliquer pour supprimer"
       },
       "editModal": {
-        "title": "MODIFIER LA VALEUR",
+        "title": "modifier la valeur",
         "noValue": "aucune valeur",
         "newValue": "nouvelle valeur"
       },
       "changePasswordModal": {
-        "title": "Changer le mot de passe",
-        "oldPassword": "Ancien mot de passe",
-        "newPassword": "Nouveau mot de passe",
-        "confirmPassword": "Confirmer le mot de passe"
+        "title": "changer le mot de passe",
+        "oldPassword": "ancien mot de passe",
+        "newPassword": "nouveau mot de passe",
+        "confirmPassword": "confirmer le mot de passe"
       },
       "newPlaceModal": {
-        "title": "Nouveau lieu",
-        "placeName": "Nom du lieu",
-        "placeDescription": "Description du lieu"
+        "title": "nouveau lieu",
+        "placeName": "nom du lieu",
+        "placeDescription": "description du lieu"
       },
       "recoveryModal": {
-        "title": "INFORMATION IMPORTANTE",
+        "title": "information importante",
         "info": "Merci de conserver précieusement votre phrase de récupération, celle-ci est unique !",
         "boldInfo": "ELLE NE VOUS SERA PLUS COMMUNIQUÉE PAR LA SUITE !",
         "confirm": "J'ai pris connaissance de cette information"
       },
       "tileModal": {
-        "new": "Nouvelle tuile",
-        "update": "Modifier la tuile",
-        "inputTitle": "Titre",
-        "inputDescription": "Description",
-        "inputValue": "Valeur"
+        "new": "nouvelle tuile",
+        "update": "modifier la tuile",
+        "inputTitle": "titre",
+        "inputDescription": "description",
+        "inputValue": "valeur"
       },
       "newComModal": {
-        "title": "Nouveau communiqué",
-        "comTitle": "Titre",
-        "comMessage": "Message"
+        "title": "nouveau communiqué",
+        "comTitle": "titre",
+        "comMessage": "message"
       },
       "infoModal": {
-        "title": "Information"
+        "title": "information"
+      },
+      "relationModal": {
+        "new": "nouvelle relation diplomatique",
+        "update": "modifier la relation diplomatique",
+        "nameInput": "dénomination de la relation",
+        "description": "description"
+      },
+      "creditTransferModal": {
+        "title": "transfert de crédit",
+        "recipient": "bénéficiaire",
+        "comment": "commentaire",
+        "amount": "montant",
+        "accountToBeDebited": "compte à débiter",
+        "remainingBalance": "solde restant"
       }
     },
     "hoverInfos": {
@@ -307,7 +328,8 @@
         "nationOwner": "éditeur de la nation",
         "residence": "résidence",
         "treasury": "richesse",
-        "date": "date",
+        "registration": "inscription",
+        "lastVisitDate": "dernière connexion",
         "honor": "distinction",
         "honor_pioneer": "pionnier",
         "religion": "religion",
@@ -325,32 +347,32 @@
     },
     "searchBars": {
       "nationsList": {
-        "name": "Nom de la nation",
+        "name": "nom de la nation",
         "tag": "mots clés",
         "sortNations": {
-          "ascAlpha": "Alphabetique croissant",
-          "descAlpha": "Alphabetique décroissant",
-          "ascLoc": "Nombre de lieux croissant",
-          "descLoc": "Nombre de lieux décroissant",
-          "ascCtz": "Nombre de citoyens croissant",
-          "descCtz": "Nombre de citoyens décroissant",
-          "ascTreasury": "Richesse croissante",
-          "descTreasury": "Richesse décroissante",
-          "ascDate": "Date de creation croissante",
-          "descDate": "Date de creation décroissante"
+          "ascAlpha": "alphabetique croissant",
+          "descAlpha": "alphabetique décroissant",
+          "ascLoc": "nombre de lieux croissant",
+          "descLoc": "nombre de lieux décroissant",
+          "ascCtz": "nombre de citoyens croissant",
+          "descCtz": "nombre de citoyens décroissant",
+          "ascTreasury": "richesse croissante",
+          "descTreasury": "richesse décroissante",
+          "ascDate": "date de creation croissante",
+          "descDate": "date de creation décroissante"
         }
       },
       "citizensList": {
-        "input": "Citoyen.ne",
+        "input": "citoyen.ne",
         "sortCitizens": {
-          "ascAlpha": "Alphabetique croissant",
-          "descAlpha": "Alphabetique décroissant",
-          "ascDate": "Date d'inscription croissante",
-          "descDate": "Date d'inscription décroissante"
+          "ascAlpha": "alphabetique croissant",
+          "descAlpha": "alphabetique décroissant",
+          "ascDate": "date d'inscription croissante",
+          "descDate": "date d'inscription décroissante"
         }
       },
       "placesList": {
-        "input": "Nom du lieu",
+        "input": "nom du lieu",
         "checkbox": {
           "state": "état",
           "county": "region",
@@ -358,19 +380,19 @@
           "nature": "environnement"
         },
         "sortPlaces": {
-          "ascAlpha": "Alphabetique croissant",
-          "descAlpha": "Alphabetique décroissant",
-          "ascCtz": "Nombre de citoyens croissant",
-          "descCtz": "Nombre de citoyens décroissant",
-          "ascDate": "Date de creation croissante",
-          "descDate": "Date de creation décroissante"
+          "ascAlpha": "alphabetique croissant",
+          "descAlpha": "alphabetique décroissant",
+          "ascCtz": "nombre de citoyens croissant",
+          "descCtz": "nombre de citoyens décroissant",
+          "ascDate": "date de creation croissante",
+          "descDate": "date de creation décroissante"
         }
       },
       "comsList": {
         "input": "ID officiel de la nation",
         "SortComs": {
-          "ascDate": "Du plus ancien au plus récent",
-          "descDate": "Du plus récent au plus ancien"
+          "ascDate": "du plus ancien au plus récent",
+          "descDate": "du plus récent au plus ancien"
         }
       }
     },
@@ -431,9 +453,9 @@
       "general": "annonce générale",
       "nationPrivate": "communiqué privé de la nation",
       "nationPublic": "communiqué publique de la nation",
-      "nationUpdate": "Mise à jour de la nation",
-      "userUpdate": "Mise à jour de l'utilisateur",
-      "userPrivate": "Communication privée"
+      "nationUpdate": "mise à jour de la nation",
+      "userUpdate": "mise à jour de l'utilisateur",
+      "userPrivate": "communication privée"
     }
   },
   "toasts": {
@@ -441,8 +463,9 @@
     "failedCopy": "Copie impossible",
     "reported": "Contenu signalé et en attente de modération",
     "connected": "Connexion rétablie !",
+    "creditTransferSuccess": "Transfert de crédits réalisé avec succès",
     "errors": {
-      "400": "Erreur de formulaire",
+      "400": "Erreur de requête",
       "401": "Action non autorisée",
       "403": "Action interdite",
       "404": "Information non trouvée",
@@ -455,7 +478,7 @@
       "signIn": "Connexion réussie",
       "signUp": "Inscription réussie",
       "verify": "Récupération du profil réussie",
-      "logout": "Déconnexion réussie",
+      "logout": "Déconnexion",
       "delete": "Suppression réussie",
       "save": "Sauvegarde effectuée",
       "add": "Ajout effectué",
@@ -539,6 +562,11 @@
     "relationUpdate": {
       "title": "Diplomatie",
       "message": "Mise à jour des relations diplomatiques"
+    },
+    "creditTransfer": {
+      "title": "Transfert de crédits",
+      "amount": "|montant : ",
+      "comment": "|commentaire : "
     }
   }
 }

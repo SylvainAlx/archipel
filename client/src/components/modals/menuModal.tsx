@@ -7,19 +7,23 @@ import { IoMdSettings } from "react-icons/io";
 import { BsFillEnvelopeAtFill } from "react-icons/bs";
 import { ADMIN_EMAIL } from "../../settings/consts";
 import ReleaseNotesLink from "../releaseNotesLink";
-import useClickOutside from "../../hooks/useClickOutside";
+import { useModal } from "../../hooks/useModal";
 
 export default function MenuModal() {
   const { t } = useTranslation();
   const [session] = useAtom(sessionAtom);
   const navigate = useNavigate();
-  const ref = useClickOutside(() => myStore.set(showMenuAtom, false));
+  const modalRef = useModal(() => myStore.set(showMenuAtom, false));
+
   return (
-    <>
+    <div
+      tabIndex={-1}
+      ref={modalRef}
+      className="flex flex-col items-center gap-2"
+    >
       <nav
         onClick={() => myStore.set(showMenuAtom, false)}
         className="flex flex-col items-center gap-2"
-        ref={ref}
       >
         {session.user.role === "admin" && (
           <Button
@@ -52,6 +56,6 @@ export default function MenuModal() {
         click={() => myStore.set(showMenuAtom, false)}
         widthFull={true}
       />
-    </>
+    </div>
   );
 }

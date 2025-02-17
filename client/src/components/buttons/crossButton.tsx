@@ -29,12 +29,13 @@ export default function CrossButton({
           widthFull={widthFull && widthFull}
         />
       ) : (
-        <div
+        <button
+          aria-label={t("components.buttons.delete")}
           onClick={click}
           className="absolute cursor-pointer text-xl text-danger hover:text-wait rounded-full transition-all top-2 right-2"
         >
           <IoMdCloseCircle />
-        </div>
+        </button>
       )}
     </>
   );

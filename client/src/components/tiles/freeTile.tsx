@@ -2,12 +2,12 @@ import { useEffect, useState } from "react";
 import { Tile } from "../../types/typTile";
 import i18n from "../../i18n/i18n";
 import CrossButton from "../buttons/crossButton";
-import EditButton from "../buttons/editButton";
 import { useAtom } from "jotai";
 import { confirmBox, editTileAtom, myStore } from "../../settings/store";
 import { MdOutlineUpdate } from "react-icons/md";
 import { useTranslation } from "react-i18next";
 import { TileModel } from "../../models/tileModel";
+import EditButton from "../buttons/editButton";
 
 export interface FreeTileProps {
   tile: Tile;
@@ -31,9 +31,7 @@ export default function FreeTile({ tile, owner }: FreeTileProps) {
 
   const handleDelete = () => {
     myStore.set(confirmBox, {
-      action: "",
       text: t("components.modals.confirmModal.deleteTile"),
-      result: "",
       actionToDo: () => {
         const newTile = new TileModel(tile);
         newTile.baseDelete();
@@ -53,7 +51,7 @@ export default function FreeTile({ tile, owner }: FreeTileProps) {
         <span>{stringDate}</span>
       </em>
       {owner && <CrossButton small={true} click={handleDelete} />}
-      {owner && <EditButton click={() => handleEdit(tile)} />}
+      {owner && <EditButton onClick={() => handleEdit(tile)} />}
     </div>
   );
 }

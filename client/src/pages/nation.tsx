@@ -13,7 +13,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { errorMessage } from "../utils/toasts";
 import CrossButton from "../components/buttons/crossButton";
 import ReportPanel from "../components/reportPanel";
-import EditIcon from "../components/editIcon";
+import EditButton from "../components/buttons/editButton";
 import { NationModel } from "../models/nationModel";
 import { NationListModel } from "../models/lists/nationListModel";
 import { createPageTitle } from "../utils/procedures";
@@ -21,6 +21,7 @@ import IdSkeleton from "../components/loading/skeletons/idSkeleton";
 import MapSkeleton from "../components/loading/skeletons/mapSkeleton";
 import TileSkeleton from "../components/loading/skeletons/tileSkeleton";
 import { useLoadNationPlaces } from "../hooks/useLoadNationPlaces";
+import CreditTransferButton from "../components/buttons/creditTransferButton";
 
 export default function Nation() {
   const [nation, setNation] = useState<NationModel>(new NationModel());
@@ -76,9 +77,7 @@ export default function Nation() {
 
   const handleDelete = () => {
     myStore.set(confirmBox, {
-      action: "deleteSelfNation",
       text: t("components.modals.confirmModal.deleteNation"),
-      result: "",
       actionToDo: () => {
         nation.baseDelete();
         const updatedList = nationList.removeByOfficialId(nation.officialId);
@@ -102,9 +101,7 @@ export default function Nation() {
     if (updatedNation.isSuccess) {
       if (needConfirm) {
         myStore.set(confirmBox, {
-          action: "",
           text: t("components.modals.confirmModal.updateNation"),
-          result: "",
           actionToDo: baseUpdate,
         });
       } else {
@@ -118,11 +115,15 @@ export default function Nation() {
       <div className="w-full relative flex items-center justify-center gap-2">
         <H1 text={nation.name} />
         {owner && (
-          <EditIcon
-            target="nation"
-            param={nation.name}
-            path="name"
-            canBeEmpty={false}
+          <EditButton
+            editBox={{
+              target: "nation",
+              original: nation.name,
+              new: nation.name,
+              path: "name",
+              action: updatePath,
+              canBeEmpty: false,
+            }}
           />
         )}
       </div>
@@ -132,7 +133,12 @@ export default function Nation() {
             <>
               <section className="w-full flex flex-wrap gap-8 items-start justify-between">
                 <div className="w-full flex flex-col gap-3 items-center justify-center">
-                  <Links selectedNation={nation} owner={owner} />
+                  <Links
+                    selectedNation={nation}
+                    owner={owner}
+                    updatePath={updatePath}
+                  />
+                  <CreditTransferButton target={nation} />
                 </div>
                 {nation.officialId === param.id && (
                   <>

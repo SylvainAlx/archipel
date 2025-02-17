@@ -1,15 +1,15 @@
 {
   "pages": {
     "home": {
-      "title": "Welcome",
+      "title": "welcome",
       "presentation1": "Welcome to your hub for micronations and virtual nations! Whether you're part of a serious micronation or a fan of role-playing in imaginary worlds, our application is here for you. Join a vibrant community, connect, collaborate, and showcase your nation in a space designed to bring people together. Build connections, share your projects, and bring your vision to life!",
       "presentation2": "Customize and bring your nation to life! As a leader, you have the tools to shape your nation in your own image. Add a flag that represents your values, define a motto to inspire your community, and write a detailed description to showcase your vision. You can also map out your territory by adding key locations, giving your nation its unique identity. Turn your dream into a virtual reality and let your nation shine among others!",
       "presentation3": "Forge diplomatic ties and build alliances! Our platform offers you the opportunity to engage with other nations, whether real or virtual. Initiate diplomatic relations, negotiate agreements, form strategic alliances, or organize joint events. Expand your nation’s influence by building bridges between cultures and collaborating with other leaders. Together, take your ambitions to new heights!"
     },
     "lobby": {
-      "description": "Enter the password to access the application",
+      "description": "enter the password to access the application",
       "allowed": "access allowed",
-      "denied": "Access denied"
+      "denied": "access denied"
     },
     "nation": {
       "noNation": "no nation to display",
@@ -36,7 +36,8 @@
         "title": "diplomacy",
         "noRelations": "no diplomatic relationship",
         "pendingRelations": "diplomatic relationships are pending approval",
-        "defaultNewRelationTitle": "New diplomatic relationship"
+        "defaultNewRelationTitle": "new diplomatic relationship",
+        "noDescription": "no description"
       },
       "citizens": {
         "title": "citizens",
@@ -47,29 +48,29 @@
         "noPlaces": "no locations to display"
       },
       "coms": {
-        "title": "Press releases",
-        "noComs": "no press releases to display"
+        "title": "news",
+        "noComs": "no news to display"
       }
     },
     "explore": {
       "nationsList": {
-        "title": "Nations"
+        "title": "nations"
       },
       "citizensList": {
-        "title": "Citizens"
+        "title": "citizens"
       },
       "placesList": {
-        "title": "Locations"
+        "title": "locations"
       },
       "comsList": {
-        "title": "News"
+        "title": "news"
       },
       "stats": {
-        "title": "Statistics",
-        "nations": "Virtual nations",
-        "locations": "Locations",
-        "citizens": "Citizens",
-        "coms": "News",
+        "title": "statistics",
+        "nations": "virtual nations",
+        "locations": "locations",
+        "citizens": "citizens",
+        "coms": "news",
         "tags": "hashtags"
       }
     },
@@ -92,10 +93,10 @@
       "title": "communications"
     },
     "login": {
-      "title": "Sign in",
-      "forgottenPassword": "Forgotten password ?",
-      "firstVisit": "First visit ?",
-      "newUser": "Create account"
+      "title": "sign in",
+      "forgottenPassword": "forgotten password ?",
+      "firstVisit": "first visit ?",
+      "newUser": "create account"
     },
     "place": {
       "noChildrenPlaces": "no children locations to display",
@@ -106,15 +107,15 @@
     "recovery": {
       "title": "reset password",
       "placeholderName": "User name",
-      "recoveryKey": "Recovery key",
-      "newPassword": "New password",
-      "confirmPassword": "Confirm new password",
-      "changePassword": "CHANGE PASSWORD"
+      "recoveryKey": "recovery key",
+      "newPassword": "new password",
+      "confirmPassword": "confirm new password",
+      "changePassword": "change password"
     },
     "register": {
       "title": "create account",
-      "ownAccount": "Account exist ?",
-      "connect": "Sign in",
+      "ownAccount": "account exist ?",
+      "connect": "sign in",
       "acceptTerms": "By ticking this box, you agree to the",
       "termsOfService": "TOS"
     },
@@ -130,57 +131,62 @@
       "nation": "YOUR NATION'S AD HERE !"
     },
     "buttons": {
-      "home": "HOME",
-      "login": "SIGN IN",
-      "logout": "LOGOUT",
-      "register": "SIGN UP",
-      "explore": "EXPLORE",
-      "dashboard": "DASHBOARD",
-      "close": "CLOSE",
-      "cancel": "CANCEL",
-      "nation": "NATION",
-      "user": "MY ACCOUNT",
-      "admin": "ADMINISTRATION",
-      "validate": "VALIDATE",
-      "createNation": "CREATE YOUR NATION",
-      "joinNation": "JOIN A NATION",
-      "deleteNation": "DELETE YOUR NATION",
-      "deleteAccount": "DELETE YOUR ACCOUNT",
-      "changePassword": "CHANGE PASSWORD",
-      "search": "SEARCH",
-      "reset": "RESET",
+      "home": "home",
+      "login": "sign in",
+      "logout": "logout",
+      "register": "sign up",
+      "explore": "explore",
+      "dashboard": "dashboard",
+      "close": "close",
+      "cancel": "cancel",
+      "nation": "nation",
+      "user": "my account",
+      "admin": "administration",
+      "validate": "validate",
+      "createNation": "create your nation",
+      "joinNation": "join a nation",
+      "leaveNation": "leave the nation",
+      "deleteNation": "delete your nation",
+      "deleteAccount": "delete your account",
+      "changePassword": "change password",
+      "search": "search",
+      "reset": "reset",
       "access": "access",
       "delete": "delete",
       "back": "back",
       "newPlace": "create new location",
-      "showMore": "SHOW MORE",
-      "askCitizenship": "ASK CITIZENSHIP",
-      "createRelation": "CREATE DIPLOMATIC RELATIONSHIP",
+      "showMore": "show more",
+      "askCitizenship": "ask citizenship",
+      "createRelation": "create diplomatic relationship",
       "parent": "parent",
       "createFreeTile": "create free tile",
-      "plan": "Choose a subscription",
+      "plan": "choose a subscription",
       "createCom": "post a press release",
       "contact": "contact",
       "generate": "generate",
-      "report": "REPORT",
+      "report": "report",
       "cookiesConsent": "cookies consent",
-      "accept": "ACCEPT",
-      "refuse": "REFUSE",
-      "break": "BREAK",
-      "donate": "Donate"
+      "accept": "accept",
+      "refuse": "refuse",
+      "break": "break",
+      "donate": "donate",
+      "edit": "edit",
+      "markAsRead": "mark as read",
+      "markAsUnread": "mark as unread",
+      "transferCredits": "transfer credits"
     },
     "form": {
       "input": {
-        "name": "Name",
-        "password": "Password"
+        "name": "name",
+        "password": "password"
       },
       "select": {
-        "choose": "CHOOSE",
-        "language": "Spoken language"
+        "choose": "choose",
+        "language": "spoken language"
       },
-      "missingField": "Missing field(s)",
+      "missingField": "missing field(s)",
       "mdEditor": {
-        "reached": "Maximum text length reached",
+        "reached": "maximum text length reached",
         "character": "character"
       }
     },
@@ -190,87 +196,102 @@
     },
     "modals": {
       "confirmModal": {
-        "title": "CONFIRM YOUR CHOICE",
-        "logout": "Do you want to log out ?",
-        "deleteNation": "Do you confirm the definitive suppression of your nation ?",
-        "deletePlace": "Do you confirm the definitive suppression of your location ?",
-        "deleteUser": "Do you confirm the definitive suppression of your account ?",
-        "deleteFile": "Do you confirm the definitive suppression of this file ?",
-        "approveCitizenship": "Approve citizenship ?",
-        "declineCitizenship": "Decline citizenship ?",
-        "askCitizenship": "Ask citizenship ?",
-        "leaveNation": "Leave the nation ?",
-        "cancelCitizenship": "Cancel citizenship application ?",
-        "acceptRelation": "Accept diplomatic relations ?",
-        "refuseRelation": "Refuse diplomatic relations ?",
-        "leaveRelation": "Leave diplomatic relations ?",
-        "createTile": "Confirm new tile ?",
-        "updateTile": "Update tile ?",
-        "deleteTile": "Delete tile ?",
-        "updateNation": "Update nation ?",
-        "updatePlace": "Update place ?",
-        "updateUser": "Update profile ?",
-        "createCom": "Confirm new communication ?",
-        "deleteCom": "Delete communication ?",
-        "reportContent": "Confirm reporting the content to the administrator ?"
+        "title": "confirm your choice",
+        "logout": "do you want to log out ?",
+        "deleteNation": "do you confirm the definitive suppression of your nation ?",
+        "deletePlace": "do you confirm the definitive suppression of your location ?",
+        "deleteUser": "do you confirm the definitive suppression of your account ?",
+        "deleteFile": "do you confirm the definitive suppression of this file ?",
+        "approveCitizenship": "approve citizenship ?",
+        "declineCitizenship": "decline citizenship ?",
+        "askCitizenship": "ask citizenship ?",
+        "leaveNation": "leave the nation ?",
+        "cancelCitizenship": "cancel citizenship application ?",
+        "acceptRelation": "accept diplomatic relations ?",
+        "refuseRelation": "refuse diplomatic relations ?",
+        "leaveRelation": "leave diplomatic relations ?",
+        "createTile": "confirm new tile ?",
+        "updateTile": "update tile ?",
+        "deleteTile": "delete tile ?",
+        "updateNation": "update nation ?",
+        "updatePlace": "update place ?",
+        "updateUser": "update profile ?",
+        "createCom": "confirm new communication ?",
+        "deleteCom": "delete communication ?",
+        "reportContent": "confirm reporting the content to the administrator ?",
+        "transferCredits": "confirm credit transfer ?"
       },
       "cookiesModal": {
-        "text": "This site uses cookies to improve your user experience",
-        "accept": "I understand",
-        "decline": "I deline"
+        "text": "this site uses cookies to improve your user experience",
+        "accept": "i understand",
+        "decline": "i decline"
       },
       "langModal": {
-        "title": "LANGUAGE"
+        "title": "language"
       },
       "loadingModal": {
-        "title": "WAIT",
-        "information": "Server starting, please wait a few moments"
+        "title": "wait",
+        "information": "server starting, please wait a few moments"
       },
       "newNationModal": {
-        "title": "NEW NATION",
-        "nationName": "Nation name",
-        "motto": "Motto",
-        "isNationState": "Check if it is a Nation-state",
-        "currency": "Currency",
-        "regime": "Regime",
-        "tagsInfos": "Space to apply, click to delete"
+        "title": "new nation",
+        "nationName": "nation name",
+        "motto": "motto",
+        "isNationState": "check if it is a nation-state",
+        "currency": "currency",
+        "regime": "regime",
+        "tagsInfos": "space to apply, click to delete"
       },
       "editModal": {
-        "title": "EDIT VALUE",
+        "title": "edit value",
         "noValue": "no value",
         "newValue": "new value"
       },
       "changePasswordModal": {
-        "title": "Change password",
-        "oldPassword": "Old password",
-        "newPassword": "New password",
-        "confirmPassword": "Confirm password"
+        "title": "change password",
+        "oldPassword": "old password",
+        "newPassword": "new password",
+        "confirmPassword": "confirm password"
       },
       "newPlaceModal": {
-        "title": "New location",
-        "placeName": "Location name",
-        "placeDescription": "Location description"
+        "title": "new location",
+        "placeName": "location name",
+        "placeDescription": "location description"
       },
       "recoveryModal": {
-        "title": "IMPORTANT INFORMATION",
-        "info": "Please keep your recovery phrase safe, this one is unique !",
-        "boldInfo": "IT WILL NOT BE COMMUNICATED TO YOU AFTERWARDS !",
-        "confirm": "I have read this information"
+        "title": "important information",
+        "info": "please keep your recovery phrase safe, this one is unique !",
+        "boldInfo": "it will not be communicated to you afterwards !",
+        "confirm": "i have read this information"
       },
       "tileModal": {
-        "new": "New tile",
-        "update": "Update tile",
-        "inputTitle": "Title",
-        "inputDescription": "Description",
-        "inputValue": "Value"
+        "new": "new tile",
+        "update": "update tile",
+        "inputTitle": "title",
+        "inputDescription": "description",
+        "inputValue": "value"
       },
       "newComModal": {
-        "title": "New press release",
-        "comTitle": "Title",
-        "comMessage": "Message"
+        "title": "new press release",
+        "comTitle": "title",
+        "comMessage": "message"
       },
       "infoModal": {
-        "title": "Information"
+        "title": "information"
+      },
+      "newRelationModal": {
+        "new": "new diplomatic relationship",
+        "update": "update diplomatic relationship",
+        "nameInput": "relationship naming",
+        "description": "description"
+      },
+      "creditTransferModal": {
+        "title": "credit transfer",
+        "recipient": "recipient",
+        "comment": "comment",
+        "amount": "amount",
+        "accountToBeDebited": "account to be debited",
+        "remainingBalance": "remaining balance"
       }
     },
     "hoverInfos": {
@@ -307,7 +328,8 @@
         "nationOwner": "nation editor",
         "residence": "residence",
         "treasury": "wealth",
-        "date": "date",
+        "registration": "registration",
+        "lastVisitDate": "last visit date",
         "honor": "honor",
         "honor_pioneer": "pioneer",
         "religion": "religion",
@@ -325,32 +347,32 @@
     },
     "searchBars": {
       "nationsList": {
-        "name": "Nation name",
+        "name": "nation name",
         "tag": "hashtag",
         "sortNations": {
-          "ascAlpha": "Ascending alphabetical",
-          "descAlpha": "Descending alphabetical",
-          "ascLoc": "Growing number of locations",
-          "descLoc": "Decreasing number of locations",
-          "ascCtz": "Growing number of citizens",
-          "descCtz": "Decreasing number of citizens",
-          "ascTreasury": "Growing wealth",
-          "descTreasury": "Decreasing wealth",
-          "ascDate": "Creation date ascending",
-          "descDate": "Creation date descending"
+          "ascAlpha": "ascending alphabetical",
+          "descAlpha": "descending alphabetical",
+          "ascLoc": "growing number of locations",
+          "descLoc": "decreasing number of locations",
+          "ascCtz": "growing number of citizens",
+          "descCtz": "decreasing number of citizens",
+          "ascTreasury": "growing wealth",
+          "descTreasury": "decreasing wealth",
+          "ascDate": "creation date ascending",
+          "descDate": "creation date descending"
         }
       },
       "citizensList": {
-        "input": "Citizen name",
+        "input": "citizen name",
         "sortCitizens": {
-          "ascAlpha": "Ascending alphabetical",
-          "descAlpha": "Descending alphabetical",
-          "ascDate": "Registration date ascending",
-          "descDate": "Registration date descending"
+          "ascAlpha": "ascending alphabetical",
+          "descAlpha": "descending alphabetical",
+          "ascDate": "registration date ascending",
+          "descDate": "registration date descending"
         }
       },
       "placesList": {
-        "input": "Location name",
+        "input": "location name",
         "checkbox": {
           "state": "state",
           "county": "county",
@@ -358,19 +380,19 @@
           "nature": "nature"
         },
         "sortPlaces": {
-          "ascAlpha": "Ascending alphabetical",
-          "descAlpha": "Descending alphabetical",
-          "ascCtz": "Growing number of citizens",
-          "descCtz": "Decreasing number of citizens",
-          "ascDate": "Creation date ascending",
-          "descDate": "Creation date descending"
+          "ascAlpha": "ascending alphabetical",
+          "descAlpha": "descending alphabetical",
+          "ascCtz": "growing number of citizens",
+          "descCtz": "decreasing number of citizens",
+          "ascDate": "creation date ascending",
+          "descDate": "creation date descending"
         }
       },
       "comsList": {
-        "input": "Nation official ID",
+        "input": "nation official id",
         "SortComs": {
-          "ascDate": "From oldest to newest",
-          "descDate": "From newest to oldest"
+          "ascDate": "from oldest to newest",
+          "descDate": "from newest to oldest"
         }
       }
     },
@@ -402,22 +424,22 @@
     },
     "religionList": {
       "preferNotToSay": "prefer not to say",
-      "christian": "Christian",
-      "muslim": "Muslim",
-      "jewish": "Jewish",
-      "buddhist": "Buddhist",
-      "hindu": "Hindu",
-      "sikh": "Sikh",
-      "shinto": "Shinto",
-      "bahai": "Bahai",
-      "jain": "Jain",
-      "zoroastrian": "Zoroastrian",
-      "taoist": "Taoist",
-      "confucian": "Confucian",
-      "indigenous": "Indigenous religion",
-      "atheist": "Atheist",
-      "agnostic": "Agnostic",
-      "other": "Other"
+      "christian": "christian",
+      "muslim": "muslim",
+      "jewish": "jewish",
+      "buddhist": "buddhist",
+      "hindu": "hindu",
+      "sikh": "sikh",
+      "shinto": "shinto",
+      "bahai": "bahai",
+      "jain": "jain",
+      "zoroastrian": "zoroastrian",
+      "taoist": "taoist",
+      "confucian": "confucian",
+      "indigenous": "indigenous religion",
+      "atheist": "atheist",
+      "agnostic": "agnostic",
+      "other": "other"
     },
     "genderList": {
       "male": "male",
@@ -441,6 +463,7 @@
     "failedCopy": "Unable to copy",
     "reported": "Content reported and awaiting moderation",
     "connected": "Connection restored !",
+    "creditTransferSuccess": "Credit transfer successfully completed",
     "errors": {
       "400": "Bad request",
       "401": "Unauthorized",
@@ -455,7 +478,7 @@
       "signIn": "Sign In successful",
       "signUp": "Sign Up Successful",
       "verify": "Profile recovery successful",
-      "logout": "Logout successful",
+      "logout": "Logout",
       "delete": "Delete successful",
       "save": "Save successful",
       "add": "Add successful",
@@ -539,6 +562,11 @@
     "relationUpdate": {
       "title": "Diplomacy",
       "message": "Diplomatic relations updated"
+    },
+    "creditTransfer": {
+      "title": "credit transfer",
+      "amount": "|amount : ",
+      "comment": "|comment : "
     }
   }
 }

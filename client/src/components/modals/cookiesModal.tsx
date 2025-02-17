@@ -4,10 +4,11 @@ import { useTranslation } from "react-i18next";
 import { GOOGLE_ANALYTICS_MEASUREMENT_ID } from "../../settings/consts";
 import ReactGA from "react-ga4";
 import { myStore, showCookiesModalAtom } from "../../settings/store";
+import { useModal } from "../../hooks/useModal";
 
 export default function CookiesModal() {
   const { t } = useTranslation();
-
+  const modalRef = useModal(() => myStore.set(showCookiesModalAtom, false));
   const [cookiesAccepted, setCookiesAccepted] = useState(false);
 
   const handleAcceptCookies = () => {
@@ -34,7 +35,7 @@ export default function CookiesModal() {
   }, [cookiesAccepted]);
 
   return (
-    <div>
+    <div ref={modalRef} tabIndex={-1}>
       <CookieConsent
         location="bottom"
         buttonText={t("components.modals.cookiesModal.accept")}
@@ -42,8 +43,19 @@ export default function CookiesModal() {
         enableDeclineButton
         onAccept={handleAcceptCookies}
         onDecline={handleDeclineCookies}
-        style={{ background: "rgb(0, 99, 138)" }}
-        buttonStyle={{ background: "#4CAF50", color: "#ffffff" }}
+        style={{ background: "var(--color-complementary2)" }}
+        buttonStyle={{
+          background: "var(--color-secondary)",
+          color: "var(--color-light)",
+          borderRadius: 100,
+          padding: "5px 20px",
+        }}
+        declineButtonStyle={{
+          background: "var(--color-danger)",
+          color: "var(--color-light)",
+          borderRadius: 100,
+          padding: "5px 20px",
+        }}
       >
         {t("components.modals.cookiesModal.text")}
       </CookieConsent>

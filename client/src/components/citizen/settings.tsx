@@ -21,6 +21,7 @@ import { dateIsExpired } from "../../utils/functions";
 import CookiesModal from "../modals/cookiesModal";
 import { useNavigate } from "react-router-dom";
 import { UserModel } from "../../models/userModel";
+import { ConfirmBoxDefault } from "../../types/typAtom";
 
 interface SettingsProps {
   citizen: UserModel;
@@ -44,11 +45,10 @@ export default function Settings({ citizen }: SettingsProps) {
     const payload = window.prompt(t("components.form.input.password"));
     if (payload) {
       myStore.set(confirmBox, {
-        action: "",
         text: t("components.modals.confirmModal.deleteUser"),
-        result: "",
         actionToDo: async () => {
           await citizen.baseDelete(payload);
+          myStore.set(confirmBox, ConfirmBoxDefault);
           navigate("/");
         },
       });
@@ -62,9 +62,7 @@ export default function Settings({ citizen }: SettingsProps) {
 
   const logout = () => {
     myStore.set(confirmBox, {
-      action: "",
       text: t("components.modals.confirmModal.logout"),
-      result: "",
       actionToDo: () => {
         citizen.logout();
         navigate("/");

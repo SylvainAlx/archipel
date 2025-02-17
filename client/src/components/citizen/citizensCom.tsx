@@ -3,9 +3,8 @@ import DashTile from "../dashTile";
 import { useAtom } from "jotai";
 import { comListAtomV2 } from "../../settings/store";
 import { lazy, Suspense, useEffect, useMemo, useState } from "react";
-import { COM_GENERAL_DESTINATION, COM_TYPE } from "../../settings/consts";
+import { COM_TYPE } from "../../settings/consts";
 import { ComListModel } from "../../models/lists/comListModel";
-import { displayUnwatchedComs } from "../../utils/procedures";
 import TileSkeleton from "../loading/skeletons/tileSkeleton";
 import { UserModel } from "../../models/userModel";
 
@@ -19,7 +18,6 @@ export default function CitizensCom({ citizen }: CitizensComProps) {
   const { t } = useTranslation();
   const [comList] = useAtom(comListAtomV2);
   const [listChecked, setListChecked] = useState(false);
-  const [comShowed, setComShowed] = useState(false);
   const [citizenComList, setCitizenComList] = useState(new ComListModel());
 
   const filteredComList = useMemo(() => {
@@ -49,20 +47,6 @@ export default function CitizensCom({ citizen }: CitizensComProps) {
   useEffect(() => {
     setCitizenComList(filteredComList);
   }, [filteredComList]);
-
-  useEffect(() => {
-    if (
-      !comShowed &&
-      citizenComList.getItems().length > 0 &&
-      citizenComList.getItems()[0].destination === citizen.officialId
-    ) {
-      displayUnwatchedComs(citizen, citizenComList.getItems(), [
-        citizen.officialId,
-        COM_GENERAL_DESTINATION,
-      ]);
-      setComShowed(true);
-    }
-  }, [citizenComList, citizen.officialId]);
 
   return (
     <DashTile title={t("pages.citizen.privateCom")}>

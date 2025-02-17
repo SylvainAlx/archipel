@@ -17,6 +17,7 @@ import DateTag from "../tags/dateTag";
 import { PIONEER_DATE } from "../../settings/consts";
 import HonorTag from "../tags/honorTag";
 import { UserModel } from "../../models/userModel";
+import OnlineStatusTag from "../tags/onlineStatusTag";
 
 export interface CitizenTileProps {
   citizen: UserModel;
@@ -27,9 +28,12 @@ export default function CitizenTile({ citizen }: CitizenTileProps) {
   const emplacement = useLocation();
   const { t } = useTranslation();
   const [session] = useAtom(sessionAtom);
+  const [selfUser, setSelfUser] = useState(false);
+  const [sameNation, setSameNation] = useState(false);
   const [userPlan, setUserPlan] = useState("free");
   const pioneerDate = new Date(PIONEER_DATE);
   const citizenCreationDate = new Date(citizen.createdAt);
+  const citizenLastVisitDate = new Date(citizen.updatedAt);
 
   const handleClick = (event: React.MouseEvent<HTMLDivElement>) => {
     if (event.target === event.currentTarget) {
@@ -43,12 +47,28 @@ export default function CitizenTile({ citizen }: CitizenTileProps) {
     } else {
       setUserPlan("free");
     }
+    if (session.user.citizenship.nationId === citizen.citizenship.nationId) {
+      setSameNation(true);
+    } else {
+      setSameNation(false);
+    }
+    if (session.user.officialId === citizen.officialId) {
+      setSelfUser(true);
+    } else {
+      setSelfUser(false);
+    }
   }, [citizen]);
 
   return (
     <div
       onClick={handleClick}
-      className={`min-h-[100px] p-2 rounded flex flex-col items-center justify-between gap-3 bg-complementary hover:bg-complementary2 cursor-pointer shadow-xl ${(userPlan === "premium" || userPlan === "elite") && "border-2 border-solid border-secondary"}`}
+      className={`${
+        session.user.citizenship.nationOwner &&
+        sameNation &&
+        citizen.citizenship.status === 0
+          ? "bg-complementary2"
+          : "bg-complementary"
+      } min-h-[100px] p-2 rounded flex flex-col items-center justify-between gap-3 hover:bg-complementary2 cursor-pointer shadow-xl ${(userPlan === "premium" || userPlan === "elite") && "border-2 border-solid border-secondary"}`}
     >
       {userPlan != "free" && (
         <legend className="px-2">
@@ -74,13 +94,11 @@ export default function CitizenTile({ citizen }: CitizenTileProps) {
         </h3>
       </div>
       <div className="flex gap-1 flex-wrap items-center self-end">
-        {session.user.officialId != citizen.officialId && (
-          <ReportPanel content={citizen} center={false} />
-        )}
+        {!selfUser && <ReportPanel content={citizen} center={false} />}
       </div>
       {session.user.citizenship.nationOwner &&
-        session.user.citizenship.nationId === citizen.citizenship.nationId &&
-        session.user.officialId != citizen.officialId &&
+        sameNation &&
+        !selfUser &&
         emplacement.pathname != "/explore" &&
         citizen.citizenship.status > 0 && (
           <div className="w-max self-end">
@@ -110,6 +128,7 @@ export default function CitizenTile({ citizen }: CitizenTileProps) {
           )}
         <LanguagesTag language={citizen.language} />
         <DateTag date={citizen.createdAt} />
+        <OnlineStatusTag citizenLastVisitDate={citizenLastVisitDate} />
       </div>
     </div>
   );

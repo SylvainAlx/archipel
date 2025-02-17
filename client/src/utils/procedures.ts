@@ -1,6 +1,5 @@
 import i18n from "../i18n/i18n";
 import { ComModel } from "../models/comModel";
-import { UserModel } from "../models/userModel";
 import { deleteUploadedFileFetch } from "../services/fileService";
 import { COM_TYPE, UPLOADCARE_URL } from "../settings/consts";
 import { loadingAtom, myStore } from "../settings/store";
@@ -8,7 +7,7 @@ import { Nation } from "../types/typNation";
 import { User } from "../types/typUser";
 import { errorCatching } from "./displayInfos";
 import { getDocumentTitle } from "./functions";
-import { comMessage, successMessage } from "./toasts";
+import { successMessage } from "./toasts";
 
 export const deleteImage = async (url: string): Promise<boolean> => {
   const uuid: string = url.replace("https://ucarecdn.com/", "");
@@ -23,26 +22,6 @@ export const deleteImage = async (url: string): Promise<boolean> => {
   } finally {
     myStore.set(loadingAtom, false);
   }
-};
-
-export const displayUnwatchedComs = (
-  user: UserModel,
-  comList: ComModel[],
-  destinations: string[],
-) => {
-  comList.forEach((com) => {
-    if (
-      com.createdAt.toString() > user.lastVisitDate.toISOString() &&
-      com.destination &&
-      destinations.includes(com.destination)
-    ) {
-      const comDate = new Date(com.createdAt);
-      const comType = com.getComTypeLabel();
-      comMessage(
-        `${comDate.toLocaleString(i18n.language)} - [${comType && comType.label}] - ${com.title} - ${com.message}`,
-      );
-    }
-  });
 };
 
 export const createComByStatus = (

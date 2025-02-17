@@ -4,12 +4,18 @@ import {
   FaFlask,
   FaHandshakeSimple,
   FaMasksTheater,
+  FaPen,
   FaPersonMilitaryPointing,
 } from "react-icons/fa6";
 import CrossButton from "../buttons/crossButton";
 import { useEffect, useState } from "react";
 import { useAtom } from "jotai";
-import { confirmBox, myStore, sessionAtom } from "../../settings/store";
+import {
+  confirmBox,
+  myStore,
+  newRelationAtom,
+  sessionAtom,
+} from "../../settings/store";
 import { useTranslation } from "react-i18next";
 import NationTag from "../tags/nationTag";
 import HoverInfo from "../hoverInfo";
@@ -25,10 +31,15 @@ export default function RelationTile({ relation }: RelationTileProps) {
 
   const [nationIndex, setNationIndex] = useState(-1);
   const [session] = useAtom(sessionAtom);
+  const [needResponse, setNeedResponse] = useState(false);
   const { t } = useTranslation();
   const [hoverInfo, setHoverInfo] = useState("");
 
   useEffect(() => {
+    setNeedResponse(
+      relation.nations[1].OfficialId === session.user.citizenship.nationId &&
+        !relation.nations[1].accepted,
+    );
     relation.nations.forEach((rel, i) => {
       if (
         rel.OfficialId === session.user.citizenship.nationId &&
@@ -43,9 +54,7 @@ export default function RelationTile({ relation }: RelationTileProps) {
     const updatedRelation = new RelationModel(relation);
     updatedRelation.nations[nationIndex].accepted = true;
     myStore.set(confirmBox, {
-      action: "",
       text: t("components.modals.confirmModal.acceptRelation"),
-      result: "",
       actionToDo: async () => {
         await updatedRelation.baseUpdate(updatedRelation);
       },
@@ -56,9 +65,7 @@ export default function RelationTile({ relation }: RelationTileProps) {
     const updatedRelation = new RelationModel(relation);
     updatedRelation.nations[nationIndex].accepted = true;
     myStore.set(confirmBox, {
-      action: "",
       text: t("components.modals.confirmModal.refuseRelation"),
-      result: "",
       actionToDo: async () => {
         await updatedRelation.baseUpdate(updatedRelation);
       },
@@ -69,9 +76,7 @@ export default function RelationTile({ relation }: RelationTileProps) {
     const updatedRelation = new RelationModel(relation);
     updatedRelation.nations.splice(nationIndex, 1);
     myStore.set(confirmBox, {
-      action: "",
       text: t("components.modals.confirmModal.leaveRelation"),
-      result: "",
       actionToDo: async () => {
         await updatedRelation.baseUpdate(updatedRelation);
       },
@@ -80,7 +85,7 @@ export default function RelationTile({ relation }: RelationTileProps) {
 
   return (
     <div
-      className={`w-full p-2 rounded flex flex-col items-center gap-3 bg-complementary shadow-xl`}
+      className={`${needResponse ? "bg-complementary2" : "bg-complementary"} w-full p-2 rounded flex flex-col items-center gap-3 shadow-xl`}
     >
       <div className="w-full text-xl flex items-center justify-between gap-2">
         <div className="flex justify-center items-center gap-2 text-2xl text-info">
@@ -140,15 +145,22 @@ export default function RelationTile({ relation }: RelationTileProps) {
         </div>
         <div className="text-xl">{relation.name}</div>
       </div>
-
+      <div>
+        {relation.description != "" ? (
+          <p className="text-justify">{relation.description}</p>
+        ) : (
+          <em className="text-center">
+            {t("pages.nation.relations.noDescription")}
+          </em>
+        )}
+      </div>
       <div className="w-full flex flex-wrap items-center justify-end gap-1">
         {relation.nations.map((nation, i) => {
           return <NationTag key={i} label={nation.OfficialId} />;
         })}
       </div>
       <div className="flex items-center gap-1 self-end">
-        {relation.nations[1].OfficialId === session.user.citizenship.nationId &&
-        !relation.nations[1].accepted ? (
+        {needResponse ? (
           <>
             <Button
               text={t("components.buttons.accept")}
@@ -161,10 +173,23 @@ export default function RelationTile({ relation }: RelationTileProps) {
           </>
         ) : (
           nationIndex != -1 && (
-            <CrossButton
-              click={handleLeave}
-              text={t("components.buttons.break")}
-            />
+            <>
+              <Button
+                text={t("components.buttons.edit")}
+                click={() =>
+                  myStore.set(newRelationAtom, {
+                    update: true,
+                    show: true,
+                    relation,
+                  })
+                }
+                children={<FaPen />}
+              />
+              <CrossButton
+                click={handleLeave}
+                text={t("components.buttons.break")}
+              />
+            </>
           )
         )}
       </div>

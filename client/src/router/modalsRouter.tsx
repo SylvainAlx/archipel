@@ -2,6 +2,7 @@ import { useAtom } from "jotai";
 import {
   changePasswordModalAtom,
   confirmBox,
+  creditTransferAtom,
   editbox,
   editTileAtom,
   imageAtom,
@@ -27,10 +28,11 @@ import ImageModal from "../components/modals/imageModal";
 import MenuModal from "../components/modals/menuModal";
 import NewNationModal from "../components/modals/newNationModal";
 import { ChangePasswordModal } from "../components/modals/changePasswordModal";
-import NewRelationModal from "../components/modals/newRelationModal";
+import RelationModal from "../components/modals/relationModal";
 import TileFormModal from "../components/modals/tileFormModal";
 import NewComModal from "../components/modals/newComModal";
 import CookiesModal from "../components/modals/cookiesModal";
+import CreditTransferModal from "../components/modals/creditTransferModal";
 
 export default function ModalsRouter() {
   const [recovery] = useAtom(recoveryKey);
@@ -49,11 +51,12 @@ export default function ModalsRouter() {
   const [tile] = useAtom(editTileAtom);
   const [newCom] = useAtom(newComAtom);
   const [showCookiesModal] = useAtom(showCookiesModalAtom);
+  const [creditTransfer] = useAtom(creditTransferAtom);
 
   if (
     recovery != "" ||
     confirm.text != "" ||
-    info.text != "" ||
+    info.subtitle != "" ||
     loading ||
     editBox.original != -1 ||
     newPlace.nation != "" ||
@@ -64,13 +67,16 @@ export default function ModalsRouter() {
     changePassword ||
     newRelation.show ||
     tile.nationOfficialId != "" ||
-    newCom.origin != ""
+    newCom.origin != "" ||
+    creditTransfer.recipient.officialId != ""
   ) {
     return (
       <div
         className={`animate-in fade-in z-20 fixed top-0 w-screen h-screen ${(!loading || longLoading) && "bg-black_alpha backdrop-blur-sm"} flex items-center justify-center`}
       >
         <div
+          role="dialog"
+          aria-modal="true"
           className={`min-w-[350px] max-w-[90%] ${(!loading || longLoading) && "bg-slate-800"} rounded-md p-3 flex flex-col items-center gap-4`}
         >
           {loading ? (
@@ -82,7 +88,7 @@ export default function ModalsRouter() {
               ) : (
                 <>
                   {confirm.text != "" && <ConfirmModal />}
-                  {info.text != "" && <InfoModal />}
+                  {info.subtitle != "" && <InfoModal />}
                   {editBox.original != -1 && <EditBoxModal />}
                   {newPlace.nation != "" && <NewPlaceModal />}
                   {newCom.origin != "" && <NewComModal />}
@@ -92,9 +98,12 @@ export default function ModalsRouter() {
                   {newNation.owner != "" && <NewNationModal />}
                   {changePassword && <ChangePasswordModal />}
                   {newRelation.show && (
-                    <NewRelationModal update={newRelation.update} />
+                    <RelationModal update={newRelation.update} />
                   )}
                   {tile.nationOfficialId != "" && <TileFormModal />}
+                  {creditTransfer.recipient.officialId != "" && (
+                    <CreditTransferModal />
+                  )}
                   {showCookiesModal && <CookiesModal />}
                 </>
               )}

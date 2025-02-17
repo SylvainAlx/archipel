@@ -6,7 +6,7 @@ import useDebugAtom from "./hooks/useDebugAtom";
 import { SERVER_URL } from "./settings/consts";
 
 export default function App() {
-  SERVER_URL.includes("localhost") && useDebugAtom();
+  SERVER_URL && SERVER_URL.includes("localhost") && useDebugAtom();
   return (
     <>
       <Header />

@@ -9,6 +9,7 @@ import {
   handleError,
 } from "../utils/functions.js";
 import { GIFTS } from "../settings/const.js";
+import { getUserByOfficialId } from "../services/userService.js";
 
 export const nationsCount = async (req, res) => {
   try {
@@ -273,6 +274,67 @@ export const getTags = async (req, res) => {
       },
     ]);
     res.status(200).json(tags.length > 0 ? tags : []);
+  } catch (error) {
+    handleError(error, res);
+  }
+};
+
+export const transferCredits = async (req, res) => {
+  try {
+    const { nationOwnerId, recipientId, amount } = req.body;
+    const userId = req.userId;
+    if (userId != nationOwnerId) {
+      return res
+        .status(403)
+        .json({ infoType: "403", message: "Transfert interdit" });
+    }
+    if (!recipientId || !amount || amount <= 0) {
+      return res
+        .status(400)
+        .json({ infoType: "400", message: "Montant invalide" });
+    }
+    const nationOwner = await getUserByOfficialId(nationOwnerId, 404);
+    const sender = await Nation.findOne({
+      officialId: nationOwner.citizenship.nationId,
+    });
+    if (sender.data.roleplay.treasury < amount) {
+      return res
+        .status(403)
+        .json({ infoType: "403", message: "Crédits insuffisants" });
+    }
+
+    let recipientUser = null;
+    let recipientNation = null;
+
+    if (recipientId.charAt(2) === "n") {
+      recipientNation = await Nation.findOne({ officialId: recipientId });
+      if (!recipientNation) {
+        return res
+          .status(404)
+          .json({ infoType: "404", message: "Nation introuvable" });
+      }
+      recipientNation.data.roleplay.treasury += amount;
+    } else if (recipientId.charAt(2) === "c") {
+      recipientUser = await getUserByOfficialId(recipientId, 404);
+      recipientUser.credits += amount;
+    } else {
+      return res
+        .status(400)
+        .json({ infoType: "400", message: "ID de destinataire invalide" });
+    }
+
+    sender.data.roleplay.treasury -= amount;
+    await sender.save();
+    if (recipientUser) await recipientUser.save();
+    if (recipientNation) await recipientNation.save();
+
+    return res.status(200).json({
+      sender,
+      recipientUser: recipientUser || undefined,
+      recipientNation: recipientNation || undefined,
+      infoType: "transfer",
+      message: "Transfert réussi",
+    });
   } catch (error) {
     handleError(error, res);
   }

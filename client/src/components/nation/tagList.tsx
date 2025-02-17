@@ -1,6 +1,6 @@
 import { useTranslation } from "react-i18next";
 import { Nation } from "../../types/typNation";
-import EditIcon from "../editIcon";
+import EditButton from "../buttons/editButton";
 import HashTag from "../tags/hashTag";
 
 interface TagListProps {
@@ -36,12 +36,14 @@ export default function TagList({
         />
       )}
       {owner && updatePath && (
-        <EditIcon
-          target="nation"
-          param={nation.data.general.tags}
-          path="data.general.tags"
-          indice="tags"
-          action={updatePath}
+        <EditButton
+          editBox={{
+            target: "nation",
+            original: nation.data.general.tags,
+            new: nation.data.general.tags,
+            path: "data.general.tags",
+            action: updatePath,
+          }}
         />
       )}
     </div>
