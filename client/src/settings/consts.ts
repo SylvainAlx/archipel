@@ -55,7 +55,7 @@ export const MAX_LENGTH = {
     placeDescription: 2000,
     relationDescription: 100,
     textArea: 60,
-    input: 20,
+    input: 40,
   },
   array: {
     tags: 5,
