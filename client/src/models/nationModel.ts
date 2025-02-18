@@ -4,6 +4,7 @@ import {
   DeleteSelfFetch,
   getAllNationTagsFetch,
   getOneNationFetch,
+  giveOwnershipFetch,
   transferCreditsFetch,
   updateNationFetch,
 } from "../services/nationService";
@@ -197,6 +198,65 @@ export class NationModel extends CommonModel implements Nation {
       myStore.set(loadingAtom, false);
     }
   };
+  giveOwnership = async (buyerOfficialId: string) => {
+    myStore.set(loadingAtom, true);
+    try {
+      const resp: {
+        seller: User;
+        buyer: User;
+        nation: Nation;
+        infoType: string;
+      } = await giveOwnershipFetch({
+        nationOfficialId: this.officialId,
+        sellerOfficialId: myStore.get(sessionAtom).user.officialId,
+        buyerOfficialId,
+      });
+      this.updateFields(resp.nation);
+      myStore.get(nationListAtomV2).addToNationListAtom([resp.nation]);
+      myStore.get(userListAtomV2).addToUserListAtom([resp.seller]);
+      myStore.get(userListAtomV2).addToUserListAtom([resp.buyer]);
+      myStore.get(sessionAtom).user.updateSessionAtom(resp.seller);
+      this.displayNationInfoByType(resp.infoType);
+      const newCom1 = new ComModel({
+        comType: COM_TYPE.userPrivate.id,
+        origin: resp.nation.officialId,
+        destination: resp.seller.officialId,
+        title: i18n.t("coms.giveOwnership.title") + resp.nation.name,
+        message:
+          resp.seller.name +
+          i18n.t("coms.giveOwnership.message") +
+          resp.buyer.name,
+      });
+      newCom1.baseInsert();
+      const newCom2 = new ComModel({
+        comType: COM_TYPE.userPrivate.id,
+        origin: resp.nation.officialId,
+        destination: resp.buyer.officialId,
+        title: i18n.t("coms.giveOwnership.title") + resp.nation.name,
+        message:
+          resp.seller.name +
+          i18n.t("coms.giveOwnership.message") +
+          resp.buyer.name,
+      });
+      newCom2.baseInsert();
+      const newCom3 = new ComModel({
+        comType: COM_TYPE.nationPrivate.id,
+        origin: resp.nation.officialId,
+        destination: resp.nation.officialId,
+        title: i18n.t("coms.giveOwnership.title") + resp.nation.name,
+        message:
+          resp.seller.name +
+          i18n.t("coms.giveOwnership.message") +
+          resp.buyer.name,
+      });
+      newCom3.baseInsert();
+    } catch (error) {
+      errorCatching(error);
+    } finally {
+      myStore.set(loadingAtom, false);
+      return new NationModel(this);
+    }
+  };
   baseInsert = async () => {
     myStore.set(loadingAtom, true);
     try {
@@ -282,6 +342,9 @@ export class NationModel extends CommonModel implements Nation {
         break;
       case "transfer":
         successMessage(i18n.t("toasts.creditTransferSuccess"));
+        break;
+      case "updateOnwership":
+        successMessage("droits de gestion cédés");
         break;
       default:
         break;

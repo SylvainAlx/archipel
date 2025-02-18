@@ -173,12 +173,14 @@
       "edit": "edit",
       "markAsRead": "mark as read",
       "markAsUnread": "mark as unread",
-      "transferCredits": "transfer credits"
+      "transferCredits": "transfer credits",
+      "giveOwnership": "transfer of power"
     },
     "form": {
       "input": {
         "name": "name",
-        "password": "password"
+        "password": "password",
+        "buyerOfficialId": "Please enter the unique identifier of the designated citizen (in the form: **c********)"
       },
       "select": {
         "choose": "choose",
@@ -219,7 +221,8 @@
         "createCom": "confirm new communication ?",
         "deleteCom": "delete communication ?",
         "reportContent": "confirm reporting the content to the administrator ?",
-        "transferCredits": "confirm credit transfer ?"
+        "transferCredits": "confirm credit transfer ?",
+        "giveOwnership": "confirm transfer of power ?"
       },
       "cookiesModal": {
         "text": "this site uses cookies to improve your user experience",

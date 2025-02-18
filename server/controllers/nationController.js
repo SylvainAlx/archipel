@@ -339,3 +339,45 @@ export const transferCredits = async (req, res) => {
     handleError(error, res);
   }
 };
+
+export const giveOwnership = async (req, res) => {
+  try {
+    const { nationOfficialId, sellerOfficialId, buyerOfficialId } = req.body;
+    if (req.userId === sellerOfficialId) {
+      const seller = await User.findOne({ officialId: sellerOfficialId });
+      const buyer = await User.findOne({ officialId: buyerOfficialId });
+      if (
+        seller &&
+        buyer &&
+        seller.citizenship.nationId === nationOfficialId &&
+        buyer.citizenship.nationId === nationOfficialId
+      ) {
+        seller.citizenship.nationOwner = false;
+        await seller.save();
+        buyer.citizenship.nationOwner = true;
+        await buyer.save();
+        const nation = await Nation.findOne(
+          { officialId: nationOfficialId },
+          "officialId name owner role reported banished data createdAt",
+        );
+        nation.owner = buyerOfficialId;
+        await nation.save();
+        res.status(200).json({
+          seller,
+          buyer,
+          nation,
+          infoType: "updateOnwership",
+        });
+      } else {
+        return res.status(403).json({
+          infoType: "403",
+          message: "Vous ne pouvez pas acquérir l'héritage de cette nation",
+        });
+      }
+    } else {
+      res.sendStatus(403).json({ infoType: "403" });
+    }
+  } catch (error) {
+    handleError(error, res);
+  }
+};

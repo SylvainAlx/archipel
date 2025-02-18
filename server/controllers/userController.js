@@ -11,7 +11,6 @@ import {
 import { GIFTS } from "../settings/const.js";
 import {
   getUserByName,
-  getLastVisitDate,
   getRecoveryWords,
   getUserByOfficialId,
 } from "../services/userService.js";

@@ -117,3 +117,9 @@ export interface TranferCreditPayload {
   recipientId: string;
   amount: number;
 }
+
+export interface GiveOwnershipPayload {
+  nationOfficialId: string;
+  sellerOfficialId: string;
+  buyerOfficialId: string;
+}

@@ -37,16 +37,6 @@ export const getUserByOfficialId = async (
   }
 };
 
-export const getLastVisitDate = (user, ip) => {
-  let date = new Date();
-  for (const address of user.ip) {
-    if (address.value === ip) {
-      date = new Date(address.lastVisit);
-    }
-  }
-  return date;
-};
-
 export const getRecoveryWords = () => {
   const recovery = bip39.generateMnemonic();
   return recovery;

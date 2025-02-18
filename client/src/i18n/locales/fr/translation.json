@@ -173,12 +173,14 @@
       "edit": "éditer",
       "markAsRead": "non lu",
       "markAsUnread": "lu",
-      "transferCredits": "envoyer des credits"
+      "transferCredits": "envoyer des credits",
+      "giveOwnership": "passation de pouvoir"
     },
     "form": {
       "input": {
         "name": "nom",
-        "password": "mot de passe"
+        "password": "mot de passe",
+        "buyerOfficialId": "merci de renseigner l'identifiant unique du citoyen désigné (sous la forme: **c********)"
       },
       "select": {
         "choose": "choisir",
@@ -219,7 +221,8 @@
         "createCom": "confirmez-vous la création de la communication ?",
         "deleteCom": "confirmez-vous la suppression définitive de la communication ?",
         "reportContent": "confirmez-vous le signalement du contenu à l'administrateur ?",
-        "transferCredits": "confirmez-vous le virement ?"
+        "transferCredits": "confirmez-vous le virement ?",
+        "giveOwnership": "confirmez-vous la passation de pouvoir ?"
       },
       "cookiesModal": {
         "text": "ce site utilise des cookies pour améliorer votre expérience utilisateur",
@@ -550,6 +553,10 @@
     "nationToWait": {
       "title": "Vie de la nation ",
       "message": "Demande de citoyenneté en attente d'approbation"
+    },
+    "giveOwnership": {
+      "title": "Vie de la nation ",
+      "message": " a transmis l'édition de la nation à "
     },
     "relationToAccept": {
       "title": "Diplomatie",

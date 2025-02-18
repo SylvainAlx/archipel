@@ -22,6 +22,8 @@ import MapSkeleton from "../components/loading/skeletons/mapSkeleton";
 import TileSkeleton from "../components/loading/skeletons/tileSkeleton";
 import { useLoadNationPlaces } from "../hooks/useLoadNationPlaces";
 import CreditTransferButton from "../components/buttons/creditTransferButton";
+import Button from "../components/buttons/button";
+import { FaExchangeAlt } from "react-icons/fa";
 
 export default function Nation() {
   const [nation, setNation] = useState<NationModel>(new NationModel());
@@ -85,6 +87,23 @@ export default function Nation() {
         navigate(`/citizen/${session.user.officialId}`);
       },
     });
+  };
+
+  const giveOwnerShip = () => {
+    const buyerOfficialId = window.prompt(
+      t("components.form.input.buyerOfficialId"),
+    );
+    if (buyerOfficialId) {
+      myStore.set(confirmBox, {
+        text: t("components.modals.confirmModal.giveOwnership"),
+        actionToDo: async () => {
+          const updatedNation = await nation.giveOwnership(
+            buyerOfficialId.toLowerCase(),
+          );
+          setNation(updatedNation);
+        },
+      });
+    }
   };
 
   const updatePath = (
@@ -183,10 +202,17 @@ export default function Nation() {
           )}
           <section className="pt-10 flex flex-col items-center gap-4">
             {owner ? (
-              <CrossButton
-                text={t("components.buttons.deleteNation")}
-                click={handleDelete}
-              />
+              <>
+                <CrossButton
+                  text={t("components.buttons.deleteNation")}
+                  click={handleDelete}
+                />
+                <Button
+                  text={t("components.buttons.giveOwnership")}
+                  click={giveOwnerShip}
+                  children={<FaExchangeAlt />}
+                />
+              </>
             ) : (
               session.user.officialId != "" && <ReportPanel content={nation} />
             )}
