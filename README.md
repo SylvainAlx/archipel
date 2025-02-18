@@ -1,8 +1,8 @@
 # Archipel
 
-## Version : BETA-0.7
+## Version : RC-1.0.0
 
-Archipel est actuellement en version **BETA-0.7** et toujours en phase de développement.  
+Archipel est actuellement en version **RC-1.0.0** et toujours en phase de test.  
 Certaines fonctionnalités peuvent être incomplètes ou sujettes à modification.
 
 ### 📌 **État actuel :**

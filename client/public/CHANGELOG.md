@@ -1,17 +1,49 @@
 ## Version actuelle
 
+### RC-1.0.0
+
+#### Ajouts
+
+[- nom de domaine disponible]
+[- autorisation des crawlers]
+
+#### Suppressions
+
+#### Modifications & Corrections
+
+[- mise à jour des CGU]
+[- mise à jour des dépendances du code source]
+[- tests effectués sur plusieurs navigateurs web]
+
+## Développements à venir
+
+- Créer une organisation ou en rejoindre une
+- Créer des items et les proposer à l'acquisition aux citoyens
+- Ajouter les hymnes des nations
+- Créer une gazette des nations en se basant sur les communiqués
+- Montrer la répartitions des langues parlées dans chaque nation
+- Créer une aide pour les premiers pas d'un utilisateur
+- Exporter une carte d'identité virtuelle sous forme d'image
+- Améliorer le référencement et l'accessibilité
+- Étendre les fonctionnalités pour les utilisateurs mobile
+- Lier les lieux de la nation à un emplacement sur la carte
+- Améliorer des traductions
+- Carte virtuelle d'Archipel avec l'ensemble des nations représentées
+
+## Versions précédentes
+
 ### BETA-0.7
 
 #### Ajouts
 
 - Ajout d'une description lors de la création d'une nouvelle relation diplomatique
 - Pouvoir modifier une relation diplomatique
-- Virements de crédits possiblent entre citoyens et entre nations
-- Ajout du status en ligne et date de dernière visite des utilisateurs
+- Virements de crédits possibles entre citoyens et entre nations
+- Ajout du statu en ligne et date de dernière visite des utilisateurs
 
 #### Suppressions
 
-aucunes
+Aucune
 
 #### Modifications & Corrections
 
@@ -25,24 +57,6 @@ aucunes
 - Amélioration du comportement des fenêtres modales
 - Amélioration de l'accessibilité
 - Modification du générateur de clés de récupération de compte
-
-## Développements à venir
-
-- Créer une organisation ou en rejoindre une
-- Créer des items et les proposer à l'acquisition aux citoyens
-- Ajouter les hymnes des nations
-- Créer une gazette des nations en se basant sur les communiqués
-- Montrer la répartitions des langues parlées dans chaque nation
-- Créer une aide pour les premiers pas d'un utilisateur
-- Améliorer le système de notifications
-- Exporter une carte d'identité virtuelle sous forme d'image
-- Améliorer le référencement et l'accessibilité
-- Étendre les fonctionnalités pour les utilisateurs mobile
-- Lier les lieux de la nation à un emplacement sur la carte
-- Améliorer des traductions
-- Carte virtuelle d'Archipel avec l'ensemble des nations représentées
-
-## Versions précédentes
 
 ### BETA-0.6
 
@@ -82,7 +96,7 @@ aucunes
 
 #### Suppressions
 
-aucune
+Aucune
 
 #### Modifications & Corrections
 

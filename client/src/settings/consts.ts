@@ -16,8 +16,8 @@ export const SOL_PUBLIC_KEY = import.meta.env.VITE_SOL_PUBLIC_KEY;
 export const ADA_PUBLIC_KEY = import.meta.env.VITE_ADA_PUBLIC_KEY;
 
 export const VERSION = {
-  beta: "0.7",
-  rc: "",
+  beta: "",
+  rc: "1.0.0",
   release: "",
   testing: true,
 };

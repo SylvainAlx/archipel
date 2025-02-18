@@ -15,7 +15,7 @@ export default function ReleaseNotesLink({
       onClick={() => navigate("/releasenotes")}
     >
       {VERSION.beta != "" && "BETA-" + VERSION.beta}
-      {VERSION.rc != "" && VERSION.rc}
+      {VERSION.rc != "" && "RC-" + VERSION.rc}
       {VERSION.release != "" && VERSION.release}
     </button>
   );
