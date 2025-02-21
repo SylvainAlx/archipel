@@ -4,7 +4,6 @@ import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { useAtom } from "jotai";
 import MenuButton from "./buttons/menuButton";
-import LangButton from "./buttons/langButton";
 import { NationModel } from "../models/nationModel";
 import { useEffect, useState } from "react";
 
@@ -77,8 +76,7 @@ export default function Nav() {
           action={() => navigate(`/admin`)}
         />
       )}
-      <div className="pt-2 flex flex-col self-start">
-        <LangButton />
+      <div className="self-center">
         <MenuButton />
       </div>
     </>

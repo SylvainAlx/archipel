@@ -46,6 +46,7 @@ export const emptyInfo: InfoModal = {
 export interface StandardOption {
   id: number | string;
   label: string;
+  descriptions?: string;
 }
 
 export interface Counts {

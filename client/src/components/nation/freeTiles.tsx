@@ -58,7 +58,7 @@ export default function FreeTiles({
       newTile.nationOfficialId = selectedNation.officialId;
       setEditTile(new TileModel(newTile));
     } else {
-      errorMessage(t("toasts.nation.notEnoughCredits"));
+      errorMessage(t("toasts.errors.notEnoughCredits"));
     }
   };
 

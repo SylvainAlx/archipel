@@ -92,7 +92,7 @@ export default function Settings({ citizen }: SettingsProps) {
               {/* {userPlan === "free" && (
                 <PlanButton
                   click={() =>
-                    errorMessage(t("toasts.user.subscriptionNotReady"))
+                    errorMessage(t("toasts.errors.subscriptionNotReady"))
                   }
                 />
               )} */}

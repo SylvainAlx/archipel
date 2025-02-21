@@ -1,5 +1,4 @@
 import User from "../models/userSchema.js";
-import { LoremIpsum } from "lorem-ipsum";
 import bip39 from "bip39";
 
 export const getUserByName = async (name) => {

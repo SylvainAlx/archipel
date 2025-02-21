@@ -27,7 +27,7 @@ export default function TermsOfService() {
   };
 
   return (
-    <section className="w-full max-w-xl px-2 pb-2 flex flex-col items-center gap-2">
+    <section className="w-full max-w-2xl px-2 pb-2 flex flex-col items-center gap-2">
       {lang === langOptions[1].id ? (
         <H1 text="Conditions générales d'utilisation" />
       ) : (

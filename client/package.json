@@ -1,11 +1,12 @@
 {
-  "name": "navir-client",
+  "name": "archipel-client",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
+    "generate:sitemap": "node scripts/generate-sitemap.js",
+    "build": "npm run generate:sitemap && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "format": "prettier --write \"src/**/*.{ts,tsx}\""
@@ -42,10 +43,12 @@
     "autoprefixer": "^10.4.16",
     "postcss": "^8.4.31",
     "prettier": "^3.4.2",
+    "sitemap": "^8.0.0",
     "tailwindcss": "^3.3.5",
     "typescript": "^5.7.3",
     "vite": "^6.1.0",
     "vite-plugin-pwa": "^0.21.1",
+    "vite-plugin-static-copy": "^2.2.0",
     "workbox-window": "^7.0.0"
   }
 }

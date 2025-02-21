@@ -1,15 +1,15 @@
-import { useNavigate } from "react-router-dom";
 import { StandardOption } from "../types/typAtom";
 
 export interface TabNavProps {
   tabs: Array<StandardOption>;
   tabId: number | string;
+  click: (id: number) => void;
+  bgColor?: string;
 }
 
-export default function TabNav({ tabs, tabId }: TabNavProps) {
-  const navigate = useNavigate();
+export default function TabNav({ tabs, tabId, click, bgColor }: TabNavProps) {
   return (
-    <nav className="w-max flex flex-col md:flex-row justify-center items-center gap-[2px] rounded overflow-hidden">
+    <nav className="flex flex-wrap justify-center items-center gap-[2px] rounded overflow-hidden">
       {tabs.map((tab, i) => {
         return (
           <button
@@ -17,9 +17,11 @@ export default function TabNav({ tabs, tabId }: TabNavProps) {
             className={`relative ${
               tab.id === tabId
                 ? "bg-gradient-to-r from-secondary2 to-secondary"
-                : "bg-complementary cursor-pointer"
-            } w-full min-w-[300px] md:min-w-max p-2 flex items-center justify-center hover:bg-secondary transition-all duration-300`}
-            onClick={() => navigate("/explore/" + tab.id.toString())}
+                : bgColor
+                  ? `${bgColor} cursor-pointer`
+                  : "bg-complementary cursor-pointer"
+            } min-w-[300px] md:min-w-max p-2 flex items-center justify-center hover:bg-secondary transition-all duration-300`}
+            onClick={() => click(Number(tab.id))}
           >
             {tab.label.toUpperCase()}
           </button>

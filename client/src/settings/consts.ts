@@ -19,7 +19,7 @@ export const VERSION = {
   beta: "",
   rc: "1.0.0",
   release: "",
-  testing: true,
+  testing: false,
 };
 
 export const APP_NAME = i18n.t("components.logo.title");

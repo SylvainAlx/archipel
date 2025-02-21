@@ -15,6 +15,7 @@ import {
   newRelationAtom,
   recoveryKey,
   showCookiesModalAtom,
+  showHelpAtom,
   showLangModalAtom,
   showMenuAtom,
 } from "../settings/store";
@@ -33,6 +34,7 @@ import TileFormModal from "../components/modals/tileFormModal";
 import NewComModal from "../components/modals/newComModal";
 import CookiesModal from "../components/modals/cookiesModal";
 import CreditTransferModal from "../components/modals/creditTransferModal";
+import HelpModal from "../components/modals/helpModal";
 
 export default function ModalsRouter() {
   const [recovery] = useAtom(recoveryKey);
@@ -52,6 +54,7 @@ export default function ModalsRouter() {
   const [newCom] = useAtom(newComAtom);
   const [showCookiesModal] = useAtom(showCookiesModalAtom);
   const [creditTransfer] = useAtom(creditTransferAtom);
+  const [showHelp] = useAtom(showHelpAtom);
 
   if (
     recovery != "" ||
@@ -68,7 +71,8 @@ export default function ModalsRouter() {
     newRelation.show ||
     tile.nationOfficialId != "" ||
     newCom.origin != "" ||
-    creditTransfer.recipient.officialId != ""
+    creditTransfer.recipient.officialId != "" ||
+    showHelp
   ) {
     return (
       <div
@@ -105,6 +109,7 @@ export default function ModalsRouter() {
                     <CreditTransferModal />
                   )}
                   {showCookiesModal && <CookiesModal />}
+                  {showHelp && <HelpModal />}
                 </>
               )}
             </>

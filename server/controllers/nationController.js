@@ -298,9 +298,10 @@ export const transferCredits = async (req, res) => {
       officialId: nationOwner.citizenship.nationId,
     });
     if (sender.data.roleplay.treasury < amount) {
-      return res
-        .status(403)
-        .json({ infoType: "403", message: "Crédits insuffisants" });
+      return res.status(403).json({
+        infoType: "notEnoughCredits",
+        message: "Crédits insuffisants",
+      });
     }
 
     let recipientUser = null;
@@ -342,9 +343,17 @@ export const transferCredits = async (req, res) => {
 
 export const giveOwnership = async (req, res) => {
   try {
-    const { nationOfficialId, sellerOfficialId, buyerOfficialId } = req.body;
+    const { nationOfficialId, sellerOfficialId, buyerOfficialId, password } =
+      req.body;
     if (req.userId === sellerOfficialId) {
       const seller = await User.findOne({ officialId: sellerOfficialId });
+      if (!password) {
+        return res.status(400).json({ infoType: "400" });
+      }
+      const isMatch = await seller.comparePassword(password);
+      if (!isMatch) {
+        return res.status(401).json({ infoType: "badPassword" });
+      }
       const buyer = await User.findOne({ officialId: buyerOfficialId });
       if (
         seller &&

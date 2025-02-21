@@ -7,7 +7,7 @@ export default function MenuButton() {
     <div className={`md:hidden h-full hover:text-secondary`}>
       <Button
         text=""
-        children={<IoMenu className="flex items-center gap-1" />}
+        children={<IoMenu className="text-5xl flex items-center gap-1" />}
         click={() => myStore.set(showMenuAtom, true)}
         bgColor="bg-invisible"
       />

@@ -2,9 +2,9 @@
   "pages": {
     "home": {
       "title": "bienvenue",
-      "presentation1": "Bienvenue dans votre espace dédié aux micronations et nations virtuelles ! Que vous soyez membre d'une micronation sérieuse ou passionné de role-play dans des univers imaginaires, notre application est là pour vous. Rejoignez une communauté dynamique, échangez, collaborez et faites briller votre nation dans un espace conçu pour vous rapprocher. Créez des liens, partagez vos projets, et faites vivre votre vision !",
-      "presentation2": "En tant que leader, vous avez la possibilité de façonner votre nation à votre image. Ajoutez un drapeau qui incarne vos valeurs, définissez une devise qui inspire votre communauté, rédigez une description détaillée pour présenter votre vision. Vous pouvez également cartographier votre territoire en ajoutant des lieux importants et marquer ainsi l’identité unique de votre nation. Transformez votre rêve en une réalité virtuelle, et faites rayonner votre nation auprès des autres !",
-      "presentation3": "Tissez des liens diplomatiques et créez des alliances ! Notre plateforme vous offre l’opportunité d’interagir avec d’autres nations, qu’elles soient réelles ou virtuelles. Initiez des relations diplomatiques, négociez des accords, formez des alliances stratégiques ou organisez des événements communs. Élargissez l’influence de votre nation en construisant des ponts entre les cultures et en collaborant avec d’autres leaders. Ensemble, donnez une nouvelle dimension à vos ambitions !"
+      "presentation1": "Bienvenue dans votre espace dédié aux **micronations** et **nations virtuelles** ! Que vous soyez membre d'une micronation **sérieuse** ou passionné de **role-play** dans des **univers imaginaires**, notre application est là pour vous. Rejoignez une communauté **dynamique**, échangez, collaborez et faites briller votre nation dans un espace conçu pour vous rapprocher. **Créez** des liens, **partagez** vos projets, et **faites vivre** votre vision !",
+      "presentation2": "En tant qu'éditeur, vous avez la possibilité de **façonner votre nation** à votre goût. Ajoutez un **drapeau** qui incarne vos valeurs, définissez une **devise** qui inspire votre communauté, rédigez une **description détaillée** pour présenter votre vision. Vous pouvez également **cartographier votre territoire** en ajoutant des lieux importants et marquer ainsi l’identité unique de votre nation. Transformez votre rêve en une réalité virtuelle, et faites rayonner votre nation auprès des autres !",
+      "presentation3": "Tissez des liens diplomatiques et créez des alliances ! Notre plateforme vous offre l’opportunité d’interagir avec d’autres nations, qu’elles soient réelles ou virtuelles. Initiez des **relations diplomatiques**, négociez des accords, formez des alliances stratégiques ou organisez des événements communs. Élargissez l’influence de votre nation en construisant des **ponts entre les cultures** et en collaborant avec d’autres leaders. Ensemble, donnez une nouvelle dimension à vos ambitions !"
     },
     "lobby": {
       "password": "Renseignez le mot de passe pour accéder à l'application",
@@ -371,7 +371,9 @@
           "ascAlpha": "alphabetique croissant",
           "descAlpha": "alphabetique décroissant",
           "ascDate": "date d'inscription croissante",
-          "descDate": "date d'inscription décroissante"
+          "descDate": "date d'inscription décroissante",
+          "ascVisit": "dernière date de visite croissante",
+          "descVisit": "dernière date de visite décroissante"
         }
       },
       "placesList": {
@@ -475,7 +477,15 @@
       "500": "Erreur serveur",
       "11000": "Information déjà existante",
       "nsfw": "L'image contient du contenu NSFW ! Notification envoyée à l'administrateur",
-      "offline": "Vous êtes hors ligne !"
+      "offline": "Vous êtes hors ligne !",
+      "badUser": "Utilisateur inconnu",
+      "badPassword": "Mot de passe erroné",
+      "badRecovery": "Clé de récupération erronée",
+      "oldJwt": "session expirée",
+      "subscriptionNotReady": "La souscription n'est pas encore disponible",
+      "ipbanned": "Votre adresse IP a été banni de Archipel",
+      "creditsNotReady": "L'ajout de crédits n'est pas encore disponible",
+      "notEnoughCredits": "Crédits insuffisants"
     },
     "user": {
       "signIn": "Connexion réussie",
@@ -486,21 +496,13 @@
       "save": "Sauvegarde effectuée",
       "add": "Ajout effectué",
       "new": "Création réussie",
-      "badUser": "Utilisateur inconnu",
-      "badPassword": "Mot de passe erroné",
       "newPassword": "Nouveau mot de passe pris en compte",
-      "badRecovery": "Clé de récupération erronée",
-      "deleteKO": "impossible de supprimer l'utilisateur",
-      "update": "Mise à jour réussie",
-      "creditsNotReady": "L'ajout de crédits n'est pas encore disponible",
-      "subscriptionNotReady": "La souscription n'est pas encore disponible",
-      "ipbanned": "Votre adresse IP a été banni de Archipel"
+      "update": "Mise à jour réussie"
     },
     "nation": {
       "create": "Nouvelle nation créée",
       "update": "Nation modifiée",
-      "delete": "Nation supprimée",
-      "notEnoughCredits": "Crédits insuffisants"
+      "delete": "Nation supprimée"
     },
     "relation": {
       "create": "Nouvelle relation diplomatique créée",

@@ -23,9 +23,7 @@ const IpIsBanished = async (AUserIp, res) => {
         props: { $elemMatch: { label: "ip", value: AUserIp } },
       })) != null;
     if (banned) {
-      let error = new Error();
-      error.code = 403;
-      throw error;
+      return res.status(403).json({ infoType: "ipbanned" });
     }
   } catch (error) {
     handleError(error, res);
@@ -90,19 +88,19 @@ export const login = async (req, res) => {
 
     const { name, password } = req.body;
     const user = await getUserByName(name);
-    if (!user) {
-      return res.status(404).json({ infoType: "404" });
-    }
     const isMatch = await user.comparePassword(password);
     if (!isMatch) {
-      return res.status(401).json({ infoType: "401" });
+      return res.status(401).json({ infoType: "badPassword" });
     }
-
     const jwt = user.createJWT();
     await updateUserIpAddress(user, userIp);
     res.status(200).json({ user, jwt, infoType: "signin" });
   } catch (error) {
-    handleError(error, res);
+    if (error.code === 404) {
+      return res.status(404).json({ infoType: "badUser" });
+    } else {
+      handleError(error, res);
+    }
   }
 };
 
@@ -124,14 +122,11 @@ export const forgetPassword = async (req, res) => {
     const { name, recovery, newPassword } = req.body;
 
     const user = await getUserByName(name);
-    if (!user) {
-      return res.status(404).json({ infoType: "404" });
-    }
 
     const isMatch = await user.compareRecovery(recovery);
 
     if (!isMatch) {
-      return res.status(401).json({ infoType: "401" });
+      return res.status(401).json({ infoType: "badRecovery" });
     }
 
     user.password = newPassword;
@@ -139,7 +134,11 @@ export const forgetPassword = async (req, res) => {
 
     return res.status(200).json({ infoType: "newPassword" });
   } catch (error) {
-    handleError(error, res);
+    if (error.code === 404) {
+      return res.status(404).json({ infoType: "badUser" });
+    } else {
+      handleError(error, res);
+    }
   }
 };
 
@@ -150,7 +149,7 @@ export const changePassword = async (req, res) => {
     const user = await getUserByOfficialId(userId, 404, true);
     const isMatch = await user.comparePassword(oldPassword);
     if (!isMatch) {
-      return res.status(403).json({ infoType: "403" });
+      return res.status(403).json({ infoType: "badPassword" });
     }
     user.password = newPassword;
     await user.save();
@@ -423,7 +422,10 @@ export const transferCredits = async (req, res) => {
     if (sender.credits < amount) {
       return res
         .status(403)
-        .json({ infoType: "403", message: "Crédits insuffisants" });
+        .json({
+          infoType: "notEnoughCredits",
+          message: "Crédits insuffisants",
+        });
     }
 
     let recipientUser = null;

@@ -10,13 +10,13 @@ export default function ReleaseNotesLink({
 }: ReleaseNotesLinkProps) {
   const navigate = useNavigate();
   return (
-    <button
+    <div
       className={`${smallSize ? "text-[12px]" : "text-sm"} cursor-pointer hover:text-secondary`}
       onClick={() => navigate("/releasenotes")}
     >
       {VERSION.beta != "" && "BETA-" + VERSION.beta}
       {VERSION.rc != "" && "RC-" + VERSION.rc}
       {VERSION.release != "" && VERSION.release}
-    </button>
+    </div>
   );
 }

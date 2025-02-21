@@ -94,15 +94,19 @@ export default function Nation() {
       t("components.form.input.buyerOfficialId"),
     );
     if (buyerOfficialId) {
-      myStore.set(confirmBox, {
-        text: t("components.modals.confirmModal.giveOwnership"),
-        actionToDo: async () => {
-          const updatedNation = await nation.giveOwnership(
-            buyerOfficialId.toLowerCase(),
-          );
-          setNation(updatedNation);
-        },
-      });
+      const password = window.prompt(t("components.form.input.password"));
+      if (password) {
+        myStore.set(confirmBox, {
+          text: t("components.modals.confirmModal.giveOwnership"),
+          actionToDo: async () => {
+            const updatedNation = await nation.giveOwnership(
+              buyerOfficialId.toLowerCase(),
+              password,
+            );
+            setNation(updatedNation);
+          },
+        });
+      }
     }
   };
 

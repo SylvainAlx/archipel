@@ -15,7 +15,11 @@ import { Nation } from "../../types/typNation";
 import { User } from "../../types/typUser";
 import { errorCatching } from "../../utils/displayInfos";
 import { findElementsByName } from "../../utils/functions";
-import { sortByCreatedAt, sortByName } from "../../utils/sorting";
+import {
+  sortByCreatedAt,
+  sortByLastVisit,
+  sortByName,
+} from "../../utils/sorting";
 import { NationModel } from "../nationModel";
 import { UserModel } from "../userModel";
 import { ListModel } from "./listModel";
@@ -136,6 +140,12 @@ export class UserListModel extends ListModel {
         break;
       case CITIZEN_SORTING.descDate.id:
         sortByCreatedAt(this.items, false);
+        break;
+      case CITIZEN_SORTING.ascVisit.id:
+        sortByLastVisit(this.items, true);
+        break;
+      case CITIZEN_SORTING.descVisit.id:
+        sortByLastVisit(this.items, false);
         break;
       default:
         break;

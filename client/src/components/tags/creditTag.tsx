@@ -18,7 +18,7 @@ export default function CreditTag({ owner, label }: customTagProps) {
           {owner && (
             <span
               className="text-2xl cursor-not-allowed"
-              onClick={() => errorMessage(t("toasts.user.creditsNotReady"))}
+              onClick={() => errorMessage(t("toasts.errors.creditsNotReady"))}
             >
               <MdAddCircle />
             </span>

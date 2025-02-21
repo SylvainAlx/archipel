@@ -2,7 +2,7 @@ import { lazy, Suspense, useEffect, useState } from "react";
 import TabNav from "../components/tabNav";
 import { useTranslation } from "react-i18next";
 import { StandardOption } from "../types/typAtom";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { createPageTitle } from "../utils/procedures";
 import ParamSkeleton from "../components/loading/skeletons/paramSkeleton";
 
@@ -18,6 +18,7 @@ export default function Explore() {
 
   const [tab, setTab] = useState(nationTabs[0]);
   const param = useParams();
+  const navigate = useNavigate();
 
   const Stats = lazy(() => import("./exploreTabs/stats"));
   const NationList = lazy(() => import("./exploreTabs/nationList"));
@@ -36,7 +37,11 @@ export default function Explore() {
   return (
     <>
       <div className="flex items-center">
-        <TabNav tabs={nationTabs} tabId={tab.id} />
+        <TabNav
+          tabs={nationTabs}
+          tabId={tab.id}
+          click={(id) => navigate(`/explore/${id.toString()}`)}
+        />
       </div>
       {tab.id === 1 && (
         <Suspense fallback={<ParamSkeleton />}>

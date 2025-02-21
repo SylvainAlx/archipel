@@ -24,16 +24,6 @@ import { emptyDiplomaticRelationship } from "../types/typRelation";
 
 export const myStore = createStore();
 
-// Cookies
-export const showCookiesModalAtom = atom(true);
-
-// Loading
-export const loadingAtom = atom(false);
-export const longLoadingAtom = atom(false);
-
-// Lobby
-export const lobbyAtom = atom(false);
-
 // Session
 export const emptySession = {
   user: new UserModel(),
@@ -44,25 +34,9 @@ export interface Session {
   user: UserModel;
   jwt: string;
 }
-
-// Stats
-export const statsAtom = atom<Stats>({
-  counts: { nations: 0, citizens: 0, places: 0, tags: 0, coms: 0 },
-  tags: [],
-});
-
-export const showLangModalAtom = atom(false);
-export const recoveryKey = atom("");
-export const confirmBox = atom(ConfirmBoxDefault);
-export const editbox = atom(EditBoxDefault);
-export const infoModalAtom = atom<InfoModal>(emptyInfo);
-export const changePasswordModalAtom = atom(false);
-export const imageAtom = atom("");
-export const showMenuAtom = atom(false);
-
-//---- V2 ----
 export const sessionAtom = atom<Session>(emptySession);
 
+//---- Lists ----
 export const comListAtomV2 = atom<ComListModel>(new ComListModel());
 export const placeListAtomV2 = atom<PlaceListModel>(new PlaceListModel());
 export const nationListAtomV2 = atom<NationListModel>(new NationListModel());
@@ -71,9 +45,9 @@ export const tileListAtomV2 = atom<TileListModel>(new TileListModel());
 export const relationListAtomV2 = atom<RelationListModel>(
   new RelationListModel(),
 );
-
 export const bannedCitizensAtom = atom<UserListModel>(new UserListModel());
 
+//---- Modals ----
 export const newComAtom = atom<ComPayload>(emptyComPayload);
 export const newPlaceAtom = atom<Place>(emptyPlace);
 export const newNationAtom = atom<NewNationPayload>(emptyNewNationPayload);
@@ -84,4 +58,26 @@ export const newRelationAtom = atom({
   relation: new RelationModel(emptyDiplomaticRelationship),
 });
 export const creditTransferAtom = atom(emptyCreditTransfert);
-//---- V2 ----
+export const showCookiesModalAtom = atom(true);
+export const showLangModalAtom = atom(false);
+export const recoveryKey = atom("");
+export const confirmBox = atom(ConfirmBoxDefault);
+export const editbox = atom(EditBoxDefault);
+export const infoModalAtom = atom<InfoModal>(emptyInfo);
+export const changePasswordModalAtom = atom(false);
+export const imageAtom = atom("");
+export const showMenuAtom = atom(false);
+export const showHelpAtom = atom(false);
+
+// Loading
+export const loadingAtom = atom(false);
+export const longLoadingAtom = atom(false);
+
+// Lobby
+export const lobbyAtom = atom(false);
+
+// Stats
+export const statsAtom = atom<Stats>({
+  counts: { nations: 0, citizens: 0, places: 0, tags: 0, coms: 0 },
+  tags: [],
+});

@@ -44,7 +44,7 @@ export default function NewPlaceButton({
 
       myStore.set(newPlaceAtom, newPlace);
     } else {
-      errorMessage(t("toasts.nation.notEnoughCredits"));
+      errorMessage(t("toasts.errors.notEnoughCredits"));
     }
   };
 

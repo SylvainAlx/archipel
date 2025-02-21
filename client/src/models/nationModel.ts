@@ -198,7 +198,7 @@ export class NationModel extends CommonModel implements Nation {
       myStore.set(loadingAtom, false);
     }
   };
-  giveOwnership = async (buyerOfficialId: string) => {
+  giveOwnership = async (buyerOfficialId: string, password: string) => {
     myStore.set(loadingAtom, true);
     try {
       const resp: {
@@ -210,6 +210,7 @@ export class NationModel extends CommonModel implements Nation {
         nationOfficialId: this.officialId,
         sellerOfficialId: myStore.get(sessionAtom).user.officialId,
         buyerOfficialId,
+        password,
       });
       this.updateFields(resp.nation);
       myStore.get(nationListAtomV2).addToNationListAtom([resp.nation]);

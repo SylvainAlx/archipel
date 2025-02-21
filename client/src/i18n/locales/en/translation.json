@@ -2,9 +2,9 @@
   "pages": {
     "home": {
       "title": "welcome",
-      "presentation1": "Welcome to your hub for micronations and virtual nations! Whether you're part of a serious micronation or a fan of role-playing in imaginary worlds, our application is here for you. Join a vibrant community, connect, collaborate, and showcase your nation in a space designed to bring people together. Build connections, share your projects, and bring your vision to life!",
-      "presentation2": "Customize and bring your nation to life! As a leader, you have the tools to shape your nation in your own image. Add a flag that represents your values, define a motto to inspire your community, and write a detailed description to showcase your vision. You can also map out your territory by adding key locations, giving your nation its unique identity. Turn your dream into a virtual reality and let your nation shine among others!",
-      "presentation3": "Forge diplomatic ties and build alliances! Our platform offers you the opportunity to engage with other nations, whether real or virtual. Initiate diplomatic relations, negotiate agreements, form strategic alliances, or organize joint events. Expand your nation’s influence by building bridges between cultures and collaborating with other leaders. Together, take your ambitions to new heights!"
+      "presentation1": "Welcome to your dedicated space for **micronations** and **virtual nations**! Whether you are a member of a **serious** micronation or passionate about **role-playing** in **imaginary worlds**, our application is here for you. Join a **dynamic** community, exchange ideas, collaborate, and make your nation shine in a space designed to bring you closer together. **Create** connections, **share** your projects, and **bring your vision to life**!",
+      "presentation2": "As an editor, you have the ability to **shape your nation** to your liking. Add a **flag** that embodies your values, define a **motto** that inspires your community, and write a **detailed description** to present your vision. You can also **map out your territory** by adding important locations, marking the unique identity of your nation. Turn your dream into a virtual reality and make your nation stand out among others!",
+      "presentation3": "Build diplomatic ties and create alliances! Our platform offers you the opportunity to interact with other nations, whether real or virtual. Initiate **diplomatic relations**, negotiate agreements, form strategic alliances, or organize joint events. Expand your nation’s influence by **bridging cultures** and collaborating with other leaders. Together, take your ambitions to a whole new level!"
     },
     "lobby": {
       "description": "enter the password to access the application",
@@ -371,7 +371,9 @@
           "ascAlpha": "ascending alphabetical",
           "descAlpha": "descending alphabetical",
           "ascDate": "registration date ascending",
-          "descDate": "registration date descending"
+          "descDate": "registration date descending",
+          "ascVisit": "last visit date ascending",
+          "descVisit": "last visit date descending"
         }
       },
       "placesList": {
@@ -475,7 +477,15 @@
       "500": "Server error",
       "11000": "Information already existing in the database",
       "nsfw": "Image contains NSFW content! Notification sent to admin",
-      "offline": "You are offline !"
+      "offline": "You are offline !",
+      "badUser": "Unknown user",
+      "badPassword": "Bad password",
+      "badRecovery": "Incorrect recovery key",
+      "oldJwt": "session expired",
+      "subscriptionNotReady": "Subscription is not yet available",
+      "ipbanned": "Your IP address has been banned from Archipel",
+      "creditsNotReady": "Adding credits is not yet available",
+      "notEnoughCredits": "Not enough credit"
     },
     "user": {
       "signIn": "Sign In successful",
@@ -486,21 +496,13 @@
       "save": "Save successful",
       "add": "Add successful",
       "new": "Creation successful",
-      "badUser": "Unknown user",
-      "badPassword": "Bad password",
       "newPassword": "New saved password",
-      "badRecovery": "Incorrect recovery key",
-      "deleteKO": "Unable to delete the user",
-      "update": "Update successful",
-      "creditsNotReady": "Adding credits is not yet available",
-      "subscriptionNotReady": "Subscription is not yet available",
-      "ipbanned": "Your IP address has been banned from Archipel"
+      "update": "Update successful"
     },
     "nation": {
       "create": "New nation created",
       "update": "Nation updated",
-      "delete": "Nation deleted",
-      "notEnoughCredits": "Not enough credit"
+      "delete": "Nation deleted"
     },
     "relation": {
       "create": "New diplomatic relationship created",

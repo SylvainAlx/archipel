@@ -4,16 +4,25 @@
 
 #### Ajouts
 
-[- nom de domaine disponible]
-[- autorisation des crawlers]
+- _Nom de domaine disponible !!! modifier index.html, robots.txt et generate-sitemap.js !!!_
+- _Ajout d'une fenètre d'aide à l'utilisation_
+- _Compléter le fichier README_
+
+- Autorisation des crawlers des moteurs de recherche pour l'indexation
+- L'éditeur d'une nation peut céder la gestion à un autre citoyen
+- Tri possible des utilisateurs par date de dernière visite
 
 #### Suppressions
 
+Aucune
+
 #### Modifications & Corrections
 
-[- mise à jour des CGU]
-[- mise à jour des dépendances du code source]
-[- tests effectués sur plusieurs navigateurs web]
+- _Mise à jour des CGU_
+- _Tests effectués sur plusieurs navigateurs web_
+
+- Optimisation du code source
+- Mise à jour des dépendances du code source
 
 ## Développements à venir
 
@@ -48,9 +57,9 @@ Aucune
 #### Modifications & Corrections
 
 - Optimisation du code source
-- amélioration du modal de donation
-- amélioration de la page d'attente
-- mise à jour importante des dépendances du code source
+- Amélioration du modal de donation
+- Amélioration de la page d'attente
+- Mise à jour importante des dépendances du code source
 - Refonte du système de notifications
 - Amélioration de la gestion des erreurs
 - Modification des liens de nouveau possible

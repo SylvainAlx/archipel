@@ -9,6 +9,14 @@ export const sortByCreatedAt = (list: any[], ascending: boolean = true) => {
   });
 };
 
+export const sortByLastVisit = (list: any[], ascending: boolean = true) => {
+  return list.sort((a, b) => {
+    const dateA = new Date(a.updatedAt).getTime();
+    const dateB = new Date(b.updatedAt).getTime();
+    return ascending ? dateA - dateB : dateB - dateA;
+  });
+};
+
 export const sortByName = (
   list: { name: string }[],
   ascending: boolean = true,

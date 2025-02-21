@@ -122,4 +122,5 @@ export interface GiveOwnershipPayload {
   nationOfficialId: string;
   sellerOfficialId: string;
   buyerOfficialId: string;
+  password: string;
 }
