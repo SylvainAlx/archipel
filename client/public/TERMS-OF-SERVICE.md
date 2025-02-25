@@ -24,17 +24,17 @@ Les présentes Conditions Générales d'Utilisation (ci-après « CGU ») ont po
 
 ### 1.3 - Acceptation des CGU par l'utilisateur
 
-Lors de la création d'un compte sur l'application, l'Utilisateur reconnaît avoir lu, compris et accepté sans réserve les présentes CGU. Cette acceptation est obligatoire pour finaliser l'inscription. Si l'Utilisateur n'accepte pas ces conditions, il ne pourra pas créer de compte ni accéder aux services proposés par l'application. L'acceptation des CGU constitue un contrat entre l'Utilisateur et l'éditeur de l'application.
+Lors de la création d'un compte sur l'application, l'Utilisateur reconnaît avoir lu, compris et accepté sans réserve les présentes CGU. Cette acceptation est obligatoire pour finaliser l'inscription. Si l'Utilisateur n'accepte pas ces conditions, il ne pourra pas créer de compte ni accéder aux services proposés par l'application. L'acceptation des CGU constitue un contrat entre l'Utilisateur et l'éditeur de l'application (ci-après « Éditeur »).
 
 ### 1.4 - Mise à jour des CGU
 
-L'éditeur de l'application se réserve le droit de modifier ou de mettre à jour les présentes CGU à tout moment, afin de les adapter aux évolutions légales, techniques ou fonctionnelles de l'application. Les modifications apportées seront communiquées aux Utilisateurs via une notification ou un message dans l'application. L'utilisation continue de l'application après la publication des modifications constitue une acceptation implicite des nouvelles CGU.
+L'Éditeur se réserve le droit de modifier ou de mettre à jour les présentes CGU à tout moment, afin de les adapter aux évolutions légales, techniques ou fonctionnelles de l'application. Les modifications apportées seront communiquées aux Utilisateurs via une notification ou un message dans l'application. L'utilisation continue de l'application après la publication des modifications constitue une acceptation implicite des nouvelles CGU.
 
 ## ARTICLE 2 : Mentions légales
 
 ### 2.1 - Informations sur l'éditeur de l'application
 
-Le présent site est la propriété de Sylvain Alexandre.  
+Le présent site est la propriété de [Sylvain Alexandre](https://github.com/SylvainAlx).  
 Ce dernier développe et maintient seul le site et le rend disponible aux internautes à titre gratuit.
 
 ### 2.2 - Hébergeurs des services
@@ -65,7 +65,7 @@ NY 10019 USA_
 
 ### 2.3 - Responsable du traitement des données personnelles
 
-L'éditeur, nommé ci-dessus, est responsable du traitement des données personnelles des utilisateurs. Plus d'informations à la rubrique [Protection des données personnelles](#protection-des-données-personnelles).
+L'Éditeur, nommé ci-dessus, est responsable du traitement des données personnelles des utilisateurs. Plus d'informations à la rubrique [Protection des données personnelles](#protection-des-données-personnelles).
 
 ## ARTICLE 3 : Accès et inscription
 
@@ -78,7 +78,7 @@ Pour accéder aux services de l'application, l'Utilisateur doit remplir les cond
 - Être une personne physique ou morale ayant la capacité légale de contracter.
 - Disposer d'un accès à Internet et d'un dispositif compatible avec l'application.
 - Créer un compte en fournissant les informations demandées et en acceptant les présentes CGU.
-- L'éditeur se réserve le droit de refuser l'accès à l'application à toute personne ne respectant pas ces conditions.
+- L'Éditeur se réserve le droit de refuser l'accès à l'application à toute personne ne respectant pas ces conditions.
 
 ### 3.2 - Modalités d'inscription
 
@@ -101,6 +101,11 @@ Un internaute peut accéder aux sections suivantes sans s'être inscrit préalab
 #### 4.1.1 - Présentation générale de l'application
 
 La page d'accueil de l'application donne une présentation globale des services proposés et invite l'internaute à s'inscrire afin de lui donner la meilleure expérience utilisateur possible.
+Sur cette page est également présent :
+
+- un bouton de lien vers la page "mon compte" si l'Utilisateur est connecté
+- un bouton de lien vers la page "explorer"
+- un bouton permettant d'afficher les liens pour effectuer une donation en cryptomonnaie à l'Éditeur d'Archipel
 
 #### 4.1.2 - Découvertes d'Archipel via l'onglet "explorer"
 
@@ -108,13 +113,13 @@ Dans la page "explorer" accessible par le bouton du même nom de la barre de nav
 
 1. Les statistiques : comptage du nombre de nations virtuelles, citoyens, lieux et communiqués.
 2. La nations : La liste de toutes les nations virtuelles présentent sur l'application avec un système de filtre et de tri possible.
-3. Les citoyens : La liste de tous les citoyens inscrits sur Archipel, également avec un système de tri.
+3. Les citoyens : La liste de tous les utilisateurs inscrits sur Archipel, également avec un système de tri.
 4. Les lieux : La liste de tous les lieux créés depuis les nations, également avec un système de filtre et de tri.
-5. Les communiqués : La liste de tous les communiqués postés par les responsables des nations, également avec un système de tri. Est présent le titre, le message, la date d'émission et la nation émettrice.
+5. Les actualités : La liste de tous les communiqués postés par les responsables des nations, ainsi que les annonces générales, également avec un système de tri. Est présent le titre, le message, la date d'émission et l'entité émettrice.
 
-Les informations visibles sur chaque élément peuvent être consultées avec plus de détails en cliquant sur le bouton "VOIR" si disponible.
+Les informations visibles sur chaque utilisateurs, nations ou lieux peuvent être consultées avec plus de détails en cliquant dessus.
 
-#### 4.1.3 - Les pages "citoyens"
+#### 4.1.3 - Les pages "citoyen"
 
 En se rendant sur la page d'un citoyen depuis la liste de la page "explorer", l'internaute va pouvoir consulter :
 
@@ -122,7 +127,7 @@ En se rendant sur la page d'un citoyen depuis la liste de la page "explorer", l'
 - La photo de profil du citoyen (avatar)
 - Les liens (email et site web)
 - La biographie
-- Les informations sur sa citoyenneté liée à une nation (Identifiant, langue, rôle, lien d'accès)
+- Les informations sur sa citoyenneté liée à une nation (Identifiant, genre, langue, religion, lieu de résidence sur Archipel, rôle, lien d'accès)
 
 #### 4.1.4 - Les pages "nation"
 
@@ -154,13 +159,13 @@ L'application Archipel propose le choix de la langue afin d'améliorer l'expéri
 
 #### 4.1.7 - Autres accès
 
-L'application Archipel donne également l'accès à un internaute non inscrit aux Conditions Générales d'Utilisation (ci-présente), au notes de versions de l'application et d'un lien mail pour entrer en contact avec l'éditeur.
+L'application Archipel donne également l'accès à un internaute non inscrit aux CGU (ci-présentes), aux notes de versions de l'application, d'un lien mail pour entrer en contact avec l'Éditeur ainsi que les liens vers les réseaux sociaux associés.
 
-### 4.2 - Le citoyen virtuel
+### 4.2 - L'Utilisateur
 
 #### 4.2.1 - Inscription
 
-L'inscription d'un utilisateur sur l'application Archipel permet à celui-ci d'expérimenter une citoyenneté virtuelle en rejoignant ou en créant une nation virtuelle une fois inscrit (plus d'informations dans la section "Modalités d'inscription" plus haut).
+L'inscription de l'Utilisateur sur l'application Archipel permet à celui-ci d'expérimenter une citoyenneté virtuelle en rejoignant ou en créant une nation virtuelle une fois inscrit (plus d'informations dans la section "Modalités d'inscription" plus haut). Lors de son inscription l'utilisateur reçoit un bonus de crédits (voir [ARTICLE 4.4](#44---les-crédits)).
 
 #### 4.2.2 - Page "mon compte"
 
@@ -168,20 +173,21 @@ Tout citoyen inscrit sur Archipel peux accéder au détail de son compte en cliq
 
 #### 4.2.3 - Rejoindre une nation
 
-Un citoyen sans aucune nation peut demander la citoyenneté de n'importe quelle nation depuis la page de cette dernière. Une fois la demande effectuée, celle-ci devra être validée par le gérant de la nation en question. Il est possible d'annuler sa demande directement depuis la page "MON COMPTE" en cliquant sur la petite croix présente sur le bouton avec le nom de la nation.
-Il n'est pas possible de faire plusieurs demandes en même temps et il n'est également pas possible d'être dans deux nations.
+Un utilisateur sans aucune nation peut demander la citoyenneté de n'importe quelle nation depuis la page de cette dernière. Une fois la demande effectuée, celle-ci devra être validée par l'éditeur de la nation en question. Il est possible d'annuler sa demande directement depuis la page "MON COMPTE" en cliquant sur "QUITTER" à côté du bouton portant le nom de la nation.
+Il n'est pas possible de faire plusieurs demandes en même temps et il n'est également pas possible d'être dans deux nations distinctes.
+Lorsqu'un utilisateur rejoint une nation, celle-ci reçoit un bonus de crédits (voir [ARTICLE 4.4](#44---les-crédits)).
 
 #### 4.2.4 - Fonctionnalités complémentaires pour le citoyen inscrit
 
-Le citoyen peut signaler via le bouton du même nom tout contenu qu'il juge inapproprié. L'éditeur, qui est administrateur de l'application, sera informé et agira en conséquence.
+L'Utilisateur peut signaler via le bouton "SIGNALER" tout contenu qu'il juge inapproprié. L'Éditeur sera informé et agira en conséquence.
 
-### 4.3 - Le citoyen responsable d'une nation
+### 4.3 - L'éditeur d'une nation
 
-Dans la version actuelle de l'application, seul le citoyen à l'origine de la création d'une nation a la possibilité d'y apporter des modifications.
+L'éditeur de la nation est l'utilisateur qui est à l'origine de sa création sur Archipel ou celui qui a hérité des droits mais n'est pas obligatoirement son dirigeant.
 
 #### 4.3.1 - La création d'une nation virtuelle
 
-Un citoyen n'appartenant pas à une nation a la possibilité d'en créer une nouvelle dont il sera responsable. Lors de la création d'une nation il est demandé de renseigner :
+Un utilisateur n'appartenant pas à une nation a la possibilité d'en créer une nouvelle dont il sera responsable. Lors de la création d'une nation il est demandé de renseigner :
 
 - Le nom de la nation (obligatoire et ne doit pas être celui d'une nation déjà existante sur l'application ou dans la réalité).
 - La devise
@@ -190,11 +196,11 @@ Un citoyen n'appartenant pas à une nation a la possibilité d'en créer une nou
 - Le jour de la fête nationale (même si le choix de l'année est possible, ne sera affiché que le jour et le mois)
 - Le type de régime (obligatoire)
 
-Si tous les éléments obligatoires sont correctement renseignés, la nation sera créée avec succès.
+Si tous les éléments obligatoires sont correctement renseignés, la nation sera créée avec succès et recevra un bonus de crédits (voir [ARTICLE 4.4](#44---les-crédits)).
 
 #### 4.3.2 - La modification d'une nation
 
-Le citoyen chargé d'une nation va pouvoir la mettre à jour et renseigner toutes les informations qu'il juge bon de faire connaître au public.
+L'éditeur d'une nation va pouvoir la mettre à jour et renseigner toutes les informations qu'il juge bon de faire connaître au public.
 Sur la page "NATION" (accessible depuis la page de citoyen ou directement sur la barre de navigation) il est possible de modifier les informations liées à l'identité de la nation :
 
 - Le nom de la nation (avec les même restrictions qu'à la création)
@@ -203,7 +209,7 @@ Sur la page "NATION" (accessible depuis la page de citoyen ou directement sur la
 - Les tags (Type de régime, jour de fête national, monnaie, capitale, mots-clés)
 - La description
 
-Le gérant d'une nation peut décider seul de supprimer sa nation. Cela a pour conséquence la suppression de tous les lieux, tuiles et communiqués associés. Les citoyens intégrés à cette nation se retrouvent immédiatement apatrides.
+L'éditeur d'une nation peut décider seul de supprimer sa nation. Cela a pour conséquence la suppression de tous les lieux, tuiles et communiqués associés. Les citoyens intégrés à cette nation se retrouvent immédiatement apatrides.
 
 #### 4.3.3 - L'ajout d'une carte de la nation
 
@@ -211,29 +217,56 @@ Un emplacement est dédié à la carte de la nation, ce qui est un élément imp
 
 #### 4.3.4 - L'ajout d'une tuile d'information libre
 
-Le gérant d'une nation peut ajouter à sa page "NATION" des tuiles d'informations libres afin de communiquer d'autres renseignements complémentaires.
+L'éditeur d'une nation peut ajouter à sa page "NATION" des tuiles d'informations libres afin de communiquer d'autres renseignements complémentaires.
 
 #### 4.3.5 - La gestion des citoyens
 
-Le gérant d'une nation peut décider de déchoir de sa nationalité n'importe quel citoyen appartenant à sa nation sans donner de motif.
+L'éditeur d'une nation peut décider de déchoir de sa nationalité n'importe quel citoyen appartenant à sa nation sans donner de motif.
 
 #### 4.3.6 - La création d'un lieu
 
-Le gérant d'une nation peut créer des lieux appartenant à sa nation. Lorsque la nation en possède plusieurs, il est possible de les apparenter entre eux afin de créer une organisation complexe. Si la nation possède un lieu de type "ville", celle-ci peut être désignée comme capitale de la nation.
+L'éditeur d'une nation peut créer des lieux appartenant à sa nation. Lorsque la nation en possède plusieurs, il est possible de les apparenter entre eux afin de créer une organisation complexe. Si la nation possède un lieu de type "ville", celle-ci peut être désignée comme capitale de la nation.
 
 #### 4.3.7 - La création d'un communiqué officiel
 
-Le gérant d'une nation peut poster un communiqué officiel en lien avec la nation. Il peut choisir si celui-ci est privé (visible uniquement par les citoyens de la nation) ou public et, de ce fait, accessible sur la page "Explorer", onglet "Communiqués". Actuellement il est possible d'envoyer un seul communiqué par 24h.
+L'éditeur d'une nation peut poster un communiqué officiel en lien avec la nation. Il peut choisir si celui-ci est privé (visible uniquement par les citoyens de la nation) ou public et, de ce fait, accessible sur la page "Explorer", onglet "Actualités".
 
 #### 4.3.8 - La création d'une relation diplomatique
 
-Le gérant d'une nation peut faire une demande de relations diplomatiques auprès d'une autre nation directement depuis la page de celle-ci. Il propose un titre de la relation ainsi que les types de partenariat qu'il souhaite entreprendre. La relation sera effective uniquement lorsque la nation questionnée acceptera la demande. Dans le cas contraire, la demande est annulée.
+L'éditeur d'une nation peut faire une demande de relations diplomatiques auprès d'une autre nation directement depuis la page de celle-ci. Il propose un titre de la relation ainsi que les types de partenariat qu'il souhaite entreprendre. La relation sera effective uniquement lorsque la nation questionnée acceptera la demande. Dans le cas contraire, la demande est annulée.
 
-### 4.4 - Restrictions
+### 4.4 - Les crédits
 
-- Un citoyen qui n'est pas chargé de la gestion d'une nation ne peut effectuer aucune modification sur celle-ci.
-- Un citoyen non administrateur de l'application ne pourra pas accéder à la page d'administration.
-- Des quotas restreignent la quantité maximum de certains éléments au sein d'une (10 lieux, 8 tuiles d'informations, et 1 communiqué officiel par jour).
+Les crédits peuvent être vus comme une monnaie interne à l'application Archipel. Les crédits ajoutent une mécanique à l'application qui participe à son côté ludique.
+
+#### 4.4.1 Obtention des crédits
+
+Des crédits sont donnés lorsque :
+
+- Un utilisateur rejoint Archipel
+- Une nation est créée
+- Un utilisateur rejoint une nation
+
+#### 4.4.2 Dépense des crédits
+
+Des crédits sont prélevés lorsque :
+
+- le seuil maximal "gratuit" pour créer certains éléments est dépassé (celui-ci est changeant et est précisé à l'utilisateur)
+
+#### 4.4.3 Transfert de crédits
+
+Le transfert de crédits est possible entre Utilisateurs et nations.
+
+#### 4.4.4 Informations complémentaires
+
+Si l'éditeur de la nation supprime un élément qui lui a coûté des crédits, la nation regagne cette somme.
+Le montant des crédits peut varier dans le temps.
+
+### 4.5 - Restrictions
+
+- Un Utilisateur qui n'est pas éditeur d'une nation ne peut effectuer aucune modification sur celle-ci.
+- Un Utilisateur non administrateur de l'application ne pourra pas accéder à la page d'administration.
+- Des quotas restreignent la quantité maximum de certains éléments au sein d'une nation. Ces quotas peuvent être dépassés en utilisant les crédits de la trésorerie de la nation (voir [ARTICLE 4.4](#44---les-crédits)).
 
 ## ARTICLE 5 : Obligations des utilisateurs
 
@@ -247,15 +280,15 @@ De porter atteinte aux droits de tiers, notamment aux droits de propriété inte
 De diffuser du contenu illégal, injurieux, diffamatoire, ou incitant à la haine.
 De contourner ou tenter de contourner les mesures de sécurité mises en place sur l’application.
 D’utiliser l’application à des fins frauduleuses ou malveillantes (telles que le piratage, l’extraction non autorisée de données, etc.).
-L’Utilisateur doit adopter un comportement respectueux envers les autres membres de la communauté et l’éditeur de l’application.
+L’Utilisateur doit adopter un comportement respectueux envers les autres membres de la communauté et l’Éditeur.
 
 ### 5.2 - Responsabilité des utilisateurs concernant leur propre contenu
 
 L’Utilisateur est seul responsable des contenus qu’il publie, partage ou transmet via l’application. Il garantit que ces contenus respectent les lois et règlements en vigueur, ainsi que les droits des tiers.
 
-En cas de publication de contenus illicites ou inappropriés, l’éditeur de l’application se réserve le droit de supprimer les contenus concernés et de suspendre ou résilier le compte de l’Utilisateur fautif. L’Utilisateur peut être tenu responsable de tout dommage résultant de la diffusion de ces contenus.
+En cas de publication de contenus illicites ou inappropriés, l’Éditeur se réserve le droit de supprimer les contenus concernés et de suspendre ou résilier le compte de l’Utilisateur fautif. L’Utilisateur peut être tenu responsable de tout dommage résultant de la diffusion de ces contenus.
 
-L’éditeur de l’application ne saurait être tenu responsable des contenus publiés par les Utilisateurs.
+L’Éditeur ne saurait être tenu responsable des contenus publiés par les Utilisateurs.
 
 ### 5.3 - Règles spécifiques aux interactions entre utilisateurs
 
@@ -265,36 +298,36 @@ Respecter les autres membres de la communauté, en évitant tout comportement in
 Ne pas solliciter, menacer ou tromper d'autres utilisateurs sous quelque forme que ce soit.
 Ne pas partager d’informations personnelles sensibles concernant d'autres utilisateurs sans leur consentement explicite.
 Ne pas usurper l’identité d’autrui ou se faire passer pour un autre utilisateur.
-L’éditeur de l’application se réserve le droit d’intervenir en cas de signalement d’un comportement inapproprié. En cas de non-respect de ces règles, des sanctions pouvant inclure la suspension ou la suppression du compte de l’utilisateur concerné peuvent être appliquées.
+L’Éditeur se réserve le droit d’intervenir en cas de signalement d’un comportement inapproprié. En cas de non-respect de ces règles, des sanctions pouvant inclure la suspension ou la suppression du compte de l’utilisateur concerné peuvent être appliquées.
 
-L’Utilisateur reconnaît également qu’il est seul responsable de ses interactions avec les autres membres et qu’il doit faire preuve de prudence et de discernement dans ces échanges. L’éditeur ne saurait être tenu responsable des conflits survenant entre utilisateurs.
+L’Utilisateur reconnaît également qu’il est seul responsable de ses interactions avec les autres membres et qu’il doit faire preuve de prudence et de discernement dans ces échanges. L'Éditeur ne saurait être tenu responsable des conflits survenant entre utilisateurs.
 
-## ARTICLE 6 : Responsabilités de l’éditeur
+## ARTICLE 6 : Responsabilités de l'Éditeur
 
 ### 6.1 - Qualité et disponibilité des services : garanties ou limitations
 
-L’éditeur s’engage à mettre en œuvre tous les moyens raisonnables pour assurer un accès de qualité et une disponibilité continue des services proposés. Cependant, l’éditeur ne garantit pas que les services seront exempts d’erreurs, ininterrompus ou conformes aux attentes spécifiques de l’utilisateur.
-L’accès aux services peut être temporairement restreint en raison de travaux de maintenance, de mises à jour techniques ou d’autres contraintes indépendantes de la volonté de l’éditeur. L’éditeur décline toute responsabilité pour les éventuelles pertes ou préjudices résultant de ces interruptions.
+L’Éditeur s’engage à mettre en œuvre tous les moyens raisonnables pour assurer un accès de qualité et une disponibilité continue des services proposés. Cependant, l'Éditeur ne garantit pas que les services seront exempts d’erreurs, ininterrompus ou conformes aux attentes spécifiques de l’utilisateur.
+L’accès aux services peut être temporairement restreint en raison de travaux de maintenance, de mises à jour techniques ou d’autres contraintes indépendantes de la volonté de l’Éditeur. L’Éditeur décline toute responsabilité pour les éventuelles pertes ou préjudices résultant de ces interruptions.
 
 ### 6.2 - Limitation de responsabilité en cas de bugs, interruptions de service ou contenus tiers
 
-L’éditeur met tout en œuvre pour identifier et corriger rapidement tout bug ou dysfonctionnement affectant ses services. Toutefois, il ne peut être tenu responsable des conséquences directes ou indirectes découlant :
+L’Éditeur met tout en œuvre pour identifier et corriger rapidement tout bug ou dysfonctionnement affectant ses services. Toutefois, il ne peut être tenu responsable des conséquences directes ou indirectes découlant :
 
 - De bugs, erreurs ou anomalies techniques affectant le fonctionnement des services.
 - D’interruptions de service causées par des facteurs externes tels que des pannes de réseau, des attaques informatiques, ou des cas de force majeure.
 - De l’utilisation de contenus tiers accessibles via les services, dont l’exactitude, la qualité ou la légalité ne peuvent être pleinement garantis.
 
-L’utilisateur reconnaît utiliser les services sous sa propre responsabilité et accepte que l’éditeur ne soit tenu que d’une obligation de moyens.
+L’utilisateur reconnaît utiliser les services sous sa propre responsabilité et accepte que l’Éditeur ne soit tenu que d’une obligation de moyens.
 
 ### 6.3 - Mesures en cas d’abus ou de non-respect des CGU
 
-En cas de violation des présentes CGU, de comportements abusifs, frauduleux ou contraires à la loi par un utilisateur, l’éditeur se réserve le droit de prendre les mesures nécessaires, notamment :
+En cas de violation des présentes CGU, de comportements abusifs, frauduleux ou contraires à la loi par un utilisateur, l’Éditeur se réserve le droit de prendre les mesures nécessaires, notamment :
 
 - Suspension ou résiliation immédiate et sans préavis de l’accès aux services.
 - Signalement des comportements illicites aux autorités compétentes.
-- Réclamation de dommages et intérêts en cas de préjudice causé à l’éditeur ou à des tiers.
+- Réclamation de dommages et intérêts en cas de préjudice causé à l’Éditeur ou à des tiers.
 
-Ces mesures pourront être appliquées sans préjudice d’autres recours juridiques à disposition de l’éditeur.
+Ces mesures pourront être appliquées sans préjudice d’autres recours juridiques à disposition de l'Éditeur.
 
 ## ARTICLE 7 : Propriété intellectuelle
 
@@ -309,7 +342,7 @@ iconographiques et photographiques.
 ### 7.2 - Modalités de cession ou non des droits sur les contenus publiés par les utilisateurs
 
 Le contenu du site est, sauf
-mention contraire, la propriété de Sylvain Alexandre. En
+mention contraire, la propriété de l'Éditeur. En
 conséquence et sauf mention contraire, toute utilisation des
 contenus du site ne peut être faite que moyennant l’autorisation
 écrite du propriétaire dont celui-ci reste seul juge. Toute
@@ -323,18 +356,18 @@ et pénale du contrefacteur.
 
 ### 8.1 - Engagement de conformité avec le RGPD et/ou autres réglementations locales
 
-L’éditeur s’engage à respecter l’ensemble des réglementations applicables en matière de protection des données personnelles, notamment :
+L'Éditeur s’engage à respecter l’ensemble des réglementations applicables en matière de protection des données personnelles, notamment :
 
 - Le Règlement Général sur la Protection des Données (RGPD), applicable dans l’Union européenne.
 - Toute autre législation locale pertinente en fonction de la juridiction concernée.
 
-À ce titre, l’éditeur garantit :
+À ce titre, l'Éditeur garantit :
 
 - La collecte de données personnelles dans le cadre d’un consentement éclairé, libre et explicite des utilisateurs lorsque nécessaire.
 - La mise en place de mesures techniques et organisationnelles adéquates pour assurer la sécurité et la confidentialité des données personnelles.
 - La possibilité pour les utilisateurs d’exercer leurs droits, notamment le droit d’accès, de rectification, de suppression, de limitation du traitement, et de portabilité des données, conformément à la réglementation en vigueur.
 
-Pour toute question ou demande relative aux données personnelles, les utilisateurs peuvent contacter l'éditeur à l’adresse suivante : sylvainalx.dev@gmail.com.
+Pour toute question ou demande relative aux données personnelles, les utilisateurs peuvent contacter l'Éditeur à l’adresse suivante : sylvainalx.dev@gmail.com.
 
 ## ARTICLE 9 : Durée et résiliation
 
@@ -347,9 +380,9 @@ Les présentes Conditions Générales d'Utilisation (CGU) entrent en vigueur à 
 L’utilisateur peut mettre fin à son utilisation des services et supprimer son compte à tout moment, sans préavis, directement depuis les paramètres de son compte.
 Cela entraîne la suppression définitive du compte utilisateur et des données associées, sous réserve des obligations légales ou contractuelles imposant une conservation limitée de certaines données.
 
-### 9.3 - Cas où l'éditeur peut suspendre ou résilier un compte
+### 9.3 - Cas où l'Éditeur peut suspendre ou résilier un compte
 
-L’éditeur se réserve le droit de suspendre ou de supprimer un compte utilisateur, avec ou sans préavis, dans les cas suivants :
+L'Éditeur se réserve le droit de suspendre ou de supprimer un compte utilisateur, avec ou sans préavis, dans les cas suivants :
 
 - Non-respect des présentes CGU ou de toute politique connexe.
 - Comportements frauduleux, abusifs ou illégaux de la part de l’utilisateur.
@@ -358,27 +391,27 @@ L’éditeur se réserve le droit de suspendre ou de supprimer un compte utilisa
 
 En cas de suppression du compte pour manquement grave, l’utilisateur ne pourra prétendre à aucune compensation, sauf disposition contraire prévue par la loi.
 
-L’éditeur s’efforce de notifier l’utilisateur de toute suspension ou suppression, sauf en cas d’urgence ou lorsque cela compromettrait la sécurité ou la légalité des services.
+L'Éditeur s’efforce de notifier l’utilisateur de toute suspension ou suppression, sauf en cas d’urgence ou lorsque cela compromettrait la sécurité ou la légalité des services.
 
 ## ARTICLE 10 : Règlement des litiges
 
 ### 10.1 - Loi applicable
 
-Les présentes Conditions Générales d’Utilisation sont régies et interprétées conformément aux lois en vigueur dans le pays où l’éditeur est établi. En cas de divergence entre la version originale des CGU et une traduction, la version originale prévaudra.
+Les présentes Conditions Générales d’Utilisation sont régies et interprétées conformément aux lois en vigueur dans le pays où l'Éditeur est établi. En cas de divergence entre la version originale des CGU et une traduction, la version originale prévaudra.
 
 ### 10.2 - Modalités de règlement des litiges
 
 En cas de différend lié à l’interprétation, l’exécution ou la résiliation des présentes CGU, les parties s’engagent à rechercher une solution amiable avant d’entamer toute procédure judiciaire.
 
 1. Réclamation préalable :
-   L’utilisateur peut adresser une réclamation écrite à l’éditeur par email ou courrier postal à l’adresse indiquée dans les présentes CGU. L’éditeur s’engage à répondre dans un délai raisonnable, généralement sous 30 jours ouvrables.
+   L’utilisateur peut adresser une réclamation écrite à l'Éditeur par email ou courrier postal à l’adresse indiquée dans les présentes CGU. l'Éditeur s’engage à répondre dans un délai raisonnable, généralement sous 30 jours ouvrables.
 
 2. Médiation :
    Si aucune solution amiable n’est trouvée, l’utilisateur peut recourir à un médiateur indépendant, conformément aux dispositions légales en vigueur. Les coordonnées du médiateur agréé seront fournies sur demande.
 
 3. Compétence juridictionnelle :
-   En cas d’échec des démarches amiables, tout litige sera soumis à la compétence exclusive des tribunaux du ressort où l’éditeur est établi, sauf disposition impérative contraire applicable en fonction de la localisation de l’utilisateur (notamment pour les consommateurs).
+   En cas d’échec des démarches amiables, tout litige sera soumis à la compétence exclusive des tribunaux du ressort où l'Éditeur est établi, sauf disposition impérative contraire applicable en fonction de la localisation de l’utilisateur (notamment pour les consommateurs).
 
 ## ARTICLE 11 : Contact
 
-Pour toute question, les utilisateurs peuvent contacter l'éditeur à l’adresse suivante : sylvainalx.dev@gmail.com.
+Pour toute question, les utilisateurs peuvent contacter l'Éditeur à l’adresse suivante : sylvainalx.dev@gmail.com.

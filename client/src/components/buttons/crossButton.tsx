@@ -9,6 +9,7 @@ interface CrossButtonProps {
   small?: boolean;
   absolute?: boolean;
   widthFull?: boolean;
+  disabled?: boolean;
 }
 
 export default function CrossButton({
@@ -16,6 +17,7 @@ export default function CrossButton({
   small,
   text,
   widthFull,
+  disabled,
 }: CrossButtonProps) {
   const { t } = useTranslation();
   return (
@@ -27,6 +29,7 @@ export default function CrossButton({
           click={click}
           children={<IoMdCloseCircle />}
           widthFull={widthFull && widthFull}
+          disabled={disabled}
         />
       ) : (
         <button

@@ -3,13 +3,11 @@ import User from "../models/userSchema.js";
 import Place from "../models/placeSchema.js";
 import Tile from "../models/tileSchema.js";
 import Relation from "../models/relationSchema.js";
-import {
-  createOfficialId,
-  deleteFile,
-  handleError,
-} from "../utils/functions.js";
+import { createOfficialId, handleError } from "../utils/functions.js";
 import { GIFTS } from "../settings/const.js";
 import { getUserByOfficialId } from "../services/userService.js";
+import { payCredits, recoverCredit } from "../services/creditService.js";
+import { deleteFile } from "../services/fileService.js";
 
 export const nationsCount = async (req, res) => {
   try {
@@ -59,6 +57,7 @@ export const createNation = async (req, res) => {
 
     try {
       const savedNation = await nation.save();
+      await payCredits(GIFTS.NEW_NATION);
       const user = await User.findOne({ officialId: owner });
       user.citizenship.status = 1;
       user.citizenship.nationId = savedNation.officialId;
@@ -142,14 +141,26 @@ export const getOneNation = async (req, res) => {
 
 export const deleteSelfNation = async (req, res) => {
   try {
+    const { password } = req.body;
     const userId = req.userId;
     const user = await User.findOne({ officialId: userId });
+    if (!password) {
+      return res.status(400).json({ infoType: "400" });
+    }
+    const isMatch = await user.comparePassword(password);
+    if (!isMatch) {
+      return res.status(401).json({ infoType: "badPassword" });
+    }
 
     // suppression de la nation
     const nation = await Nation.findOneAndDelete({
       officialId: user.citizenship.nationId,
     });
+    await recoverCredit(nation.data.roleplay.treasury);
     if (nation != null) {
+      if (nation.data.roleplay.citizens > 1) {
+        return res.status(403).json({ infoType: "403" });
+      }
       // suppression des images uploadées pour la nation
       if (nation.data.url.flag != "") {
         const uuid = nation.data.url.flag.replace("https://ucarecdn.com/", "");

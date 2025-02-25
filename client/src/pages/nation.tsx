@@ -78,15 +78,18 @@ export default function Nation() {
   }, [param.id]);
 
   const handleDelete = () => {
-    myStore.set(confirmBox, {
-      text: t("components.modals.confirmModal.deleteNation"),
-      actionToDo: () => {
-        nation.baseDelete();
-        const updatedList = nationList.removeByOfficialId(nation.officialId);
-        setNationList(new NationListModel(updatedList));
-        navigate(`/citizen/${session.user.officialId}`);
-      },
-    });
+    const password = window.prompt(t("components.form.input.password"));
+    if (password) {
+      myStore.set(confirmBox, {
+        text: t("components.modals.confirmModal.deleteNation"),
+        actionToDo: () => {
+          nation.baseDelete(password);
+          const updatedList = nationList.removeByOfficialId(nation.officialId);
+          setNationList(new NationListModel(updatedList));
+          navigate(`/citizen/${session.user.officialId}`);
+        },
+      });
+    }
   };
 
   const giveOwnerShip = () => {
@@ -210,11 +213,13 @@ export default function Nation() {
                 <CrossButton
                   text={t("components.buttons.deleteNation")}
                   click={handleDelete}
+                  disabled={nation.data.roleplay.citizens > 1}
                 />
                 <Button
                   text={t("components.buttons.giveOwnership")}
                   click={giveOwnerShip}
                   children={<FaExchangeAlt />}
+                  disabled={nation.data.roleplay.citizens < 2}
                 />
               </>
             ) : (

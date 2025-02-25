@@ -119,3 +119,20 @@ h5 {
   color: var(--color-light) !important;
   font-size: 1.25rem !important;
 }
+
+@layer utilities {
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    background: theme('colors.slate.100');
+    border-radius: 10px;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: theme('colors.slate.400');
+    border-radius: 10px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: theme('colors.slate.600');
+  }
+}

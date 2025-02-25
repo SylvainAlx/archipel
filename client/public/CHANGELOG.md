@@ -1,3 +1,7 @@
+## Code source
+
+Le code source est public et est visible [ici](https://github.com/SylvainAlx/archipel)
+
 ## Version actuelle
 
 ### RC-1.0.0
@@ -5,24 +9,22 @@
 #### Ajouts
 
 - _Nom de domaine disponible !!! modifier index.html, robots.txt et generate-sitemap.js !!!_
-- _Ajout d'une fenètre d'aide à l'utilisation_
-- _Compléter le fichier README_
 
+- Ajout d'une fenètre d'aide à l'utilisation
 - Autorisation des crawlers des moteurs de recherche pour l'indexation
 - L'éditeur d'une nation peut céder la gestion à un autre citoyen
 - Tri possible des utilisateurs par date de dernière visite
 
 #### Suppressions
 
-Aucune
+- Suppression impossible de la nation tant qu'au moins deux citoyens en font partie
 
 #### Modifications & Corrections
 
-- _Mise à jour des CGU_
+- Mise à jour des CGU
 - _Tests effectués sur plusieurs navigateurs web_
 
-- Optimisation du code source
-- Mise à jour des dépendances du code source
+- Optimisation du code source et mise à jour des dépendances
 
 ## Développements à venir
 

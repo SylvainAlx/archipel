@@ -1,21 +1,8 @@
 import Tile from "../models/tileSchema.js";
-import User from "../models/userSchema.js";
 import Nation from "../models/nationSchema.js";
 import { COSTS, QUOTAS } from "../settings/const.js";
 import { handleError } from "../utils/functions.js";
-
-const verifyNationOwner = async (userId, nationId) => {
-  const user = await User.findOne({
-    officialId: userId,
-    "citizenship.nationOwner": true,
-    "citizenship.nationId": nationId,
-  });
-  if (user) {
-    return true;
-  } else {
-    return false;
-  }
-};
+import { verifyNationOwner } from "../services/userService.js";
 
 export const createTile = async (req, res) => {
   try {

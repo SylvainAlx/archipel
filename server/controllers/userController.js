@@ -13,28 +13,19 @@ import {
   getUserByName,
   getRecoveryWords,
   getUserByOfficialId,
+  IpIsBanished,
+  updateUserIpAddress,
 } from "../services/userService.js";
-
-const IpIsBanished = async (AUserIp, res) => {
-  try {
-    const banned =
-      (await Param.findOne({
-        name: "banished",
-        props: { $elemMatch: { label: "ip", value: AUserIp } },
-      })) != null;
-    if (banned) {
-      return res.status(403).json({ infoType: "ipbanned" });
-    }
-  } catch (error) {
-    handleError(error, res);
-  }
-};
+import { payCredits, recoverCredit } from "../services/creditService.js";
 
 export const register = async (req, res) => {
   try {
     const { name, password, gender, language } = req.body;
     const userIp = req.clientIp;
-    await IpIsBanished(userIp);
+    const banned = await IpIsBanished(userIp);
+    if (banned) {
+      return res.status(403).json({ infoType: "ipbanned" });
+    }
     if (!name || !password) {
       return res.status(401).json({
         infoType: "401",
@@ -61,6 +52,7 @@ export const register = async (req, res) => {
     });
     try {
       const savedUser = await user.save();
+      await payCredits(GIFTS.REGISTER);
       const jwt = savedUser.createJWT();
       res
         .status(201)
@@ -84,8 +76,10 @@ export const register = async (req, res) => {
 export const login = async (req, res) => {
   try {
     const userIp = req.clientIp;
-    await IpIsBanished(userIp);
-
+    const banned = await IpIsBanished(userIp);
+    if (banned) {
+      return res.status(403).json({ infoType: "ipbanned" });
+    }
     const { name, password } = req.body;
     const user = await getUserByName(name);
     const isMatch = await user.comparePassword(password);
@@ -107,7 +101,10 @@ export const login = async (req, res) => {
 export const verify = async (req, res) => {
   try {
     const userIp = req.clientIp;
-    await IpIsBanished(userIp);
+    const banned = await IpIsBanished(userIp);
+    if (banned) {
+      return res.status(403).json({ infoType: "ipbanned" });
+    }
     const userId = req.userId;
     const user = await getUserByOfficialId(userId, 401, true);
     await updateUserIpAddress(user, userIp);
@@ -224,7 +221,7 @@ export const deleteSelfUser = async (req, res) => {
     if (!deletedUser) {
       return res.status(500).json({ infoType: "500" });
     }
-
+    await recoverCredit(deletedUser.credits);
     // Mise à jour de la nation si l'utilisateur en faisait partie
     if (nationId) {
       const nation = await Nation.findOne({ officialId: nationId });
@@ -365,6 +362,7 @@ export const changeStatus = async (req, res) => {
           nation.data.roleplay.citizens += 1;
           nation.data.roleplay.treasury += GIFTS.CITIZENSHIP;
           await nation.save();
+          await payCredits(GIFTS.CITIZENSHIP);
         }
       } else {
         user.citizenship.nationId = "";
@@ -373,6 +371,7 @@ export const changeStatus = async (req, res) => {
           nation.data.roleplay.citizens -= 1;
           nation.data.roleplay.treasury -= GIFTS.CITIZENSHIP;
           await nation.save();
+          await recoverCredit(GIFTS.CITIZENSHIP);
         }
       }
       user.citizenship.status = status;
@@ -420,12 +419,10 @@ export const transferCredits = async (req, res) => {
 
     const sender = await getUserByOfficialId(req.userId, 404);
     if (sender.credits < amount) {
-      return res
-        .status(403)
-        .json({
-          infoType: "notEnoughCredits",
-          message: "Crédits insuffisants",
-        });
+      return res.status(403).json({
+        infoType: "notEnoughCredits",
+        message: "Crédits insuffisants",
+      });
     }
 
     let recipientUser = null;
@@ -460,24 +457,6 @@ export const transferCredits = async (req, res) => {
       infoType: "transfer",
       message: "Transfert réussi",
     });
-  } catch (error) {
-    handleError(error, res);
-  }
-};
-
-const updateUserIpAddress = async (user, ip) => {
-  try {
-    let isFind = false;
-    for (const address of user.ip) {
-      if (address.value === ip) {
-        isFind = true;
-        address.lastVisit = new Date();
-      }
-    }
-    if (!isFind) {
-      user.ip.push({ value: ip, lastVisit: new Date() });
-    }
-    await user.save();
   } catch (error) {
     handleError(error, res);
   }

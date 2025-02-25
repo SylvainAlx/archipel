@@ -1,5 +1,5 @@
 import { useAtom } from "jotai";
-import { recoveryKey } from "../../settings/store";
+import { myStore, recoveryKey, showHelpAtom } from "../../settings/store";
 import Button from "../buttons/button";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -21,6 +21,10 @@ export function RecoveryModal() {
     } catch (error) {
       errorMessage(t("toasts.failedCopy"));
     }
+  };
+  const handleConfirm = () => {
+    myStore.set(showHelpAtom, true);
+    setRecovery("");
   };
   return (
     <div
@@ -53,7 +57,7 @@ export function RecoveryModal() {
         </span>
       </div>
       {checked && (
-        <div className="my-4" onClick={() => setRecovery("")}>
+        <div className="my-4" onClick={handleConfirm}>
           <Button text={t("components.buttons.validate")} />
         </div>
       )}

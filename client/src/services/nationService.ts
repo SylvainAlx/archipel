@@ -23,12 +23,16 @@ export const createNationFetch = async (payload: NationModel) => {
   }
 };
 
-export const DeleteSelfFetch = async () => {
+export const DeleteSelfFetch = async (password: string) => {
   const jwt = GET_JWT();
   try {
     const resp = await fetch(`${SERVER_URL}/nation/delete`, {
       method: "DELETE",
-      headers: { authorization: `Bearer ${jwt}` },
+      headers: {
+        "Content-Type": "application/json",
+        authorization: `Bearer ${jwt}`,
+      },
+      body: JSON.stringify({ password }),
     });
     await handleFetchError(resp);
     const result = await resp.json();

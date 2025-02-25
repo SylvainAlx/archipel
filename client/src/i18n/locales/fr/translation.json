@@ -174,7 +174,7 @@
       "markAsRead": "non lu",
       "markAsUnread": "lu",
       "transferCredits": "envoyer des credits",
-      "giveOwnership": "passation de pouvoir"
+      "giveOwnership": "céder l'édition"
     },
     "form": {
       "input": {
@@ -222,7 +222,7 @@
         "deleteCom": "confirmez-vous la suppression définitive de la communication ?",
         "reportContent": "confirmez-vous le signalement du contenu à l'administrateur ?",
         "transferCredits": "confirmez-vous le virement ?",
-        "giveOwnership": "confirmez-vous la passation de pouvoir ?"
+        "giveOwnership": "confirmez-vous la cession des droits d'édition ?"
       },
       "cookiesModal": {
         "text": "ce site utilise des cookies pour améliorer votre expérience utilisateur",
@@ -295,6 +295,33 @@
         "amount": "montant",
         "accountToBeDebited": "compte à débiter",
         "remainingBalance": "solde restant"
+      },
+      "helpModal": {
+        "title": "Aide",
+        "citizen": {
+          "title": "le citoyen",
+          "description": "**Votre identité unique d'utilisateur**<hr/>Une fois inscrit pour trouverez sur votre page de profil un identifiant unique sous la forme :<br/>*XXCXXXXXXXX*<br/>Cet identifiant se retrouve également dans la barre d'adresse de votre page de profil :<br/>*[url Archipel]/citizen/[votre identifiant]*<br/><br/>**La nationalité virtuelle**<hr/>Sur *Archipel*, vous pouvez devenir citoyen, soit :<br/>- en rejoignant une des nations déjà existantes. Il vous faudra attendre alors l'approbation de l'éditeur de la nation avant de l'intéger<br/>- en créant la votre !<br/><br/>**Votre tableau de bord**<hr/>Depuis votre page de profil vous pouvez :<br/>- Changer votre avatar et vos informations<br/>- Gérer vos paramètres<br/>"
+        },
+        "nation": {
+          "title": "la nation",
+          "description": "**Présentation**<hr/>La nation est la clé de voute d'*Archipel*, c'est celle-ci qui va être à l'origine du mouvement des utilisateurs/citoyens, des lieux créés et de la vie qui va naître sur la plateforme. Une nation peut être l'image d'une micronation existant réellement ou bien une nation complétement fictive avec comme objectif une immersion et un *Role-Play* pour ses membres.<br/><br/>**Les composantes d'une nation**<hr/>Sur *Archipel*, on trouve sur la page de la nation :<br/>- Un nom, une devise, un drapeau, etc...<br/>- une carte<br/>- des informations complémentaires (population, PIB, etc...)<br/>- des relations diplomatiques<br/>- des lieux (États, Régions, villes, éléments naturels)<br/>- des communiqués privées internes à la nation ou publics<br/><br/>**L'éditeur de la nation**<hr/>L'éditeur de la nation est l'utilisateur qui est à l'origine de sa création sur *Archipel* ou celui qui a hérité des droits mais n'est pas obligatoirement son dirigeant. Il possède les droits d'édition et peut :<br/>- modifier n'importe quelle information concernant la nation<br/>- accepter des demandes de citoyenneté ou bannir des citoyens<br/>- lier des relations diplomatiques avec d'autres nations<br/>- céder les droits d'édition de la nation à un autre citoyen"
+        },
+        "relations": {
+          "title": "les relations diplomatiques",
+          "description": "L'éditeur d'une nation peut faire une demande de relations diplomatiques auprès d'une autre nation directement depuis la page de celle-ci.<br/>Il propose un titre de la relation, un description ainsi que les types de partenariat qu'il souhaite entreprendre.<br/>La relation sera effective uniquement lorsque la nation questionnée acceptera la demande. Dans le cas contraire, la demande est annulée.<br/>La relation peut être modifiée par n'importe quelle nation en faisant partie. Les autres nations seront informées de la modification et seront libre de l'accepter ou de rompre la relation."
+        },
+        "places": {
+          "title": "les lieux",
+          "description": "**Présentation**<hr/>Les lieux ajoutent une profondeur aux nations et permettent de faire la liaison avec les citoyens via la résidence de ceux-ci.<br/><br/>**Les types de lieux**<hr/>Lors de sa création, on décide du type de lieu parmi les choix suivants :<br/>- un état<br/>- une région<br/>- une ville<br/>- un élément naturel<br/><br/>**Les lieux enfants**<hr/>Les lieux peuvent être imbriqués les uns dans les autres afin de créer une arborescence de taille. Un lieu n'ayant pas de parent défini est par défaut à la racine de la nation.<br/><br/>**Cas particulier des villes**<hr/>Les citoyens d'une nation peuvent choisir sur leur profil un lieu de résidence parmi les villes existantes de la nation.<br/>De même, la nation peut choisir sa capitale parmi les villes qu'elle possède."
+        },
+        "coms": {
+          "title": "les communications",
+          "description": "**Présentation**<hr/>Les communications sont des transmissions d'informations entre les utilisateurs et les nations. Elle permettent de garder un suivi des actions importantes réalisées sur Archipel.<br/><br/>**Les communications automatiques**<hr/>La plupart du temps les communications sont automatiques et se créées essentiellement :<br/>- à l'inscription<br/>- lorsqu'un utilisateur rejoint ou créé une nation<br/>- lors d'une création ou modification de relation diplomatique<br/>- au retrait d'un citoyen d'une nation et de la suppression d'une nation<br/><br/>**Poster un communiqué**<hr/>Seul l'éditeur d'une nation peut poster une communication. Celle-ci a un rôle de communiqué officiel. Elle peut être privée et donc visiblement uniquement par les citoyens de la nation, ou publique et donc également visible dans les actualités."
+        },
+        "credits": {
+          "title": "les crédits",
+          "description": "**Présentation**<hr/>Les crédits ajoutent une mécanique à l'application qui participe à son côté ludique.<br/><br/>**Obtention des crédits**<hr/>Des crédits sont donnés lorsque :<br/>- Un utilisateur rejoint Archipel<br/>- Une nation est créée<br/>- Un utilisateur rejoint une nation<br/><br/>**Dépense des crédits**<hr/>Des crédits sont prélevés lorsque :<br/>- le seuil maximal _gratuit_ pour créer des lieux et des tuiles d'informations est dépassé<br/><br/>**Transfert de crédits**<hr/>Le transfert de crédits est possible entre utilisateurs et nations.<br/><br/>**Informations complémentaires**<hr/>Si l'éditeur de la nation supprime un lieu ou une tuile qui lui a coûté des crédits, la nation regagne cette somme.<br/>Le montant des crédits peut varier dans le temps."
+        }
       }
     },
     "hoverInfos": {

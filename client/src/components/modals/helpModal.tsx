@@ -5,7 +5,7 @@ import { useModal } from "../../hooks/useModal";
 import TabNav from "../tabNav";
 import { StandardOption } from "../../types/typAtom";
 import { useState } from "react";
-import H3 from "../titles/h3";
+import MDEditor from "@uiw/react-md-editor";
 
 export default function HelpModal() {
   const { t } = useTranslation();
@@ -14,39 +14,33 @@ export default function HelpModal() {
   const helpTabs: StandardOption[] = [
     {
       id: 1,
-      label: "Les citoyens",
-      descriptions:
-        "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Consectetur dolorem",
+      label: t("components.modals.helpModal.citizen.title"),
+      descriptions: t("components.modals.helpModal.citizen.description"),
     },
     {
       id: 2,
-      label: "Les nations",
-      descriptions:
-        "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Consectetur dolorem",
+      label: t("components.modals.helpModal.nation.title"),
+      descriptions: t("components.modals.helpModal.nation.description"),
     },
     {
       id: 3,
-      label: "Les relations diplomatiques",
-      descriptions:
-        "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Consectetur dolorem",
+      label: t("components.modals.helpModal.relations.title"),
+      descriptions: t("components.modals.helpModal.relations.description"),
     },
     {
       id: 4,
-      label: "Les lieux",
-      descriptions:
-        "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Consectetur dolorem",
+      label: t("components.modals.helpModal.places.title"),
+      descriptions: t("components.modals.helpModal.places.description"),
     },
     {
       id: 5,
-      label: "Les communiqués",
-      descriptions:
-        "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Consectetur dolorem",
+      label: t("components.modals.helpModal.coms.title"),
+      descriptions: t("components.modals.helpModal.coms.description"),
     },
     {
       id: 6,
-      label: "Les crédits",
-      descriptions:
-        "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Consectetur dolorem",
+      label: t("components.modals.helpModal.credits.title"),
+      descriptions: t("components.modals.helpModal.credits.description"),
     },
   ];
 
@@ -58,15 +52,20 @@ export default function HelpModal() {
       ref={modalRef}
       className="w-full flex flex-col items-center gap-2"
     >
+      <h2 className="text-2xl text-center p-4">
+        {t("components.modals.helpModal.title")}
+      </h2>
       <TabNav
         tabs={helpTabs}
         tabId={tab.id}
         click={(id: number) => setTab(helpTabs[id - 1])}
         bgColor="bg-complementary2"
       />
-      <article className="flex flex-col items-center gap-2">
-        <H3 text={helpTabs[Number(tab.id) - 1].label} />
-        <p>{helpTabs[Number(tab.id) - 1].descriptions}</p>
+      <article className="w-full max-h-96 flex flex-col items-center gap-2 overflow-y-auto">
+        <MDEditor.Markdown
+          className="presentation"
+          source={helpTabs[Number(tab.id) - 1].descriptions}
+        />
       </article>
       <Button
         text={t("components.buttons.close")}

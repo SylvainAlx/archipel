@@ -306,10 +306,11 @@ export class NationModel extends CommonModel implements Nation {
       return new NationModel(this);
     }
   };
-  baseDelete = async () => {
+  baseDelete = async (password: string) => {
     myStore.set(loadingAtom, true);
     try {
-      const resp: { user: User; infoType: string } = await DeleteSelfFetch();
+      const resp: { user: User; infoType: string } =
+        await DeleteSelfFetch(password);
       this.removeFromNationListAtom(this);
       const newCom = new ComModel({
         comType: COM_TYPE.userPrivate.id,

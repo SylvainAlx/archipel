@@ -12,6 +12,7 @@ export const COSTS = {
 
 export const GIFTS = {
   REGISTER: 10,
+  NEW_NATION: 10,
   CITIZENSHIP: 10,
 };
 
