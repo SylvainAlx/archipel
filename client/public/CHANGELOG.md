@@ -8,12 +8,13 @@ Le code source est public et est visible [ici](https://github.com/SylvainAlx/arc
 
 #### Ajouts
 
-- _Nom de domaine disponible !!! modifier index.html, robots.txt et generate-sitemap.js !!!_
+- _si changement du nom de domaine !!! modifier CLIENT: index.html, robots.txt et generate-sitemap.js SERVER: FRONTENDURL dans le .env !!!_
 
 - Ajout d'une fenètre d'aide à l'utilisation
 - Autorisation des crawlers des moteurs de recherche pour l'indexation
 - L'éditeur d'une nation peut céder la gestion à un autre citoyen
 - Tri possible des utilisateurs par date de dernière visite
+- Une nation peut obtenir le status officiel sur validation de son dirigeant réel
 
 #### Suppressions
 

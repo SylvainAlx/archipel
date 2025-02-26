@@ -1,23 +1,11 @@
-import { lazy, Suspense, useEffect, useState } from "react";
+import { lazy, Suspense } from "react";
 import TabNav from "../components/tabNav";
-import { useTranslation } from "react-i18next";
-import { StandardOption } from "../types/typAtom";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { createPageTitle } from "../utils/procedures";
 import ParamSkeleton from "../components/loading/skeletons/paramSkeleton";
+import { useExplore } from "../hooks/pagesHooks/useExplore";
 
 export default function Explore() {
-  const { t } = useTranslation();
-  const nationTabs: StandardOption[] = [
-    { id: 1, label: t("pages.explore.stats.title") },
-    { id: 2, label: t("pages.explore.nationsList.title") },
-    { id: 3, label: t("pages.explore.citizensList.title") },
-    { id: 4, label: t("pages.explore.placesList.title") },
-    { id: 5, label: t("pages.explore.comsList.title") },
-  ];
-
-  const [tab, setTab] = useState(nationTabs[0]);
-  const param = useParams();
   const navigate = useNavigate();
 
   const Stats = lazy(() => import("./exploreTabs/stats"));
@@ -25,14 +13,9 @@ export default function Explore() {
   const CitizenList = lazy(() => import("./exploreTabs/citizenList"));
   const PlaceList = lazy(() => import("./exploreTabs/placeList"));
   const ComList = lazy(() => import("./exploreTabs/comList"));
+  const { tab, nationTabs } = useExplore();
 
   createPageTitle(tab.label);
-
-  useEffect(() => {
-    if (param.id != undefined) {
-      setTab(nationTabs[Number(param.id) - 1]);
-    }
-  }, [param.id]);
 
   return (
     <>

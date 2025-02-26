@@ -1,40 +1,29 @@
-import { useTranslation } from "react-i18next";
 import H1 from "../components/titles/h1";
 import { useEffect, useState } from "react";
 import { langOptions } from "../i18n/i18n";
 import MDEditor from "@uiw/react-md-editor";
 import { createPageTitle } from "../utils/procedures";
+import { getMarkdown } from "../utils/functions";
+import { useTranslation } from "react-i18next";
 
 export default function TermsOfService() {
-  const t = useTranslation();
-  const [lang, setLang] = useState("");
   const [markdownContent, setMarkdownContent] = useState("");
-
-  createPageTitle("CGU");
-
-  useEffect(() => {
-    setLang(t.i18n.language);
-  }, [t]);
+  const { t, i18n } = useTranslation();
+  createPageTitle(t("pages.termsOfService.title"));
 
   useEffect(() => {
+    const fetchMarkdown = async () => {
+      setMarkdownContent(await getMarkdown("/TERMS-OF-SERVICE.md"));
+    };
+
     fetchMarkdown();
   }, []);
 
-  const fetchMarkdown = async () => {
-    const response = await fetch("/TERMS-OF-SERVICE.md");
-    const text = await response.text();
-    setMarkdownContent(text);
-  };
-
   return (
     <section className="w-full max-w-2xl px-2 pb-2 flex flex-col items-center gap-2">
-      {lang === langOptions[1].id ? (
-        <H1 text="Conditions générales d'utilisation" />
-      ) : (
-        <>
-          <H1 text="Terms of service" />
-          <strong className="animate-pulse">ONLY IN FRENCH LANGUAGE</strong>
-        </>
+      <H1 text={t("pages.termsOfService.title")} />
+      {i18n.language === langOptions[0].id && (
+        <strong className="animate-pulse">ONLY IN FRENCH LANGUAGE</strong>
       )}
       <MDEditor.Markdown
         className="bg-transparent text-light text-justify mde-markdown"

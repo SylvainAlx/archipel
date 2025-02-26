@@ -11,6 +11,7 @@ import DateTag from "../tags/dateTag";
 import NationStateTag from "../tags/nationStateTag";
 import { NationModel } from "../../models/nationModel";
 import TreasuryTag from "../tags/treasuryTag";
+import VerifiedTag from "../tags/verifiedTag";
 
 interface NationTileProps {
   nation: NationModel;
@@ -35,9 +36,12 @@ export default function NationTile({ nation }: NationTileProps) {
         <Flag nation={nation} />
         <h3
           onClick={handleClick}
-          className="text-light text-xl pl-4 pr-6 cursor-pointer"
+          className="flex items-center gap-2 text-light text-xl pl-4 pr-6 cursor-pointer"
         >
           {nation.name}
+          {nation.data.roleplay.officialOwner === nation.owner && (
+            <VerifiedTag />
+          )}
         </h3>
       </div>
       <div className="flex gap-1 flex-wrap items-center self-end">

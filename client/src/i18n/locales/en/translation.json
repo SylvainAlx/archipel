@@ -174,7 +174,8 @@
       "markAsRead": "mark as read",
       "markAsUnread": "mark as unread",
       "transferCredits": "transfer credits",
-      "giveOwnership": "give ownership"
+      "giveOwnership": "give ownership",
+      "askOfficial": "request official status"
     },
     "form": {
       "input": {
@@ -280,7 +281,8 @@
         "comMessage": "message"
       },
       "infoModal": {
-        "title": "information"
+        "title": "information",
+        "askOfficial": "To obtain official status and the badge, the manager of your virtual nation or micronation must explicitly contact the app publisher (email address below) and submit their request as follows:|I, [MANAGER'S NAME], solemnly declare that the user [USER'S NAME ON ARCHIPEL] officially represents the nation [NATION'S NAME] on the Archipel app.|The email must include the nation's official signature or seal.|Once the request is verified, a confirmation email from the publisher will confirm the update."
       },
       "newRelationModal": {
         "new": "new diplomatic relationship",
@@ -364,7 +366,8 @@
         "honor_pioneer": "pioneer",
         "religion": "religion",
         "gender": "gender",
-        "particularity": "particularity"
+        "particularity": "particularity",
+        "official": "official"
       },
       "avatar": "avatar",
       "relations": {

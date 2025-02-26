@@ -1,45 +1,27 @@
-import { ChangeEvent, FormEvent, useState } from "react";
 import H1 from "../components/titles/h1";
 import Input from "../components/form/input";
 import Button from "../components/buttons/button";
 import Form from "../components/form/form";
 import TextArea from "../components/form/textArea";
 import { useTranslation } from "react-i18next";
-import { useNavigate } from "react-router-dom";
 import RequiredStar from "../components/form/requiredStar";
-import { UserModel } from "../models/userModel";
 import { createPageTitle } from "../utils/procedures";
+import { useRecovery } from "../hooks/pagesHooks/useRecovery";
 
 export default function Recovery() {
-  const [name, setName] = useState("");
-  const [password, setPassword] = useState("");
-  const [recovery, setRecovery] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [passwordsMatch, setPasswordsMatch] = useState(true);
   const { t } = useTranslation();
-  const navigate = useNavigate();
+  const {
+    name,
+    password,
+    recovery,
+    confirmPassword,
+    passwordsMatch,
+    handleChange,
+    handleConfirm,
+    handleSubmit,
+  } = useRecovery();
 
   createPageTitle(t("pages.recovery.title"));
-
-  const handleChange = (
-    e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>,
-  ) => {
-    if (e.target.type == "text") {
-      setName(e.target.value);
-    } else if (e.target.type == "password") {
-      setPassword(e.target.value);
-      setPasswordsMatch(confirmPassword === e.target.value);
-    } else {
-      setRecovery(e.target.value);
-    }
-  };
-
-  const handleSubmit = async (e: FormEvent) => {
-    e.preventDefault();
-    const newUser = new UserModel();
-    const isOk = await newUser.recoveryUser({ name, recovery, password });
-    isOk && navigate("/login");
-  };
 
   return (
     <>
@@ -74,10 +56,7 @@ export default function Recovery() {
             />
             <Input
               required={true}
-              onChange={(e) => {
-                setConfirmPassword(e.target.value);
-                setPasswordsMatch(password === e.target.value);
-              }}
+              onChange={handleConfirm}
               type="password"
               name="confirm"
               placeholder={t("pages.recovery.confirmPassword")}

@@ -1,79 +1,38 @@
-import { ChangeEvent, FormEvent, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import H1 from "../components/titles/h1";
 import Input from "../components/form/input";
 import Button from "../components/buttons/button";
 import Form from "../components/form/form";
-import { useTranslation } from "react-i18next";
 import Select from "../components/form/select";
 import { CAPTCHA_PUBLIC_KEY } from "../settings/consts";
-import { errorMessage } from "../utils/toasts";
 import ReCAPTCHA from "react-google-recaptcha";
 import { genderList, languageList } from "../settings/lists";
-import i18n from "../i18n/i18n";
 import RequiredStar from "../components/form/requiredStar";
-import { UserModel } from "../models/userModel";
 import { createPageTitle } from "../utils/procedures";
+import { useRegister } from "../hooks/pagesHooks/useRegister";
 
 export default function Register() {
-  const { t } = useTranslation();
-  const [name, setName] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [passwordsMatch, setPasswordsMatch] = useState(true);
-  const [language, setLanguage] = useState(i18n.language);
-  const [gender, setGender] = useState(0);
-  const [acceptCGU, setAcceptCGU] = useState(false);
-  const [captchaOk, setCaptchaOk] = useState(false);
+  const {
+    name,
+    password,
+    confirmPassword,
+    passwordsMatch,
+    language,
+    acceptCGU,
+    setAcceptCGU,
+    captchaOk,
+    handleChange,
+    handleLanguageChange,
+    handleGenerChange,
+    verifyToken,
+    handleSubmit,
+    t,
+  } = useRegister();
 
   createPageTitle(t("pages.register.title"));
 
   const navigate = useNavigate();
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    if (e.target.name == "name") {
-      setName(e.target.value);
-    } else if (e.target.name == "password") {
-      setPassword(e.target.value);
-      setPasswordsMatch(confirmPassword === e.target.value);
-    } else if (e.target.name == "confirm") {
-      setConfirmPassword(e.target.value);
-      setPasswordsMatch(password === e.target.value);
-    }
-  };
-
-  const handleLanguageChange = (e: ChangeEvent<HTMLSelectElement>) => {
-    if (e.target.value != "-1") {
-      setLanguage(e.target.value);
-    } else {
-      setLanguage("");
-    }
-  };
-
-  const handleGenerChange = (e: ChangeEvent<HTMLSelectElement>) => {
-    setGender(Number(e.target.value));
-  };
-
-  const verifyToken = async (e: string | null) => {
-    const newUser = new UserModel();
-    const response = await newUser.verifyCaptcha(e);
-    setCaptchaOk(response);
-  };
-
-  const handleSubmit = async (e: FormEvent) => {
-    e.preventDefault();
-    if (name != "" && password != "") {
-      const newUser = new UserModel();
-      await newUser.baseInsert({
-        name: name.trimEnd(),
-        password: password.trimEnd(),
-        gender,
-        language,
-      });
-    } else {
-      errorMessage(t("components.form.missingField"));
-    }
-  };
   return (
     <>
       <H1 text={t("pages.register.title")} />

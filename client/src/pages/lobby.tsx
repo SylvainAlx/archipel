@@ -1,37 +1,17 @@
-import { ChangeEvent, FormEvent, useState } from "react";
 import Input from "../components/form/input";
 import { LOBBY_INFO, MDP_LOBBY } from "../settings/consts";
 import Button from "../components/buttons/button";
-import { useAtom } from "jotai";
-import { useTranslation } from "react-i18next";
-import { lobbyAtom } from "../settings/store";
 import Form from "../components/form/form";
-import { errorMessage, successMessage } from "../utils/toasts";
 import LangButton from "../components/buttons/langButton";
 import RequiredStar from "../components/form/requiredStar";
 import { createPageTitle } from "../utils/procedures";
+import { useLobby } from "../hooks/pagesHooks/useLobby";
 
 export default function Lobby() {
-  const { t } = useTranslation();
-  const [password, setPassword] = useState("");
-  const [, setAccess] = useAtom(lobbyAtom);
+  const { handleChange, handleSubmit, password, t } = useLobby();
 
   createPageTitle("");
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setPassword(e.target.value);
-  };
-  const handleSubmit = (e: FormEvent) => {
-    e.preventDefault();
-    if (password === MDP_LOBBY) {
-      successMessage(t("pages.lobby.allowed"));
-      setAccess(true);
-      localStorage.setItem("lobbyToken", password);
-    } else {
-      errorMessage(t("pages.lobby.denied"));
-    }
-    setPassword("");
-  };
   return (
     <main className="flex flex-col items-center justify-start gap-4 h-[70vh]">
       {LOBBY_INFO != "" && (

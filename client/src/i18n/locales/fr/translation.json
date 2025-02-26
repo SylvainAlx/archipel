@@ -174,7 +174,8 @@
       "markAsRead": "non lu",
       "markAsUnread": "lu",
       "transferCredits": "envoyer des credits",
-      "giveOwnership": "céder l'édition"
+      "giveOwnership": "céder l'édition",
+      "askOfficial": "demander le statut officiel"
     },
     "form": {
       "input": {
@@ -280,7 +281,8 @@
         "comMessage": "message"
       },
       "infoModal": {
-        "title": "information"
+        "title": "information",
+        "askOfficial": "Pour obtenir le statut officiel et le badge, le gérant de votre nation virtuelle ou micronation doit explicitement contacter l'éditeur de l'application (adresse email ci-dessous) en formulant sa demande comme ceci :|Je sousigné [LE NOM DU GÉRANT], atteste sur l'honneur que l'utilisateur [LE NOM DE L'UTILISATEUR SUR ARCHIPEL] représente officiellement la nation [LE NOM DE LA NATION] sur l'application Archipel.|L'email doit comporter la signature ou le sceau officiel de la nation.|Une fois la demande vérifiée, un email de l'éditeur confirmera la modification."
       },
       "relationModal": {
         "new": "nouvelle relation diplomatique",
@@ -364,7 +366,8 @@
         "honor_pioneer": "pionnier",
         "religion": "religion",
         "gender": "genre",
-        "particularity": "particularité"
+        "particularity": "particularité",
+        "official": "officiel"
       },
       "avatar": "avatar",
       "relations": {

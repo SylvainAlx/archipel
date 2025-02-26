@@ -60,6 +60,7 @@ export class NationModel extends CommonModel implements Nation {
       capital: string;
       citizens: number;
       places: number;
+      officialOwner: string;
     };
   };
 

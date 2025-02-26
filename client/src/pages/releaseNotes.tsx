@@ -4,6 +4,7 @@ import MDEditor from "@uiw/react-md-editor";
 import { useEffect, useState } from "react";
 import { langOptions } from "../i18n/i18n";
 import { createPageTitle } from "../utils/procedures";
+import { getMarkdown } from "../utils/functions";
 
 export default function ReleaseNotes() {
   const { t, i18n } = useTranslation();
@@ -12,14 +13,12 @@ export default function ReleaseNotes() {
   createPageTitle(t("pages.releaseNotes.title"));
 
   useEffect(() => {
+    const fetchMarkdown = async () => {
+      setMarkdownContent(await getMarkdown("/CHANGELOG.md"));
+    };
+
     fetchMarkdown();
   }, []);
-
-  const fetchMarkdown = async () => {
-    const response = await fetch("/CHANGELOG.md");
-    const text = await response.text();
-    setMarkdownContent(text);
-  };
 
   return (
     <section className="w-full max-w-2xl px-2 pb-2 flex flex-col items-center gap-2">

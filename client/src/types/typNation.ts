@@ -29,6 +29,7 @@ export interface Nation {
       capital: string;
       citizens: number;
       places: number;
+      officialOwner: string;
     };
   };
   createdAt: Date;
@@ -64,6 +65,7 @@ export const EmptyNation: Nation = {
       capital: "",
       citizens: 0,
       places: 0,
+      officialOwner: "",
     },
   },
   createdAt: new Date(0),

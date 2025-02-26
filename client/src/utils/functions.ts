@@ -117,3 +117,9 @@ export const getFormatedDate = (date: Date | string) => {
 export const isNation = (officialId: string): boolean => {
   return officialId.charAt(2) === "n";
 };
+
+export const getMarkdown = async (path: string): Promise<string> => {
+  const response = await fetch(path);
+  const text = await response.text();
+  return text;
+};

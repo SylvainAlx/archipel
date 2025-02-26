@@ -1,4 +1,3 @@
-import { ChangeEvent, FormEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import H1 from "../components/titles/h1";
 import Input from "../components/form/input";
@@ -6,34 +5,15 @@ import Button from "../components/buttons/button";
 import Form from "../components/form/form";
 import { useTranslation } from "react-i18next";
 import RequiredStar from "../components/form/requiredStar";
-import { myStore, sessionAtom } from "../settings/store";
 import { createPageTitle } from "../utils/procedures";
+import { useLogin } from "../hooks/pagesHooks/useLogin";
 
 export default function Login() {
-  const [name, setName] = useState("");
-  const [password, setPassword] = useState("");
   const navigate = useNavigate();
   const { t } = useTranslation();
+  const { name, password, handleChange, handleSubmit } = useLogin();
 
   createPageTitle(t("pages.login.title"));
-
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    if (e.target.type == "text") {
-      setName(e.target.value);
-    } else {
-      setPassword(e.target.value);
-    }
-  };
-
-  const handleSubmit = (e: FormEvent) => {
-    const login = async () => {
-      myStore
-        .get(sessionAtom)
-        .user.login({ name: name.trimEnd(), password: password.trimEnd() });
-    };
-    e.preventDefault();
-    login();
-  };
 
   return (
     <>

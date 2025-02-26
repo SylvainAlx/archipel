@@ -120,6 +120,10 @@ const nationSchema = mongoose.Schema(
           type: Number,
           default: 0,
         },
+        officialOwner: {
+          type: String,
+          default: "",
+        },
       },
     },
   },
