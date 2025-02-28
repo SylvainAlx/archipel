@@ -34,18 +34,6 @@ export const PIONEER_DATE = "2025-03-07T00:00:00.000Z";
 
 export const UPLOADCARE_URL = "https://ucarecdn.com";
 
-export const QUOTAS = {
-  PLACES: 10,
-  TILES: 8,
-  COMS: 1, // par jour
-};
-
-export const COSTS = {
-  PLACE: 10,
-  TILE: 10,
-  COM: 10,
-};
-
 export const MAX_LENGTH = {
   text: {
     defaultMD: 2000,

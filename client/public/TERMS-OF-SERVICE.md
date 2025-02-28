@@ -105,7 +105,7 @@ Sur cette page est également présent :
 
 - un bouton de lien vers la page "mon compte" si l'Utilisateur est connecté
 - un bouton de lien vers la page "explorer"
-- un bouton permettant d'afficher les liens pour effectuer une donation en cryptomonnaie à l'Éditeur d'Archipel
+- un bouton permettant d'afficher les liens pour effectuer une donation anonyme en cryptomonnaie à l'Éditeur d'Archipel. Aucun utilisateur, inscrit ou non sur l'application, ne pourra revendiquer une donation en échange de faveurs ou de compensations.
 
 #### 4.1.2 - Découvertes d'Archipel via l'onglet "explorer"
 
@@ -133,7 +133,7 @@ En se rendant sur la page d'un citoyen depuis la liste de la page "explorer", l'
 
 En se rendant sur la page d'une nation depuis la liste de la page "explorer", l'internaute va pouvoir consulter :
 
-- L'identité de la nation (Les liens externes, le nom de la nation, le drapeau et le blason s'ils ont été ajoutés, la devise)
+- L'identité de la nation (Les liens externes, le nom de la nation, son statut officiel ou non, le drapeau et le blason s'ils ont été ajoutés, la devise)
 - Les tags (L'identifiant unique, Le total du trésor public, le type de régime, le nombre de citoyens, le nombre de lieux, le jour national, la monnaie, la capitale, les mots clés)
 - La description
 - La carte de la nation (si existante)
@@ -194,6 +194,7 @@ Un utilisateur n'appartenant pas à une nation a la possibilité d'en créer une
 - Un ou plusieurs mots clés pour apporter un meilleur référencement de la nation
 - Le nom de la monnaie (fictive ou non)
 - Le jour de la fête nationale (même si le choix de l'année est possible, ne sera affiché que le jour et le mois)
+- S'il s'agit d'un État-Nation ou non (par défaut "oui")
 - Le type de régime (obligatoire)
 
 Si tous les éléments obligatoires sont correctement renseignés, la nation sera créée avec succès et recevra un bonus de crédits (voir [ARTICLE 4.4](#44---les-crédits)).
@@ -206,10 +207,13 @@ Sur la page "NATION" (accessible depuis la page de citoyen ou directement sur la
 - Le nom de la nation (avec les même restrictions qu'à la création)
 - L'ajout ou la suppression de drapeau et de blason
 - La devise
-- Les tags (Type de régime, jour de fête national, monnaie, capitale, mots-clés)
+- Les tags (Type de régime, État-Nation, jour de fête national, monnaie, capitale, mots-clés)
 - La description
 
-L'éditeur d'une nation peut décider seul de supprimer sa nation. Cela a pour conséquence la suppression de tous les lieux, tuiles et communiqués associés. Les citoyens intégrés à cette nation se retrouvent immédiatement apatrides.
+Un badge "officiel" peut être acquis si le gérant réel de la nation confirme à l'Éditeur par mail quel utilisateur peut modifier la nation sur Archipel. Si approbation, les informations de la nation deviennent, de fait, officielles.
+
+L'éditeur d'une nation peut décider seul de supprimer sa nation à condition qu'il en soit le seul citoyen. Cela a pour conséquence la suppression de tous les lieux, tuiles et communiqués associés.
+Dans le cas où la nation comporte plusieurs citoyens, l'éditeur de la nation peut décider de transmettre les droits d'édition à un autre citoyen.
 
 #### 4.3.3 - L'ajout d'une carte de la nation
 
@@ -237,7 +241,7 @@ L'éditeur d'une nation peut faire une demande de relations diplomatiques auprè
 
 ### 4.4 - Les crédits
 
-Les crédits peuvent être vus comme une monnaie interne à l'application Archipel. Les crédits ajoutent une mécanique à l'application qui participe à son côté ludique.
+Les crédits peuvent être vus comme une monnaie interne à l'application Archipel. Les crédits ajoutent une mécanique à l'application qui participe à son côté ludique. Les nations ayant le plus grand nombre de crédits (appellée trésorerie) sont vues en premier dans l'onglet "nations" de la page explorer.
 
 #### 4.4.1 Obtention des crédits
 

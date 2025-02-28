@@ -22,7 +22,7 @@ import { ListModel } from "./listModel";
 export class NationListModel extends ListModel {
   constructor(
     list: NationModel[] = [],
-    sorting: number = NATION_SORTING.descCtz.id,
+    sorting: number = NATION_SORTING.descTreasury.id,
   ) {
     super();
     this.items = list;
@@ -68,6 +68,7 @@ export class NationListModel extends ListModel {
         this.addMany(nations);
         this.addToNationListAtom(nations);
       }
+      this.sortNations(this.sorting);
     } catch (error) {
       errorCatching(error);
     } finally {

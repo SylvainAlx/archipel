@@ -21,6 +21,7 @@ import { TileModel } from "../models/tileModel";
 import { RelationListModel } from "../models/lists/relationListModel";
 import { RelationModel } from "../models/relationModel";
 import { emptyDiplomaticRelationship } from "../types/typRelation";
+import { Param } from "../types/typeParam";
 
 export const myStore = createStore();
 
@@ -81,3 +82,5 @@ export const statsAtom = atom<Stats>({
   counts: { nations: 0, citizens: 0, places: 0, tags: 0, coms: 0 },
   tags: [],
 });
+
+export const paramsAtom = atom<Param[]>([]);

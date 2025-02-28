@@ -12,10 +12,10 @@ import { useAtom } from "jotai";
 import { useTranslation } from "react-i18next";
 import TextArea from "../form/textArea";
 import { FaCoins } from "react-icons/fa";
-import { COSTS } from "../../settings/consts";
 import RequiredStar from "../form/requiredStar";
 import { TileModel } from "../../models/tileModel";
 import { useModal } from "../../hooks/useModal";
+import { getValueFromParam } from "../../services/paramService";
 
 export default function TileFormModal() {
   const [isNewTile, setIsNewTile] = useState(false);
@@ -24,6 +24,7 @@ export default function TileFormModal() {
   const [tileList] = useAtom(tileListAtomV2);
   const { t } = useTranslation();
   const modalRef = useModal(() => setTile(new TileModel()));
+  const cost = Number(getValueFromParam("costs", "tile"));
 
   useEffect(() => {
     if (
@@ -81,7 +82,7 @@ export default function TileFormModal() {
       {!localTile.isFree && (
         <span className="flex items-center gap-1 text-gold">
           <FaCoins />
-          {COSTS.TILE}
+          {cost && cost}
         </span>
       )}
       <Form

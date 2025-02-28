@@ -8,12 +8,12 @@ import Button from "../buttons/button";
 import { emptyTile } from "../../types/typTile";
 import { GiSBrick } from "react-icons/gi";
 import { useTranslation } from "react-i18next";
-import { COSTS, QUOTAS } from "../../settings/consts";
 import { FaCoins } from "react-icons/fa";
 import { errorMessage } from "../../utils/toasts";
 import { TileListModel } from "../../models/lists/tileListModel";
 import { TileModel } from "../../models/tileModel";
 import TileSkeleton from "../loading/skeletons/tileSkeleton";
+import { getValueFromParam } from "../../services/paramService";
 
 export default function FreeTiles({
   selectedNation,
@@ -25,7 +25,8 @@ export default function FreeTiles({
     new TileListModel(),
   );
   const [, setEditTile] = useAtom(editTileAtom);
-
+  const quota = Number(getValueFromParam("quotas", "tiles"));
+  const cost = Number(getValueFromParam("costs", "tile"));
   const FreeTile = lazy(() => import("../tiles/freeTile"));
 
   const filteredTileList = useMemo(() => {
@@ -50,11 +51,11 @@ export default function FreeTiles({
 
   const handleClick = () => {
     if (
-      selectedNation.data.roleplay.treasury >= COSTS.TILE ||
-      nationTileList.getItems().length < QUOTAS.TILES
+      (quota && selectedNation.data.roleplay.treasury >= quota) ||
+      nationTileList.getItems().length < quota
     ) {
       const newTile = { ...emptyTile };
-      newTile.isFree = nationTileList.getItems().length < QUOTAS.TILES;
+      newTile.isFree = nationTileList.getItems().length < quota;
       newTile.nationOfficialId = selectedNation.officialId;
       setEditTile(new TileModel(newTile));
     } else {
@@ -71,12 +72,14 @@ export default function FreeTiles({
             <section className="flex flex-col items-center justify-center gap-2">
               {owner && (
                 <div className="flex items-center gap-4">
-                  {nationTileList.getItems().length >= QUOTAS.TILES && (
-                    <span className="flex items-center gap-1 text-gold">
-                      <FaCoins />
-                      {COSTS.TILE}
-                    </span>
-                  )}
+                  {quota &&
+                    cost &&
+                    nationTileList.getItems().length >= quota && (
+                      <span className="flex items-center gap-1 text-gold">
+                        <FaCoins />
+                        {cost}
+                      </span>
+                    )}
                   <Button
                     text={t("components.buttons.createFreeTile")}
                     children={<GiSBrick />}

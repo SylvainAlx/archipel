@@ -56,7 +56,7 @@ export const sortByTreasury = (list: Nation[], ascending: boolean = true) => {
   return list.sort(function (a, b) {
     return ascending
       ? a.data.roleplay.treasury - b.data.roleplay.treasury
-      : b.data.roleplay.citizens - a.data.roleplay.treasury;
+      : b.data.roleplay.treasury - a.data.roleplay.treasury;
   });
 };
 

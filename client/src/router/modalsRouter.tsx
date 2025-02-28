@@ -81,7 +81,7 @@ export default function ModalsRouter() {
         <div
           role="dialog"
           aria-modal="true"
-          className={`min-w-[350px] max-w-[90%] ${(!loading || longLoading) && "bg-slate-800"} rounded-md p-3 flex flex-col items-center gap-4`}
+          className={`min-w-[350px] max-w-[90%] max-h-[95%] ${(!loading || longLoading) && "bg-slate-800"} rounded-md p-3 flex flex-col items-center gap-4`}
         >
           {loading ? (
             <>{/* <LoadingSpinner /> */}</>

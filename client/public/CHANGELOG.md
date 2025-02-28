@@ -22,10 +22,13 @@ Le code source est public et est visible [ici](https://github.com/SylvainAlx/arc
 
 #### Modifications & Corrections
 
-- Mise à jour des CGU
 - _Tests effectués sur plusieurs navigateurs web_
 
+- Mise à jour des CGU
 - Optimisation du code source et mise à jour des dépendances
+- Propriété "Etat-Nation" modifiable
+- Le tri des nation est à présent défini par défaut sur "Richesse décroissante"
+- Les quotas et les coûts des lieux et tuiles peuvent être ajustés directement en base de donnée
 
 ## Développements à venir
 
@@ -34,9 +37,7 @@ Le code source est public et est visible [ici](https://github.com/SylvainAlx/arc
 - Ajouter les hymnes des nations
 - Créer une gazette des nations en se basant sur les communiqués
 - Montrer la répartitions des langues parlées dans chaque nation
-- Créer une aide pour les premiers pas d'un utilisateur
 - Exporter une carte d'identité virtuelle sous forme d'image
-- Améliorer le référencement et l'accessibilité
 - Étendre les fonctionnalités pour les utilisateurs mobile
 - Lier les lieux de la nation à un emplacement sur la carte
 - Améliorer des traductions

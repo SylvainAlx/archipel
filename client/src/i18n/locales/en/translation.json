@@ -22,7 +22,8 @@
         "noMotto": "no motto",
         "externalLinks": "external links",
         "noDescription": "no description",
-        "nationState": "Nation-State"
+        "nationState": "Nation-State",
+        "noNationState": "multinational State"
       },
       "map": {
         "title": "nation map",
@@ -191,6 +192,10 @@
       "mdEditor": {
         "reached": "maximum text length reached",
         "character": "character"
+      },
+      "boolean": {
+        "yes": "yes",
+        "no": "no"
       }
     },
     "logo": {
@@ -241,7 +246,7 @@
         "title": "new nation",
         "nationName": "nation name",
         "motto": "motto",
-        "isNationState": "check if it is a nation-state",
+        "isNationState": "Is it a nation-state ?",
         "currency": "currency",
         "regime": "regime",
         "tagsInfos": "space to apply, click to delete"
@@ -282,6 +287,8 @@
       },
       "infoModal": {
         "title": "information",
+        "cryptoAddresses": "public addresses for a cryptocurrency donation",
+        "donation": "The donation must be anonymous. No user, registered or not on the application, will be able to claim a donation to obtain favors or compensation.",
         "askOfficial": "To obtain official status and the badge, the manager of your virtual nation or micronation must explicitly contact the app publisher (email address below) and submit their request as follows:|I, [MANAGER'S NAME], solemnly declare that the user [USER'S NAME ON ARCHIPEL] officially represents the nation [NATION'S NAME] on the Archipel app.|The email must include the nation's official signature or seal.|Once the request is verified, a confirmation email from the publisher will confirm the update."
       },
       "newRelationModal": {
@@ -306,7 +313,7 @@
         },
         "nation": {
           "title": "the nation",
-          "description": "**Overview**<hr/>The nation is the cornerstone of *Archipel*. It drives user/citizen engagement, the creation of places, and the overall life on the platform. A nation can represent a real existing micronation or be a completely fictional one, designed for immersion and *Role-Play* among its members.<br/><br/>**Components of a nation**<hr/>On *Archipel*, a nation's page includes:<br/>- A name, a motto, a flag, etc.<br/>- A map<br/>- Additional information (population, GDP, etc.)<br/>- Diplomatic relations<br/>- Places (States, Regions, Cities, Natural Elements)<br/>- Private internal or public announcements<br/><br/>**The nation editor**<hr/>The nation editor is either the user who created the nation on *Archipel* or someone who has inherited editing rights but is not necessarily the leader. The editor has editing privileges and can:<br/>- Modify any information regarding the nation<br/>- Approve citizenship requests or ban citizens<br/>- Establish diplomatic relations with other nations<br/>- Transfer editing rights to another citizen"
+          "description": "**Overview**<hr/>The nation is the cornerstone of *Archipel*. It drives user/citizen engagement, the creation of places, and the overall life on the platform. A nation can represent a real existing micronation or be a completely fictional one, designed for immersion and *Role-Play* among its members.<br/><br/>**Components of a nation**<hr/>On *Archipel*, a nation's page includes:<br/>- A name, a motto, a flag, etc.<br/>- A map<br/>- Additional information (population, GDP, etc.)<br/>- Diplomatic relations<br/>- Places (States, Regions, Cities, Natural Elements)<br/>- Private internal or public announcements<br/><br/>**The nation editor**<hr/>The nation editor is either the user who created the nation on *Archipel* or someone who has inherited editing rights but is not necessarily the leader. The editor has editing privileges and can:<br/>- Modify any information regarding the nation<br/>- Approve citizenship requests or ban citizens<br/>- Establish diplomatic relations with other nations<br/>- Transfer editing rights to another citizen<br/><br/>**The Official Badge**<hr/>An 'official' badge can be acquired if the actual manager of the nation confirms to the Editor by email which user can edit the nation on Archipel. If approved, the nation's information becomes, in fact, official."
         },
         "relations": {
           "title": "diplomatic relations",
@@ -322,7 +329,7 @@
         },
         "credits": {
           "title": "credits",
-          "description": "**Overview**<hr/>Credits introduce a game-like mechanic to the application, adding a layer of engagement.<br/><br/>**Earning credits**<hr/>Credits are awarded when:<br/>- A user joins Archipel<br/>- A nation is created<br/>- A user joins a nation<br/><br/>**Spending credits**<hr/>Credits are deducted when:<br/>- The free limit for creating places and information tiles is exceeded<br/><br/>**Transferring credits**<hr/>Credits can be transferred between users and nations.<br/><br/>**Additional information**<hr/>If a nation’s editor deletes a place or an information tile that cost credits, the nation regains the spent amount.<br/>The amount of credits may fluctuate over time."
+          "description": "**Overview**<hr/>Credits introduce a game-like mechanic to the application, adding a layer of engagement. Nations with the most credits (called treasury) are seen first in the 'nations' tab of the explore page.<br/><br/>**Earning credits**<hr/>Credits are awarded when:<br/>- A user joins Archipel<br/>- A nation is created<br/>- A user joins a nation<br/><br/>**Spending credits**<hr/>Credits are deducted when:<br/>- The free limit for creating places and information tiles is exceeded<br/><br/>**Transferring credits**<hr/>Credits can be transferred between users and nations.<br/><br/>**Additional information**<hr/>If a nation’s editor deletes a place or an information tile that cost credits, the nation regains the spent amount.<br/>The amount of credits may fluctuate over time."
         }
       }
     },

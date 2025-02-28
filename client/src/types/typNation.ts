@@ -54,7 +54,7 @@ export const EmptyNation: Nation = {
     general: {
       motto: "",
       nationalDay: "",
-      isNationState: false,
+      isNationState: true,
       regime: 0,
       currency: "",
       tags: [],
@@ -102,7 +102,7 @@ export const emptyNewNationPayload: NewNationPayload = {
   name: "",
   owner: "",
   motto: "",
-  isNationState: false,
+  isNationState: true,
   regime: 0,
   currency: "",
   nationalDay: "",

@@ -15,6 +15,13 @@ Cette version précède la _v1.0.0_ qui viendra conclure cette période de déve
 
 ### Présentation
 
+#### Origine
+
+C'est en construisant un archipel représentant une nation dans le jeu vidéo Minecraft, et échangeant avec d'autres joueurs partageant les mêmes envies, que m'est venue l'idée de rassembler dans une même application toutes les nations fictives d'origines diverses.
+J'était développeur junior au début du projet et ce nouveau challenge était parfait pour que je puisse me lancer dans l'élaboration complète d'une application jusqu'a son déploiement.
+
+#### Objectif
+
 L'application Archipel a pour projet de rassembler en un même endroit les nations virtuelles et les micronations existantes à travers le monde. Le but est de permettre l'interaction entre des nations sérieuses et d'autres complètement ludiques et animées par un jeu de rôles.
 
 ### Les fonctionnalités principales
@@ -54,6 +61,7 @@ Un utilisateur n'appartenant pas à une nation a la possibilité d'en créer une
 - Un ou plusieurs mots clés pour apporter un meilleur référencement de la nation
 - Le nom de la monnaie (fictive ou non)
 - Le jour de la fête nationale (même si le choix de l'année est possible, ne sera affiché que le jour et le mois)
+- S'il s'agit d'un État-Nation ou non (par défaut "oui")
 - Le type de régime (obligatoire)
 
 Si tous les éléments obligatoires sont correctement renseignés, la nation sera créée avec succès.
@@ -65,15 +73,20 @@ Sur la page "NATION" (accessible depuis la page de citoyen ou directement sur la
 
 - Modifier les informations liées à l'identité de la nation
 - Ajouter une carte de la nation
-- Ajouter des tuiles d'informations libres (max 8 sans utiliser de crédits)
+- Ajouter des tuiles d'informations libres
 - Créer des relations diplomatiques
 - Voir la liste des citoyens de la nation et les déchoir de leur nationalité si nécessaire ou en accepter de nouveaux
-- Créer des lieux dans la nation (État, Région, Environnement ou Ville, max 10 sans utiliser de crédits)
-- Créer des communiqués officiels (privés ou publics, max 1/24h)
+- Créer des lieux dans la nation (État, Région, Environnement ou Ville)
+- Créer des communiqués officiels
+
+Un badge "officiel" peut être acquis si le gérant réel de la nation confirme à l'Éditeur par mail quel utilisateur peut modifier la nation sur Archipel. Si approbation, les informations de la nation deviennent, de fait, officielles.
+
+L'éditeur d'une nation peut décider seul de supprimer sa nation à condition qu'il en soit le seul citoyen. Cela a pour conséquence la suppression de tous les lieux, tuiles et communiqués associés.
+Dans le cas où la nation comporte plusieurs citoyens, l'éditeur de la nation peut décider de transmettre les droits d'édition à un autre citoyen.
 
 #### Les crédits
 
-Les crédits ajoutent une mécanique à l'application qui participe à son côté ludique.
+Les crédits ajoutent une mécanique à l'application qui participe à son côté ludique. Les nations ayant le plus grand nombre de crédits (appellée trésorerie) sont vues en premier dans l'onglet "nations" de la page explorer.
 
 **Obtention des crédits**  
 Des crédits sont donnés lorsque :

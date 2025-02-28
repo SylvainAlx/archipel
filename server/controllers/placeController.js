@@ -1,7 +1,18 @@
 import Place from "../models/placeSchema.js";
 import Nation from "../models/nationSchema.js";
 import { createOfficialId } from "../utils/functions.js";
-import { COSTS, PLACE_TYPE, QUOTAS } from "../settings/const.js";
+import {
+  DEFAULT_COSTS,
+  PLACE_TYPE,
+  DEFAULT_QUOTAS,
+} from "../settings/const.js";
+import {
+  getCosts,
+  getQuotas,
+  getValueFromParam,
+  payCreditsFromBank,
+  recoverCreditToBank,
+} from "../services/paramService.js";
 
 export const placesCount = async (req, res) => {
   try {
@@ -56,9 +67,18 @@ export const createPlace = async (req, res) => {
   try {
     const { nation, parentId, name, type, description, image } = req.body;
     const placeNation = await Nation.findOne({ officialId: nation });
-
-    const freePlace = placeNation.data.roleplay.places < QUOTAS.PLACES;
-    const enoughMoney = placeNation.data.roleplay.treasury >= COSTS.PLACES;
+    const quota = getValueFromParam(
+      await getQuotas(),
+      "places",
+      DEFAULT_QUOTAS.PLACES,
+    );
+    const cost = getValueFromParam(
+      await getCosts(),
+      "place",
+      DEFAULT_COSTS.PLACES,
+    );
+    const freePlace = placeNation.data.roleplay.places < quota;
+    const enoughMoney = placeNation.data.roleplay.treasury >= quota;
 
     if (freePlace || enoughMoney) {
       const officialId = createOfficialId("p");
@@ -83,7 +103,8 @@ export const createPlace = async (req, res) => {
       }
 
       if (!freePlace) {
-        placeNation.data.roleplay.treasury -= COSTS.PLACES;
+        placeNation.data.roleplay.treasury -= cost;
+        recoverCreditToBank(cost);
       }
 
       placeNation.data.roleplay.places += 1;
@@ -123,9 +144,20 @@ export const deletePlace = async (req, res) => {
       nation.data.roleplay.capital = "";
     }
     nation.data.roleplay.population -= place.population;
+    const quota = getValueFromParam(
+      await getQuotas(),
+      "places",
+      DEFAULT_QUOTAS.PLACES,
+    );
 
-    if (nation.data.roleplay.places > QUOTAS.PLACES) {
-      nation.data.roleplay.treasury += COSTS.PLACES;
+    if (nation.data.roleplay.places > quota) {
+      const cost = getValueFromParam(
+        await getCosts(),
+        "place",
+        DEFAULT_COSTS.PLACES,
+      );
+      payCreditsFromBank(cost);
+      nation.data.roleplay.treasury += cost;
     }
 
     nation.data.roleplay.places -= 1;

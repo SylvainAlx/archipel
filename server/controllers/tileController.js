@@ -1,8 +1,15 @@
 import Tile from "../models/tileSchema.js";
 import Nation from "../models/nationSchema.js";
-import { COSTS, QUOTAS } from "../settings/const.js";
+import { DEFAULT_COSTS, DEFAULT_QUOTAS } from "../settings/const.js";
 import { handleError } from "../utils/functions.js";
 import { verifyNationOwner } from "../services/userService.js";
+import {
+  getCosts,
+  getQuotas,
+  getValueFromParam,
+  payCreditsFromBank,
+  recoverCreditToBank,
+} from "../services/paramService.js";
 
 export const createTile = async (req, res) => {
   try {
@@ -10,14 +17,25 @@ export const createTile = async (req, res) => {
     const userId = req.userId;
     const nationsTilesCount = await Tile.countDocuments({ nationOfficialId });
     const nation = await Nation.findOne({ officialId: nationOfficialId });
-    const freeTile = nationsTilesCount < QUOTAS.TILES;
-    const enoughMoney = nation.data.roleplay.treasury >= COSTS.TILES;
+    const quota = getValueFromParam(
+      await getQuotas(),
+      "tiles",
+      DEFAULT_QUOTAS.TILES,
+    );
+    const cost = getValueFromParam(
+      await getCosts(),
+      "tile",
+      DEFAULT_COSTS.TILES,
+    );
+    const freeTile = nationsTilesCount < quota;
+    const enoughMoney = nation.data.roleplay.treasury >= cost;
     const allow =
       verifyNationOwner(userId, nationOfficialId) && (freeTile || enoughMoney);
     if (allow) {
       let updatedNation;
       if (!freeTile) {
-        nation.data.roleplay.treasury -= COSTS.TILES;
+        nation.data.roleplay.treasury -= cost;
+        recoverCreditToBank(cost);
         updatedNation = await nation.save();
       } else {
         updatedNation = nation;
@@ -61,8 +79,19 @@ export const deleteTile = async (req, res) => {
         const nationsTilesCount = await Tile.countDocuments({
           nationOfficialId: nation.officialId,
         });
-        if (nationsTilesCount + 1 > QUOTAS.TILES) {
-          nation.data.roleplay.treasury += COSTS.TILES;
+        const quota = getValueFromParam(
+          await getQuotas(),
+          "tiles",
+          DEFAULT_QUOTAS.TILES,
+        );
+        if (nationsTilesCount + 1 > quota) {
+          const cost = getValueFromParam(
+            await getCosts(),
+            "tile",
+            DEFAULT_COSTS.TILES,
+          );
+          payCreditsFromBank(cost);
+          nation.data.roleplay.treasury += cost;
         }
         const updatedNation = await nation.save();
         res

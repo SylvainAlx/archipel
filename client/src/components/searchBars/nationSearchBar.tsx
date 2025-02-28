@@ -51,14 +51,11 @@ export default function NationSearchBar({
   const loadList = async (searchName: string, searchTag: string) => {
     const updatedList = await list.loadNationList(searchName, searchTag);
     if (updatedList) {
-      updatedList.sortNations(updatedList.sorting);
       setList(updatedList);
     }
   };
 
   const reset = () => {
-    setSearchName("");
-    setSearchTag("");
     loadList("", "");
     navigate(`/explore/2`);
   };
@@ -83,7 +80,7 @@ export default function NationSearchBar({
       onSubmit={handleSubmit}
     >
       <Input
-        required={false}
+        required={searchTag === ""}
         onChange={handleSearch}
         type="text"
         name="name"

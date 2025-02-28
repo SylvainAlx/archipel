@@ -8,7 +8,6 @@ import ReportPanel from "../reportPanel";
 import { sessionAtom } from "../../settings/store";
 import { useAtom } from "jotai";
 import DateTag from "../tags/dateTag";
-import NationStateTag from "../tags/nationStateTag";
 import { NationModel } from "../../models/nationModel";
 import TreasuryTag from "../tags/treasuryTag";
 import VerifiedTag from "../tags/verifiedTag";
@@ -51,7 +50,6 @@ export default function NationTile({ nation }: NationTileProps) {
       </div>
       <div className="max-w-[80%] flex gap-1 self-end flex-wrap justify-end">
         <TreasuryTag label={nation.data.roleplay.treasury} />
-        {nation.data.general.isNationState && <NationStateTag />}
         <RegimeTag selectedNation={nation} />
         <PopulationTag label={nation.data.roleplay.citizens} />
         <PlaceTag label={nation.data.roleplay.places} />

@@ -1,16 +1,16 @@
-export const QUOTAS = {
+export const DEFAULT_QUOTAS = {
   PLACES: 10,
   TILES: 8,
   COMS: 1, // par jour
 };
 
-export const COSTS = {
+export const DEFAULT_COSTS = {
   PLACES: 10,
   TILES: 10,
   COMS: 10,
 };
 
-export const GIFTS = {
+export const DEFAULT_GIFTS = {
   REGISTER: 10,
   NEW_NATION: 10,
   CITIZENSHIP: 10,

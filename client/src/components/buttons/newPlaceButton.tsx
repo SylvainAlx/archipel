@@ -1,5 +1,5 @@
 // import { FaCoins } from "react-icons/fa6";
-import { COSTS, PLACE_TYPE, QUOTAS } from "../../settings/consts";
+import { PLACE_TYPE } from "../../settings/consts";
 import Button from "./button";
 import { Place, emptyPlace } from "../../types/typPlace";
 import { myStore, newPlaceAtom } from "../../settings/store";
@@ -8,6 +8,7 @@ import { MdLandscape } from "react-icons/md";
 import { Nation } from "../../types/typNation";
 import { FaCoins } from "react-icons/fa";
 import { errorMessage } from "../../utils/toasts";
+import { getValueFromParam } from "../../services/paramService";
 
 export interface newPlaceProps {
   nation: Nation;
@@ -21,11 +22,13 @@ export default function NewPlaceButton({
   owner,
 }: newPlaceProps) {
   const { t } = useTranslation();
+  const quota = Number(getValueFromParam("quotas", "places"));
+  const cost = Number(getValueFromParam("costs", "place"));
 
   const handleClick = () => {
     if (
-      nation.data.roleplay.treasury >= COSTS.PLACE ||
-      nation.data.roleplay.places < QUOTAS.PLACES
+      (quota && nation.data.roleplay.treasury >= quota) ||
+      nation.data.roleplay.places < quota
     ) {
       const newPlace: Place = {
         officialId: emptyPlace.officialId,
@@ -39,7 +42,7 @@ export default function NewPlaceButton({
         reported: emptyPlace.reported,
         banished: emptyPlace.banished,
         createdAt: new Date(),
-        isFree: nation.data.roleplay.places < QUOTAS.PLACES,
+        isFree: nation.data.roleplay.places < quota,
       };
 
       myStore.set(newPlaceAtom, newPlace);
@@ -52,10 +55,10 @@ export default function NewPlaceButton({
     <>
       {owner && (
         <div className="flex items-center gap-4">
-          {nation.data.roleplay.places >= QUOTAS.PLACES && (
+          {cost && quota && nation.data.roleplay.places >= quota && (
             <span className="flex items-center gap-1 text-gold">
               <FaCoins />
-              {COSTS.PLACE}
+              {cost}
             </span>
           )}
           <Button

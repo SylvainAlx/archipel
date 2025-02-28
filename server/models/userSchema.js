@@ -1,7 +1,6 @@
 import mongoose from "mongoose";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import { GIFTS } from "../settings/const.js";
 
 const UserSchema = mongoose.Schema(
   {
@@ -70,7 +69,7 @@ const UserSchema = mongoose.Schema(
     },
     credits: {
       type: Number,
-      default: GIFTS.REGISTER,
+      default: 0,
     },
     plan: {
       type: String,

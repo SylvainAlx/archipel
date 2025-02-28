@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import {
   comListAtomV2,
   nationListAtomV2,
+  paramsAtom,
   placeListAtomV2,
   relationListAtomV2,
   sessionAtom,
@@ -19,6 +20,7 @@ const useDebugAtom = () => {
     coms: false,
     tiles: false,
     relations: false,
+    params: false,
   };
   const [session] = useAtom(sessionAtom);
   const [nationList] = useAtom(nationListAtomV2);
@@ -27,6 +29,7 @@ const useDebugAtom = () => {
   const [comList] = useAtom(comListAtomV2);
   const [tileList] = useAtom(tileListAtomV2);
   const [relations] = useAtom(relationListAtomV2);
+  const [params] = useAtom(paramsAtom);
 
   DEBUG_ATOM.session &&
     useEffect(() => {
@@ -86,6 +89,11 @@ const useDebugAtom = () => {
           relations.getItems().length,
       );
     }, [relations]);
+
+  DEBUG_ATOM.params &&
+    useEffect(() => {
+      console.log(params);
+    }, [params]);
 };
 
 export default useDebugAtom;

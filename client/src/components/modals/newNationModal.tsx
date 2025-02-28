@@ -13,9 +13,10 @@ import HashTag from "../tags/hashTag";
 import { regimeList } from "../../settings/lists";
 import { MAX_LENGTH } from "../../settings/consts";
 import RequiredStar from "../form/requiredStar";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { NationModel } from "../../models/nationModel";
 import { useModal } from "../../hooks/useModal";
+import BooleanRadio from "../form/booleanRadio";
 
 export default function NewNationModal() {
   const [newNation, setNewNation] = useAtom(newNationAtom);
@@ -142,26 +143,17 @@ export default function NewNationModal() {
                 value={newNation.nationalDay}
               />
             </label>
-            <label className="w-full flex gap-2 items-center justify-center">
-              <Link
-                to="https://fr.wikipedia.org/wiki/%C3%89tat-nation"
-                target="_blank"
-                className="cursor-help text-sm"
-              >
-                {t("components.modals.newNationModal.isNationState")}
-              </Link>
-              <Input
-                type="checkbox"
-                name="nationState"
-                checked={newNation.isNationState}
-                onChange={() =>
-                  setNewNation({
-                    ...newNation,
-                    isNationState: !newNation.isNationState,
-                  })
-                }
-              />
-            </label>
+            <BooleanRadio
+              title={t("components.modals.newNationModal.isNationState")}
+              name="nationState"
+              value={newNation.isNationState}
+              onChange={() =>
+                setNewNation({
+                  ...newNation,
+                  isNationState: !newNation.isNationState,
+                })
+              }
+            />
             <Select
               id="regime"
               onChange={handleSelectChange}
@@ -170,18 +162,18 @@ export default function NewNationModal() {
               required={newNation.regime === 0}
             />
             <RequiredStar />
-            <Button
-              type="submit"
-              text={t("components.buttons.validate")}
-              widthFull={true}
-              disabled={newNation.name === "" || newNation.regime === 0}
-            />
-            <Button
-              type="button"
-              text={t("components.buttons.cancel")}
-              click={() => setNewNation(emptyNewNationPayload)}
-              widthFull={true}
-            />
+            <div className="flex items-center justify-center flex-wrap gap-2">
+              <Button
+                type="submit"
+                text={t("components.buttons.validate")}
+                disabled={newNation.name === "" || newNation.regime === 0}
+              />
+              <Button
+                type="button"
+                text={t("components.buttons.cancel")}
+                click={() => setNewNation(emptyNewNationPayload)}
+              />
+            </div>
           </>
         }
       />

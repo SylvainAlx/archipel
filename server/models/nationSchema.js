@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-import { GIFTS } from "../settings/const.js";
 
 const nationSchema = mongoose.Schema(
   {
@@ -83,7 +82,7 @@ const nationSchema = mongoose.Schema(
         },
         isNationState: {
           type: Boolean,
-          default: false,
+          default: true,
         },
         regime: {
           type: Number,
@@ -106,7 +105,7 @@ const nationSchema = mongoose.Schema(
       roleplay: {
         treasury: {
           type: Number,
-          default: GIFTS.NEW_NATION,
+          default: 0,
         },
         capital: {
           type: String,

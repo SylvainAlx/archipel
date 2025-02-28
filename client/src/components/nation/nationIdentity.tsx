@@ -85,8 +85,20 @@ export default function NationIdentity({
                     <TreasuryTag
                       label={selectedNation.data.roleplay.treasury}
                     />
-                    {selectedNation.data.general.isNationState && (
-                      <NationStateTag />
+                    <NationStateTag
+                      isNationState={selectedNation.data.general.isNationState}
+                    />
+                    {owner && (
+                      <EditButton
+                        editBox={{
+                          target: "nation",
+                          original: selectedNation.data.general.isNationState,
+                          new: selectedNation.data.general.isNationState,
+                          path: "data.general.isNationState",
+                          indice: t("pages.nation.nationIdentity.nationState"),
+                          action: updatePath,
+                        }}
+                      />
                     )}
                     <div className="flex items-center gap-2">
                       {selectedNation.data != undefined && (

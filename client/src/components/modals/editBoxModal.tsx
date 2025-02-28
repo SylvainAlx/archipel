@@ -5,7 +5,7 @@ import { editbox } from "../../settings/store";
 import Button from "../buttons/button";
 import Input from "../form/input";
 import Select from "../form/select";
-import { ChangeEvent, FormEvent, useEffect, useState } from "react";
+import { ChangeEvent, FormEvent, useState } from "react";
 import { useTranslation } from "react-i18next";
 import TextArea from "../form/textArea";
 import { IoMdCloseCircle } from "react-icons/io";
@@ -14,6 +14,7 @@ import MarkdownEditor from "../form/markdownEditor";
 import { getMaxLength } from "../../utils/functions";
 import { MAX_LENGTH } from "../../settings/consts";
 import { useModal } from "../../hooks/useModal";
+import BooleanRadio from "../form/booleanRadio";
 
 export default function EditBoxModal() {
   const [editBox, setEditBox] = useAtom(editbox);
@@ -23,9 +24,6 @@ export default function EditBoxModal() {
     setEditBox({ target: "", original: -1, new: -1, path: "" }),
   );
 
-  useEffect(() => {
-    console.log(editBox.new);
-  }, [editBox]);
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     if (editBox.action != undefined) {
@@ -83,6 +81,10 @@ export default function EditBoxModal() {
     }
   };
 
+  const handleRadioChange = () => {
+    setEditBox({ ...editBox, new: !editBox.new });
+  };
+
   return (
     <div
       ref={modalRef}
@@ -132,6 +134,14 @@ export default function EditBoxModal() {
             onChange={handleChange}
             value={editBox.new.toString()}
             name=""
+          />
+        )}
+        {typeof editBox.new == "boolean" && (
+          <BooleanRadio
+            title={editBox.indice ? editBox.indice.toString() : ""}
+            name="isNationState"
+            value={editBox.new}
+            onChange={handleRadioChange}
           />
         )}
         {Array.isArray(editBox.original) &&

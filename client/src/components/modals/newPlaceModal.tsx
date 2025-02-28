@@ -8,13 +8,14 @@ import Input from "../form/input";
 import { emptyPlace } from "../../types/typPlace";
 import Select from "../form/select";
 import { useTranslation } from "react-i18next";
-import { COSTS, PLACE_TYPE } from "../../settings/consts";
+import { PLACE_TYPE } from "../../settings/consts";
 import { FaCoins } from "react-icons/fa";
 import RequiredStar from "../form/requiredStar";
 import { PlaceModel } from "../../models/placeModel";
 import { useNavigate } from "react-router-dom";
 import { PlaceListModel } from "../../models/lists/placeListModel";
 import { useModal } from "../../hooks/useModal";
+import { getValueFromParam } from "../../services/paramService";
 
 export default function NewPlaceModal() {
   const [newPlace, setNewPlace] = useAtom(newPlaceAtom);
@@ -22,6 +23,7 @@ export default function NewPlaceModal() {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const modalRef = useModal(() => setNewPlace(emptyPlace));
+  const cost = Number(getValueFromParam("costs", "place", 10));
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -54,7 +56,7 @@ export default function NewPlaceModal() {
       {!newPlace.isFree && (
         <span className="flex items-center gap-1 text-gold">
           <FaCoins />
-          {COSTS.PLACE}
+          {cost}
         </span>
       )}
       <Form

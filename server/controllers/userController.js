@@ -8,7 +8,7 @@ import {
   createOfficialId,
   handleError,
 } from "../utils/functions.js";
-import { GIFTS } from "../settings/const.js";
+import { DEFAULT_GIFTS } from "../settings/const.js";
 import {
   getUserByName,
   getRecoveryWords,
@@ -16,7 +16,13 @@ import {
   IpIsBanished,
   updateUserIpAddress,
 } from "../services/userService.js";
-import { payCredits, recoverCredit } from "../services/creditService.js";
+import {
+  getGifts,
+  getNationParam,
+  getValueFromParam,
+  payCreditsFromBank,
+  recoverCreditToBank,
+} from "../services/paramService.js";
 
 export const register = async (req, res) => {
   try {
@@ -39,6 +45,11 @@ export const register = async (req, res) => {
       }
     });
     const recovery = getRecoveryWords();
+    const gift = getValueFromParam(
+      await getGifts(),
+      "register",
+      DEFAULT_GIFTS.REGISTER,
+    );
     const user = new User({
       officialId: createOfficialId("c"),
       ip: [{ value: userIp, lastVisit: new Date() }],
@@ -48,15 +59,20 @@ export const register = async (req, res) => {
       gender,
       language,
       role,
-      credits: GIFTS.REGISTER,
+      credits: gift,
     });
     try {
       const savedUser = await user.save();
-      await payCredits(GIFTS.REGISTER);
+      await payCreditsFromBank(gift);
       const jwt = savedUser.createJWT();
-      res
-        .status(201)
-        .json({ user: savedUser, recovery, jwt, infoType: "signup" });
+      const { quotas, costs, gifts } = await getNationParam();
+      res.status(201).json({
+        user: savedUser,
+        recovery,
+        jwt,
+        infoType: "signup",
+        params: [quotas, costs],
+      });
     } catch (error) {
       console.error(error);
       if (error.code === 11000) {
@@ -88,7 +104,10 @@ export const login = async (req, res) => {
     }
     const jwt = user.createJWT();
     await updateUserIpAddress(user, userIp);
-    res.status(200).json({ user, jwt, infoType: "signin" });
+    const { quotas, costs, gifts } = await getNationParam();
+    res
+      .status(200)
+      .json({ user, jwt, infoType: "signin", params: [quotas, costs] });
   } catch (error) {
     if (error.code === 404) {
       return res.status(404).json({ infoType: "badUser" });
@@ -108,7 +127,10 @@ export const verify = async (req, res) => {
     const userId = req.userId;
     const user = await getUserByOfficialId(userId, 401, true);
     await updateUserIpAddress(user, userIp);
-    return res.status(200).json({ user, infoType: "verify" });
+    const { quotas, costs, gifts } = await getNationParam();
+    return res
+      .status(200)
+      .json({ user, infoType: "verify", params: [quotas, costs] });
   } catch (error) {
     handleError(error, res);
   }
@@ -221,7 +243,7 @@ export const deleteSelfUser = async (req, res) => {
     if (!deletedUser) {
       return res.status(500).json({ infoType: "500" });
     }
-    await recoverCredit(deletedUser.credits);
+    await recoverCreditToBank(deletedUser.credits);
     // Mise à jour de la nation si l'utilisateur en faisait partie
     if (nationId) {
       const nation = await Nation.findOne({ officialId: nationId });
@@ -354,24 +376,28 @@ export const changeStatus = async (req, res) => {
     if (req.userId === officialId || status != 0) {
       const user = await getUserByOfficialId(officialId, 404);
       const nation = await Nation.findOne({ officialId: nationId });
-
+      const gift = getValueFromParam(
+        await getGifts(),
+        "citizenship",
+        DEFAULT_GIFTS.CITIZENSHIP,
+      );
       if (status === 0 || status === 1) {
         user.citizenship.nationId = nation.officialId;
         user.citizenship.nationName = nation.name;
         if (status === 1) {
           nation.data.roleplay.citizens += 1;
-          nation.data.roleplay.treasury += GIFTS.CITIZENSHIP;
+          nation.data.roleplay.treasury += gift;
           await nation.save();
-          await payCredits(GIFTS.CITIZENSHIP);
+          await payCreditsFromBank(gift);
         }
       } else {
         user.citizenship.nationId = "";
         user.citizenship.nationName = "";
         if (user.citizenship.status === 1) {
           nation.data.roleplay.citizens -= 1;
-          nation.data.roleplay.treasury -= GIFTS.CITIZENSHIP;
+          nation.data.roleplay.treasury -= gift;
           await nation.save();
-          await recoverCredit(GIFTS.CITIZENSHIP);
+          await recoverCreditToBank(gift);
         }
       }
       user.citizenship.status = status;

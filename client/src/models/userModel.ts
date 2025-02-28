@@ -19,11 +19,13 @@ import {
   loadingAtom,
   myStore,
   nationListAtomV2,
+  paramsAtom,
   placeListAtomV2,
   recoveryKey,
   sessionAtom,
   userListAtomV2,
 } from "../settings/store";
+import { Param } from "../types/typeParam";
 import { Nation } from "../types/typNation";
 import { Place } from "../types/typPlace";
 import {
@@ -91,7 +93,8 @@ export class UserModel extends CommonModel implements User {
     myStore.set(loadingAtom, true);
     try {
       if (jwt) {
-        const response: { user: User; infoType: string } = await authGet(jwt);
+        const response: { user: User; infoType: string; params: Param[] } =
+          await authGet(jwt);
         if (response.user != undefined) {
           myStore.set(sessionAtom, {
             ...myStore.get(sessionAtom),
@@ -105,6 +108,7 @@ export class UserModel extends CommonModel implements User {
               response.user.citizenship.nationId,
             );
           }
+          myStore.set(paramsAtom, response.params);
         } else {
           myStore.set(sessionAtom, emptySession);
           myStore.set(loadingAtom, false);

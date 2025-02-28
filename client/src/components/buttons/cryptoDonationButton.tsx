@@ -25,7 +25,7 @@ export default function CryptoDonationButton() {
   };
   const handleDonationClick = () => {
     myStore.set(infoModalAtom, {
-      subtitle: "Wallets",
+      subtitle: t("components.modals.infoModal.cryptoAddresses"),
       children: (
         <div className="flex flex-col gap-4">
           {BTC_PUBLIC_KEY != "" && (
@@ -76,6 +76,7 @@ export default function CryptoDonationButton() {
               </p>
             </div>
           )}
+          <em>{t("components.modals.infoModal.donation")}</em>
         </div>
       ),
     });

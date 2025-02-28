@@ -22,7 +22,8 @@
         "noMotto": "pas de devise",
         "externalLinks": "liens externes",
         "noDescription": "pas de description",
-        "nationState": "État-Nation"
+        "nationState": "État-Nation",
+        "noNationState": "État multinational"
       },
       "map": {
         "title": "carte de la nation",
@@ -191,6 +192,10 @@
       "mdEditor": {
         "reached": "La longueur maximale de texte est atteinte",
         "character": "caractères"
+      },
+      "boolean": {
+        "yes": "oui",
+        "no": "non"
       }
     },
     "logo": {
@@ -242,7 +247,7 @@
         "nationName": "nom de la nation",
         "motto": "devise",
         "currency": "monnaie",
-        "isNationState": "Cocher s'il s'agit d'un État-nation",
+        "isNationState": "S'agit-il d'un État-nation ?",
         "regime": "régime",
         "tagsInfos": "Espace pour valider, cliquer pour supprimer"
       },
@@ -282,6 +287,8 @@
       },
       "infoModal": {
         "title": "information",
+        "cryptoAddresses": "adresses publiques pour une donation en cryptomonnaie",
+        "donation": "La donation doit être anonyme. Aucun utilisateur, inscrit ou non sur l'application, ne pourra faire valoir une donation pour obtenir des faveurs ou des compensations.",
         "askOfficial": "Pour obtenir le statut officiel et le badge, le gérant de votre nation virtuelle ou micronation doit explicitement contacter l'éditeur de l'application (adresse email ci-dessous) en formulant sa demande comme ceci :|Je sousigné [LE NOM DU GÉRANT], atteste sur l'honneur que l'utilisateur [LE NOM DE L'UTILISATEUR SUR ARCHIPEL] représente officiellement la nation [LE NOM DE LA NATION] sur l'application Archipel.|L'email doit comporter la signature ou le sceau officiel de la nation.|Une fois la demande vérifiée, un email de l'éditeur confirmera la modification."
       },
       "relationModal": {
@@ -306,7 +313,7 @@
         },
         "nation": {
           "title": "la nation",
-          "description": "**Présentation**<hr/>La nation est la clé de voute d'*Archipel*, c'est celle-ci qui va être à l'origine du mouvement des utilisateurs/citoyens, des lieux créés et de la vie qui va naître sur la plateforme. Une nation peut être l'image d'une micronation existant réellement ou bien une nation complétement fictive avec comme objectif une immersion et un *Role-Play* pour ses membres.<br/><br/>**Les composantes d'une nation**<hr/>Sur *Archipel*, on trouve sur la page de la nation :<br/>- Un nom, une devise, un drapeau, etc...<br/>- une carte<br/>- des informations complémentaires (population, PIB, etc...)<br/>- des relations diplomatiques<br/>- des lieux (États, Régions, villes, éléments naturels)<br/>- des communiqués privées internes à la nation ou publics<br/><br/>**L'éditeur de la nation**<hr/>L'éditeur de la nation est l'utilisateur qui est à l'origine de sa création sur *Archipel* ou celui qui a hérité des droits mais n'est pas obligatoirement son dirigeant. Il possède les droits d'édition et peut :<br/>- modifier n'importe quelle information concernant la nation<br/>- accepter des demandes de citoyenneté ou bannir des citoyens<br/>- lier des relations diplomatiques avec d'autres nations<br/>- céder les droits d'édition de la nation à un autre citoyen"
+          "description": "**Présentation**<hr/>La nation est la clé de voute d'*Archipel*, c'est celle-ci qui va être à l'origine du mouvement des utilisateurs/citoyens, des lieux créés et de la vie qui va naître sur la plateforme. Une nation peut être l'image d'une micronation existant réellement ou bien une nation complétement fictive avec comme objectif une immersion et un *Role-Play* pour ses membres.<br/><br/>**Les composantes d'une nation**<hr/>Sur *Archipel*, on trouve sur la page de la nation :<br/>- Un nom, une devise, un drapeau, etc...<br/>- une carte<br/>- des informations complémentaires (population, PIB, etc...)<br/>- des relations diplomatiques<br/>- des lieux (États, Régions, villes, éléments naturels)<br/>- des communiqués privées internes à la nation ou publics<br/><br/>**L'éditeur de la nation**<hr/>L'éditeur de la nation est l'utilisateur qui est à l'origine de sa création sur *Archipel* ou celui qui a hérité des droits mais n'est pas obligatoirement son dirigeant. Il possède les droits d'édition et peut :<br/>- modifier n'importe quelle information concernant la nation<br/>- accepter des demandes de citoyenneté ou bannir des citoyens<br/>- lier des relations diplomatiques avec d'autres nations<br/>- céder les droits d'édition de la nation à un autre citoyen<br/><br/>**Le badge officiel**<hr/>Un badge 'officiel' peut être acquis si le gérant réel de la nation confirme à l'Éditeur par mail quel utilisateur peut modifier la nation sur Archipel. Si approbation, les informations de la nation deviennent, de fait, officielles."
         },
         "relations": {
           "title": "les relations diplomatiques",
@@ -322,7 +329,7 @@
         },
         "credits": {
           "title": "les crédits",
-          "description": "**Présentation**<hr/>Les crédits ajoutent une mécanique à l'application qui participe à son côté ludique.<br/><br/>**Obtention des crédits**<hr/>Des crédits sont donnés lorsque :<br/>- Un utilisateur rejoint Archipel<br/>- Une nation est créée<br/>- Un utilisateur rejoint une nation<br/><br/>**Dépense des crédits**<hr/>Des crédits sont prélevés lorsque :<br/>- le seuil maximal _gratuit_ pour créer des lieux et des tuiles d'informations est dépassé<br/><br/>**Transfert de crédits**<hr/>Le transfert de crédits est possible entre utilisateurs et nations.<br/><br/>**Informations complémentaires**<hr/>Si l'éditeur de la nation supprime un lieu ou une tuile qui lui a coûté des crédits, la nation regagne cette somme.<br/>Le montant des crédits peut varier dans le temps."
+          "description": "**Présentation**<hr/>Les crédits ajoutent une mécanique à l'application qui participe à son côté ludique. Les nations ayant le plus grand nombre de crédits (appellée trésorerie) sont vues en premier dans l'onglet 'nations' de la page explorer.<br/><br/>**Obtention des crédits**<hr/>Des crédits sont donnés lorsque :<br/>- Un utilisateur rejoint Archipel<br/>- Une nation est créée<br/>- Un utilisateur rejoint une nation<br/><br/>**Dépense des crédits**<hr/>Des crédits sont prélevés lorsque :<br/>- le seuil maximal _gratuit_ pour créer des lieux et des tuiles d'informations est dépassé<br/><br/>**Transfert de crédits**<hr/>Le transfert de crédits est possible entre utilisateurs et nations.<br/><br/>**Informations complémentaires**<hr/>Si l'éditeur de la nation supprime un lieu ou une tuile qui lui a coûté des crédits, la nation regagne cette somme.<br/>Le montant des crédits peut varier dans le temps."
         }
       }
     },

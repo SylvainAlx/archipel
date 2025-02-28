@@ -4,9 +4,14 @@ import Place from "../models/placeSchema.js";
 import Tile from "../models/tileSchema.js";
 import Relation from "../models/relationSchema.js";
 import { createOfficialId, handleError } from "../utils/functions.js";
-import { GIFTS } from "../settings/const.js";
+import { DEFAULT_GIFTS } from "../settings/const.js";
 import { getUserByOfficialId } from "../services/userService.js";
-import { payCredits, recoverCredit } from "../services/creditService.js";
+import {
+  getGifts,
+  getValueFromParam,
+  payCreditsFromBank,
+  recoverCreditToBank,
+} from "../services/paramService.js";
 import { deleteFile } from "../services/fileService.js";
 
 export const nationsCount = async (req, res) => {
@@ -38,8 +43,13 @@ export const createNation = async (req, res) => {
       return res.status(403).json({ infoType: "403" });
     }
     const officialId = createOfficialId("n");
+    const gift = getValueFromParam(
+      await getGifts(),
+      "newNation",
+      DEFAULT_GIFTS.NEW_NATION,
+    );
     let data = {
-      roleplay: { citizens: 1, treasury: GIFTS.REGISTER },
+      roleplay: { citizens: 1, treasury: gift },
       general: {},
     };
     data.general.motto = motto;
@@ -57,7 +67,7 @@ export const createNation = async (req, res) => {
 
     try {
       const savedNation = await nation.save();
-      await payCredits(GIFTS.NEW_NATION);
+      await payCreditsFromBank(gift);
       const user = await User.findOne({ officialId: owner });
       user.citizenship.status = 1;
       user.citizenship.nationId = savedNation.officialId;
@@ -156,7 +166,7 @@ export const deleteSelfNation = async (req, res) => {
     const nation = await Nation.findOneAndDelete({
       officialId: user.citizenship.nationId,
     });
-    await recoverCredit(nation.data.roleplay.treasury);
+    await recoverCreditToBank(nation.data.roleplay.treasury);
     if (nation != null) {
       if (nation.data.roleplay.citizens > 1) {
         return res.status(403).json({ infoType: "403" });
