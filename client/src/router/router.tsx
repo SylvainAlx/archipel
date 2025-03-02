@@ -1,19 +1,19 @@
-import { Routes, Route, Outlet, Navigate } from "react-router-dom";
-
-import Lobby from "../pages/lobby";
+import { Routes, Route, Outlet } from "react-router-dom";
+import Lobby from "../views/pages/lobby";
 import ModalsRouter from "./modalsRouter";
 import { useAuth } from "../hooks/useAuth";
-import Home from "../pages/home";
-import Recovery from "../pages/recovery";
-import Citizen from "../pages/citizen";
-import Explore from "../pages/explore";
-import Nation from "../pages/nation";
-import Place from "../pages/place";
-import TermsOfService from "../pages/termsOfService";
-import ReleaseNotes from "../pages/releaseNotes";
-import Admin from "../pages/admin";
-import Login from "../pages/login";
-import Register from "../pages/register";
+import Home from "../views/pages/home";
+import Recovery from "../views/pages/recovery";
+import Citizen from "../views/pages/citizen";
+import Explore from "../views/pages/explore";
+import Nation from "../views/pages/nation";
+import Place from "../views/pages/place";
+import TermsOfService from "../views/pages/termsOfService";
+import ReleaseNotes from "../views/pages/releaseNotes";
+import Admin from "../views/pages/admin";
+import Login from "../views/pages/login";
+import Register from "../views/pages/register";
+import NotFound from "../views/pages/notFound";
 
 const Layout = () => (
   <main className="animate-fadeIn flex flex-grow flex-col items-center gap-2 self-center pt-5 pb-[100px] px-1 md:px-4 w-full min-w-[300px] max-w-[1440px]">
@@ -60,7 +60,7 @@ const Router = () => {
         )}
         <Route path="termsofservice" element={<TermsOfService />} />
         <Route path="releasenotes" element={<ReleaseNotes />} />
-        <Route path="*" element={<Navigate to="/" />} />
+        <Route path="*" element={<NotFound />} />
       </Route>
     </Routes>
   );

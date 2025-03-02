@@ -18,7 +18,7 @@ import { useAtom } from "jotai";
 import { resetCookieConsentValue } from "react-cookie-consent";
 import { useEffect, useState } from "react";
 import { dateIsExpired } from "../../utils/functions";
-import CookiesModal from "../modals/cookiesModal";
+import CookiesModal from "../../views/modals/cookiesModal";
 import { useNavigate } from "react-router-dom";
 import { UserModel } from "../../models/userModel";
 import { ConfirmBoxDefault } from "../../types/typAtom";

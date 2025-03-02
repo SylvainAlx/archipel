@@ -125,11 +125,18 @@
     },
     "termsOfService": {
       "title": "conditions générales d'utilisation"
+    },
+    "notFound": {
+      "title": "404 - page non trouvée",
+      "message": "Désolé, la page que vous recherchez n'existe pas."
     }
   },
   "components": {
     "ads": {
       "nation": "LA PUBLICITÉ POUR VOTRE NATION ICI !"
+    },
+    "pieChart": {
+      "empty": "aucune donnée disponible"
     },
     "buttons": {
       "home": "accueil",
@@ -182,6 +189,7 @@
       "input": {
         "name": "nom",
         "password": "mot de passe",
+        "strongPassword": "Le mot de passe doit contenir au moins 8 caractères, une majuscule, une minuscule, un chiffre et un caractère spécial.",
         "buyerOfficialId": "merci de renseigner l'identifiant unique du citoyen désigné (sous la forme: **c********)"
       },
       "select": {
@@ -289,7 +297,23 @@
         "title": "information",
         "cryptoAddresses": "adresses publiques pour une donation en cryptomonnaie",
         "donation": "La donation doit être anonyme. Aucun utilisateur, inscrit ou non sur l'application, ne pourra faire valoir une donation pour obtenir des faveurs ou des compensations.",
-        "askOfficial": "Pour obtenir le statut officiel et le badge, le gérant de votre nation virtuelle ou micronation doit explicitement contacter l'éditeur de l'application (adresse email ci-dessous) en formulant sa demande comme ceci :|Je sousigné [LE NOM DU GÉRANT], atteste sur l'honneur que l'utilisateur [LE NOM DE L'UTILISATEUR SUR ARCHIPEL] représente officiellement la nation [LE NOM DE LA NATION] sur l'application Archipel.|L'email doit comporter la signature ou le sceau officiel de la nation.|Une fois la demande vérifiée, un email de l'éditeur confirmera la modification."
+        "askOfficial": "Pour obtenir le statut officiel et le badge, le gérant de votre nation virtuelle ou micronation doit explicitement contacter l'éditeur de l'application (adresse email ci-dessous) en formulant sa demande comme ceci :|Je sousigné [LE NOM DU GÉRANT], atteste sur l'honneur que l'utilisateur [LE NOM DE L'UTILISATEUR SUR ARCHIPEL] représente officiellement la nation [LE NOM DE LA NATION] sur l'application Archipel.|L'email doit comporter la signature ou le sceau officiel de la nation.|Une fois la demande vérifiée, un email de l'éditeur confirmera la modification.",
+        "creditsParams": "paramètres des crédits",
+        "table": {
+          "thead": {
+            "place": "lieu",
+            "tile": "tuile",
+            "userBonus": "bonus pour l'utilisateur",
+            "nationBonus": "bonus pour la nation"
+          },
+          "tbody": {
+            "freeLimit": "limite gratuite",
+            "cost": "coût",
+            "register": "inscription",
+            "newNation": "création d'une nation",
+            "citizenship": "nouveau citoyen"
+          }
+        }
       },
       "relationModal": {
         "new": "nouvelle relation diplomatique",

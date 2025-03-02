@@ -123,3 +123,7 @@ export const getMarkdown = async (path: string): Promise<string> => {
   const text = await response.text();
   return text;
 };
+
+export const isStrongPassword = (password: string): boolean => {
+  return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/.test(password);
+};

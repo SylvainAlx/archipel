@@ -125,11 +125,18 @@
     },
     "termsOfService": {
       "title": "terms of service"
+    },
+    "notFound": {
+      "title": "404 - Page not found",
+      "message": "Sorry, the page you are looking for does not exist."
     }
   },
   "components": {
     "ads": {
       "nation": "YOUR NATION'S AD HERE !"
+    },
+    "pieChart": {
+      "empty": "no data available"
     },
     "buttons": {
       "home": "home",
@@ -182,6 +189,7 @@
       "input": {
         "name": "name",
         "password": "password",
+        "strongPassword": "The password must contain at least 8 characters, one uppercase letter, one lowercase letter, one digit, and one special character.",
         "buyerOfficialId": "Please enter the unique identifier of the designated citizen (in the form: **c********)"
       },
       "select": {
@@ -289,7 +297,23 @@
         "title": "information",
         "cryptoAddresses": "public addresses for a cryptocurrency donation",
         "donation": "The donation must be anonymous. No user, registered or not on the application, will be able to claim a donation to obtain favors or compensation.",
-        "askOfficial": "To obtain official status and the badge, the manager of your virtual nation or micronation must explicitly contact the app publisher (email address below) and submit their request as follows:|I, [MANAGER'S NAME], solemnly declare that the user [USER'S NAME ON ARCHIPEL] officially represents the nation [NATION'S NAME] on the Archipel app.|The email must include the nation's official signature or seal.|Once the request is verified, a confirmation email from the publisher will confirm the update."
+        "askOfficial": "To obtain official status and the badge, the manager of your virtual nation or micronation must explicitly contact the app publisher (email address below) and submit their request as follows:|I, [MANAGER'S NAME], solemnly declare that the user [USER'S NAME ON ARCHIPEL] officially represents the nation [NATION'S NAME] on the Archipel app.|The email must include the nation's official signature or seal.|Once the request is verified, a confirmation email from the publisher will confirm the update.",
+        "creditsParams": "credits settings",
+        "table": {
+          "thead": {
+            "place": "place",
+            "tile": "tile",
+            "userBonus": "bonus for the user",
+            "nationBonus": "bonus for the nation"
+          },
+          "tbody": {
+            "freeLimit": "free limit",
+            "cost": "cost",
+            "register": "registration",
+            "newNation": "creation of a nation",
+            "citizenship": "new citizen"
+          }
+        }
       },
       "newRelationModal": {
         "new": "new diplomatic relationship",

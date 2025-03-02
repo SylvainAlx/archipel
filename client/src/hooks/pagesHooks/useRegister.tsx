@@ -3,11 +3,13 @@ import i18n from "../../i18n/i18n";
 import { UserModel } from "../../models/userModel";
 import { errorMessage } from "../../utils/toasts";
 import { useTranslation } from "react-i18next";
+import { isStrongPassword } from "../../utils/functions";
 
 export function useRegister() {
   const { t } = useTranslation();
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
+  const [isPasswordStrong, setIsPasswordStrong] = useState(false);
   const [confirmPassword, setConfirmPassword] = useState("");
   const [passwordsMatch, setPasswordsMatch] = useState(true);
   const [language, setLanguage] = useState(i18n.language);
@@ -19,6 +21,7 @@ export function useRegister() {
     if (e.target.name == "name") {
       setName(e.target.value);
     } else if (e.target.name == "password") {
+      setIsPasswordStrong(isStrongPassword(e.target.value));
       setPassword(e.target.value);
       setPasswordsMatch(confirmPassword === e.target.value);
     } else if (e.target.name == "confirm") {
@@ -65,6 +68,7 @@ export function useRegister() {
     password,
     confirmPassword,
     passwordsMatch,
+    isPasswordStrong,
     language,
     acceptCGU,
     setAcceptCGU,

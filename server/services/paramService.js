@@ -9,7 +9,8 @@ export const getNationParam = async () => {
   try {
     const quotas = await getQuotas();
     const costs = await getCosts();
-    return { quotas, costs };
+    const gifts = await getGifts();
+    return { quotas, costs, gifts };
   } catch (error) {
     throw error;
   }

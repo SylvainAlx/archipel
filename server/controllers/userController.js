@@ -71,7 +71,7 @@ export const register = async (req, res) => {
         recovery,
         jwt,
         infoType: "signup",
-        params: [quotas, costs],
+        params: [quotas, costs, gifts],
       });
     } catch (error) {
       console.error(error);
@@ -107,7 +107,7 @@ export const login = async (req, res) => {
     const { quotas, costs, gifts } = await getNationParam();
     res
       .status(200)
-      .json({ user, jwt, infoType: "signin", params: [quotas, costs] });
+      .json({ user, jwt, infoType: "signin", params: [quotas, costs, gifts] });
   } catch (error) {
     if (error.code === 404) {
       return res.status(404).json({ infoType: "badUser" });
@@ -130,7 +130,7 @@ export const verify = async (req, res) => {
     const { quotas, costs, gifts } = await getNationParam();
     return res
       .status(200)
-      .json({ user, infoType: "verify", params: [quotas, costs] });
+      .json({ user, infoType: "verify", params: [quotas, costs, gifts] });
   } catch (error) {
     handleError(error, res);
   }

@@ -120,6 +120,13 @@ h5 {
   font-size: 1.25rem !important;
 }
 
+td {
+  text-align: center;
+  border: solid 1px var(--color-complementary);
+  border-collapse: collapse;
+}
+
+
 @layer utilities {
   ::-webkit-scrollbar {
     width: 8px;

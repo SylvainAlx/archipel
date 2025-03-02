@@ -19,22 +19,22 @@ import {
   showLangModalAtom,
   showMenuAtom,
 } from "../settings/store";
-import { RecoveryModal } from "../components/modals/recoveryModal";
-import ConfirmModal from "../components/modals/confirmModal";
-import InfoModal from "../components/modals/infoModal";
-import EditBoxModal from "../components/modals/editBoxModal";
-import NewPlaceModal from "../components/modals/newPlaceModal";
-import LangModal from "../components/modals/langModal";
-import ImageModal from "../components/modals/imageModal";
-import MenuModal from "../components/modals/menuModal";
-import NewNationModal from "../components/modals/newNationModal";
-import { ChangePasswordModal } from "../components/modals/changePasswordModal";
-import RelationModal from "../components/modals/relationModal";
-import TileFormModal from "../components/modals/tileFormModal";
-import NewComModal from "../components/modals/newComModal";
-import CookiesModal from "../components/modals/cookiesModal";
-import CreditTransferModal from "../components/modals/creditTransferModal";
-import HelpModal from "../components/modals/helpModal";
+import { RecoveryModal } from "../views/modals/recoveryModal";
+import ConfirmModal from "../views/modals/confirmModal";
+import InfoModal from "../views/modals/infoModal";
+import EditBoxModal from "../views/modals/editBoxModal";
+import NewPlaceModal from "../views/modals/newPlaceModal";
+import LangModal from "../views/modals/langModal";
+import ImageModal from "../views/modals/imageModal";
+import MenuModal from "../views/modals/menuModal";
+import NewNationModal from "../views/modals/newNationModal";
+import { ChangePasswordModal } from "../views/modals/changePasswordModal";
+import RelationModal from "../views/modals/relationModal";
+import TileFormModal from "../views/modals/tileFormModal";
+import NewComModal from "../views/modals/newComModal";
+import CookiesModal from "../views/modals/cookiesModal";
+import CreditTransferModal from "../views/modals/creditTransferModal";
+import HelpModal from "../views/modals/helpModal";
 
 export default function ModalsRouter() {
   const [recovery] = useAtom(recoveryKey);

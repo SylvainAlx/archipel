@@ -30,6 +30,7 @@
     "react-router-dom": "^6.20.0",
     "react-spinners": "^0.15.0",
     "react-toastify": "^11.0.3",
+    "recharts": "^2.15.1",
     "tailwindcss-animated": "^2.0.0"
   },
   "devDependencies": {

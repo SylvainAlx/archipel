@@ -15,6 +15,9 @@ Le code source est public et est visible [ici](https://github.com/SylvainAlx/arc
 - L'éditeur d'une nation peut céder la gestion à un autre citoyen
 - Tri possible des utilisateurs par date de dernière visite
 - Une nation peut obtenir le status officiel sur validation de son dirigeant réel
+- Consultation possible des paramètres des crédits pour les utilisateurs connectés
+- Ajout de visualisations en graphiques sur la page "explorer"
+- Ajout d'une page "erreur 404"
 
 #### Suppressions
 
@@ -29,6 +32,7 @@ Le code source est public et est visible [ici](https://github.com/SylvainAlx/arc
 - Propriété "Etat-Nation" modifiable
 - Le tri des nation est à présent défini par défaut sur "Richesse décroissante"
 - Les quotas et les coûts des lieux et tuiles peuvent être ajustés directement en base de donnée
+- Durcissement des règles pour le choix du mot de passe d'un nouvel utilisateur ou lors d'un changement
 
 ## Développements à venir
 
