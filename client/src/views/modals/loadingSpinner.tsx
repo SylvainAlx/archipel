@@ -1,25 +1,15 @@
 // import { useAtom } from "jotai";
 import { useTranslation } from "react-i18next";
-import { loadingAtom, longLoadingAtom, myStore } from "../../settings/store";
+import { loadingAtom, myStore } from "../../settings/store";
 import Button from "../../components/buttons/button";
 import Spinner from "../../components/loading/spinner";
-import { useEffect } from "react";
-import { useAtom } from "jotai";
 import { useModal } from "../../hooks/useModal";
+import { useLoadingSpinner } from "../../hooks/modalsHooks/useLoadingSpinner";
 
 export default function LoadingSpinner() {
   const { t } = useTranslation();
-  const [longLoading, setLongLoading] = useAtom(longLoadingAtom);
+  const { longLoading } = useLoadingSpinner();
   const modalRef = useModal(() => myStore.set(loadingAtom, false));
-
-  useEffect(() => {
-    setTimeout(() => {
-      setLongLoading(true);
-    }, 2000);
-
-    return setLongLoading(false);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   return (
     <div

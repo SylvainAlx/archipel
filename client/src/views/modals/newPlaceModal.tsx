@@ -1,8 +1,4 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-import { useAtom } from "jotai";
-import { newPlaceAtom, placeListAtomV2 } from "../../settings/store";
 import Button from "../../components/buttons/button";
-import { ChangeEvent, FormEvent } from "react";
 import Form from "../../components/form/form";
 import Input from "../../components/form/input";
 import { emptyPlace } from "../../types/typPlace";
@@ -11,42 +7,21 @@ import { useTranslation } from "react-i18next";
 import { PLACE_TYPE } from "../../settings/consts";
 import { FaCoins } from "react-icons/fa";
 import RequiredStar from "../../components/form/requiredStar";
-import { PlaceModel } from "../../models/placeModel";
-import { useNavigate } from "react-router-dom";
-import { PlaceListModel } from "../../models/lists/placeListModel";
 import { useModal } from "../../hooks/useModal";
 import { getValueFromParam } from "../../services/paramService";
+import { useNewPlaceModal } from "../../hooks/modalsHooks/useNewPlaceModal";
 
 export default function NewPlaceModal() {
-  const [newPlace, setNewPlace] = useAtom(newPlaceAtom);
-  const [placeList, setPlaceList] = useAtom(placeListAtomV2);
   const { t } = useTranslation();
-  const navigate = useNavigate();
+  const {
+    handleSubmit,
+    handleChange,
+    handleSelectChange,
+    newPlace,
+    setNewPlace,
+  } = useNewPlaceModal();
   const modalRef = useModal(() => setNewPlace(emptyPlace));
-  const cost = Number(getValueFromParam("costs", "place", 10));
-
-  const handleSubmit = async (e: FormEvent) => {
-    e.preventDefault();
-    const placeToInsert = new PlaceModel(newPlace);
-    const placeInserted = await placeToInsert.baseInsert();
-    const listToUpdate = placeList.addOrUpdate(placeInserted);
-    setPlaceList(new PlaceListModel(listToUpdate));
-    setNewPlace(emptyPlace);
-    navigate(`/place/${placeInserted.officialId}`);
-  };
-
-  const handleChange = (
-    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-  ) => {
-    const name = e.target.name;
-    const value = e.target.value;
-    setNewPlace({ ...newPlace, [name]: value });
-  };
-
-  const handleSelectChange = (e: ChangeEvent<HTMLSelectElement>) => {
-    const value = Number(e.target.value);
-    setNewPlace({ ...newPlace, type: value });
-  };
+  const cost = Number(getValueFromParam("costs", "place"));
 
   return (
     <div ref={modalRef} tabIndex={-1} className="flex flex-col items-center">

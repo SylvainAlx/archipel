@@ -1,77 +1,26 @@
-import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import Form from "../../components/form/form";
 import Input from "../../components/form/input";
 import Button from "../../components/buttons/button";
-import {
-  confirmBox,
-  editTileAtom,
-  myStore,
-  tileListAtomV2,
-} from "../../settings/store";
-import { useAtom } from "jotai";
-import { useTranslation } from "react-i18next";
 import TextArea from "../../components/form/textArea";
 import { FaCoins } from "react-icons/fa";
 import RequiredStar from "../../components/form/requiredStar";
 import { TileModel } from "../../models/tileModel";
 import { useModal } from "../../hooks/useModal";
-import { getValueFromParam } from "../../services/paramService";
+import { useTileFormModal } from "../../hooks/modalsHooks/useTileFormModal";
 
 export default function TileFormModal() {
-  const [isNewTile, setIsNewTile] = useState(false);
-  const [tile, setTile] = useAtom(editTileAtom);
-  const [localTile, setLocalTile] = useState(new TileModel(tile));
-  const [tileList] = useAtom(tileListAtomV2);
-  const { t } = useTranslation();
+  const {
+    handleChange,
+    handleSubmit,
+    localTile,
+    isNewTile,
+    tile,
+    setTile,
+    cost,
+    t,
+  } = useTileFormModal();
   const modalRef = useModal(() => setTile(new TileModel()));
-  const cost = Number(getValueFromParam("costs", "tile"));
 
-  useEffect(() => {
-    if (
-      localTile.nationOfficialId != "" &&
-      localTile.title === "" &&
-      !isNewTile
-    ) {
-      setIsNewTile(true);
-    }
-  }, [localTile]);
-
-  const handleChange = (
-    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-  ) => {
-    const name = e.target.name;
-    const value = e.target.value;
-    setLocalTile((prevTile) => {
-      const updatedTile = new TileModel(prevTile);
-      updatedTile.updateFields({ [name]: value });
-      return updatedTile;
-    });
-  };
-
-  const handleSubmit = (e: FormEvent) => {
-    e.preventDefault();
-    // if (localTile.isFree === undefined) {
-    //   localTile.isFree = true;
-    // }
-    if (isNewTile) {
-      myStore.set(confirmBox, {
-        text: t("components.modals.confirmModal.createTile"),
-        actionToDo: async () => {
-          const tileInserted = await localTile.baseInsert(localTile);
-          tileList.addToTileListAtom([tileInserted]);
-        },
-      });
-    } else {
-      myStore.set(confirmBox, {
-        text: t("components.modals.confirmModal.updateTile"),
-        actionToDo: async () => {
-          const tileUpdated = await localTile.baseUpdate(localTile);
-          tileList.addToTileListAtom([tileUpdated]);
-        },
-      });
-    }
-    setTile(new TileModel());
-  };
   return (
     <div ref={modalRef} tabIndex={-1} className="flex flex-col items-center">
       <h2 className="text-2xl text-center p-4">

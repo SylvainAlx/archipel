@@ -1,18 +1,12 @@
-import { useAtom } from "jotai";
 import Button from "../../components/buttons/button";
-import { infoModalAtom, myStore } from "../../settings/store";
 import { useTranslation } from "react-i18next";
-import { emptyInfo } from "../../types/typAtom";
 import { useModal } from "../../hooks/useModal";
+import { useInfoModal } from "../../hooks/modalsHooks/useInfoModal";
 
 export default function InfoModal() {
-  const [info] = useAtom(infoModalAtom);
   const { t } = useTranslation();
+  const { info, handleClose } = useInfoModal();
   const modalRef = useModal(() => handleClose());
-
-  const handleClose = () => {
-    myStore.set(infoModalAtom, emptyInfo);
-  };
 
   return (
     <div

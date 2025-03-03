@@ -1,5 +1,5 @@
 import { useAtom } from "jotai";
-import { myStore, recoveryKey, showHelpAtom } from "../../settings/store";
+import { recoveryKey } from "../../settings/store";
 import Button from "../../components/buttons/button";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -23,7 +23,6 @@ export function RecoveryModal() {
     }
   };
   const handleConfirm = () => {
-    myStore.set(showHelpAtom, true);
     setRecovery("");
   };
   return (

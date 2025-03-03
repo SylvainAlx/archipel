@@ -1,79 +1,31 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-import { useAtom } from "jotai";
-import { newNationAtom } from "../../settings/store";
 import Button from "../../components/buttons/button";
-import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import Form from "../../components/form/form";
 import Input from "../../components/form/input";
 import { emptyNewNationPayload } from "../../types/typNation";
 import Select from "../../components/form/select";
-import { useTranslation } from "react-i18next";
-import { errorMessage } from "../../utils/toasts";
 import HashTag from "../../components/tags/hashTag";
 import { regimeList } from "../../settings/lists";
 import { MAX_LENGTH } from "../../settings/consts";
 import RequiredStar from "../../components/form/requiredStar";
-import { useNavigate } from "react-router-dom";
-import { NationModel } from "../../models/nationModel";
 import { useModal } from "../../hooks/useModal";
 import BooleanRadio from "../../components/form/booleanRadio";
+import { useNewNationModal } from "../../hooks/modalsHooks/useNewNationModal";
 
 export default function NewNationModal() {
-  const [newNation, setNewNation] = useAtom(newNationAtom);
-  const [tagString, setTagString] = useState<string>("");
-  const [tags, setTags] = useState<string[]>(newNation.tags);
-  const { t } = useTranslation();
-  const navigate = useNavigate();
+  const {
+    newNation,
+    setNewNation,
+    handleSubmit,
+    handleChange,
+    handleSelectChange,
+    handleChangeTag,
+    deleteTag,
+    tagString,
+    tags,
+    t,
+  } = useNewNationModal();
+
   const modalRef = useModal(() => setNewNation(emptyNewNationPayload));
-
-  useEffect(() => {
-    const updateNewNation = { ...newNation };
-    updateNewNation.tags = tags;
-    setNewNation(updateNewNation);
-  }, [tags]);
-
-  const handleSubmit = async (e: FormEvent) => {
-    e.preventDefault();
-    if (newNation.regime != 0 && newNation.name != "") {
-      const newNationToInsert = new NationModel(newNation);
-      const nationInBase = await newNationToInsert.baseInsert();
-      navigate(`/nation/${nationInBase.officialId}`);
-      setNewNation(emptyNewNationPayload);
-    } else {
-      errorMessage(t("components.form.missingField"));
-      setNewNation(emptyNewNationPayload);
-    }
-  };
-
-  const handleChange = (
-    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-  ) => {
-    const name = e.target.name;
-    const value = e.target.value;
-    setNewNation({ ...newNation, [name]: value });
-  };
-
-  const handleSelectChange = (e: ChangeEvent<HTMLSelectElement>) => {
-    const value = Number(e.target.value);
-    setNewNation({ ...newNation, regime: value });
-  };
-
-  const handleChangeTag = (e: ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    if (value != " ") {
-      setTagString(value);
-
-      if (value.includes(" ")) {
-        const word = value.trim().split(/\s+/); // Séparer par des espaces multiples
-        setTags([...tags, ...word]); // Ajouter les mots au tableau de mots-clés
-        setTagString("");
-      }
-    }
-  };
-
-  const deleteTag = (value: string) => {
-    setTags((currentTags) => currentTags.filter((tag) => tag !== value));
-  };
 
   return (
     <div ref={modalRef} tabIndex={-1}>

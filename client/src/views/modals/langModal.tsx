@@ -1,24 +1,15 @@
-import { ChangeEvent } from "react";
 import { myStore, showLangModalAtom } from "../../settings/store";
 import Button from "../../components/buttons/button";
 import i18n, { langOptions } from "../../i18n/i18n";
 import Select from "../../components/form/select";
 import { useTranslation } from "react-i18next";
 import { useModal } from "../../hooks/useModal";
+import { useLangModal } from "../../hooks/modalsHooks/useLangModal";
 
 export default function LangModal() {
   const { t } = useTranslation();
+  const { handleChange, handleSubmit } = useLangModal();
   const modalRef = useModal(() => myStore.set(showLangModalAtom, false));
-
-  const handleChange = (e: ChangeEvent<HTMLSelectElement>) => {
-    i18n.changeLanguage(e.target.value);
-    myStore.set(showLangModalAtom, false);
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    myStore.set(showLangModalAtom, false);
-  };
 
   return (
     <div ref={modalRef} tabIndex={-1}>

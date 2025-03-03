@@ -1,49 +1,25 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-import { useAtom } from "jotai";
-import { confirmBox, myStore, newComAtom } from "../../settings/store";
 import Button from "../../components/buttons/button";
-import { ChangeEvent, FormEvent } from "react";
 import Form from "../../components/form/form";
 import Input from "../../components/form/input";
 import Select from "../../components/form/select";
 import { MAX_LENGTH } from "../../settings/consts";
-import { useTranslation } from "react-i18next";
 import { emptyComPayload } from "../../types/typCom";
 import MarkdownEditor from "../../components/form/markdownEditor";
 import { nationComTypeOptions } from "../../settings/lists";
 import RequiredStar from "../../components/form/requiredStar";
-import { ComModel } from "../../models/comModel";
 import { useModal } from "../../hooks/useModal";
+import { useNewComModal } from "../../hooks/modalsHooks/useNewComModal";
 
 export default function NewComModal() {
-  const [newCom, setNewCom] = useAtom(newComAtom);
-  const { t } = useTranslation();
+  const {
+    newCom,
+    setNewCom,
+    handleSubmit,
+    handleChange,
+    handleSelectChange,
+    t,
+  } = useNewComModal();
   const modalRef = useModal(() => setNewCom(emptyComPayload));
-
-  const handleSubmit = (e: FormEvent) => {
-    e.preventDefault();
-    myStore.set(confirmBox, {
-      text: t("components.modals.confirmModal.createCom"),
-      actionToDo: () => {
-        const comToInsert = new ComModel(newCom);
-        comToInsert.baseInsert();
-      },
-    });
-    setNewCom(emptyComPayload);
-  };
-
-  const handleChange = (
-    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-  ) => {
-    const name = e.target.name;
-    const value = e.target.value;
-    setNewCom({ ...newCom, [name]: value });
-  };
-
-  const handleSelectChange = (e: ChangeEvent<HTMLSelectElement>) => {
-    const value = Number(e.target.value);
-    setNewCom({ ...newCom, comType: value });
-  };
 
   return (
     <div

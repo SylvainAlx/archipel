@@ -1,12 +1,6 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-import { useAtom } from "jotai";
-import { newRelationAtom } from "../../settings/store";
 import Button from "../../components/buttons/button";
-import { ChangeEvent, FormEvent, useState } from "react";
 import Form from "../../components/form/form";
 import Input from "../../components/form/input";
-import { useTranslation } from "react-i18next";
-import { errorMessage } from "../../utils/toasts";
 import { emptyDiplomaticRelationship } from "../../types/typRelation";
 import { FaBriefcase, FaCoins, FaFlask } from "react-icons/fa";
 import { FaMasksTheater, FaPersonMilitaryPointing } from "react-icons/fa6";
@@ -15,15 +9,23 @@ import { RelationModel } from "../../models/relationModel";
 import { MAX_LENGTH } from "../../settings/consts";
 import TextArea from "../../components/form/textArea";
 import { useModal } from "../../hooks/useModal";
+import { useRelationModal } from "../../hooks/modalsHooks/useRelationModal";
 
 export interface RelationModalProps {
   update: boolean;
 }
 
 export default function RelationModal({ update }: RelationModalProps) {
-  const [newRelation, setNewRelation] = useAtom(newRelationAtom);
-  const [hoverInfo, setHoverInfo] = useState("");
-  const { t } = useTranslation();
+  const {
+    newRelation,
+    setNewRelation,
+    handleSubmit,
+    handleChange,
+    handleCheck,
+    hoverInfo,
+    setHoverInfo,
+    t,
+  } = useRelationModal(update);
   const modalRef = useModal(() =>
     setNewRelation({
       relation: new RelationModel(emptyDiplomaticRelationship),
@@ -31,72 +33,6 @@ export default function RelationModal({ update }: RelationModalProps) {
       update: false,
     }),
   );
-
-  const handleSubmit = async (e: FormEvent) => {
-    e.preventDefault();
-    if (
-      newRelation.relation.name != "" &&
-      newRelation.relation.nations.length > 0
-    ) {
-      if (update) {
-        await newRelation.relation.baseUpdate(newRelation.relation);
-      } else {
-        await newRelation.relation.baseInsert(newRelation.relation);
-      }
-
-      setNewRelation({
-        relation: new RelationModel(emptyDiplomaticRelationship),
-        show: false,
-        update: false,
-      });
-    } else {
-      errorMessage(t("components.form.missingField"));
-    }
-  };
-
-  const handleChange = (
-    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-  ) => {
-    const value = e.target.value;
-    const name = e.target.name;
-    const updatedRelation = new RelationModel({
-      ...newRelation.relation,
-      [name]: value,
-    });
-    setNewRelation({
-      ...newRelation,
-      relation: updatedRelation,
-    });
-  };
-
-  const handleCheck = (e: ChangeEvent<HTMLInputElement>) => {
-    const name = e.target.name;
-    const checked = e.target.checked;
-    const updatedRelation = { ...newRelation.relation };
-    switch (name) {
-      case "business":
-        updatedRelation.kind.business = checked;
-        break;
-      case "economic":
-        updatedRelation.kind.economic = checked;
-        break;
-      case "cultural":
-        updatedRelation.kind.cultural = checked;
-        break;
-      case "scientific":
-        updatedRelation.kind.scientific = checked;
-        break;
-      case "coop":
-        updatedRelation.kind.coop = checked;
-        break;
-      default:
-        break;
-    }
-    setNewRelation({
-      ...newRelation,
-      relation: new RelationModel(updatedRelation),
-    });
-  };
 
   return (
     <div

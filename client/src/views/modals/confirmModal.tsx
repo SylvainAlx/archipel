@@ -1,24 +1,13 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { useAtom } from "jotai";
-import { confirmBox } from "../../settings/store";
 import Button from "../../components/buttons/button";
 import { useTranslation } from "react-i18next";
 import { ConfirmBoxDefault } from "../../types/typAtom";
-import { FormEvent } from "react";
 import { useModal } from "../../hooks/useModal";
+import { useConfirmModal } from "../../hooks/modalsHooks/useConfirmModal";
 
 export default function ConfirmModal() {
   const { t } = useTranslation();
-  const [confirm, setConfirm] = useAtom(confirmBox);
+  const { confirm, setConfirm, handleSubmit } = useConfirmModal();
   const modalRef = useModal(() => setConfirm({ text: "" }));
-
-  const handleSubmit = (e: FormEvent) => {
-    e.preventDefault();
-    setConfirm({ text: "" });
-    if (confirm.actionToDo) {
-      confirm.actionToDo();
-    }
-  };
 
   return (
     <div ref={modalRef} tabIndex={-1}>

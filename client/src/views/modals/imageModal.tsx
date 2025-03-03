@@ -1,12 +1,11 @@
-import { useAtom } from "jotai";
 import Button from "../../components/buttons/button";
-import { imageAtom } from "../../settings/store";
 import { GiBlackFlag } from "react-icons/gi";
 import { useTranslation } from "react-i18next";
 import { useModal } from "../../hooks/useModal";
+import { useImageModal } from "../../hooks/modalsHooks/useImageModal";
 
 export default function ImageModal() {
-  const [image, setImage] = useAtom(imageAtom);
+  const { image, setImage } = useImageModal();
   const { t } = useTranslation();
   const modalRef = useModal(() => setImage(""));
 
