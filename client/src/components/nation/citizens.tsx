@@ -1,14 +1,14 @@
 import { useTranslation } from "react-i18next";
-import TileContainer from "../tileContainer";
-import DashTile from "../dashTile";
+import TileContainer from "../ui/tileContainer";
+import DashTile from "../ui/dashTile";
 import { lazy, Suspense, useEffect, useState } from "react";
 import { SelectedNationProps } from "../../types/typProp";
 import { confirmBox, sessionAtom } from "../../settings/store";
 import { useAtom } from "jotai";
-import Button from "../buttons/button";
+import Button from "../ui/buttons/button";
 import { FaPassport } from "react-icons/fa";
 import { UserListModel } from "../../models/lists/userListModel";
-import TileSkeleton from "../loading/skeletons/tileSkeleton";
+import TileSkeleton from "../ui/loading/skeletons/tileSkeleton";
 
 export default function Citizens({ selectedNation }: SelectedNationProps) {
   const [session] = useAtom(sessionAtom);
@@ -17,7 +17,7 @@ export default function Citizens({ selectedNation }: SelectedNationProps) {
   );
   const [, setConfirmModal] = useAtom(confirmBox);
   const { t } = useTranslation();
-  const CitizenTile = lazy(() => import("../tiles/citizenTile"));
+  const CitizenTile = lazy(() => import("../ui/tiles/citizenTile"));
 
   useEffect(() => {
     const loadRelationList = async () => {

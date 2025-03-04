@@ -1,9 +1,9 @@
 import { lazy, Suspense } from "react";
-import ReportPanel from "../../components/reportPanel";
+import ReportPanel from "../../components/ui/reportPanel";
 import { createPageTitle } from "../../utils/procedures";
-import MapSkeleton from "../../components/loading/skeletons/mapSkeleton";
-import TileSkeleton from "../../components/loading/skeletons/tileSkeleton";
-import ParamSkeleton from "../../components/loading/skeletons/paramSkeleton";
+import MapSkeleton from "../../components/ui/loading/skeletons/mapSkeleton";
+import TileSkeleton from "../../components/ui/loading/skeletons/tileSkeleton";
+import ParamSkeleton from "../../components/ui/loading/skeletons/paramSkeleton";
 import { useLoadNationPlaces } from "../../hooks/useLoadNationPlaces";
 import { usePlace } from "../../hooks/pagesHooks/usePlace";
 

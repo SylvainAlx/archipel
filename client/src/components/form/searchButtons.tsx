@@ -1,5 +1,5 @@
 import { useTranslation } from "react-i18next";
-import Button from "../buttons/button";
+import Button from "../ui/buttons/button";
 import { RxReset } from "react-icons/rx";
 import { IoSearchSharp } from "react-icons/io5";
 

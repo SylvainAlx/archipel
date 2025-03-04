@@ -1,5 +1,5 @@
 import { useTranslation } from "react-i18next";
-import H1 from "../../components/titles/h1";
+import H1 from "../../components/ui/titles/h1";
 import MDEditor from "@uiw/react-md-editor";
 import { useEffect, useState } from "react";
 import { langOptions } from "../../i18n/i18n";

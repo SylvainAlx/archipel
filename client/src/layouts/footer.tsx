@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import FooterNav from "../components/footerNav";
+import FooterNav from "../components/nav/footerNav";
 import {
   ADMIN_EMAIL,
   APP_NAME,
@@ -10,8 +10,8 @@ import { useTranslation } from "react-i18next";
 import { lobbyAtom } from "../settings/store";
 import { useAtom } from "jotai";
 import { BsFillEnvelopeAtFill, BsThreads } from "react-icons/bs";
-import ReleaseNotesLink from "../components/releaseNotesLink";
 import { FaInstagram } from "react-icons/fa6";
+import ReleaseNotesLink from "../components/ui/releaseNotesLink";
 
 export default function Footer() {
   const { t } = useTranslation();

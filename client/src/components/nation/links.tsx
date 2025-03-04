@@ -1,8 +1,8 @@
 import { useTranslation } from "react-i18next";
 import { FaDiscord, FaInstagram, FaLink, FaWikipediaW } from "react-icons/fa6";
-import ExternalLink from "../externalLink";
-import EditButton from "../buttons/editButton";
-import ShareButton from "../buttons/shareButton";
+import ExternalLink from "../ui/externalLink";
+import EditButton from "../ui/buttons/editButton";
+import ShareButton from "../ui/buttons/shareButton";
 import { NationModel } from "../../models/nationModel";
 
 interface LinksProps {

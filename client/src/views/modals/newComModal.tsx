@@ -1,4 +1,4 @@
-import Button from "../../components/buttons/button";
+import Button from "../../components/ui/buttons/button";
 import Form from "../../components/form/form";
 import Input from "../../components/form/input";
 import Select from "../../components/form/select";

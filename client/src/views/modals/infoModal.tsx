@@ -1,4 +1,4 @@
-import Button from "../../components/buttons/button";
+import Button from "../../components/ui/buttons/button";
 import { useTranslation } from "react-i18next";
 import { useModal } from "../../hooks/useModal";
 import { useInfoModal } from "../../hooks/modalsHooks/useInfoModal";

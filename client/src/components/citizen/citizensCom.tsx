@@ -1,14 +1,14 @@
 import { useTranslation } from "react-i18next";
-import DashTile from "../dashTile";
+import DashTile from "../ui/dashTile";
 import { useAtom } from "jotai";
 import { comListAtomV2 } from "../../settings/store";
 import { lazy, Suspense, useEffect, useMemo, useState } from "react";
 import { COM_TYPE } from "../../settings/consts";
 import { ComListModel } from "../../models/lists/comListModel";
-import TileSkeleton from "../loading/skeletons/tileSkeleton";
+import TileSkeleton from "../ui/loading/skeletons/tileSkeleton";
 import { UserModel } from "../../models/userModel";
 
-const ComTile = lazy(() => import("../tiles/comTile"));
+const ComTile = lazy(() => import("../ui/tiles/comTile"));
 
 interface CitizensComProps {
   citizen: UserModel;

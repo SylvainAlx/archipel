@@ -1,11 +1,11 @@
 import { lazy, Suspense } from "react";
 import { Nation } from "../../types/typNation";
 import { deleteImage } from "../../utils/procedures";
-import Spinner from "../loading/spinner";
-import CrossButton from "../buttons/crossButton";
+import Spinner from "../ui/loading/spinner";
+import CrossButton from "../ui/buttons/crossButton";
 import { GiBlackFlag } from "react-icons/gi";
-import Upploader from "../uploader";
-import LinkButton from "../buttons/linkButton";
+import Upploader from "../ui/uploader";
+import LinkButton from "../ui/buttons/linkButton";
 import { FLAG_MAKER_URL } from "../../settings/consts";
 import { FaExternalLinkAlt } from "react-icons/fa";
 import { useTranslation } from "react-i18next";
@@ -31,7 +31,7 @@ export default function BigFlag({ nation, owner, updatePath }: FlagProps) {
   };
 
   const { t } = useTranslation();
-  const LazyImage = lazy(() => import("../lazy/lazyImage"));
+  const LazyImage = lazy(() => import("../ui/lazy/lazyImage"));
   return (
     <div className="relative">
       <div className={`w-[200px] flex flex-col items-center justify-end gap-2`}>

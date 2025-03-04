@@ -1,13 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import Button from "../../components/buttons/button";
+import Button from "../../components/ui/buttons/button";
 import { lazy, Suspense } from "react";
-import H1 from "../../components/titles/h1";
-import IndexTag from "../../components/tags/indexTag";
+import H1 from "../../components/ui/titles/h1";
+import IndexTag from "../../components/ui/tags/indexTag";
 import { StringProps } from "../../types/typProp";
 import CitizenSearchBar from "../../components/searchBars/citizenSearchBar";
 import { useTranslation } from "react-i18next";
 import { ELEMENTS_DISPLAYED_LIMIT } from "../../settings/consts";
-import TileSkeleton from "../../components/loading/skeletons/tileSkeleton";
+import TileSkeleton from "../../components/ui/loading/skeletons/tileSkeleton";
 import { useCitizenList } from "../../hooks/exploreTabsHooks/useCitizenList";
 
 export default function CitizenList({ text }: StringProps) {
@@ -18,7 +18,9 @@ export default function CitizenList({ text }: StringProps) {
     setCitizensList,
   } = useCitizenList();
   const { t } = useTranslation();
-  const CitizenTile = lazy(() => import("../../components/tiles/citizenTile"));
+  const CitizenTile = lazy(
+    () => import("../../components/ui/tiles/citizenTile"),
+  );
 
   return (
     <>

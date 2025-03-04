@@ -1,14 +1,14 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import DashTile from "../../components/dashTile";
-import H1 from "../../components/titles/h1";
+import DashTile from "../../components/ui/dashTile";
+import H1 from "../../components/ui/titles/h1";
 import { useTranslation } from "react-i18next";
 import { StringProps } from "../../types/typProp";
-import HashTag from "../../components/tags/hashTag";
+import HashTag from "../../components/ui/tags/hashTag";
 import CountUp from "react-countup";
-import RegimeChart from "../../components/charts/regimeChart";
-import LanguageChart from "../../components/charts/languageChart";
-import PlaceTypeChart from "../../components/charts/placeTypeChart";
-import TileContainer from "../../components/tileContainer";
+import RegimeChart from "../../components/ui/charts/regimeChart";
+import LanguageChart from "../../components/ui/charts/languageChart";
+import PlaceTypeChart from "../../components/ui/charts/placeTypeChart";
+import TileContainer from "../../components/ui/tileContainer";
 import { useStats } from "../../hooks/exploreTabsHooks/useStats";
 
 export default function Stats({ text }: StringProps) {

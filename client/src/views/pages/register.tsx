@@ -1,7 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
-import H1 from "../../components/titles/h1";
+import H1 from "../../components/ui/titles/h1";
 import Input from "../../components/form/input";
-import Button from "../../components/buttons/button";
+import Button from "../../components/ui/buttons/button";
 import Form from "../../components/form/form";
 import Select from "../../components/form/select";
 import { CAPTCHA_PUBLIC_KEY } from "../../settings/consts";

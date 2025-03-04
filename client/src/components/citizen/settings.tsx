@@ -1,8 +1,8 @@
 import { IoDiamondOutline } from "react-icons/io5";
-import DashTile from "../dashTile";
-import ReportedFlag from "../reportedFlag";
-import DateTag from "../tags/dateTag";
-import Button from "../buttons/button";
+import DashTile from "../ui/dashTile";
+import ReportedFlag from "../ui/reportedFlag";
+import DateTag from "../ui/tags/dateTag";
+import Button from "../ui/buttons/button";
 import {
   changePasswordModalAtom,
   confirmBox,
@@ -12,7 +12,7 @@ import {
 import { RiLockPasswordFill } from "react-icons/ri";
 import { FaCookieBite, FaKey } from "react-icons/fa";
 import { IoMdLogOut } from "react-icons/io";
-import CrossButton from "../buttons/crossButton";
+import CrossButton from "../ui/buttons/crossButton";
 import { useTranslation } from "react-i18next";
 import { useAtom } from "jotai";
 import { resetCookieConsentValue } from "react-cookie-consent";

@@ -1,7 +1,7 @@
 import { myStore, showHelpAtom } from "../../settings/store";
-import Button from "../../components/buttons/button";
+import Button from "../../components/ui/buttons/button";
 import { useModal } from "../../hooks/useModal";
-import TabNav from "../../components/tabNav";
+import TabNav from "../../components/nav/tabNav";
 import MDEditor from "@uiw/react-md-editor";
 import { useHelpModal } from "../../hooks/modalsHooks/useHelpModal";
 

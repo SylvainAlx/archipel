@@ -1,9 +1,9 @@
 import { useTranslation } from "react-i18next";
-import HeaderNav from "../components/headerNav";
-import Logo from "../components/logo";
+import HeaderNav from "../components/nav/headerNav";
+import Logo from "../components/ui/logo";
 import { lobbyAtom } from "../settings/store";
 import { useAtom } from "jotai";
-import DevFlag from "../components/devFlag";
+import DevFlag from "../components/ui/devFlag";
 import { VERSION } from "../settings/consts";
 
 export default function Header() {

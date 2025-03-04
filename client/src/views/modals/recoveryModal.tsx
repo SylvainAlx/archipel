@@ -1,6 +1,6 @@
 import { useAtom } from "jotai";
 import { recoveryKey } from "../../settings/store";
-import Button from "../../components/buttons/button";
+import Button from "../../components/ui/buttons/button";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { errorMessage, successMessage } from "../../utils/toasts";

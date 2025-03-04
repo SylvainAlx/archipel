@@ -1,15 +1,15 @@
 import { useTranslation } from "react-i18next";
 import { genderList, languageList, religionList } from "../../settings/lists";
 import { emptyNewNationPayload } from "../../types/typNation";
-import DashTile from "../dashTile";
-import EditButton from "../buttons/editButton";
-import IdTag from "../tags/idTag";
-import LanguagesTag from "../tags/languagesTag";
-import NationOwnerTag from "../tags/nationOwnerTag";
-import RoleTag from "../tags/roleTag";
-import Button from "../buttons/button";
+import DashTile from "../ui/dashTile";
+import EditButton from "../ui/buttons/editButton";
+import IdTag from "../ui/tags/idTag";
+import LanguagesTag from "../ui/tags/languagesTag";
+import NationOwnerTag from "../ui/tags/nationOwnerTag";
+import RoleTag from "../ui/tags/roleTag";
+import Button from "../ui/buttons/button";
 import { GiBlackFlag } from "react-icons/gi";
-import CrossButton from "../buttons/crossButton";
+import CrossButton from "../ui/buttons/crossButton";
 import { MdAddCircle } from "react-icons/md";
 import { FaRegArrowAltCircleRight } from "react-icons/fa";
 import {
@@ -22,16 +22,16 @@ import { useAtom } from "jotai";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { PIONEER_DATE, PLACE_TYPE } from "../../settings/consts";
-import ReligionTag from "../tags/religionTag";
-import GenderTag from "../tags/genderTag";
-import HonorTag from "../tags/honorTag";
+import ReligionTag from "../ui/tags/religionTag";
+import GenderTag from "../ui/tags/genderTag";
+import HonorTag from "../ui/tags/honorTag";
 import { UserModel } from "../../models/userModel";
-import ResidenceTag from "../tags/residenceTag";
+import ResidenceTag from "../ui/tags/residenceTag";
 import { NationModel } from "../../models/nationModel";
 import { useLoadNationPlaces } from "../../hooks/useLoadNationPlaces";
 import { PlaceListModel } from "../../models/lists/placeListModel";
-import CreditTag from "../tags/creditTag";
-import CreditTransferButton from "../buttons/creditTransferButton";
+import CreditTag from "../ui/tags/creditTag";
+import CreditTransferButton from "../ui/buttons/creditTransferButton";
 
 interface CitizenshipProps {
   citizen: UserModel;

@@ -1,19 +1,19 @@
 import { lazy, Suspense } from "react";
-import EditButton from "../buttons/editButton";
-import H2 from "../titles/h2";
-import Spinner from "../loading/spinner";
-import CrossButton from "../buttons/crossButton";
+import EditButton from "../ui/buttons/editButton";
+import H2 from "../ui/titles/h2";
+import Spinner from "../ui/loading/spinner";
+import CrossButton from "../ui/buttons/crossButton";
 import { AiOutlinePicture } from "react-icons/ai";
-import Upploader from "../uploader";
-import IdTag from "../tags/idTag";
-import PlaceTag from "../tags/placeTag";
+import Upploader from "../ui/uploader";
+import IdTag from "../ui/tags/idTag";
+import PlaceTag from "../ui/tags/placeTag";
 import MDEditor from "@uiw/react-md-editor";
 import { useTranslation } from "react-i18next";
 import { PlaceModel } from "../../models/placeModel";
 import { deleteImage } from "../../utils/procedures";
 import { confirmBox, myStore } from "../../settings/store";
 import { PLACE_TYPE } from "../../settings/consts";
-import PopulationTag from "../tags/populationTag";
+import PopulationTag from "../ui/tags/populationTag";
 
 interface PlaceIdentityProps {
   place: PlaceModel;
@@ -26,7 +26,7 @@ export default function PlaceIdentity({
   owner,
   updatePath,
 }: PlaceIdentityProps) {
-  const LazyImage = lazy(() => import("../lazy/lazyImage"));
+  const LazyImage = lazy(() => import("../ui/lazy/lazyImage"));
   const { t } = useTranslation();
 
   const handleDeleteImage = async () => {

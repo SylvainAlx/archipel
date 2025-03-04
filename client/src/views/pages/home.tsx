@@ -1,14 +1,14 @@
-import Button from "../../components/buttons/button";
-import H1 from "../../components/titles/h1";
+import Button from "../../components/ui/buttons/button";
+import H1 from "../../components/ui/titles/h1";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { sessionAtom } from "../../settings/store";
 import { useAtom } from "jotai";
-import Illustration from "../../components/illustration";
+import Illustration from "../../components/ui/illustration";
 import { IoMdAddCircleOutline, IoMdGlobe, IoMdLogIn } from "react-icons/io";
 import { RxAvatar } from "react-icons/rx";
 import { GiBlackFlag } from "react-icons/gi";
-import CryptoDonationButton from "../../components/buttons/cryptoDonationButton";
+import CryptoDonationButton from "../../components/ui/buttons/cryptoDonationButton";
 import { createPageTitle } from "../../utils/procedures";
 import MDEditor from "@uiw/react-md-editor";
 

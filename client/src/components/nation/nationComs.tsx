@@ -1,5 +1,5 @@
 import { useTranslation } from "react-i18next";
-import DashTile from "../dashTile";
+import DashTile from "../ui/dashTile";
 import { SelectedNationProps } from "../../types/typProp";
 import { useAtom } from "jotai";
 import {
@@ -9,12 +9,12 @@ import {
   sessionAtom,
 } from "../../settings/store";
 import { lazy, Suspense, useEffect, useMemo, useState } from "react";
-import Button from "../buttons/button";
+import Button from "../ui/buttons/button";
 import { FaComment } from "react-icons/fa";
 import { ComPayload, emptyComPayload } from "../../types/typCom";
 import { ComListModel } from "../../models/lists/comListModel";
 import { COM_TYPE } from "../../settings/consts";
-import TileSkeleton from "../loading/skeletons/tileSkeleton";
+import TileSkeleton from "../ui/loading/skeletons/tileSkeleton";
 
 export default function NationComs({
   selectedNation,
@@ -25,7 +25,7 @@ export default function NationComs({
   const [comList] = useAtom(comListAtomV2);
   const [coms, setComs] = useState<ComListModel>(new ComListModel());
   // const { allowPost, dueDate } = useAllowPost(coms, selectedNation);
-  const ComTile = lazy(() => import("../tiles/comTile"));
+  const ComTile = lazy(() => import("../ui/tiles/comTile"));
 
   const comTypes: number[] =
     session.user.citizenship.nationId === selectedNation.officialId

@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
-import H1 from "../../components/titles/h1";
+import H1 from "../../components/ui/titles/h1";
 import Input from "../../components/form/input";
-import Button from "../../components/buttons/button";
+import Button from "../../components/ui/buttons/button";
 import Form from "../../components/form/form";
 import { useTranslation } from "react-i18next";
 import RequiredStar from "../../components/form/requiredStar";

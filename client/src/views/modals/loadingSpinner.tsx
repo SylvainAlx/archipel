@@ -1,8 +1,8 @@
 // import { useAtom } from "jotai";
 import { useTranslation } from "react-i18next";
 import { loadingAtom, myStore } from "../../settings/store";
-import Button from "../../components/buttons/button";
-import Spinner from "../../components/loading/spinner";
+import Button from "../../components/ui/buttons/button";
+import Spinner from "../../components/ui/loading/spinner";
 import { useModal } from "../../hooks/useModal";
 import { useLoadingSpinner } from "../../hooks/modalsHooks/useLoadingSpinner";
 

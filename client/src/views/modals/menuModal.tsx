@@ -1,16 +1,16 @@
 import { Link, useNavigate } from "react-router-dom";
 import { myStore, sessionAtom, showMenuAtom } from "../../settings/store";
-import Button from "../../components/buttons/button";
+import Button from "../../components/ui/buttons/button";
 import { useTranslation } from "react-i18next";
 import { BsFillEnvelopeAtFill, BsThreads } from "react-icons/bs";
 import { ADMIN_EMAIL, INSTAGRAM_URL, THREADS_URL } from "../../settings/consts";
-import ReleaseNotesLink from "../../components/releaseNotesLink";
+import ReleaseNotesLink from "../../components/ui/releaseNotesLink";
 import { useModal } from "../../hooks/useModal";
-import LangButton from "../../components/buttons/langButton";
-import HelpButton from "../../components/buttons/helpButton";
+import LangButton from "../../components/ui/buttons/langButton";
+import HelpButton from "../../components/ui/buttons/helpButton";
 import { FaInstagram } from "react-icons/fa6";
 import { useAtom } from "jotai";
-import CreditsParamsButton from "../../components/buttons/creditsParamsButton";
+import CreditsParamsButton from "../../components/ui/buttons/creditsParamsButton";
 
 export default function MenuModal() {
   const { t } = useTranslation();

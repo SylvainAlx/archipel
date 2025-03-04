@@ -1,10 +1,10 @@
 import { Suspense, lazy } from "react";
-import TileContainer from "../tileContainer";
-import NewPlaceButton from "../buttons/newPlaceButton";
+import TileContainer from "../ui/tileContainer";
+import NewPlaceButton from "../ui/buttons/newPlaceButton";
 import { useTranslation } from "react-i18next";
-import DashTile from "../dashTile";
+import DashTile from "../ui/dashTile";
 import { NationModel } from "../../models/nationModel";
-import TileSkeleton from "../loading/skeletons/tileSkeleton";
+import TileSkeleton from "../ui/loading/skeletons/tileSkeleton";
 import { PlaceListModel } from "../../models/lists/placeListModel";
 
 interface PlacesProps {
@@ -19,7 +19,7 @@ export default function Places({
   owner,
 }: PlacesProps) {
   const { t } = useTranslation();
-  const PlaceTile = lazy(() => import("../tiles/placeTile"));
+  const PlaceTile = lazy(() => import("../ui/tiles/placeTile"));
 
   return (
     <TileContainer

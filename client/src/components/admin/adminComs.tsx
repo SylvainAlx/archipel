@@ -1,12 +1,12 @@
 import { Suspense, useEffect, useState } from "react";
-import TileContainer from "../tileContainer";
-import AdminComTile from "../tiles/adminComTile";
-import H2 from "../titles/h2";
-import IndexTag from "../tags/indexTag";
-import Button from "../buttons/button";
+import TileContainer from "../ui/tileContainer";
+import AdminComTile from "../ui/tiles/adminComTile";
+import H2 from "../ui/titles/h2";
+import IndexTag from "../ui/tags/indexTag";
+import Button from "../ui/buttons/button";
 import { useTranslation } from "react-i18next";
 import { ComListModel } from "../../models/lists/comListModel";
-import TileSkeleton from "../loading/skeletons/tileSkeleton";
+import TileSkeleton from "../ui/loading/skeletons/tileSkeleton";
 
 export default function AdminComs() {
   const [adminComList, setAdminComList] = useState<ComListModel>(

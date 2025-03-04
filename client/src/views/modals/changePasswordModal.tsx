@@ -1,5 +1,5 @@
 import { changePasswordModalAtom, myStore } from "../../settings/store";
-import Button from "../../components/buttons/button";
+import Button from "../../components/ui/buttons/button";
 import Form from "../../components/form/form";
 import Input from "../../components/form/input";
 import { useModal } from "../../hooks/useModal";

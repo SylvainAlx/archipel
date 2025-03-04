@@ -1,4 +1,4 @@
-import H1 from "../../components/titles/h1";
+import H1 from "../../components/ui/titles/h1";
 import { useEffect, useState } from "react";
 import { langOptions } from "../../i18n/i18n";
 import MDEditor from "@uiw/react-md-editor";

@@ -1,4 +1,4 @@
-import H1 from "../../components/titles/h1";
+import H1 from "../../components/ui/titles/h1";
 import AdminForm from "../../components/form/adminForm";
 import AdminBanned from "../../components/admin/adminBanned";
 import AdminComs from "../../components/admin/adminComs";

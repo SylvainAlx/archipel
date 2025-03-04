@@ -1,10 +1,10 @@
 import { lazy, Suspense, useEffect, useMemo, useState } from "react";
-import DashTile from "../dashTile";
-import TileContainer from "../tileContainer";
+import DashTile from "../ui/dashTile";
+import TileContainer from "../ui/tileContainer";
 import { SelectedNationProps } from "../../types/typProp";
 import { useAtom } from "jotai";
 import { editTileAtom, tileListAtomV2 } from "../../settings/store";
-import Button from "../buttons/button";
+import Button from "../ui/buttons/button";
 import { emptyTile } from "../../types/typTile";
 import { GiSBrick } from "react-icons/gi";
 import { useTranslation } from "react-i18next";
@@ -12,7 +12,7 @@ import { FaCoins } from "react-icons/fa";
 import { errorMessage } from "../../utils/toasts";
 import { TileListModel } from "../../models/lists/tileListModel";
 import { TileModel } from "../../models/tileModel";
-import TileSkeleton from "../loading/skeletons/tileSkeleton";
+import TileSkeleton from "../ui/loading/skeletons/tileSkeleton";
 import { getValueFromParam } from "../../services/paramService";
 
 export default function FreeTiles({
@@ -27,7 +27,7 @@ export default function FreeTiles({
   const [, setEditTile] = useAtom(editTileAtom);
   const quota = Number(getValueFromParam("quotas", "tiles"));
   const cost = Number(getValueFromParam("costs", "tile"));
-  const FreeTile = lazy(() => import("../tiles/freeTile"));
+  const FreeTile = lazy(() => import("../ui/tiles/freeTile"));
 
   const filteredTileList = useMemo(() => {
     const list = tileList

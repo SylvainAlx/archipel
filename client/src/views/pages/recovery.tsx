@@ -1,6 +1,6 @@
-import H1 from "../../components/titles/h1";
+import H1 from "../../components/ui/titles/h1";
 import Input from "../../components/form/input";
-import Button from "../../components/buttons/button";
+import Button from "../../components/ui/buttons/button";
 import Form from "../../components/form/form";
 import TextArea from "../../components/form/textArea";
 import { useTranslation } from "react-i18next";

@@ -1,15 +1,15 @@
-import Button from "../../components/buttons/button";
+import Button from "../../components/ui/buttons/button";
 import Form from "../../components/form/form";
 import Input from "../../components/form/input";
 import { emptyDiplomaticRelationship } from "../../types/typRelation";
 import { FaBriefcase, FaCoins, FaFlask } from "react-icons/fa";
 import { FaMasksTheater, FaPersonMilitaryPointing } from "react-icons/fa6";
-import HoverInfo from "../../components/hoverInfo";
 import { RelationModel } from "../../models/relationModel";
 import { MAX_LENGTH } from "../../settings/consts";
 import TextArea from "../../components/form/textArea";
 import { useModal } from "../../hooks/useModal";
 import { useRelationModal } from "../../hooks/modalsHooks/useRelationModal";
+import HoverInfo from "../../components/ui/hoverInfo";
 
 export interface RelationModalProps {
   update: boolean;

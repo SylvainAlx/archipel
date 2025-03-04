@@ -1,14 +1,14 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import Button from "../../components/buttons/button";
+import Button from "../../components/ui/buttons/button";
 import { lazy, Suspense } from "react";
-import H1 from "../../components/titles/h1";
-import IndexTag from "../../components/tags/indexTag";
+import H1 from "../../components/ui/titles/h1";
+import IndexTag from "../../components/ui/tags/indexTag";
 import { StringProps } from "../../types/typProp";
 import PlaceSearchBar from "../../components/searchBars/placeSearchBar";
 import { useTranslation } from "react-i18next";
 import { ELEMENTS_DISPLAYED_LIMIT } from "../../settings/consts";
 import { NationModel } from "../../models/nationModel";
-import TileSkeleton from "../../components/loading/skeletons/tileSkeleton";
+import TileSkeleton from "../../components/ui/loading/skeletons/tileSkeleton";
 import { usePlaceList } from "../../hooks/exploreTabsHooks/usePlaceList";
 
 export default function PlaceList({ text }: StringProps) {
@@ -16,7 +16,7 @@ export default function PlaceList({ text }: StringProps) {
     usePlaceList();
   const { t } = useTranslation();
 
-  const PlaceTile = lazy(() => import("../../components/tiles/placeTile"));
+  const PlaceTile = lazy(() => import("../../components/ui/tiles/placeTile"));
 
   return (
     <>

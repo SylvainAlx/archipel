@@ -1,5 +1,5 @@
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
-import Button from "../buttons/button";
+import Button from "../ui/buttons/button";
 import Form from "./form";
 import Input from "./input";
 import MarkdownEditor from "./markdownEditor";
@@ -9,8 +9,8 @@ import { adminComTypeOptions } from "../../settings/lists";
 import { COM_GENERAL_DESTINATION, MAX_LENGTH } from "../../settings/consts";
 import { useTranslation } from "react-i18next";
 import { confirmBox, myStore, sessionAtom } from "../../settings/store";
-import H2 from "../titles/h2";
-import TileContainer from "../tileContainer";
+import H2 from "../ui/titles/h2";
+import TileContainer from "../ui/tileContainer";
 import { ComModel } from "../../models/comModel";
 
 export default function AdminForm() {

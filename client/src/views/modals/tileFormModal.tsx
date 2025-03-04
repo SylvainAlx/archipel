@@ -1,6 +1,6 @@
 import Form from "../../components/form/form";
 import Input from "../../components/form/input";
-import Button from "../../components/buttons/button";
+import Button from "../../components/ui/buttons/button";
 import TextArea from "../../components/form/textArea";
 import { FaCoins } from "react-icons/fa";
 import RequiredStar from "../../components/form/requiredStar";

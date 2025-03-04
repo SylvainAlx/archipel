@@ -1,7 +1,7 @@
 import { useTranslation } from "react-i18next";
 import { Nation } from "../../types/typNation";
-import EditButton from "../buttons/editButton";
-import HashTag from "../tags/hashTag";
+import EditButton from "../ui/buttons/editButton";
+import HashTag from "../ui/tags/hashTag";
 
 interface TagListProps {
   nation: Nation;

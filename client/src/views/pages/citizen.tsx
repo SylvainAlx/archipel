@@ -1,11 +1,11 @@
-import H1 from "../../components/titles/h1";
+import H1 from "../../components/ui/titles/h1";
 import { lazy, Suspense } from "react";
-import EditButton from "../../components/buttons/editButton";
-import ReportPanel from "../../components/reportPanel";
+import EditButton from "../../components/ui/buttons/editButton";
+import ReportPanel from "../../components/ui/reportPanel";
 import { createPageTitle } from "../../utils/procedures";
-import IdSkeleton from "../../components/loading/skeletons/idSkeleton";
-import TileSkeleton from "../../components/loading/skeletons/tileSkeleton";
-import ParamSkeleton from "../../components/loading/skeletons/paramSkeleton";
+import IdSkeleton from "../../components/ui/loading/skeletons/idSkeleton";
+import TileSkeleton from "../../components/ui/loading/skeletons/tileSkeleton";
+import ParamSkeleton from "../../components/ui/loading/skeletons/paramSkeleton";
 import { useCitizen } from "../../hooks/pagesHooks/useCitizen";
 
 export default function Citizen() {

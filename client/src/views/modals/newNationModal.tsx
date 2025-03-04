@@ -1,9 +1,9 @@
-import Button from "../../components/buttons/button";
+import Button from "../../components/ui/buttons/button";
 import Form from "../../components/form/form";
 import Input from "../../components/form/input";
 import { emptyNewNationPayload } from "../../types/typNation";
 import Select from "../../components/form/select";
-import HashTag from "../../components/tags/hashTag";
+import HashTag from "../../components/ui/tags/hashTag";
 import { regimeList } from "../../settings/lists";
 import { MAX_LENGTH } from "../../settings/consts";
 import RequiredStar from "../../components/form/requiredStar";

@@ -1,13 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import Button from "../../components/buttons/button";
+import Button from "../../components/ui/buttons/button";
 import { lazy, Suspense } from "react";
-import H1 from "../../components/titles/h1";
-import IndexTag from "../../components/tags/indexTag";
+import H1 from "../../components/ui/titles/h1";
+import IndexTag from "../../components/ui/tags/indexTag";
 import NationSearchBar from "../../components/searchBars/nationSearchBar";
 import { StringProps } from "../../types/typProp";
 import { useTranslation } from "react-i18next";
 import { ELEMENTS_DISPLAYED_LIMIT } from "../../settings/consts";
-import TileSkeleton from "../../components/loading/skeletons/tileSkeleton";
+import TileSkeleton from "../../components/ui/loading/skeletons/tileSkeleton";
 import { useNationList } from "../../hooks/exploreTabsHooks/useNationList";
 // import AdBanner from "../../components/ads/adBanner";
 
@@ -15,7 +15,7 @@ export default function NationList({ text }: StringProps) {
   const { nationsList, setNationsList, displayedNations, setDisplayedNations } =
     useNationList();
   const { t } = useTranslation();
-  const NationTile = lazy(() => import("../../components/tiles/nationTile"));
+  const NationTile = lazy(() => import("../../components/ui/tiles/nationTile"));
 
   return (
     <>

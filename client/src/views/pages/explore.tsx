@@ -1,8 +1,8 @@
 import { lazy, Suspense } from "react";
-import TabNav from "../../components/tabNav";
+import TabNav from "../../components/nav/tabNav";
 import { useNavigate } from "react-router-dom";
 import { createPageTitle } from "../../utils/procedures";
-import ParamSkeleton from "../../components/loading/skeletons/paramSkeleton";
+import ParamSkeleton from "../../components/ui/loading/skeletons/paramSkeleton";
 import { useExplore } from "../../hooks/pagesHooks/useExplore";
 
 export default function Explore() {

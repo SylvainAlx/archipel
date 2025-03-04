@@ -1,8 +1,8 @@
 import Input from "../../components/form/input";
 import { LOBBY_INFO, MDP_LOBBY } from "../../settings/consts";
-import Button from "../../components/buttons/button";
+import Button from "../../components/ui/buttons/button";
 import Form from "../../components/form/form";
-import LangButton from "../../components/buttons/langButton";
+import LangButton from "../../components/ui/buttons/langButton";
 import RequiredStar from "../../components/form/requiredStar";
 import { createPageTitle } from "../../utils/procedures";
 import { useLobby } from "../../hooks/pagesHooks/useLobby";

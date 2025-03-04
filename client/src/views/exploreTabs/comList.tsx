@@ -1,19 +1,19 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import Button from "../../components/buttons/button";
+import Button from "../../components/ui/buttons/button";
 import { Suspense, lazy } from "react";
-import H1 from "../../components/titles/h1";
-import IndexTag from "../../components/tags/indexTag";
+import H1 from "../../components/ui/titles/h1";
+import IndexTag from "../../components/ui/tags/indexTag";
 import { StringProps } from "../../types/typProp";
 import { useTranslation } from "react-i18next";
 import ComSearchBar from "../../components/searchBars/comSearchBar";
 import { ELEMENTS_DISPLAYED_LIMIT } from "../../settings/consts";
-import TileSkeleton from "../../components/loading/skeletons/tileSkeleton";
+import TileSkeleton from "../../components/ui/loading/skeletons/tileSkeleton";
 import { useComList } from "../../hooks/exploreTabsHooks/useComList";
 
 export default function ComList({ text }: StringProps) {
   const { comList, setComList, displayedComs, setDisplayedComs } = useComList();
   const { t } = useTranslation();
-  const ComTile = lazy(() => import("../../components/tiles/comTile"));
+  const ComTile = lazy(() => import("../../components/ui/tiles/comTile"));
 
   return (
     <>

@@ -1,18 +1,18 @@
-import H1 from "../../components/titles/h1";
+import H1 from "../../components/ui/titles/h1";
 import Links from "../../components/nation/links";
 import { lazy, Suspense } from "react";
 import { FaExchangeAlt } from "react-icons/fa";
-import CrossButton from "../../components/buttons/crossButton";
-import ReportPanel from "../../components/reportPanel";
-import EditButton from "../../components/buttons/editButton";
-import IdSkeleton from "../../components/loading/skeletons/idSkeleton";
-import MapSkeleton from "../../components/loading/skeletons/mapSkeleton";
-import TileSkeleton from "../../components/loading/skeletons/tileSkeleton";
-import CreditTransferButton from "../../components/buttons/creditTransferButton";
-import Button from "../../components/buttons/button";
+import CrossButton from "../../components/ui/buttons/crossButton";
+import ReportPanel from "../../components/ui/reportPanel";
+import EditButton from "../../components/ui/buttons/editButton";
+import IdSkeleton from "../../components/ui/loading/skeletons/idSkeleton";
+import MapSkeleton from "../../components/ui/loading/skeletons/mapSkeleton";
+import TileSkeleton from "../../components/ui/loading/skeletons/tileSkeleton";
+import CreditTransferButton from "../../components/ui/buttons/creditTransferButton";
+import Button from "../../components/ui/buttons/button";
 import { createPageTitle } from "../../utils/procedures";
 import { useNation } from "../../hooks/pagesHooks/useNation";
-import VerifiedTag from "../../components/tags/verifiedTag";
+import VerifiedTag from "../../components/ui/tags/verifiedTag";
 import { RiVerifiedBadgeFill } from "react-icons/ri";
 
 const NationIdentity = lazy(
