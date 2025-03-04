@@ -2,7 +2,7 @@ import { SitemapStream, streamToPromise } from "sitemap";
 import fs from "fs";
 import { routes } from "../src/router/routes.js";
 
-const hostname = "https://archipel.vercel.app";
+const hostname = "https://archipel-app.com";
 
 (async () => {
   const sitemap = new SitemapStream({ hostname });

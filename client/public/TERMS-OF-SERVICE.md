@@ -20,7 +20,7 @@ Archipel est une application web accessible par navigateur sur tous les supports
 
 ### 1.2 - Objet des Conditions Générales d'Utilisation
 
-Les présentes Conditions Générales d'Utilisation (ci-après « CGU ») ont pour objet de définir les modalités et conditions dans lesquelles les utilisateurs (ci-après « Utilisateur ») peuvent accéder et utiliser l'application. Elles précisent également les droits et obligations des parties dans le cadre de l'utilisation des services proposés. L'accès à l'application et son utilisation sont subordonnés au respect intégral des présentes CGU.
+Les présentes Conditions Générales d'Utilisation (ci-après « CGU ») ont pour objet de définir les modalités et conditions dans lesquelles les utilisateurs (ci-après « Utilisateur ») peuvent accéder et utiliser l'application hébergée à l'adresse [archipel-app.com](archipel-app.com). Elles précisent également les droits et obligations des parties dans le cadre de l'utilisation des services proposés. L'accès à l'application et son utilisation sont subordonnés au respect intégral des présentes CGU.
 
 ### 1.3 - Acceptation des CGU par l'utilisateur
 
@@ -63,9 +63,17 @@ MongoDB, Inc.
 _1633 Broadway, 38th Floor New York  
 NY 10019 USA_
 
+#### 2.2.4 - Le stockage des images téléversées
+
+Le stockage des images téléversées est assuré par :
+
+Uploadcare, Inc.  
+_18401 Collins Ave, Ste. 100-241, Sunny Isles Beach  
+FL, 33160 USA_
+
 ### 2.3 - Responsable du traitement des données personnelles
 
-L'Éditeur, nommé ci-dessus, est responsable du traitement des données personnelles des utilisateurs. Plus d'informations à la rubrique [Protection des données personnelles](#protection-des-données-personnelles).
+L'Éditeur, nommé ci-dessus, est responsable du traitement des données personnelles des utilisateurs. Plus d'informations à la rubrique [Protection des données personnelles](#article-8--protection-des-données-personnelles).
 
 ## ARTICLE 3 : Accès et inscription
 
@@ -169,7 +177,7 @@ L'inscription de l'Utilisateur sur l'application Archipel permet à celui-ci d'e
 
 #### 4.2.2 - Page "mon compte"
 
-Tout citoyen inscrit sur Archipel peux accéder au détail de son compte en cliquant sur le bouton "MON COMPTE" dans la barre de navigation. Cette page est identique aux pages "citoyen" énoncées plus haut, avec cependant la possibilité d'éditer le nom, l'avatar, les liens et la biographie. La page propose également au citoyen de changer son mot de passe, de modifier ses préférences concernant les cookies, se déconnecter et supprimer son compte.
+Tout citoyen inscrit sur Archipel peux accéder au détail de son compte en cliquant sur le bouton "MON COMPTE" dans la barre de navigation. Cette page est identique aux pages "citoyen" énoncées plus haut, avec cependant la possibilité d'éditer le nom, l'avatar, les liens et la biographie. La page propose également au citoyen de changer son mot de passe, de créer une nouvelle clé de récupération, de modifier ses préférences concernant les cookies, de se déconnecter et de supprimer son compte.
 
 #### 4.2.3 - Rejoindre une nation
 
@@ -418,4 +426,4 @@ En cas de différend lié à l’interprétation, l’exécution ou la résiliat
 
 ## ARTICLE 11 : Contact
 
-Pour toute question, les utilisateurs peuvent contacter l'Éditeur à l’adresse suivante : sylvainalx.dev@gmail.com.
+Pour toute question, les utilisateurs peuvent contacter l'Éditeur à l’adresse [sylvainalx.dev@gmail.com](mailto:sylvainalx.dev@gmail.com).

@@ -183,7 +183,8 @@
       "markAsUnread": "mark as unread",
       "transferCredits": "transfer credits",
       "giveOwnership": "give ownership",
-      "askOfficial": "request official status"
+      "askOfficial": "request official status",
+      "createNewRecovery": "create a new recovery key"
     },
     "form": {
       "input": {
@@ -236,7 +237,8 @@
         "deleteCom": "delete communication ?",
         "reportContent": "confirm reporting the content to the administrator ?",
         "transferCredits": "confirm credit transfer ?",
-        "giveOwnership": "confirm transfer of ownership ?"
+        "giveOwnership": "confirm transfer of ownership ?",
+        "createNewRecovery": "confirm the creation of a new recovery key ?"
       },
       "cookiesModal": {
         "text": "this site uses cookies to improve your user experience",

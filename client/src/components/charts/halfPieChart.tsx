@@ -7,28 +7,18 @@ import {
   ResponsiveContainer,
   Tooltip,
 } from "recharts";
-
-const COLORS = [
-  "#0088FE",
-  "#00C49F",
-  "#FFBB28",
-  "#FF8042",
-  "#A28DFF",
-  "#FF6384",
-  "#36A2EB",
-  "#FFCE56",
-  "#4BC0C0",
-  "#9966FF",
-];
+import { STAT_COLORS } from "../../settings/lists";
 
 interface HalfPieChartProps {
   pieChartData: any[];
+  high?: number;
   cy?: string;
 }
 
 export default function HalfPieChart({
   pieChartData,
-  cy = "70%",
+  high = 220,
+  cy = "50%",
 }: HalfPieChartProps) {
   const { t } = useTranslation();
   if (pieChartData.length === 0) {
@@ -36,24 +26,26 @@ export default function HalfPieChart({
   }
 
   return (
-    <div className="w-full min-h-[270px] flex flex-col justify-center items-center">
-      <ResponsiveContainer width="100%" height={270}>
+    <div className="w-full flex flex-col justify-center items-center">
+      <ResponsiveContainer width="100%" height={high}>
         <PieChart>
           <Pie
             data={pieChartData}
             cx="50%"
             cy={cy}
             labelLine={false}
-            outerRadius={120}
-            fill="#8884d8"
+            innerRadius={50}
+            outerRadius={70}
+            paddingAngle={3}
+            stroke="none"
             dataKey="value"
-            startAngle={180}
+            startAngle={360}
             endAngle={0}
           >
             {pieChartData.map((_, index) => (
               <Cell
                 key={`cell-${index}`}
-                fill={COLORS[index % COLORS.length]}
+                fill={STAT_COLORS[index % STAT_COLORS.length]}
               />
             ))}
           </Pie>

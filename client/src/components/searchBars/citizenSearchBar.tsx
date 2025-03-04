@@ -29,22 +29,17 @@ export default function CitizenSearchBar({
       list.getItems().length != stats.counts.citizens ||
       list.getItems().length === 0
     ) {
-      loadUserList("");
+      if (isLeader) {
+        const updatedList = list
+          .getItems()
+          .filter((user) => user.citizenship.nationOwner === true);
+        setList(new UserListModel(updatedList));
+      } else {
+        loadUserList(searchName);
+      }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [stats.counts.citizens]);
-
-  useEffect(() => {
-    if (isLeader) {
-      const updatedList = list
-        .getItems()
-        .filter((user) => user.citizenship.nationOwner === true);
-      setList(new UserListModel(updatedList));
-    } else {
-      loadUserList(searchName);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isLeader]);
+  }, [stats.counts.citizens, isLeader]);
 
   const loadUserList = async (searchName: string) => {
     let updatedList = await list.loadUserList(searchName);

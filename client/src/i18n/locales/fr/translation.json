@@ -177,13 +177,14 @@
       "accept": "accepter",
       "refuse": "refuser",
       "break": "rompre",
-      "donate": "faire un don",
+      "donate": "soutenir",
       "edit": "éditer",
       "markAsRead": "non lu",
       "markAsUnread": "lu",
       "transferCredits": "envoyer des credits",
       "giveOwnership": "céder l'édition",
-      "askOfficial": "demander le statut officiel"
+      "askOfficial": "demander le statut officiel",
+      "createNewRecovery": "créer une nouvelle clé de récupération"
     },
     "form": {
       "input": {
@@ -236,7 +237,8 @@
         "deleteCom": "confirmez-vous la suppression définitive de la communication ?",
         "reportContent": "confirmez-vous le signalement du contenu à l'administrateur ?",
         "transferCredits": "confirmez-vous le virement ?",
-        "giveOwnership": "confirmez-vous la cession des droits d'édition ?"
+        "giveOwnership": "confirmez-vous la cession des droits d'édition ?",
+        "createNewRecovery": "confirmez-vous la création d'une nouvelle clé de récupération ?"
       },
       "cookiesModal": {
         "text": "ce site utilise des cookies pour améliorer votre expérience utilisateur",

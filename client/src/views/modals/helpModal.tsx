@@ -13,7 +13,7 @@ export default function HelpModal() {
     <div
       tabIndex={-1}
       ref={modalRef}
-      className="w-full flex flex-col items-center gap-2"
+      className="w-full max-h-full flex flex-col items-center gap-2"
     >
       <h2 className="text-2xl text-center p-4">
         {t("components.modals.helpModal.title")}
@@ -24,7 +24,7 @@ export default function HelpModal() {
         click={(id: number) => setTab(helpTabs[id - 1])}
         bgColor="bg-complementary2"
       />
-      <article className="w-full max-h-96 flex flex-col items-center gap-2 overflow-y-auto">
+      <article className="w-full max-h-72 flex flex-col items-center gap-2 overflow-y-auto">
         <MDEditor.Markdown
           className="presentation"
           source={helpTabs[Number(tab.id) - 1].descriptions}

@@ -10,7 +10,7 @@ import {
   showCookiesModalAtom,
 } from "../../settings/store";
 import { RiLockPasswordFill } from "react-icons/ri";
-import { FaCookieBite } from "react-icons/fa";
+import { FaCookieBite, FaKey } from "react-icons/fa";
 import { IoMdLogOut } from "react-icons/io";
 import CrossButton from "../buttons/crossButton";
 import { useTranslation } from "react-i18next";
@@ -50,6 +50,19 @@ export default function Settings({ citizen }: SettingsProps) {
           await citizen.baseDelete(payload);
           myStore.set(confirmBox, ConfirmBoxDefault);
           navigate("/");
+        },
+      });
+    }
+  };
+
+  const handleCreateRecovery = () => {
+    const payload = window.prompt(t("components.form.input.password"));
+    if (payload) {
+      myStore.set(confirmBox, {
+        text: t("components.modals.confirmModal.createNewRecovery"),
+        actionToDo: async () => {
+          await citizen.createNewRecovery(payload);
+          myStore.set(confirmBox, ConfirmBoxDefault);
         },
       });
     }
@@ -100,6 +113,11 @@ export default function Settings({ citizen }: SettingsProps) {
                 text={t("components.buttons.changePassword")}
                 click={() => myStore.set(changePasswordModalAtom, true)}
                 children={<RiLockPasswordFill />}
+              />
+              <Button
+                text={t("components.buttons.createNewRecovery")}
+                click={handleCreateRecovery}
+                children={<FaKey />}
               />
               <Button
                 text={t("components.buttons.cookiesConsent")}

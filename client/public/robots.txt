@@ -1,4 +1,4 @@
 User-agent: *
 Disallow: /admin
 
-Sitemap: https://archipel.vercel.app/sitemap.xml
+Sitemap: https://archipel-app.com/sitemap.xml

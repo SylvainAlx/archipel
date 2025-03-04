@@ -3,6 +3,7 @@ import {
   authGet,
   changePasswordFetch,
   changeStatusFetch,
+  createNewRecoveryFetch,
   deleteUserFetch,
   getOneUserFetch,
   loginFetch,
@@ -240,6 +241,20 @@ export class UserModel extends CommonModel implements User {
     try {
       const response = await changePasswordFetch({ oldPassword, newPassword });
       this.displayUserInfoByType(response.infoType);
+    } catch (error) {
+      errorCatching(error);
+    } finally {
+      myStore.set(loadingAtom, false);
+    }
+  };
+  createNewRecovery = async (password: string) => {
+    myStore.set(loadingAtom, true);
+    try {
+      const response = await createNewRecoveryFetch({ password });
+      console.log(response);
+
+      this.displayUserInfoByType(response.infoType);
+      myStore.set(recoveryKey, response.newRecovery);
     } catch (error) {
       errorCatching(error);
     } finally {

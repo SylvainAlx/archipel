@@ -1,24 +1,19 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import Button from "../../components/buttons/button";
-import { useState, lazy, Suspense } from "react";
+import { lazy, Suspense } from "react";
 import H1 from "../../components/titles/h1";
 import IndexTag from "../../components/tags/indexTag";
 import { StringProps } from "../../types/typProp";
 import PlaceSearchBar from "../../components/searchBars/placeSearchBar";
 import { useTranslation } from "react-i18next";
 import { ELEMENTS_DISPLAYED_LIMIT } from "../../settings/consts";
-import { PlaceListModel } from "../../models/lists/placeListModel";
 import { NationModel } from "../../models/nationModel";
 import TileSkeleton from "../../components/loading/skeletons/tileSkeleton";
-import PlaceTypeChart from "../../components/charts/placeTypeChart";
+import { usePlaceList } from "../../hooks/exploreTabsHooks/usePlaceList";
 
 export default function PlaceList({ text }: StringProps) {
-  const [placesList, setPlacesList] = useState<PlaceListModel>(
-    new PlaceListModel(),
-  );
-  const [displayedPlaces, setDisplayedPlaces] = useState(
-    ELEMENTS_DISPLAYED_LIMIT.places,
-  );
+  const { placesList, setPlacesList, displayedPlaces, setDisplayedPlaces } =
+    usePlaceList();
   const { t } = useTranslation();
 
   const PlaceTile = lazy(() => import("../../components/tiles/placeTile"));
@@ -27,7 +22,6 @@ export default function PlaceList({ text }: StringProps) {
     <>
       <H1 text={text} />
       <PlaceSearchBar type="nation" list={placesList} setList={setPlacesList} />
-      <PlaceTypeChart placeList={placesList} />
       <section className="w-full flex gap-1 flex-wrap items-center flex-col ">
         {placesList != undefined &&
           placesList.getItems().length > 0 &&

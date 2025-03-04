@@ -40,6 +40,8 @@ export default function Footer() {
             <BsFillEnvelopeAtFill />
             {t("components.buttons.contact")}
           </Link>
+        </div>
+        <div className="pb-1 flex items-center gap-2 text-[10px] md:text-[12px] opacity-30 md:opacity-100">
           {INSTAGRAM_URL != "" && (
             <Link
               to={INSTAGRAM_URL}

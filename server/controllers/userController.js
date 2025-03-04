@@ -487,3 +487,25 @@ export const transferCredits = async (req, res) => {
     handleError(error, res);
   }
 };
+
+export const createNewRecovery = async (req, res) => {
+  try {
+    const id = req.userId;
+    const { password } = req.body;
+
+    const user = await getUserByOfficialId(id, 404, true);
+    if (!user) {
+      return res.status(404).json({ infoType: "404" });
+    }
+    const isMatch = await user.comparePassword(password);
+    if (!isMatch) {
+      return res.status(403).json({ infoType: "403" });
+    }
+    const newRecovery = getRecoveryWords();
+    user.recovery = newRecovery;
+    await user.save();
+    res.status(200).json({ newRecovery, infoType: "200" });
+  } catch (error) {
+    handleError(error, res);
+  }
+};

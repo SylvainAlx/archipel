@@ -8,16 +8,14 @@ Le code source est public et est visible [ici](https://github.com/SylvainAlx/arc
 
 #### Ajouts
 
-- _si changement du nom de domaine !!! modifier CLIENT: index.html, robots.txt et generate-sitemap.js SERVER: FRONTENDURL dans le .env !!!_
-
 - Ajout d'une fenètre d'aide à l'utilisation
 - Autorisation des crawlers des moteurs de recherche pour l'indexation
 - L'éditeur d'une nation peut céder la gestion à un autre citoyen
 - Tri possible des utilisateurs par date de dernière visite
 - Une nation peut obtenir le status officiel sur validation de son dirigeant réel
 - Consultation possible des paramètres des crédits pour les utilisateurs connectés
-- Ajout de visualisations en graphiques sur la page "explorer"
 - Ajout d'une page "erreur 404"
+- L'utilisateur connecté peut créer une nouvelle clé de récupération de son compte
 
 #### Suppressions
 
@@ -25,14 +23,14 @@ Le code source est public et est visible [ici](https://github.com/SylvainAlx/arc
 
 #### Modifications & Corrections
 
-- _Tests effectués sur plusieurs navigateurs web_
-
+- Conforme pour les navigateurs : Chrome, Brave, Edge
 - Mise à jour des CGU
 - Optimisation du code source et mise à jour des dépendances
 - Propriété "Etat-Nation" modifiable
 - Le tri des nation est à présent défini par défaut sur "Richesse décroissante"
 - Les quotas et les coûts des lieux et tuiles peuvent être ajustés directement en base de donnée
 - Durcissement des règles pour le choix du mot de passe d'un nouvel utilisateur ou lors d'un changement
+- Refonte de l'onglet "statistiques" de la page "explorer"
 
 ## Développements à venir
 

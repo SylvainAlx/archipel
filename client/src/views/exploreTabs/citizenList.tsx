@@ -1,23 +1,22 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import Button from "../../components/buttons/button";
-import { useState, lazy, Suspense } from "react";
+import { lazy, Suspense } from "react";
 import H1 from "../../components/titles/h1";
 import IndexTag from "../../components/tags/indexTag";
 import { StringProps } from "../../types/typProp";
 import CitizenSearchBar from "../../components/searchBars/citizenSearchBar";
 import { useTranslation } from "react-i18next";
 import { ELEMENTS_DISPLAYED_LIMIT } from "../../settings/consts";
-import { UserListModel } from "../../models/lists/userListModel";
 import TileSkeleton from "../../components/loading/skeletons/tileSkeleton";
-import LanguageChart from "../../components/charts/languageChart";
+import { useCitizenList } from "../../hooks/exploreTabsHooks/useCitizenList";
 
 export default function CitizenList({ text }: StringProps) {
-  const [citizensList, setCitizensList] = useState<UserListModel>(
-    new UserListModel(),
-  );
-  const [displayedCitizens, setDisplayedCitizens] = useState(
-    ELEMENTS_DISPLAYED_LIMIT.citizens,
-  );
+  const {
+    citizensList,
+    displayedCitizens,
+    setDisplayedCitizens,
+    setCitizensList,
+  } = useCitizenList();
   const { t } = useTranslation();
   const CitizenTile = lazy(() => import("../../components/tiles/citizenTile"));
 
@@ -29,7 +28,6 @@ export default function CitizenList({ text }: StringProps) {
         list={citizensList}
         setList={setCitizensList}
       />
-      <LanguageChart userList={citizensList} />
       <section className="w-full flex gap-1 flex-wrap items-center flex-col ">
         {citizensList != undefined &&
           citizensList.getItems().length > 0 &&

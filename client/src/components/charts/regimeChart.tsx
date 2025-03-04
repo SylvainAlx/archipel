@@ -24,5 +24,5 @@ export default function RegimeChart({ nations }: RegimeChartProps) {
     }))
     .filter((entry) => entry.value > 0); // On garde uniquement les régimes présents
 
-  return <HalfPieChart pieChartData={pieChartData} cy="85%" />;
+  return <HalfPieChart pieChartData={pieChartData} high={310} />;
 }

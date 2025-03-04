@@ -69,7 +69,7 @@ export default function Home() {
               )}
             </div>
           </div>
-          <Illustration src="/archipelago.webp" />
+          <Illustration src="/citizen.webp" />
         </article>
         <article className="flex flex-col-reverse lg:flex-row justify-center items-center lg:items-stretch flex-wrap px-4 gap-4">
           <Illustration src="/worldbuilding.webp" />
@@ -96,7 +96,7 @@ export default function Home() {
               source={t("pages.home.presentation3")}
             />
           </div>
-          <Illustration src="/citizen.webp" />
+          <Illustration src="/archipelago.webp" />
         </article>
       </section>
     </>
