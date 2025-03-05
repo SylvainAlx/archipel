@@ -8,6 +8,7 @@ export function useLangModal() {
     myStore.set(showLangModalAtom, false);
   };
 
+  // eslint-disable-next-line no-undef
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     myStore.set(showLangModalAtom, false);

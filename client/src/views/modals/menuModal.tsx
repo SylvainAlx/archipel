@@ -41,9 +41,10 @@ export default function MenuModal() {
         <Button
           text=""
           widthFull={true}
-          children={<ReleaseNotesLink />}
           click={() => navigate("/releasenotes")}
-        />
+        >
+          <ReleaseNotesLink />
+        </Button>
         <Link
           className="w-full h-full flex items-center gap-1"
           to={`mailto:${ADMIN_EMAIL}`}
@@ -52,30 +53,25 @@ export default function MenuModal() {
             text={t("components.buttons.contact")}
             type="button"
             widthFull={true}
-            children={<BsFillEnvelopeAtFill />}
-          />
+          >
+            <BsFillEnvelopeAtFill />
+          </Button>
         </Link>
         <Link
           className="w-full h-full flex items-center gap-1"
           to={INSTAGRAM_URL}
         >
-          <Button
-            text="Instagram"
-            type="button"
-            widthFull={true}
-            children={<FaInstagram />}
-          />
+          <Button text="Instagram" type="button" widthFull={true}>
+            <FaInstagram />
+          </Button>
         </Link>
         <Link
           className="w-full h-full flex items-center gap-1"
           to={THREADS_URL}
         >
-          <Button
-            text="Threads"
-            type="button"
-            widthFull={true}
-            children={<BsThreads />}
-          />
+          <Button text="Threads" type="button" widthFull={true}>
+            <BsThreads />
+          </Button>
         </Link>
       </nav>
       <Button

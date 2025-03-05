@@ -34,6 +34,7 @@ export default function FreeTiles({
       .getItems()
       .filter((tile) => tile.nationOfficialId === selectedNation.officialId);
     return new TileListModel(list);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [tileList]);
 
   useEffect(() => {
@@ -43,6 +44,7 @@ export default function FreeTiles({
     if (selectedNation.officialId != "") {
       loadTileList();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -64,50 +66,44 @@ export default function FreeTiles({
   };
 
   return (
-    <TileContainer
-      children={
-        <DashTile
-          title={t("pages.nation.freeTiles.title")}
-          children={
-            <section className="flex flex-col items-center justify-center gap-2">
-              {owner && (
-                <div className="flex items-center gap-4">
-                  {quota &&
-                    cost &&
-                    nationTileList.getItems().length >= quota && (
-                      <span className="flex items-center gap-1 text-gold">
-                        <FaCoins />
-                        {cost}
-                      </span>
-                    )}
-                  <Button
-                    text={t("components.buttons.createFreeTile")}
-                    children={<GiSBrick />}
-                    click={handleClick}
-                  />
-                </div>
+    <TileContainer>
+      <DashTile title={t("pages.nation.freeTiles.title")}>
+        <section className="flex flex-col items-center justify-center gap-2">
+          {owner && (
+            <div className="flex items-center gap-4">
+              {quota && cost && nationTileList.getItems().length >= quota && (
+                <span className="flex items-center gap-1 text-gold">
+                  <FaCoins />
+                  {cost}
+                </span>
               )}
-              <div className="flex flex-wrap items-stretch justify-center gap-4">
-                {nationTileList.getItems().length > 0 ? (
-                  nationTileList.getItems().map((tile, i) => {
-                    return (
-                      <Suspense key={i} fallback={<TileSkeleton />}>
-                        <FreeTile
-                          key={i}
-                          tile={tile}
-                          owner={owner ? owner : false}
-                        />
-                      </Suspense>
-                    );
-                  })
-                ) : (
-                  <em>{t("pages.nation.freeTiles.noFreeTiles")}</em>
-                )}
-              </div>
-            </section>
-          }
-        />
-      }
-    />
+              <Button
+                text={t("components.buttons.createFreeTile")}
+                click={handleClick}
+              >
+                <GiSBrick />
+              </Button>
+            </div>
+          )}
+          <div className="flex flex-wrap items-stretch justify-center gap-4">
+            {nationTileList.getItems().length > 0 ? (
+              nationTileList.getItems().map((tile, i) => {
+                return (
+                  <Suspense key={i} fallback={<TileSkeleton />}>
+                    <FreeTile
+                      key={i}
+                      tile={tile}
+                      owner={owner ? owner : false}
+                    />
+                  </Suspense>
+                );
+              })
+            ) : (
+              <em>{t("pages.nation.freeTiles.noFreeTiles")}</em>
+            )}
+          </div>
+        </section>
+      </DashTile>
+    </TileContainer>
   );
 }

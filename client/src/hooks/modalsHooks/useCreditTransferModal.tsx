@@ -45,10 +45,12 @@ export function useCreditTransferModal() {
         { id: selfNation.officialId, label: selfNation.name },
       ]);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selfNation]);
 
   useEffect(() => {
     setMaxAmount(getMaxAMount(newTransfer.sender.officialId));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [newTransfer]);
 
   const getMaxAMount = (officialId: string) => {

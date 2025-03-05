@@ -24,7 +24,8 @@ export default function NationalDayTag({ label }: customTagProps) {
       text={formattedDate != "" ? formattedDate.toString() : "non défini"}
       hover={t("components.hoverInfos.tags.nationalDay")}
       bgColor="bg-info"
-      children={<GiFireworkRocket />}
-    />
+    >
+      <GiFireworkRocket />
+    </Tag>
   );
 }

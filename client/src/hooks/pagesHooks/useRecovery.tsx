@@ -32,7 +32,7 @@ export function useRecovery() {
     e.preventDefault();
     const newUser = new UserModel();
     const isOk = await newUser.recoveryUser({ name, recovery, password });
-    isOk && navigate("/login");
+    if (isOk) navigate("/login");
   };
 
   return {

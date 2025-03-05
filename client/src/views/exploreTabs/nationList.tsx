@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import Button from "../../components/ui/buttons/button";
 import { lazy, Suspense } from "react";
 import H1 from "../../components/ui/titles/h1";

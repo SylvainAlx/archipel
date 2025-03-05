@@ -19,6 +19,7 @@ export default function ImageModal() {
         className={`max-w-screen-sm max-h-screen bg-complementary flex flex-col items-center justify-center overflow-hidden rounded cursor-zoom-in`}
         href={image}
         target="_blank"
+        rel="noreferrer"
       >
         {image ? (
           <img

@@ -34,56 +34,53 @@ export default function TileFormModal() {
           {cost && cost}
         </span>
       )}
-      <Form
-        submit={handleSubmit}
-        children={
-          <>
-            <Input
-              required
-              type="text"
-              name="title"
-              value={localTile.title}
-              onChange={handleChange}
-              placeholder={t("components.modals.tileModal.inputTitle")}
-              maxLength={60}
-            />
-            <TextArea
-              name="description"
-              placeholder={t("components.modals.tileModal.inputDescription")}
-              value={
-                localTile.description != undefined ? localTile.description : ""
-              }
-              onChange={handleChange}
-              maxLength={200}
-            />
-            <Input
-              required
-              onChange={handleChange}
-              type="text"
-              name="value"
-              placeholder={t("components.modals.tileModal.inputValue")}
-              value={localTile.value}
-            />
-            <RequiredStar />
-            <Button
-              type="submit"
-              text={t("components.buttons.validate")}
-              widthFull={true}
-              disabled={
-                localTile.title === tile.title &&
-                localTile.value === tile.value &&
-                localTile.description === tile.description
-              }
-            />
-            <Button
-              type="button"
-              text={t("components.buttons.cancel")}
-              click={() => setTile(new TileModel())}
-              widthFull={true}
-            />
-          </>
-        }
-      />
+      <Form submit={handleSubmit}>
+        <>
+          <Input
+            required
+            type="text"
+            name="title"
+            value={localTile.title}
+            onChange={handleChange}
+            placeholder={t("components.modals.tileModal.inputTitle")}
+            maxLength={60}
+          />
+          <TextArea
+            name="description"
+            placeholder={t("components.modals.tileModal.inputDescription")}
+            value={
+              localTile.description != undefined ? localTile.description : ""
+            }
+            onChange={handleChange}
+            maxLength={200}
+          />
+          <Input
+            required
+            onChange={handleChange}
+            type="text"
+            name="value"
+            placeholder={t("components.modals.tileModal.inputValue")}
+            value={localTile.value}
+          />
+          <RequiredStar />
+          <Button
+            type="submit"
+            text={t("components.buttons.validate")}
+            widthFull={true}
+            disabled={
+              localTile.title === tile.title &&
+              localTile.value === tile.value &&
+              localTile.description === tile.description
+            }
+          />
+          <Button
+            type="button"
+            text={t("components.buttons.cancel")}
+            click={() => setTile(new TileModel())}
+            widthFull={true}
+          />
+        </>
+      </Form>
     </div>
   );
 }

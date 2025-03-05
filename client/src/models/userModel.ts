@@ -399,8 +399,9 @@ export class UserModel extends CommonModel implements User {
       this.updateFields(resp.user);
       this.updateSessionAtom(resp.user);
       this.addOrUpdateUserListAtom(resp.user);
-      resp.place && myStore.get(placeListAtomV2).addOrUpdate(resp.place);
-      resp.oldPlace && myStore.get(placeListAtomV2).addOrUpdate(resp.oldPlace);
+      if (resp.place) myStore.get(placeListAtomV2).addOrUpdate(resp.place);
+      if (resp.oldPlace)
+        myStore.get(placeListAtomV2).addOrUpdate(resp.oldPlace);
       this.displayUserInfoByType(resp.infoType);
     } catch (error) {
       errorCatching(error);

@@ -43,6 +43,7 @@ export function useAllowPost(coms: ComListModel) {
     } else {
       setDueDate(new Date());
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [allowPost]);
 
   return { allowPost, dueDate };

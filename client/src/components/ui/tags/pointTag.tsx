@@ -10,7 +10,8 @@ export default function PointTag({ label }: customTagProps) {
       text={label.toString()}
       hover={t("components.hoverInfos.tags.points")}
       bgColor="bg-info"
-      children={<FaTrophy />}
-    />
+    >
+      <FaTrophy />
+    </Tag>
   );
 }

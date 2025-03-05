@@ -21,7 +21,8 @@ export default function PopulationTag({ label }: customTagProps) {
       text={label.toString() + " " + updatedLabel}
       hover={t("components.hoverInfos.tags.population")}
       bgColor="bg-info"
-      children={<FaUserGroup />}
-    />
+    >
+      <FaUserGroup />
+    </Tag>
   );
 }

@@ -24,7 +24,6 @@ export function useCitizen() {
     if (param.id) {
       loadCitizen(param.id);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [param.id]);
 
   useEffect(() => {

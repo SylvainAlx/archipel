@@ -19,7 +19,7 @@ export default function CryptoDonationButton() {
     try {
       await navigator.clipboard.writeText(text);
       successMessage(t("toasts.successCopy"));
-    } catch (error) {
+    } catch {
       errorMessage(t("toasts.failedCopy"));
     }
   };
@@ -83,10 +83,8 @@ export default function CryptoDonationButton() {
   };
 
   return (
-    <Button
-      text={t("components.buttons.donate")}
-      click={handleDonationClick}
-      children={<BiSolidDonateHeart />}
-    />
+    <Button text={t("components.buttons.donate")} click={handleDonationClick}>
+      <BiSolidDonateHeart />
+    </Button>
   );
 }

@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 interface LinkButtonProps {
   text: string;
   path: string;
+  // eslint-disable-next-line no-undef
   children?: JSX.Element;
   blank?: boolean;
 }

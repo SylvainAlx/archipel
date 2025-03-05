@@ -20,6 +20,7 @@ export default function NationTile({ nation }: NationTileProps) {
   const navigate = useNavigate();
   const [session] = useAtom(sessionAtom);
 
+  // eslint-disable-next-line no-undef
   const handleClick = (event: React.MouseEvent<HTMLDivElement>) => {
     if (event.target === event.currentTarget) {
       navigate(`/nation/${nation.officialId}`);

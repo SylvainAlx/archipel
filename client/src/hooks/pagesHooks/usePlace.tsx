@@ -19,10 +19,11 @@ export function usePlace() {
     const loadPlace = async () => {
       if (param.id) {
         const updatedPlace = await place.loadPlace(param.id);
-        updatedPlace && setPlace(updatedPlace);
+        if (updatedPlace) setPlace(updatedPlace);
       }
     };
     loadPlace();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [param.id]);
 
   useEffect(() => {

@@ -23,14 +23,13 @@ export default function RegimeTag({ selectedNation }: SelectedNationProps) {
       text={regime.label.toString()}
       hover={t("components.hoverInfos.tags.regime")}
       bgColor={regime.bgColor}
-      children={
-        <>
-          {regime.type === 0 && <FaQuestion />}
-          {regime.type === 1 && <MdHowToVote />}
-          {regime.type === 2 && <FaCrown />}
-          {regime.type === 3 && <FaPersonMilitaryPointing />}
-        </>
-      }
-    />
+    >
+      <>
+        {regime.type === 0 && <FaQuestion />}
+        {regime.type === 1 && <MdHowToVote />}
+        {regime.type === 2 && <FaCrown />}
+        {regime.type === 3 && <FaPersonMilitaryPointing />}
+      </>
+    </Tag>
   );
 }

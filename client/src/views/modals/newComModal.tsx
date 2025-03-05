@@ -30,50 +30,47 @@ export default function NewComModal() {
       <h2 className="text-2xl text-center p-4">
         {t("components.modals.newComModal.title")}
       </h2>
-      <Form
-        submit={handleSubmit}
-        children={
-          <>
-            <Input
-              required
-              type="text"
-              name="title"
-              value={newCom.title}
-              onChange={handleChange}
-              placeholder={t("components.modals.newComModal.comTitle")}
-            />
-            <Select
-              options={nationComTypeOptions}
-              onChange={handleSelectChange}
-              value={newCom.comType}
-            />
-            <MarkdownEditor
-              value={newCom.message}
-              onChange={(value) =>
-                value != undefined && setNewCom({ ...newCom, message: value })
-              }
-              maxLength={MAX_LENGTH.text.comMessage}
-            />
-            <RequiredStar />
-            <Button
-              type="submit"
-              text={t("components.buttons.validate")}
-              widthFull={true}
-              disabled={
-                newCom.title === "" ||
-                newCom.message.length === 0 ||
-                newCom.message.length > MAX_LENGTH.text.comMessage
-              }
-            />
-            <Button
-              type="button"
-              text={t("components.buttons.cancel")}
-              click={() => setNewCom(emptyComPayload)}
-              widthFull={true}
-            />
-          </>
-        }
-      />
+      <Form submit={handleSubmit}>
+        <>
+          <Input
+            required
+            type="text"
+            name="title"
+            value={newCom.title}
+            onChange={handleChange}
+            placeholder={t("components.modals.newComModal.comTitle")}
+          />
+          <Select
+            options={nationComTypeOptions}
+            onChange={handleSelectChange}
+            value={newCom.comType}
+          />
+          <MarkdownEditor
+            value={newCom.message}
+            onChange={(value) =>
+              value != undefined && setNewCom({ ...newCom, message: value })
+            }
+            maxLength={MAX_LENGTH.text.comMessage}
+          />
+          <RequiredStar />
+          <Button
+            type="submit"
+            text={t("components.buttons.validate")}
+            widthFull={true}
+            disabled={
+              newCom.title === "" ||
+              newCom.message.length === 0 ||
+              newCom.message.length > MAX_LENGTH.text.comMessage
+            }
+          />
+          <Button
+            type="button"
+            text={t("components.buttons.cancel")}
+            click={() => setNewCom(emptyComPayload)}
+            widthFull={true}
+          />
+        </>
+      </Form>
     </div>
   );
 }

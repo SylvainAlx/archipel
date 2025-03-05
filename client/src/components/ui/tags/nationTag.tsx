@@ -34,8 +34,9 @@ export default function NationTag({ label }: customTagProps) {
       text={typeof nationName === "string" ? nationName : ""}
       hover={t("components.hoverInfos.tags.nation")}
       bgColor="bg-info"
-      children={<GiBlackFlag />}
       click={handleClick}
-    />
+    >
+      <GiBlackFlag />
+    </Tag>
   );
 }

@@ -35,6 +35,7 @@ import CreditTransferButton from "../ui/buttons/creditTransferButton";
 
 interface CitizenshipProps {
   citizen: UserModel;
+  // eslint-disable-next-line no-undef
   setCitizen: React.Dispatch<React.SetStateAction<UserModel>>;
   nation: NationModel;
   owner: boolean;
@@ -64,7 +65,7 @@ export default function Citizenship({
     } else {
       setEnableLeaving(false);
     }
-  }, [citizen, session.user]);
+  }, [citizen, owner, session.user]);
 
   useEffect(() => {
     setCities(nationPlaceList.getCities());
@@ -101,125 +102,125 @@ export default function Citizenship({
   };
 
   return (
-    <DashTile
-      title={t("pages.citizen.virtualCitizenship")}
-      children={
-        <>
-          <div className="max-w-[90%] flex flex-wrap items-center justify-center gap-1">
-            <IdTag label={citizen.officialId} />
-            <span className="flex items-center gap-1">
-              <GenderTag genderId={citizen.gender} />
-              {owner && (
-                <EditButton
-                  editBox={{
-                    target: "citizen",
-                    original: genderList,
-                    new: citizen.gender,
-                    path: "gender",
-                    indice: citizen.gender,
-                    action: updatePath,
-                  }}
-                />
-              )}
-            </span>
-            <span className="flex items-center gap-1">
-              <LanguagesTag language={citizen.language} />
-              {owner && (
-                <EditButton
-                  editBox={{
-                    target: "citizen",
-                    original: languageList,
-                    new: citizen.language,
-                    path: "language",
-                    indice: citizen.language,
-                    action: updatePath,
-                  }}
-                />
-              )}
-            </span>
-            <span className="flex items-center gap-1">
-              <ReligionTag religionId={citizen.religion} />
-              {owner && (
-                <EditButton
-                  editBox={{
-                    target: "citizen",
-                    original: religionList,
-                    new: citizen.religion,
-                    path: "religion",
-                    indice: citizen.religion,
-                    action: updatePath,
-                  }}
-                />
-              )}
-            </span>
-            <ResidenceTag
-              residenceId={citizen.citizenship.residence}
-              nationPlaces={cities}
-            />
-            {owner && cities.getItems().length > 0 && (
+    <DashTile title={t("pages.citizen.virtualCitizenship")}>
+      <>
+        <div className="max-w-[90%] flex flex-wrap items-center justify-center gap-1">
+          <IdTag label={citizen.officialId} />
+          <span className="flex items-center gap-1">
+            <GenderTag genderId={citizen.gender} />
+            {owner && (
               <EditButton
                 editBox={{
                   target: "citizen",
-                  original: cities.getLabelIdPlaceList([PLACE_TYPE.city.id]),
-                  new:
-                    citizen.citizenship.residence != ""
-                      ? citizen.citizenship.residence
-                      : cities.getLabelIdPlaceList([PLACE_TYPE.city.id])[0].id,
-                  path: "citizenship.residence",
+                  original: genderList,
+                  new: citizen.gender,
+                  path: "gender",
+                  indice: citizen.gender,
                   action: updatePath,
                 }}
               />
             )}
-            {owner && <CreditTag label={citizen.credits} owner={true} />}
-            {citizen.citizenship.nationOwner && <NationOwnerTag />}
-            {citizen.role === "admin" && (
-              <RoleTag label={t("pages.citizen.role.admin")} />
+          </span>
+          <span className="flex items-center gap-1">
+            <LanguagesTag language={citizen.language} />
+            {owner && (
+              <EditButton
+                editBox={{
+                  target: "citizen",
+                  original: languageList,
+                  new: citizen.language,
+                  path: "language",
+                  indice: citizen.language,
+                  action: updatePath,
+                }}
+              />
             )}
-            {citizenCreationDate < pioneerDate && (
-              <HonorTag honor="honor_pioneer" />
+          </span>
+          <span className="flex items-center gap-1">
+            <ReligionTag religionId={citizen.religion} />
+            {owner && (
+              <EditButton
+                editBox={{
+                  target: "citizen",
+                  original: religionList,
+                  new: citizen.religion,
+                  path: "religion",
+                  indice: citizen.religion,
+                  action: updatePath,
+                }}
+              />
+            )}
+          </span>
+          <ResidenceTag
+            residenceId={citizen.citizenship.residence}
+            nationPlaces={cities}
+          />
+          {owner && cities.getItems().length > 0 && (
+            <EditButton
+              editBox={{
+                target: "citizen",
+                original: cities.getLabelIdPlaceList([PLACE_TYPE.city.id]),
+                new:
+                  citizen.citizenship.residence != ""
+                    ? citizen.citizenship.residence
+                    : cities.getLabelIdPlaceList([PLACE_TYPE.city.id])[0].id,
+                path: "citizenship.residence",
+                action: updatePath,
+              }}
+            />
+          )}
+          {owner && <CreditTag label={citizen.credits} owner={true} />}
+          {citizen.citizenship.nationOwner && <NationOwnerTag />}
+          {citizen.role === "admin" && (
+            <RoleTag label={t("pages.citizen.role.admin")} />
+          )}
+          {citizenCreationDate < pioneerDate && (
+            <HonorTag honor="honor_pioneer" />
+          )}
+        </div>
+        {session.user.officialId != citizen.officialId &&
+          session.user.officialId != "" && (
+            <CreditTransferButton target={citizen} />
+          )}
+        {nation != undefined &&
+        nation.officialId != "" &&
+        citizen.citizenship.nationId != "" ? (
+          <div className="w-full flex justify-center items-center flex-wrap gap-2">
+            <Button
+              text={nation.name}
+              click={() => handleClick("nation")}
+              lowerCase={false}
+            >
+              <GiBlackFlag />
+            </Button>
+            {enableLeaving && (
+              <CrossButton
+                text={t("components.buttons.leaveNation")}
+                click={leaveNation}
+              />
             )}
           </div>
-          {session.user.officialId != citizen.officialId &&
-            session.user.officialId != "" && (
-              <CreditTransferButton target={citizen} />
+        ) : (
+          <>
+            {owner && (
+              <div className="flex flex-wrap gap-2 justify-center">
+                <Button
+                  text={t("components.buttons.createNation")}
+                  click={() => handleClick("new")}
+                >
+                  <MdAddCircle />
+                </Button>
+                <Button
+                  text={t("components.buttons.joinNation")}
+                  click={() => handleClick("join")}
+                >
+                  <FaRegArrowAltCircleRight />
+                </Button>
+              </div>
             )}
-          {nation != undefined &&
-          nation.officialId != "" &&
-          citizen.citizenship.nationId != "" ? (
-            <div className="w-full flex justify-center items-center flex-wrap gap-2">
-              <Button
-                text={nation.name}
-                click={() => handleClick("nation")}
-                children={<GiBlackFlag />}
-                lowerCase={false}
-              />
-              {enableLeaving && (
-                <CrossButton
-                  text={t("components.buttons.leaveNation")}
-                  click={leaveNation}
-                />
-              )}
-            </div>
-          ) : (
-            <>
-              {owner && (
-                <div className="flex flex-wrap gap-2 justify-center">
-                  <Button
-                    text={t("components.buttons.createNation")}
-                    click={() => handleClick("new")}
-                    children={<MdAddCircle />}
-                  />
-                  <Button
-                    text={t("components.buttons.joinNation")}
-                    click={() => handleClick("join")}
-                    children={<FaRegArrowAltCircleRight />}
-                  />
-                </div>
-              )}
-            </>
-          )}
-        </>
-      }
-    />
+          </>
+        )}
+      </>
+    </DashTile>
   );
 }

@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import {
   comListAtomV2,
   nationListAtomV2,
@@ -10,18 +10,10 @@ import {
   userListAtomV2,
 } from "../settings/store";
 import { useAtom } from "jotai";
+import { SERVER_URL } from "../settings/consts";
 
 const useDebugAtom = () => {
-  const DEBUG_ATOM = {
-    session: false,
-    nations: false,
-    users: false,
-    places: false,
-    coms: false,
-    tiles: false,
-    relations: false,
-    params: false,
-  };
+  const [enableDebug, setEnableDebug] = useState(false);
   const [session] = useAtom(sessionAtom);
   const [nationList] = useAtom(nationListAtomV2);
   const [placeList] = useAtom(placeListAtomV2);
@@ -31,69 +23,61 @@ const useDebugAtom = () => {
   const [relations] = useAtom(relationListAtomV2);
   const [params] = useAtom(paramsAtom);
 
-  DEBUG_ATOM.session &&
-    useEffect(() => {
-      console.log(session);
-    }, [session]);
+  useEffect(() => {
+    if (SERVER_URL && SERVER_URL.includes("localhost")) {
+      setEnableDebug(true);
+    }
+  }, []);
 
-  DEBUG_ATOM.nations &&
-    useEffect(() => {
-      console.log(
-        new Date().toLocaleTimeString() +
-          " nations : " +
-          nationList.getItems().length,
-      );
-    }, [nationList]);
+  useEffect(() => {
+    const DEBUG_ATOM = {
+      session: false,
+      nations: false,
+      users: false,
+      places: false,
+      coms: false,
+      tiles: false,
+      relations: false,
+      params: false,
+    };
 
-  DEBUG_ATOM.places &&
-    useEffect(() => {
-      console.log(
-        new Date().toLocaleTimeString() +
-          " lieux : " +
-          placeList.getItems().length,
-      );
-    }, [placeList]);
-
-  DEBUG_ATOM.users &&
-    useEffect(() => {
-      console.log(
-        new Date().toLocaleTimeString() +
-          " utilisateurs : " +
-          userList.getItems().length,
-      );
-    }, [userList]);
-
-  DEBUG_ATOM.coms &&
-    useEffect(() => {
-      console.log(
-        new Date().toLocaleTimeString() +
-          " coms : " +
-          comList.getItems().length,
-      );
-    }, [comList]);
-
-  DEBUG_ATOM.tiles &&
-    useEffect(() => {
-      console.log(
-        new Date().toLocaleTimeString() +
-          " tuiles : " +
-          tileList.getItems().length,
-      );
-    }, [tileList]);
-
-  DEBUG_ATOM.relations &&
-    useEffect(() => {
-      console.log(
-        new Date().toLocaleTimeString() +
-          " relations : " +
-          relations.getItems().length,
-      );
-    }, [relations]);
-
-  DEBUG_ATOM.params &&
-    useEffect(() => {
-      console.log(params);
-    }, [params]);
+    if (enableDebug) {
+      if (DEBUG_ATOM.session) {
+        console.log(session);
+      }
+      if (DEBUG_ATOM.nations) {
+        console.log(nationList);
+      }
+      if (DEBUG_ATOM.places) {
+        console.log(placeList);
+      }
+      if (DEBUG_ATOM.users) {
+        console.log(userList);
+      }
+      if (DEBUG_ATOM.coms) {
+        console.log(comList);
+      }
+      if (DEBUG_ATOM.tiles) {
+        console.log(tileList);
+      }
+      if (DEBUG_ATOM.relations) {
+        console.log(relations);
+      }
+      if (DEBUG_ATOM.params) {
+        console.log(params);
+      }
+    }
+  }, [
+    comList,
+    enableDebug,
+    nationList,
+    params,
+    placeList,
+    relations,
+    session,
+    tileList,
+    userList,
+  ]);
 };
 
 export default useDebugAtom;

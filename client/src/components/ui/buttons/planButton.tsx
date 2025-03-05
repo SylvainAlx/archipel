@@ -9,10 +9,11 @@ export default function PlanButton({ click }: ClickProps) {
     <Button
       text={t("components.buttons.plan")}
       click={click}
-      children={<IoDiamondOutline />}
       bgColor="bg-gold"
       widthFull={true}
       disabled={true}
-    />
+    >
+      <IoDiamondOutline />
+    </Button>
   );
 }

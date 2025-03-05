@@ -23,34 +23,32 @@ export default function AdminBanned() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
-    <TileContainer
-      children={
-        <>
-          <H2 text="Bannis" />
-          <section>
-            {bannedUsers != undefined &&
-              bannedUsers.getItems().length > 0 &&
-              bannedUsers.getItems().map((citizen, i) => {
-                if (i < displayedCitizens) {
-                  return (
-                    <Suspense key={i} fallback={<TileSkeleton />}>
-                      <div className="min-w-[300px] w-full relative transition-all duration-300 animate-fadeIn">
-                        <CitizenTile citizen={citizen} />
-                        <IndexTag text={i} />
-                      </div>
-                    </Suspense>
-                  );
-                }
-              })}
-            {displayedCitizens < bannedUsers.getItems().length && (
-              <Button
-                click={() => setDisplayedCitizens(displayedCitizens + 5)}
-                text={t("components.buttons.showMore")}
-              />
-            )}
-          </section>
-        </>
-      }
-    />
+    <TileContainer>
+      <>
+        <H2 text="Bannis" />
+        <section>
+          {bannedUsers != undefined &&
+            bannedUsers.getItems().length > 0 &&
+            bannedUsers.getItems().map((citizen, i) => {
+              if (i < displayedCitizens) {
+                return (
+                  <Suspense key={i} fallback={<TileSkeleton />}>
+                    <div className="min-w-[300px] w-full relative transition-all duration-300 animate-fadeIn">
+                      <CitizenTile citizen={citizen} />
+                      <IndexTag text={i} />
+                    </div>
+                  </Suspense>
+                );
+              }
+            })}
+          {displayedCitizens < bannedUsers.getItems().length && (
+            <Button
+              click={() => setDisplayedCitizens(displayedCitizens + 5)}
+              text={t("components.buttons.showMore")}
+            />
+          )}
+        </section>
+      </>
+    </TileContainer>
   );
 }

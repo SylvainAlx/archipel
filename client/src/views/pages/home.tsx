@@ -36,14 +36,16 @@ export default function Home() {
                     text={t("components.buttons.register")}
                     type="button"
                     click={() => navigate("/register")}
-                    children={<IoMdAddCircleOutline />}
-                  />
+                  >
+                    <IoMdAddCircleOutline />
+                  </Button>
                   <Button
                     text={t("components.buttons.login")}
                     type="button"
                     click={() => navigate("/login")}
-                    children={<IoMdLogIn />}
-                  />
+                  >
+                    <IoMdLogIn />
+                  </Button>
                 </>
               ) : (
                 <>
@@ -53,8 +55,9 @@ export default function Home() {
                     click={() =>
                       navigate(`/citizen/${session.user.officialId}`)
                     }
-                    children={<RxAvatar />}
-                  />
+                  >
+                    <RxAvatar />
+                  </Button>
                   {session.user.citizenship.nationId != "" && (
                     <Button
                       text={t("components.buttons.nation")}
@@ -62,8 +65,9 @@ export default function Home() {
                       click={() =>
                         navigate(`/nation/${session.user.citizenship.nationId}`)
                       }
-                      children={<GiBlackFlag />}
-                    />
+                    >
+                      <GiBlackFlag />
+                    </Button>
                   )}
                 </>
               )}
@@ -83,8 +87,9 @@ export default function Home() {
                 text={t("components.buttons.explore")}
                 type="button"
                 click={() => navigate("/explore")}
-                children={<IoMdGlobe />}
-              />
+              >
+                <IoMdGlobe />
+              </Button>
               <CryptoDonationButton />
             </div>
           </div>

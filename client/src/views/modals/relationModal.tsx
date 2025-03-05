@@ -45,122 +45,117 @@ export default function RelationModal({ update }: RelationModalProps) {
           ? t("components.modals.relationModal.update")
           : t("components.modals.relationModal.new")}
       </h2>
-      <Form
-        submit={handleSubmit}
-        children={
-          <>
-            <Input
-              required
-              type="text"
-              name="name"
-              value={newRelation.relation.name}
-              onChange={handleChange}
-              placeholder={t("components.modals.relationModal.nameInput")}
-              maxLength={100}
-            />
-            <TextArea
-              required
-              name="description"
-              value={newRelation.relation.description}
-              onChange={handleChange}
-              placeholder={t("components.modals.relationModal.description")}
-              maxLength={MAX_LENGTH.text.relationDescription}
-            />
-            <fieldset className="w-full p-2 flex flex-wrap justify-center items-center gap-2 bg-complementary2 text-2xl">
-              <label className="flex gap-1">
-                <FaBriefcase
-                  onMouseEnter={() =>
-                    setHoverInfo(t("components.hoverInfos.relations.business"))
-                  }
-                  onMouseLeave={() => setHoverInfo("")}
-                />
-                <Input
-                  type="checkbox"
-                  name="business"
-                  checked={newRelation.relation.kind.business}
-                  onChange={handleCheck}
-                />
-              </label>
-              <label className="flex gap-1">
-                <FaCoins
-                  onMouseEnter={() =>
-                    setHoverInfo(t("components.hoverInfos.relations.economic"))
-                  }
-                  onMouseLeave={() => setHoverInfo("")}
-                />
-                <Input
-                  type="checkbox"
-                  name="economic"
-                  checked={newRelation.relation.kind.economic}
-                  onChange={handleCheck}
-                />
-              </label>
-              <label className="flex gap-1">
-                <FaMasksTheater
-                  onMouseEnter={() =>
-                    setHoverInfo(t("components.hoverInfos.relations.cultural"))
-                  }
-                  onMouseLeave={() => setHoverInfo("")}
-                />
-                <Input
-                  type="checkbox"
-                  name="cultural"
-                  checked={newRelation.relation.kind.cultural}
-                  onChange={handleCheck}
-                />
-              </label>
-              <label className="flex gap-1">
-                <FaFlask
-                  onMouseEnter={() =>
-                    setHoverInfo(
-                      t("components.hoverInfos.relations.scientific"),
-                    )
-                  }
-                  onMouseLeave={() => setHoverInfo("")}
-                />
-                <Input
-                  type="checkbox"
-                  name="scientific"
-                  checked={newRelation.relation.kind.scientific}
-                  onChange={handleCheck}
-                />
-              </label>
-              <label className="flex gap-1">
-                <FaPersonMilitaryPointing
-                  onMouseEnter={() =>
-                    setHoverInfo(t("components.hoverInfos.relations.coop"))
-                  }
-                  onMouseLeave={() => setHoverInfo("")}
-                />
-                <Input
-                  type="checkbox"
-                  name="coop"
-                  checked={newRelation.relation.kind.coop}
-                  onChange={handleCheck}
-                />
-              </label>
-            </fieldset>
+      <Form submit={handleSubmit}>
+        <>
+          <Input
+            required
+            type="text"
+            name="name"
+            value={newRelation.relation.name}
+            onChange={handleChange}
+            placeholder={t("components.modals.relationModal.nameInput")}
+            maxLength={100}
+          />
+          <TextArea
+            required
+            name="description"
+            value={newRelation.relation.description}
+            onChange={handleChange}
+            placeholder={t("components.modals.relationModal.description")}
+            maxLength={MAX_LENGTH.text.relationDescription}
+          />
+          <fieldset className="w-full p-2 flex flex-wrap justify-center items-center gap-2 bg-complementary2 text-2xl">
+            <label className="flex gap-1">
+              <FaBriefcase
+                onMouseEnter={() =>
+                  setHoverInfo(t("components.hoverInfos.relations.business"))
+                }
+                onMouseLeave={() => setHoverInfo("")}
+              />
+              <Input
+                type="checkbox"
+                name="business"
+                checked={newRelation.relation.kind.business}
+                onChange={handleCheck}
+              />
+            </label>
+            <label className="flex gap-1">
+              <FaCoins
+                onMouseEnter={() =>
+                  setHoverInfo(t("components.hoverInfos.relations.economic"))
+                }
+                onMouseLeave={() => setHoverInfo("")}
+              />
+              <Input
+                type="checkbox"
+                name="economic"
+                checked={newRelation.relation.kind.economic}
+                onChange={handleCheck}
+              />
+            </label>
+            <label className="flex gap-1">
+              <FaMasksTheater
+                onMouseEnter={() =>
+                  setHoverInfo(t("components.hoverInfos.relations.cultural"))
+                }
+                onMouseLeave={() => setHoverInfo("")}
+              />
+              <Input
+                type="checkbox"
+                name="cultural"
+                checked={newRelation.relation.kind.cultural}
+                onChange={handleCheck}
+              />
+            </label>
+            <label className="flex gap-1">
+              <FaFlask
+                onMouseEnter={() =>
+                  setHoverInfo(t("components.hoverInfos.relations.scientific"))
+                }
+                onMouseLeave={() => setHoverInfo("")}
+              />
+              <Input
+                type="checkbox"
+                name="scientific"
+                checked={newRelation.relation.kind.scientific}
+                onChange={handleCheck}
+              />
+            </label>
+            <label className="flex gap-1">
+              <FaPersonMilitaryPointing
+                onMouseEnter={() =>
+                  setHoverInfo(t("components.hoverInfos.relations.coop"))
+                }
+                onMouseLeave={() => setHoverInfo("")}
+              />
+              <Input
+                type="checkbox"
+                name="coop"
+                checked={newRelation.relation.kind.coop}
+                onChange={handleCheck}
+              />
+            </label>
+          </fieldset>
 
-            <Button
-              type="submit"
-              text={t("components.buttons.validate")}
-              widthFull={true}
-            />
-            <Button
-              type="button"
-              text={t("components.buttons.cancel")}
-              click={() =>
-                setNewRelation({
-                  relation: new RelationModel(emptyDiplomaticRelationship),
-                  show: false,
-                  update: false,
-                })
-              }
-              widthFull={true}
-            />
-          </>
-        }
-      />
+          <Button
+            type="submit"
+            text={t("components.buttons.validate")}
+            widthFull={true}
+          />
+          <Button
+            type="button"
+            text={t("components.buttons.cancel")}
+            click={() =>
+              setNewRelation({
+                relation: new RelationModel(emptyDiplomaticRelationship),
+                show: false,
+                update: false,
+              })
+            }
+            widthFull={true}
+          />
+        </>
+      </Form>
       {hoverInfo != "" && <HoverInfo text={hoverInfo} />}
     </div>
   );

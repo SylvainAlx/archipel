@@ -65,8 +65,9 @@ export default function NewPlaceButton({
             text={t("components.buttons.newPlace")}
             type="button"
             click={handleClick}
-            children={<MdLandscape />}
-          />
+          >
+            <MdLandscape />
+          </Button>
         </div>
       )}
     </>

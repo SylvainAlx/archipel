@@ -52,9 +52,10 @@ export default function Personal({
         <span className="flex items-center gap-1">
           <ExternalLink
             url={citizen.link}
-            children={<FaLink />}
             hover={t("components.hoverInfos.links.website")}
-          />
+          >
+            <FaLink />
+          </ExternalLink>
           {owner && (
             <EditButton
               editBox={{
@@ -70,9 +71,10 @@ export default function Personal({
         <span className="flex items-center gap-1">
           <ExternalLink
             url={citizen.email != "" ? "mailto:" + citizen.email : ""}
-            children={<BsFillEnvelopeAtFill />}
             hover={t("components.hoverInfos.links.email")}
-          />
+          >
+            <BsFillEnvelopeAtFill />
+          </ExternalLink>
           {owner && (
             <EditButton
               editBox={{

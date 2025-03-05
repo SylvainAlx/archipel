@@ -1,4 +1,4 @@
 export interface Param {
   name: string;
-  props: { label: String; value: string | number }[];
+  props: { label: string; value: string | number }[];
 }

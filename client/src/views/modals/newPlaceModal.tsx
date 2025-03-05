@@ -34,37 +34,34 @@ export default function NewPlaceModal() {
           {cost}
         </span>
       )}
-      <Form
-        submit={handleSubmit}
-        children={
-          <>
-            <Input
-              required
-              type="text"
-              name="name"
-              value={newPlace.name}
-              onChange={handleChange}
-              placeholder={t("components.modals.newPlaceModal.placeName")}
-            />
-            <Select
-              options={Object.values(PLACE_TYPE)}
-              onChange={handleSelectChange}
-            />
-            <RequiredStar />
-            <Button
-              type="submit"
-              text={t("components.buttons.validate")}
-              widthFull={true}
-            />
-            <Button
-              type="button"
-              text={t("components.buttons.cancel")}
-              click={() => setNewPlace(emptyPlace)}
-              widthFull={true}
-            />
-          </>
-        }
-      />
+      <Form submit={handleSubmit}>
+        <>
+          <Input
+            required
+            type="text"
+            name="name"
+            value={newPlace.name}
+            onChange={handleChange}
+            placeholder={t("components.modals.newPlaceModal.placeName")}
+          />
+          <Select
+            options={Object.values(PLACE_TYPE)}
+            onChange={handleSelectChange}
+          />
+          <RequiredStar />
+          <Button
+            type="submit"
+            text={t("components.buttons.validate")}
+            widthFull={true}
+          />
+          <Button
+            type="button"
+            text={t("components.buttons.cancel")}
+            click={() => setNewPlace(emptyPlace)}
+            widthFull={true}
+          />
+        </>
+      </Form>
     </div>
   );
 }

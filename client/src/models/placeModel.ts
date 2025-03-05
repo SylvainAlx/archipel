@@ -103,7 +103,7 @@ export class PlaceModel extends CommonModel implements Place {
         .get(placeListAtomV2)
         .removeByOfficialId(response.place.officialId);
       myStore.set(placeListAtomV2, new PlaceListModel(updatedList));
-      this.image != "" && (await deleteImage(this.image));
+      if (this.image != "") await deleteImage(this.image);
     } catch (error) {
       errorCatching(error);
     } finally {

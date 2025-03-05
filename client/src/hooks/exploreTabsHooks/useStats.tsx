@@ -30,6 +30,7 @@ export function useStats() {
       setTagList(tags);
     };
     loadData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return {
     nationsList,

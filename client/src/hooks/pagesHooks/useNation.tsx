@@ -48,7 +48,8 @@ export function useNation() {
     if (nation && nation.officialId !== param.id && param.id) {
       loadNation(param.id);
     }
-  }, [param.id]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [nation, t]);
 
   const handleDelete = () => {
     const password = window.prompt(t("components.form.input.password"));

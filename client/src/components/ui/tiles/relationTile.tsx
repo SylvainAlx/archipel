@@ -27,8 +27,6 @@ export interface RelationTileProps {
 }
 
 export default function RelationTile({ relation }: RelationTileProps) {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-
   const [nationIndex, setNationIndex] = useState(-1);
   const [session] = useAtom(sessionAtom);
   const [needResponse, setNeedResponse] = useState(false);
@@ -183,8 +181,9 @@ export default function RelationTile({ relation }: RelationTileProps) {
                     relation,
                   })
                 }
-                children={<FaPen />}
-              />
+              >
+                <FaPen />
+              </Button>
               <CrossButton
                 click={handleLeave}
                 text={t("components.buttons.break")}

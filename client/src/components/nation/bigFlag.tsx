@@ -62,8 +62,9 @@ export default function BigFlag({ nation, owner, updatePath }: FlagProps) {
                 <LinkButton
                   text={t("components.buttons.generate")}
                   path={FLAG_MAKER_URL}
-                  children={<FaExternalLinkAlt />}
-                />
+                >
+                  <FaExternalLinkAlt />
+                </LinkButton>
               </>
             )}
           </>

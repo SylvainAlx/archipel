@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from "react";
 import { MdTimer } from "react-icons/md";
-import Tag from "./ui/tags/tag";
+import Tag from "./tags/tag";
 
 interface CountdownProps {
   targetDate: Date;
@@ -48,21 +48,16 @@ const Countdown: React.FC<CountdownProps> = ({ targetDate }) => {
 
   return (
     <div className="flex flex-col items-center">
-      <Tag
-        text=""
-        hover=""
-        bgColor="bg-wait"
-        children={
-          <>
-            <MdTimer />
-            {Object.keys(timeLeft).length === 0 ? (
-              <span>Terminé !</span>
-            ) : (
-              renderTime()
-            )}
-          </>
-        }
-      />
+      <Tag text="" hover="" bgColor="bg-wait">
+        <>
+          <MdTimer />
+          {Object.keys(timeLeft).length === 0 ? (
+            <span>Terminé !</span>
+          ) : (
+            renderTime()
+          )}
+        </>
+      </Tag>
     </div>
   );
 };

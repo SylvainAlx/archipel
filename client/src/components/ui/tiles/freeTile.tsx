@@ -22,7 +22,6 @@ export default function FreeTile({ tile, owner }: FreeTileProps) {
 
   useEffect(() => {
     setStringDate(new Date(updatedAt).toLocaleString(i18n.language));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [updatedAt]);
 
   const handleEdit = (tile: Tile) => {

@@ -38,6 +38,7 @@ export const useAuth = () => {
     } else {
       setAccess(false);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -49,6 +50,7 @@ export const useAuth = () => {
     } else {
       setIsConnected(false);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [session.user]);
 
   useEffect(() => {
@@ -61,6 +63,7 @@ export const useAuth = () => {
         setOffline(false);
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isOnlineHook]);
 
   return { user: session.user, access, isConnected };

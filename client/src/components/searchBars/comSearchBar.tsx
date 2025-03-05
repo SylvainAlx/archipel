@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import Input from "../form/input";
 import Select from "../form/select";
@@ -13,6 +12,7 @@ import { COM_SORTING } from "../../settings/sorting";
 export interface ComSearchBarProps {
   type: string;
   list: ComListModel;
+  // eslint-disable-next-line no-undef
   setList: React.Dispatch<React.SetStateAction<ComListModel>>;
 }
 

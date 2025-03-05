@@ -41,8 +41,11 @@ export default function CitizensCom({ citizen }: CitizensComProps) {
       ]);
       setListChecked(true);
     };
-    !listChecked && loadComList();
-  }, [listChecked]);
+    if (listChecked) {
+      loadComList();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [citizen.officialId, listChecked]);
 
   useEffect(() => {
     setCitizenComList(filteredComList);

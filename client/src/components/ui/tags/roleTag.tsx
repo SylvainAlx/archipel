@@ -10,7 +10,8 @@ export default function RoleTag({ label }: customTagProps) {
       text={label.toString()}
       hover={t("components.hoverInfos.tags.role")}
       bgColor="bg-secondary2"
-      children={<FaShieldAlt />}
-    />
+    >
+      <FaShieldAlt />
+    </Tag>
   );
 }

@@ -31,6 +31,7 @@ export default function PlaceTile({ place, nation }: PlaceTileProp) {
   const emplacement = useLocation();
   const navigate = useNavigate();
 
+  // eslint-disable-next-line no-undef
   const handleClick = (event: React.MouseEvent<HTMLDivElement>) => {
     if (event.target === event.currentTarget) {
       navigate(`/place/${place.officialId}`);
@@ -49,8 +50,6 @@ export default function PlaceTile({ place, nation }: PlaceTileProp) {
       }
     });
     setChildrenStats(stats);
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [placeList, place.officialId]);
 
   return (

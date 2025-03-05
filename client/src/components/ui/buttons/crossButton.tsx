@@ -27,10 +27,11 @@ export default function CrossButton({
           text={text ? text : t("components.buttons.delete")}
           bgColor="bg-danger"
           click={click}
-          children={<IoMdCloseCircle />}
           widthFull={widthFull && widthFull}
           disabled={disabled}
-        />
+        >
+          <IoMdCloseCircle />
+        </Button>
       ) : (
         <button
           aria-label={t("components.buttons.delete")}

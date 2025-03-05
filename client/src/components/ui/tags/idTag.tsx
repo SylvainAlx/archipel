@@ -10,7 +10,8 @@ export default function IdTag({ label }: customTagProps) {
       text={label.toString().toUpperCase()}
       hover={t("components.hoverInfos.tags.id")}
       bgColor="bg-complementary3"
-      children={<span>@</span>}
-    />
+    >
+      <span>@</span>
+    </Tag>
   );
 }

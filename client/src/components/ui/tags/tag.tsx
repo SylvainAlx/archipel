@@ -7,6 +7,7 @@ export interface TagProps {
   bgColor?: string;
   textColor?: string;
   textStyle?: string;
+  // eslint-disable-next-line no-undef
   children?: JSX.Element;
   click?: () => void;
 }
@@ -30,7 +31,7 @@ export default function Tag({
       onMouseLeave={() => setShowInfo(false)}
       onKeyDown={(e) => {
         if ((e.key === "Enter" || e.key === " ") && click) {
-          click != undefined && click();
+          if (click) click();
         }
       }}
       onClick={click && click}

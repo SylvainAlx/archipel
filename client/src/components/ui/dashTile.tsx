@@ -1,5 +1,6 @@
 export interface DashTileProps {
   title: string;
+  // eslint-disable-next-line no-undef
   children: JSX.Element;
   className?: string;
 }

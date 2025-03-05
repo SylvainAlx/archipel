@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { PlaceListModel } from "../models/lists/placeListModel";
 import { Nation } from "../types/typNation";
 

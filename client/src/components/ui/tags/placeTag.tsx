@@ -14,7 +14,7 @@ export default function PlaceTag({ label }: customTagProps) {
     if (typeof label === "number" && label < 2) {
       setUpdatedLabel(t("components.hoverInfos.tags.places").slice(0, -1));
     }
-  }, [label]);
+  }, [label, t]);
 
   return (
     <>
@@ -23,15 +23,17 @@ export default function PlaceTag({ label }: customTagProps) {
           text={label.toString()}
           hover={t("components.hoverInfos.tags.place")}
           bgColor="bg-info"
-          children={<MdPlace />}
-        />
+        >
+          <MdPlace />
+        </Tag>
       ) : (
         <Tag
           text={label.toString() + " " + updatedLabel}
           hover={t("components.hoverInfos.tags.places")}
           bgColor="bg-info"
-          children={<MdLandscape />}
-        />
+        >
+          <MdLandscape />
+        </Tag>
       )}
     </>
   );

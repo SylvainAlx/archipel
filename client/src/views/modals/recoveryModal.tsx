@@ -18,7 +18,7 @@ export function RecoveryModal() {
     try {
       await navigator.clipboard.writeText(recovery);
       successMessage(t("toasts.successCopy"));
-    } catch (error) {
+    } catch {
       errorMessage(t("toasts.failedCopy"));
     }
   };

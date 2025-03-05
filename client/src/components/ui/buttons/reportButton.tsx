@@ -34,7 +34,8 @@ export default function ReportButton({ contentOfficialId }: ReportButtonProps) {
       text={t("components.buttons.report")}
       bgColor="bg-danger"
       click={handleClick}
-      children={<MdReport />}
-    />
+    >
+      <MdReport />
+    </Button>
   );
 }

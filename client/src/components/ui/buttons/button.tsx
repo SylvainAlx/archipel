@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import { MouseEventHandler, useState } from "react";
 
 export interface ButtonProps {
@@ -6,10 +5,12 @@ export interface ButtonProps {
   text: string;
   bgColor?: string;
   disabled?: boolean;
+  // eslint-disable-next-line no-undef
   children?: JSX.Element;
   widthFull?: boolean;
   lowerCase?: boolean;
   click?: MouseEventHandler<HTMLButtonElement>;
+  // eslint-disable-next-line no-undef
   keyDown?: React.KeyboardEventHandler;
 }
 

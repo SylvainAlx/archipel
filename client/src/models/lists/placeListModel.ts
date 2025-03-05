@@ -86,7 +86,7 @@ export class PlaceListModel extends ListModel {
         }
       });
     });
-    nation && result.push({ id: nation.officialId, label: nation.name });
+    if (nation) result.push({ id: nation.officialId, label: nation.name });
     return result;
   };
   getTotalPopulation = (place: PlaceModel): number => {

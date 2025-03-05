@@ -13,19 +13,18 @@ export default function CreditTag({ owner, label }: customTagProps) {
       text={label != undefined ? label.toString() : ""}
       hover={t("components.hoverInfos.tags.credits")}
       bgColor="bg-complementary2"
-      children={
-        <>
-          {owner && (
-            <span
-              className="text-2xl cursor-not-allowed"
-              onClick={() => errorMessage(t("toasts.errors.creditsNotReady"))}
-            >
-              <MdAddCircle />
-            </span>
-          )}
-          <FaCoins />
-        </>
-      }
-    />
+    >
+      <>
+        {owner && (
+          <span
+            className="text-2xl cursor-not-allowed"
+            onClick={() => errorMessage(t("toasts.errors.creditsNotReady"))}
+          >
+            <MdAddCircle />
+          </span>
+        )}
+        <FaCoins />
+      </>
+    </Tag>
   );
 }

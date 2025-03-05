@@ -38,7 +38,7 @@ export default function IconLink({
     setFocus(false);
     switch (destination) {
       case "home":
-        currentURL === "/" && setFocus(true);
+        if (currentURL === "/") setFocus(true);
         break;
       case "login":
         if (currentURL === "/login" || currentURL === "/recovery") {
@@ -46,19 +46,20 @@ export default function IconLink({
         }
         break;
       case "register":
-        currentURL === "/register" && setFocus(true);
+        if (currentURL === "/register") setFocus(true);
         break;
       case "explore":
-        currentURL.includes("explore") && setFocus(true);
+        if (currentURL.includes("explore")) setFocus(true);
         break;
       case "user":
-        currentURL === `/citizen/${session.user.officialId}` && setFocus(true);
+        if (currentURL === `/citizen/${session.user.officialId}`)
+          setFocus(true);
         break;
       case "nation":
-        currentURL.includes("nation") && setFocus(true);
+        if (currentURL.includes("nation")) setFocus(true);
         break;
       case "admin":
-        currentURL === "/admin" && setFocus(true);
+        if (currentURL === "/admin") setFocus(true);
         break;
       default:
         break;

@@ -30,16 +30,18 @@ export default function AdminBanButton({
         <Button
           text="débannir"
           bgColor="bg-danger"
-          children={<RiArrowGoBackFill />}
           click={() => handleAdminBan(true)}
-        />
+        >
+          <RiArrowGoBackFill />
+        </Button>
       ) : (
         <Button
           text="bannir"
           bgColor="bg-danger"
-          children={<FaBan />}
           click={() => handleAdminBan(false)}
-        />
+        >
+          <FaBan />
+        </Button>
       )}
     </>
   );

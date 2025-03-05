@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export class ListModel {
   protected items!: any[];
   sorting!: number;

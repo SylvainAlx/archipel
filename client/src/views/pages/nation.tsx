@@ -114,15 +114,17 @@ export default function Nation() {
             <Button
               text={t("components.buttons.askOfficial")}
               click={askOfficial}
-              children={<RiVerifiedBadgeFill />}
               disabled={nation.data.roleplay.officialOwner === nation.owner}
-            />
+            >
+              <RiVerifiedBadgeFill />
+            </Button>
             <Button
               text={t("components.buttons.giveOwnership")}
               click={giveOwnerShip}
-              children={<FaExchangeAlt />}
               disabled={nation.data.roleplay.citizens < 2}
-            />
+            >
+              <FaExchangeAlt />
+            </Button>
           </>
         ) : (
           <ReportPanel content={nation} />

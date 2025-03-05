@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable no-undef */
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 
 import Input from "../form/input";
@@ -65,7 +65,9 @@ export default function PlaceSearchBar({ list, setList }: PlaceSearchBarProps) {
   const loadPlaceList = async (searchName: string) => {
     let updatedList = await list.loadPlaceList(searchName);
     updatedList = updatedList.sortPlaces(list.sorting);
-    updatedList && setList(updatedList);
+    if (updatedList) {
+      setList(updatedList);
+    }
   };
 
   const reset = () => {

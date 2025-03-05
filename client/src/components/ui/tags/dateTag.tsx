@@ -16,7 +16,8 @@ export default function DateTag({ date, due = false }: DateTagProps) {
       text={getFormatedDate(date)}
       hover={t("components.hoverInfos.tags.registration")}
       bgColor="bg-complementary3"
-      children={due ? <MdOutlineUpdate /> : <FaCalendarAlt />}
-    />
+    >
+      {due ? <MdOutlineUpdate /> : <FaCalendarAlt />}
+    </Tag>
   );
 }

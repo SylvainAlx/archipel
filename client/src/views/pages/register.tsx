@@ -37,86 +37,83 @@ export default function Register() {
   return (
     <>
       <H1 text={t("pages.register.title")} />
-      <Form
-        submit={handleSubmit}
-        children={
-          <>
-            <Input
-              required={true}
-              onChange={handleChange}
-              type="text"
-              name="name"
-              placeholder={t("components.form.input.name")}
-              value={name}
-            />
-            <Input
-              required={true}
-              onChange={handleChange}
-              type="password"
-              name="password"
-              placeholder={t("components.form.input.password")}
-              value={password}
-            />
-            <Input
-              required={true}
-              onChange={handleChange}
-              type="password"
-              name="confirm"
-              placeholder={t("pages.recovery.confirmPassword")}
-              value={confirmPassword}
-            />
-            {!isPasswordStrong && password.length > 0 && (
-              <p className="text-red-500 text-sm">
-                {t("components.form.input.strongPassword")}
-              </p>
-            )}
-            <Select
-              title="Genre"
-              options={genderList}
-              onChange={handleGenerChange}
-            />
-            <Select
-              title={t("components.form.select.language")}
-              options={languageList}
-              onChange={handleLanguageChange}
-              value={language}
-            />
+      <Form submit={handleSubmit}>
+        <>
+          <Input
+            required={true}
+            onChange={handleChange}
+            type="text"
+            name="name"
+            placeholder={t("components.form.input.name")}
+            value={name}
+          />
+          <Input
+            required={true}
+            onChange={handleChange}
+            type="password"
+            name="password"
+            placeholder={t("components.form.input.password")}
+            value={password}
+          />
+          <Input
+            required={true}
+            onChange={handleChange}
+            type="password"
+            name="confirm"
+            placeholder={t("pages.recovery.confirmPassword")}
+            value={confirmPassword}
+          />
+          {!isPasswordStrong && password.length > 0 && (
+            <p className="text-red-500 text-sm">
+              {t("components.form.input.strongPassword")}
+            </p>
+          )}
+          <Select
+            title="Genre"
+            options={genderList}
+            onChange={handleGenerChange}
+          />
+          <Select
+            title={t("components.form.select.language")}
+            options={languageList}
+            onChange={handleLanguageChange}
+            value={language}
+          />
 
-            <div className="flex justify-center text-sm gap-2">
-              <span>{t("pages.register.ownAccount")}</span>
-              <span
-                className="underline cursor-pointer"
-                onClick={() => navigate("/login")}
-              >
-                {t("pages.register.connect")}
-              </span>
-            </div>
-            <div className="flex justify-start items-center gap-2">
-              <input
-                type="checkbox"
-                className="cursor-pointer"
-                onClick={() => setAcceptCGU(!acceptCGU)}
-              ></input>
-              <p className="text-sm">
-                {t("pages.register.acceptTerms")}{" "}
-                <Link to="/termsofservice" target="_blank">
-                  <b>{t("pages.register.termsOfService")}</b>
-                </Link>
-              </p>
-            </div>
-            <ReCAPTCHA sitekey={CAPTCHA_PUBLIC_KEY} onChange={verifyToken} />
-            <RequiredStar />
-            <Button
-              text={t("components.buttons.register")}
-              type="submit"
-              disabled={
-                !acceptCGU || !captchaOk || !passwordsMatch || !isPasswordStrong
-              }
-              widthFull={true}
-            />
-          </>
-        }
-      />
+          <div className="flex justify-center text-sm gap-2">
+            <span>{t("pages.register.ownAccount")}</span>
+            <span
+              className="underline cursor-pointer"
+              onClick={() => navigate("/login")}
+            >
+              {t("pages.register.connect")}
+            </span>
+          </div>
+          <div className="flex justify-start items-center gap-2">
+            <input
+              type="checkbox"
+              className="cursor-pointer"
+              onClick={() => setAcceptCGU(!acceptCGU)}
+            ></input>
+            <p className="text-sm">
+              {t("pages.register.acceptTerms")}{" "}
+              <Link to="/termsofservice" target="_blank">
+                <b>{t("pages.register.termsOfService")}</b>
+              </Link>
+            </p>
+          </div>
+          <ReCAPTCHA sitekey={CAPTCHA_PUBLIC_KEY} onChange={verifyToken} />
+          <RequiredStar />
+          <Button
+            text={t("components.buttons.register")}
+            type="submit"
+            disabled={
+              !acceptCGU || !captchaOk || !passwordsMatch || !isPasswordStrong
+            }
+            widthFull={true}
+          />
+        </>
+      </Form>
     </>
   );
 }

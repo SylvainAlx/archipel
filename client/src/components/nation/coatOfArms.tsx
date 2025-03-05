@@ -69,8 +69,9 @@ export default function CoatOfArms({
                 <LinkButton
                   text={t("components.buttons.generate")}
                   path={COA_MAKER_URL}
-                  children={<FaExternalLinkAlt />}
-                />
+                >
+                  <FaExternalLinkAlt />
+                </LinkButton>
               </>
             )}
           </>

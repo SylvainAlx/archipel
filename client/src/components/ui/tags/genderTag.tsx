@@ -24,7 +24,8 @@ export default function GenderTag({ genderId }: GenderTagProps) {
       text={gender.label.toString()}
       hover={t("components.hoverInfos.tags.gender")}
       bgColor="bg-info"
-      children={<FaTransgenderAlt />}
-    />
+    >
+      <FaTransgenderAlt />
+    </Tag>
   );
 }

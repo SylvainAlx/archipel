@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import Input from "../form/input";
 import Select from "../form/select";
@@ -12,6 +11,7 @@ import { UserListModel } from "../../models/lists/userListModel";
 export interface CitizenSearchBarProps {
   type: string;
   list: UserListModel;
+  // eslint-disable-next-line no-undef
   setList: React.Dispatch<React.SetStateAction<UserListModel>>;
 }
 
@@ -44,7 +44,9 @@ export default function CitizenSearchBar({
   const loadUserList = async (searchName: string) => {
     let updatedList = await list.loadUserList(searchName);
     updatedList = updatedList.sortUsers(list.sorting);
-    updatedList && setList(updatedList);
+    if (updatedList) {
+      setList(updatedList);
+    }
   };
 
   const reset = () => {

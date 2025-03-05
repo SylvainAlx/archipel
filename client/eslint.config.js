@@ -4,15 +4,19 @@ import tsParser from "@typescript-eslint/parser";
 import react from "eslint-plugin-react";
 import reactHooks from "eslint-plugin-react-hooks";
 import reactRefresh from "eslint-plugin-react-refresh";
+import globals from "globals";
 
 export default [
   {
     files: ["**/*.{js,jsx,ts,tsx}"], // S'applique à tous les fichiers JS/TS
-    ignores: ["dist", "dev-dist"],
+    ignores: ["dev-dist/**", "dist/**", "scripts/**", "tsconfig.json"],
     languageOptions: {
       parser: tsParser,
       ecmaVersion: "latest",
       sourceType: "module",
+      globals: {
+        ...globals.browser,
+      },
     },
     plugins: {
       "@typescript-eslint": ts,
@@ -35,7 +39,11 @@ export default [
         { allowConstantExport: true },
       ],
       "react/react-in-jsx-scope": "off", // Plus nécessaire avec React 17+
-      "react/no-children-prop": "off", // LE TEMPS DE FAIRE LES CORRECTIONS
+      "no-unsafe-finally": "off",
+      "no-useless-catch": "off",
     },
+  },
+  {
+    ignores: ["dev-dist/**", "dist/**", "scripts/**", "tsconfig.json"],
   },
 ];

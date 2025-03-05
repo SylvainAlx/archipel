@@ -9,7 +9,8 @@ export default function HonorTag({ honor }: { honor: string }) {
       text={t(`components.hoverInfos.tags.${honor}`)}
       hover={t("components.hoverInfos.tags.honor")}
       bgColor="bg-secondary2"
-      children={<MdWorkspacePremium />}
-    />
+    >
+      <MdWorkspacePremium />
+    </Tag>
   );
 }

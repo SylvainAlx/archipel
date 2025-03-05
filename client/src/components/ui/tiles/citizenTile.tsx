@@ -35,6 +35,7 @@ export default function CitizenTile({ citizen }: CitizenTileProps) {
   const citizenCreationDate = new Date(citizen.createdAt);
   const citizenLastVisitDate = new Date(citizen.updatedAt);
 
+  // eslint-disable-next-line no-undef
   const handleClick = (event: React.MouseEvent<HTMLDivElement>) => {
     if (event.target === event.currentTarget) {
       navigate(`/citizen/${citizen.officialId}`);
@@ -57,6 +58,7 @@ export default function CitizenTile({ citizen }: CitizenTileProps) {
     } else {
       setSelfUser(false);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [citizen]);
 
   return (

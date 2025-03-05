@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { FaPen } from "react-icons/fa6";
 import { useAtom } from "jotai";
 import { editbox } from "../../../settings/store";
@@ -14,7 +13,11 @@ export default function EditButton({ editBox, onClick }: EditButtonProps) {
   const [, setEditBox] = useAtom(editbox);
   const { t } = useTranslation();
   const handleClick = () => {
-    editBox ? setEditBox(editBox) : onClick && onClick();
+    if (editBox) {
+      setEditBox(editBox);
+    } else if (onClick) {
+      onClick();
+    }
   };
   return (
     <button

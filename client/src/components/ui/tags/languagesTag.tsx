@@ -15,7 +15,8 @@ export default function LanguagesTag({ language }: LangagesTagPros) {
       text={getLanguageLabel(language)}
       hover={t("components.hoverInfos.tags.languages")}
       bgColor="bg-info"
-      children={<IoLanguage />}
-    />
+    >
+      <IoLanguage />
+    </Tag>
   );
 }

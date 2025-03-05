@@ -11,7 +11,8 @@ export default function TreasuryTag({ label }: customTagProps) {
       text={label != undefined ? label.toString() : ""}
       hover={t("components.hoverInfos.tags.treasury")}
       bgColor="bg-gold"
-      children={<FaCoins />}
-    />
+    >
+      <FaCoins />
+    </Tag>
   );
 }

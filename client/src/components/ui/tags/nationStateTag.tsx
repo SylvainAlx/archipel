@@ -18,7 +18,8 @@ export default function NationStateTag({ isNationState }: NationStateTagProps) {
       }
       hover={t("components.hoverInfos.tags.particularity")}
       bgColor="bg-info"
-      children={<RiGovernmentFill />}
-    />
+    >
+      <RiGovernmentFill />
+    </Tag>
   );
 }

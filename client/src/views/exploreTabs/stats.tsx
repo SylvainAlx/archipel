@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import DashTile from "../../components/ui/dashTile";
 import H1 from "../../components/ui/titles/h1";
 import { useTranslation } from "react-i18next";
@@ -19,75 +18,60 @@ export default function Stats({ text }: StringProps) {
     <section className="w-full flex gap-1 flex-wrap items-center flex-col ">
       <H1 text={text} />
       <section className="flex flex-wrap justify-center gap-2">
-        <TileContainer
-          children={
-            <>
-              <DashTile
-                title={t("pages.explore.stats.nations")}
-                children={
-                  <div className="w-full flex flex-col items-center">
-                    <CountUp
-                      className="text-3xl"
-                      end={nationsList.getItems().length}
-                    />
-                    <RegimeChart nations={nationsList} />
-                  </div>
-                }
-              />
-              <div className="flex flex-col items-center">
-                <strong>{t("pages.explore.stats.tags")}</strong>
-                <div className="w-full px-2 flex flex-wrap items-center justify-center gap-1">
-                  {tagList != undefined &&
-                    tagList.map((tag, i) => {
-                      return (
-                        <HashTag
-                          label={tag.label}
-                          occurrence={tag.occurrence}
-                          key={i}
-                        />
-                      );
-                    })}
-                </div>
+        <TileContainer>
+          <>
+            <DashTile title={t("pages.explore.stats.nations")}>
+              <div className="w-full flex flex-col items-center">
+                <CountUp
+                  className="text-3xl"
+                  end={nationsList.getItems().length}
+                />
+                <RegimeChart nations={nationsList} />
               </div>
-            </>
-          }
-        />
-        <TileContainer
-          children={
-            <>
-              <DashTile
-                title={t("pages.explore.stats.citizens")}
-                children={
-                  <div className="w-full flex flex-col items-center">
-                    <CountUp
-                      className="text-3xl"
-                      end={citizensList.getItems().length}
-                    />
-                    <LanguageChart userList={citizensList} />
-                  </div>
-                }
-              />
-            </>
-          }
-        />
-        <TileContainer
-          children={
-            <>
-              <DashTile
-                title={t("pages.explore.stats.locations")}
-                children={
-                  <div className="w-full flex flex-col items-center">
-                    <CountUp
-                      className="text-3xl"
-                      end={placesList.getItems().length}
-                    />
-                    <PlaceTypeChart placeList={placesList} />
-                  </div>
-                }
-              />
-            </>
-          }
-        />
+            </DashTile>
+            <div className="flex flex-col items-center">
+              <strong>{t("pages.explore.stats.tags")}</strong>
+              <div className="w-full px-2 flex flex-wrap items-center justify-center gap-1">
+                {tagList != undefined &&
+                  tagList.map((tag, i) => {
+                    return (
+                      <HashTag
+                        label={tag.label}
+                        occurrence={tag.occurrence}
+                        key={i}
+                      />
+                    );
+                  })}
+              </div>
+            </div>
+          </>
+        </TileContainer>
+        <TileContainer>
+          <>
+            <DashTile title={t("pages.explore.stats.citizens")}>
+              <div className="w-full flex flex-col items-center">
+                <CountUp
+                  className="text-3xl"
+                  end={citizensList.getItems().length}
+                />
+                <LanguageChart userList={citizensList} />
+              </div>
+            </DashTile>
+          </>
+        </TileContainer>
+        <TileContainer>
+          <>
+            <DashTile title={t("pages.explore.stats.locations")}>
+              <div className="w-full flex flex-col items-center">
+                <CountUp
+                  className="text-3xl"
+                  end={placesList.getItems().length}
+                />
+                <PlaceTypeChart placeList={placesList} />
+              </div>
+            </DashTile>
+          </>
+        </TileContainer>
       </section>
     </section>
   );

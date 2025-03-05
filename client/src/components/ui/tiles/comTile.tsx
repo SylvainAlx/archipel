@@ -47,6 +47,7 @@ export default function ComTile({ nation, com }: ComTileProps) {
     } else {
       setComOwner(false);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [com.origin, session]);
 
   const handleDelete = () => {
@@ -55,7 +56,7 @@ export default function ComTile({ nation, com }: ComTileProps) {
       actionToDo: async () => {
         const comToDelete = new ComModel();
         comToDelete.baseDelete(com._id);
-        nation && (await comList.removeByBaseId(com._id));
+        if (nation) await comList.removeByBaseId(com._id);
       },
     });
   };
@@ -99,8 +100,9 @@ export default function ComTile({ nation, com }: ComTileProps) {
                 ? t("components.buttons.markAsUnread")
                 : t("components.buttons.markAsRead")
             }
-            children={read ? <FaCheckSquare /> : <ImCheckboxUnchecked />}
-          />
+          >
+            {read ? <FaCheckSquare /> : <ImCheckboxUnchecked />}
+          </Button>
         )}
         {comOwner ? (
           <CrossButton click={handleDelete} />

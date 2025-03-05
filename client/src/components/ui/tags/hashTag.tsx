@@ -21,16 +21,15 @@ export default function HashTag({ label, occurrence }: HashtagProps) {
           navigate(`/explore/2#${label}`);
         }
       }}
-      children={
-        occurrence != -1 ? (
-          <CountUp
-            className="bg-complementary2 rounded-full px-1"
-            end={occurrence}
-          />
-        ) : (
-          <></>
-        )
-      }
-    />
+    >
+      {occurrence != -1 ? (
+        <CountUp
+          className="bg-complementary2 rounded-full px-1"
+          end={occurrence}
+        />
+      ) : (
+        <></>
+      )}
+    </Tag>
   );
 }

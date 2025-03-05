@@ -10,7 +10,8 @@ export default function CurrencyTag({ label }: customTagProps) {
       text={label != "" ? label.toString() : "non définie"}
       hover={t("components.hoverInfos.tags.currency")}
       bgColor="bg-info"
-      children={<BsCurrencyExchange />}
-    />
+    >
+      <BsCurrencyExchange />
+    </Tag>
   );
 }

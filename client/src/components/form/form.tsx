@@ -1,6 +1,7 @@
 import { FormEvent } from "react";
 
 export interface FormProps {
+  // eslint-disable-next-line no-undef
   children: JSX.Element;
   title?: string;
   submit: (event: FormEvent) => void;

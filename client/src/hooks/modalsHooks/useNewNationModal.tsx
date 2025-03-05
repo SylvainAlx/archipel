@@ -18,6 +18,7 @@ export function useNewNationModal() {
     const updateNewNation = { ...newNation };
     updateNewNation.tags = tags;
     setNewNation(updateNewNation);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [tags]);
 
   const handleSubmit = async (e: FormEvent) => {

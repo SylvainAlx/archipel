@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 
 export interface ExternalLinkProps {
   url: string;
+  // eslint-disable-next-line no-undef
   children: JSX.Element;
   hover: string;
 }

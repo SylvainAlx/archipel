@@ -24,10 +24,8 @@ export default function CreditTransferButton({
     });
   };
   return (
-    <Button
-      click={handleClick}
-      text={t("components.buttons.transferCredits")}
-      children={<FaMoneyBillTransfer />}
-    />
+    <Button click={handleClick} text={t("components.buttons.transferCredits")}>
+      <FaMoneyBillTransfer />
+    </Button>
   );
 }

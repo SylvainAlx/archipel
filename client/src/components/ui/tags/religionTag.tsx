@@ -26,7 +26,8 @@ export default function ReligionTag({ religionId }: ReligionTagProps) {
       text={religion.label.toString()}
       hover={t("components.hoverInfos.tags.religion")}
       bgColor="bg-info"
-      children={<FaPray />}
-    />
+    >
+      <FaPray />
+    </Tag>
   );
 }

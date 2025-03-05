@@ -34,6 +34,7 @@ export const EditBoxDefault: EditBox = {
 
 export interface InfoModal {
   subtitle: string;
+  // eslint-disable-next-line no-undef
   children?: JSX.Element;
 }
 

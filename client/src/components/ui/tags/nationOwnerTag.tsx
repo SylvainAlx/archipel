@@ -10,7 +10,8 @@ export default function NationOwnerTag() {
       text={t("components.hoverInfos.tags.nationOwner")}
       hover={t("components.hoverInfos.tags.role")}
       bgColor="bg-secondary2"
-      children={<FaUserEdit />}
-    />
+    >
+      <FaUserEdit />
+    </Tag>
   );
 }

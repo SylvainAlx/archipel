@@ -19,15 +19,14 @@ export default function OnlineStatusTag({
       text={getFormatedDate(citizenLastVisitDate)}
       hover={t("components.hoverInfos.tags.lastVisitDate")}
       bgColor="bg-complementary3"
-      children={
-        <div className="text-xl">
-          {isOlderThan30Minutes(citizenLastVisitDate) ? (
-            <HiOutlineStatusOffline />
-          ) : (
-            <HiOutlineStatusOnline className="text-primary animate-pulse" />
-          )}
-        </div>
-      }
-    />
+    >
+      <div className="text-xl">
+        {isOlderThan30Minutes(citizenLastVisitDate) ? (
+          <HiOutlineStatusOffline />
+        ) : (
+          <HiOutlineStatusOnline className="text-primary animate-pulse" />
+        )}
+      </div>
+    </Tag>
   );
 }

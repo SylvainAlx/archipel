@@ -16,8 +16,9 @@ export default function SearchButtons({ reset }: SearchButtonsProps) {
           type="submit"
           disabled={false}
           text={t("components.buttons.search")}
-          children={<IoSearchSharp />}
-        />
+        >
+          <IoSearchSharp />
+        </Button>
       </div>
       <div className="w-[150px] flex justify-center">
         <Button
@@ -25,8 +26,9 @@ export default function SearchButtons({ reset }: SearchButtonsProps) {
           disabled={false}
           text={t("components.buttons.reset")}
           click={reset}
-          children={<RxReset />}
-        />
+        >
+          <RxReset />
+        </Button>
       </div>
     </div>
   );

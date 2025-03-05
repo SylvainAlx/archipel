@@ -37,11 +37,8 @@ export default function ResidenceTag({
       hover={t("components.hoverInfos.tags.residence")}
       text={residence}
       bgColor="bg-info"
-      children={
-        <>
-          <FaLocationDot />
-        </>
-      }
-    />
+    >
+      <FaLocationDot />
+    </Tag>
   );
 }

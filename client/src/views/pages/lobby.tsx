@@ -18,31 +18,28 @@ export default function Lobby() {
         <strong className="animate-pulse">{LOBBY_INFO}</strong>
       )}
       {MDP_LOBBY != "" && (
-        <Form
-          submit={handleSubmit}
-          children={
-            <>
-              <p className="max-w-[80%] text-center">
-                {t("pages.lobby.password")}
-              </p>
-              <Input
-                type="password"
-                placeholder={t("components.form.input.password")}
-                name="password"
-                required
-                value={password}
-                onChange={handleChange}
-              />
-              <RequiredStar />
-              <Button
-                type="submit"
-                text={t("components.buttons.validate")}
-                widthFull={true}
-              />
-              <LangButton />
-            </>
-          }
-        />
+        <Form submit={handleSubmit}>
+          <>
+            <p className="max-w-[80%] text-center">
+              {t("pages.lobby.password")}
+            </p>
+            <Input
+              type="password"
+              placeholder={t("components.form.input.password")}
+              name="password"
+              required
+              value={password}
+              onChange={handleChange}
+            />
+            <RequiredStar />
+            <Button
+              type="submit"
+              text={t("components.buttons.validate")}
+              widthFull={true}
+            />
+            <LangButton />
+          </>
+        </Form>
       )}
     </main>
   );

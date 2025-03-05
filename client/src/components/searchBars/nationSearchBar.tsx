@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import Input from "../form/input";
 import Select from "../form/select";
@@ -13,6 +12,7 @@ import { NATION_SORTING } from "../../settings/sorting";
 export interface NationSearchBarProps {
   type: string;
   list: NationListModel;
+  // eslint-disable-next-line no-undef
   setList: React.Dispatch<React.SetStateAction<NationListModel>>;
 }
 
@@ -46,6 +46,7 @@ export default function NationSearchBar({
     if (searchTag != "" && location.hash != "") {
       loadList(searchName, searchTag);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchTag]);
 
   const loadList = async (searchName: string, searchTag: string) => {

@@ -19,6 +19,7 @@ export function useExplore() {
     if (param.id != undefined) {
       setTab(nationTabs[Number(param.id) - 1]);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [param.id]);
 
   return { nationTabs, tab };

@@ -29,16 +29,18 @@ export default function AdminReportButton({
         <Button
           text="afficher"
           bgColor="bg-wait"
-          children={<BiShow />}
           click={() => handleAdminReport(true)}
-        />
+        >
+          <BiShow />
+        </Button>
       ) : (
         <Button
           text="masquer"
           bgColor="bg-wait"
-          children={<BiSolidHide />}
           click={() => handleAdminReport(false)}
-        />
+        >
+          <BiSolidHide />
+        </Button>
       )}
     </>
   );

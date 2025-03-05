@@ -6,11 +6,10 @@ export default function LangButton() {
   return (
     <Button
       text=""
-      children={
-        <IoLanguage className="flex items-center gap-1 hover:text-secondary transition-all" />
-      }
       click={() => myStore.set(showLangModalAtom, true)}
       bgColor="bg-invisible"
-    />
+    >
+      <IoLanguage className="flex items-center gap-1 hover:text-secondary transition-all" />
+    </Button>
   );
 }

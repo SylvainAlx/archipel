@@ -26,6 +26,7 @@ export function useTileFormModal() {
     ) {
       setIsNewTile(true);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [localTile]);
 
   const handleChange = (

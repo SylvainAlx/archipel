@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import Button from "../../components/ui/buttons/button";
 import Input from "../../components/form/input";
 import Select from "../../components/form/select";

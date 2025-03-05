@@ -9,6 +9,7 @@ export default function Spinner({ showClock = false }: SpinnerProps) {
   const [tempsRestant, setTempsRestant] = useState(60);
 
   useEffect(() => {
+    // eslint-disable-next-line no-undef
     let interval: NodeJS.Timeout | undefined;
 
     if (showClock) {

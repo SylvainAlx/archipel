@@ -5,8 +5,6 @@ import { DiplomaticRelationship } from "./typRelation";
 import { User } from "./typUser";
 import { NationModel } from "../models/nationModel";
 
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
 export interface StringProps {
   text: string;
 }
@@ -19,6 +17,7 @@ export interface customTagProps {
 }
 
 export interface Props {
+  // eslint-disable-next-line no-undef
   children: JSX.Element;
 }
 
@@ -31,6 +30,7 @@ export interface ClickProps {
 
 export interface SelectedNationProps {
   selectedNation: NationModel;
+  // eslint-disable-next-line no-undef
   setSelectedNation?: React.Dispatch<React.SetStateAction<Nation>>;
   owner?: boolean;
 }

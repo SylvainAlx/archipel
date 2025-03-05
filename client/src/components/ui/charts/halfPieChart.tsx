@@ -10,7 +10,7 @@ import {
 import { STAT_COLORS } from "../../../settings/lists";
 
 interface HalfPieChartProps {
-  pieChartData: any[];
+  pieChartData: { name: string; value: string | number }[];
   high?: number;
   cy?: string;
 }

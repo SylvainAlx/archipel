@@ -29,7 +29,8 @@ export default function Citizens({ selectedNation }: SelectedNationProps) {
     if (selectedNation.officialId !== "") {
       loadRelationList();
     }
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedNation]);
 
   const askCtz = () => {
     const payload = {
@@ -46,46 +47,44 @@ export default function Citizens({ selectedNation }: SelectedNationProps) {
   };
 
   return (
-    <TileContainer
-      children={
-        <DashTile
-          title={t("pages.nation.citizens.title")}
-          className="w-full min-w-[300px] flex-grow"
-          children={
-            <>
-              {session.user.citizenship.status === -1 &&
-                session.user.officialId != "" && (
-                  <Button
-                    text={t("components.buttons.askCitizenship")}
-                    click={askCtz}
-                    children={<FaPassport />}
-                  />
-                )}
-              <div className="w-full flex flex-col-reverse gap-2 items-center">
-                {nationUsers.getItems().length > 0 ? (
-                  nationUsers.getItems().map((citizen, i) => {
-                    if (
-                      citizen.citizenship.nationId === selectedNation.officialId
-                    ) {
-                      return (
-                        <Suspense key={i} fallback={<TileSkeleton />}>
-                          <div className="relative w-full">
-                            <CitizenTile citizen={citizen} />
-                          </div>
-                        </Suspense>
-                      );
-                    }
-                  })
-                ) : (
-                  <em className="text-center">
-                    {t("pages.nation.citizens.noCitizens")}
-                  </em>
-                )}
-              </div>
-            </>
-          }
-        />
-      }
-    />
+    <TileContainer>
+      <DashTile
+        title={t("pages.nation.citizens.title")}
+        className="w-full min-w-[300px] flex-grow"
+      >
+        <>
+          {session.user.citizenship.status === -1 &&
+            session.user.officialId != "" && (
+              <Button
+                text={t("components.buttons.askCitizenship")}
+                click={askCtz}
+              >
+                <FaPassport />
+              </Button>
+            )}
+          <div className="w-full flex flex-col-reverse gap-2 items-center">
+            {nationUsers.getItems().length > 0 ? (
+              nationUsers.getItems().map((citizen, i) => {
+                if (
+                  citizen.citizenship.nationId === selectedNation.officialId
+                ) {
+                  return (
+                    <Suspense key={i} fallback={<TileSkeleton />}>
+                      <div className="relative w-full">
+                        <CitizenTile citizen={citizen} />
+                      </div>
+                    </Suspense>
+                  );
+                }
+              })
+            ) : (
+              <em className="text-center">
+                {t("pages.nation.citizens.noCitizens")}
+              </em>
+            )}
+          </div>
+        </>
+      </DashTile>
+    </TileContainer>
   );
 }

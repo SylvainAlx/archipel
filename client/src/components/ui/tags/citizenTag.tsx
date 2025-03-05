@@ -21,28 +21,27 @@ export default function CitizenTag({ label, citizen }: CitizenTagProps) {
       text={label.toString().toUpperCase()}
       hover={t("components.hoverInfos.tags.pendingCitizenship")}
       bgColor="bg-complementary3"
-      children={
-        <div className="flex gap-2 items-center">
-          {session.user.citizenship.nationId === citizen.citizenship.nationId &&
-            session.user.citizenship.nationOwner && (
-              <div className="flex items-center bg-light rounded-full px-1">
-                <div
-                  onClick={() => citizen.approveCitizenship()}
-                  className="cursor-pointer text-xl text-success"
-                >
-                  <MdCheckCircle />
-                </div>
-                <div
-                  onClick={() => citizen.declineCitizenship()}
-                  className="cursor-pointer text-xl text-danger"
-                >
-                  <IoMdCloseCircle />
-                </div>
+    >
+      <div className="flex gap-2 items-center">
+        {session.user.citizenship.nationId === citizen.citizenship.nationId &&
+          session.user.citizenship.nationOwner && (
+            <div className="flex items-center bg-light rounded-full px-1">
+              <div
+                onClick={() => citizen.approveCitizenship()}
+                className="cursor-pointer text-xl text-success"
+              >
+                <MdCheckCircle />
               </div>
-            )}
-          <FaPassport />
-        </div>
-      }
-    />
+              <div
+                onClick={() => citizen.declineCitizenship()}
+                className="cursor-pointer text-xl text-danger"
+              >
+                <IoMdCloseCircle />
+              </div>
+            </div>
+          )}
+        <FaPassport />
+      </div>
+    </Tag>
   );
 }

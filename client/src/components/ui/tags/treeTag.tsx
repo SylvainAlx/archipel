@@ -10,7 +10,8 @@ export default function TreeTag({ label }: customTagProps) {
       text={label.toString()}
       hover={t("components.hoverInfos.tags.tree")}
       bgColor="bg-info"
-      children={<ImTree />}
-    />
+    >
+      <ImTree />
+    </Tag>
   );
 }
