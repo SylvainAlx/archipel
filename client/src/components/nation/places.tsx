@@ -6,6 +6,7 @@ import DashTile from "../ui/dashTile";
 import { NationModel } from "../../models/nationModel";
 import TileSkeleton from "../ui/loading/skeletons/tileSkeleton";
 import { PlaceListModel } from "../../models/lists/placeListModel";
+import { PlaceModel } from "../../models/placeModel";
 
 interface PlacesProps {
   selectedNation: NationModel;
@@ -48,7 +49,7 @@ export default function Places({
                       <div className="relative w-full">
                         <PlaceTile
                           owner={owner}
-                          place={place}
+                          place={new PlaceModel(place)}
                           nation={selectedNation}
                         />
                       </div>

@@ -79,7 +79,7 @@ export const lobbyAtom = atom(false);
 
 // Stats
 export const statsAtom = atom<Stats>({
-  counts: { nations: 0, citizens: 0, places: 0, tags: 0, coms: 0 },
+  counts: { tags: 0 },
   tags: [],
 });
 

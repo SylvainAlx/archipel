@@ -8,6 +8,7 @@ import { loadingAtom, myStore, placeListAtomV2 } from "../../settings/store";
 import { LabelId, Nation } from "../../types/typNation";
 import { Place } from "../../types/typPlace";
 import { errorCatching } from "../../utils/displayInfos";
+import { findElementsByName } from "../../utils/functions";
 import {
   sortByCreatedAt,
   sortByName,
@@ -33,10 +34,23 @@ export class PlaceListModel extends ListModel {
   loadPlaceList = async (searchName: string) => {
     myStore.set(loadingAtom, true);
     try {
-      this.items = [];
-      const places: Place[] = await getAllPlacesFetch(searchName);
-      this.addMany(places);
-      this.addToPlaceListAtom(places);
+      let savedPlaces: PlaceModel[] = [];
+      if (searchName != "") {
+        savedPlaces = findElementsByName(
+          searchName,
+          myStore.get(placeListAtomV2).getItems(),
+        );
+      }
+      if (searchName === "") {
+        savedPlaces = myStore.get(placeListAtomV2).getItems();
+      }
+      if (savedPlaces.length > 0) {
+        this.items = savedPlaces;
+      } else {
+        const places: Place[] = await getAllPlacesFetch(searchName);
+        this.addMany(places);
+        this.addToPlaceListAtom(places);
+      }
     } catch (error) {
       errorCatching(error);
     } finally {
@@ -60,7 +74,7 @@ export class PlaceListModel extends ListModel {
         savedPlaces.length > 0 &&
         savedPlaces.length === nation.data.roleplay.places
       ) {
-        this.addMany(savedPlaces);
+        this.items = savedPlaces;
       } else {
         const places: Place[] = await getNationPlacesFetch(nation.officialId);
         this.addMany(places);

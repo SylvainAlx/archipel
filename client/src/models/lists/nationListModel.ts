@@ -1,11 +1,6 @@
 import { getAllNationsFetch } from "../../services/nationService";
 import { NATION_SORTING } from "../../settings/sorting";
-import {
-  loadingAtom,
-  myStore,
-  nationListAtomV2,
-  statsAtom,
-} from "../../settings/store";
+import { loadingAtom, myStore, nationListAtomV2 } from "../../settings/store";
 import { Nation } from "../../types/typNation";
 import { errorCatching } from "../../utils/displayInfos";
 import { findElementsByName, findNationsByTag } from "../../utils/functions";
@@ -49,23 +44,22 @@ export class NationListModel extends ListModel {
       if (searchTag != "") {
         savedNations = findNationsByTag(
           searchTag,
-          myStore.get(nationListAtomV2).getItems(),
+          savedNations.length > 0
+            ? savedNations
+            : myStore.get(nationListAtomV2).getItems(),
         );
       }
       if (searchName === "" && searchTag === "") {
         savedNations = myStore.get(nationListAtomV2).getItems();
       }
-      if (
-        savedNations.length > 0 &&
-        savedNations.length === myStore.get(statsAtom).counts.nations
-      ) {
-        this.addMany(savedNations);
+      if (savedNations.length > 0) {
+        this.items = savedNations;
       } else {
         const nations: Nation[] = await getAllNationsFetch(
           searchName,
           searchTag,
         );
-        this.addMany(nations);
+        this.items = nations;
         this.addToNationListAtom(nations);
       }
       this.sortNations(this.sorting);

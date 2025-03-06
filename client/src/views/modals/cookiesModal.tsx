@@ -1,12 +1,12 @@
 import CookieConsent from "react-cookie-consent";
 import { useTranslation } from "react-i18next";
-import { myStore, showCookiesModalAtom } from "../../settings/store";
 import { useModal } from "../../hooks/useModal";
 import { useCookiesModal } from "../../hooks/modalsHooks/useCookiesModal";
+import { Link } from "react-router-dom";
 
 export default function CookiesModal() {
   const { t } = useTranslation();
-  const modalRef = useModal(() => myStore.set(showCookiesModalAtom, false));
+  const modalRef = useModal(() => {});
   const { handleAcceptCookies, handleDeclineCookies } = useCookiesModal();
 
   return (
@@ -26,13 +26,23 @@ export default function CookiesModal() {
           padding: "5px 20px",
         }}
         declineButtonStyle={{
-          background: "var(--color-danger)",
+          background: "var(--color-wait)",
           color: "var(--color-light)",
           borderRadius: 100,
           padding: "5px 20px",
         }}
       >
-        {t("components.modals.cookiesModal.text")}
+        <div className="flex flex-col gap-2">
+          {t("components.modals.cookiesModal.text")}
+          <strong>
+            <Link
+              className="transition-colors cursor-pointer hover:text-secondary"
+              to="/termsofservice"
+            >
+              {t("pages.termsOfService.title")}
+            </Link>
+          </strong>
+        </div>
       </CookieConsent>
     </div>
   );

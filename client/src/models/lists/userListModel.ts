@@ -8,7 +8,6 @@ import {
   bannedCitizensAtom,
   loadingAtom,
   myStore,
-  statsAtom,
   userListAtomV2,
 } from "../../settings/store";
 import { Nation } from "../../types/typNation";
@@ -51,14 +50,11 @@ export class UserListModel extends ListModel {
       if (searchName === "") {
         savedUsers = myStore.get(userListAtomV2).getItems();
       }
-      if (
-        savedUsers.length > 0 &&
-        savedUsers.length === myStore.get(statsAtom).counts.citizens
-      ) {
-        this.addMany(savedUsers);
+      if (savedUsers.length > 0) {
+        this.items = savedUsers;
       } else {
         const users: User[] = await getAllCitizensFetch(searchName);
-        this.addMany(users);
+        this.items = users;
         this.addToUserListAtom(users);
       }
     } catch (error) {

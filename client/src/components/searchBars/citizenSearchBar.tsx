@@ -1,9 +1,7 @@
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import Input from "../form/input";
 import Select from "../form/select";
-import { statsAtom } from "../../settings/store";
 import { useTranslation } from "react-i18next";
-import { useAtom } from "jotai";
 import SearchButtons from "../form/searchButtons";
 import { CITIZEN_SORTING } from "../../settings/sorting";
 import { UserListModel } from "../../models/lists/userListModel";
@@ -22,13 +20,9 @@ export default function CitizenSearchBar({
   const { t } = useTranslation();
   const [searchName, setSearchName] = useState("");
   const [isLeader, setIsLeader] = useState(false);
-  const [stats] = useAtom(statsAtom);
 
   useEffect(() => {
-    if (
-      list.getItems().length != stats.counts.citizens ||
-      list.getItems().length === 0
-    ) {
+    if (list.getItems().length === 0) {
       if (isLeader) {
         const updatedList = list
           .getItems()
@@ -39,7 +33,7 @@ export default function CitizenSearchBar({
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [stats.counts.citizens, isLeader]);
+  }, []);
 
   const loadUserList = async (searchName: string) => {
     let updatedList = await list.loadUserList(searchName);

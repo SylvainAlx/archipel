@@ -100,14 +100,21 @@ export const getAllNations = async (req, res) => {
     const searchText = req.query.name;
     const searchTag = req.query.tag;
     if (searchText || searchTag) {
+      const filter = { banished: false };
+      if (searchText) {
+        filter.name = { $regex: ".*" + searchText + ".*", $options: "i" };
+      }
+      if (searchTag) {
+        filter["data.general.tags"] = {
+          $regex: ".*" + searchTag + ".*",
+          $options: "i",
+        };
+      }
       const nations = await Nation.find(
-        {
-          name: { $regex: searchText, $options: "i" },
-          "data.general.tags": { $regex: searchTag, $options: "i" },
-          banished: false,
-        },
+        filter,
         "officialId name owner role reported banished data createdAt",
       );
+
       res.status(200).json(nations);
     } else if (searchText === "" && searchTag === "") {
       const nations = await Nation.find(

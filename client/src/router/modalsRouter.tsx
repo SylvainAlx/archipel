@@ -14,7 +14,6 @@ import {
   newPlaceAtom,
   newRelationAtom,
   recoveryKey,
-  showCookiesModalAtom,
   showHelpAtom,
   showLangModalAtom,
   showMenuAtom,
@@ -32,7 +31,6 @@ import { ChangePasswordModal } from "../views/modals/changePasswordModal";
 import RelationModal from "../views/modals/relationModal";
 import TileFormModal from "../views/modals/tileFormModal";
 import NewComModal from "../views/modals/newComModal";
-import CookiesModal from "../views/modals/cookiesModal";
 import CreditTransferModal from "../views/modals/creditTransferModal";
 import HelpModal from "../views/modals/helpModal";
 
@@ -52,7 +50,6 @@ export default function ModalsRouter() {
   const [newRelation] = useAtom(newRelationAtom);
   const [tile] = useAtom(editTileAtom);
   const [newCom] = useAtom(newComAtom);
-  const [showCookiesModal] = useAtom(showCookiesModalAtom);
   const [creditTransfer] = useAtom(creditTransferAtom);
   const [showHelp] = useAtom(showHelpAtom);
 
@@ -108,7 +105,7 @@ export default function ModalsRouter() {
                   {creditTransfer.recipient.officialId != "" && (
                     <CreditTransferModal />
                   )}
-                  {showCookiesModal && <CookiesModal />}
+
                   {showHelp && <HelpModal />}
                 </>
               )}

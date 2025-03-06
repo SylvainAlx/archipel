@@ -16,6 +16,7 @@ export default function Recovery() {
     recovery,
     confirmPassword,
     passwordsMatch,
+    isPasswordStrong,
     handleChange,
     handleConfirm,
     handleSubmit,
@@ -52,6 +53,11 @@ export default function Recovery() {
             placeholder={t("pages.recovery.newPassword")}
             value={password}
           />
+          {!isPasswordStrong && password.length > 0 && (
+            <p className="text-red-500 text-sm">
+              {t("components.form.input.strongPassword")}
+            </p>
+          )}
           <Input
             required={true}
             onChange={handleConfirm}
@@ -60,6 +66,11 @@ export default function Recovery() {
             placeholder={t("pages.recovery.confirmPassword")}
             value={confirmPassword}
           />
+          {!passwordsMatch && (
+            <p className="text-red-500 text-sm">
+              {t("components.form.input.confirmPassword")}
+            </p>
+          )}
           <RequiredStar />
           <div className={`${!passwordsMatch && "cursor-not-allowed"} w-full`}>
             <Button

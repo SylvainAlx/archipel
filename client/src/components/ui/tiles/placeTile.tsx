@@ -50,7 +50,7 @@ export default function PlaceTile({ place, nation }: PlaceTileProp) {
       }
     });
     setChildrenStats(stats);
-  }, [placeList, place.officialId]);
+  }, [placeList, place.officialId, place]);
 
   return (
     <div

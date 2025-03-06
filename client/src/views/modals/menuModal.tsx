@@ -60,6 +60,7 @@ export default function MenuModal() {
         <Link
           className="w-full h-full flex items-center gap-1"
           to={INSTAGRAM_URL}
+          target="_blank"
         >
           <Button text="Instagram" type="button" widthFull={true}>
             <FaInstagram />
@@ -68,6 +69,7 @@ export default function MenuModal() {
         <Link
           className="w-full h-full flex items-center gap-1"
           to={THREADS_URL}
+          target="_blank"
         >
           <Button text="Threads" type="button" widthFull={true}>
             <BsThreads />

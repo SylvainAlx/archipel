@@ -1,12 +1,14 @@
 import { ChangeEvent, FormEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { UserModel } from "../../models/userModel";
+import { isStrongPassword } from "../../utils/functions";
 
 export function useRecovery() {
   const navigate = useNavigate();
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [recovery, setRecovery] = useState("");
+  const [isPasswordStrong, setIsPasswordStrong] = useState(false);
   const [confirmPassword, setConfirmPassword] = useState("");
   const [passwordsMatch, setPasswordsMatch] = useState(true);
 
@@ -16,6 +18,7 @@ export function useRecovery() {
     if (e.target.type == "text") {
       setName(e.target.value);
     } else if (e.target.type == "password") {
+      setIsPasswordStrong(isStrongPassword(e.target.value));
       setPassword(e.target.value);
       setPasswordsMatch(confirmPassword === e.target.value);
     } else {
@@ -41,6 +44,7 @@ export function useRecovery() {
     recovery,
     confirmPassword,
     passwordsMatch,
+    isPasswordStrong,
     handleChange,
     handleConfirm,
     handleSubmit,

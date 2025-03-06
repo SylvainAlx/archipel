@@ -190,6 +190,7 @@
       "input": {
         "name": "nom",
         "password": "mot de passe",
+        "confirmPassword": "Les mots de passe ne sont pas identiques !",
         "strongPassword": "Le mot de passe doit contenir au moins 8 caractères, une majuscule, une minuscule, un chiffre et un caractère spécial.",
         "buyerOfficialId": "merci de renseigner l'identifiant unique du citoyen désigné (sous la forme: **c********)"
       },
@@ -241,7 +242,7 @@
         "createNewRecovery": "confirmez-vous la création d'une nouvelle clé de récupération ?"
       },
       "cookiesModal": {
-        "text": "ce site utilise des cookies pour améliorer votre expérience utilisateur",
+        "text": "Nous utilisons des cookies à des fins statistiques avec Google Analytics et pour protéger notre site contre les abus avec Google reCAPTCHA. Ces cookies peuvent impliquer des services tiers. Vous pouvez accepter ou refuser leur utilisation.",
         "accept": "je comprends",
         "decline": "je refuse"
       },

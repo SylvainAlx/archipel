@@ -1,9 +1,7 @@
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import Input from "../form/input";
 import Select from "../form/select";
-import { statsAtom } from "../../settings/store";
 import { useTranslation } from "react-i18next";
-import { useAtom } from "jotai";
 import SearchButtons from "../form/searchButtons";
 import { COM_TYPE } from "../../settings/consts";
 import { ComListModel } from "../../models/lists/comListModel";
@@ -19,12 +17,11 @@ export interface ComSearchBarProps {
 export default function ComSearchBar({ list, setList }: ComSearchBarProps) {
   const { t } = useTranslation();
   const [nationId, setNationId] = useState("");
-  const [stats] = useAtom(statsAtom);
 
   useEffect(() => {
     loadList();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [stats.counts.coms]);
+  }, []);
 
   const reset = async () => {
     setNationId("");

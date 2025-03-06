@@ -9,6 +9,7 @@ import { ELEMENTS_DISPLAYED_LIMIT } from "../../settings/consts";
 import { NationModel } from "../../models/nationModel";
 import TileSkeleton from "../../components/ui/loading/skeletons/tileSkeleton";
 import { usePlaceList } from "../../hooks/exploreTabsHooks/usePlaceList";
+import { PlaceModel } from "../../models/placeModel";
 
 export default function PlaceList({ text }: StringProps) {
   const { placesList, setPlacesList, displayedPlaces, setDisplayedPlaces } =
@@ -29,7 +30,10 @@ export default function PlaceList({ text }: StringProps) {
               return (
                 <Suspense key={i} fallback={<TileSkeleton />}>
                   <div className="min-w-[300px] w-full relative transition-all duration-300 animate-fadeIn">
-                    <PlaceTile place={place} nation={new NationModel()} />
+                    <PlaceTile
+                      place={new PlaceModel(place)}
+                      nation={new NationModel()}
+                    />
                     <IndexTag text={i} />
                   </div>
                 </Suspense>

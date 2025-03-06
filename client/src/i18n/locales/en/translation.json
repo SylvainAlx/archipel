@@ -7,7 +7,7 @@
       "presentation3": "Build diplomatic ties and create alliances! Our platform offers you the opportunity to interact with other nations, whether real or virtual. Initiate **diplomatic relations**, negotiate agreements, form strategic alliances, or organize joint events. Expand your nation’s influence by **bridging cultures** and collaborating with other leaders. Together, take your ambitions to a whole new level!"
     },
     "lobby": {
-      "description": "enter the password to access the application",
+      "password": "enter the password to access the application",
       "allowed": "access allowed",
       "denied": "access denied"
     },
@@ -190,6 +190,7 @@
       "input": {
         "name": "name",
         "password": "password",
+        "confirmPassword": "Passwords are not the same !",
         "strongPassword": "The password must contain at least 8 characters, one uppercase letter, one lowercase letter, one digit, and one special character.",
         "buyerOfficialId": "Please enter the unique identifier of the designated citizen (in the form: **c********)"
       },
@@ -241,7 +242,7 @@
         "createNewRecovery": "confirm the creation of a new recovery key ?"
       },
       "cookiesModal": {
-        "text": "this site uses cookies to improve your user experience",
+        "text": "We use cookies for statistical purposes with Google Analytics and to protect our site from abuse with Google reCAPTCHA. These cookies may involve third-party services. You can accept or refuse their use.",
         "accept": "i understand",
         "decline": "i decline"
       },

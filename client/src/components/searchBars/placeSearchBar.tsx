@@ -3,9 +3,7 @@ import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 
 import Input from "../form/input";
 import Select from "../form/select";
-import { placeListAtomV2, statsAtom } from "../../settings/store";
 import { useTranslation } from "react-i18next";
-import { useAtom } from "jotai";
 import SearchButtons from "../form/searchButtons";
 import { PLACE_SORTING } from "../../settings/sorting";
 import { PlaceListModel } from "../../models/lists/placeListModel";
@@ -26,30 +24,25 @@ export default function PlaceSearchBar({ list, setList }: PlaceSearchBarProps) {
     type_2: true,
     type_3: true,
   });
-  const [placeList] = useAtom(placeListAtomV2);
-  const [stats] = useAtom(statsAtom);
 
   useEffect(() => {
-    if (
-      placeList.getItems().length != stats.counts.places ||
-      placeList.getItems().length === 0
-    ) {
-      loadPlaceList("");
+    if (list.getItems().length === 0) {
+      loadPlaceList(searchName);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [stats.counts.places]);
+  }, []);
 
   useEffect(() => {
-    const updatedList1 = placeList
+    const updatedList1 = list
       .getItems()
       .filter((place) => place.type === 0 && placeType.type_0);
-    const updatedList2 = placeList
+    const updatedList2 = list
       .getItems()
       .filter((place) => place.type === 1 && placeType.type_1);
-    const updatedList3 = placeList
+    const updatedList3 = list
       .getItems()
       .filter((place) => place.type === 2 && placeType.type_2);
-    const updatedList4 = placeList
+    const updatedList4 = list
       .getItems()
       .filter((place) => place.type === 3 && placeType.type_3);
     const newList = [

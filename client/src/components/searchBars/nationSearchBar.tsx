@@ -1,9 +1,7 @@
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import Input from "../form/input";
 import Select from "../form/select";
-import { statsAtom } from "../../settings/store";
 import { useTranslation } from "react-i18next";
-import { useAtom } from "jotai";
 import SearchButtons from "../form/searchButtons";
 import { useLocation, useNavigate } from "react-router-dom";
 import { NationListModel } from "../../models/lists/nationListModel";
@@ -24,7 +22,6 @@ export default function NationSearchBar({
   const location = useLocation();
   const [searchName, setSearchName] = useState("");
   const [searchTag, setSearchTag] = useState(location.hash.replace("#", ""));
-  const [stats] = useAtom(statsAtom);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -32,15 +29,12 @@ export default function NationSearchBar({
   }, [location]);
 
   useEffect(() => {
-    if (
-      list.getItems().length != stats.counts.nations ||
-      list.getItems().length === 0
-    ) {
+    if (list.getItems().length === 0) {
       loadList(searchName, searchTag);
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [stats.counts.nations]);
+  }, []);
 
   useEffect(() => {
     if (searchTag != "" && location.hash != "") {

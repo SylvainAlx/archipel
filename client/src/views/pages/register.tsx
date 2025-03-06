@@ -55,6 +55,11 @@ export default function Register() {
             placeholder={t("components.form.input.password")}
             value={password}
           />
+          {!isPasswordStrong && password.length > 0 && (
+            <p className="text-red-500 text-sm">
+              {t("components.form.input.strongPassword")}
+            </p>
+          )}
           <Input
             required={true}
             onChange={handleChange}
@@ -63,9 +68,9 @@ export default function Register() {
             placeholder={t("pages.recovery.confirmPassword")}
             value={confirmPassword}
           />
-          {!isPasswordStrong && password.length > 0 && (
+          {!passwordsMatch && (
             <p className="text-red-500 text-sm">
-              {t("components.form.input.strongPassword")}
+              {t("components.form.input.confirmPassword")}
             </p>
           )}
           <Select
