@@ -70,7 +70,7 @@ export default function ComTile({ nation, com }: ComTileProps) {
 
   return (
     <div
-      className={`${(comOwner || nationOwner) && !com.read ? "bg-complementary2" : "bg-complementary"} p-2 rounded flex flex-col items-center gap-3 shadow-xl `}
+      className={`${(comOwner || nationOwner) && !com.read ? "bg-complementary2" : "bg-complementary"} p-2 pb-7 rounded flex flex-col items-center gap-3 shadow-xl `}
     >
       <div className="w-full flex justify-between">
         <h3 className="pl-4 pr-6 text-light text-xl flex items-center gap-2">
