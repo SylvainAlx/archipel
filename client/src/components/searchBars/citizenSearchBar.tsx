@@ -22,18 +22,16 @@ export default function CitizenSearchBar({
   const [isLeader, setIsLeader] = useState(false);
 
   useEffect(() => {
-    if (list.getItems().length === 0) {
-      if (isLeader) {
-        const updatedList = list
-          .getItems()
-          .filter((user) => user.citizenship.nationOwner === true);
-        setList(new UserListModel(updatedList));
-      } else {
-        loadUserList(searchName);
-      }
+    if (isLeader) {
+      const updatedList = list
+        .getItems()
+        .filter((user) => user.citizenship.nationOwner === true);
+      setList(new UserListModel(updatedList));
+    } else {
+      loadUserList(searchName);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [isLeader]);
 
   const loadUserList = async (searchName: string) => {
     let updatedList = await list.loadUserList(searchName);
