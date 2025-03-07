@@ -8,7 +8,6 @@ import {
 import { errorCatching } from "../../utils/displayInfos";
 import { COM_SORTING } from "../../settings/sorting";
 import { ListModel } from "./listModel";
-import { COM_TYPE } from "../../settings/consts";
 import { Com } from "../../types/typCom";
 import { sortByCreatedAt } from "../../utils/sorting";
 
@@ -38,7 +37,7 @@ export class ComListModel extends ListModel {
     destinationId: string,
     comType: number[],
     isJwtRequired: boolean = true,
-    useSavedComs: boolean = true,
+    useSavedComs: boolean = false,
   ) => {
     const savedComList: ComModel[] = [];
     myStore
@@ -75,29 +74,16 @@ export class ComListModel extends ListModel {
     return new ComListModel(this.items);
   };
   loadAdminComList = async () => {
-    const savedComList: ComModel[] = [];
-    myStore
-      .get(comListAtomV2)
-      .getItems()
-      .forEach((com) => {
-        if (com.comType === COM_TYPE.admin.id) {
-          savedComList.push(com);
-        }
-      });
-    if (savedComList.length > 0) {
-      this.addMany(savedComList);
-    } else {
-      try {
-        myStore.set(loadingAtom, true);
-        const response = await getAllAdminComsFetch();
-        this.addMany(response);
-        this.addToComListAtom(response);
-      } catch (error) {
-        errorCatching(error);
-      } finally {
-        myStore.set(loadingAtom, false);
-        return new ComListModel(this.items);
-      }
+    try {
+      myStore.set(loadingAtom, true);
+      const response = await getAllAdminComsFetch();
+      this.addMany(response);
+      this.addToComListAtom(response);
+    } catch (error) {
+      errorCatching(error);
+    } finally {
+      myStore.set(loadingAtom, false);
+      return new ComListModel(this.items);
     }
   };
   loadNationComList = async (

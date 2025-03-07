@@ -20,6 +20,7 @@ Le code source est public et est visible [ici](https://github.com/SylvainAlx/arc
 #### Suppressions
 
 - Suppression impossible de la nation tant qu'au moins deux citoyens en font partie
+- Suppression impossible du compte utilisateur si celui-ci est éditeur d'une nation
 
 #### Modifications & Corrections
 

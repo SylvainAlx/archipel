@@ -59,7 +59,7 @@ export const newRelationAtom = atom({
   relation: new RelationModel(emptyDiplomaticRelationship),
 });
 export const creditTransferAtom = atom(emptyCreditTransfert);
-export const showCookiesModalAtom = atom(true);
+export const showCookiesModalAtom = atom(false);
 export const showLangModalAtom = atom(false);
 export const recoveryKey = atom("");
 export const confirmBox = atom(ConfirmBoxDefault);

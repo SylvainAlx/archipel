@@ -3,8 +3,9 @@ import User from "../models/userSchema.js";
 import Place from "../models/placeSchema.js";
 import Tile from "../models/tileSchema.js";
 import Relation from "../models/relationSchema.js";
+import Com from "../models/comSchema.js";
 import { createOfficialId, handleError } from "../utils/functions.js";
-import { DEFAULT_GIFTS } from "../settings/const.js";
+import { COMTYPE, DEFAULT_GIFTS } from "../settings/const.js";
 import { getUserByOfficialId } from "../services/userService.js";
 import {
   getGifts,
@@ -150,6 +151,11 @@ export const getOneNation = async (req, res) => {
       { officialId: nationId, banished: false },
       "officialId name owner role reported banished data createdAt",
     );
+    if (!nation) {
+      let error = new Error();
+      error.code = 404;
+      throw error;
+    }
     res.status(200).json(nation);
   } catch (error) {
     handleError(error, res);
@@ -231,6 +237,12 @@ export const deleteSelfNation = async (req, res) => {
       // suppression des tuiles libres de la nation
       await Tile.deleteMany({
         nationOfficialId: nation.officialId,
+      });
+
+      // suppression des communications privées de la nation
+      await Com.deleteMany({
+        origin: nation.officialId,
+        comType: COMTYPE[2].id,
       });
 
       // retrait de la nation des relations liées

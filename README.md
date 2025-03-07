@@ -18,7 +18,7 @@ Cette version précède la _v1.0.0_ qui viendra conclure cette période de déve
 #### Origine
 
 C'est en construisant un archipel représentant une nation dans le jeu vidéo Minecraft, et échangeant avec d'autres joueurs partageant les mêmes envies, que m'est venue l'idée de rassembler dans une même application toutes les nations fictives d'origines diverses.
-J'était développeur junior au début du projet et ce nouveau challenge était parfait pour que je puisse me lancer dans l'élaboration complète d'une application jusqu'a son déploiement.
+J'était développeur junior au début du projet et ce nouveau challenge était parfait pour que je puisse me lancer dans l'élaboration complète d'une application jusqu'à son déploiement.
 
 #### Objectif
 

@@ -32,6 +32,7 @@ import { useLoadNationPlaces } from "../../hooks/useLoadNationPlaces";
 import { PlaceListModel } from "../../models/lists/placeListModel";
 import CreditTag from "../ui/tags/creditTag";
 import CreditTransferButton from "../ui/buttons/creditTransferButton";
+import { MdTimer } from "react-icons/md";
 
 interface CitizenshipProps {
   citizen: UserModel;
@@ -57,6 +58,7 @@ export default function Citizenship({
   const [enableLeaving, setEnableLeaving] = useState(false);
 
   const pioneerDate = new Date(PIONEER_DATE);
+
   const citizenCreationDate = new Date(citizen.createdAt);
 
   useEffect(() => {
@@ -165,6 +167,7 @@ export default function Citizenship({
                     ? citizen.citizenship.residence
                     : cities.getLabelIdPlaceList([PLACE_TYPE.city.id])[0].id,
                 path: "citizenship.residence",
+                indice: citizen.citizenship.residence,
                 action: updatePath,
               }}
             />
@@ -190,8 +193,12 @@ export default function Citizenship({
               text={nation.name}
               click={() => handleClick("nation")}
               lowerCase={false}
+              bgColor={citizen.citizenship.status === 0 ? "bg-wait" : ""}
             >
-              <GiBlackFlag />
+              <div className="flex gap-1">
+                {citizen.citizenship.status === 0 && <MdTimer />}
+                <GiBlackFlag />
+              </div>
             </Button>
             {enableLeaving && (
               <CrossButton

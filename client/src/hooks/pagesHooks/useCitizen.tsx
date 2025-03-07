@@ -72,5 +72,6 @@ export function useCitizen() {
     owner,
     setCitizen,
     updatePath,
+    t,
   };
 }

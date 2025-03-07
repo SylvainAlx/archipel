@@ -16,11 +16,11 @@ export default function Citizen() {
   const Settings = lazy(() => import("../../components/citizen/settings"));
   const CitizenCom = lazy(() => import("../../components/citizen/citizensCom"));
 
-  const { citizen, nation, owner, setCitizen, updatePath } = useCitizen();
+  const { citizen, nation, owner, setCitizen, updatePath, t } = useCitizen();
 
   createPageTitle(citizen.name);
 
-  return (
+  return citizen.officialId ? (
     <>
       <div className="flex items-center gap-1">
         <H1 text={citizen.name} />
@@ -74,5 +74,7 @@ export default function Citizen() {
         )}
       </section>
     </>
+  ) : (
+    <em className="text-center">{t("pages.citizen.noCitizen")}</em>
   );
 }

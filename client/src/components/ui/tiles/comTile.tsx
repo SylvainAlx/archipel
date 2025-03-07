@@ -18,6 +18,8 @@ import { FaCheckSquare } from "react-icons/fa";
 import Button from "../buttons/button";
 import { ImCheckboxUnchecked } from "react-icons/im";
 import { isNation } from "../../../utils/functions";
+import { COM_TYPE } from "../../../settings/consts";
+import { RiChatPrivateFill } from "react-icons/ri";
 
 export interface ComTileProps {
   nation?: NationModel;
@@ -71,7 +73,10 @@ export default function ComTile({ nation, com }: ComTileProps) {
       className={`${(comOwner || nationOwner) && !com.read ? "bg-complementary2" : "bg-complementary"} p-2 rounded flex flex-col items-center gap-3 shadow-xl `}
     >
       <div className="w-full flex justify-between">
-        <h3 className="pl-4 pr-6 text-light text-xl">{com.title}</h3>
+        <h3 className="pl-4 pr-6 text-light text-xl flex items-center gap-2">
+          {com.comType === COM_TYPE.nationPrivate.id && <RiChatPrivateFill />}
+          {com.title}
+        </h3>
         <div className="flex gap-1 items-center flex-wrap justify-end">
           <DateTag date={com.createdAt} />
           {com.origin != undefined && isNation(com.origin) && (
@@ -104,7 +109,7 @@ export default function ComTile({ nation, com }: ComTileProps) {
             {read ? <FaCheckSquare /> : <ImCheckboxUnchecked />}
           </Button>
         )}
-        {comOwner ? (
+        {comOwner || nationOwner ? (
           <CrossButton click={handleDelete} />
         ) : (
           <ReportPanel content={com} center={false} />

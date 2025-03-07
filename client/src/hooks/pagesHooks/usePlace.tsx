@@ -66,5 +66,5 @@ export function usePlace() {
     }
   };
 
-  return { place, nation, owner, updatePath };
+  return { place, nation, owner, updatePath, t };
 }

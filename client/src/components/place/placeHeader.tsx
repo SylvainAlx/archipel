@@ -80,6 +80,7 @@ export default function PlaceHeader({
               ),
               new: place.parentId,
               path: "parentId",
+              indice: place.parentId,
               action: updatePath,
             }}
           />

@@ -47,9 +47,6 @@ export class UserListModel extends ListModel {
           myStore.get(userListAtomV2).getItems(),
         );
       }
-      if (searchName === "") {
-        savedUsers = myStore.get(userListAtomV2).getItems();
-      }
       if (savedUsers.length > 0) {
         this.items = savedUsers;
       } else {
@@ -67,27 +64,27 @@ export class UserListModel extends ListModel {
   loadNationUserList = async (nation: Nation | NationModel) => {
     myStore.set(loadingAtom, true);
     try {
-      this.items = [];
-      const savedNationCitizenList: User[] = [];
-      myStore
-        .get(userListAtomV2)
-        .getItems()
-        .forEach((user) => {
-          if (user.citizenship.nationId === nation.officialId) {
-            savedNationCitizenList.push(user);
-          }
-        });
-      if (
-        savedNationCitizenList.length > 0 &&
-        savedNationCitizenList.length === nation.data.roleplay.citizens
-      ) {
-        this.items = savedNationCitizenList;
-      } else {
-        const resp: User[] = await getNationCitizensFetch(nation.officialId);
-        if (resp.length > 0) {
-          this.addMany(resp);
-          this.addToUserListAtom(resp);
-        }
+      // this.items = [];
+      // const savedNationCitizenList: User[] = [];
+      // myStore
+      //   .get(userListAtomV2)
+      //   .getItems()
+      //   .forEach((user) => {
+      //     if (user.citizenship.nationId === nation.officialId) {
+      //       savedNationCitizenList.push(user);
+      //     }
+      //   });
+      // if (
+      //   savedNationCitizenList.length > 0 &&
+      //   savedNationCitizenList.length === nation.data.roleplay.citizens
+      // ) {
+      //   this.items = savedNationCitizenList;
+      // } else {
+      const resp: User[] = await getNationCitizensFetch(nation.officialId);
+      if (resp.length > 0) {
+        this.addMany(resp);
+        this.addToUserListAtom(resp);
+        // }
       }
     } catch (error) {
       errorCatching(error);

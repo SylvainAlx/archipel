@@ -95,19 +95,20 @@ export default function CitizenTile({ citizen }: CitizenTileProps) {
           {citizen.name}
         </h3>
       </div>
-      <div className="flex gap-1 flex-wrap items-center self-end">
-        {!selfUser && <ReportPanel content={citizen} center={false} />}
+      <div className="w-full flex justify-end gap-1 flex-wrap">
+        <div className="flex gap-1 flex-wrap items-center self-end">
+          {!selfUser && <ReportPanel content={citizen} center={false} />}
+        </div>
+        {session.user.citizenship.nationOwner &&
+          sameNation &&
+          !selfUser &&
+          emplacement.pathname != "/explore" &&
+          citizen.citizenship.status > 0 && (
+            <div className="w-max self-end">
+              <CrossButton click={() => citizen.declineCitizenship()} />
+            </div>
+          )}
       </div>
-      {session.user.citizenship.nationOwner &&
-        sameNation &&
-        !selfUser &&
-        emplacement.pathname != "/explore" &&
-        citizen.citizenship.status > 0 && (
-          <div className="w-max self-end">
-            <CrossButton click={() => citizen.declineCitizenship()} />
-          </div>
-        )}
-
       <div className="max-w-[90%] flex flex-wrap items-center self-end justify-end gap-1">
         {citizen.citizenship.status === 0 &&
           emplacement.pathname ===

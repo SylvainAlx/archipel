@@ -1,6 +1,7 @@
 import Place from "../models/placeSchema.js";
 import Nation from "../models/nationSchema.js";
-import { createOfficialId } from "../utils/functions.js";
+import User from "../models/userSchema.js";
+import { createOfficialId, handleError } from "../utils/functions.js";
 import {
   DEFAULT_COSTS,
   PLACE_TYPE,
@@ -13,6 +14,7 @@ import {
   payCreditsFromBank,
   recoverCreditToBank,
 } from "../services/paramService.js";
+import { deleteFile } from "../services/fileService.js";
 
 export const placesCount = async (req, res) => {
   try {
@@ -37,6 +39,11 @@ export const getOne = async (req, res) => {
   const id = req.params.id;
   try {
     const place = await Place.findOne({ officialId: id, banished: false });
+    if (!place) {
+      let error = new Error();
+      error.code = 404;
+      throw error;
+    }
     res.status(200).json({
       place,
     });
@@ -143,7 +150,6 @@ export const deletePlace = async (req, res) => {
     if (nation.data.roleplay.capital === place.officialId) {
       nation.data.roleplay.capital = "";
     }
-    nation.data.roleplay.population -= place.population;
     const quota = getValueFromParam(
       await getQuotas(),
       "places",
@@ -163,10 +169,15 @@ export const deletePlace = async (req, res) => {
     nation.data.roleplay.places -= 1;
 
     await nation.save();
+
     await Place.updateMany(
       { parentId: id },
       { $set: { parentId: place.parentId } },
     );
+    if (place.image != "") {
+      const uuid = place.image.replace("https://ucarecdn.com/", "");
+      await deleteFile(uuid);
+    }
     await Place.findByIdAndDelete(place._id);
     res.status(200).json({ place, nation, infoType: "delete" });
   } catch (error) {

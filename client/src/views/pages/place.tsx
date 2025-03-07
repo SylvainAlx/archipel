@@ -8,7 +8,7 @@ import { useLoadNationPlaces } from "../../hooks/useLoadNationPlaces";
 import { usePlace } from "../../hooks/pagesHooks/usePlace";
 
 export default function Place() {
-  const { place, nation, owner, updatePath } = usePlace();
+  const { place, nation, owner, updatePath, t } = usePlace();
   const nationPlaceList = useLoadNationPlaces(nation);
 
   createPageTitle(place.name);
@@ -21,7 +21,7 @@ export default function Place() {
     () => import("../../components/place/placeChildren"),
   );
 
-  return (
+  return place.officialId ? (
     <>
       <section className="w-full px-2 pb-2 flex flex-col items-center gap-2">
         <Suspense fallback={<ParamSkeleton />}>
@@ -52,5 +52,7 @@ export default function Place() {
       </Suspense>
       <ReportPanel content={place} />
     </>
+  ) : (
+    <em className="text-center">{t("pages.place.noPlace")}</em>
   );
 }

@@ -118,7 +118,7 @@ export default function EditBoxModal() {
                       onClick={() => handleDeleteItem(i)}
                       className="cursor-pointer text-xl hover:animate-pulse rounded-full transition-all"
                     >
-                      <IoMdCloseCircle />
+                      <IoMdCloseCircle className="text-danger" />
                     </div>
                   </div>
                 );
@@ -135,7 +135,7 @@ export default function EditBoxModal() {
                 className="cursor-pointer text-xl hover:animate-pulse rounded-full transition-all"
                 onClick={handleAddItem}
               >
-                <MdCheckCircle />
+                <MdCheckCircle className="text-success" />
               </div>
             </div>
           </div>

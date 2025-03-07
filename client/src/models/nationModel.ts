@@ -313,6 +313,9 @@ export class NationModel extends CommonModel implements Nation {
       const resp: { user: User; infoType: string } =
         await DeleteSelfFetch(password);
       this.removeFromNationListAtom(this);
+      this.updateFields(EmptyNation);
+      myStore.get(sessionAtom).user.addOrUpdateUserListAtom(resp.user);
+      myStore.get(sessionAtom).user.updateSessionAtom(resp.user);
       const newCom = new ComModel({
         comType: COM_TYPE.userPrivate.id,
         origin: this.officialId,
@@ -321,9 +324,6 @@ export class NationModel extends CommonModel implements Nation {
         message: i18n.t("coms.nationDelete.message"),
       });
       newCom.baseInsert();
-      this.updateFields(EmptyNation);
-      myStore.get(sessionAtom).user.addOrUpdateUserListAtom(resp.user);
-      myStore.get(sessionAtom).user.updateSessionAtom(resp.user);
       this.displayNationInfoByType(resp.infoType);
     } catch (error) {
       errorCatching(error);

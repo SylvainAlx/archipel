@@ -173,6 +173,7 @@ export default function NationIdentity({
                                   .getLabelIdPlaceList([PLACE_TYPE.city.id])[0]
                                   .id,
                           path: "data.roleplay.capital",
+                          indice: selectedNation.data.roleplay.capital,
                           action: updatePath,
                         }}
                       />

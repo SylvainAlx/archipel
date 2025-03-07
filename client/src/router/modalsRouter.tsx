@@ -33,6 +33,8 @@ import TileFormModal from "../views/modals/tileFormModal";
 import NewComModal from "../views/modals/newComModal";
 import CreditTransferModal from "../views/modals/creditTransferModal";
 import HelpModal from "../views/modals/helpModal";
+import CookiesModal from "../views/modals/cookiesModal";
+import { useCookiesModal } from "../hooks/modalsHooks/useCookiesModal";
 
 export default function ModalsRouter() {
   const [recovery] = useAtom(recoveryKey);
@@ -52,6 +54,7 @@ export default function ModalsRouter() {
   const [newCom] = useAtom(newComAtom);
   const [creditTransfer] = useAtom(creditTransferAtom);
   const [showHelp] = useAtom(showHelpAtom);
+  const { showCookiesModal } = useCookiesModal();
 
   if (
     recovery != "" ||
@@ -105,7 +108,7 @@ export default function ModalsRouter() {
                   {creditTransfer.recipient.officialId != "" && (
                     <CreditTransferModal />
                   )}
-
+                  {showCookiesModal && <CookiesModal />}
                   {showHelp && <HelpModal />}
                 </>
               )}

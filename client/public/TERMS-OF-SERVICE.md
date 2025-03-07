@@ -277,6 +277,7 @@ Le montant des crédits peut varier dans le temps.
 ### 4.5 - Restrictions
 
 - Un Utilisateur qui n'est pas éditeur d'une nation ne peut effectuer aucune modification sur celle-ci.
+- un Utilisateur éditeur d'une nation ne pourra pas supprimer son compte avant d'avoir préalablement cédé ou supprimé sa nation.
 - Un Utilisateur non administrateur de l'application ne pourra pas accéder à la page d'administration.
 - Des quotas restreignent la quantité maximum de certains éléments au sein d'une nation. Ces quotas peuvent être dépassés en utilisant les crédits de la trésorerie de la nation (voir [ARTICLE 4.4](#44---les-crédits)).
 

@@ -31,7 +31,7 @@ export class PlaceListModel extends ListModel {
     const updatedList = myStore.get(placeListAtomV2).addMany(list);
     myStore.set(placeListAtomV2, new PlaceListModel(updatedList));
   };
-  loadPlaceList = async (searchName: string) => {
+  loadPlaceList = async (searchName: string, forceFetch: boolean = true) => {
     myStore.set(loadingAtom, true);
     try {
       let savedPlaces: PlaceModel[] = [];
@@ -44,7 +44,7 @@ export class PlaceListModel extends ListModel {
       if (searchName === "") {
         savedPlaces = myStore.get(placeListAtomV2).getItems();
       }
-      if (savedPlaces.length > 0) {
+      if (savedPlaces.length > 0 && !forceFetch) {
         this.items = savedPlaces;
       } else {
         const places: Place[] = await getAllPlacesFetch(searchName);

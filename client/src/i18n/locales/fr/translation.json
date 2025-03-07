@@ -76,6 +76,7 @@
       }
     },
     "citizen": {
+      "noCitizen": "aucun citizen à afficher",
       "noBio": "pas de biographie",
       "virtualCitizenship": "citoyenneté virtuelle",
       "settings": "paramètre du compte",
@@ -100,6 +101,7 @@
       "newUser": "créez un compte utilisateur"
     },
     "place": {
+      "noPlace": "aucun lieu à afficher",
       "noChildrenPlaces": "aucun lieu enfant à afficher",
       "image": "illustration du lieu",
       "noImage": "aucune illustration du lieu",
@@ -614,7 +616,7 @@
     },
     "nationToAccept": {
       "title": "Vie de la nation ",
-      "message": " demande la citoyenneté de la nation"
+      "message": " demande la citoyenneté de la nation "
     },
     "nationToWait": {
       "title": "Vie de la nation ",

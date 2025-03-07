@@ -7,15 +7,15 @@ import { useAtom } from "jotai";
 export function useCookiesModal() {
   const [showCookiesModal, setShowCookiesModal] = useAtom(showCookiesModalAtom);
   const cookies = document.cookie.split("; ");
-  const cookie = cookies.find((row) => row.startsWith("CookieConsent"));
+  const cookieConsent = cookies.find((row) => row.startsWith("CookieConsent"));
 
-  if (!cookie) {
+  if (!cookieConsent) {
     setShowCookiesModal(true);
   }
 
   const getCookieBoolean = () => {
-    if (!cookie) return false; // Retourne false si le cookie n'existe pas
-    return cookie.split("=")[1] === "true"; // Convertit la valeur en booléen
+    if (!cookieConsent) return false; // Retourne false si le cookie n'existe pas
+    return cookieConsent.split("=")[1] === "true"; // Convertit la valeur en booléen
   };
 
   const [cookiesAccepted, setCookiesAccepted] =

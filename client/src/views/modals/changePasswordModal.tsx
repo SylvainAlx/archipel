@@ -57,6 +57,11 @@ export function ChangePasswordModal() {
             )}
             value={confirmPassword}
           />
+          {!passwordsMatch && (
+            <p className="text-red-500 text-sm">
+              {t("components.form.input.confirmPassword")}
+            </p>
+          )}
           <div className="flex gap-4 justify-center my-4">
             <div className={`${!passwordsMatch && "cursor-not-allowed"}`}>
               <Button

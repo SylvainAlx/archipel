@@ -13,19 +13,21 @@ export const getAdminComs = async (req, res) => {
   }
 };
 
-export const reportContent = (req, res) => {
+export const reportContent = async (req, res) => {
   try {
     const AContent = req.params.id;
-    modifierReportOuBan(AContent, true, null);
+    const content = await modifierReportOuBan(AContent, true, null);
+    res.status(200).json(content);
   } catch (error) {
     handleError(error, res);
   }
 };
 
-export const reverseReportContent = (req, res) => {
+export const reverseReportContent = async (req, res) => {
   try {
     const AContent = req.params.id;
-    modifierReportOuBan(AContent, false, null);
+    const content = await modifierReportOuBan(AContent, false, null);
+    res.status(200).json(content);
   } catch (error) {
     handleError(error, res);
   }
@@ -34,16 +36,18 @@ export const reverseReportContent = (req, res) => {
 export const banContent = async (req, res) => {
   try {
     const AContent = req.params.id;
-    await modifierReportOuBan(AContent, null, true);
+    const content = await modifierReportOuBan(AContent, null, true);
+    res.status(200).json(content);
   } catch (error) {
     handleError(error, res);
   }
 };
 
-export const reverseBanContent = (req, res) => {
+export const reverseBanContent = async (req, res) => {
   try {
     const AContent = req.params.id;
-    modifierReportOuBan(AContent, false, null);
+    const content = await modifierReportOuBan(AContent, false, null);
+    res.status(200).json(content);
   } catch (error) {
     handleError(error, res);
   }

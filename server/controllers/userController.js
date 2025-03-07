@@ -2,13 +2,14 @@ import User from "../models/userSchema.js";
 import Nation from "../models/nationSchema.js";
 import Param from "../models/paramSchema.js";
 import Place from "../models/placeSchema.js";
+import Com from "../models/comSchema.js";
 
 import {
   addMonths,
   createOfficialId,
   handleError,
 } from "../utils/functions.js";
-import { DEFAULT_GIFTS } from "../settings/const.js";
+import { COMTYPE, DEFAULT_GIFTS } from "../settings/const.js";
 import {
   getUserByName,
   getRecoveryWords,
@@ -23,6 +24,7 @@ import {
   payCreditsFromBank,
   recoverCreditToBank,
 } from "../services/paramService.js";
+import { deleteFile } from "../services/fileService.js";
 
 export const register = async (req, res) => {
   try {
@@ -238,27 +240,41 @@ export const deleteSelfUser = async (req, res) => {
     // Sauvegarder l'ID de la nation avant de supprimer l'utilisateur
     const nationId = user.citizenship?.nationId;
 
-    // Suppression de l'utilisateur
-    const deletedUser = await User.findOneAndDelete({ officialId: id });
-    if (!deletedUser) {
-      return res.status(500).json({ infoType: "500" });
-    }
-    await recoverCreditToBank(deletedUser.credits);
     // Mise à jour de la nation si l'utilisateur en faisait partie
     if (nationId) {
       const nation = await Nation.findOne({ officialId: nationId });
       if (nation) {
         if (nation.owner === id) {
-          nation.owner = "";
+          return res.status(401).json({ infoType: "401" });
         }
         nation.data.roleplay.citizens = Math.max(
           0,
           nation.data.roleplay.citizens - 1,
         );
         await nation.save();
-        return res.status(200).json({ nation, infoType: "delete" });
       }
     }
+
+    // Suppression de l'utilisateur
+    const deletedUser = await User.findOneAndDelete({ officialId: id });
+    if (!deletedUser) {
+      return res.status(500).json({ infoType: "500" });
+    }
+    // suppression des images uploadées pour la nation
+    if (deletedUser.avatar != "") {
+      const uuid = deletedUser.avatar.replace("https://ucarecdn.com/", "");
+      await deleteFile(uuid);
+    }
+    // suppression des communications privées de l'utilisateur
+    await Com.deleteMany({
+      origin: deletedUser.officialId,
+      comType: COMTYPE[6].id,
+    });
+    await Com.deleteMany({
+      destination: deletedUser.officialId,
+    });
+
+    await recoverCreditToBank(deletedUser.credits);
 
     return res.status(200).json({ infoType: "delete" });
   } catch (error) {

@@ -76,6 +76,7 @@
       }
     },
     "citizen": {
+      "noCitizen": "no citizen to display",
       "noBio": "no biography",
       "virtualCitizenship": "virtual citizenship",
       "settings": "settings",
@@ -100,6 +101,7 @@
       "newUser": "create account"
     },
     "place": {
+      "noPlace": "no place to display",
       "noChildrenPlaces": "no children locations to display",
       "image": "image of the location",
       "noImage": "no image of the location",
@@ -318,7 +320,7 @@
           }
         }
       },
-      "newRelationModal": {
+      "relationModal": {
         "new": "new diplomatic relationship",
         "update": "update diplomatic relationship",
         "nameInput": "relationship naming",
@@ -606,15 +608,15 @@
     },
     "nationJoin": {
       "title": "Life of the nation ",
-      "message": " has joined the nation"
+      "message": " has joined the nation "
     },
     "nationLeave": {
       "title": "Life of the nation ",
-      "message": " has left the nation"
+      "message": " has left the nation "
     },
     "nationToAccept": {
       "title": "Life of the nation ",
-      "message": " requests citizenship for the nation"
+      "message": " requests citizenship for the nation "
     },
     "nationToWait": {
       "title": "Life of the nation ",

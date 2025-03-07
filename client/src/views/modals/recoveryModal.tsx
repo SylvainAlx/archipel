@@ -12,7 +12,7 @@ export function RecoveryModal() {
   const [checked, setChecked] = useState(false);
   const { t } = useTranslation();
   const modalRef = useModal(() =>
-    console.error(t("components.modals.recoveryModal.confirm")),
+    console.error(t("components.modals.recoveryModal.title")),
   );
   const handleClick = async () => {
     try {

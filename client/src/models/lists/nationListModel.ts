@@ -30,7 +30,11 @@ export class NationListModel extends ListModel {
   getNationByOfficialId = (officialId: string) => {
     return this.items.find((nation) => nation.officialId === officialId);
   };
-  loadNationList = async (searchName: string, searchTag: string) => {
+  loadNationList = async (
+    searchName: string,
+    searchTag: string,
+    forceFetch: boolean = true,
+  ) => {
     myStore.set(loadingAtom, true);
     try {
       this.items = [];
@@ -52,7 +56,7 @@ export class NationListModel extends ListModel {
       if (searchName === "" && searchTag === "") {
         savedNations = myStore.get(nationListAtomV2).getItems();
       }
-      if (savedNations.length > 0) {
+      if (savedNations.length > 0 && !forceFetch) {
         this.items = savedNations;
       } else {
         const nations: Nation[] = await getAllNationsFetch(
