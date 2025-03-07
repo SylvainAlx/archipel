@@ -17,8 +17,8 @@ export const ADA_PUBLIC_KEY = import.meta.env.VITE_ADA_PUBLIC_KEY;
 
 export const VERSION = {
   beta: "",
-  rc: "1.0.0",
-  release: "",
+  rc: "",
+  release: "1.0.0",
   testing: false,
 };
 

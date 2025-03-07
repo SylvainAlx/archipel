@@ -4,6 +4,37 @@ Le code source est public et est visible [ici](https://github.com/SylvainAlx/arc
 
 ## Version actuelle
 
+### v1.0.0
+
+#### Ajouts
+
+aucun
+
+#### Suppressions
+
+aucune
+
+#### Modifications & Corrections
+
+- Correction du modal de cookies
+- Correction du routing pour Vercel
+- Correction de la recherche des utilisateur
+
+## Développements à venir
+
+- Créer une organisation ou en rejoindre une
+- Créer des items et les proposer à l'acquisition aux citoyens
+- Ajouter les hymnes des nations
+- Créer une gazette des nations en se basant sur les communiqués
+- Montrer la répartitions des langues parlées dans chaque nation
+- Exporter une carte d'identité virtuelle sous forme d'image
+- Étendre les fonctionnalités pour les utilisateurs mobile
+- Lier les lieux de la nation à un emplacement sur la carte
+- Améliorer des traductions
+- Carte virtuelle d'Archipel avec l'ensemble des nations représentées
+
+## Versions précédentes
+
 ### RC-1.0.0
 
 #### Ajouts
@@ -32,21 +63,6 @@ Le code source est public et est visible [ici](https://github.com/SylvainAlx/arc
 - Les quotas et les coûts des lieux et tuiles peuvent être ajustés directement en base de donnée
 - Durcissement des règles pour le choix du mot de passe d'un nouvel utilisateur ou lors d'un changement
 - Refonte de l'onglet "statistiques" de la page "explorer"
-
-## Développements à venir
-
-- Créer une organisation ou en rejoindre une
-- Créer des items et les proposer à l'acquisition aux citoyens
-- Ajouter les hymnes des nations
-- Créer une gazette des nations en se basant sur les communiqués
-- Montrer la répartitions des langues parlées dans chaque nation
-- Exporter une carte d'identité virtuelle sous forme d'image
-- Étendre les fonctionnalités pour les utilisateurs mobile
-- Lier les lieux de la nation à un emplacement sur la carte
-- Améliorer des traductions
-- Carte virtuelle d'Archipel avec l'ensemble des nations représentées
-
-## Versions précédentes
 
 ### BETA-0.7
 
