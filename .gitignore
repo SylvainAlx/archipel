@@ -1,3 +1,5 @@
+validation.md
+
 /server/.env
 /server/node_modules
 /server/dist
@@ -6,6 +8,7 @@
 /client/node_modules
 /client/dist
 /client/dev-dist
+/client/eslint-errors.txt
 
 /db/backup
 /db/extracted

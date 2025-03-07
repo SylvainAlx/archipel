@@ -14,25 +14,27 @@ import {
   newPlaceAtom,
   newRelationAtom,
   recoveryKey,
-  showCookiesModalAtom,
+  showHelpAtom,
   showLangModalAtom,
   showMenuAtom,
 } from "../settings/store";
-import { RecoveryModal } from "../components/modals/recoveryModal";
-import ConfirmModal from "../components/modals/confirmModal";
-import InfoModal from "../components/modals/infoModal";
-import EditBoxModal from "../components/modals/editBoxModal";
-import NewPlaceModal from "../components/modals/newPlaceModal";
-import LangModal from "../components/modals/langModal";
-import ImageModal from "../components/modals/imageModal";
-import MenuModal from "../components/modals/menuModal";
-import NewNationModal from "../components/modals/newNationModal";
-import { ChangePasswordModal } from "../components/modals/changePasswordModal";
-import RelationModal from "../components/modals/relationModal";
-import TileFormModal from "../components/modals/tileFormModal";
-import NewComModal from "../components/modals/newComModal";
-import CookiesModal from "../components/modals/cookiesModal";
-import CreditTransferModal from "../components/modals/creditTransferModal";
+import { RecoveryModal } from "../views/modals/recoveryModal";
+import ConfirmModal from "../views/modals/confirmModal";
+import InfoModal from "../views/modals/infoModal";
+import EditBoxModal from "../views/modals/editBoxModal";
+import NewPlaceModal from "../views/modals/newPlaceModal";
+import LangModal from "../views/modals/langModal";
+import ImageModal from "../views/modals/imageModal";
+import MenuModal from "../views/modals/menuModal";
+import NewNationModal from "../views/modals/newNationModal";
+import { ChangePasswordModal } from "../views/modals/changePasswordModal";
+import RelationModal from "../views/modals/relationModal";
+import TileFormModal from "../views/modals/tileFormModal";
+import NewComModal from "../views/modals/newComModal";
+import CreditTransferModal from "../views/modals/creditTransferModal";
+import HelpModal from "../views/modals/helpModal";
+import CookiesModal from "../views/modals/cookiesModal";
+import { useCookiesModal } from "../hooks/modalsHooks/useCookiesModal";
 
 export default function ModalsRouter() {
   const [recovery] = useAtom(recoveryKey);
@@ -50,8 +52,9 @@ export default function ModalsRouter() {
   const [newRelation] = useAtom(newRelationAtom);
   const [tile] = useAtom(editTileAtom);
   const [newCom] = useAtom(newComAtom);
-  const [showCookiesModal] = useAtom(showCookiesModalAtom);
   const [creditTransfer] = useAtom(creditTransferAtom);
+  const [showHelp] = useAtom(showHelpAtom);
+  const { showCookiesModal } = useCookiesModal();
 
   if (
     recovery != "" ||
@@ -68,7 +71,8 @@ export default function ModalsRouter() {
     newRelation.show ||
     tile.nationOfficialId != "" ||
     newCom.origin != "" ||
-    creditTransfer.recipient.officialId != ""
+    creditTransfer.recipient.officialId != "" ||
+    showHelp
   ) {
     return (
       <div
@@ -77,7 +81,7 @@ export default function ModalsRouter() {
         <div
           role="dialog"
           aria-modal="true"
-          className={`min-w-[350px] max-w-[90%] ${(!loading || longLoading) && "bg-slate-800"} rounded-md p-3 flex flex-col items-center gap-4`}
+          className={`min-w-[350px] max-w-[90%] max-h-[95%] ${(!loading || longLoading) && "bg-slate-800"} rounded-md p-3 flex flex-col items-center gap-4`}
         >
           {loading ? (
             <>{/* <LoadingSpinner /> */}</>
@@ -105,6 +109,7 @@ export default function ModalsRouter() {
                     <CreditTransferModal />
                   )}
                   {showCookiesModal && <CookiesModal />}
+                  {showHelp && <HelpModal />}
                 </>
               )}
             </>

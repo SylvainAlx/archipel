@@ -2,9 +2,9 @@
   "pages": {
     "home": {
       "title": "bienvenue",
-      "presentation1": "Bienvenue dans votre espace dédié aux micronations et nations virtuelles ! Que vous soyez membre d'une micronation sérieuse ou passionné de role-play dans des univers imaginaires, notre application est là pour vous. Rejoignez une communauté dynamique, échangez, collaborez et faites briller votre nation dans un espace conçu pour vous rapprocher. Créez des liens, partagez vos projets, et faites vivre votre vision !",
-      "presentation2": "En tant que leader, vous avez la possibilité de façonner votre nation à votre image. Ajoutez un drapeau qui incarne vos valeurs, définissez une devise qui inspire votre communauté, rédigez une description détaillée pour présenter votre vision. Vous pouvez également cartographier votre territoire en ajoutant des lieux importants et marquer ainsi l’identité unique de votre nation. Transformez votre rêve en une réalité virtuelle, et faites rayonner votre nation auprès des autres !",
-      "presentation3": "Tissez des liens diplomatiques et créez des alliances ! Notre plateforme vous offre l’opportunité d’interagir avec d’autres nations, qu’elles soient réelles ou virtuelles. Initiez des relations diplomatiques, négociez des accords, formez des alliances stratégiques ou organisez des événements communs. Élargissez l’influence de votre nation en construisant des ponts entre les cultures et en collaborant avec d’autres leaders. Ensemble, donnez une nouvelle dimension à vos ambitions !"
+      "presentation1": "Bienvenue dans votre espace dédié aux **micronations** et **nations virtuelles** ! Que vous soyez membre d'une micronation **sérieuse** ou passionné de **role-play** dans des **univers imaginaires**, notre application est là pour vous. Rejoignez une communauté **dynamique**, échangez, collaborez et faites briller votre nation dans un espace conçu pour vous rapprocher. **Créez** des liens, **partagez** vos projets, et **faites vivre** votre vision !",
+      "presentation2": "En tant qu'éditeur, vous avez la possibilité de **façonner votre nation** à votre goût. Ajoutez un **drapeau** qui incarne vos valeurs, définissez une **devise** qui inspire votre communauté, rédigez une **description détaillée** pour présenter votre vision. Vous pouvez également **cartographier votre territoire** en ajoutant des lieux importants et marquer ainsi l’identité unique de votre nation. Transformez votre rêve en une réalité virtuelle, et faites rayonner votre nation auprès des autres !",
+      "presentation3": "Tissez des liens diplomatiques et créez des alliances ! Notre plateforme vous offre l’opportunité d’interagir avec d’autres nations, qu’elles soient réelles ou virtuelles. Initiez des **relations diplomatiques**, négociez des accords, formez des alliances stratégiques ou organisez des événements communs. Élargissez l’influence de votre nation en construisant des **ponts entre les cultures** et en collaborant avec d’autres leaders. Ensemble, donnez une nouvelle dimension à vos ambitions !"
     },
     "lobby": {
       "password": "Renseignez le mot de passe pour accéder à l'application",
@@ -22,7 +22,8 @@
         "noMotto": "pas de devise",
         "externalLinks": "liens externes",
         "noDescription": "pas de description",
-        "nationState": "État-Nation"
+        "nationState": "État-Nation",
+        "noNationState": "État multinational"
       },
       "map": {
         "title": "carte de la nation",
@@ -75,6 +76,7 @@
       }
     },
     "citizen": {
+      "noCitizen": "aucun citizen à afficher",
       "noBio": "pas de biographie",
       "virtualCitizenship": "citoyenneté virtuelle",
       "settings": "paramètre du compte",
@@ -99,6 +101,7 @@
       "newUser": "créez un compte utilisateur"
     },
     "place": {
+      "noPlace": "aucun lieu à afficher",
       "noChildrenPlaces": "aucun lieu enfant à afficher",
       "image": "illustration du lieu",
       "noImage": "aucune illustration du lieu",
@@ -124,11 +127,18 @@
     },
     "termsOfService": {
       "title": "conditions générales d'utilisation"
+    },
+    "notFound": {
+      "title": "404 - page non trouvée",
+      "message": "Désolé, la page que vous recherchez n'existe pas."
     }
   },
   "components": {
     "ads": {
       "nation": "LA PUBLICITÉ POUR VOTRE NATION ICI !"
+    },
+    "pieChart": {
+      "empty": "aucune donnée disponible"
     },
     "buttons": {
       "home": "accueil",
@@ -169,16 +179,22 @@
       "accept": "accepter",
       "refuse": "refuser",
       "break": "rompre",
-      "donate": "faire un don",
+      "donate": "soutenir",
       "edit": "éditer",
       "markAsRead": "non lu",
       "markAsUnread": "lu",
-      "transferCredits": "envoyer des credits"
+      "transferCredits": "envoyer des credits",
+      "giveOwnership": "céder l'édition",
+      "askOfficial": "demander le statut officiel",
+      "createNewRecovery": "créer une nouvelle clé de récupération"
     },
     "form": {
       "input": {
         "name": "nom",
-        "password": "mot de passe"
+        "password": "mot de passe",
+        "confirmPassword": "Les mots de passe ne sont pas identiques !",
+        "strongPassword": "Le mot de passe doit contenir au moins 8 caractères, une majuscule, une minuscule, un chiffre et un caractère spécial.",
+        "buyerOfficialId": "merci de renseigner l'identifiant unique du citoyen désigné (sous la forme: **c********)"
       },
       "select": {
         "choose": "choisir",
@@ -188,6 +204,10 @@
       "mdEditor": {
         "reached": "La longueur maximale de texte est atteinte",
         "character": "caractères"
+      },
+      "boolean": {
+        "yes": "oui",
+        "no": "non"
       }
     },
     "logo": {
@@ -219,10 +239,12 @@
         "createCom": "confirmez-vous la création de la communication ?",
         "deleteCom": "confirmez-vous la suppression définitive de la communication ?",
         "reportContent": "confirmez-vous le signalement du contenu à l'administrateur ?",
-        "transferCredits": "confirmez-vous le virement ?"
+        "transferCredits": "confirmez-vous le virement ?",
+        "giveOwnership": "confirmez-vous la cession des droits d'édition ?",
+        "createNewRecovery": "confirmez-vous la création d'une nouvelle clé de récupération ?"
       },
       "cookiesModal": {
-        "text": "ce site utilise des cookies pour améliorer votre expérience utilisateur",
+        "text": "Nous utilisons des cookies à des fins statistiques avec Google Analytics et pour protéger notre site contre les abus avec Google reCAPTCHA. Ces cookies peuvent impliquer des services tiers. Vous pouvez accepter ou refuser leur utilisation.",
         "accept": "je comprends",
         "decline": "je refuse"
       },
@@ -238,7 +260,7 @@
         "nationName": "nom de la nation",
         "motto": "devise",
         "currency": "monnaie",
-        "isNationState": "Cocher s'il s'agit d'un État-nation",
+        "isNationState": "S'agit-il d'un État-nation ?",
         "regime": "régime",
         "tagsInfos": "Espace pour valider, cliquer pour supprimer"
       },
@@ -277,7 +299,26 @@
         "comMessage": "message"
       },
       "infoModal": {
-        "title": "information"
+        "title": "information",
+        "cryptoAddresses": "adresses publiques pour une donation en cryptomonnaie",
+        "donation": "La donation doit être anonyme. Aucun utilisateur, inscrit ou non sur l'application, ne pourra faire valoir une donation pour obtenir des faveurs ou des compensations.",
+        "askOfficial": "Pour obtenir le statut officiel et le badge, le gérant de votre nation virtuelle ou micronation doit explicitement contacter l'éditeur de l'application (adresse email ci-dessous) en formulant sa demande comme ceci :|Je sousigné [LE NOM DU GÉRANT], atteste sur l'honneur que l'utilisateur [LE NOM DE L'UTILISATEUR SUR ARCHIPEL] représente officiellement la nation [LE NOM DE LA NATION] sur l'application Archipel.|L'email doit comporter la signature ou le sceau officiel de la nation.|Une fois la demande vérifiée, un email de l'éditeur confirmera la modification.",
+        "creditsParams": "paramètres des crédits",
+        "table": {
+          "thead": {
+            "place": "lieu",
+            "tile": "tuile",
+            "userBonus": "bonus pour l'utilisateur",
+            "nationBonus": "bonus pour la nation"
+          },
+          "tbody": {
+            "freeLimit": "limite gratuite",
+            "cost": "coût",
+            "register": "inscription",
+            "newNation": "création d'une nation",
+            "citizenship": "nouveau citoyen"
+          }
+        }
       },
       "relationModal": {
         "new": "nouvelle relation diplomatique",
@@ -292,6 +333,33 @@
         "amount": "montant",
         "accountToBeDebited": "compte à débiter",
         "remainingBalance": "solde restant"
+      },
+      "helpModal": {
+        "title": "Aide",
+        "citizen": {
+          "title": "le citoyen",
+          "description": "**Votre identité unique d'utilisateur**<hr/>Une fois inscrit pour trouverez sur votre page de profil un identifiant unique sous la forme :<br/>*XXCXXXXXXXX*<br/>Cet identifiant se retrouve également dans la barre d'adresse de votre page de profil :<br/>*[url Archipel]/citizen/[votre identifiant]*<br/><br/>**La nationalité virtuelle**<hr/>Sur *Archipel*, vous pouvez devenir citoyen, soit :<br/>- en rejoignant une des nations déjà existantes. Il vous faudra attendre alors l'approbation de l'éditeur de la nation avant de l'intéger<br/>- en créant la votre !<br/><br/>**Votre tableau de bord**<hr/>Depuis votre page de profil vous pouvez :<br/>- Changer votre avatar et vos informations<br/>- Gérer vos paramètres<br/>"
+        },
+        "nation": {
+          "title": "la nation",
+          "description": "**Présentation**<hr/>La nation est la clé de voute d'*Archipel*, c'est celle-ci qui va être à l'origine du mouvement des utilisateurs/citoyens, des lieux créés et de la vie qui va naître sur la plateforme. Une nation peut être l'image d'une micronation existant réellement ou bien une nation complétement fictive avec comme objectif une immersion et un *Role-Play* pour ses membres.<br/><br/>**Les composantes d'une nation**<hr/>Sur *Archipel*, on trouve sur la page de la nation :<br/>- Un nom, une devise, un drapeau, etc...<br/>- une carte<br/>- des informations complémentaires (population, PIB, etc...)<br/>- des relations diplomatiques<br/>- des lieux (États, Régions, villes, éléments naturels)<br/>- des communiqués privées internes à la nation ou publics<br/><br/>**L'éditeur de la nation**<hr/>L'éditeur de la nation est l'utilisateur qui est à l'origine de sa création sur *Archipel* ou celui qui a hérité des droits mais n'est pas obligatoirement son dirigeant. Il possède les droits d'édition et peut :<br/>- modifier n'importe quelle information concernant la nation<br/>- accepter des demandes de citoyenneté ou bannir des citoyens<br/>- lier des relations diplomatiques avec d'autres nations<br/>- céder les droits d'édition de la nation à un autre citoyen<br/><br/>**Le badge officiel**<hr/>Un badge 'officiel' peut être acquis si le gérant réel de la nation confirme à l'Éditeur par mail quel utilisateur peut modifier la nation sur Archipel. Si approbation, les informations de la nation deviennent, de fait, officielles."
+        },
+        "relations": {
+          "title": "les relations diplomatiques",
+          "description": "L'éditeur d'une nation peut faire une demande de relations diplomatiques auprès d'une autre nation directement depuis la page de celle-ci.<br/>Il propose un titre de la relation, un description ainsi que les types de partenariat qu'il souhaite entreprendre.<br/>La relation sera effective uniquement lorsque la nation questionnée acceptera la demande. Dans le cas contraire, la demande est annulée.<br/>La relation peut être modifiée par n'importe quelle nation en faisant partie. Les autres nations seront informées de la modification et seront libre de l'accepter ou de rompre la relation."
+        },
+        "places": {
+          "title": "les lieux",
+          "description": "**Présentation**<hr/>Les lieux ajoutent une profondeur aux nations et permettent de faire la liaison avec les citoyens via la résidence de ceux-ci.<br/><br/>**Les types de lieux**<hr/>Lors de sa création, on décide du type de lieu parmi les choix suivants :<br/>- un état<br/>- une région<br/>- une ville<br/>- un élément naturel<br/><br/>**Les lieux enfants**<hr/>Les lieux peuvent être imbriqués les uns dans les autres afin de créer une arborescence de taille. Un lieu n'ayant pas de parent défini est par défaut à la racine de la nation.<br/><br/>**Cas particulier des villes**<hr/>Les citoyens d'une nation peuvent choisir sur leur profil un lieu de résidence parmi les villes existantes de la nation.<br/>De même, la nation peut choisir sa capitale parmi les villes qu'elle possède."
+        },
+        "coms": {
+          "title": "les communications",
+          "description": "**Présentation**<hr/>Les communications sont des transmissions d'informations entre les utilisateurs et les nations. Elle permettent de garder un suivi des actions importantes réalisées sur Archipel.<br/><br/>**Les communications automatiques**<hr/>La plupart du temps les communications sont automatiques et se créées essentiellement :<br/>- à l'inscription<br/>- lorsqu'un utilisateur rejoint ou créé une nation<br/>- lors d'une création ou modification de relation diplomatique<br/>- au retrait d'un citoyen d'une nation et de la suppression d'une nation<br/><br/>**Poster un communiqué**<hr/>Seul l'éditeur d'une nation peut poster une communication. Celle-ci a un rôle de communiqué officiel. Elle peut être privée et donc visiblement uniquement par les citoyens de la nation, ou publique et donc également visible dans les actualités."
+        },
+        "credits": {
+          "title": "les crédits",
+          "description": "**Présentation**<hr/>Les crédits ajoutent une mécanique à l'application qui participe à son côté ludique. Les nations ayant le plus grand nombre de crédits (appellée trésorerie) sont vues en premier dans l'onglet 'nations' de la page explorer.<br/><br/>**Obtention des crédits**<hr/>Des crédits sont donnés lorsque :<br/>- Un utilisateur rejoint Archipel<br/>- Une nation est créée<br/>- Un utilisateur rejoint une nation<br/><br/>**Dépense des crédits**<hr/>Des crédits sont prélevés lorsque :<br/>- le seuil maximal _gratuit_ pour créer des lieux et des tuiles d'informations est dépassé<br/><br/>**Transfert de crédits**<hr/>Le transfert de crédits est possible entre utilisateurs et nations.<br/><br/>**Informations complémentaires**<hr/>Si l'éditeur de la nation supprime un lieu ou une tuile qui lui a coûté des crédits, la nation regagne cette somme.<br/>Le montant des crédits peut varier dans le temps."
+        }
       }
     },
     "hoverInfos": {
@@ -334,7 +402,8 @@
         "honor_pioneer": "pionnier",
         "religion": "religion",
         "gender": "genre",
-        "particularity": "particularité"
+        "particularity": "particularité",
+        "official": "officiel"
       },
       "avatar": "avatar",
       "relations": {
@@ -368,7 +437,9 @@
           "ascAlpha": "alphabetique croissant",
           "descAlpha": "alphabetique décroissant",
           "ascDate": "date d'inscription croissante",
-          "descDate": "date d'inscription décroissante"
+          "descDate": "date d'inscription décroissante",
+          "ascVisit": "dernière date de visite croissante",
+          "descVisit": "dernière date de visite décroissante"
         }
       },
       "placesList": {
@@ -472,7 +543,15 @@
       "500": "Erreur serveur",
       "11000": "Information déjà existante",
       "nsfw": "L'image contient du contenu NSFW ! Notification envoyée à l'administrateur",
-      "offline": "Vous êtes hors ligne !"
+      "offline": "Vous êtes hors ligne !",
+      "badUser": "Utilisateur inconnu",
+      "badPassword": "Mot de passe erroné",
+      "badRecovery": "Clé de récupération erronée",
+      "oldJwt": "session expirée",
+      "subscriptionNotReady": "La souscription n'est pas encore disponible",
+      "ipbanned": "Votre adresse IP a été banni de Archipel",
+      "creditsNotReady": "L'ajout de crédits n'est pas encore disponible",
+      "notEnoughCredits": "Crédits insuffisants"
     },
     "user": {
       "signIn": "Connexion réussie",
@@ -483,21 +562,13 @@
       "save": "Sauvegarde effectuée",
       "add": "Ajout effectué",
       "new": "Création réussie",
-      "badUser": "Utilisateur inconnu",
-      "badPassword": "Mot de passe erroné",
       "newPassword": "Nouveau mot de passe pris en compte",
-      "badRecovery": "Clé de récupération erronée",
-      "deleteKO": "impossible de supprimer l'utilisateur",
-      "update": "Mise à jour réussie",
-      "creditsNotReady": "L'ajout de crédits n'est pas encore disponible",
-      "subscriptionNotReady": "La souscription n'est pas encore disponible",
-      "ipbanned": "Votre adresse IP a été banni de Archipel"
+      "update": "Mise à jour réussie"
     },
     "nation": {
       "create": "Nouvelle nation créée",
       "update": "Nation modifiée",
-      "delete": "Nation supprimée",
-      "notEnoughCredits": "Crédits insuffisants"
+      "delete": "Nation supprimée"
     },
     "relation": {
       "create": "Nouvelle relation diplomatique créée",
@@ -545,11 +616,15 @@
     },
     "nationToAccept": {
       "title": "Vie de la nation ",
-      "message": " demande la citoyenneté de la nation"
+      "message": " demande la citoyenneté de la nation "
     },
     "nationToWait": {
       "title": "Vie de la nation ",
       "message": "Demande de citoyenneté en attente d'approbation"
+    },
+    "giveOwnership": {
+      "title": "Vie de la nation ",
+      "message": " a transmis l'édition de la nation à "
     },
     "relationToAccept": {
       "title": "Diplomatie",

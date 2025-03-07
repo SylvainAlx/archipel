@@ -3,6 +3,7 @@ import {
   authGet,
   changePasswordFetch,
   changeStatusFetch,
+  createNewRecoveryFetch,
   deleteUserFetch,
   getOneUserFetch,
   loginFetch,
@@ -19,11 +20,13 @@ import {
   loadingAtom,
   myStore,
   nationListAtomV2,
+  paramsAtom,
   placeListAtomV2,
   recoveryKey,
   sessionAtom,
   userListAtomV2,
 } from "../settings/store";
+import { Param } from "../types/typeParam";
 import { Nation } from "../types/typNation";
 import { Place } from "../types/typPlace";
 import {
@@ -91,7 +94,8 @@ export class UserModel extends CommonModel implements User {
     myStore.set(loadingAtom, true);
     try {
       if (jwt) {
-        const response: { user: User; infoType: string } = await authGet(jwt);
+        const response: { user: User; infoType: string; params: Param[] } =
+          await authGet(jwt);
         if (response.user != undefined) {
           myStore.set(sessionAtom, {
             ...myStore.get(sessionAtom),
@@ -105,6 +109,7 @@ export class UserModel extends CommonModel implements User {
               response.user.citizenship.nationId,
             );
           }
+          myStore.set(paramsAtom, response.params);
         } else {
           myStore.set(sessionAtom, emptySession);
           myStore.set(loadingAtom, false);
@@ -236,6 +241,20 @@ export class UserModel extends CommonModel implements User {
     try {
       const response = await changePasswordFetch({ oldPassword, newPassword });
       this.displayUserInfoByType(response.infoType);
+    } catch (error) {
+      errorCatching(error);
+    } finally {
+      myStore.set(loadingAtom, false);
+    }
+  };
+  createNewRecovery = async (password: string) => {
+    myStore.set(loadingAtom, true);
+    try {
+      const response = await createNewRecoveryFetch({ password });
+      console.log(response);
+
+      this.displayUserInfoByType(response.infoType);
+      myStore.set(recoveryKey, response.newRecovery);
     } catch (error) {
       errorCatching(error);
     } finally {
@@ -380,8 +399,9 @@ export class UserModel extends CommonModel implements User {
       this.updateFields(resp.user);
       this.updateSessionAtom(resp.user);
       this.addOrUpdateUserListAtom(resp.user);
-      resp.place && myStore.get(placeListAtomV2).addOrUpdate(resp.place);
-      resp.oldPlace && myStore.get(placeListAtomV2).addOrUpdate(resp.oldPlace);
+      if (resp.place) myStore.get(placeListAtomV2).addOrUpdate(resp.place);
+      if (resp.oldPlace)
+        myStore.get(placeListAtomV2).addOrUpdate(resp.oldPlace);
       this.displayUserInfoByType(resp.infoType);
     } catch (error) {
       errorCatching(error);

@@ -16,6 +16,7 @@ export function useLoadNationPlaces(selectedNation: NationModel) {
       };
       loadNationPlaceList();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedNation]);
 
   return nationPlaceList;

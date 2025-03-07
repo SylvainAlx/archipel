@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { PlaceListModel } from "../models/lists/placeListModel";
 import { Nation } from "../types/typNation";
 
@@ -5,6 +6,14 @@ export const sortByCreatedAt = (list: any[], ascending: boolean = true) => {
   return list.sort((a, b) => {
     const dateA = new Date(a.createdAt).getTime();
     const dateB = new Date(b.createdAt).getTime();
+    return ascending ? dateA - dateB : dateB - dateA;
+  });
+};
+
+export const sortByLastVisit = (list: any[], ascending: boolean = true) => {
+  return list.sort((a, b) => {
+    const dateA = new Date(a.updatedAt).getTime();
+    const dateB = new Date(b.updatedAt).getTime();
     return ascending ? dateA - dateB : dateB - dateA;
   });
 };
@@ -48,7 +57,7 @@ export const sortByTreasury = (list: Nation[], ascending: boolean = true) => {
   return list.sort(function (a, b) {
     return ascending
       ? a.data.roleplay.treasury - b.data.roleplay.treasury
-      : b.data.roleplay.citizens - a.data.roleplay.treasury;
+      : b.data.roleplay.treasury - a.data.roleplay.treasury;
   });
 };
 

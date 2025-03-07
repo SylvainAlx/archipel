@@ -2,12 +2,12 @@
   "pages": {
     "home": {
       "title": "welcome",
-      "presentation1": "Welcome to your hub for micronations and virtual nations! Whether you're part of a serious micronation or a fan of role-playing in imaginary worlds, our application is here for you. Join a vibrant community, connect, collaborate, and showcase your nation in a space designed to bring people together. Build connections, share your projects, and bring your vision to life!",
-      "presentation2": "Customize and bring your nation to life! As a leader, you have the tools to shape your nation in your own image. Add a flag that represents your values, define a motto to inspire your community, and write a detailed description to showcase your vision. You can also map out your territory by adding key locations, giving your nation its unique identity. Turn your dream into a virtual reality and let your nation shine among others!",
-      "presentation3": "Forge diplomatic ties and build alliances! Our platform offers you the opportunity to engage with other nations, whether real or virtual. Initiate diplomatic relations, negotiate agreements, form strategic alliances, or organize joint events. Expand your nation’s influence by building bridges between cultures and collaborating with other leaders. Together, take your ambitions to new heights!"
+      "presentation1": "Welcome to your dedicated space for **micronations** and **virtual nations**! Whether you are a member of a **serious** micronation or passionate about **role-playing** in **imaginary worlds**, our application is here for you. Join a **dynamic** community, exchange ideas, collaborate, and make your nation shine in a space designed to bring you closer together. **Create** connections, **share** your projects, and **bring your vision to life**!",
+      "presentation2": "As an editor, you have the ability to **shape your nation** to your liking. Add a **flag** that embodies your values, define a **motto** that inspires your community, and write a **detailed description** to present your vision. You can also **map out your territory** by adding important locations, marking the unique identity of your nation. Turn your dream into a virtual reality and make your nation stand out among others!",
+      "presentation3": "Build diplomatic ties and create alliances! Our platform offers you the opportunity to interact with other nations, whether real or virtual. Initiate **diplomatic relations**, negotiate agreements, form strategic alliances, or organize joint events. Expand your nation’s influence by **bridging cultures** and collaborating with other leaders. Together, take your ambitions to a whole new level!"
     },
     "lobby": {
-      "description": "enter the password to access the application",
+      "password": "enter the password to access the application",
       "allowed": "access allowed",
       "denied": "access denied"
     },
@@ -22,7 +22,8 @@
         "noMotto": "no motto",
         "externalLinks": "external links",
         "noDescription": "no description",
-        "nationState": "Nation-State"
+        "nationState": "Nation-State",
+        "noNationState": "multinational State"
       },
       "map": {
         "title": "nation map",
@@ -75,6 +76,7 @@
       }
     },
     "citizen": {
+      "noCitizen": "no citizen to display",
       "noBio": "no biography",
       "virtualCitizenship": "virtual citizenship",
       "settings": "settings",
@@ -99,6 +101,7 @@
       "newUser": "create account"
     },
     "place": {
+      "noPlace": "no place to display",
       "noChildrenPlaces": "no children locations to display",
       "image": "image of the location",
       "noImage": "no image of the location",
@@ -124,11 +127,18 @@
     },
     "termsOfService": {
       "title": "terms of service"
+    },
+    "notFound": {
+      "title": "404 - Page not found",
+      "message": "Sorry, the page you are looking for does not exist."
     }
   },
   "components": {
     "ads": {
       "nation": "YOUR NATION'S AD HERE !"
+    },
+    "pieChart": {
+      "empty": "no data available"
     },
     "buttons": {
       "home": "home",
@@ -173,12 +183,18 @@
       "edit": "edit",
       "markAsRead": "mark as read",
       "markAsUnread": "mark as unread",
-      "transferCredits": "transfer credits"
+      "transferCredits": "transfer credits",
+      "giveOwnership": "give ownership",
+      "askOfficial": "request official status",
+      "createNewRecovery": "create a new recovery key"
     },
     "form": {
       "input": {
         "name": "name",
-        "password": "password"
+        "password": "password",
+        "confirmPassword": "Passwords are not the same !",
+        "strongPassword": "The password must contain at least 8 characters, one uppercase letter, one lowercase letter, one digit, and one special character.",
+        "buyerOfficialId": "Please enter the unique identifier of the designated citizen (in the form: **c********)"
       },
       "select": {
         "choose": "choose",
@@ -188,6 +204,10 @@
       "mdEditor": {
         "reached": "maximum text length reached",
         "character": "character"
+      },
+      "boolean": {
+        "yes": "yes",
+        "no": "no"
       }
     },
     "logo": {
@@ -219,10 +239,12 @@
         "createCom": "confirm new communication ?",
         "deleteCom": "delete communication ?",
         "reportContent": "confirm reporting the content to the administrator ?",
-        "transferCredits": "confirm credit transfer ?"
+        "transferCredits": "confirm credit transfer ?",
+        "giveOwnership": "confirm transfer of ownership ?",
+        "createNewRecovery": "confirm the creation of a new recovery key ?"
       },
       "cookiesModal": {
-        "text": "this site uses cookies to improve your user experience",
+        "text": "We use cookies for statistical purposes with Google Analytics and to protect our site from abuse with Google reCAPTCHA. These cookies may involve third-party services. You can accept or refuse their use.",
         "accept": "i understand",
         "decline": "i decline"
       },
@@ -237,7 +259,7 @@
         "title": "new nation",
         "nationName": "nation name",
         "motto": "motto",
-        "isNationState": "check if it is a nation-state",
+        "isNationState": "Is it a nation-state ?",
         "currency": "currency",
         "regime": "regime",
         "tagsInfos": "space to apply, click to delete"
@@ -277,9 +299,28 @@
         "comMessage": "message"
       },
       "infoModal": {
-        "title": "information"
+        "title": "information",
+        "cryptoAddresses": "public addresses for a cryptocurrency donation",
+        "donation": "The donation must be anonymous. No user, registered or not on the application, will be able to claim a donation to obtain favors or compensation.",
+        "askOfficial": "To obtain official status and the badge, the manager of your virtual nation or micronation must explicitly contact the app publisher (email address below) and submit their request as follows:|I, [MANAGER'S NAME], solemnly declare that the user [USER'S NAME ON ARCHIPEL] officially represents the nation [NATION'S NAME] on the Archipel app.|The email must include the nation's official signature or seal.|Once the request is verified, a confirmation email from the publisher will confirm the update.",
+        "creditsParams": "credits settings",
+        "table": {
+          "thead": {
+            "place": "place",
+            "tile": "tile",
+            "userBonus": "bonus for the user",
+            "nationBonus": "bonus for the nation"
+          },
+          "tbody": {
+            "freeLimit": "free limit",
+            "cost": "cost",
+            "register": "registration",
+            "newNation": "creation of a nation",
+            "citizenship": "new citizen"
+          }
+        }
       },
-      "newRelationModal": {
+      "relationModal": {
         "new": "new diplomatic relationship",
         "update": "update diplomatic relationship",
         "nameInput": "relationship naming",
@@ -292,6 +333,33 @@
         "amount": "amount",
         "accountToBeDebited": "account to be debited",
         "remainingBalance": "remaining balance"
+      },
+      "helpModal": {
+        "title": "Help",
+        "citizen": {
+          "title": "the citizen",
+          "description": "**Your unique user identity**<hr/>Once registered, you will find a unique identifier on your profile page in the following format:<br/>*XXCXXXXXXXX*<br/>This identifier is also found in the address bar of your profile page:<br/>*[Archipel URL]/citizen/[your identifier]*<br/><br/>**Virtual nationality**<hr/>On *Archipel*, you can become a citizen by either:<br/>- joining one of the already existing nations. You will have to wait for the nation’s editor to approve your request before joining.<br/>- creating your own!<br/><br/>**Your dashboard**<hr/>From your profile page, you can:<br/>- Change your avatar and personal information<br/>- Manage your settings<br/>"
+        },
+        "nation": {
+          "title": "the nation",
+          "description": "**Overview**<hr/>The nation is the cornerstone of *Archipel*. It drives user/citizen engagement, the creation of places, and the overall life on the platform. A nation can represent a real existing micronation or be a completely fictional one, designed for immersion and *Role-Play* among its members.<br/><br/>**Components of a nation**<hr/>On *Archipel*, a nation's page includes:<br/>- A name, a motto, a flag, etc.<br/>- A map<br/>- Additional information (population, GDP, etc.)<br/>- Diplomatic relations<br/>- Places (States, Regions, Cities, Natural Elements)<br/>- Private internal or public announcements<br/><br/>**The nation editor**<hr/>The nation editor is either the user who created the nation on *Archipel* or someone who has inherited editing rights but is not necessarily the leader. The editor has editing privileges and can:<br/>- Modify any information regarding the nation<br/>- Approve citizenship requests or ban citizens<br/>- Establish diplomatic relations with other nations<br/>- Transfer editing rights to another citizen<br/><br/>**The Official Badge**<hr/>An 'official' badge can be acquired if the actual manager of the nation confirms to the Editor by email which user can edit the nation on Archipel. If approved, the nation's information becomes, in fact, official."
+        },
+        "relations": {
+          "title": "diplomatic relations",
+          "description": "A nation’s editor can request diplomatic relations with another nation directly from its page.<br/>They propose a title for the relationship, a description, and the types of partnerships they wish to establish.<br/>The relationship becomes official only when the other nation accepts the request. If rejected, the request is canceled.<br/>Any nation involved in the relationship can modify it. The other nations will be notified of the modification and can choose to accept or terminate the relationship."
+        },
+        "places": {
+          "title": "places",
+          "description": "**Overview**<hr/>Places add depth to nations and serve as a connection to citizens through their residences.<br/><br/>**Types of places**<hr/>When creating a place, its type must be selected from the following options:<br/>- A state<br/>- A region<br/>- A city<br/>- A natural element<br/><br/>**Nested places**<hr/>Places can be nested within each other to form a hierarchical structure. A place without a defined parent is, by default, at the root level of the nation.<br/><br/>**Special case: Cities**<hr/>Citizens of a nation can choose a city of residence from the existing cities in the nation.<br/>Similarly, the nation can designate its capital from the cities it owns."
+        },
+        "coms": {
+          "title": "communications",
+          "description": "**Overview**<hr/>Communications are exchanges of information between users and nations. They help keep track of important actions performed on Archipel.<br/><br/>**Automatic communications**<hr/>Most communications are automatic and are created primarily when:<br/>- A user registers<br/>- A user joins or creates a nation<br/>- A diplomatic relation is created or modified<br/>- A citizen leaves a nation or a nation is deleted<br/><br/>**Posting an announcement**<hr/>Only the nation’s editor can post a communication. It serves as an official announcement. It can be private, visible only to the nation’s citizens, or public, also appearing in the news feed."
+        },
+        "credits": {
+          "title": "credits",
+          "description": "**Overview**<hr/>Credits introduce a game-like mechanic to the application, adding a layer of engagement. Nations with the most credits (called treasury) are seen first in the 'nations' tab of the explore page.<br/><br/>**Earning credits**<hr/>Credits are awarded when:<br/>- A user joins Archipel<br/>- A nation is created<br/>- A user joins a nation<br/><br/>**Spending credits**<hr/>Credits are deducted when:<br/>- The free limit for creating places and information tiles is exceeded<br/><br/>**Transferring credits**<hr/>Credits can be transferred between users and nations.<br/><br/>**Additional information**<hr/>If a nation’s editor deletes a place or an information tile that cost credits, the nation regains the spent amount.<br/>The amount of credits may fluctuate over time."
+        }
       }
     },
     "hoverInfos": {
@@ -334,7 +402,8 @@
         "honor_pioneer": "pioneer",
         "religion": "religion",
         "gender": "gender",
-        "particularity": "particularity"
+        "particularity": "particularity",
+        "official": "official"
       },
       "avatar": "avatar",
       "relations": {
@@ -368,7 +437,9 @@
           "ascAlpha": "ascending alphabetical",
           "descAlpha": "descending alphabetical",
           "ascDate": "registration date ascending",
-          "descDate": "registration date descending"
+          "descDate": "registration date descending",
+          "ascVisit": "last visit date ascending",
+          "descVisit": "last visit date descending"
         }
       },
       "placesList": {
@@ -472,7 +543,15 @@
       "500": "Server error",
       "11000": "Information already existing in the database",
       "nsfw": "Image contains NSFW content! Notification sent to admin",
-      "offline": "You are offline !"
+      "offline": "You are offline !",
+      "badUser": "Unknown user",
+      "badPassword": "Bad password",
+      "badRecovery": "Incorrect recovery key",
+      "oldJwt": "session expired",
+      "subscriptionNotReady": "Subscription is not yet available",
+      "ipbanned": "Your IP address has been banned from Archipel",
+      "creditsNotReady": "Adding credits is not yet available",
+      "notEnoughCredits": "Not enough credit"
     },
     "user": {
       "signIn": "Sign In successful",
@@ -483,21 +562,13 @@
       "save": "Save successful",
       "add": "Add successful",
       "new": "Creation successful",
-      "badUser": "Unknown user",
-      "badPassword": "Bad password",
       "newPassword": "New saved password",
-      "badRecovery": "Incorrect recovery key",
-      "deleteKO": "Unable to delete the user",
-      "update": "Update successful",
-      "creditsNotReady": "Adding credits is not yet available",
-      "subscriptionNotReady": "Subscription is not yet available",
-      "ipbanned": "Your IP address has been banned from Archipel"
+      "update": "Update successful"
     },
     "nation": {
       "create": "New nation created",
       "update": "Nation updated",
-      "delete": "Nation deleted",
-      "notEnoughCredits": "Not enough credit"
+      "delete": "Nation deleted"
     },
     "relation": {
       "create": "New diplomatic relationship created",
@@ -537,15 +608,15 @@
     },
     "nationJoin": {
       "title": "Life of the nation ",
-      "message": " has joined the nation"
+      "message": " has joined the nation "
     },
     "nationLeave": {
       "title": "Life of the nation ",
-      "message": " has left the nation"
+      "message": " has left the nation "
     },
     "nationToAccept": {
       "title": "Life of the nation ",
-      "message": " requests citizenship for the nation"
+      "message": " requests citizenship for the nation "
     },
     "nationToWait": {
       "title": "Life of the nation ",

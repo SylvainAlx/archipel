@@ -55,6 +55,14 @@ export const CITIZEN_SORTING = {
     id: 3,
     label: i18n.t("components.searchBars.citizensList.sortCitizens.descDate"),
   },
+  ascVisit: {
+    id: 4,
+    label: i18n.t("components.searchBars.citizensList.sortCitizens.ascVisit"),
+  },
+  descVisit: {
+    id: 5,
+    label: i18n.t("components.searchBars.citizensList.sortCitizens.descVisit"),
+  },
 };
 
 export const NATION_SORTING = {

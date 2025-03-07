@@ -16,6 +16,7 @@ import {
   changeStatus,
   changePlan,
   transferCredits,
+  createNewRecovery,
 } from "../controllers/userController.js";
 
 const userRouter = express.Router();
@@ -24,6 +25,7 @@ userRouter.post("/signup", register);
 userRouter.post("/signin", login);
 userRouter.post("/forgetpassword", forgetPassword);
 userRouter.post("/changepassword", [verifyJwt], changePassword);
+userRouter.post("/createnewrecovery", [verifyJwt], createNewRecovery);
 userRouter.post("/update", [verifyJwt], updateUser);
 userRouter.post("/changestatus", [verifyJwt], changeStatus);
 userRouter.post("/changeplan", changePlan);

@@ -3,13 +3,17 @@ import User from "../models/userSchema.js";
 import Place from "../models/placeSchema.js";
 import Tile from "../models/tileSchema.js";
 import Relation from "../models/relationSchema.js";
-import {
-  createOfficialId,
-  deleteFile,
-  handleError,
-} from "../utils/functions.js";
-import { GIFTS } from "../settings/const.js";
+import Com from "../models/comSchema.js";
+import { createOfficialId, handleError } from "../utils/functions.js";
+import { COMTYPE, DEFAULT_GIFTS } from "../settings/const.js";
 import { getUserByOfficialId } from "../services/userService.js";
+import {
+  getGifts,
+  getValueFromParam,
+  payCreditsFromBank,
+  recoverCreditToBank,
+} from "../services/paramService.js";
+import { deleteFile } from "../services/fileService.js";
 
 export const nationsCount = async (req, res) => {
   try {
@@ -40,8 +44,13 @@ export const createNation = async (req, res) => {
       return res.status(403).json({ infoType: "403" });
     }
     const officialId = createOfficialId("n");
+    const gift = getValueFromParam(
+      await getGifts(),
+      "newNation",
+      DEFAULT_GIFTS.NEW_NATION,
+    );
     let data = {
-      roleplay: { citizens: 1, treasury: GIFTS.REGISTER },
+      roleplay: { citizens: 1, treasury: gift },
       general: {},
     };
     data.general.motto = motto;
@@ -59,6 +68,7 @@ export const createNation = async (req, res) => {
 
     try {
       const savedNation = await nation.save();
+      await payCreditsFromBank(gift);
       const user = await User.findOne({ officialId: owner });
       user.citizenship.status = 1;
       user.citizenship.nationId = savedNation.officialId;
@@ -91,14 +101,21 @@ export const getAllNations = async (req, res) => {
     const searchText = req.query.name;
     const searchTag = req.query.tag;
     if (searchText || searchTag) {
+      const filter = { banished: false };
+      if (searchText) {
+        filter.name = { $regex: ".*" + searchText + ".*", $options: "i" };
+      }
+      if (searchTag) {
+        filter["data.general.tags"] = {
+          $regex: ".*" + searchTag + ".*",
+          $options: "i",
+        };
+      }
       const nations = await Nation.find(
-        {
-          name: { $regex: searchText, $options: "i" },
-          "data.general.tags": { $regex: searchTag, $options: "i" },
-          banished: false,
-        },
+        filter,
         "officialId name owner role reported banished data createdAt",
       );
+
       res.status(200).json(nations);
     } else if (searchText === "" && searchTag === "") {
       const nations = await Nation.find(
@@ -134,6 +151,11 @@ export const getOneNation = async (req, res) => {
       { officialId: nationId, banished: false },
       "officialId name owner role reported banished data createdAt",
     );
+    if (!nation) {
+      let error = new Error();
+      error.code = 404;
+      throw error;
+    }
     res.status(200).json(nation);
   } catch (error) {
     handleError(error, res);
@@ -142,14 +164,26 @@ export const getOneNation = async (req, res) => {
 
 export const deleteSelfNation = async (req, res) => {
   try {
+    const { password } = req.body;
     const userId = req.userId;
     const user = await User.findOne({ officialId: userId });
+    if (!password) {
+      return res.status(400).json({ infoType: "400" });
+    }
+    const isMatch = await user.comparePassword(password);
+    if (!isMatch) {
+      return res.status(401).json({ infoType: "badPassword" });
+    }
 
     // suppression de la nation
     const nation = await Nation.findOneAndDelete({
       officialId: user.citizenship.nationId,
     });
+    await recoverCreditToBank(nation.data.roleplay.treasury);
     if (nation != null) {
+      if (nation.data.roleplay.citizens > 1) {
+        return res.status(403).json({ infoType: "403" });
+      }
       // suppression des images uploadées pour la nation
       if (nation.data.url.flag != "") {
         const uuid = nation.data.url.flag.replace("https://ucarecdn.com/", "");
@@ -203,6 +237,12 @@ export const deleteSelfNation = async (req, res) => {
       // suppression des tuiles libres de la nation
       await Tile.deleteMany({
         nationOfficialId: nation.officialId,
+      });
+
+      // suppression des communications privées de la nation
+      await Com.deleteMany({
+        origin: nation.officialId,
+        comType: COMTYPE[2].id,
       });
 
       // retrait de la nation des relations liées
@@ -298,9 +338,10 @@ export const transferCredits = async (req, res) => {
       officialId: nationOwner.citizenship.nationId,
     });
     if (sender.data.roleplay.treasury < amount) {
-      return res
-        .status(403)
-        .json({ infoType: "403", message: "Crédits insuffisants" });
+      return res.status(403).json({
+        infoType: "notEnoughCredits",
+        message: "Crédits insuffisants",
+      });
     }
 
     let recipientUser = null;
@@ -335,6 +376,56 @@ export const transferCredits = async (req, res) => {
       infoType: "transfer",
       message: "Transfert réussi",
     });
+  } catch (error) {
+    handleError(error, res);
+  }
+};
+
+export const giveOwnership = async (req, res) => {
+  try {
+    const { nationOfficialId, sellerOfficialId, buyerOfficialId, password } =
+      req.body;
+    if (req.userId === sellerOfficialId) {
+      const seller = await User.findOne({ officialId: sellerOfficialId });
+      if (!password) {
+        return res.status(400).json({ infoType: "400" });
+      }
+      const isMatch = await seller.comparePassword(password);
+      if (!isMatch) {
+        return res.status(401).json({ infoType: "badPassword" });
+      }
+      const buyer = await User.findOne({ officialId: buyerOfficialId });
+      if (
+        seller &&
+        buyer &&
+        seller.citizenship.nationId === nationOfficialId &&
+        buyer.citizenship.nationId === nationOfficialId
+      ) {
+        seller.citizenship.nationOwner = false;
+        await seller.save();
+        buyer.citizenship.nationOwner = true;
+        await buyer.save();
+        const nation = await Nation.findOne(
+          { officialId: nationOfficialId },
+          "officialId name owner role reported banished data createdAt",
+        );
+        nation.owner = buyerOfficialId;
+        await nation.save();
+        res.status(200).json({
+          seller,
+          buyer,
+          nation,
+          infoType: "updateOnwership",
+        });
+      } else {
+        return res.status(403).json({
+          infoType: "403",
+          message: "Vous ne pouvez pas acquérir l'héritage de cette nation",
+        });
+      }
+    } else {
+      res.sendStatus(403).json({ infoType: "403" });
+    }
   } catch (error) {
     handleError(error, res);
   }

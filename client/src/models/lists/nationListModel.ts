@@ -1,11 +1,6 @@
 import { getAllNationsFetch } from "../../services/nationService";
 import { NATION_SORTING } from "../../settings/sorting";
-import {
-  loadingAtom,
-  myStore,
-  nationListAtomV2,
-  statsAtom,
-} from "../../settings/store";
+import { loadingAtom, myStore, nationListAtomV2 } from "../../settings/store";
 import { Nation } from "../../types/typNation";
 import { errorCatching } from "../../utils/displayInfos";
 import { findElementsByName, findNationsByTag } from "../../utils/functions";
@@ -22,7 +17,7 @@ import { ListModel } from "./listModel";
 export class NationListModel extends ListModel {
   constructor(
     list: NationModel[] = [],
-    sorting: number = NATION_SORTING.descCtz.id,
+    sorting: number = NATION_SORTING.descTreasury.id,
   ) {
     super();
     this.items = list;
@@ -35,7 +30,11 @@ export class NationListModel extends ListModel {
   getNationByOfficialId = (officialId: string) => {
     return this.items.find((nation) => nation.officialId === officialId);
   };
-  loadNationList = async (searchName: string, searchTag: string) => {
+  loadNationList = async (
+    searchName: string,
+    searchTag: string,
+    forceFetch: boolean = true,
+  ) => {
     myStore.set(loadingAtom, true);
     try {
       this.items = [];
@@ -49,25 +48,25 @@ export class NationListModel extends ListModel {
       if (searchTag != "") {
         savedNations = findNationsByTag(
           searchTag,
-          myStore.get(nationListAtomV2).getItems(),
+          savedNations.length > 0
+            ? savedNations
+            : myStore.get(nationListAtomV2).getItems(),
         );
       }
       if (searchName === "" && searchTag === "") {
         savedNations = myStore.get(nationListAtomV2).getItems();
       }
-      if (
-        savedNations.length > 0 &&
-        savedNations.length === myStore.get(statsAtom).counts.nations
-      ) {
-        this.addMany(savedNations);
+      if (savedNations.length > 0 && !forceFetch) {
+        this.items = savedNations;
       } else {
         const nations: Nation[] = await getAllNationsFetch(
           searchName,
           searchTag,
         );
-        this.addMany(nations);
+        this.items = nations;
         this.addToNationListAtom(nations);
       }
+      this.sortNations(this.sorting);
     } catch (error) {
       errorCatching(error);
     } finally {

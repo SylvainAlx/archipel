@@ -29,7 +29,7 @@ export const verifyJwt = (req, res, next) => {
     if (aErreur.name === "JsonWebTokenError") {
       return res.status(401).json({ erreur: "JWT invalide", infoType: "401" });
     } else if (aErreur.name === "TokenExpiredError") {
-      return res.status(401).json({ erreur: "JWT expiré", infoType: "401" });
+      return res.status(401).json({ erreur: "JWT expiré", infoType: "oldJwt" });
     } else {
       console.error("Erreur serveur lors de la vérification du JWT :", aErreur);
       return res

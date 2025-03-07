@@ -2,42 +2,38 @@ import User from "../models/userSchema.js";
 import Nation from "../models/nationSchema.js";
 import Param from "../models/paramSchema.js";
 import Place from "../models/placeSchema.js";
+import Com from "../models/comSchema.js";
 
 import {
   addMonths,
   createOfficialId,
   handleError,
 } from "../utils/functions.js";
-import { GIFTS } from "../settings/const.js";
+import { COMTYPE, DEFAULT_GIFTS } from "../settings/const.js";
 import {
   getUserByName,
-  getLastVisitDate,
   getRecoveryWords,
   getUserByOfficialId,
+  IpIsBanished,
+  updateUserIpAddress,
 } from "../services/userService.js";
-
-const IpIsBanished = async (AUserIp, res) => {
-  try {
-    const banned =
-      (await Param.findOne({
-        name: "banished",
-        props: { $elemMatch: { label: "ip", value: AUserIp } },
-      })) != null;
-    if (banned) {
-      let error = new Error();
-      error.code = 403;
-      throw error;
-    }
-  } catch (error) {
-    handleError(error, res);
-  }
-};
+import {
+  getGifts,
+  getNationParam,
+  getValueFromParam,
+  payCreditsFromBank,
+  recoverCreditToBank,
+} from "../services/paramService.js";
+import { deleteFile } from "../services/fileService.js";
 
 export const register = async (req, res) => {
   try {
     const { name, password, gender, language } = req.body;
     const userIp = req.clientIp;
-    await IpIsBanished(userIp);
+    const banned = await IpIsBanished(userIp);
+    if (banned) {
+      return res.status(403).json({ infoType: "ipbanned" });
+    }
     if (!name || !password) {
       return res.status(401).json({
         infoType: "401",
@@ -51,6 +47,11 @@ export const register = async (req, res) => {
       }
     });
     const recovery = getRecoveryWords();
+    const gift = getValueFromParam(
+      await getGifts(),
+      "register",
+      DEFAULT_GIFTS.REGISTER,
+    );
     const user = new User({
       officialId: createOfficialId("c"),
       ip: [{ value: userIp, lastVisit: new Date() }],
@@ -60,14 +61,20 @@ export const register = async (req, res) => {
       gender,
       language,
       role,
-      credits: GIFTS.REGISTER,
+      credits: gift,
     });
     try {
       const savedUser = await user.save();
+      await payCreditsFromBank(gift);
       const jwt = savedUser.createJWT();
-      res
-        .status(201)
-        .json({ user: savedUser, recovery, jwt, infoType: "signup" });
+      const { quotas, costs, gifts } = await getNationParam();
+      res.status(201).json({
+        user: savedUser,
+        recovery,
+        jwt,
+        infoType: "signup",
+        params: [quotas, costs, gifts],
+      });
     } catch (error) {
       console.error(error);
       if (error.code === 11000) {
@@ -87,34 +94,45 @@ export const register = async (req, res) => {
 export const login = async (req, res) => {
   try {
     const userIp = req.clientIp;
-    await IpIsBanished(userIp);
-
+    const banned = await IpIsBanished(userIp);
+    if (banned) {
+      return res.status(403).json({ infoType: "ipbanned" });
+    }
     const { name, password } = req.body;
     const user = await getUserByName(name);
-    if (!user) {
-      return res.status(404).json({ infoType: "404" });
-    }
     const isMatch = await user.comparePassword(password);
     if (!isMatch) {
-      return res.status(401).json({ infoType: "401" });
+      return res.status(401).json({ infoType: "badPassword" });
     }
-
     const jwt = user.createJWT();
     await updateUserIpAddress(user, userIp);
-    res.status(200).json({ user, jwt, infoType: "signin" });
+    const { quotas, costs, gifts } = await getNationParam();
+    res
+      .status(200)
+      .json({ user, jwt, infoType: "signin", params: [quotas, costs, gifts] });
   } catch (error) {
-    handleError(error, res);
+    if (error.code === 404) {
+      return res.status(404).json({ infoType: "badUser" });
+    } else {
+      handleError(error, res);
+    }
   }
 };
 
 export const verify = async (req, res) => {
   try {
     const userIp = req.clientIp;
-    await IpIsBanished(userIp);
+    const banned = await IpIsBanished(userIp);
+    if (banned) {
+      return res.status(403).json({ infoType: "ipbanned" });
+    }
     const userId = req.userId;
     const user = await getUserByOfficialId(userId, 401, true);
     await updateUserIpAddress(user, userIp);
-    return res.status(200).json({ user, infoType: "verify" });
+    const { quotas, costs, gifts } = await getNationParam();
+    return res
+      .status(200)
+      .json({ user, infoType: "verify", params: [quotas, costs, gifts] });
   } catch (error) {
     handleError(error, res);
   }
@@ -125,14 +143,11 @@ export const forgetPassword = async (req, res) => {
     const { name, recovery, newPassword } = req.body;
 
     const user = await getUserByName(name);
-    if (!user) {
-      return res.status(404).json({ infoType: "404" });
-    }
 
     const isMatch = await user.compareRecovery(recovery);
 
     if (!isMatch) {
-      return res.status(401).json({ infoType: "401" });
+      return res.status(401).json({ infoType: "badRecovery" });
     }
 
     user.password = newPassword;
@@ -140,7 +155,11 @@ export const forgetPassword = async (req, res) => {
 
     return res.status(200).json({ infoType: "newPassword" });
   } catch (error) {
-    handleError(error, res);
+    if (error.code === 404) {
+      return res.status(404).json({ infoType: "badUser" });
+    } else {
+      handleError(error, res);
+    }
   }
 };
 
@@ -151,7 +170,7 @@ export const changePassword = async (req, res) => {
     const user = await getUserByOfficialId(userId, 404, true);
     const isMatch = await user.comparePassword(oldPassword);
     if (!isMatch) {
-      return res.status(403).json({ infoType: "403" });
+      return res.status(403).json({ infoType: "badPassword" });
     }
     user.password = newPassword;
     await user.save();
@@ -221,27 +240,41 @@ export const deleteSelfUser = async (req, res) => {
     // Sauvegarder l'ID de la nation avant de supprimer l'utilisateur
     const nationId = user.citizenship?.nationId;
 
-    // Suppression de l'utilisateur
-    const deletedUser = await User.findOneAndDelete({ officialId: id });
-    if (!deletedUser) {
-      return res.status(500).json({ infoType: "500" });
-    }
-
     // Mise à jour de la nation si l'utilisateur en faisait partie
     if (nationId) {
       const nation = await Nation.findOne({ officialId: nationId });
       if (nation) {
         if (nation.owner === id) {
-          nation.owner = "";
+          return res.status(401).json({ infoType: "401" });
         }
         nation.data.roleplay.citizens = Math.max(
           0,
           nation.data.roleplay.citizens - 1,
         );
         await nation.save();
-        return res.status(200).json({ nation, infoType: "delete" });
       }
     }
+
+    // Suppression de l'utilisateur
+    const deletedUser = await User.findOneAndDelete({ officialId: id });
+    if (!deletedUser) {
+      return res.status(500).json({ infoType: "500" });
+    }
+    // suppression des images uploadées pour la nation
+    if (deletedUser.avatar != "") {
+      const uuid = deletedUser.avatar.replace("https://ucarecdn.com/", "");
+      await deleteFile(uuid);
+    }
+    // suppression des communications privées de l'utilisateur
+    await Com.deleteMany({
+      origin: deletedUser.officialId,
+      comType: COMTYPE[6].id,
+    });
+    await Com.deleteMany({
+      destination: deletedUser.officialId,
+    });
+
+    await recoverCreditToBank(deletedUser.credits);
 
     return res.status(200).json({ infoType: "delete" });
   } catch (error) {
@@ -359,22 +392,28 @@ export const changeStatus = async (req, res) => {
     if (req.userId === officialId || status != 0) {
       const user = await getUserByOfficialId(officialId, 404);
       const nation = await Nation.findOne({ officialId: nationId });
-
+      const gift = getValueFromParam(
+        await getGifts(),
+        "citizenship",
+        DEFAULT_GIFTS.CITIZENSHIP,
+      );
       if (status === 0 || status === 1) {
         user.citizenship.nationId = nation.officialId;
         user.citizenship.nationName = nation.name;
         if (status === 1) {
           nation.data.roleplay.citizens += 1;
-          nation.data.roleplay.treasury += GIFTS.CITIZENSHIP;
+          nation.data.roleplay.treasury += gift;
           await nation.save();
+          await payCreditsFromBank(gift);
         }
       } else {
         user.citizenship.nationId = "";
         user.citizenship.nationName = "";
         if (user.citizenship.status === 1) {
           nation.data.roleplay.citizens -= 1;
-          nation.data.roleplay.treasury -= GIFTS.CITIZENSHIP;
+          nation.data.roleplay.treasury -= gift;
           await nation.save();
+          await recoverCreditToBank(gift);
         }
       }
       user.citizenship.status = status;
@@ -422,9 +461,10 @@ export const transferCredits = async (req, res) => {
 
     const sender = await getUserByOfficialId(req.userId, 404);
     if (sender.credits < amount) {
-      return res
-        .status(403)
-        .json({ infoType: "403", message: "Crédits insuffisants" });
+      return res.status(403).json({
+        infoType: "notEnoughCredits",
+        message: "Crédits insuffisants",
+      });
     }
 
     let recipientUser = null;
@@ -464,19 +504,23 @@ export const transferCredits = async (req, res) => {
   }
 };
 
-const updateUserIpAddress = async (user, ip) => {
+export const createNewRecovery = async (req, res) => {
   try {
-    let isFind = false;
-    for (const address of user.ip) {
-      if (address.value === ip) {
-        isFind = true;
-        address.lastVisit = new Date();
-      }
+    const id = req.userId;
+    const { password } = req.body;
+
+    const user = await getUserByOfficialId(id, 404, true);
+    if (!user) {
+      return res.status(404).json({ infoType: "404" });
     }
-    if (!isFind) {
-      user.ip.push({ value: ip, lastVisit: new Date() });
+    const isMatch = await user.comparePassword(password);
+    if (!isMatch) {
+      return res.status(403).json({ infoType: "403" });
     }
+    const newRecovery = getRecoveryWords();
+    user.recovery = newRecovery;
     await user.save();
+    res.status(200).json({ newRecovery, infoType: "200" });
   } catch (error) {
     handleError(error, res);
   }

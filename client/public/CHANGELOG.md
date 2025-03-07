@@ -1,30 +1,37 @@
+## Code source
+
+Le code source est public et est visible [ici](https://github.com/SylvainAlx/archipel)
+
 ## Version actuelle
 
-### BETA-0.7
+### RC-1.0.0
 
 #### Ajouts
 
-- Ajout d'une description lors de la création d'une nouvelle relation diplomatique
-- Pouvoir modifier une relation diplomatique
-- Virements de crédits possiblent entre citoyens et entre nations
-- Ajout du status en ligne et date de dernière visite des utilisateurs
+- Ajout d'une fenètre d'aide à l'utilisation
+- Autorisation des crawlers des moteurs de recherche pour l'indexation
+- L'éditeur d'une nation peut céder la gestion à un autre citoyen
+- Tri possible des utilisateurs par date de dernière visite
+- Une nation peut obtenir le status officiel sur validation de son dirigeant réel
+- Consultation possible des paramètres des crédits pour les utilisateurs connectés
+- Ajout d'une page "erreur 404"
+- L'utilisateur connecté peut créer une nouvelle clé de récupération de son compte
 
 #### Suppressions
 
-aucunes
+- Suppression impossible de la nation tant qu'au moins deux citoyens en font partie
+- Suppression impossible du compte utilisateur si celui-ci est éditeur d'une nation
 
 #### Modifications & Corrections
 
-- Optimisation du code source
-- amélioration du modal de donation
-- amélioration de la page d'attente
-- mise à jour importante des dépendances du code source
-- Refonte du système de notifications
-- Amélioration de la gestion des erreurs
-- Modification des liens de nouveau possible
-- Amélioration du comportement des fenêtres modales
-- Amélioration de l'accessibilité
-- Modification du générateur de clés de récupération de compte
+- Conforme pour les navigateurs : Chrome, Brave, Edge
+- Mise à jour des CGU
+- Optimisation du code source et mise à jour des dépendances
+- Propriété "Etat-Nation" modifiable
+- Le tri des nation est à présent défini par défaut sur "Richesse décroissante"
+- Les quotas et les coûts des lieux et tuiles peuvent être ajustés directement en base de donnée
+- Durcissement des règles pour le choix du mot de passe d'un nouvel utilisateur ou lors d'un changement
+- Refonte de l'onglet "statistiques" de la page "explorer"
 
 ## Développements à venir
 
@@ -33,16 +40,39 @@ aucunes
 - Ajouter les hymnes des nations
 - Créer une gazette des nations en se basant sur les communiqués
 - Montrer la répartitions des langues parlées dans chaque nation
-- Créer une aide pour les premiers pas d'un utilisateur
-- Améliorer le système de notifications
 - Exporter une carte d'identité virtuelle sous forme d'image
-- Améliorer le référencement et l'accessibilité
 - Étendre les fonctionnalités pour les utilisateurs mobile
 - Lier les lieux de la nation à un emplacement sur la carte
 - Améliorer des traductions
 - Carte virtuelle d'Archipel avec l'ensemble des nations représentées
 
 ## Versions précédentes
+
+### BETA-0.7
+
+#### Ajouts
+
+- Ajout d'une description lors de la création d'une nouvelle relation diplomatique
+- Pouvoir modifier une relation diplomatique
+- Virements de crédits possibles entre citoyens et entre nations
+- Ajout du statu en ligne et date de dernière visite des utilisateurs
+
+#### Suppressions
+
+Aucune
+
+#### Modifications & Corrections
+
+- Optimisation du code source
+- Amélioration du modal de donation
+- Amélioration de la page d'attente
+- Mise à jour importante des dépendances du code source
+- Refonte du système de notifications
+- Amélioration de la gestion des erreurs
+- Modification des liens de nouveau possible
+- Amélioration du comportement des fenêtres modales
+- Amélioration de l'accessibilité
+- Modification du générateur de clés de récupération de compte
 
 ### BETA-0.6
 
@@ -82,7 +112,7 @@ aucunes
 
 #### Suppressions
 
-aucune
+Aucune
 
 #### Modifications & Corrections
 

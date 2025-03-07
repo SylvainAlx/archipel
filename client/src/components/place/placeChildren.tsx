@@ -1,9 +1,9 @@
 import { lazy, Suspense, useEffect, useState } from "react";
-import NewPlaceButton from "../buttons/newPlaceButton";
+import NewPlaceButton from "../ui/buttons/newPlaceButton";
 import { useTranslation } from "react-i18next";
 import { NationModel } from "../../models/nationModel";
 import { PlaceModel } from "../../models/placeModel";
-import TileSkeleton from "../loading/skeletons/tileSkeleton";
+import TileSkeleton from "../ui/loading/skeletons/tileSkeleton";
 import { PlaceListModel } from "../../models/lists/placeListModel";
 
 interface PlaceChildrenProps {
@@ -19,7 +19,7 @@ export default function PlaceChildren({
   owner,
   nationPlaceList,
 }: PlaceChildrenProps) {
-  const PlaceTile = lazy(() => import("../tiles/placeTile"));
+  const PlaceTile = lazy(() => import("../ui/tiles/placeTile"));
   const { t } = useTranslation();
   const [children, setChildren] = useState<PlaceListModel>(nationPlaceList);
 

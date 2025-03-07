@@ -1,12 +1,12 @@
 import { lazy, Suspense } from "react";
 import { Nation } from "../../types/typNation";
 import { deleteImage } from "../../utils/procedures";
-import Spinner from "../loading/spinner";
-import CrossButton from "../buttons/crossButton";
+import Spinner from "../ui/loading/spinner";
+import CrossButton from "../ui/buttons/crossButton";
 import { useTranslation } from "react-i18next";
 import { BsShieldShaded } from "react-icons/bs";
-import Upploader from "../uploader";
-import LinkButton from "../buttons/linkButton";
+import Upploader from "../ui/uploader";
+import LinkButton from "../ui/buttons/linkButton";
 import { COA_MAKER_URL } from "../../settings/consts";
 import { FaExternalLinkAlt } from "react-icons/fa";
 import { confirmBox, myStore } from "../../settings/store";
@@ -23,7 +23,7 @@ export default function CoatOfArms({
   updatePath,
 }: CoatOfArmsProps) {
   const { t } = useTranslation();
-  const LazyImage = lazy(() => import("../lazy/lazyImage"));
+  const LazyImage = lazy(() => import("../ui/lazy/lazyImage"));
 
   const handleDeleteImage = async () => {
     myStore.set(confirmBox, {
@@ -69,8 +69,9 @@ export default function CoatOfArms({
                 <LinkButton
                   text={t("components.buttons.generate")}
                   path={COA_MAKER_URL}
-                  children={<FaExternalLinkAlt />}
-                />
+                >
+                  <FaExternalLinkAlt />
+                </LinkButton>
               </>
             )}
           </>

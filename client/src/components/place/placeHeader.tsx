@@ -1,14 +1,14 @@
 import { FaSortAmountDownAlt } from "react-icons/fa";
-import CrossButton from "../buttons/crossButton";
-import ParentButton from "../buttons/parentButton";
-import EditButton from "../buttons/editButton";
+import CrossButton from "../ui/buttons/crossButton";
+import ParentButton from "../ui/buttons/parentButton";
+import EditButton from "../ui/buttons/editButton";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { confirmBox, myStore, placeListAtomV2 } from "../../settings/store";
 import { useAtom } from "jotai";
 import { ConfirmBoxDefault } from "../../types/typAtom";
-import ShareButton from "../buttons/shareButton";
+import ShareButton from "../ui/buttons/shareButton";
 import { PlaceModel } from "../../models/placeModel";
 import { NationModel } from "../../models/nationModel";
 import { PlaceListModel } from "../../models/lists/placeListModel";
@@ -80,6 +80,7 @@ export default function PlaceHeader({
               ),
               new: place.parentId,
               path: "parentId",
+              indice: place.parentId,
               action: updatePath,
             }}
           />

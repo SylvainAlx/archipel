@@ -111,6 +111,25 @@ export const changePasswordFetch = async (payload: ChangePasswordPayload) => {
   }
 };
 
+export const createNewRecoveryFetch = async (payload: { password: string }) => {
+  const jwt = GET_JWT();
+  try {
+    const resp = await fetch(`${SERVER_URL}/user/createnewrecovery`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        authorization: "Bearer " + jwt,
+      },
+      body: JSON.stringify(payload),
+    });
+    await handleFetchError(resp);
+    const result = await resp.json();
+    return result;
+  } catch (error) {
+    throw error;
+  }
+};
+
 export const deleteUserFetch = async (password: string) => {
   const jwt = GET_JWT();
   try {

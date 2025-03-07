@@ -1,14 +1,14 @@
 import { BsFillEnvelopeAtFill } from "react-icons/bs";
-import Avatar from "../avatar";
-import CrossButton from "../buttons/crossButton";
-import EditButton from "../buttons/editButton";
-import ExternalLink from "../externalLink";
-import Upploader from "../uploader";
+import Avatar from "../ui/avatar";
+import CrossButton from "../ui/buttons/crossButton";
+import EditButton from "../ui/buttons/editButton";
+import ExternalLink from "../ui/externalLink";
+import Upploader from "../ui/uploader";
 import MDEditor from "@uiw/react-md-editor";
 import { FaLink } from "react-icons/fa";
 import { confirmBox, myStore } from "../../settings/store";
 import { useTranslation } from "react-i18next";
-import ShareButton from "../buttons/shareButton";
+import ShareButton from "../ui/buttons/shareButton";
 import { deleteImage } from "../../utils/procedures";
 import { UserModel } from "../../models/userModel";
 
@@ -52,9 +52,10 @@ export default function Personal({
         <span className="flex items-center gap-1">
           <ExternalLink
             url={citizen.link}
-            children={<FaLink />}
             hover={t("components.hoverInfos.links.website")}
-          />
+          >
+            <FaLink />
+          </ExternalLink>
           {owner && (
             <EditButton
               editBox={{
@@ -70,9 +71,10 @@ export default function Personal({
         <span className="flex items-center gap-1">
           <ExternalLink
             url={citizen.email != "" ? "mailto:" + citizen.email : ""}
-            children={<BsFillEnvelopeAtFill />}
             hover={t("components.hoverInfos.links.email")}
-          />
+          >
+            <BsFillEnvelopeAtFill />
+          </ExternalLink>
           {owner && (
             <EditButton
               editBox={{

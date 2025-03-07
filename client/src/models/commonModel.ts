@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-this-alias */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { banContentFetch, reportContentFetch } from "../services/commonService";
 import { successMessage } from "../utils/toasts";
 
@@ -11,9 +13,11 @@ export class CommonModel {
   reportContent = async (reverse = false) => {
     try {
       await reportContentFetch(this.officialId, reverse);
-      reverse
-        ? successMessage("signalement retiré et contenu affiché")
-        : successMessage("contenu signalé et rendu inaccessible");
+      if (reverse) {
+        successMessage("signalement retiré et contenu affiché");
+      } else {
+        successMessage("contenu signalé et rendu inaccessible");
+      }
     } catch (error) {
       console.error(error);
     }
@@ -22,9 +26,11 @@ export class CommonModel {
   banContent = async (reverse = false) => {
     try {
       await banContentFetch(this.officialId, reverse);
-      reverse
-        ? successMessage(`Réindexation du contenu ${this.officialId}`)
-        : successMessage(`désindexation du contenu ${this.officialId}`);
+      if (reverse) {
+        successMessage(`Réindexation du contenu ${this.officialId}`);
+      } else {
+        successMessage(`désindexation du contenu ${this.officialId}`);
+      }
     } catch (error) {
       console.error(error);
     }

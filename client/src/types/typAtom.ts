@@ -34,6 +34,7 @@ export const EditBoxDefault: EditBox = {
 
 export interface InfoModal {
   subtitle: string;
+  // eslint-disable-next-line no-undef
   children?: JSX.Element;
 }
 
@@ -46,14 +47,11 @@ export const emptyInfo: InfoModal = {
 export interface StandardOption {
   id: number | string;
   label: string;
+  descriptions?: string;
 }
 
 export interface Counts {
-  nations: number;
-  citizens: number;
-  places: number;
   tags: number;
-  coms: number;
 }
 export type Stats = {
   counts: Counts;

@@ -1,4 +1,5 @@
-import { deleteFile, handleError } from "../utils/functions.js";
+import { deleteFile } from "../services/fileService.js";
+import { handleError } from "../utils/functions.js";
 
 export const deleteUploadedFile = async (req, res) => {
   try {

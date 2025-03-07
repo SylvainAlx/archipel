@@ -1,6 +1,7 @@
 import { FormEvent } from "react";
 
 export interface FormProps {
+  // eslint-disable-next-line no-undef
   children: JSX.Element;
   title?: string;
   submit: (event: FormEvent) => void;
@@ -15,13 +16,11 @@ export default function Form({
 }: FormProps) {
   return (
     <form
-      className={`w-[300px] p-2 rounded ${background && "bg-complementary"}`}
+      className={`w-[300px] p-2 rounded ${background && "bg-complementary"} flex flex-col gap-4 items-center justify-between`}
       onSubmit={submit}
     >
-      <fieldset className="flex flex-col gap-4 items-center justify-between">
-        {title && <legend className="text-center">{title}</legend>}
-        {children}
-      </fieldset>
+      {title && <legend className="text-center">{title}</legend>}
+      {children}
     </form>
   );
 }

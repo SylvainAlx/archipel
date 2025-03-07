@@ -1,6 +1,6 @@
 import { useTranslation } from "react-i18next";
-import TileContainer from "../tileContainer";
-import DashTile from "../dashTile";
+import TileContainer from "../ui/tileContainer";
+import DashTile from "../ui/dashTile";
 import { SelectedNationProps } from "../../types/typProp";
 import { useAtom } from "jotai";
 import {
@@ -10,7 +10,7 @@ import {
   sessionAtom,
 } from "../../settings/store";
 import { lazy, Suspense, useEffect, useState } from "react";
-import Button from "../buttons/button";
+import Button from "../ui/buttons/button";
 import { FaHandshakeSimple } from "react-icons/fa6";
 import {
   DiplomaticRelationship,
@@ -19,7 +19,7 @@ import {
 } from "../../types/typRelation";
 import { RelationListModel } from "../../models/lists/relationListModel";
 import { RelationModel } from "../../models/relationModel";
-import TileSkeleton from "../loading/skeletons/tileSkeleton";
+import TileSkeleton from "../ui/loading/skeletons/tileSkeleton";
 
 export default function Diplomacy({
   selectedNation,
@@ -31,7 +31,7 @@ export default function Diplomacy({
     useState<RelationListModel>(new RelationListModel());
   const [listChecked, setListChecked] = useState<boolean>(false);
   const [session] = useAtom(sessionAtom);
-  const RelationTile = lazy(() => import("../tiles/relationTile"));
+  const RelationTile = lazy(() => import("../ui/tiles/relationTile"));
 
   useEffect(() => {
     const filterList = (list: RelationListModel) => {
@@ -56,8 +56,13 @@ export default function Diplomacy({
       }
     };
     if (selectedNation.officialId !== "") {
-      !listChecked ? loadRelationList() : filterList(relationList);
+      if (!listChecked) {
+        loadRelationList();
+      } else {
+        filterList(relationList);
+      }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedNation.officialId, relationList]);
 
   const handleClick = () => {
@@ -82,49 +87,44 @@ export default function Diplomacy({
   };
 
   return (
-    <TileContainer
-      children={
-        <DashTile
-          title={t("pages.nation.relations.title")}
-          children={
-            <div className="w-full flex flex-col-reverse gap-2 items-center">
-              {nationRelationList.getItems().length > 0 ? (
-                nationRelationList.getItems().map((relation, i) => {
-                  if (
-                    relation.nations.length > 1 &&
-                    (relation.nations[1].accepted ||
-                      relation.nations[1].AmbassadorId ===
-                        session.user.officialId)
-                  ) {
-                    return (
-                      <Suspense key={i} fallback={<TileSkeleton />}>
-                        <RelationTile relation={relation} />
-                      </Suspense>
-                    );
-                  } else {
-                    return (
-                      <em key={i} className="text-center">
-                        {t("components.buttons.createRelation")}
-                      </em>
-                    );
-                  }
-                })
-              ) : (
-                <em className="text-center">
-                  {t("pages.nation.relations.noRelations")}
-                </em>
-              )}
-              {!owner && session.user.citizenship.nationOwner && (
-                <Button
-                  text={t("components.buttons.createRelation")}
-                  children={<FaHandshakeSimple />}
-                  click={handleClick}
-                />
-              )}
-            </div>
-          }
-        />
-      }
-    />
+    <TileContainer>
+      <DashTile title={t("pages.nation.relations.title")}>
+        <div className="w-full flex flex-col-reverse gap-2 items-center">
+          {nationRelationList.getItems().length > 0 ? (
+            nationRelationList.getItems().map((relation, i) => {
+              if (
+                relation.nations.length > 1 &&
+                (relation.nations[1].accepted ||
+                  relation.nations[1].AmbassadorId === session.user.officialId)
+              ) {
+                return (
+                  <Suspense key={i} fallback={<TileSkeleton />}>
+                    <RelationTile relation={relation} />
+                  </Suspense>
+                );
+              } else {
+                return (
+                  <em key={i} className="text-center">
+                    {t("components.buttons.createRelation")}
+                  </em>
+                );
+              }
+            })
+          ) : (
+            <em className="text-center">
+              {t("pages.nation.relations.noRelations")}
+            </em>
+          )}
+          {!owner && session.user.citizenship.nationOwner && (
+            <Button
+              text={t("components.buttons.createRelation")}
+              click={handleClick}
+            >
+              <FaHandshakeSimple />
+            </Button>
+          )}
+        </div>
+      </DashTile>
+    </TileContainer>
   );
 }

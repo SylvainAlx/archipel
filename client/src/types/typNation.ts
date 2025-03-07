@@ -29,6 +29,7 @@ export interface Nation {
       capital: string;
       citizens: number;
       places: number;
+      officialOwner: string;
     };
   };
   createdAt: Date;
@@ -53,7 +54,7 @@ export const EmptyNation: Nation = {
     general: {
       motto: "",
       nationalDay: "",
-      isNationState: false,
+      isNationState: true,
       regime: 0,
       currency: "",
       tags: [],
@@ -64,6 +65,7 @@ export const EmptyNation: Nation = {
       capital: "",
       citizens: 0,
       places: 0,
+      officialOwner: "",
     },
   },
   createdAt: new Date(0),
@@ -100,7 +102,7 @@ export const emptyNewNationPayload: NewNationPayload = {
   name: "",
   owner: "",
   motto: "",
-  isNationState: false,
+  isNationState: true,
   regime: 0,
   currency: "",
   nationalDay: "",
@@ -116,4 +118,11 @@ export interface TranferCreditPayload {
   nationOwnerId: string;
   recipientId: string;
   amount: number;
+}
+
+export interface GiveOwnershipPayload {
+  nationOfficialId: string;
+  sellerOfficialId: string;
+  buyerOfficialId: string;
+  password: string;
 }

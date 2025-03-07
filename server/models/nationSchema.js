@@ -82,7 +82,7 @@ const nationSchema = mongoose.Schema(
         },
         isNationState: {
           type: Boolean,
-          default: false,
+          default: true,
         },
         regime: {
           type: Number,
@@ -118,6 +118,10 @@ const nationSchema = mongoose.Schema(
         places: {
           type: Number,
           default: 0,
+        },
+        officialOwner: {
+          type: String,
+          default: "",
         },
       },
     },

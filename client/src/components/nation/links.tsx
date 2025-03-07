@@ -1,8 +1,8 @@
 import { useTranslation } from "react-i18next";
 import { FaDiscord, FaInstagram, FaLink, FaWikipediaW } from "react-icons/fa6";
-import ExternalLink from "../externalLink";
-import EditButton from "../buttons/editButton";
-import ShareButton from "../buttons/shareButton";
+import ExternalLink from "../ui/externalLink";
+import EditButton from "../ui/buttons/editButton";
+import ShareButton from "../ui/buttons/shareButton";
 import { NationModel } from "../../models/nationModel";
 
 interface LinksProps {
@@ -22,9 +22,10 @@ export default function Links({
       <span className="flex items-center gap-1">
         <ExternalLink
           url={selectedNation.data.url.website}
-          children={<FaLink />}
           hover={t("components.hoverInfos.links.website")}
-        />
+        >
+          <FaLink />
+        </ExternalLink>
         {owner && (
           <EditButton
             editBox={{
@@ -40,9 +41,10 @@ export default function Links({
       <span className="flex items-center gap-1">
         <ExternalLink
           url={selectedNation.data.url.instagram}
-          children={<FaInstagram />}
           hover={t("components.hoverInfos.links.instagram")}
-        />
+        >
+          <FaInstagram />
+        </ExternalLink>
         {owner && (
           <EditButton
             editBox={{
@@ -58,9 +60,10 @@ export default function Links({
       <span className="flex items-center gap-1">
         <ExternalLink
           url={selectedNation.data.url.wiki}
-          children={<FaWikipediaW />}
           hover={t("components.hoverInfos.links.wiki")}
-        />
+        >
+          <FaWikipediaW />
+        </ExternalLink>{" "}
         {owner && (
           <EditButton
             editBox={{
@@ -76,9 +79,10 @@ export default function Links({
       <span className="flex items-center gap-1">
         <ExternalLink
           url={selectedNation.data.url.discord}
-          children={<FaDiscord />}
           hover={t("components.hoverInfos.links.discord")}
-        />
+        >
+          <FaDiscord />
+        </ExternalLink>
         {owner && (
           <EditButton
             editBox={{

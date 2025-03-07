@@ -1,10 +1,7 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import Input from "../form/input";
 import Select from "../form/select";
-import { statsAtom } from "../../settings/store";
 import { useTranslation } from "react-i18next";
-import { useAtom } from "jotai";
 import SearchButtons from "../form/searchButtons";
 import { useLocation, useNavigate } from "react-router-dom";
 import { NationListModel } from "../../models/lists/nationListModel";
@@ -13,6 +10,7 @@ import { NATION_SORTING } from "../../settings/sorting";
 export interface NationSearchBarProps {
   type: string;
   list: NationListModel;
+  // eslint-disable-next-line no-undef
   setList: React.Dispatch<React.SetStateAction<NationListModel>>;
 }
 
@@ -24,7 +22,6 @@ export default function NationSearchBar({
   const location = useLocation();
   const [searchName, setSearchName] = useState("");
   const [searchTag, setSearchTag] = useState(location.hash.replace("#", ""));
-  const [stats] = useAtom(statsAtom);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -32,33 +29,28 @@ export default function NationSearchBar({
   }, [location]);
 
   useEffect(() => {
-    if (
-      list.getItems().length != stats.counts.nations ||
-      list.getItems().length === 0
-    ) {
+    if (list.getItems().length === 0) {
       loadList(searchName, searchTag);
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [stats.counts.nations]);
+  }, []);
 
   useEffect(() => {
     if (searchTag != "" && location.hash != "") {
       loadList(searchName, searchTag);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchTag]);
 
   const loadList = async (searchName: string, searchTag: string) => {
     const updatedList = await list.loadNationList(searchName, searchTag);
     if (updatedList) {
-      updatedList.sortNations(updatedList.sorting);
       setList(updatedList);
     }
   };
 
   const reset = () => {
-    setSearchName("");
-    setSearchTag("");
     loadList("", "");
     navigate(`/explore/2`);
   };
@@ -83,7 +75,7 @@ export default function NationSearchBar({
       onSubmit={handleSubmit}
     >
       <Input
-        required={false}
+        required={searchTag === ""}
         onChange={handleSearch}
         type="text"
         name="name"

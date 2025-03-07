@@ -16,10 +16,10 @@ export const SOL_PUBLIC_KEY = import.meta.env.VITE_SOL_PUBLIC_KEY;
 export const ADA_PUBLIC_KEY = import.meta.env.VITE_ADA_PUBLIC_KEY;
 
 export const VERSION = {
-  beta: "0.7",
-  rc: "",
+  beta: "",
+  rc: "1.0.0",
   release: "",
-  testing: true,
+  testing: false,
 };
 
 export const APP_NAME = i18n.t("components.logo.title");
@@ -33,18 +33,6 @@ export const color_black_alpha = "var(--color-black-alpha)";
 export const PIONEER_DATE = "2025-03-07T00:00:00.000Z";
 
 export const UPLOADCARE_URL = "https://ucarecdn.com";
-
-export const QUOTAS = {
-  PLACES: 10,
-  TILES: 8,
-  COMS: 1, // par jour
-};
-
-export const COSTS = {
-  PLACE: 10,
-  TILE: 10,
-  COM: 10,
-};
 
 export const MAX_LENGTH = {
   text: {

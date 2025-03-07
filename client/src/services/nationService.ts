@@ -1,6 +1,6 @@
 import { NationModel } from "../models/nationModel";
 import { SERVER_URL } from "../settings/consts";
-import { TranferCreditPayload } from "../types/typNation";
+import { GiveOwnershipPayload, TranferCreditPayload } from "../types/typNation";
 import { GET_JWT } from "../utils/functions";
 import { handleFetchError } from "../utils/procedures";
 
@@ -23,12 +23,16 @@ export const createNationFetch = async (payload: NationModel) => {
   }
 };
 
-export const DeleteSelfFetch = async () => {
+export const DeleteSelfFetch = async (password: string) => {
   const jwt = GET_JWT();
   try {
     const resp = await fetch(`${SERVER_URL}/nation/delete`, {
       method: "DELETE",
-      headers: { authorization: `Bearer ${jwt}` },
+      headers: {
+        "Content-Type": "application/json",
+        authorization: `Bearer ${jwt}`,
+      },
+      body: JSON.stringify({ password }),
     });
     await handleFetchError(resp);
     const result = await resp.json();
@@ -106,6 +110,25 @@ export const updateNationFetch = async (payload: NationModel) => {
 export const getAllNationTagsFetch = async () => {
   try {
     const resp = await fetch(`${SERVER_URL}/nation/gettags`);
+    await handleFetchError(resp);
+    const result = await resp.json();
+    return result;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const giveOwnershipFetch = async (payload: GiveOwnershipPayload) => {
+  const jwt = GET_JWT();
+  try {
+    const resp = await fetch(`${SERVER_URL}/nation/giveownership`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        authorization: "Bearer " + jwt,
+      },
+      body: JSON.stringify(payload),
+    });
     await handleFetchError(resp);
     const result = await resp.json();
     return result;

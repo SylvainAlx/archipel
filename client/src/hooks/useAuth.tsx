@@ -1,11 +1,6 @@
 import { useAtom } from "jotai";
 import { useState, useEffect } from "react";
-import {
-  lobbyAtom,
-  myStore,
-  sessionAtom,
-  showCookiesModalAtom,
-} from "../settings/store";
+import { lobbyAtom, sessionAtom } from "../settings/store";
 import { useLocation, useNavigate } from "react-router-dom";
 import { LOBBY_INFO, MDP_LOBBY } from "../settings/consts";
 import useOnlineStatus from "../hooks/useOnlineStatus";
@@ -15,7 +10,7 @@ import { useTranslation } from "react-i18next";
 export const useAuth = () => {
   const [access, setAccess] = useAtom(lobbyAtom);
   const [session] = useAtom(sessionAtom);
-  const [openPrivateRoads, setOpenPrivateRoads] = useState(false);
+  const [isConnected, setIsConnected] = useState(false);
   const [offline, setOffline] = useState(false);
   const isOnlineHook = useOnlineStatus();
   const { t } = useTranslation();
@@ -33,22 +28,23 @@ export const useAuth = () => {
       (lobbyToken === MDP_LOBBY || (MDP_LOBBY === "" && LOBBY_INFO === ""))
     ) {
       setAccess(true);
-      myStore.set(showCookiesModalAtom, access);
       if (!session.user.officialId) authenticateUser();
     } else {
       setAccess(false);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
     if (session.user.officialId) {
-      setOpenPrivateRoads(true);
+      setIsConnected(true);
       if (["/login", "/register"].includes(location.pathname)) {
         navigate(`/citizen/${session.user.officialId}`);
       }
     } else {
-      setOpenPrivateRoads(false);
+      setIsConnected(false);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [session.user]);
 
   useEffect(() => {
@@ -61,7 +57,8 @@ export const useAuth = () => {
         setOffline(false);
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isOnlineHook]);
 
-  return { user: session.user, access, openPrivateRoads };
+  return { user: session.user, access, isConnected };
 };

@@ -10,9 +10,11 @@ export const GET_JWT = () => {
 };
 
 export const findElementsByName = (searchName: string, array: any[]) => {
-  return array.filter((element) =>
-    element.name.toLowerCase().includes(searchName.toLowerCase()),
-  );
+  if (!searchName) return array; // Si searchName est vide, on retourne tout l'array
+
+  const regex = new RegExp(`.*${searchName}.*`, "i"); // Équivalent à MongoDB regex
+
+  return array.filter((element) => regex.test(element.name));
 };
 
 export const findNationsByTag = (searchTag: string, nations: NationModel[]) => {
@@ -116,4 +118,14 @@ export const getFormatedDate = (date: Date | string) => {
 
 export const isNation = (officialId: string): boolean => {
   return officialId.charAt(2) === "n";
+};
+
+export const getMarkdown = async (path: string): Promise<string> => {
+  const response = await fetch(path);
+  const text = await response.text();
+  return text;
+};
+
+export const isStrongPassword = (password: string): boolean => {
+  return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/.test(password);
 };

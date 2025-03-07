@@ -8,6 +8,19 @@ export const nationComTypeOptions = [
   COM_TYPE.nationPublic,
 ];
 
+export const STAT_COLORS = [
+  "#0088FE",
+  "#00C49F",
+  "#FFBB28",
+  "#FF8042",
+  "#A28DFF",
+  "#FF6384",
+  "#36A2EB",
+  "#FFCE56",
+  "#4BC0C0",
+  "#9966FF",
+];
+
 export const adminComTypeOptions = [COM_TYPE.general, COM_TYPE.userPrivate];
 
 export const regimeTypeList: RegimeType[] = [

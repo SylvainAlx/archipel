@@ -6,7 +6,12 @@ import {
   updatePlaceFetch,
 } from "../services/placeService";
 import { PLACE_TYPE } from "../settings/consts";
-import { loadingAtom, myStore, placeListAtomV2 } from "../settings/store";
+import {
+  loadingAtom,
+  myStore,
+  nationListAtomV2,
+  placeListAtomV2,
+} from "../settings/store";
 import { Nation } from "../types/typNation";
 import { emptyPlace, Place } from "../types/typPlace";
 import { errorCatching } from "../utils/displayInfos";
@@ -71,6 +76,7 @@ export class PlaceModel extends CommonModel implements Place {
       this.updateFields(response.place);
       this.displayPlaceInfoByType(response.infoType);
       myStore.get(placeListAtomV2).addToPlaceListAtom([response.place]);
+      myStore.get(nationListAtomV2).addToNationListAtom([response.nation]);
     } catch (error) {
       errorCatching(error);
     } finally {
@@ -103,7 +109,8 @@ export class PlaceModel extends CommonModel implements Place {
         .get(placeListAtomV2)
         .removeByOfficialId(response.place.officialId);
       myStore.set(placeListAtomV2, new PlaceListModel(updatedList));
-      this.image != "" && (await deleteImage(this.image));
+      myStore.get(nationListAtomV2).addToNationListAtom([response.nation]);
+      if (this.image != "") await deleteImage(this.image);
     } catch (error) {
       errorCatching(error);
     } finally {
