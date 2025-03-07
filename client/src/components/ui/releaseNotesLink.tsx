@@ -16,7 +16,7 @@ export default function ReleaseNotesLink({
     >
       {VERSION.beta != "" && "BETA-" + VERSION.beta}
       {VERSION.rc != "" && "RC-" + VERSION.rc}
-      {VERSION.release != "" && VERSION.release}
+      {VERSION.release != "" && "v" + VERSION.release}
     </div>
   );
 }
