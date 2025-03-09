@@ -2,24 +2,6 @@
 
 Le code source est public et est visible [ici](https://github.com/SylvainAlx/archipel)
 
-## Version actuelle
-
-### v1.0.0
-
-#### Ajouts
-
-aucun
-
-#### Suppressions
-
-aucune
-
-#### Modifications & Corrections
-
-- Correction du modal de cookies
-- Correction du routing pour Vercel
-- Correction de la recherche des utilisateur
-
 ## Développements à venir
 
 - Créer une organisation ou en rejoindre une
@@ -33,9 +15,28 @@ aucune
 - Améliorer des traductions
 - Carte virtuelle d'Archipel avec l'ensemble des nations représentées
 
+## Version actuelle
+
+### v1.0.1
+
+#### Ajouts
+
+aucun
+
+#### Suppressions
+
+aucune
+
+#### Modifications & Corrections
+
+- Optimisation du code source
+- Mise à jour des dépendances
+- Amélioration des couleurs pour les diagrammes
+- Amélioration du référencement
+
 ## Versions précédentes
 
-### RC-1.0.0
+### v1.0.0/RC-1.0.0
 
 #### Ajouts
 
@@ -63,6 +64,9 @@ aucune
 - Les quotas et les coûts des lieux et tuiles peuvent être ajustés directement en base de donnée
 - Durcissement des règles pour le choix du mot de passe d'un nouvel utilisateur ou lors d'un changement
 - Refonte de l'onglet "statistiques" de la page "explorer"
+- Correction du modal de cookies
+- Correction du routing pour Vercel
+- Correction de la recherche des utilisateur
 
 ### BETA-0.7
 

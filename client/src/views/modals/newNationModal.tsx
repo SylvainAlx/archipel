@@ -4,8 +4,7 @@ import Input from "../../components/form/input";
 import { emptyNewNationPayload } from "../../types/typNation";
 import Select from "../../components/form/select";
 import HashTag from "../../components/ui/tags/hashTag";
-import { regimeList } from "../../settings/lists";
-import { MAX_LENGTH } from "../../settings/consts";
+import { MAX_LENGTH, REGIME } from "../../settings/consts";
 import RequiredStar from "../../components/form/requiredStar";
 import { useModal } from "../../hooks/useModal";
 import BooleanRadio from "../../components/form/booleanRadio";
@@ -107,7 +106,7 @@ export default function NewNationModal() {
           <Select
             id="regime"
             onChange={handleSelectChange}
-            options={regimeList}
+            options={Object.values(REGIME)}
             title={t("components.modals.newNationModal.regime")}
             required={newNation.regime === 0}
           />

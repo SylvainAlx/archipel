@@ -11,13 +11,12 @@ import NationalDayTag from "../ui/tags/nationalDayTag";
 import PopulationTag from "../ui/tags/populationTag";
 import PlaceTag from "../ui/tags/placeTag";
 import MDEditor from "@uiw/react-md-editor";
-import { regimeList } from "../../settings/lists";
 import TreasuryTag from "../ui/tags/treasuryTag";
 import BigFlag from "./bigFlag";
 import CoatOfArms from "./coatOfArms";
 import NationStateTag from "../ui/tags/nationStateTag";
 import { NationModel } from "../../models/nationModel";
-import { PLACE_TYPE } from "../../settings/consts";
+import { PLACE_TYPE, REGIME } from "../../settings/consts";
 import { PlaceListModel } from "../../models/lists/placeListModel";
 
 interface NationIdentityProps {
@@ -105,7 +104,7 @@ export default function NationIdentity({
                     <EditButton
                       editBox={{
                         target: "nation",
-                        original: regimeList,
+                        original: Object.values(REGIME),
                         new: selectedNation.data.general.regime,
                         path: "data.general.regime",
                         action: updatePath,
