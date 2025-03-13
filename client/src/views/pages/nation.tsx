@@ -55,8 +55,10 @@ export default function Nation() {
             }}
           />
         )}
-        {nation.data.roleplay.officialOwner === nation.owner && <VerifiedTag />}
       </div>
+      {nation.data.roleplay.officialOwner === nation.owner && (
+        <VerifiedTag isFullTag={true} />
+      )}
       {!nation.reported && (
         <section className="w-full flex flex-wrap gap-8 items-start justify-between">
           <div className="w-full flex flex-col gap-3 items-center justify-center">

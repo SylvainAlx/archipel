@@ -136,6 +136,7 @@ En se rendant sur la page d'un citoyen depuis la liste de la page "explorer", l'
 - Les liens (email et site web)
 - La biographie
 - Les informations sur sa citoyenneté liée à une nation (Identifiant, genre, langue, religion, lieu de résidence sur Archipel, rôle, lien d'accès)
+- Un bouton de signalement du contenu
 
 #### 4.1.4 - Les pages "nation"
 
@@ -149,6 +150,7 @@ En se rendant sur la page d'une nation depuis la liste de la page "explorer", l'
 - Les relations diplomatiques (si existantes)
 - Les lieux (si existants)
 - Les communiqués (si existants)
+- Un bouton de signalement du contenu
 
 #### 4.1.5 - Les pages "lieux"
 
@@ -160,6 +162,7 @@ En se rendant sur la page d'un lieu depuis la liste de la page "explorer", l'int
 - Les tags (L'identifiant unique, le type de lieu)
 - La description du lieu (si existante)
 - Lieux enfants (si existants)
+- Un bouton de signalement du contenu
 
 #### 4.1.6 - Choix de la langue
 

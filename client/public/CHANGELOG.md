@@ -21,22 +21,23 @@ Le code source est public et est visible [ici](https://github.com/SylvainAlx/arc
 
 #### Ajouts
 
-aucun
+Aucun
 
 #### Suppressions
 
-aucune
+- Retrait du bouton de signalement sur les tuiles (toujours disponible sur les pages dédiées)
 
 #### Modifications & Corrections
 
 - Optimisation du code source
 - Mise à jour des dépendances
-- Amélioration des couleurs pour les diagrammes
+- Diagrammes : amélioration des couleurs et correction de l'affichage
 - Amélioration du référencement
+- Modification du badge "officiel" sur la page "nation"
 
 ## Versions précédentes
 
-### v1.0.0/RC-1.0.0
+### v1.0.0/RC-1.0.0 (MVP)
 
 #### Ajouts
 

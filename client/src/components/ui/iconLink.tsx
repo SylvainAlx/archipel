@@ -97,7 +97,6 @@ export default function IconLink({
                 )}
               />
             )}
-
           <Flag nation={nation} isHeader={true} />
         </div>
       )}

@@ -17,7 +17,7 @@ interface HalfPieChartProps {
 
 export default function HalfPieChart({
   pieChartData,
-  high = 220,
+  high,
   cy = "50%",
 }: HalfPieChartProps) {
   const { t } = useTranslation();
@@ -26,34 +26,31 @@ export default function HalfPieChart({
   }
 
   return (
-    <div className="w-full flex flex-col justify-center items-center">
-      <ResponsiveContainer width="100%" height={high}>
-        <PieChart>
-          <Pie
-            data={pieChartData}
-            cx="50%"
-            cy={cy}
-            labelLine={false}
-            innerRadius={50}
-            outerRadius={70}
-            paddingAngle={3}
-            stroke="none"
-            dataKey="value"
-            startAngle={360}
-            endAngle={0}
-          >
-            {pieChartData.map((_, index) => (
-              <Cell
-                key={`cell-${index}`}
-                fill={STAT_COLORS[index % STAT_COLORS.length]}
-              />
-            ))}
-          </Pie>
-          <Tooltip />
-
-          <Legend />
-        </PieChart>
-      </ResponsiveContainer>
-    </div>
+    <ResponsiveContainer width="100%" height={high ? high : 220}>
+      <PieChart>
+        <Pie
+          data={pieChartData}
+          cx="50%"
+          cy={cy}
+          labelLine={false}
+          innerRadius={50}
+          outerRadius={70}
+          paddingAngle={3}
+          stroke="none"
+          dataKey="value"
+          startAngle={360}
+          endAngle={0}
+        >
+          {pieChartData.map((_, index) => (
+            <Cell
+              key={`cell-${index}`}
+              fill={STAT_COLORS[index % STAT_COLORS.length]}
+            />
+          ))}
+        </Pie>
+        <Tooltip />
+        <Legend />
+      </PieChart>
+    </ResponsiveContainer>
   );
 }

@@ -12,7 +12,6 @@ interface FlagProps {
 export default function Flag({ nation, isHeader }: FlagProps) {
   const { t } = useTranslation();
   const LazyImage = lazy(() => import("./lazy/lazyImage"));
-
   return (
     <div
       className={
@@ -32,9 +31,7 @@ export default function Flag({ nation, isHeader }: FlagProps) {
           />
         </Suspense>
       ) : (
-        <div className={`${!isHeader ? "text-[3.1rem]" : ""}`}>
-          <GiBlackFlag />
-        </div>
+        <GiBlackFlag className={!isHeader ? "text-[3.1rem]" : ""} />
       )}
     </div>
   );

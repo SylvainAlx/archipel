@@ -3,12 +3,18 @@ import { GiBlackFlag } from "react-icons/gi";
 
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
-import { customTagProps } from "../../../types/typProp";
 import { useAtom } from "jotai";
 import { useEffect, useState } from "react";
 import { nationListAtomV2 } from "../../../settings/store";
+import { MdTimer } from "react-icons/md";
+import { UserModel } from "../../../models/userModel";
 
-export default function NationTag({ label }: customTagProps) {
+interface NationTagProps {
+  label: string;
+  citizen?: UserModel;
+}
+
+export default function NationTag({ label, citizen }: NationTagProps) {
   const { t } = useTranslation();
   const [nationList] = useAtom(nationListAtomV2);
   const [nationName, setNationName] = useState(label);
@@ -33,10 +39,13 @@ export default function NationTag({ label }: customTagProps) {
     <Tag
       text={typeof nationName === "string" ? nationName : ""}
       hover={t("components.hoverInfos.tags.nation")}
-      bgColor="bg-info"
+      bgColor={"bg-info"}
       click={handleClick}
     >
-      <GiBlackFlag />
+      <>
+        {citizen && citizen.citizenship.status === 0 && <MdTimer />}
+        <GiBlackFlag />
+      </>
     </Tag>
   );
 }

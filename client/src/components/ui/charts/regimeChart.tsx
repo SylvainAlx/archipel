@@ -24,5 +24,10 @@ export default function RegimeChart({ nations }: RegimeChartProps) {
     }))
     .filter((entry) => entry.value > 0); // On garde uniquement les régimes présents
 
-  return <HalfPieChart pieChartData={pieChartData} high={310} />;
+  return (
+    <HalfPieChart
+      pieChartData={pieChartData}
+      high={39 * Object.values(pieChartData).length}
+    />
+  );
 }

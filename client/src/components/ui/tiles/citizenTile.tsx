@@ -12,7 +12,6 @@ import NationOwnerTag from "../tags/nationOwnerTag";
 import { useEffect, useState } from "react";
 import { IoDiamondOutline } from "react-icons/io5";
 import LanguagesTag from "../tags/languagesTag";
-import ReportPanel from "../reportPanel";
 import DateTag from "../tags/dateTag";
 import { PIONEER_DATE } from "../../../settings/consts";
 import HonorTag from "../tags/honorTag";
@@ -96,9 +95,6 @@ export default function CitizenTile({ citizen }: CitizenTileProps) {
         </h3>
       </div>
       <div className="w-full flex justify-end gap-1 flex-wrap">
-        <div className="flex gap-1 flex-wrap items-center self-end">
-          {!selfUser && <ReportPanel content={citizen} center={false} />}
-        </div>
         {session.user.citizenship.nationOwner &&
           sameNation &&
           !selfUser &&
@@ -125,10 +121,9 @@ export default function CitizenTile({ citizen }: CitizenTileProps) {
           <HonorTag honor="honor_pioneer" />
         )}
         {citizen.citizenship.nationOwner && <NationOwnerTag />}
-        {citizen.citizenship.nationId != "" &&
-          emplacement.pathname != `/nation/${citizen.citizenship.nationId}` && (
-            <NationTag label={citizen.citizenship.nationId} />
-          )}
+        {citizen.citizenship.nationId != "" && (
+          <NationTag label={citizen.citizenship.nationId} citizen={citizen} />
+        )}
         <LanguagesTag language={citizen.language} />
         <DateTag date={citizen.createdAt} />
         <OnlineStatusTag citizenLastVisitDate={citizenLastVisitDate} />

@@ -4,9 +4,6 @@ import RegimeTag from "../tags/regimeTag";
 import PlaceTag from "../tags/placeTag";
 import Flag from "../flag";
 import TagList from "../../nation/tagList";
-import ReportPanel from "../reportPanel";
-import { sessionAtom } from "../../../settings/store";
-import { useAtom } from "jotai";
 import DateTag from "../tags/dateTag";
 import { NationModel } from "../../../models/nationModel";
 import TreasuryTag from "../tags/treasuryTag";
@@ -18,7 +15,6 @@ interface NationTileProps {
 
 export default function NationTile({ nation }: NationTileProps) {
   const navigate = useNavigate();
-  const [session] = useAtom(sessionAtom);
 
   // eslint-disable-next-line no-undef
   const handleClick = (event: React.MouseEvent<HTMLDivElement>) => {
@@ -36,18 +32,13 @@ export default function NationTile({ nation }: NationTileProps) {
         <Flag nation={nation} />
         <h3
           onClick={handleClick}
-          className="flex items-center gap-2 text-light text-xl pl-4 pr-6 cursor-pointer"
+          className="flex items-center gap-1 text-light text-xl pl-4 pr-6 cursor-pointer"
         >
           {nation.name}
           {nation.data.roleplay.officialOwner === nation.owner && (
             <VerifiedTag />
           )}
         </h3>
-      </div>
-      <div className="flex gap-1 flex-wrap items-center self-end">
-        {session.user.citizenship.nationId != nation.officialId && (
-          <ReportPanel content={nation} center={false} />
-        )}
       </div>
       <div className="max-w-[80%] flex gap-1 self-end flex-wrap justify-end">
         <TreasuryTag label={nation.data.roleplay.treasury} />

@@ -3,6 +3,7 @@ validation.md
 /server/.env
 /server/node_modules
 /server/dist
+/server/eslint-errors.txt
 
 /client/.env
 /client/node_modules
