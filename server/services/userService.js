@@ -51,7 +51,7 @@ export const IpIsBanished = async (AUserIp) => {
       })) != null;
     return banned;
   } catch (error) {
-    handleError(error, res);
+    throw error;
   }
 };
 

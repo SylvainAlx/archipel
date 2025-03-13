@@ -1,5 +1,7 @@
 import Nation from "../models/nationSchema.js";
 import Place from "../models/placeSchema.js";
+import User from "../models/userSchema.js";
+import Com from "../models/comSchema.js";
 import { banIp } from "../services/userService.js";
 
 export const modifierReportOuBan = async (
@@ -24,10 +26,11 @@ export const modifierReportOuBan = async (
       case "m":
         AModel = Com;
         break;
-      default:
+      default: {
         const error = new Error();
         error.code = 404;
         throw new Error(error);
+      }
     }
 
     const entite = await AModel.findOne({ officialId: AContent });

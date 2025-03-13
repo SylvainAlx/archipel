@@ -1,6 +1,5 @@
 import Place from "../models/placeSchema.js";
 import Nation from "../models/nationSchema.js";
-import User from "../models/userSchema.js";
 import { createOfficialId, handleError } from "../utils/functions.js";
 import {
   DEFAULT_COSTS,
@@ -200,7 +199,6 @@ export const updatePlace = async (req, res) => {
       const placeInBase = await place.save();
       res.status(200).json({ place: placeInBase, infoType: "update" });
     } else {
-      console.error(error);
       res.status(403).json({
         infoType: "403",
       });

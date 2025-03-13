@@ -1,114 +1,29 @@
 import i18n from "../i18n/i18n";
 import { StandardOption } from "../types/typAtom";
-import { Regime, RegimeType } from "../types/typNation";
 import { COM_TYPE } from "./consts";
+
+export const STAT_COLORS: string[] = [
+  "#ffa600", // Jaune orangé
+  "#1f78b4", // Bleu soutenu
+  "#ff7c43", // Orange foncé
+  "#33a02c", // Vert intense
+  "#d45087", // Rose foncé
+  "#4BC0C0", // Turquoise
+  "#e31a1c", // Rouge vif
+  "#665191", // Violet foncé
+  "#b2df8a", // Vert clair
+  "#f95d6a", // Rouge rosé
+  "#8E44AD", // Violet profond
+  "#fb9a99", // Rose clair
+  "#a05195", // Violet moyen
+];
 
 export const nationComTypeOptions = [
   COM_TYPE.nationPrivate,
   COM_TYPE.nationPublic,
 ];
 
-export const STAT_COLORS = [
-  "#0088FE",
-  "#00C49F",
-  "#FFBB28",
-  "#FF8042",
-  "#A28DFF",
-  "#FF6384",
-  "#36A2EB",
-  "#FFCE56",
-  "#4BC0C0",
-  "#9966FF",
-];
-
 export const adminComTypeOptions = [COM_TYPE.general, COM_TYPE.userPrivate];
-
-export const regimeTypeList: RegimeType[] = [
-  {
-    type: 0,
-    color: "bg-regime_0",
-  },
-  {
-    type: 1,
-    color: "bg-regime_1",
-  },
-  {
-    type: 2,
-    color: "bg-regime_2",
-  },
-  {
-    type: 3,
-    color: "bg-regime_3",
-  },
-];
-
-export const regimeList: Regime[] = [
-  {
-    id: 1,
-    label: i18n.t("listes.regimeList.others.unknownPoliticalRegime"),
-    type: 0,
-  },
-  {
-    id: 2,
-    label: i18n.t("listes.regimeList.others.noGovernment"),
-    type: 0,
-  },
-  {
-    id: 3,
-    label: i18n.t("listes.regimeList.others.provisionalGovernment"),
-    type: 0,
-  },
-  {
-    id: 4,
-    label: i18n.t("listes.regimeList.others.other"),
-    type: 0,
-  },
-  {
-    id: 100,
-    label: i18n.t("listes.regimeList.democracies.presidentialRepublic"),
-    type: 1,
-  },
-  {
-    id: 101,
-    label: i18n.t("listes.regimeList.democracies.semiPresidentialRepublic"),
-    type: 1,
-  },
-  {
-    id: 102,
-    label: i18n.t("listes.regimeList.democracies.parliamentaryRepublic"),
-    type: 1,
-  },
-  {
-    id: 103,
-    label: i18n.t("listes.regimeList.democracies.onePartyRepublic"),
-    type: 1,
-  },
-  {
-    id: 104,
-    label: i18n.t("listes.regimeList.democracies.directDemocracy"),
-    type: 1,
-  },
-  {
-    id: 105,
-    label: i18n.t("listes.regimeList.democracies.illiberalDemocracy"),
-    type: 1,
-  },
-  {
-    id: 200,
-    label: i18n.t("listes.regimeList.monarchies.constitutionalMonarchy"),
-    type: 2,
-  },
-  {
-    id: 201,
-    label: i18n.t("listes.regimeList.monarchies.absoluteMonarchy"),
-    type: 2,
-  },
-  {
-    id: 300,
-    label: i18n.t("listes.regimeList.autoritarianRegimes.militaryDictatorship"),
-    type: 3,
-  },
-];
 
 export const languageList: StandardOption[] = [
   { id: "ar", label: "العربية" }, // Arabe

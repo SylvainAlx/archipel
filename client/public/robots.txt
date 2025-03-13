@@ -1,4 +1,8 @@
 User-agent: *
 Disallow: /admin
+Disallow: /login
+Disallow: /register
+Disallow: /recovery
+Allow: /
 
 Sitemap: https://archipel-app.com/sitemap.xml

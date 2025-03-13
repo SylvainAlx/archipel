@@ -1,4 +1,6 @@
 import i18n from "../i18n/i18n";
+import { Dictionary, IdLabelDictionary } from "../types/dictionnaries";
+import { Regime } from "../types/typNation";
 
 export const MDP_LOBBY = import.meta.env.VITE_MDP_LOBBY;
 export const LOBBY_INFO = import.meta.env.VITE_LOBBY_INFO;
@@ -18,7 +20,7 @@ export const ADA_PUBLIC_KEY = import.meta.env.VITE_ADA_PUBLIC_KEY;
 export const VERSION = {
   beta: "",
   rc: "",
-  release: "1.0.0",
+  release: "1.0.1",
   testing: false,
 };
 
@@ -62,7 +64,7 @@ export const COM_GENERAL_DESTINATION = "-1";
 export const FLAG_MAKER_URL = "https://flagmakerjr.stg7.net/";
 export const COA_MAKER_URL = "https://coamaker.com/";
 
-export const COM_TYPE = {
+export const COM_TYPE: IdLabelDictionary = {
   admin: { id: 0, label: i18n.t("listes.comType.admin") },
   general: { id: 1, label: i18n.t("listes.comType.general") },
   nationPrivate: { id: 10, label: i18n.t("listes.comType.nationPrivate") },
@@ -72,7 +74,7 @@ export const COM_TYPE = {
   userPrivate: { id: 21, label: i18n.t("listes.comType.userPrivate") },
 };
 
-export const PLACE_TYPE = {
+export const PLACE_TYPE: IdLabelDictionary = {
   state: {
     id: 0,
     label: i18n.t("components.searchBars.placesList.checkbox.state"),
@@ -88,5 +90,86 @@ export const PLACE_TYPE = {
   nature: {
     id: 3,
     label: i18n.t("components.searchBars.placesList.checkbox.nature"),
+  },
+};
+
+export const REGIME: Dictionary<Regime> = {
+  unknownPoliticalRegime: {
+    id: 1,
+    label: i18n.t("listes.regimeList.others.unknownPoliticalRegime"),
+    type: 0,
+    color: "bg-regime_0",
+  },
+  noGovernment: {
+    id: 2,
+    label: i18n.t("listes.regimeList.others.noGovernment"),
+    type: 0,
+    color: "bg-regime_0",
+  },
+  provisionalGovernment: {
+    id: 3,
+    label: i18n.t("listes.regimeList.others.provisionalGovernment"),
+    type: 0,
+    color: "bg-regime_0",
+  },
+  other: {
+    id: 4,
+    label: i18n.t("listes.regimeList.others.other"),
+    type: 0,
+    color: "bg-regime_0",
+  },
+  presidentialRepublic: {
+    id: 100,
+    label: i18n.t("listes.regimeList.democracies.presidentialRepublic"),
+    type: 1,
+    color: "bg-regime_1",
+  },
+  semiPresidentialRepublic: {
+    id: 101,
+    label: i18n.t("listes.regimeList.democracies.semiPresidentialRepublic"),
+    type: 1,
+    color: "bg-regime_1",
+  },
+  parliamentaryRepublic: {
+    id: 102,
+    label: i18n.t("listes.regimeList.democracies.parliamentaryRepublic"),
+    type: 1,
+    color: "bg-regime_1",
+  },
+  onePartyRepublic: {
+    id: 103,
+    label: i18n.t("listes.regimeList.democracies.onePartyRepublic"),
+    type: 1,
+    color: "bg-regime_1",
+  },
+  directDemocracy: {
+    id: 104,
+    label: i18n.t("listes.regimeList.democracies.directDemocracy"),
+    type: 1,
+    color: "bg-regime_1",
+  },
+  illiberalDemocracy: {
+    id: 105,
+    label: i18n.t("listes.regimeList.democracies.illiberalDemocracy"),
+    type: 1,
+    color: "bg-regime_1",
+  },
+  constitutionalMonarchy: {
+    id: 200,
+    label: i18n.t("listes.regimeList.monarchies.constitutionalMonarchy"),
+    type: 2,
+    color: "bg-regime_2",
+  },
+  absoluteMonarchy: {
+    id: 201,
+    label: i18n.t("listes.regimeList.monarchies.absoluteMonarchy"),
+    type: 2,
+    color: "bg-regime_2",
+  },
+  militaryDictatorship: {
+    id: 300,
+    label: i18n.t("listes.regimeList.autoritarianRegimes.militaryDictatorship"),
+    type: 3,
+    color: "bg-regime_3",
   },
 };

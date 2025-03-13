@@ -1,6 +1,7 @@
 import i18n from "../i18n/i18n";
+import { IdLabelDictionary } from "../types/dictionnaries";
 
-export const COM_SORTING = {
+export const COM_SORTING: IdLabelDictionary = {
   ascDate: {
     id: 0,
     label: i18n.t("components.searchBars.comsList.SortComs.ascDate"),
@@ -11,7 +12,7 @@ export const COM_SORTING = {
   },
 };
 
-export const PLACE_SORTING = {
+export const PLACE_SORTING: IdLabelDictionary = {
   ascAlpha: {
     id: 0,
     label: i18n.t("components.searchBars.placesList.sortPlaces.ascAlpha"),
@@ -38,7 +39,7 @@ export const PLACE_SORTING = {
   },
 };
 
-export const CITIZEN_SORTING = {
+export const CITIZEN_SORTING: IdLabelDictionary = {
   ascAlpha: {
     id: 0,
     label: i18n.t("components.searchBars.citizensList.sortCitizens.ascAlpha"),
@@ -65,7 +66,7 @@ export const CITIZEN_SORTING = {
   },
 };
 
-export const NATION_SORTING = {
+export const NATION_SORTING: IdLabelDictionary = {
   ascAlpha: {
     id: 0,
     label: i18n.t("components.searchBars.nationsList.sortNations.ascAlpha"),

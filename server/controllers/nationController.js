@@ -124,7 +124,6 @@ export const getAllNations = async (req, res) => {
       );
       res.status(200).json(nations);
     } else {
-      console.error(error);
       res.status(404).json({ infoType: "404" });
     }
   } catch (error) {

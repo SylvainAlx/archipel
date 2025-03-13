@@ -2,13 +2,12 @@
 
 ## 📌 Version
 
-Archipel est actuellement en version **v1.0.0**.
+Archipel est actuellement en version **v1.0.1**.
 La phase bêta est terminée et l'application est désormais accessible librement au public.
-Cette version vient conclure la période initiale de développement en corrigeant les bugs et propose un MVP de l'application.
 
 ### État actuel
 
-- Première version de production
+- Version de production
 - Les avis des utilisateurs sont toujours les bienvenus
 
 ## ✨ Le projet

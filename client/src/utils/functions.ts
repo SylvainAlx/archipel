@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import i18n from "../i18n/i18n";
-import { APP_NAME, MAX_LENGTH } from "../settings/consts";
-import { languageList, regimeList, regimeTypeList } from "../settings/lists";
+import { APP_NAME, MAX_LENGTH, REGIME } from "../settings/consts";
+import { languageList } from "../settings/lists";
 import { NationModel } from "../models/nationModel";
 
 export const GET_JWT = () => {
@@ -33,25 +33,22 @@ export const createTagRegime = (id: number) => {
     bgColor: "bg-regime_0",
   };
 
-  const getLabel = (id: number): string => {
-    let label = i18n.t("listes.regimeList.others.unknownPoliticalRegime");
-    regimeList.map((regime) => {
-      if (regime.id === id) {
-        label = regime.label;
-      }
-    });
-    return label;
-  };
+  // const getLabel = (id: number): string => {
+  //   let label = i18n.t("listes.regimeList.others.unknownPoliticalRegime");
+  //   Object.values(REGIME).map((regime) => {
+  //     if (regime.id === id) {
+  //       label = regime.label;
+  //     }
+  //   });
+  //   return label;
+  // };
 
-  tagRegime.label = getLabel(id);
-  regimeList.map((regime) => {
+  // tagRegime.label = getLabel(id);
+  Object.values(REGIME).map((regime) => {
     if (regime.id === id) {
-      regimeTypeList.map((type) => {
-        if (regime.type === type.type) {
-          tagRegime.type = type.type;
-          tagRegime.bgColor = type.color;
-        }
-      });
+      tagRegime.label = regime.label;
+      tagRegime.type = regime.type;
+      tagRegime.bgColor = regime.color;
     }
   });
   return tagRegime;

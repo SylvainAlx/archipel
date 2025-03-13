@@ -16,11 +16,6 @@ export interface customTagProps {
   owner?: boolean;
 }
 
-export interface Props {
-  // eslint-disable-next-line no-undef
-  children: JSX.Element;
-}
-
 export interface ClickProps {
   text?: string;
   click: MouseEventHandler<HTMLButtonElement | HTMLDivElement>;

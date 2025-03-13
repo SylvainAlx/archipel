@@ -72,7 +72,6 @@ export const updateRelation = async (req, res) => {
           infoType: "update",
         });
       } else {
-        console.error(error);
         res.status(400).json({ infoType: "400" });
       }
     } else {
