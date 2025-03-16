@@ -1,27 +1,19 @@
-import { lazy, Suspense, useEffect, useState } from "react";
+import { lazy, Suspense } from "react";
 import TileContainer from "../ui/tileContainer";
 import H2 from "../ui/titles/h2";
 import IndexTag from "../ui/tags/indexTag";
 import Button from "../ui/buttons/button";
-import { useAtom } from "jotai";
-import { bannedCitizensAtom } from "../../settings/store";
 import { useTranslation } from "react-i18next";
 import TileSkeleton from "../ui/loading/skeletons/tileSkeleton";
+import useAdminBanned from "../../hooks/componentsHooks/useAdminBanned";
 
 export default function AdminBanned() {
   const { t } = useTranslation();
-  const [bannedUsers] = useAtom(bannedCitizensAtom);
-  const [displayedCitizens, setDisplayedCitizens] = useState(10);
+  const { displayedCitizens, setDisplayedCitizens, bannedUsers } =
+    useAdminBanned();
+
   const CitizenTile = lazy(() => import("../ui/tiles/citizenTile"));
-  useEffect(() => {
-    const getUsers = () => {
-      bannedUsers.loadBannedCitizensAtom();
-    };
-    if (bannedUsers.getItems().length === 0) {
-      getUsers();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+
   return (
     <TileContainer>
       <>

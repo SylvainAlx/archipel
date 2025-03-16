@@ -14,7 +14,9 @@ export default function Citizen() {
     () => import("../../components/citizen/citizenship"),
   );
   const Settings = lazy(() => import("../../components/citizen/settings"));
-  const CitizenCom = lazy(() => import("../../components/citizen/citizensCom"));
+  const CitizenComs = lazy(
+    () => import("../../components/citizen/citizenComs"),
+  );
 
   const { citizen, nation, owner, setCitizen, updatePath, t } = useCitizen();
 
@@ -69,7 +71,7 @@ export default function Citizen() {
         )}
         {owner && (
           <Suspense fallback={<TileSkeleton />}>
-            <CitizenCom citizen={citizen} />
+            <CitizenComs citizen={citizen} />
           </Suspense>
         )}
       </section>

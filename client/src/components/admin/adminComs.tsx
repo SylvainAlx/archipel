@@ -1,30 +1,17 @@
-import { Suspense, useEffect, useState } from "react";
+import { Suspense } from "react";
 import TileContainer from "../ui/tileContainer";
 import AdminComTile from "../ui/tiles/adminComTile";
 import H2 from "../ui/titles/h2";
 import IndexTag from "../ui/tags/indexTag";
 import Button from "../ui/buttons/button";
 import { useTranslation } from "react-i18next";
-import { ComListModel } from "../../models/lists/comListModel";
 import TileSkeleton from "../ui/loading/skeletons/tileSkeleton";
+import useAdminComs from "../../hooks/componentsHooks/useAdminComs";
 
 export default function AdminComs() {
-  const [adminComList, setAdminComList] = useState<ComListModel>(
-    new ComListModel(),
-  );
-  const [displayedComs, setDisplayedComs] = useState(10);
+  const { adminComList, displayedComs, setDisplayedComs } = useAdminComs();
   const { t } = useTranslation();
 
-  useEffect(() => {
-    const loadList = async () => {
-      const updatedList = await adminComList.loadAdminComList();
-      if (updatedList) {
-        setAdminComList(updatedList);
-      }
-    };
-    loadList();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
   return (
     <TileContainer>
       <>

@@ -51,7 +51,11 @@ export interface StandardOption {
 }
 
 export interface Counts {
+  nations: number;
+  citizens: number;
+  places: number;
   tags: number;
+  coms: number;
 }
 export type Stats = {
   counts: Counts;

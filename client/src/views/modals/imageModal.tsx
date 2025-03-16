@@ -11,12 +11,12 @@ export default function ImageModal() {
 
   return (
     <div
-      className="flex flex-col items-center gap-4"
+      className="flex flex-col items-center gap-4 overflow-hidden"
       ref={modalRef}
       tabIndex={-1}
     >
       <a
-        className={`max-w-screen-sm max-h-screen bg-complementary flex flex-col items-center justify-center overflow-hidden rounded cursor-zoom-in`}
+        className={`max-w-screen-sm bg-complementary flex flex-col items-center justify-center overflow-hidden rounded cursor-zoom-in`}
         href={image}
         target="_blank"
         rel="noreferrer"

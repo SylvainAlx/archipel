@@ -48,7 +48,7 @@ export class PlaceListModel extends ListModel {
         this.items = savedPlaces;
       } else {
         const places: Place[] = await getAllPlacesFetch(searchName);
-        this.addMany(places);
+        this.items = places;
         this.addToPlaceListAtom(places);
       }
     } catch (error) {
