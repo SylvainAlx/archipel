@@ -16,10 +16,10 @@ export default function AdminBanButton({
   const handleAdminBan = (reverse: boolean) => {
     myStore.set(confirmBox, {
       text: reverse ? "Réindexer le contenu ?" : "Désindexer le contenu ?",
-      actionToDo: () => {
+      actionToDo: async () => {
         const content = new CommonModel();
         content.officialId = contentOfficialId;
-        content.banContent(reverse);
+        await content.banContent(reverse);
       },
     });
   };

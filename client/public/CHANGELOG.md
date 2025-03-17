@@ -33,6 +33,8 @@ Aucune
 - Mise à jour des dépendances
 - Correction des recherches par nom depuis la page explorer
 - Correction du modal d'image
+- Correction de l'algorithme lié aux résidences
+- Optimisation des données en mémoire
 
 ## Versions précédentes
 

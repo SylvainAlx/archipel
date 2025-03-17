@@ -56,8 +56,8 @@ export function useNation() {
     if (password) {
       myStore.set(confirmBox, {
         text: t("components.modals.confirmModal.deleteNation"),
-        actionToDo: () => {
-          nation.baseDelete(password);
+        actionToDo: async () => {
+          await nation.baseDelete(password);
           const updatedList = nationList.removeByOfficialId(nation.officialId);
           setNationList(new NationListModel(updatedList));
           navigate(`/citizen/${session.user.officialId}`);
