@@ -30,9 +30,9 @@ export default function AdminForm() {
     e.preventDefault();
     myStore.set(confirmBox, {
       text: t("components.modals.confirmModal.createCom"),
-      actionToDo: () => {
+      actionToDo: async () => {
         const comToInsert = new ComModel(newCom);
-        comToInsert.baseInsert();
+        await comToInsert.baseInsert();
       },
     });
     setNewCom(emptyComPayload);

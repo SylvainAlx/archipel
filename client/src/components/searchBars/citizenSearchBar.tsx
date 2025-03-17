@@ -1,10 +1,10 @@
-import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import Input from "../form/input";
 import Select from "../form/select";
 import { useTranslation } from "react-i18next";
 import SearchButtons from "../form/searchButtons";
 import { CITIZEN_SORTING } from "../../settings/sorting";
 import { UserListModel } from "../../models/lists/userListModel";
+import useCitizenSearchBar from "../../hooks/componentsHooks/useCitizenSearchBar";
 
 export interface CitizenSearchBarProps {
   type: string;
@@ -18,50 +18,15 @@ export default function CitizenSearchBar({
   setList,
 }: CitizenSearchBarProps) {
   const { t } = useTranslation();
-  const [searchName, setSearchName] = useState("");
-  const [isLeader, setIsLeader] = useState(false);
-
-  useEffect(() => {
-    if (isLeader) {
-      const updatedList = list
-        .getItems()
-        .filter((user) => user.citizenship.nationOwner === true);
-      setList(new UserListModel(updatedList));
-    } else {
-      loadUserList(searchName);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isLeader]);
-
-  const loadUserList = async (searchName: string) => {
-    let updatedList = await list.loadUserList(searchName);
-    updatedList = updatedList.sortUsers(list.sorting);
-    if (updatedList) {
-      setList(updatedList);
-    }
-  };
-
-  const reset = () => {
-    loadUserList("");
-  };
-
-  const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
-    setSearchName(e.target.value);
-  };
-
-  const handleSubmit = (e: FormEvent) => {
-    e.preventDefault();
-    loadUserList(searchName);
-  };
-
-  const handleChangeCheckbox = () => {
-    setIsLeader(!isLeader);
-  };
-
-  const handleChangeSorting = (e: ChangeEvent<HTMLSelectElement>) => {
-    const updatedList = list.sortUsers(Number(e.target.value));
-    setList(updatedList);
-  };
+  const {
+    searchName,
+    isLeader,
+    handleSearch,
+    handleSubmit,
+    handleChangeCheckbox,
+    handleChangeSorting,
+    reset,
+  } = useCitizenSearchBar(list, setList);
 
   return (
     <form

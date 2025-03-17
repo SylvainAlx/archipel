@@ -20,7 +20,7 @@ export default function AdminComTile({ com }: ComTileProps) {
       text: t("components.modals.confirmModal.deleteCom"),
       actionToDo: async () => {
         const comToDelete = new ComModel();
-        comToDelete.baseDelete(com._id);
+        await comToDelete.baseDelete(com._id);
       },
     });
   };

@@ -15,10 +15,10 @@ export default function AdminReportButton({
   const handleAdminReport = (reverse: boolean) => {
     myStore.set(confirmBox, {
       text: reverse ? "Afficher le contenu ?" : "Masquer le contenu ?",
-      actionToDo: () => {
+      actionToDo: async () => {
         const content = new CommonModel();
         content.officialId = contentOfficialId;
-        content.reportContent(reverse);
+        await content.reportContent(reverse);
       },
     });
   };

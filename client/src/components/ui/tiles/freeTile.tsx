@@ -31,9 +31,9 @@ export default function FreeTile({ tile, owner }: FreeTileProps) {
   const handleDelete = () => {
     myStore.set(confirmBox, {
       text: t("components.modals.confirmModal.deleteTile"),
-      actionToDo: () => {
+      actionToDo: async () => {
         const newTile = new TileModel(tile);
-        newTile.baseDelete();
+        await newTile.baseDelete();
       },
     });
   };

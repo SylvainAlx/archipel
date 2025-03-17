@@ -13,6 +13,7 @@ import {
   loadingAtom,
   myStore,
   nationListAtomV2,
+  placeListAtomV2,
   sessionAtom,
   statsAtom,
   userListAtomV2,
@@ -310,10 +311,11 @@ export class NationModel extends CommonModel implements Nation {
   baseDelete = async (password: string) => {
     myStore.set(loadingAtom, true);
     try {
-      const resp: { user: User; infoType: string } =
-        await DeleteSelfFetch(password);
-      this.removeFromNationListAtom(this);
-      this.updateFields(EmptyNation);
+      const resp: {
+        user: User;
+        infoType: string;
+      } = await DeleteSelfFetch(password);
+      myStore.get(placeListAtomV2).deleteNationPlaces(this.officialId);
       myStore.get(sessionAtom).user.addOrUpdateUserListAtom(resp.user);
       myStore.get(sessionAtom).user.updateSessionAtom(resp.user);
       const newCom = new ComModel({
@@ -324,6 +326,8 @@ export class NationModel extends CommonModel implements Nation {
         message: i18n.t("coms.nationDelete.message"),
       });
       newCom.baseInsert();
+      this.removeFromNationListAtom(this);
+      this.updateFields(EmptyNation);
       this.displayNationInfoByType(resp.infoType);
     } catch (error) {
       errorCatching(error);

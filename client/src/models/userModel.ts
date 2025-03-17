@@ -264,11 +264,19 @@ export class UserModel extends CommonModel implements User {
   changeStatus = async (payload: changeStatusPayload) => {
     myStore.set(loadingAtom, true);
     try {
-      const resp: { user: User; nation: Nation; infoType: string } =
-        await changeStatusFetch(payload);
+      const resp: {
+        user: User;
+        nation: Nation;
+        newResidence: Place;
+        oldResidence: Place;
+        infoType: string;
+      } = await changeStatusFetch(payload);
       this.updateFields(resp.user);
-      // this.updateSessionAtom(resp.user);
       this.addOrUpdateUserListAtom(resp.user);
+      if (resp.newResidence)
+        myStore.get(placeListAtomV2).addOrUpdate(resp.newResidence);
+      if (resp.oldResidence)
+        myStore.get(placeListAtomV2).addOrUpdate(resp.oldResidence);
       myStore.get(nationListAtomV2).addToNationListAtom([resp.nation]);
       createComByStatus(resp.user.citizenship.status, resp.nation, resp.user);
       this.displayUserInfoByType(resp.infoType);
@@ -392,16 +400,17 @@ export class UserModel extends CommonModel implements User {
     try {
       const resp: {
         user: User;
-        place: Place;
-        oldPlace: Place;
+        newResidence: Place;
+        oldResidence: Place;
         infoType: string;
       } = await updateUserFetch(this);
       this.updateFields(resp.user);
       this.updateSessionAtom(resp.user);
       this.addOrUpdateUserListAtom(resp.user);
-      if (resp.place) myStore.get(placeListAtomV2).addOrUpdate(resp.place);
-      if (resp.oldPlace)
-        myStore.get(placeListAtomV2).addOrUpdate(resp.oldPlace);
+      if (resp.newResidence)
+        myStore.get(placeListAtomV2).addOrUpdate(resp.newResidence);
+      if (resp.oldResidence)
+        myStore.get(placeListAtomV2).addOrUpdate(resp.oldResidence);
       this.displayUserInfoByType(resp.infoType);
     } catch (error) {
       errorCatching(error);

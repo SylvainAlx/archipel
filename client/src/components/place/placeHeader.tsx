@@ -49,8 +49,8 @@ export default function PlaceHeader({
   const handleDelete = () => {
     myStore.set(confirmBox, {
       text: t("components.modals.confirmModal.deletePlace"),
-      actionToDo: () => {
-        place.baseDelete();
+      actionToDo: async () => {
+        await place.baseDelete();
         const listToUpdate = placeList.removeByOfficialId(place.officialId);
         setPlaceList(new PlaceListModel(listToUpdate));
         navigate(`/nation/${place.nation}`);

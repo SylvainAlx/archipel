@@ -1,7 +1,6 @@
 import User from "../models/userSchema.js";
 import Nation from "../models/nationSchema.js";
 import Param from "../models/paramSchema.js";
-import Place from "../models/placeSchema.js";
 import Com from "../models/comSchema.js";
 
 import {
@@ -25,6 +24,7 @@ import {
   recoverCreditToBank,
 } from "../services/paramService.js";
 import { deleteFile } from "../services/fileService.js";
+import { updateResidence } from "../services/placeService.js";
 
 export const register = async (req, res) => {
   try {
@@ -333,31 +333,10 @@ export const updateUser = async (req, res) => {
 
     if (req.userId === officialId) {
       const user = await getUserByOfficialId(officialId, 404);
-      let newResidence;
-      let oldResidence;
-      if (user.citizenship.residence != citizenship.residence) {
-        oldResidence = await Place.findOne({
-          officialId: user.citizenship.residence,
-        });
-        if (oldResidence && oldResidence.population > 0) {
-          oldResidence.population -= 1;
-          await oldResidence.save();
-        }
-        newResidence = await Place.findOne({
-          officialId: citizenship.residence,
-        });
-
-        if (newResidence) {
-          newResidence.population += 1;
-          await newResidence.save();
-        } else {
-          newResidence = null;
-        }
-      } else {
-        newResidence = null;
-        oldResidence = null;
-      }
-
+      const { oldResidence, newResidence } = await updateResidence(
+        user.citizenship.residence,
+        citizenship.residence,
+      );
       user.name = name;
       (user.bio = bio), (user.gender = gender);
       user.avatar = avatar;
@@ -371,8 +350,8 @@ export const updateUser = async (req, res) => {
       await user.save();
       res.status(200).json({
         user,
-        place: newResidence,
-        oldPlace: oldResidence,
+        newResidence,
+        oldResidence,
         infoType: "update",
       });
     } else {
@@ -416,11 +395,19 @@ export const changeStatus = async (req, res) => {
           await recoverCreditToBank(gift);
         }
       }
+      const { oldResidence, newResidence } = await updateResidence(
+        user.citizenship.residence,
+        "",
+      );
+      user.citizenship.residence = "";
+
       user.citizenship.status = status;
       await user.save();
       res.status(200).json({
         user,
         nation,
+        oldResidence,
+        newResidence,
         infoType: "update",
       });
     } else {

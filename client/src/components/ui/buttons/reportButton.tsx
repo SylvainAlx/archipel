@@ -23,9 +23,9 @@ export default function ReportButton({ contentOfficialId }: ReportButtonProps) {
     };
     myStore.set(confirmBox, {
       text: t("components.modals.confirmModal.reportContent"),
-      actionToDo: () => {
+      actionToDo: async () => {
         const newCom = new ComModel(payload);
-        newCom.baseInsert();
+        await newCom.baseInsert();
       },
     });
   };

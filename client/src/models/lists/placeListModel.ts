@@ -31,6 +31,13 @@ export class PlaceListModel extends ListModel {
     const updatedList = myStore.get(placeListAtomV2).addMany(list);
     myStore.set(placeListAtomV2, new PlaceListModel(updatedList));
   };
+  deleteNationPlaces = (nationOfficialId: string) => {
+    const updatedList = myStore
+      .get(placeListAtomV2)
+      .getItems()
+      .filter((place) => place.nation != nationOfficialId);
+    myStore.set(placeListAtomV2, new PlaceListModel(updatedList));
+  };
   loadPlaceList = async (searchName: string, forceFetch: boolean = true) => {
     myStore.set(loadingAtom, true);
     try {
@@ -48,7 +55,7 @@ export class PlaceListModel extends ListModel {
         this.items = savedPlaces;
       } else {
         const places: Place[] = await getAllPlacesFetch(searchName);
-        this.addMany(places);
+        this.items = places;
         this.addToPlaceListAtom(places);
       }
     } catch (error) {

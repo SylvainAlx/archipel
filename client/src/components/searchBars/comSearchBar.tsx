@@ -1,11 +1,10 @@
-import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import Input from "../form/input";
 import Select from "../form/select";
 import { useTranslation } from "react-i18next";
 import SearchButtons from "../form/searchButtons";
-import { COM_TYPE } from "../../settings/consts";
 import { ComListModel } from "../../models/lists/comListModel";
 import { COM_SORTING } from "../../settings/sorting";
+import useComSearchBar from "../../hooks/componentsHooks/useComSearchBar";
 
 export interface ComSearchBarProps {
   type: string;
@@ -16,43 +15,8 @@ export interface ComSearchBarProps {
 
 export default function ComSearchBar({ list, setList }: ComSearchBarProps) {
   const { t } = useTranslation();
-  const [nationId, setNationId] = useState("");
-
-  useEffect(() => {
-    loadList();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  const reset = async () => {
-    setNationId("");
-    loadList();
-  };
-  const loadList = async () => {
-    const updatedList = await list.loadComList(
-      "",
-      "",
-      [COM_TYPE.nationPublic.id, COM_TYPE.general.id],
-      false,
-    );
-    if (updatedList) {
-      updatedList.sortComs(updatedList.sorting);
-      setList(updatedList);
-    }
-  };
-  const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
-    setNationId(e.target.value);
-  };
-  const handleChangeSorting = (e: ChangeEvent<HTMLSelectElement>) => {
-    const updatedList = list.sortComs(Number(e.target.value));
-    setList(updatedList);
-  };
-  const handleSubmit = (e: FormEvent) => {
-    e.preventDefault();
-    const updatedList = new ComListModel(
-      list.getItems().filter((com) => com.origin === nationId.toLowerCase()),
-    );
-    setList(updatedList);
-  };
+  const { nationId, reset, handleSearch, handleChangeSorting, handleSubmit } =
+    useComSearchBar(list, setList);
 
   return (
     <form

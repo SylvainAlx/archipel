@@ -85,7 +85,9 @@ export default function Citizenship({
           ? t("components.modals.confirmModal.leaveNation")
           : t("components.modals.confirmModal.cancelCitizenship"),
       actionToDo: async () => {
-        setCitizen(await citizen.changeStatus(payload));
+        const updatedUser = await citizen.changeStatus(payload);
+        updatedUser.updateSessionAtom(updatedUser);
+        setCitizen(updatedUser);
       },
     });
   };
