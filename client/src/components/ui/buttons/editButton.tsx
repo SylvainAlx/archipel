@@ -29,7 +29,7 @@ export default function EditButton({ editBox, onClick }: EditButtonProps) {
           handleClick();
         }
       }}
-      className="opacity-30 hover:text-secondary hover:opacity-100 cursor-pointer transition-all text-sm"
+      className="opacity-30 hover:text-secondary3 hover:opacity-100 cursor-pointer transition-all text-sm"
     >
       <FaPen />
     </button>

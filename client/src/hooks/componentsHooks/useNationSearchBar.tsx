@@ -33,16 +33,21 @@ export default function useNationSearchBar(
     ) {
       loadList(searchName, searchTag);
     } else {
-      myStore
-        .get(nationListAtomV2)
-        .sortNations(myStore.get(nationListAtomV2).sorting);
-      setList(myStore.get(nationListAtomV2));
+      loadList(searchName, searchTag, false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [stats, searchTag]);
+  }, [stats, searchName, searchTag]);
 
-  const loadList = async (searchName: string, searchTag: string) => {
-    const updatedList = await list.loadNationList(searchName, searchTag);
+  const loadList = async (
+    searchName: string,
+    searchTag: string,
+    forceFetch: boolean = true,
+  ) => {
+    const updatedList = await list.loadNationList(
+      searchName,
+      searchTag,
+      forceFetch,
+    );
     if (updatedList) {
       updatedList.sortNations(updatedList.sorting);
       setList(updatedList);

@@ -16,6 +16,25 @@ Le code source est public et est visible [ici](https://github.com/SylvainAlx/arc
 
 ## Version actuelle
 
+### v1.1.0
+
+#### Ajouts
+
+Aucun
+
+#### Suppressions
+
+Aucune
+
+#### Modifications & Corrections
+
+- Amélioration de l'accessibilité
+- Correction des recherches par noms et tags depuis la page "explorer"
+- Correction de la recherche lors d'un clic sur un hashtag
+- Modification des tuiles de relations diplomatiques
+
+## Versions précédentes
+
 ### v1.0.2
 
 #### Ajouts
@@ -35,8 +54,6 @@ Aucune
 - Correction du modal d'image
 - Correction de l'algorithme lié aux résidences
 - Optimisation des données en mémoire
-
-## Versions précédentes
 
 ### v1.0.1
 

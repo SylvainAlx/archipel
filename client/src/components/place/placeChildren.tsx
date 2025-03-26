@@ -27,8 +27,6 @@ export default function PlaceChildren({
     setChildren(nationPlaceList.getPlacesByParentId(place.officialId));
   }, [nationPlaceList, place.officialId]);
 
-  // useEffect(() => console.log(children), []);
-
   return (
     <section className="w-full px-2 flex flex-wrap justify-center gap-2">
       <div className="w-full py-4 flex flex-col gap-2">

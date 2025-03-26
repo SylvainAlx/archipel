@@ -185,7 +185,7 @@ export default function NationIdentity({
                   updatePath={updatePath}
                 />
               </div>
-              <div className="w-full mt-4 justify-center flex gap-2">
+              <div className="w-full max-w-3xl mt-4 justify-center flex gap-2">
                 {selectedNation.data.general.description ? (
                   <MDEditor.Markdown
                     className="bg-transparent text-light text-justify mde-markdown"

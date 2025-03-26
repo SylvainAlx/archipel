@@ -89,7 +89,7 @@ export default function Personal({
         </span>
         <ShareButton label={citizen.name} />
       </div>
-      <div className="w-full max-w-[300px] md:max-w-lg mt-4 justify-center flex gap-2">
+      <div className="w-full max-w-3xl mt-4 justify-center flex gap-2">
         {citizen.bio ? (
           <MDEditor.Markdown
             className="bg-transparent text-light text-justify mde-markdown"

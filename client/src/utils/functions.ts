@@ -11,9 +11,7 @@ export const GET_JWT = () => {
 
 export const findElementsByName = (searchName: string, array: any[]) => {
   if (!searchName) return array; // Si searchName est vide, on retourne tout l'array
-
   const regex = new RegExp(`.*${searchName}.*`, "i"); // Équivalent à MongoDB regex
-
   return array.filter((element) => regex.test(element.name));
 };
 

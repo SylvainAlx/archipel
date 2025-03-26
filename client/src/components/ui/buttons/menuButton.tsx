@@ -7,6 +7,7 @@ export default function MenuButton() {
     <div className={`md:hidden h-full hover:text-secondary`}>
       <Button
         text=""
+        name="menu"
         click={() => myStore.set(showMenuAtom, true)}
         bgColor="bg-invisible"
       >

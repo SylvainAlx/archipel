@@ -26,36 +26,25 @@ export default function useCitizenSearchBar(
     ) {
       loadUserList(searchName);
     } else {
-      myStore
-        .get(userListAtomV2)
-        .sortUsers(myStore.get(userListAtomV2).sorting);
-      setList(myStore.get(userListAtomV2));
+      loadUserList(searchName, false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [stats]);
+  }, [stats, searchName, isLeader]);
 
-  useEffect(() => {
-    if (isLeader) {
-      const updatedList = list
-        .getItems()
-        .filter((user) => user.citizenship.nationOwner === true);
-      setList(new UserListModel(updatedList));
-    } else {
-      setList(myStore.get(userListAtomV2));
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isLeader]);
-
-  const loadUserList = async (searchName: string) => {
-    const updatedList = await list.loadUserList(searchName);
+  const loadUserList = async (
+    searchName: string,
+    forceFetch: boolean = true,
+    onlyOnwers: boolean = isLeader,
+  ) => {
+    const updatedList = await list.loadUserList(searchName, forceFetch);
     if (updatedList) {
       updatedList.sortUsers(list.sorting);
-      setList(updatedList);
+      setList(!onlyOnwers ? updatedList : updatedList.getOnlyNationOwners());
     }
   };
 
   const reset = () => {
-    loadUserList("");
+    loadUserList("", true, false);
     setSearchName("");
     setIsLeader(false);
   };

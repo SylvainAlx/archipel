@@ -251,8 +251,6 @@ export class UserModel extends CommonModel implements User {
     myStore.set(loadingAtom, true);
     try {
       const response = await createNewRecoveryFetch({ password });
-      console.log(response);
-
       this.displayUserInfoByType(response.infoType);
       myStore.set(recoveryKey, response.newRecovery);
     } catch (error) {

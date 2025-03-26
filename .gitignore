@@ -6,6 +6,8 @@ validation.md
 /server/eslint-errors.txt
 
 /client/.env
+/client/android
+/client/android.keystore
 /client/node_modules
 /client/dist
 /client/dev-dist

@@ -89,7 +89,7 @@ export default function Diplomacy({
   return (
     <TileContainer>
       <DashTile title={t("pages.nation.relations.title")}>
-        <div className="w-full flex flex-col-reverse gap-2 items-center">
+        <div className="w-full flex flex-reverse flex-wrap gap-2 items-center">
           {nationRelationList.getItems().length > 0 ? (
             nationRelationList.getItems().map((relation, i) => {
               if (

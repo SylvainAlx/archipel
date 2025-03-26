@@ -27,7 +27,7 @@ export default function Footer() {
         <ReleaseNotesLink smallSize={true} />
         <div className="pb-1 flex items-center gap-2 text-[10px] md:text-[12px] opacity-30 md:opacity-100">
           <Link
-            className="transition-colors cursor-pointer hover:text-secondary"
+            className="transition-colors cursor-pointer hover:text-secondary3"
             to="/termsofservice"
           >
             {t("pages.termsOfService.title")}
@@ -35,7 +35,7 @@ export default function Footer() {
           <Link
             to={`mailto:${ADMIN_EMAIL}`}
             target="_blank"
-            className="mx-2 transition-colors cursor-pointer hover:text-secondary flex items-center gap-1"
+            className="mx-2 transition-colors cursor-pointer hover:text-secondary3 flex items-center gap-1"
           >
             <BsFillEnvelopeAtFill />
             {t("components.buttons.contact")}
@@ -46,7 +46,7 @@ export default function Footer() {
             <Link
               to={INSTAGRAM_URL}
               target="_blank"
-              className="mx-2 transition-colors cursor-pointer hover:text-secondary flex items-center gap-1"
+              className="mx-2 transition-colors cursor-pointer hover:text-secondary3 flex items-center gap-1"
             >
               <FaInstagram />
               Instagram
@@ -56,7 +56,7 @@ export default function Footer() {
             <Link
               to={THREADS_URL}
               target="_blank"
-              className="mx-2 transition-colors cursor-pointer hover:text-secondary flex items-center gap-1"
+              className="mx-2 transition-colors cursor-pointer hover:text-secondary3 flex items-center gap-1"
             >
               <BsThreads />
               Threads

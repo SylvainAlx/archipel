@@ -59,7 +59,7 @@ export default function PlaceIdentity({
         )}
       </div>
       {place.image != undefined && place.image != "" ? (
-        <div className="relative max-w-[800px]">
+        <div className="relative max-w-3xl">
           <Suspense fallback={<Spinner />}>
             <LazyImage
               src={place.image}
@@ -86,7 +86,7 @@ export default function PlaceIdentity({
           <PopulationTag label={place.population} />
         )}
       </div>
-      <div className="flex items-center gap-2">
+      <div className="w-full max-w-3xl flex items-center gap-2">
         {place.description != "" ? (
           <MDEditor.Markdown
             className="bg-transparent text-light text-justify mde-markdown"

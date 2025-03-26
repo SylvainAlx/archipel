@@ -37,17 +37,14 @@ export class UserListModel extends ListModel {
     const updatedList = myStore.get(userListAtomV2).addMany(list);
     myStore.set(userListAtomV2, new UserListModel(updatedList));
   };
-  loadUserList = async (searchName: string) => {
+  loadUserList = async (searchName: string, forceFetch: boolean = true) => {
     myStore.set(loadingAtom, true);
     try {
-      let savedUsers: UserModel[] = [];
+      let savedUsers: UserModel[] = myStore.get(userListAtomV2).getItems();
       if (searchName != "") {
-        savedUsers = findElementsByName(
-          searchName,
-          myStore.get(userListAtomV2).getItems(),
-        );
+        savedUsers = findElementsByName(searchName, savedUsers);
       }
-      if (savedUsers.length > 0) {
+      if (savedUsers.length > 0 && !forceFetch) {
         this.items = savedUsers;
       } else {
         const users: User[] = await getAllCitizensFetch(searchName);
@@ -145,5 +142,10 @@ export class UserListModel extends ListModel {
     }
     this.sorting = selectOption;
     return new UserListModel(this.items, this.sorting);
+  };
+  getOnlyNationOwners = () => {
+    return new UserListModel(
+      this.items.filter((user) => user.citizenship.nationOwner),
+    );
   };
 }

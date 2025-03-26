@@ -29,21 +29,16 @@ export default function usePlaceSearchBar(
     if (myStore.get(placeListAtomV2).getItems().length != stats.counts.places) {
       loadPlaceList(searchName);
     } else {
-      myStore
-        .get(placeListAtomV2)
-        .sortPlaces(myStore.get(placeListAtomV2).sorting);
-      setList(myStore.get(placeListAtomV2));
+      loadPlaceList(searchName, false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [stats]);
+  }, [stats, searchName, placeType]);
 
-  useEffect(() => {
-    loadPlaceList(searchName);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [placeType]);
-
-  const loadPlaceList = async (searchName: string) => {
-    let updatedList = await list.loadPlaceList(searchName, false);
+  const loadPlaceList = async (
+    searchName: string,
+    forceFetch: boolean = true,
+  ) => {
+    let updatedList = await list.loadPlaceList(searchName, forceFetch);
     if (updatedList) {
       updatedList = filterPlaceList(updatedList);
       updatedList.sortPlaces(list.sorting);

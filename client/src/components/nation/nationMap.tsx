@@ -42,7 +42,7 @@ export default function NationMap({
         <section className="w-full flex flex-col items-center rounded">
           {selectedNation.data.url.map != undefined &&
           selectedNation.data.url.map != "" ? (
-            <div className="relative w-full max-w-[600px]">
+            <div className="relative w-full max-w-2xl">
               <Suspense fallback={<Spinner />}>
                 <LazyImage
                   src={selectedNation.data.url.map}
