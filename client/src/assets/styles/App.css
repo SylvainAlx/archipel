@@ -127,6 +127,26 @@ td {
   border-collapse: collapse;
 }
 
+audio::-webkit-media-controls {
+  background-color: #ffffff00;
+  border-radius: 8px;
+  padding: 16px;
+}
+
+audio::-webkit-media-controls-enclosure {
+  border-radius: 5px;
+  background-color: var(--color-info);
+}
+
+audio::-webkit-media-controls-current-time-display, audio::-webkit-media-controls-time-remaining-display, audio::-webkit-media-controls-play-button {
+  color: #ffffff !important;
+  text-shadow: none;
+}
+
+audio > #thumb {
+  box-shadow: none !important;
+}
+
 
 @layer utilities {
   ::-webkit-scrollbar {

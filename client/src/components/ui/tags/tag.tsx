@@ -35,7 +35,7 @@ export default function Tag({
         }
       }}
       onClick={click && click}
-      className={`relative min-h-[30px] py-1 px-2 rounded-md text-sm flex items-center justify-center gap-1 ${bgColor && bgColor} ${textStyle && textStyle} ${textColor && textColor} shadow-md ${click ? "cursor-pointer hover:bg-secondary transition-all" : "cursor-default"}`}
+      className={`relative min-h-[30px] py-1 px-2 rounded-md text-sm flex items-center justify-center gap-1 ${bgColor && bgColor} ${textStyle && textStyle} ${textColor && textColor} shadow-md ${click ? "cursor-pointer hover:bg-secondary transition-all" : "cursor-help"}`}
     >
       {children}
       {showInfo && hover != "" && <HoverInfo text={hover} />}

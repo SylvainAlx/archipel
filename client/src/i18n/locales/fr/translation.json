@@ -23,7 +23,8 @@
         "externalLinks": "liens externes",
         "noDescription": "pas de description",
         "nationState": "État-Nation",
-        "noNationState": "État multinational"
+        "noNationState": "État multinational",
+        "noAnthem": "pas d'hymne de la nation"
       },
       "map": {
         "title": "carte de la nation",
@@ -367,6 +368,7 @@
       "noCoatOfArms": "nation sans blason",
       "flag": "drapeau de la nation",
       "noFlag": "nation sans drapeau",
+      "anthem": "hymne de la nation",
       "dev": "tests & développements en cours",
       "links": {
         "website": "site internet",

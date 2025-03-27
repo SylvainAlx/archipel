@@ -18,8 +18,9 @@ Le code source est public et est visible [ici](https://github.com/SylvainAlx/arc
 
 #### Ajouts
 
-_- Ajouter les hymnes des nations_
 _- Exporter une carte d'identité virtuelle sous forme d'image_
+
+- Ajouter les hymnes des nations
 
 #### Suppressions
 

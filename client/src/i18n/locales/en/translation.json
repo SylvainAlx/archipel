@@ -23,7 +23,8 @@
         "externalLinks": "external links",
         "noDescription": "no description",
         "nationState": "Nation-State",
-        "noNationState": "multinational State"
+        "noNationState": "multinational State",
+        "noAnthem": "no anthem"
       },
       "map": {
         "title": "nation map",
@@ -367,6 +368,7 @@
       "noCoatOfArms": "no nation coat of arms",
       "flag": "nation flag",
       "noFlag": "no nation flag",
+      "anthem": "nation anthem",
       "dev": "under testing & development",
       "links": {
         "website": "website",

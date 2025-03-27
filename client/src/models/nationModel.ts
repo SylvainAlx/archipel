@@ -41,6 +41,7 @@ export class NationModel extends CommonModel implements Nation {
     url: {
       flag: string;
       coatOfArms: string;
+      anthem: string;
       map: string;
       website: string;
       wiki: string;

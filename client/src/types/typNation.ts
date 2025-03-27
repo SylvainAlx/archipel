@@ -9,6 +9,7 @@ export interface Nation {
     url: {
       flag: string;
       coatOfArms: string;
+      anthem: string;
       map: string;
       website: string;
       wiki: string;
@@ -45,6 +46,7 @@ export const EmptyNation: Nation = {
     url: {
       flag: "",
       coatOfArms: "",
+      anthem: "",
       map: "",
       website: "",
       wiki: "",
