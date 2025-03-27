@@ -1,8 +1,8 @@
 import { useAtom } from "jotai";
-import { UserListModel } from "../../models/lists/userListModel";
-import { myStore, statsAtom, userListAtomV2 } from "../../settings/store";
+import { UserListModel } from "../../../models/lists/userListModel";
+import { myStore, statsAtom, userListAtomV2 } from "../../../settings/store";
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
-import { getCounts } from "../../services/statService";
+import { getCounts } from "../../../services/statService";
 
 export default function useCitizenSearchBar(
   list: UserListModel,

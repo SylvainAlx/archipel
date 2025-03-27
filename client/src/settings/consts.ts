@@ -11,7 +11,6 @@ export const CAPTCHA_PUBLIC_KEY = import.meta.env.VITE_CAPTCHA_PUBLIC_KEY;
 export const GOOGLE_ANALYTICS_MEASUREMENT_ID = import.meta.env
   .VITE_GOOGLE_ANALYTICS_MEASUREMENT_ID;
 export const INSTAGRAM_URL = import.meta.env.VITE_INSTAGRAM_URL;
-export const THREADS_URL = import.meta.env.VITE_THREADS_URL;
 export const BTC_PUBLIC_KEY = import.meta.env.VITE_BTC_PUBLIC_KEY;
 export const ETH_PUBLIC_KEY = import.meta.env.VITE_ETH_PUBLIC_KEY;
 export const SOL_PUBLIC_KEY = import.meta.env.VITE_SOL_PUBLIC_KEY;

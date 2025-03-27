@@ -5,7 +5,8 @@ import IndexTag from "../ui/tags/indexTag";
 import Button from "../ui/buttons/button";
 import { useTranslation } from "react-i18next";
 import TileSkeleton from "../ui/loading/skeletons/tileSkeleton";
-import useAdminBanned from "../../hooks/componentsHooks/useAdminBanned";
+import useAdminBanned from "../../hooks/componentsHooks/admin/useAdminBanned";
+import { UserModel } from "../../models/userModel";
 
 export default function AdminBanned() {
   const { t } = useTranslation();
@@ -21,7 +22,7 @@ export default function AdminBanned() {
         <section>
           {bannedUsers != undefined &&
             bannedUsers.getItems().length > 0 &&
-            bannedUsers.getItems().map((citizen, i) => {
+            bannedUsers.getItems().map((citizen: UserModel, i: number) => {
               if (i < displayedCitizens) {
                 return (
                   <Suspense key={i} fallback={<TileSkeleton />}>

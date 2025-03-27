@@ -6,7 +6,8 @@ import IndexTag from "../ui/tags/indexTag";
 import Button from "../ui/buttons/button";
 import { useTranslation } from "react-i18next";
 import TileSkeleton from "../ui/loading/skeletons/tileSkeleton";
-import useAdminComs from "../../hooks/componentsHooks/useAdminComs";
+import useAdminComs from "../../hooks/componentsHooks/admin/useAdminComs";
+import { ComModel } from "../../models/comModel";
 
 export default function AdminComs() {
   const { adminComList, displayedComs, setDisplayedComs } = useAdminComs();
@@ -19,7 +20,7 @@ export default function AdminComs() {
         <section className="w-full flex gap-1 flex-wrap items-center flex-col-reverse">
           {adminComList != undefined &&
             adminComList.getItems().length > 0 &&
-            adminComList.getItems().map((com, i) => {
+            adminComList.getItems().map((com: ComModel, i: number) => {
               if (i < displayedComs) {
                 return (
                   <Suspense key={i} fallback={<TileSkeleton />}>

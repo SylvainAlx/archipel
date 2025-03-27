@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import SearchButtons from "../form/searchButtons";
 import { CITIZEN_SORTING } from "../../settings/sorting";
 import { UserListModel } from "../../models/lists/userListModel";
-import useCitizenSearchBar from "../../hooks/componentsHooks/useCitizenSearchBar";
+import useCitizenSearchBar from "../../hooks/componentsHooks/searchBars/useCitizenSearchBar";
 
 export interface CitizenSearchBarProps {
   type: string;

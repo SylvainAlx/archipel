@@ -2,8 +2,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { myStore, sessionAtom, showMenuAtom } from "../../settings/store";
 import Button from "../../components/ui/buttons/button";
 import { useTranslation } from "react-i18next";
-import { BsFillEnvelopeAtFill, BsThreads } from "react-icons/bs";
-import { ADMIN_EMAIL, INSTAGRAM_URL, THREADS_URL } from "../../settings/consts";
+import { BsFillEnvelopeAtFill } from "react-icons/bs";
+import { ADMIN_EMAIL, INSTAGRAM_URL } from "../../settings/consts";
 import ReleaseNotesLink from "../../components/ui/releaseNotesLink";
 import { useModal } from "../../hooks/useModal";
 import LangButton from "../../components/ui/buttons/langButton";
@@ -64,15 +64,6 @@ export default function MenuModal() {
         >
           <Button text="Instagram" type="button" widthFull={true}>
             <FaInstagram />
-          </Button>
-        </Link>
-        <Link
-          className="w-full h-full flex items-center gap-1"
-          to={THREADS_URL}
-          target="_blank"
-        >
-          <Button text="Threads" type="button" widthFull={true}>
-            <BsThreads />
           </Button>
         </Link>
       </nav>

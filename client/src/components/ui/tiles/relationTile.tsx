@@ -12,7 +12,7 @@ import NationTag from "../tags/nationTag";
 import HoverInfo from "../hoverInfo";
 import Button from "../buttons/button";
 import { RelationModel } from "../../../models/relationModel";
-import useRelationTile from "../../../hooks/componentsHooks/useRelationTile";
+import useRelationTile from "../../../hooks/componentsHooks/ui/useRelationTile";
 import Flag from "../flag";
 
 export interface RelationTileProps {

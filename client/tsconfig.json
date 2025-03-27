@@ -22,5 +22,5 @@
   },
   "include": ["src"],
   "references": [{ "path": "./tsconfig.node.json" }],
-  "types": ["@uploadcare/blocks/types/jsx"]
+  "types": ["@types/node", "@uploadcare/blocks/types/jsx"]
 }

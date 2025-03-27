@@ -6,9 +6,7 @@ Le code source est public et est visible [ici](https://github.com/SylvainAlx/arc
 
 - Créer ou rejoindre une organisation
 - Créer des items et les proposer à l'acquisition aux citoyens
-- Ajouter les hymnes des nations
 - Créer une gazette des nations en se basant sur les communiqués
-- Exporter une carte d'identité virtuelle sous forme d'image
 - Étendre les fonctionnalités pour les utilisateurs mobile
 - Positionner les lieux de la nation sur sa propre carte
 - Améliorer des traductions
@@ -20,14 +18,17 @@ Le code source est public et est visible [ici](https://github.com/SylvainAlx/arc
 
 #### Ajouts
 
-Aucun
+_- Ajouter les hymnes des nations_
+_- Exporter une carte d'identité virtuelle sous forme d'image_
 
 #### Suppressions
 
-Aucune
+- Retrait du réseau social Threads
 
 #### Modifications & Corrections
 
+- Optimisation du code source
+- Amélioration des performances
 - Amélioration de l'accessibilité
 - Correction des recherches par noms et tags depuis la page "explorer"
 - Correction de la recherche lors d'un clic sur un hashtag

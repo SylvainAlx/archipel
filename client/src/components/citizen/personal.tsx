@@ -6,11 +6,9 @@ import ExternalLink from "../ui/externalLink";
 import Upploader from "../ui/uploader";
 import MDEditor from "@uiw/react-md-editor";
 import { FaLink } from "react-icons/fa";
-import { confirmBox, myStore } from "../../settings/store";
-import { useTranslation } from "react-i18next";
 import ShareButton from "../ui/buttons/shareButton";
-import { deleteImage } from "../../utils/procedures";
 import { UserModel } from "../../models/userModel";
+import usePersonal from "../../hooks/componentsHooks/citizen/usePersonal";
 
 interface PersonalProps {
   citizen: UserModel;
@@ -23,19 +21,7 @@ export default function Personal({
   owner,
   updatePath,
 }: PersonalProps) {
-  const { t } = useTranslation();
-
-  const handleDeleteImage = async () => {
-    myStore.set(confirmBox, {
-      text: t("components.modals.confirmModal.deleteFile"),
-      actionToDo: async () => {
-        const result = await deleteImage(citizen.avatar);
-        if (result) {
-          updatePath("avatar", "", false);
-        }
-      },
-    });
-  };
+  const { handleDeleteImage, t } = usePersonal(citizen, updatePath);
 
   return (
     <section className="w-full flex flex-col items-center">

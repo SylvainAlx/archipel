@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
-import { confirmBox, myStore, sessionAtom } from "../../settings/store";
+import { confirmBox, myStore, sessionAtom } from "../../../settings/store";
 import { useAtom } from "jotai";
-import { DiplomaticRelationship } from "../../types/typRelation";
-import { RelationModel } from "../../models/relationModel";
+import { DiplomaticRelationship } from "../../../types/typRelation";
+import { RelationModel } from "../../../models/relationModel";
 import { useTranslation } from "react-i18next";
-import { NationListModel } from "../../models/lists/nationListModel";
-import { NationModel } from "../../models/nationModel";
+import { NationListModel } from "../../../models/lists/nationListModel";
+import { NationModel } from "../../../models/nationModel";
 
 export default function useRelationTile(relation: DiplomaticRelationship) {
   const [nationIndex, setNationIndex] = useState(-1);

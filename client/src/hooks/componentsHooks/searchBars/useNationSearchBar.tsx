@@ -1,9 +1,9 @@
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
-import { NationListModel } from "../../models/lists/nationListModel";
+import { NationListModel } from "../../../models/lists/nationListModel";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useAtom } from "jotai";
-import { myStore, nationListAtomV2, statsAtom } from "../../settings/store";
-import { getCounts } from "../../services/statService";
+import { myStore, nationListAtomV2, statsAtom } from "../../../settings/store";
+import { getCounts } from "../../../services/statService";
 
 export default function useNationSearchBar(
   list: NationListModel,

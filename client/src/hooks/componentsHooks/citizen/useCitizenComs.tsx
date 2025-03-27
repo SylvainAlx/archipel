@@ -1,9 +1,9 @@
 import { useAtom } from "jotai";
 import { useEffect, useMemo, useState } from "react";
-import { comListAtomV2 } from "../../settings/store";
-import { ComListModel } from "../../models/lists/comListModel";
-import { UserModel } from "../../models/userModel";
-import { COM_TYPE } from "../../settings/consts";
+import { comListAtomV2 } from "../../../settings/store";
+import { ComListModel } from "../../../models/lists/comListModel";
+import { UserModel } from "../../../models/userModel";
+import { COM_TYPE } from "../../../settings/consts";
 
 export default function useCitizenComs(citizen: UserModel) {
   const [comList] = useAtom(comListAtomV2);

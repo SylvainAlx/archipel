@@ -1,6 +1,6 @@
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
-import { ComListModel } from "../../models/lists/comListModel";
-import { COM_TYPE } from "../../settings/consts";
+import { ComListModel } from "../../../models/lists/comListModel";
+import { COM_TYPE } from "../../../settings/consts";
 
 export default function useComSearchBar(
   list: ComListModel,

@@ -1,8 +1,8 @@
 import { useAtom } from "jotai";
-import { PlaceListModel } from "../../models/lists/placeListModel";
-import { myStore, placeListAtomV2, statsAtom } from "../../settings/store";
+import { PlaceListModel } from "../../../models/lists/placeListModel";
+import { myStore, placeListAtomV2, statsAtom } from "../../../settings/store";
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
-import { getCounts } from "../../services/statService";
+import { getCounts } from "../../../services/statService";
 
 export default function usePlaceSearchBar(
   list: PlaceListModel,
