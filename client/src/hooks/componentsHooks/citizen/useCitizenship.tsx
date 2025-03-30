@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import {
   confirmBox,
+  infoModalAtom,
   myStore,
   newNationAtom,
   sessionAtom,
@@ -14,6 +15,7 @@ import { PIONEER_DATE } from "../../../settings/consts";
 import { UserModel } from "../../../models/userModel";
 import { NationModel } from "../../../models/nationModel";
 import { emptyNewNationPayload } from "../../../types/typNation";
+import IDCard from "../../../components/ui/idCard";
 
 export default function useCitizenship(
   citizen: UserModel,
@@ -77,11 +79,19 @@ export default function useCitizenship(
     }
   };
 
+  const showIDCard = () => {
+    myStore.set(infoModalAtom, {
+      subtitle: t("components.idCard.name"),
+      children: <IDCard user={citizen} nation={nation} />,
+    });
+  };
+
   return {
     citizenCreationDate,
     enableLeaving,
     handleClick,
     leaveNation,
+    showIDCard,
     pioneerDate,
     session,
     t,

@@ -215,6 +215,10 @@
       "title": "Archipel",
       "subtitle": "CITOYENS DES MICRONATIONS & NATIONS VIRTUELLES"
     },
+    "idCard": {
+      "name": "carte d'identité",
+      "download": "télécharger"
+    },
     "modals": {
       "confirmModal": {
         "title": "demande de confirmation",

@@ -21,6 +21,7 @@ import CreditTag from "../ui/tags/creditTag";
 import CreditTransferButton from "../ui/buttons/creditTransferButton";
 import { MdTimer } from "react-icons/md";
 import useCitizenship from "../../hooks/componentsHooks/citizen/useCitizenship";
+import { FaPassport } from "react-icons/fa";
 
 interface CitizenshipProps {
   citizen: UserModel;
@@ -43,6 +44,7 @@ export default function Citizenship({
     enableLeaving,
     handleClick,
     leaveNation,
+    showIDCard,
     pioneerDate,
     session,
     t,
@@ -146,6 +148,15 @@ export default function Citizenship({
                 <GiBlackFlag />
               </div>
             </Button>
+            {(owner || session.user.role === "admin") &&
+              citizen.citizenship.status > 0 && (
+                <Button
+                  text={t("components.idCard.name")}
+                  click={() => showIDCard()}
+                >
+                  <FaPassport />
+                </Button>
+              )}
             {enableLeaving && (
               <CrossButton
                 text={t("components.buttons.leaveNation")}

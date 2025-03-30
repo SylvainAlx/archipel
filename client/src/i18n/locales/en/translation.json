@@ -215,6 +215,10 @@
       "title": "Archipel",
       "subtitle": "CITIZENS OF MICRONATIONS & VIRTUAL NATIONS"
     },
+    "idCard": {
+      "name": "identity card",
+      "download": "download"
+    },
     "modals": {
       "confirmModal": {
         "title": "confirm your choice",
