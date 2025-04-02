@@ -135,14 +135,14 @@ En se rendant sur la page d'un citoyen depuis la liste de la page "explorer", l'
 - La photo de profil du citoyen (avatar)
 - Les liens (email et site web)
 - La biographie
-- Les informations sur sa citoyenneté liée à une nation (Identifiant, genre, langue, religion, lieu de résidence sur Archipel, rôle, lien d'accès)
+- Les informations sur sa citoyenneté liée à une nation (Identifiant, genre, langue, religion, lieu de résidence sur Archipel, rôle, crédits, lien d'accès)
 - Un bouton de signalement du contenu
 
 #### 4.1.4 - Les pages "nation"
 
 En se rendant sur la page d'une nation depuis la liste de la page "explorer", l'internaute va pouvoir consulter :
 
-- L'identité de la nation (Les liens externes, le nom de la nation, son statut officiel ou non, le drapeau et le blason s'ils ont été ajoutés, la devise)
+- L'identité de la nation (Les liens externes, le nom de la nation, son statut officiel ou non, le drapeau et le blason s'ils ont été ajoutés, la devise, l'hymne nationale)
 - Les tags (L'identifiant unique, Le total du trésor public, le type de régime, le nombre de citoyens, le nombre de lieux, le jour national, la monnaie, la capitale, les mots clés)
 - La description
 - La carte de la nation (si existante)
@@ -259,6 +259,7 @@ Les crédits peuvent être vus comme une monnaie interne à l'application Archip
 Des crédits sont donnés lorsque :
 
 - Un utilisateur rejoint Archipel
+- Un utilisateur est parrain d'un autre utilisateur
 - Une nation est créée
 - Un utilisateur rejoint une nation
 

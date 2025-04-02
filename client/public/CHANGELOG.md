@@ -10,7 +10,6 @@ Le code source est public et est visible [ici](https://github.com/SylvainAlx/arc
 - Étendre les fonctionnalités pour les utilisateurs mobile
 - Positionner les lieux de la nation sur sa propre carte
 - Améliorer des traductions
-- Carte virtuelle d'Archipel avec l'ensemble des nations représentées
 
 ## Version actuelle
 
@@ -18,8 +17,10 @@ Le code source est public et est visible [ici](https://github.com/SylvainAlx/arc
 
 #### Ajouts
 
+- Parrainage possible avec gain de crédits pour le nouvel utilisateur et le parrain
 - Ajout de cartes d'identité virtuelle téléchargeables
 - Ajouter les hymnes des nations
+- Tri possible des utilisateurs par richesse (crédits)
 
 #### Suppressions
 
@@ -33,6 +34,11 @@ Le code source est public et est visible [ici](https://github.com/SylvainAlx/arc
 - Correction des recherches par noms et tags depuis la page "explorer"
 - Correction de la recherche lors d'un clic sur un hashtag
 - Modification des tuiles de relations diplomatiques
+- Correction du bug de raffraichissement des données lors d'un changement de page "nation"
+- Correction de la position du curseur vertical lors d'un changement de page
+- Visibilité publique des crédits des utilisateurs
+- Modification des CGU
+- Modification des textes de la page d'accueil
 
 ## Versions précédentes
 

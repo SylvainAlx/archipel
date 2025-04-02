@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { PlaceListModel } from "../models/lists/placeListModel";
+import { UserModel } from "../models/userModel";
 import { Nation } from "../types/typNation";
 
 export const sortByCreatedAt = (list: any[], ascending: boolean = true) => {
@@ -58,6 +59,12 @@ export const sortByTreasury = (list: Nation[], ascending: boolean = true) => {
     return ascending
       ? a.data.roleplay.treasury - b.data.roleplay.treasury
       : b.data.roleplay.treasury - a.data.roleplay.treasury;
+  });
+};
+
+export const sortByCredits = (list: UserModel[], ascending: boolean = true) => {
+  return list.sort((a, b) => {
+    return ascending ? a.credits - b.credits : b.credits - a.credits;
   });
 };
 

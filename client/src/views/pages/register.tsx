@@ -18,6 +18,9 @@ export default function Register() {
     confirmPassword,
     passwordsMatch,
     isPasswordStrong,
+    godparentId,
+    haveGodparent,
+    setHaveGodparent,
     language,
     acceptCGU,
     setAcceptCGU,
@@ -37,6 +40,15 @@ export default function Register() {
   return (
     <>
       <H1 text={t("pages.register.title")} />
+      <div className="flex justify-center text-sm gap-2">
+        <span>{t("pages.register.ownAccount")}</span>
+        <span
+          className="underline cursor-pointer"
+          onClick={() => navigate("/login")}
+        >
+          {t("pages.register.connect")}
+        </span>
+      </div>
       <Form submit={handleSubmit}>
         <>
           <Input
@@ -84,16 +96,25 @@ export default function Register() {
             onChange={handleLanguageChange}
             value={language}
           />
-
-          <div className="flex justify-center text-sm gap-2">
-            <span>{t("pages.register.ownAccount")}</span>
-            <span
-              className="underline cursor-pointer"
-              onClick={() => navigate("/login")}
-            >
-              {t("pages.register.connect")}
-            </span>
+          <div className="w-full flex justify-start items-center gap-2">
+            <input
+              type="checkbox"
+              className="cursor-pointer"
+              onClick={() => setHaveGodparent(!haveGodparent)}
+            ></input>
+            <p className="text-sm">
+              {t("components.form.input.haveGodparent")}
+            </p>
           </div>
+          {haveGodparent && (
+            <Input
+              onChange={handleChange}
+              type="text"
+              name="godparent"
+              placeholder={t("components.form.input.godparentId")}
+              value={godparentId}
+            />
+          )}
           <div className="flex justify-start items-center gap-2">
             <input
               type="checkbox"

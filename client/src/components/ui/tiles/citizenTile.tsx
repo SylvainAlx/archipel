@@ -17,6 +17,7 @@ import { PIONEER_DATE } from "../../../settings/consts";
 import HonorTag from "../tags/honorTag";
 import { UserModel } from "../../../models/userModel";
 import OnlineStatusTag from "../tags/onlineStatusTag";
+import CreditTag from "../tags/creditTag";
 
 export interface CitizenTileProps {
   citizen: UserModel;
@@ -125,6 +126,7 @@ export default function CitizenTile({ citizen }: CitizenTileProps) {
           <NationTag label={citizen.citizenship.nationId} citizen={citizen} />
         )}
         <LanguagesTag language={citizen.language} />
+        <CreditTag label={citizen.credits} />
         <DateTag date={citizen.createdAt} />
         <OnlineStatusTag citizenLastVisitDate={citizenLastVisitDate} />
       </div>

@@ -77,6 +77,18 @@ export default function CreditsParams() {
           </tr>
           <tr>
             <td className="px-4 py-2">
+              {t("components.modals.infoModal.table.tbody.godparent")}
+            </td>
+            <td className="px-4 py-2">
+              <span className="flex items-center justify-center gap-2">
+                {getValueFromParam("gifts", "godparent")}
+                <FaCoins />
+              </span>
+            </td>
+            <td className="px-4 py-2"></td>
+          </tr>
+          <tr>
+            <td className="px-4 py-2">
               {t("components.modals.infoModal.table.tbody.newNation")}
             </td>
             <td className="px-4 py-2"></td>

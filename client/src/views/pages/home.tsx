@@ -76,18 +76,19 @@ export default function Home() {
             </div>
           </div>
           <Suspense fallback={<ImageSkeleton />}>
-            <Illustration src="/citizen.webp" alt="illustration" />
+            <Illustration src="/worldbuilding.webp" alt="illustration" />
           </Suspense>
         </article>
         <article className="flex flex-col-reverse lg:flex-row justify-center items-center lg:items-stretch flex-wrap px-4 gap-4">
           <Suspense fallback={<ImageSkeleton />}>
-            <Illustration src="/worldbuilding.webp" alt="illustration" />
+            <Illustration src="/citizen.webp" alt="illustration" />
           </Suspense>
           <div className="lg:animate-fade-left w-full lg:w-[45%]">
             <MDEditor.Markdown
               className="presentation"
               source={t("pages.home.presentation2")}
             />
+
             <div className="animate-fade w-full py-4 flex justify-center gap-2 flex-wrap">
               <Button
                 text={t("components.buttons.explore")}
@@ -98,9 +99,13 @@ export default function Home() {
               </Button>
               <CryptoDonationButton />
             </div>
+            <MDEditor.Markdown
+              className="presentation"
+              source={t("pages.home.presentation3")}
+            />
           </div>
         </article>
-        <article className="flex flex-col lg:flex-row justify-center items-center lg:items-stretch flex-wrap px-4 gap-4">
+        {/* <article className="flex flex-col lg:flex-row justify-center items-center lg:items-stretch flex-wrap px-4 gap-4">
           <div className="lg:animate-fade-right w-full lg:w-[45%]">
             <MDEditor.Markdown
               className="presentation"
@@ -110,7 +115,7 @@ export default function Home() {
           <Suspense fallback={<ImageSkeleton />}>
             <Illustration src="/archipelago.webp" alt="illustration" />
           </Suspense>
-        </article>
+        </article> */}
       </section>
     </>
   );

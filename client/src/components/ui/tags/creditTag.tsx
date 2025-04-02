@@ -12,7 +12,7 @@ export default function CreditTag({ owner, label }: customTagProps) {
     <Tag
       text={label != undefined ? label.toString() : ""}
       hover={t("components.hoverInfos.tags.credits")}
-      bgColor="bg-complementary2"
+      bgColor={owner ? "bg-complementary2" : "bg-gold"}
     >
       <>
         {owner && (

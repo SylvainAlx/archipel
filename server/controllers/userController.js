@@ -28,7 +28,7 @@ import { updateResidence } from "../services/placeService.js";
 
 export const register = async (req, res) => {
   try {
-    const { name, password, gender, language } = req.body;
+    const { name, password, godparentId, gender, language } = req.body;
     const userIp = req.clientIp;
     const banned = await IpIsBanished(userIp);
     if (banned) {
@@ -47,8 +47,9 @@ export const register = async (req, res) => {
       }
     });
     const recovery = getRecoveryWords();
-    const gift = getValueFromParam(
-      await getGifts(),
+    const { quotas, costs, gifts } = await getNationParam();
+    const gift = await getValueFromParam(
+      gifts,
       "register",
       DEFAULT_GIFTS.REGISTER,
     );
@@ -66,8 +67,26 @@ export const register = async (req, res) => {
     try {
       const savedUser = await user.save();
       await payCreditsFromBank(gift);
+      if (godparentId) {
+        const godparent = await getUserByOfficialId(
+          godparentId.toLowerCase(),
+          404,
+        );
+        if (godparent) {
+          const godparentGift = await getValueFromParam(
+            await getGifts(),
+            "godparent",
+            DEFAULT_GIFTS.GODPARENT,
+          );
+          godparent.credits += godparentGift;
+          await godparent.save();
+          user.credits += godparentGift;
+          await user.save();
+          await payCreditsFromBank(godparentGift * 2);
+        }
+      }
       const jwt = savedUser.createJWT();
-      const { quotas, costs, gifts } = await getNationParam();
+
       res.status(201).json({
         user: savedUser,
         recovery,
@@ -371,7 +390,7 @@ export const changeStatus = async (req, res) => {
     if (req.userId === officialId || status != 0) {
       const user = await getUserByOfficialId(officialId, 404);
       const nation = await Nation.findOne({ officialId: nationId });
-      const gift = getValueFromParam(
+      const gift = await getValueFromParam(
         await getGifts(),
         "citizenship",
         DEFAULT_GIFTS.CITIZENSHIP,

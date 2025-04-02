@@ -16,6 +16,7 @@ import { errorCatching } from "../../utils/displayInfos";
 import { findElementsByName } from "../../utils/functions";
 import {
   sortByCreatedAt,
+  sortByCredits,
   sortByLastVisit,
   sortByName,
 } from "../../utils/sorting";
@@ -61,22 +62,6 @@ export class UserListModel extends ListModel {
   loadNationUserList = async (nation: Nation | NationModel) => {
     myStore.set(loadingAtom, true);
     try {
-      // this.items = [];
-      // const savedNationCitizenList: User[] = [];
-      // myStore
-      //   .get(userListAtomV2)
-      //   .getItems()
-      //   .forEach((user) => {
-      //     if (user.citizenship.nationId === nation.officialId) {
-      //       savedNationCitizenList.push(user);
-      //     }
-      //   });
-      // if (
-      //   savedNationCitizenList.length > 0 &&
-      //   savedNationCitizenList.length === nation.data.roleplay.citizens
-      // ) {
-      //   this.items = savedNationCitizenList;
-      // } else {
       const resp: User[] = await getNationCitizensFetch(nation.officialId);
       if (resp.length > 0) {
         this.addMany(resp);
@@ -136,6 +121,12 @@ export class UserListModel extends ListModel {
         break;
       case CITIZEN_SORTING.descVisit.id:
         sortByLastVisit(this.items, false);
+        break;
+      case CITIZEN_SORTING.ascCredits.id:
+        sortByCredits(this.items, true);
+        break;
+      case CITIZEN_SORTING.descCredits.id:
+        sortByCredits(this.items, false);
         break;
       default:
         break;

@@ -1,6 +1,4 @@
 import { lazy, Suspense } from "react";
-import { Nation } from "../../types/typNation";
-import { deleteImage } from "../../utils/procedures";
 import Spinner from "../ui/loading/spinner";
 import CrossButton from "../ui/buttons/crossButton";
 import { GiBlackFlag } from "react-icons/gi";
@@ -8,29 +6,18 @@ import Upploader from "../ui/uploader";
 import LinkButton from "../ui/buttons/linkButton";
 import { FLAG_MAKER_URL } from "../../settings/consts";
 import { FaExternalLinkAlt } from "react-icons/fa";
-import { useTranslation } from "react-i18next";
-import { confirmBox, myStore } from "../../settings/store";
+import useBigFlag from "../../hooks/componentsHooks/nation/useBigFlag";
+import { NationModel } from "../../models/nationModel";
 
 interface FlagProps {
-  nation: Nation;
+  nation: NationModel;
   owner: boolean;
   updatePath: (path: string, value: string, needConfirm?: boolean) => void;
 }
 
 export default function BigFlag({ nation, owner, updatePath }: FlagProps) {
-  const handleDeleteImage = async () => {
-    myStore.set(confirmBox, {
-      text: t("components.modals.confirmModal.deleteFile"),
-      actionToDo: async () => {
-        const result = await deleteImage(nation.data.url.flag);
-        if (result) {
-          updatePath("data.url.flag", "", false);
-        }
-      },
-    });
-  };
+  const { handleDeleteImage, t } = useBigFlag(nation, updatePath);
 
-  const { t } = useTranslation();
   const LazyImage = lazy(() => import("../ui/lazy/lazyImage"));
   return (
     <div className="relative">

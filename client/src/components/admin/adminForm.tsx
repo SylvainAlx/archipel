@@ -1,9 +1,9 @@
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import Button from "../ui/buttons/button";
-import Form from "./form";
-import Input from "./input";
-import MarkdownEditor from "./markdownEditor";
-import Select from "./select";
+import Form from "../form/form";
+import Input from "../form/input";
+import MarkdownEditor from "../form/markdownEditor";
+import Select from "../form/select";
 import { emptyComPayload } from "../../types/typCom";
 import { adminComTypeOptions } from "../../settings/lists";
 import { COM_GENERAL_DESTINATION, MAX_LENGTH } from "../../settings/consts";

@@ -363,7 +363,13 @@ export class UserModel extends CommonModel implements User {
     }
     return result;
   };
-  baseInsert = async ({ name, password, gender, language }: AuthPayload) => {
+  baseInsert = async ({
+    name,
+    password,
+    godparentId,
+    gender,
+    language,
+  }: AuthPayload) => {
     myStore.set(loadingAtom, true);
     try {
       const response: {
@@ -371,7 +377,13 @@ export class UserModel extends CommonModel implements User {
         jwt: string;
         recovery: string;
         infoType: string;
-      } = await registerFetch({ name, password, gender, language });
+      } = await registerFetch({
+        name,
+        password,
+        godparentId,
+        gender,
+        language,
+      });
       localStorage.setItem("jwt", response.jwt);
       myStore.set(recoveryKey, response.recovery);
       this.updateFields(response.user);
