@@ -358,4 +358,12 @@ export class NationModel extends CommonModel implements Nation {
         break;
     }
   };
+  getNationPoints = () => {
+    let points: number = Math.floor(
+      this.data.roleplay.citizens * 10 +
+        this.data.roleplay.places +
+        this.data.roleplay.treasury / 10,
+    );
+    return points;
+  };
 }

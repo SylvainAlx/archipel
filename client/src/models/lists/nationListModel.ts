@@ -8,6 +8,7 @@ import {
   sortByCreatedAt,
   sortByName,
   sortByPlaces,
+  sortByPoints,
   sortByTreasury,
   sortNationsByCitizens,
 } from "../../utils/sorting";
@@ -17,7 +18,7 @@ import { ListModel } from "./listModel";
 export class NationListModel extends ListModel {
   constructor(
     list: NationModel[] = [],
-    sorting: number = NATION_SORTING.descTreasury.id,
+    sorting: number = NATION_SORTING.descPoints.id,
   ) {
     super();
     this.items = list;
@@ -123,6 +124,12 @@ export class NationListModel extends ListModel {
         break;
       case NATION_SORTING.descDate.id:
         sortByCreatedAt(this.items, false);
+        break;
+      case NATION_SORTING.ascPoints.id:
+        sortByPoints(this.items, true);
+        break;
+      case NATION_SORTING.descPoints.id:
+        sortByPoints(this.items, false);
         break;
       default:
         break;

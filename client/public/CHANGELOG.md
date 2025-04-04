@@ -17,10 +17,11 @@ Le code source est public et est visible [ici](https://github.com/SylvainAlx/arc
 
 #### Ajouts
 
-- Parrainage possible avec gain de crédits pour le nouvel utilisateur et le parrain
 - Ajout de cartes d'identité virtuelle téléchargeables
 - Ajouter les hymnes des nations
+- Ajout des points des nations (nbr de citoyens x 10 + nbr de lieux + richesse / 10)
 - Tri possible des utilisateurs par richesse (crédits)
+- Parrainage possible avec gain de crédits pour le nouvel utilisateur et le parrain
 
 #### Suppressions
 
@@ -39,6 +40,7 @@ Le code source est public et est visible [ici](https://github.com/SylvainAlx/arc
 - Visibilité publique des crédits des utilisateurs
 - Modification des CGU
 - Modification des textes de la page d'accueil
+- Tri par défaut des nations basculé sur le nombre de points décroissants
 
 ## Versions précédentes
 

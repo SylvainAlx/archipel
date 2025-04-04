@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { PlaceListModel } from "../models/lists/placeListModel";
+import { NationModel } from "../models/nationModel";
 import { UserModel } from "../models/userModel";
 import { Nation } from "../types/typNation";
 
@@ -59,6 +60,17 @@ export const sortByTreasury = (list: Nation[], ascending: boolean = true) => {
     return ascending
       ? a.data.roleplay.treasury - b.data.roleplay.treasury
       : b.data.roleplay.treasury - a.data.roleplay.treasury;
+  });
+};
+
+export const sortByPoints = (
+  list: NationModel[],
+  ascending: boolean = true,
+) => {
+  return list.sort((a, b) => {
+    return ascending
+      ? a.getNationPoints() - b.getNationPoints()
+      : b.getNationPoints() - a.getNationPoints();
   });
 };
 

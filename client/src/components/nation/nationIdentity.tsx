@@ -19,6 +19,7 @@ import { NationModel } from "../../models/nationModel";
 import { PLACE_TYPE, REGIME } from "../../settings/consts";
 import { PlaceListModel } from "../../models/lists/placeListModel";
 import Audio from "../ui/audio";
+import NationPointsTag from "../ui/tags/nationPointsTag";
 
 interface NationIdentityProps {
   selectedNation: NationModel;
@@ -105,6 +106,7 @@ export default function NationIdentity({
               </div>
               <div className="flex gap-1 flex-wrap items-center justify-center">
                 <IdTag label={selectedNation.officialId} />
+                <NationPointsTag label={selectedNation.getNationPoints()} />
                 <TreasuryTag label={selectedNation.data.roleplay.treasury} />
                 <NationStateTag
                   isNationState={selectedNation.data.general.isNationState}

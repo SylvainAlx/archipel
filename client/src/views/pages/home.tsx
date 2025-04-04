@@ -1,7 +1,7 @@
 import Button from "../../components/ui/buttons/button";
 import H1 from "../../components/ui/titles/h1";
 import { useTranslation } from "react-i18next";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { sessionAtom } from "../../settings/store";
 import { useAtom } from "jotai";
 import { IoMdAddCircleOutline, IoMdGlobe, IoMdLogIn } from "react-icons/io";
@@ -12,6 +12,9 @@ import { createPageTitle } from "../../utils/procedures";
 import MDEditor from "@uiw/react-md-editor";
 import { lazy, Suspense } from "react";
 import ImageSkeleton from "../../components/ui/loading/skeletons/imageSkeleton";
+import { BsFillEnvelopeAtFill } from "react-icons/bs";
+import { ADMIN_EMAIL } from "../../settings/consts";
+import HelpButton from "../../components/ui/buttons/helpButton";
 
 export default function Home() {
   const { t } = useTranslation();
@@ -76,12 +79,18 @@ export default function Home() {
             </div>
           </div>
           <Suspense fallback={<ImageSkeleton />}>
-            <Illustration src="/worldbuilding.webp" alt="illustration" />
+            <Illustration
+              src="/illustrations/citizen.webp"
+              alt="illustration"
+            />
           </Suspense>
         </article>
         <article className="flex flex-col-reverse lg:flex-row justify-center items-center lg:items-stretch flex-wrap px-4 gap-4">
           <Suspense fallback={<ImageSkeleton />}>
-            <Illustration src="/citizen.webp" alt="illustration" />
+            <Illustration
+              src="/illustrations/worldbuilding.webp"
+              alt="illustration"
+            />
           </Suspense>
           <div className="lg:animate-fade-left w-full lg:w-[45%]">
             <MDEditor.Markdown
@@ -99,13 +108,9 @@ export default function Home() {
               </Button>
               <CryptoDonationButton />
             </div>
-            <MDEditor.Markdown
-              className="presentation"
-              source={t("pages.home.presentation3")}
-            />
           </div>
         </article>
-        {/* <article className="flex flex-col lg:flex-row justify-center items-center lg:items-stretch flex-wrap px-4 gap-4">
+        <article className="flex flex-col lg:flex-row justify-center items-center lg:items-stretch flex-wrap px-4 gap-4">
           <div className="lg:animate-fade-right w-full lg:w-[45%]">
             <MDEditor.Markdown
               className="presentation"
@@ -113,9 +118,37 @@ export default function Home() {
             />
           </div>
           <Suspense fallback={<ImageSkeleton />}>
-            <Illustration src="/archipelago.webp" alt="illustration" />
+            <Illustration
+              src="/illustrations/assembly.webp"
+              alt="illustration"
+            />
           </Suspense>
-        </article> */}
+        </article>
+        <article className="flex flex-col-reverse lg:flex-row justify-center items-center lg:items-stretch flex-wrap px-4 gap-4">
+          <Suspense fallback={<ImageSkeleton />}>
+            <Illustration
+              src="/illustrations/archipelago.webp"
+              alt="illustration"
+            />
+          </Suspense>
+          <div className="lg:animate-fade-left w-full lg:w-[45%]">
+            <MDEditor.Markdown
+              className="presentation"
+              source={t("pages.home.presentation4")}
+            />
+            <div className="animate-fade w-full py-4 flex justify-center gap-2 flex-wrap">
+              <HelpButton showText={true} bgColor="" />
+              <Link
+                className="flex items-center justify-center gap-1"
+                to={`mailto:${ADMIN_EMAIL}`}
+              >
+                <Button text={t("components.buttons.contact")} type="button">
+                  <BsFillEnvelopeAtFill />
+                </Button>
+              </Link>
+            </div>
+          </div>
+        </article>
       </section>
     </>
   );

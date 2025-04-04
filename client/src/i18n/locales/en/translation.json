@@ -3,8 +3,9 @@
     "home": {
       "title": "welcome",
       "presentation1": "**Archipel** is an innovative application that allows you to join a **digital community** like no other. By becoming a **virtual citizen**, you have the choice: join an existing **nation** or create a new one based on your ideals and aspirations. Each user receives a **virtual identity card**, symbolizing their belonging to this **interactive universe**, where **imagination** and **collective engagement** come to life.",
-      "presentation2": "To enhance the experience, a **credit system** adds a **fun** and **immersive** dimension. These credits allow you to interact with other citizens, develop projects within your nation, and strengthen your role in this **virtual ecosystem**. Whether you are a builder, a strategist, or a dreamer, Archipel provides you with the tools to shape your own path and forge connections with a **dynamic community**.",
-      "presentation3": "We designed Archipel to be **inclusive** and **accessible to all**, promoting **exchange** and **diversity of ideas**. Here, every voice matters, and every nation has its place. **Join us now** and start writing the story of your virtual citizenship !"
+      "presentation2": "As an editor, you have the ability to **shape your nation** to your liking. Add a **flag** that embodies your values, define a **motto** that inspires your community, and write a **detailed description** to present your vision. You can also **map out your territory** by adding important locations, marking the unique identity of your nation. Turn your dream into a virtual reality and make your nation stand out among others!",
+      "presentation3": "To enhance the experience, a **credit system** adds a **fun** and **immersive** dimension. These credits allow you to interact with other citizens, develop projects within your nation, and strengthen your role in this **virtual ecosystem**. Whether you are a builder, a strategist, or a dreamer, Archipel provides you with the tools to shape your own path and forge connections with a **dynamic community**.",
+      "presentation4": "We designed Archipel to be **inclusive** and **accessible to all**, promoting **exchange** and **diversity of ideas**. Here, every voice matters, and every nation has its place. **Join us now** and start writing the story of your virtual citizenship !"
     },
     "lobby": {
       "password": "enter the password to access the application",
@@ -392,7 +393,7 @@
         "index": "position",
         "place": "kind of location",
         "places": "locations",
-        "points": "success",
+        "points": "points",
         "population": "citizens",
         "regime": "regime",
         "tree": "childrens",
@@ -437,7 +438,9 @@
           "ascTreasury": "growing wealth",
           "descTreasury": "decreasing wealth",
           "ascDate": "creation date ascending",
-          "descDate": "creation date descending"
+          "descDate": "creation date descending",
+          "ascPoints": "ascending number of points",
+          "descPoints": "descending number of points"
         }
       },
       "citizensList": {

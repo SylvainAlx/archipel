@@ -117,4 +117,12 @@ export const NATION_SORTING: IdLabelDictionary = {
     id: 9,
     label: i18n.t("components.searchBars.nationsList.sortNations.descDate"),
   },
+  ascPoints: {
+    id: 10,
+    label: i18n.t("components.searchBars.nationsList.sortNations.ascPoints"),
+  },
+  descPoints: {
+    id: 11,
+    label: i18n.t("components.searchBars.nationsList.sortNations.descPoints"),
+  },
 };

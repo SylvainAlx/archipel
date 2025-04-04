@@ -3,8 +3,9 @@
     "home": {
       "title": "bienvenue",
       "presentation1": "**Archipel** est une application innovante qui vous permet de rejoindre une **communauté numérique** unique en son genre. En devenant **citoyen virtuel**, vous avez le choix : intégrer une **nation** existante ou en fonder une nouvelle selon vos idéaux et vos aspirations. Chaque utilisateur reçoit une **carte d'identité virtuelle**, symbole de son appartenance à cet **univers interactif** où l'**imagination** et l'**engagement collectif** prennent vie.",
-      "presentation2": "Pour enrichir l’expérience, un **système de crédits** vient ajouter une dimension **ludique** et **immersive**. Ces crédits permettent d’interagir avec d’autres citoyens, de développer des projets au sein de votre nation et de renforcer votre rôle dans cet **écosystème virtuel**. Que vous soyez un bâtisseur, un stratège ou un rêveur, Archipel vous offre les outils pour façonner votre propre parcours et tisser des liens avec une **communauté dynamique**.",
-      "presentation3": "Nous avons conçu Archipel pour être **inclusif** et **accessible à tous**, favorisant l’**échange** et la **diversité des idées**. Ici, chaque voix compte et chaque nation a sa place. **Rejoignez-nous dès maintenant** et commencez à écrire l’histoire de votre citoyenneté virtuelle !"
+      "presentation2": "En tant qu'éditeur, vous avez la possibilité de façonner votre nation à votre goût. Ajoutez un **drapeau** qui incarne vos valeurs, définissez une **devise** qui inspire votre communauté, rédigez une **description détaillée** pour présenter votre vision. Vous pouvez également **cartographier votre territoire** en ajoutant des lieux importants et marquer ainsi l’identité unique de votre nation. Transformez votre rêve en réalité virtuelle, et faites rayonner votre nation auprès des autres !",
+      "presentation3": "Pour enrichir l’expérience, un **système de crédits** vient ajouter une dimension **ludique** et **immersive**. Ces crédits permettent d’interagir avec d’autres citoyens, de développer des projets au sein de votre nation et de renforcer votre rôle dans cet **écosystème virtuel**. Que vous soyez un bâtisseur, un stratège ou un rêveur, Archipel vous offre les outils pour façonner votre propre parcours et tisser des liens avec une **communauté dynamique**.",
+      "presentation4": "Nous avons conçu Archipel pour être **inclusif** et **accessible à tous**, favorisant l’**échange** et la **diversité des idées**. Ici, chaque voix compte et chaque nation a sa place. **Rejoignez-nous dès maintenant** et commencez à écrire l’histoire de votre citoyenneté virtuelle !"
     },
     "lobby": {
       "password": "Renseignez le mot de passe pour accéder à l'application",
@@ -392,7 +393,7 @@
         "index": "position dans la liste",
         "place": "type de lieu",
         "places": "lieux",
-        "points": "succès",
+        "points": "points",
         "population": "citoyens",
         "regime": "regime de la nation",
         "tree": "enfants",
@@ -437,7 +438,9 @@
           "ascTreasury": "richesse croissante",
           "descTreasury": "richesse décroissante",
           "ascDate": "date de creation croissante",
-          "descDate": "date de creation décroissante"
+          "descDate": "date de creation décroissante",
+          "ascPoints": "nombre de points croissant",
+          "descPoints": "nombre de points décroissant"
         }
       },
       "citizensList": {
