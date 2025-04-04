@@ -18,6 +18,8 @@ import NationStateTag from "../ui/tags/nationStateTag";
 import { NationModel } from "../../models/nationModel";
 import { PLACE_TYPE, REGIME } from "../../settings/consts";
 import { PlaceListModel } from "../../models/lists/placeListModel";
+import Audio from "../ui/audio";
+import NationPointsTag from "../ui/tags/nationPointsTag";
 
 interface NationIdentityProps {
   selectedNation: NationModel;
@@ -77,9 +79,34 @@ export default function NationIdentity({
                   />
                 )}
               </div>
-
+              <div className="flex items-center gap-2">
+                {selectedNation.data.url.anthem != "" ? (
+                  <Audio
+                    url={selectedNation.data.url.anthem}
+                    hover={t("components.hoverInfos.anthem")}
+                  />
+                ) : (
+                  <em className="text-center">
+                    {t("pages.nation.nationIdentity.noAnthem")}
+                  </em>
+                )}
+                {owner && (
+                  <EditButton
+                    editBox={{
+                      target: "nation",
+                      original: selectedNation.data.url.anthem
+                        ? selectedNation.data.url.anthem
+                        : "",
+                      new: selectedNation.data.url.anthem,
+                      path: "data.url.anthem",
+                      action: updatePath,
+                    }}
+                  />
+                )}
+              </div>
               <div className="flex gap-1 flex-wrap items-center justify-center">
                 <IdTag label={selectedNation.officialId} />
+                <NationPointsTag label={selectedNation.getNationPoints()} />
                 <TreasuryTag label={selectedNation.data.roleplay.treasury} />
                 <NationStateTag
                   isNationState={selectedNation.data.general.isNationState}
@@ -185,7 +212,7 @@ export default function NationIdentity({
                   updatePath={updatePath}
                 />
               </div>
-              <div className="w-full mt-4 justify-center flex gap-2">
+              <div className="w-full max-w-3xl mt-4 justify-center flex gap-2">
                 {selectedNation.data.general.description ? (
                   <MDEditor.Markdown
                     className="bg-transparent text-light text-justify mde-markdown"

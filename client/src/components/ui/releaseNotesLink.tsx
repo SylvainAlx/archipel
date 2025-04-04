@@ -11,7 +11,7 @@ export default function ReleaseNotesLink({
   const navigate = useNavigate();
   return (
     <div
-      className={`${smallSize ? "text-[12px]" : "text-sm"} cursor-pointer hover:text-secondary`}
+      className={`${smallSize ? "text-[12px]" : "text-sm"} cursor-pointer hover:text-secondary3`}
       onClick={() => navigate("/releasenotes")}
     >
       {VERSION.beta != "" && "BETA-" + VERSION.beta}

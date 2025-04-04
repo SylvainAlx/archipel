@@ -116,6 +116,7 @@ export const getGifts = async () => {
           { label: "register", value: DEFAULT_GIFTS.REGISTER },
           { label: "newNation", value: DEFAULT_GIFTS.NEW_NATION },
           { label: "citizenship", value: DEFAULT_GIFTS.CITIZENSHIP },
+          { label: "godparent", value: DEFAULT_GIFTS.GODPARENT },
         ],
       });
       await gifts.save();
@@ -126,7 +127,7 @@ export const getGifts = async () => {
   }
 };
 
-export const getValueFromParam = (paramList, propLabel, defaultValue) => {
+export const getValueFromParam = async (paramList, propLabel, defaultValue) => {
   let value = defaultValue;
   if (paramList.props) {
     const selectedProp = paramList.props.find(

@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import SearchButtons from "../form/searchButtons";
 import { NationListModel } from "../../models/lists/nationListModel";
 import { NATION_SORTING } from "../../settings/sorting";
-import useNationSearchBar from "../../hooks/componentsHooks/useNationSearchBar";
+import useNationSearchBar from "../../hooks/componentsHooks/searchBars/useNationSearchBar";
 
 export interface NationSearchBarProps {
   type: string;

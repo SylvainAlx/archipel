@@ -2,94 +2,52 @@ import {
   FaBriefcase,
   FaCoins,
   FaFlask,
-  FaHandshakeSimple,
   FaMasksTheater,
   FaPen,
   FaPersonMilitaryPointing,
 } from "react-icons/fa6";
 import CrossButton from "../buttons/crossButton";
-import { useEffect, useState } from "react";
-import { useAtom } from "jotai";
-import {
-  confirmBox,
-  myStore,
-  newRelationAtom,
-  sessionAtom,
-} from "../../../settings/store";
-import { useTranslation } from "react-i18next";
+import { myStore, newRelationAtom } from "../../../settings/store";
 import NationTag from "../tags/nationTag";
 import HoverInfo from "../hoverInfo";
 import Button from "../buttons/button";
 import { RelationModel } from "../../../models/relationModel";
+import useRelationTile from "../../../hooks/componentsHooks/ui/useRelationTile";
+import Flag from "../flag";
 
 export interface RelationTileProps {
   relation: RelationModel;
 }
 
 export default function RelationTile({ relation }: RelationTileProps) {
-  const [nationIndex, setNationIndex] = useState(-1);
-  const [session] = useAtom(sessionAtom);
-  const [needResponse, setNeedResponse] = useState(false);
-  const { t } = useTranslation();
-  const [hoverInfo, setHoverInfo] = useState("");
-
-  useEffect(() => {
-    setNeedResponse(
-      relation.nations[1].OfficialId === session.user.citizenship.nationId &&
-        !relation.nations[1].accepted,
-    );
-    relation.nations.forEach((rel, i) => {
-      if (
-        rel.OfficialId === session.user.citizenship.nationId &&
-        session.user.citizenship.nationOwner
-      ) {
-        setNationIndex(i);
-      }
-    });
-  }, [relation, session.user.citizenship]);
-
-  const handleAccept = () => {
-    const updatedRelation = new RelationModel(relation);
-    updatedRelation.nations[nationIndex].accepted = true;
-    myStore.set(confirmBox, {
-      text: t("components.modals.confirmModal.acceptRelation"),
-      actionToDo: async () => {
-        await updatedRelation.baseUpdate(updatedRelation);
-      },
-    });
-  };
-
-  const handleRefuse = () => {
-    const updatedRelation = new RelationModel(relation);
-    updatedRelation.nations[nationIndex].accepted = true;
-    myStore.set(confirmBox, {
-      text: t("components.modals.confirmModal.refuseRelation"),
-      actionToDo: async () => {
-        await updatedRelation.baseUpdate(updatedRelation);
-      },
-    });
-  };
-
-  const handleLeave = () => {
-    const updatedRelation = new RelationModel(relation);
-    updatedRelation.nations.splice(nationIndex, 1);
-    myStore.set(confirmBox, {
-      text: t("components.modals.confirmModal.leaveRelation"),
-      actionToDo: async () => {
-        await updatedRelation.baseUpdate(updatedRelation);
-      },
-    });
-  };
+  const {
+    handleAccept,
+    handleRefuse,
+    handleLeave,
+    nationList,
+    needResponse,
+    hoverInfo,
+    nationIndex,
+    setHoverInfo,
+    t,
+  } = useRelationTile(relation);
 
   return (
     <div
-      className={`${needResponse ? "bg-complementary2" : "bg-complementary"} w-full p-2 rounded flex flex-col items-center gap-3 shadow-xl`}
+      className={`${needResponse ? "bg-complementary2" : "bg-complementary"} flex-grow p-2 rounded flex flex-col items-center gap-3 shadow-xl`}
     >
-      <div className="w-full text-xl flex items-center justify-between gap-2">
+      <div className="w-full flex flex-wrap items-center justify-center gap-1">
+        {nationList.getItems().map((nation, i) => {
+          return <Flag key={i} nation={nation} />;
+        })}
+      </div>
+      <div className="w-full flex flex-wrap items-center justify-center gap-1">
+        {nationList.getItems().map((nation, i) => {
+          return <NationTag key={i} label={nation.officialId} />;
+        })}
+      </div>
+      <div className="w-full text-xl flex items-center justify-center gap-2">
         <div className="flex justify-center items-center gap-2 text-2xl text-info">
-          <div className="text-5xl text-light">
-            <FaHandshakeSimple />
-          </div>
           {relation.kind.business && (
             <div
               onMouseEnter={() =>
@@ -141,8 +99,8 @@ export default function RelationTile({ relation }: RelationTileProps) {
             </div>
           )}
         </div>
-        <div className="text-xl">{relation.name}</div>
       </div>
+      <div className="text-xl">{relation.name}</div>
       <div>
         {relation.description != "" ? (
           <p className="text-justify">{relation.description}</p>
@@ -152,11 +110,7 @@ export default function RelationTile({ relation }: RelationTileProps) {
           </em>
         )}
       </div>
-      <div className="w-full flex flex-wrap items-center justify-end gap-1">
-        {relation.nations.map((nation, i) => {
-          return <NationTag key={i} label={nation.OfficialId} />;
-        })}
-      </div>
+
       <div className="flex items-center gap-1 self-end">
         {needResponse ? (
           <>

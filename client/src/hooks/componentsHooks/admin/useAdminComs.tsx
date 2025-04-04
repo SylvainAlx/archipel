@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { ComListModel } from "../../models/lists/comListModel";
+import { ComListModel } from "../../../models/lists/comListModel";
 
 export default function useAdminComs() {
   const [adminComList, setAdminComList] = useState<ComListModel>(

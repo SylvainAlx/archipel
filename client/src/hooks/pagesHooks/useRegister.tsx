@@ -11,6 +11,8 @@ export function useRegister() {
   const [password, setPassword] = useState("");
   const [isPasswordStrong, setIsPasswordStrong] = useState(false);
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [haveGodparent, setHaveGodparent] = useState(false);
+  const [godparentId, setGodparentId] = useState("");
   const [passwordsMatch, setPasswordsMatch] = useState(true);
   const [language, setLanguage] = useState(i18n.language);
   const [gender, setGender] = useState(0);
@@ -20,6 +22,8 @@ export function useRegister() {
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.name == "name") {
       setName(e.target.value);
+    } else if (e.target.name == "godparent") {
+      setGodparentId(e.target.value);
     } else if (e.target.name == "password") {
       setIsPasswordStrong(isStrongPassword(e.target.value));
       setPassword(e.target.value);
@@ -55,6 +59,7 @@ export function useRegister() {
       await newUser.baseInsert({
         name: name.trimEnd(),
         password: password.trimEnd(),
+        godparentId,
         gender,
         language,
       });
@@ -69,6 +74,9 @@ export function useRegister() {
     confirmPassword,
     passwordsMatch,
     isPasswordStrong,
+    godparentId,
+    haveGodparent,
+    setHaveGodparent,
     language,
     acceptCGU,
     setAcceptCGU,

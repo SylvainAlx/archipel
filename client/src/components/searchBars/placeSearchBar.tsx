@@ -6,7 +6,7 @@ import SearchButtons from "../form/searchButtons";
 import { PLACE_SORTING } from "../../settings/sorting";
 import { PlaceListModel } from "../../models/lists/placeListModel";
 import { PlaceModel } from "../../models/placeModel";
-import usePlaceSearchBar from "../../hooks/componentsHooks/usePlaceSearchBar";
+import usePlaceSearchBar from "../../hooks/componentsHooks/searchBars/usePlaceSearchBar";
 
 export interface PlaceSearchBarProps {
   type: string;

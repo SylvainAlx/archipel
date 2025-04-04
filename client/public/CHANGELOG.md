@@ -6,15 +6,43 @@ Le code source est public et est visible [ici](https://github.com/SylvainAlx/arc
 
 - Créer ou rejoindre une organisation
 - Créer des items et les proposer à l'acquisition aux citoyens
-- Ajouter les hymnes des nations
 - Créer une gazette des nations en se basant sur les communiqués
-- Exporter une carte d'identité virtuelle sous forme d'image
 - Étendre les fonctionnalités pour les utilisateurs mobile
 - Positionner les lieux de la nation sur sa propre carte
 - Améliorer des traductions
-- Carte virtuelle d'Archipel avec l'ensemble des nations représentées
 
 ## Version actuelle
+
+### v1.1.0
+
+#### Ajouts
+
+- Ajout de cartes d'identité virtuelle téléchargeables
+- Ajouter les hymnes des nations
+- Ajout des points des nations (nbr de citoyens x 10 + nbr de lieux + richesse / 10)
+- Tri possible des utilisateurs par richesse (crédits)
+- Parrainage possible avec gain de crédits pour le nouvel utilisateur et le parrain
+
+#### Suppressions
+
+- Retrait du réseau social Threads
+
+#### Modifications & Corrections
+
+- Optimisation du code source
+- Amélioration des performances
+- Amélioration de l'accessibilité
+- Correction des recherches par noms et tags depuis la page "explorer"
+- Correction de la recherche lors d'un clic sur un hashtag
+- Modification des tuiles de relations diplomatiques
+- Correction du bug de raffraichissement des données lors d'un changement de page "nation"
+- Correction de la position du curseur vertical lors d'un changement de page
+- Visibilité publique des crédits des utilisateurs
+- Modification des CGU
+- Modification des textes de la page d'accueil
+- Tri par défaut des nations basculé sur le nombre de points décroissants
+
+## Versions précédentes
 
 ### v1.0.2
 
@@ -35,8 +63,6 @@ Aucune
 - Correction du modal d'image
 - Correction de l'algorithme lié aux résidences
 - Optimisation des données en mémoire
-
-## Versions précédentes
 
 ### v1.0.1
 

@@ -1,5 +1,5 @@
 import { useAtom } from "jotai";
-import { bannedCitizensAtom } from "../../settings/store";
+import { bannedCitizensAtom } from "../../../settings/store";
 import { useEffect, useState } from "react";
 
 export default function useAdminBanned() {

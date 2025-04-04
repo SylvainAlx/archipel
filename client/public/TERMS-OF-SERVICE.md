@@ -135,15 +135,15 @@ En se rendant sur la page d'un citoyen depuis la liste de la page "explorer", l'
 - La photo de profil du citoyen (avatar)
 - Les liens (email et site web)
 - La biographie
-- Les informations sur sa citoyenneté liée à une nation (Identifiant, genre, langue, religion, lieu de résidence sur Archipel, rôle, lien d'accès)
+- Les informations sur sa citoyenneté liée à une nation (Identifiant, genre, langue, religion, lieu de résidence sur Archipel, rôle, crédits, lien d'accès)
 - Un bouton de signalement du contenu
 
 #### 4.1.4 - Les pages "nation"
 
 En se rendant sur la page d'une nation depuis la liste de la page "explorer", l'internaute va pouvoir consulter :
 
-- L'identité de la nation (Les liens externes, le nom de la nation, son statut officiel ou non, le drapeau et le blason s'ils ont été ajoutés, la devise)
-- Les tags (L'identifiant unique, Le total du trésor public, le type de régime, le nombre de citoyens, le nombre de lieux, le jour national, la monnaie, la capitale, les mots clés)
+- L'identité de la nation (Les liens externes, le nom de la nation, son statut officiel ou non, le drapeau et le blason s'ils ont été ajoutés, la devise, l'hymne nationale)
+- Les tags (L'identifiant unique, Le total de points (voir [ARTICLE 4.5](#45---les-points)), Le total du trésor public, le type de régime, le nombre de citoyens, le nombre de lieux, le jour national, la monnaie, la capitale, les mots clés)
 - La description
 - La carte de la nation (si existante)
 - Les tuiles d'informations libres (si existantes)
@@ -259,6 +259,7 @@ Les crédits peuvent être vus comme une monnaie interne à l'application Archip
 Des crédits sont donnés lorsque :
 
 - Un utilisateur rejoint Archipel
+- Un utilisateur est parrain d'un autre utilisateur
 - Une nation est créée
 - Un utilisateur rejoint une nation
 
@@ -277,7 +278,12 @@ Le transfert de crédits est possible entre Utilisateurs et nations.
 Si l'éditeur de la nation supprime un élément qui lui a coûté des crédits, la nation regagne cette somme.
 Le montant des crédits peut varier dans le temps.
 
-### 4.5 - Restrictions
+### 4.5 - Les points
+
+Le total de points visible sur la page d'une nation ainsi que sur les tuiles de la page "explorer" est un nombre issue d'une formule. Celle-ci permet de représenter du mieux possible son importance sur l'application. Celle formule est :  
+_Total des citoyens de la nation x 10 + Total des lieux de la nation + Richesse de la nation / 10_
+
+### 4.6 - Restrictions
 
 - Un Utilisateur qui n'est pas éditeur d'une nation ne peut effectuer aucune modification sur celle-ci.
 - un Utilisateur éditeur d'une nation ne pourra pas supprimer son compte avant d'avoir préalablement cédé ou supprimé sa nation.

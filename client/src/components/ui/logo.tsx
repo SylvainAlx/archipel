@@ -8,10 +8,15 @@ export default function Logo() {
   };
 
   return (
-    <button onClick={handleClick} className="animate-fadeIn h-[50px] w-[50px]">
+    <button
+      name="logo"
+      onClick={handleClick}
+      className="animate-fadeIn h-[50px] w-[50px]"
+    >
       <img
         src="/logo.webp"
         className="cursor-pointer h-full hover:animate-pulse"
+        alt="Archipel logo"
       ></img>
     </button>
   );

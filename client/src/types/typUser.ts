@@ -40,6 +40,7 @@ export interface User {
 export interface AuthPayload {
   name: string;
   password: string;
+  godparentId?: string;
   gender?: number;
   language?: string;
 }

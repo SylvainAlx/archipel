@@ -18,9 +18,9 @@ export default function Header() {
           <h2 className="text-3xl text-center">
             {t("components.logo.title").toUpperCase()}
           </h2>
-          <h4 className="text-sm lg:text-md text-center">
+          <h3 className="text-sm lg:text-md text-center">
             {t("components.logo.subtitle")}
-          </h4>
+          </h3>
         </div>
       </div>
 

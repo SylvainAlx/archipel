@@ -3,12 +3,10 @@ import DashTile from "../ui/dashTile";
 import TileContainer from "../ui/tileContainer";
 import Spinner from "../ui/loading/spinner";
 import CrossButton from "../ui/buttons/crossButton";
-import { useTranslation } from "react-i18next";
 import { FaMapLocationDot } from "react-icons/fa6";
-import { deleteImage } from "../../utils/procedures";
 import { NationModel } from "../../models/nationModel";
-import { confirmBox, myStore } from "../../settings/store";
 import Upploader from "../ui/uploader";
+import useNationMap from "../../hooks/componentsHooks/nation/useNationMap";
 
 interface NationMapProps {
   selectedNation: NationModel;
@@ -20,21 +18,8 @@ export default function NationMap({
   owner,
   updatePath,
 }: NationMapProps) {
-  const { t } = useTranslation();
-
+  const { handleDeleteImage, t } = useNationMap(selectedNation, updatePath);
   const LazyImage = lazy(() => import("../ui/lazy/lazyImage"));
-
-  const handleDeleteImage = async () => {
-    myStore.set(confirmBox, {
-      text: t("components.modals.confirmModal.deleteFile"),
-      actionToDo: async () => {
-        const result = await deleteImage(selectedNation.data.url.map);
-        if (result) {
-          updatePath("data.url.map", "", false);
-        }
-      },
-    });
-  };
 
   return (
     <TileContainer>
@@ -42,7 +27,7 @@ export default function NationMap({
         <section className="w-full flex flex-col items-center rounded">
           {selectedNation.data.url.map != undefined &&
           selectedNation.data.url.map != "" ? (
-            <div className="relative w-full max-w-[600px]">
+            <div className="relative w-full max-w-2xl">
               <Suspense fallback={<Spinner />}>
                 <LazyImage
                   src={selectedNation.data.url.map}

@@ -8,6 +8,7 @@ import DateTag from "../tags/dateTag";
 import { NationModel } from "../../../models/nationModel";
 import TreasuryTag from "../tags/treasuryTag";
 import VerifiedTag from "../tags/verifiedTag";
+import NationPointsTag from "../tags/nationPointsTag";
 
 interface NationTileProps {
   nation: NationModel;
@@ -40,15 +41,14 @@ export default function NationTile({ nation }: NationTileProps) {
           )}
         </h3>
       </div>
-      <div className="max-w-[80%] flex gap-1 self-end flex-wrap justify-end">
+      <div className="max-w-[90%] flex gap-1 self-end flex-wrap justify-end">
+        <NationPointsTag label={nation.getNationPoints()} />
         <TreasuryTag label={nation.data.roleplay.treasury} />
         <RegimeTag selectedNation={nation} />
         <PopulationTag label={nation.data.roleplay.citizens} />
         <PlaceTag label={nation.data.roleplay.places} />
         <DateTag date={nation.createdAt} />
-        <div className="self-end">
-          <TagList nation={nation} isTile={true} />
-        </div>
+        <TagList nation={nation} isTile={true} />
       </div>
     </div>
   );

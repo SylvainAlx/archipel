@@ -16,6 +16,7 @@ import { errorCatching } from "../../utils/displayInfos";
 import { findElementsByName } from "../../utils/functions";
 import {
   sortByCreatedAt,
+  sortByCredits,
   sortByLastVisit,
   sortByName,
 } from "../../utils/sorting";
@@ -37,17 +38,14 @@ export class UserListModel extends ListModel {
     const updatedList = myStore.get(userListAtomV2).addMany(list);
     myStore.set(userListAtomV2, new UserListModel(updatedList));
   };
-  loadUserList = async (searchName: string) => {
+  loadUserList = async (searchName: string, forceFetch: boolean = true) => {
     myStore.set(loadingAtom, true);
     try {
-      let savedUsers: UserModel[] = [];
+      let savedUsers: UserModel[] = myStore.get(userListAtomV2).getItems();
       if (searchName != "") {
-        savedUsers = findElementsByName(
-          searchName,
-          myStore.get(userListAtomV2).getItems(),
-        );
+        savedUsers = findElementsByName(searchName, savedUsers);
       }
-      if (savedUsers.length > 0) {
+      if (savedUsers.length > 0 && !forceFetch) {
         this.items = savedUsers;
       } else {
         const users: User[] = await getAllCitizensFetch(searchName);
@@ -64,22 +62,6 @@ export class UserListModel extends ListModel {
   loadNationUserList = async (nation: Nation | NationModel) => {
     myStore.set(loadingAtom, true);
     try {
-      // this.items = [];
-      // const savedNationCitizenList: User[] = [];
-      // myStore
-      //   .get(userListAtomV2)
-      //   .getItems()
-      //   .forEach((user) => {
-      //     if (user.citizenship.nationId === nation.officialId) {
-      //       savedNationCitizenList.push(user);
-      //     }
-      //   });
-      // if (
-      //   savedNationCitizenList.length > 0 &&
-      //   savedNationCitizenList.length === nation.data.roleplay.citizens
-      // ) {
-      //   this.items = savedNationCitizenList;
-      // } else {
       const resp: User[] = await getNationCitizensFetch(nation.officialId);
       if (resp.length > 0) {
         this.addMany(resp);
@@ -140,10 +122,21 @@ export class UserListModel extends ListModel {
       case CITIZEN_SORTING.descVisit.id:
         sortByLastVisit(this.items, false);
         break;
+      case CITIZEN_SORTING.ascCredits.id:
+        sortByCredits(this.items, true);
+        break;
+      case CITIZEN_SORTING.descCredits.id:
+        sortByCredits(this.items, false);
+        break;
       default:
         break;
     }
     this.sorting = selectOption;
     return new UserListModel(this.items, this.sorting);
+  };
+  getOnlyNationOwners = () => {
+    return new UserListModel(
+      this.items.filter((user) => user.citizenship.nationOwner),
+    );
   };
 }

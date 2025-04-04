@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import SearchButtons from "../form/searchButtons";
 import { ComListModel } from "../../models/lists/comListModel";
 import { COM_SORTING } from "../../settings/sorting";
-import useComSearchBar from "../../hooks/componentsHooks/useComSearchBar";
+import useComSearchBar from "../../hooks/componentsHooks/searchBars/useComSearchBar";
 
 export interface ComSearchBarProps {
   type: string;

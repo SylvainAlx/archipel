@@ -1,76 +1,19 @@
 import { useTranslation } from "react-i18next";
 import DashTile from "../ui/dashTile";
 import { SelectedNationProps } from "../../types/typProp";
-import { useAtom } from "jotai";
-import {
-  comListAtomV2,
-  myStore,
-  newComAtom,
-  sessionAtom,
-} from "../../settings/store";
-import { lazy, Suspense, useEffect, useMemo, useState } from "react";
+import { lazy, Suspense } from "react";
 import Button from "../ui/buttons/button";
 import { FaComment } from "react-icons/fa";
-import { ComPayload, emptyComPayload } from "../../types/typCom";
-import { ComListModel } from "../../models/lists/comListModel";
-import { COM_TYPE } from "../../settings/consts";
 import TileSkeleton from "../ui/loading/skeletons/tileSkeleton";
+import useNationComs from "../../hooks/componentsHooks/nation/useNationComs";
 
 export default function NationComs({
   selectedNation,
   owner,
 }: SelectedNationProps) {
   const { t } = useTranslation();
-  const [session] = useAtom(sessionAtom);
-  const [comList] = useAtom(comListAtomV2);
-  const [coms, setComs] = useState<ComListModel>(new ComListModel());
-  // const { allowPost, dueDate } = useAllowPost(coms, selectedNation);
+  const { coms, handleClick } = useNationComs(selectedNation);
   const ComTile = lazy(() => import("../ui/tiles/comTile"));
-
-  const comTypes: number[] =
-    session.user.citizenship.nationId === selectedNation.officialId
-      ? [COM_TYPE.nationPublic.id, COM_TYPE.nationPrivate.id]
-      : [COM_TYPE.nationPublic.id];
-
-  const filterComList = useMemo(() => {
-    const list = comList
-      .getItems()
-      .filter(
-        (com) =>
-          com.destination === selectedNation.officialId &&
-          comTypes.includes(com.comType),
-      );
-    return new ComListModel(list);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [comList]);
-
-  useEffect(() => {
-    const loadNationComList = async () => {
-      await coms.loadNationComList(
-        "",
-        selectedNation.officialId,
-        comTypes,
-        session.user.citizenship.nationId === selectedNation.officialId,
-      );
-    };
-    loadNationComList();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  useEffect(() => {
-    setComs(filterComList);
-  }, [filterComList]);
-
-  const handleClick = () => {
-    const newCom: ComPayload = {
-      comType: 10,
-      message: emptyComPayload.message,
-      origin: selectedNation.officialId,
-      destination: selectedNation.officialId,
-      title: emptyComPayload.title,
-    };
-    myStore.set(newComAtom, newCom);
-  };
 
   return (
     <DashTile title={t("pages.nation.coms.title")}>

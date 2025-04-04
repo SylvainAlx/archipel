@@ -1,69 +1,20 @@
-import { lazy, Suspense, useEffect, useMemo, useState } from "react";
+import { lazy, Suspense } from "react";
 import DashTile from "../ui/dashTile";
 import TileContainer from "../ui/tileContainer";
 import { SelectedNationProps } from "../../types/typProp";
-import { useAtom } from "jotai";
-import { editTileAtom, tileListAtomV2 } from "../../settings/store";
 import Button from "../ui/buttons/button";
-import { emptyTile } from "../../types/typTile";
 import { GiSBrick } from "react-icons/gi";
-import { useTranslation } from "react-i18next";
 import { FaCoins } from "react-icons/fa";
-import { errorMessage } from "../../utils/toasts";
-import { TileListModel } from "../../models/lists/tileListModel";
-import { TileModel } from "../../models/tileModel";
 import TileSkeleton from "../ui/loading/skeletons/tileSkeleton";
-import { getValueFromParam } from "../../services/paramService";
+import useFreeTiles from "../../hooks/componentsHooks/nation/useFreeTiles";
 
 export default function FreeTiles({
   selectedNation,
   owner,
 }: SelectedNationProps) {
-  const { t } = useTranslation();
-  const [tileList] = useAtom(tileListAtomV2);
-  const [nationTileList, setNationTileList] = useState<TileListModel>(
-    new TileListModel(),
-  );
-  const [, setEditTile] = useAtom(editTileAtom);
-  const quota = Number(getValueFromParam("quotas", "tiles"));
-  const cost = Number(getValueFromParam("costs", "tile"));
+  const { cost, quota, handleClick, nationTileList, t } =
+    useFreeTiles(selectedNation);
   const FreeTile = lazy(() => import("../ui/tiles/freeTile"));
-
-  const filteredTileList = useMemo(() => {
-    const list = tileList
-      .getItems()
-      .filter((tile) => tile.nationOfficialId === selectedNation.officialId);
-    return new TileListModel(list);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [tileList]);
-
-  useEffect(() => {
-    const loadTileList = async () => {
-      await nationTileList.loadTiles(selectedNation.officialId);
-    };
-    if (selectedNation.officialId != "") {
-      loadTileList();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  useEffect(() => {
-    setNationTileList(filteredTileList);
-  }, [filteredTileList]);
-
-  const handleClick = () => {
-    if (
-      (quota && selectedNation.data.roleplay.treasury >= quota) ||
-      nationTileList.getItems().length < quota
-    ) {
-      const newTile = { ...emptyTile };
-      newTile.isFree = nationTileList.getItems().length < quota;
-      newTile.nationOfficialId = selectedNation.officialId;
-      setEditTile(new TileModel(newTile));
-    } else {
-      errorMessage(t("toasts.errors.notEnoughCredits"));
-    }
-  };
 
   return (
     <TileContainer>

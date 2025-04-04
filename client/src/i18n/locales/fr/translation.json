@@ -2,9 +2,10 @@
   "pages": {
     "home": {
       "title": "bienvenue",
-      "presentation1": "Bienvenue dans votre espace dédié aux **micronations** et **nations virtuelles** ! Que vous soyez membre d'une micronation **sérieuse** ou passionné de **role-play** dans des **univers imaginaires**, notre application est là pour vous. Rejoignez une communauté **dynamique**, échangez, collaborez et faites briller votre nation dans un espace conçu pour vous rapprocher. **Créez** des liens, **partagez** vos projets, et **faites vivre** votre vision !",
-      "presentation2": "En tant qu'éditeur, vous avez la possibilité de **façonner votre nation** à votre goût. Ajoutez un **drapeau** qui incarne vos valeurs, définissez une **devise** qui inspire votre communauté, rédigez une **description détaillée** pour présenter votre vision. Vous pouvez également **cartographier votre territoire** en ajoutant des lieux importants et marquer ainsi l’identité unique de votre nation. Transformez votre rêve en une réalité virtuelle, et faites rayonner votre nation auprès des autres !",
-      "presentation3": "Tissez des liens diplomatiques et créez des alliances ! Notre plateforme vous offre l’opportunité d’interagir avec d’autres nations, qu’elles soient réelles ou virtuelles. Initiez des **relations diplomatiques**, négociez des accords, formez des alliances stratégiques ou organisez des événements communs. Élargissez l’influence de votre nation en construisant des **ponts entre les cultures** et en collaborant avec d’autres leaders. Ensemble, donnez une nouvelle dimension à vos ambitions !"
+      "presentation1": "**Archipel** est une application innovante qui vous permet de rejoindre une **communauté numérique** unique en son genre. En devenant **citoyen virtuel**, vous avez le choix : intégrer une **nation** existante ou en fonder une nouvelle selon vos idéaux et vos aspirations. Chaque utilisateur reçoit une **carte d'identité virtuelle**, symbole de son appartenance à cet **univers interactif** où l'**imagination** et l'**engagement collectif** prennent vie.",
+      "presentation2": "En tant qu'éditeur, vous avez la possibilité de façonner votre nation à votre goût. Ajoutez un **drapeau** qui incarne vos valeurs, définissez une **devise** qui inspire votre communauté, rédigez une **description détaillée** pour présenter votre vision. Vous pouvez également **cartographier votre territoire** en ajoutant des lieux importants et marquer ainsi l’identité unique de votre nation. Transformez votre rêve en réalité virtuelle, et faites rayonner votre nation auprès des autres !",
+      "presentation3": "Pour enrichir l’expérience, un **système de crédits** vient ajouter une dimension **ludique** et **immersive**. Ces crédits permettent d’interagir avec d’autres citoyens, de développer des projets au sein de votre nation et de renforcer votre rôle dans cet **écosystème virtuel**. Que vous soyez un bâtisseur, un stratège ou un rêveur, Archipel vous offre les outils pour façonner votre propre parcours et tisser des liens avec une **communauté dynamique**.",
+      "presentation4": "Nous avons conçu Archipel pour être **inclusif** et **accessible à tous**, favorisant l’**échange** et la **diversité des idées**. Ici, chaque voix compte et chaque nation a sa place. **Rejoignez-nous dès maintenant** et commencez à écrire l’histoire de votre citoyenneté virtuelle !"
     },
     "lobby": {
       "password": "Renseignez le mot de passe pour accéder à l'application",
@@ -23,7 +24,8 @@
         "externalLinks": "liens externes",
         "noDescription": "pas de description",
         "nationState": "État-Nation",
-        "noNationState": "État multinational"
+        "noNationState": "État multinational",
+        "noAnthem": "pas d'hymne de la nation"
       },
       "map": {
         "title": "carte de la nation",
@@ -194,7 +196,9 @@
         "password": "mot de passe",
         "confirmPassword": "Les mots de passe ne sont pas identiques !",
         "strongPassword": "Le mot de passe doit contenir au moins 8 caractères, une majuscule, une minuscule, un chiffre et un caractère spécial.",
-        "buyerOfficialId": "merci de renseigner l'identifiant unique du citoyen désigné (sous la forme: **c********)"
+        "buyerOfficialId": "merci de renseigner l'identifiant unique du citoyen désigné (sous la forme: **c********)",
+        "godparentId": "ID du parrain",
+        "haveGodparent": "J'ai été parrainé"
       },
       "select": {
         "choose": "choisir",
@@ -213,6 +217,10 @@
     "logo": {
       "title": "Archipel",
       "subtitle": "CITOYENS DES MICRONATIONS & NATIONS VIRTUELLES"
+    },
+    "idCard": {
+      "name": "carte d'identité",
+      "download": "télécharger"
     },
     "modals": {
       "confirmModal": {
@@ -315,6 +323,7 @@
             "freeLimit": "limite gratuite",
             "cost": "coût",
             "register": "inscription",
+            "godparent": "parrainage",
             "newNation": "création d'une nation",
             "citizenship": "nouveau citoyen"
           }
@@ -338,7 +347,7 @@
         "title": "Aide",
         "citizen": {
           "title": "le citoyen",
-          "description": "**Votre identité unique d'utilisateur**<hr/>Une fois inscrit pour trouverez sur votre page de profil un identifiant unique sous la forme :<br/>*XXCXXXXXXXX*<br/>Cet identifiant se retrouve également dans la barre d'adresse de votre page de profil :<br/>*[url Archipel]/citizen/[votre identifiant]*<br/><br/>**La nationalité virtuelle**<hr/>Sur *Archipel*, vous pouvez devenir citoyen, soit :<br/>- en rejoignant une des nations déjà existantes. Il vous faudra attendre alors l'approbation de l'éditeur de la nation avant de l'intéger<br/>- en créant la votre !<br/><br/>**Votre tableau de bord**<hr/>Depuis votre page de profil vous pouvez :<br/>- Changer votre avatar et vos informations<br/>- Gérer vos paramètres<br/>"
+          "description": "**Votre identité unique d'utilisateur**<hr/>Une fois inscrit pour trouverez sur votre page de profil un identifiant unique sous la forme :<br/>*XXCXXXXXXXX*<br/>Cet identifiant se retrouve également dans la barre d'adresse de votre page de profil :<br/>*[url Archipel]/citizen/[votre identifiant]*<br/><br/>**La nationalité virtuelle**<hr/>Sur *Archipel*, vous pouvez devenir citoyen, soit :<br/>- en rejoignant une des nations déjà existantes. Il vous faudra attendre alors l'approbation de l'éditeur de la nation avant de l'intéger<br/>- en créant la votre !<br/><br/>**Votre tableau de bord**<hr/>Depuis votre page de profil vous pouvez :<br/>- Changer votre avatar et vos informations<br/>- Télécharger votre carte d'identité<br/>- Gérer vos paramètres<br/>"
         },
         "nation": {
           "title": "la nation",
@@ -358,7 +367,7 @@
         },
         "credits": {
           "title": "les crédits",
-          "description": "**Présentation**<hr/>Les crédits ajoutent une mécanique à l'application qui participe à son côté ludique. Les nations ayant le plus grand nombre de crédits (appellée trésorerie) sont vues en premier dans l'onglet 'nations' de la page explorer.<br/><br/>**Obtention des crédits**<hr/>Des crédits sont donnés lorsque :<br/>- Un utilisateur rejoint Archipel<br/>- Une nation est créée<br/>- Un utilisateur rejoint une nation<br/><br/>**Dépense des crédits**<hr/>Des crédits sont prélevés lorsque :<br/>- le seuil maximal _gratuit_ pour créer des lieux et des tuiles d'informations est dépassé<br/><br/>**Transfert de crédits**<hr/>Le transfert de crédits est possible entre utilisateurs et nations.<br/><br/>**Informations complémentaires**<hr/>Si l'éditeur de la nation supprime un lieu ou une tuile qui lui a coûté des crédits, la nation regagne cette somme.<br/>Le montant des crédits peut varier dans le temps."
+          "description": "**Présentation**<hr/>Les crédits ajoutent une mécanique à l'application qui participe à son côté ludique. Les nations ayant le plus grand nombre de crédits (appellée trésorerie) sont vues en premier dans l'onglet 'nations' de la page explorer.<br/><br/>**Obtention des crédits**<hr/>Des crédits sont donnés lorsque :<br/>- Un utilisateur rejoint Archipel<br/>- Un utilisateur est parrain d'un autre utilisateur<br/>- Une nation est créée<br/>- Un utilisateur rejoint une nation<br/><br/>**Dépense des crédits**<hr/>Des crédits sont prélevés lorsque :<br/>- le seuil maximal _gratuit_ pour créer des lieux et des tuiles d'informations est dépassé<br/><br/>**Transfert de crédits**<hr/>Le transfert de crédits est possible entre utilisateurs et nations.<br/><br/>**Informations complémentaires**<hr/>Si l'éditeur de la nation supprime un lieu ou une tuile qui lui a coûté des crédits, la nation regagne cette somme.<br/>Le montant des crédits peut varier dans le temps."
         }
       }
     },
@@ -367,6 +376,7 @@
       "noCoatOfArms": "nation sans blason",
       "flag": "drapeau de la nation",
       "noFlag": "nation sans drapeau",
+      "anthem": "hymne de la nation",
       "dev": "tests & développements en cours",
       "links": {
         "website": "site internet",
@@ -383,7 +393,7 @@
         "index": "position dans la liste",
         "place": "type de lieu",
         "places": "lieux",
-        "points": "succès",
+        "points": "points",
         "population": "citoyens",
         "regime": "regime de la nation",
         "tree": "enfants",
@@ -428,7 +438,9 @@
           "ascTreasury": "richesse croissante",
           "descTreasury": "richesse décroissante",
           "ascDate": "date de creation croissante",
-          "descDate": "date de creation décroissante"
+          "descDate": "date de creation décroissante",
+          "ascPoints": "nombre de points croissant",
+          "descPoints": "nombre de points décroissant"
         }
       },
       "citizensList": {
@@ -439,7 +451,9 @@
           "ascDate": "date d'inscription croissante",
           "descDate": "date d'inscription décroissante",
           "ascVisit": "dernière date de visite croissante",
-          "descVisit": "dernière date de visite décroissante"
+          "descVisit": "dernière date de visite décroissante",
+          "ascCredits": "richesse croissante",
+          "descCredits": "richesse décroissante"
         }
       },
       "placesList": {

@@ -34,6 +34,14 @@ const nationSchema = mongoose.Schema(
           type: String,
           default: "",
         },
+        anthem: {
+          type: String,
+          default: "",
+          match: [
+            /^(.*)\.(mp3|wav|flac)$/i,
+            "Le champ 'anthem' doit être un fichier sonore.",
+          ],
+        },
         map: {
           type: String,
           default: "",

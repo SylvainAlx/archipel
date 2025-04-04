@@ -11,7 +11,6 @@ export const CAPTCHA_PUBLIC_KEY = import.meta.env.VITE_CAPTCHA_PUBLIC_KEY;
 export const GOOGLE_ANALYTICS_MEASUREMENT_ID = import.meta.env
   .VITE_GOOGLE_ANALYTICS_MEASUREMENT_ID;
 export const INSTAGRAM_URL = import.meta.env.VITE_INSTAGRAM_URL;
-export const THREADS_URL = import.meta.env.VITE_THREADS_URL;
 export const BTC_PUBLIC_KEY = import.meta.env.VITE_BTC_PUBLIC_KEY;
 export const ETH_PUBLIC_KEY = import.meta.env.VITE_ETH_PUBLIC_KEY;
 export const SOL_PUBLIC_KEY = import.meta.env.VITE_SOL_PUBLIC_KEY;
@@ -20,7 +19,7 @@ export const ADA_PUBLIC_KEY = import.meta.env.VITE_ADA_PUBLIC_KEY;
 export const VERSION = {
   beta: "",
   rc: "",
-  release: "1.0.2",
+  release: "1.1.0",
   testing: false,
 };
 
@@ -44,8 +43,8 @@ export const MAX_LENGTH = {
     nationDescription: 5000,
     placeDescription: 2000,
     relationDescription: 100,
-    textArea: 60,
-    input: 40,
+    textArea: 100,
+    input: 60,
   },
   array: {
     tags: 5,

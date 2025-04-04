@@ -2,9 +2,10 @@
   "pages": {
     "home": {
       "title": "welcome",
-      "presentation1": "Welcome to your dedicated space for **micronations** and **virtual nations**! Whether you are a member of a **serious** micronation or passionate about **role-playing** in **imaginary worlds**, our application is here for you. Join a **dynamic** community, exchange ideas, collaborate, and make your nation shine in a space designed to bring you closer together. **Create** connections, **share** your projects, and **bring your vision to life**!",
+      "presentation1": "**Archipel** is an innovative application that allows you to join a **digital community** like no other. By becoming a **virtual citizen**, you have the choice: join an existing **nation** or create a new one based on your ideals and aspirations. Each user receives a **virtual identity card**, symbolizing their belonging to this **interactive universe**, where **imagination** and **collective engagement** come to life.",
       "presentation2": "As an editor, you have the ability to **shape your nation** to your liking. Add a **flag** that embodies your values, define a **motto** that inspires your community, and write a **detailed description** to present your vision. You can also **map out your territory** by adding important locations, marking the unique identity of your nation. Turn your dream into a virtual reality and make your nation stand out among others!",
-      "presentation3": "Build diplomatic ties and create alliances! Our platform offers you the opportunity to interact with other nations, whether real or virtual. Initiate **diplomatic relations**, negotiate agreements, form strategic alliances, or organize joint events. Expand your nation’s influence by **bridging cultures** and collaborating with other leaders. Together, take your ambitions to a whole new level!"
+      "presentation3": "To enhance the experience, a **credit system** adds a **fun** and **immersive** dimension. These credits allow you to interact with other citizens, develop projects within your nation, and strengthen your role in this **virtual ecosystem**. Whether you are a builder, a strategist, or a dreamer, Archipel provides you with the tools to shape your own path and forge connections with a **dynamic community**.",
+      "presentation4": "We designed Archipel to be **inclusive** and **accessible to all**, promoting **exchange** and **diversity of ideas**. Here, every voice matters, and every nation has its place. **Join us now** and start writing the story of your virtual citizenship !"
     },
     "lobby": {
       "password": "enter the password to access the application",
@@ -23,7 +24,8 @@
         "externalLinks": "external links",
         "noDescription": "no description",
         "nationState": "Nation-State",
-        "noNationState": "multinational State"
+        "noNationState": "multinational State",
+        "noAnthem": "no anthem"
       },
       "map": {
         "title": "nation map",
@@ -194,7 +196,9 @@
         "password": "password",
         "confirmPassword": "Passwords are not the same !",
         "strongPassword": "The password must contain at least 8 characters, one uppercase letter, one lowercase letter, one digit, and one special character.",
-        "buyerOfficialId": "Please enter the unique identifier of the designated citizen (in the form: **c********)"
+        "buyerOfficialId": "Please enter the unique identifier of the designated citizen (in the form: **c********)",
+        "godparentId": "godparent ID",
+        "haveGodparent": "I was sponsored"
       },
       "select": {
         "choose": "choose",
@@ -213,6 +217,10 @@
     "logo": {
       "title": "Archipel",
       "subtitle": "CITIZENS OF MICRONATIONS & VIRTUAL NATIONS"
+    },
+    "idCard": {
+      "name": "identity card",
+      "download": "download"
     },
     "modals": {
       "confirmModal": {
@@ -315,6 +323,7 @@
             "freeLimit": "free limit",
             "cost": "cost",
             "register": "registration",
+            "godparent": "sponsorship",
             "newNation": "creation of a nation",
             "citizenship": "new citizen"
           }
@@ -338,7 +347,7 @@
         "title": "Help",
         "citizen": {
           "title": "the citizen",
-          "description": "**Your unique user identity**<hr/>Once registered, you will find a unique identifier on your profile page in the following format:<br/>*XXCXXXXXXXX*<br/>This identifier is also found in the address bar of your profile page:<br/>*[Archipel URL]/citizen/[your identifier]*<br/><br/>**Virtual nationality**<hr/>On *Archipel*, you can become a citizen by either:<br/>- joining one of the already existing nations. You will have to wait for the nation’s editor to approve your request before joining.<br/>- creating your own!<br/><br/>**Your dashboard**<hr/>From your profile page, you can:<br/>- Change your avatar and personal information<br/>- Manage your settings<br/>"
+          "description": "**Your unique user identity**<hr/>Once registered, you will find a unique identifier on your profile page in the following format:<br/>*XXCXXXXXXXX*<br/>This identifier is also found in the address bar of your profile page:<br/>*[Archipel URL]/citizen/[your identifier]*<br/><br/>**Virtual nationality**<hr/>On *Archipel*, you can become a citizen by either:<br/>- joining one of the already existing nations. You will have to wait for the nation’s editor to approve your request before joining.<br/>- creating your own!<br/><br/>**Your dashboard**<hr/>From your profile page, you can:<br/>- Change your avatar and personal information<br/>- Download your ID Card<br/>- Manage your settings<br/>"
         },
         "nation": {
           "title": "the nation",
@@ -358,7 +367,7 @@
         },
         "credits": {
           "title": "credits",
-          "description": "**Overview**<hr/>Credits introduce a game-like mechanic to the application, adding a layer of engagement. Nations with the most credits (called treasury) are seen first in the 'nations' tab of the explore page.<br/><br/>**Earning credits**<hr/>Credits are awarded when:<br/>- A user joins Archipel<br/>- A nation is created<br/>- A user joins a nation<br/><br/>**Spending credits**<hr/>Credits are deducted when:<br/>- The free limit for creating places and information tiles is exceeded<br/><br/>**Transferring credits**<hr/>Credits can be transferred between users and nations.<br/><br/>**Additional information**<hr/>If a nation’s editor deletes a place or an information tile that cost credits, the nation regains the spent amount.<br/>The amount of credits may fluctuate over time."
+          "description": "**Overview**<hr/>Credits introduce a game-like mechanic to the application, adding a layer of engagement. Nations with the most credits (called treasury) are seen first in the 'nations' tab of the explore page.<br/><br/>**Earning credits**<hr/>Credits are awarded when:<br/>- A user joins Archipel<br/>- A user is sponsoring another user<br/>- A nation is created<br/>- A user joins a nation<br/><br/>**Spending credits**<hr/>Credits are deducted when:<br/>- The free limit for creating places and information tiles is exceeded<br/><br/>**Transferring credits**<hr/>Credits can be transferred between users and nations.<br/><br/>**Additional information**<hr/>If a nation’s editor deletes a place or an information tile that cost credits, the nation regains the spent amount.<br/>The amount of credits may fluctuate over time."
         }
       }
     },
@@ -367,6 +376,7 @@
       "noCoatOfArms": "no nation coat of arms",
       "flag": "nation flag",
       "noFlag": "no nation flag",
+      "anthem": "nation anthem",
       "dev": "under testing & development",
       "links": {
         "website": "website",
@@ -383,7 +393,7 @@
         "index": "position",
         "place": "kind of location",
         "places": "locations",
-        "points": "success",
+        "points": "points",
         "population": "citizens",
         "regime": "regime",
         "tree": "childrens",
@@ -428,7 +438,9 @@
           "ascTreasury": "growing wealth",
           "descTreasury": "decreasing wealth",
           "ascDate": "creation date ascending",
-          "descDate": "creation date descending"
+          "descDate": "creation date descending",
+          "ascPoints": "ascending number of points",
+          "descPoints": "descending number of points"
         }
       },
       "citizensList": {
@@ -439,7 +451,9 @@
           "ascDate": "registration date ascending",
           "descDate": "registration date descending",
           "ascVisit": "last visit date ascending",
-          "descVisit": "last visit date descending"
+          "descVisit": "last visit date descending",
+          "ascCredits": "growing wealth",
+          "descCredits": "decreasing wealth"
         }
       },
       "placesList": {

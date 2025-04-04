@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import i18n from "../i18n/i18n";
 import { APP_NAME, MAX_LENGTH, REGIME } from "../settings/consts";
-import { languageList } from "../settings/lists";
+import { genderList, languageList } from "../settings/lists";
 import { NationModel } from "../models/nationModel";
 
 export const GET_JWT = () => {
@@ -11,9 +11,7 @@ export const GET_JWT = () => {
 
 export const findElementsByName = (searchName: string, array: any[]) => {
   if (!searchName) return array; // Si searchName est vide, on retourne tout l'array
-
   const regex = new RegExp(`.*${searchName}.*`, "i"); // Équivalent à MongoDB regex
-
   return array.filter((element) => regex.test(element.name));
 };
 
@@ -125,4 +123,8 @@ export const getMarkdown = async (path: string): Promise<string> => {
 
 export const isStrongPassword = (password: string): boolean => {
   return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/.test(password);
+};
+
+export const getGender = (gender: number): string => {
+  return genderList.filter((element) => element.id === gender)[0].label;
 };

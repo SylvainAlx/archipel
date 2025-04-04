@@ -1,18 +1,16 @@
 import { lazy, Suspense } from "react";
-import { Nation } from "../../types/typNation";
-import { deleteImage } from "../../utils/procedures";
 import Spinner from "../ui/loading/spinner";
 import CrossButton from "../ui/buttons/crossButton";
-import { useTranslation } from "react-i18next";
 import { BsShieldShaded } from "react-icons/bs";
 import Upploader from "../ui/uploader";
 import LinkButton from "../ui/buttons/linkButton";
 import { COA_MAKER_URL } from "../../settings/consts";
 import { FaExternalLinkAlt } from "react-icons/fa";
-import { confirmBox, myStore } from "../../settings/store";
+import { NationModel } from "../../models/nationModel";
+import useCoatOfArms from "../../hooks/componentsHooks/nation/useCoatOfArms";
 
 interface CoatOfArmsProps {
-  nation: Nation;
+  nation: NationModel;
   owner: boolean;
   updatePath: (path: string, value: string, needConfirm?: boolean) => void;
 }
@@ -22,20 +20,8 @@ export default function CoatOfArms({
   owner,
   updatePath,
 }: CoatOfArmsProps) {
-  const { t } = useTranslation();
   const LazyImage = lazy(() => import("../ui/lazy/lazyImage"));
-
-  const handleDeleteImage = async () => {
-    myStore.set(confirmBox, {
-      text: t("components.modals.confirmModal.deleteFile"),
-      actionToDo: async () => {
-        const result = await deleteImage(nation.data.url.coatOfArms);
-        if (result) {
-          updatePath("data.url.coatOfArms", "", false);
-        }
-      },
-    });
-  };
+  const { handleDeleteImage, t } = useCoatOfArms(nation, updatePath);
 
   return (
     <div className="relative">

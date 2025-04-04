@@ -9,6 +9,7 @@ export default function CreditsParamsButton() {
   return (
     <Button
       text=""
+      name={t("components.modals.infoModal.creditsParams")}
       click={() =>
         myStore.set(infoModalAtom, {
           subtitle: t("components.modals.infoModal.creditsParams"),
@@ -17,7 +18,7 @@ export default function CreditsParamsButton() {
       }
       bgColor="bg-invisible"
     >
-      <AiOutlineStock className="flex items-center gap-1 hover:text-secondary transition-all" />
+      <AiOutlineStock className="flex items-center gap-1 hover:text-secondary3 transition-all" />
     </Button>
   );
 }

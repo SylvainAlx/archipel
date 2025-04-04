@@ -68,7 +68,8 @@ export default function IconLink({
 
   return (
     <button
-      className={`flex flex-col items-center justify-center text-5xl md:text-3xl hover:text-secondary transition-all cursor-pointer ${focus && "text-secondary"}`}
+      name={destination}
+      className={`flex flex-col items-center justify-center text-5xl md:text-3xl hover:text-secondary3 transition-all cursor-pointer ${focus && "text-secondary3"}`}
       onClick={action}
     >
       {destination === "home" && <IoMdHome />}

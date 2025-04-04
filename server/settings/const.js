@@ -14,6 +14,7 @@ export const DEFAULT_GIFTS = {
   REGISTER: 10,
   NEW_NATION: 100,
   CITIZENSHIP: 10,
+  GODPARENT: 5,
 };
 
 export const COMTYPE = [
