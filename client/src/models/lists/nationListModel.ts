@@ -64,7 +64,7 @@ export class NationListModel extends ListModel {
           searchName,
           searchTag,
         );
-        this.items = nations;
+        this.addMany(nations);
         this.addToNationListAtom(nations);
       }
       this.sortNations(this.sorting);

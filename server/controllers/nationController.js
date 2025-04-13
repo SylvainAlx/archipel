@@ -44,7 +44,7 @@ export const createNation = async (req, res) => {
       return res.status(403).json({ infoType: "403" });
     }
     const officialId = createOfficialId("n");
-    const gift = getValueFromParam(
+    const gift = await getValueFromParam(
       await getGifts(),
       "newNation",
       DEFAULT_GIFTS.NEW_NATION,
