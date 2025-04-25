@@ -13,6 +13,25 @@ Le code source est public et est visible [ici](https://github.com/SylvainAlx/arc
 
 ## Version actuelle
 
+### v1.1.1
+
+#### Ajouts
+
+- Notification à la connexion des annonces générales non lues des 7 derniers jours
+
+#### Suppressions
+
+Aucune
+
+#### Modifications & Corrections
+
+- Optimisation du code source
+- Mise à jour des dépendances
+- Correction de l'UI
+- Correction du bug de création de lieu
+
+## Versions précédentes
+
 ### v1.1.0
 
 #### Ajouts
@@ -41,8 +60,6 @@ Le code source est public et est visible [ici](https://github.com/SylvainAlx/arc
 - Modification des CGU
 - Modification des textes de la page d'accueil
 - Tri par défaut des nations basculé sur le nombre de points décroissants
-
-## Versions précédentes
 
 ### v1.0.2
 

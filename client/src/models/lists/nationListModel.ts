@@ -137,4 +137,12 @@ export class NationListModel extends ListModel {
     this.sorting = selectOption;
     return new NationListModel(this.items, this.sorting);
   };
+
+  getOnlyOfficialNations = () => {
+    return new NationListModel(
+      this.items.filter(
+        (nation) => nation.data.roleplay.officialOwner === nation.owner,
+      ),
+    );
+  };
 }

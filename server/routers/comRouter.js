@@ -5,6 +5,7 @@ import {
   deleteCom,
   getComs,
   getDestinationComs,
+  getLastNews,
   getPublicComs,
   getPublicComsByOrigin,
   readCom,
@@ -17,6 +18,7 @@ comRouter.get("/count", comCount);
 comRouter.get("/getcoms", [verifyJwt], getComs);
 comRouter.get("/getbydestination/:id", [verifyJwt], getDestinationComs);
 comRouter.get("/getpubliccoms", getPublicComs);
+comRouter.get("/getlastnews", getLastNews);
 comRouter.get("/getpubliccoms/:id", getPublicComsByOrigin);
 comRouter.post("/create", [verifyJwt], createCom);
 comRouter.post("/read", [verifyJwt], readCom);

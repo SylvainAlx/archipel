@@ -84,6 +84,19 @@ export const getPublicComs = async (req, res) => {
   }
 };
 
+export const getLastNews = async (req, res) => {
+  try {
+    const cutoffDate = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000); // il y a 7 jours
+    const coms = await Com.find({
+      comType: { $in: [COMTYPE[1].id] },
+      createdAt: { $gt: cutoffDate },
+    });
+    res.status(200).json(coms);
+  } catch (error) {
+    handleError(error, res);
+  }
+};
+
 export const createCom = async (req, res) => {
   try {
     const { origin, destination, title, comType, message } = req.body;
