@@ -27,8 +27,7 @@ export default function Select({
 
   return (
     <label className="w-full max-w-[300px]">
-      {title ? title.toLocaleUpperCase() : t("components.form.select.choose")}
-      {required && " *"}
+      {title && title.toLocaleUpperCase()}
       <select
         required={required}
         onChange={onChange}
@@ -36,6 +35,11 @@ export default function Select({
         value={value}
         id={id && id}
       >
+        {required && (
+          <option selected disabled>
+            {t("components.form.select.choose") + " *"}
+          </option>
+        )}
         {options.map((option, i) => {
           return (
             <option key={i} value={option.id} label={option.label}>

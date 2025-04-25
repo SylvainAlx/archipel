@@ -109,7 +109,7 @@ export default function ComTile({ nation, com }: ComTileProps) {
             {read ? <FaCheckSquare /> : <ImCheckboxUnchecked />}
           </Button>
         )}
-        {comOwner || nationOwner ? (
+        {comOwner || nationOwner || session.user.role === "admin" ? (
           <CrossButton click={handleDelete} />
         ) : (
           <ReportPanel content={com} center={false} />

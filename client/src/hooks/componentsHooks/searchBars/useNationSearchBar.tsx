@@ -13,6 +13,7 @@ export default function useNationSearchBar(
   const [stats] = useAtom(statsAtom);
   const location = useLocation();
   const [searchName, setSearchName] = useState("");
+  const [isOfficial, setIsOfficial] = useState(false);
   const [searchTag, setSearchTag] = useState(location.hash.replace("#", ""));
   const navigate = useNavigate();
 
@@ -36,7 +37,7 @@ export default function useNationSearchBar(
       loadList(searchName, searchTag, false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [stats, searchName, searchTag]);
+  }, [stats, searchName, searchTag, isOfficial]);
 
   const loadList = async (
     searchName: string,
@@ -50,7 +51,11 @@ export default function useNationSearchBar(
     );
     if (updatedList) {
       updatedList.sortNations(updatedList.sorting);
-      setList(updatedList);
+      if (isOfficial) {
+        setList(updatedList.getOnlyOfficialNations());
+      } else {
+        setList(updatedList);
+      }
     }
   };
 
@@ -59,6 +64,10 @@ export default function useNationSearchBar(
     setSearchName("");
     setSearchTag("");
     navigate(`/explore/2`);
+  };
+
+  const handleChangeCheckbox = () => {
+    setIsOfficial(!isOfficial);
   };
 
   const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
@@ -78,6 +87,8 @@ export default function useNationSearchBar(
   return {
     searchName,
     searchTag,
+    isOfficial,
+    handleChangeCheckbox,
     setSearchTag,
     handleSearch,
     handleSubmit,

@@ -89,12 +89,14 @@ export default function Register() {
             title="Genre"
             options={genderList}
             onChange={handleGenerChange}
+            required={true}
           />
           <Select
             title={t("components.form.select.language")}
             options={languageList}
             onChange={handleLanguageChange}
             value={language}
+            required={true}
           />
           <div className="w-full flex justify-start items-center gap-2">
             <input

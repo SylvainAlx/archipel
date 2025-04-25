@@ -73,12 +73,12 @@ export const createPlace = async (req, res) => {
   try {
     const { nation, parentId, name, type, description, image } = req.body;
     const placeNation = await Nation.findOne({ officialId: nation });
-    const quota = getValueFromParam(
+    const quota = await getValueFromParam(
       await getQuotas(),
       "places",
       DEFAULT_QUOTAS.PLACES,
     );
-    const cost = getValueFromParam(
+    const cost = await getValueFromParam(
       await getCosts(),
       "place",
       DEFAULT_COSTS.PLACES,
@@ -149,14 +149,14 @@ export const deletePlace = async (req, res) => {
     if (nation.data.roleplay.capital === place.officialId) {
       nation.data.roleplay.capital = "";
     }
-    const quota = getValueFromParam(
+    const quota = await getValueFromParam(
       await getQuotas(),
       "places",
       DEFAULT_QUOTAS.PLACES,
     );
 
     if (nation.data.roleplay.places > quota) {
-      const cost = getValueFromParam(
+      const cost = await getValueFromParam(
         await getCosts(),
         "place",
         DEFAULT_COSTS.PLACES,

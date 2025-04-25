@@ -46,6 +46,7 @@ import { createComByStatus } from "../utils/procedures";
 import { successMessage } from "../utils/toasts";
 import { ComModel } from "./comModel";
 import { CommonModel } from "./commonModel";
+import { ComListModel } from "./lists/comListModel";
 import { NationListModel } from "./lists/nationListModel";
 import { UserListModel } from "./lists/userListModel";
 import { NationModel } from "./nationModel";
@@ -116,6 +117,7 @@ export class UserModel extends CommonModel implements User {
           localStorage.removeItem("jwt");
         }
         this.displayUserInfoByType(response.infoType);
+        new ComListModel().getLastNews();
       } else {
         myStore.set(sessionAtom, {
           ...myStore.get(sessionAtom),
@@ -145,6 +147,7 @@ export class UserModel extends CommonModel implements User {
         });
       }
       this.displayUserInfoByType(response.infoType);
+      new ComListModel().getLastNews();
     } catch (error) {
       errorCatching(error);
     } finally {
@@ -398,6 +401,7 @@ export class UserModel extends CommonModel implements User {
         message: i18n.t("coms.register.message"),
       });
       newCom.baseInsert();
+      new ComListModel().getLastNews();
     } catch (error) {
       errorCatching(error);
     } finally {

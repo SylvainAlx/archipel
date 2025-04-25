@@ -47,6 +47,7 @@ export default function NewPlaceModal() {
           <Select
             options={Object.values(PLACE_TYPE)}
             onChange={handleSelectChange}
+            required={true}
           />
           <RequiredStar />
           <Button

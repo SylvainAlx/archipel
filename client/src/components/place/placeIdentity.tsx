@@ -86,7 +86,7 @@ export default function PlaceIdentity({
           <PopulationTag label={place.population} />
         )}
       </div>
-      <div className="w-full max-w-3xl flex items-center gap-2">
+      <div className="w-full max-w-3xl flex items-center gap-2 justify-center">
         {place.description != "" ? (
           <MDEditor.Markdown
             className="bg-transparent text-light text-justify mde-markdown"

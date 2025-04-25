@@ -139,7 +139,7 @@ export default function Home() {
             <div className="animate-fade w-full py-4 flex justify-center gap-2 flex-wrap">
               <HelpButton showText={true} bgColor="" />
               <Link
-                className="flex items-center justify-center gap-1"
+                className="w-full md:w-min flex items-center justify-center gap-1"
                 to={`mailto:${ADMIN_EMAIL}`}
               >
                 <Button text={t("components.buttons.contact")} type="button">

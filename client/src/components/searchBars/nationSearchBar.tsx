@@ -21,6 +21,8 @@ export default function NationSearchBar({
   const {
     searchName,
     searchTag,
+    isOfficial,
+    handleChangeCheckbox,
     setSearchTag,
     handleSearch,
     handleSubmit,
@@ -49,6 +51,15 @@ export default function NationSearchBar({
         placeholder={t("components.searchBars.nationsList.tag")}
         value={searchTag}
       />
+      <label className="flex gap-2 items-center">
+        {t("components.hoverInfos.tags.official")}
+        <input
+          type="checkbox"
+          id="0"
+          checked={isOfficial}
+          onChange={handleChangeCheckbox}
+        />
+      </label>
       <Select
         onChange={handleChangeSorting}
         options={Object.values(NATION_SORTING)}

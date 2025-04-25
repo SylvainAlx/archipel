@@ -68,9 +68,9 @@ export const getComsByDestinationFetch = async (officialId: string) => {
   }
 };
 
-export const getAllPublicComsFetch = async () => {
+export const getLastNewsFetch = async () => {
   try {
-    const resp = await fetch(`${SERVER_URL}/com/getpubliccoms`);
+    const resp = await fetch(`${SERVER_URL}/com/getlastnews`);
     await handleFetchError(resp);
     const result = await resp.json();
     return result;

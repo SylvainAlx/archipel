@@ -3,6 +3,7 @@ import { ComModel } from "../comModel";
 import {
   getAllAdminComsFetch,
   getComsFetch,
+  getLastNewsFetch,
   getPublicComsByOriginFetch,
 } from "../../services/comService";
 import { errorCatching } from "../../utils/displayInfos";
@@ -10,6 +11,7 @@ import { COM_SORTING } from "../../settings/sorting";
 import { ListModel } from "./listModel";
 import { Com } from "../../types/typCom";
 import { sortByCreatedAt } from "../../utils/sorting";
+import { comMessage } from "../../utils/toasts";
 
 export class ComListModel extends ListModel {
   constructor(
@@ -32,6 +34,29 @@ export class ComListModel extends ListModel {
         com.destination === destinationId,
     ).length;
   }
+  getLastNews = async () => {
+    const news: Com[] = await getLastNewsFetch();
+    const newsDate = localStorage.getItem("newsDate");
+    if (news.length > 0) {
+      if (newsDate) {
+        const lastNewsDate = new Date(JSON.parse(newsDate));
+        news
+          .filter(
+            (element) =>
+              new Date(element.createdAt).getTime() > lastNewsDate.getTime(),
+          )
+          .forEach((message) => {
+            comMessage(message.title + " : " + message.message);
+          });
+      } else {
+        news.forEach((message) => {
+          comMessage(message.title + " : " + message.message);
+        });
+      }
+
+      localStorage.setItem("newsDate", JSON.stringify(news[0].createdAt));
+    }
+  };
   loadComList = async (
     originId: string,
     destinationId: string,
