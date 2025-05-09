@@ -2,7 +2,7 @@
 
 ## 📌 État actuel
 
-- Version de production : **v1.1.1**
+- Version de production : **v1.2.0**
 - Les avis des utilisateurs sont toujours les bienvenus
 
 ## ✨ Le projet

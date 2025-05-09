@@ -2,17 +2,11 @@ import { FaSortAmountDownAlt } from "react-icons/fa";
 import CrossButton from "../ui/buttons/crossButton";
 import ParentButton from "../ui/buttons/parentButton";
 import EditButton from "../ui/buttons/editButton";
-import { useEffect, useState } from "react";
-import { useTranslation } from "react-i18next";
-import { useNavigate } from "react-router-dom";
-import { confirmBox, myStore, placeListAtomV2 } from "../../settings/store";
-import { useAtom } from "jotai";
-import { ConfirmBoxDefault } from "../../types/typAtom";
 import ShareButton from "../ui/buttons/shareButton";
 import { PlaceModel } from "../../models/placeModel";
 import { NationModel } from "../../models/nationModel";
-import { PlaceListModel } from "../../models/lists/placeListModel";
 import { PLACE_TYPE } from "../../settings/consts";
+import usePlaceHeader from "../../hooks/componentsHooks/place/usePlaceHeader";
 
 interface PlaceHeaderProps {
   place: PlaceModel;
@@ -27,37 +21,10 @@ export default function PlaceHeader({
   owner,
   updatePath,
 }: PlaceHeaderProps) {
-  const [parentName, setParentName] = useState("");
-  const [placeList, setPlaceList] = useAtom(placeListAtomV2);
-  const { t } = useTranslation();
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if (place.parentId != "") {
-      setParentName(placeList.findPlaceName(place.parentId, nation.name));
-    }
-  }, [placeList, place, nation]);
-
-  const handleClick = () => {
-    if (place.nation === place.parentId) {
-      navigate(`/nation/${place.nation}`);
-    } else {
-      navigate(`/place/${place.parentId}`);
-    }
-  };
-
-  const handleDelete = () => {
-    myStore.set(confirmBox, {
-      text: t("components.modals.confirmModal.deletePlace"),
-      actionToDo: async () => {
-        await place.baseDelete();
-        const listToUpdate = placeList.removeByOfficialId(place.officialId);
-        setPlaceList(new PlaceListModel(listToUpdate));
-        navigate(`/nation/${place.nation}`);
-        myStore.set(confirmBox, ConfirmBoxDefault);
-      },
-    });
-  };
+  const { handleClick, handleDelete, parentName, placeList } = usePlaceHeader(
+    place,
+    nation,
+  );
 
   return (
     <>

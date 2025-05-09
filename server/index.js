@@ -20,6 +20,7 @@ import { verifyCaptcha } from "./controllers/captchaController.js";
 import adminRouter from "./routers/adminRouter.js";
 import statsRouter from "./routers/statsRouter.js";
 import { pingBackend } from "./utils/functions.js";
+import structureRouter from "./routers/structureRouter.js";
 
 // config serveur
 const app = express();
@@ -62,6 +63,7 @@ connectToDatabase();
 app.use("/admin", [verifyJwt], [isAdmin], adminRouter);
 app.use("/user", userRouter);
 app.use("/nation", nationRouter);
+app.use("/structure", structureRouter);
 app.use("/com", comRouter);
 app.use("/place", placeRouter);
 app.use("/param", [verifyJwt], paramRouter);

@@ -1,10 +1,11 @@
-import { lazy, Suspense, useEffect, useState } from "react";
+import { lazy, Suspense } from "react";
 import NewPlaceButton from "../ui/buttons/newPlaceButton";
 import { useTranslation } from "react-i18next";
 import { NationModel } from "../../models/nationModel";
 import { PlaceModel } from "../../models/placeModel";
 import TileSkeleton from "../ui/loading/skeletons/tileSkeleton";
 import { PlaceListModel } from "../../models/lists/placeListModel";
+import usePlaceChildren from "../../hooks/componentsHooks/place/usePlaceChildren";
 
 interface PlaceChildrenProps {
   place: PlaceModel;
@@ -21,11 +22,7 @@ export default function PlaceChildren({
 }: PlaceChildrenProps) {
   const PlaceTile = lazy(() => import("../ui/tiles/placeTile"));
   const { t } = useTranslation();
-  const [children, setChildren] = useState<PlaceListModel>(nationPlaceList);
-
-  useEffect(() => {
-    setChildren(nationPlaceList.getPlacesByParentId(place.officialId));
-  }, [nationPlaceList, place.officialId]);
+  const { children } = usePlaceChildren(place, nationPlaceList);
 
   return (
     <section className="w-full px-2 flex flex-wrap justify-center gap-2">

@@ -8,12 +8,10 @@ import Upploader from "../ui/uploader";
 import IdTag from "../ui/tags/idTag";
 import PlaceTag from "../ui/tags/placeTag";
 import MDEditor from "@uiw/react-md-editor";
-import { useTranslation } from "react-i18next";
 import { PlaceModel } from "../../models/placeModel";
-import { deleteImage } from "../../utils/procedures";
-import { confirmBox, myStore } from "../../settings/store";
 import { PLACE_TYPE } from "../../settings/consts";
 import PopulationTag from "../ui/tags/populationTag";
+import usePlaceIdentity from "../../hooks/componentsHooks/place/usePlaceIdentity";
 
 interface PlaceIdentityProps {
   place: PlaceModel;
@@ -27,19 +25,7 @@ export default function PlaceIdentity({
   updatePath,
 }: PlaceIdentityProps) {
   const LazyImage = lazy(() => import("../ui/lazy/lazyImage"));
-  const { t } = useTranslation();
-
-  const handleDeleteImage = async () => {
-    myStore.set(confirmBox, {
-      text: t("components.modals.confirmModal.deleteFile"),
-      actionToDo: async () => {
-        const result = await deleteImage(place.image);
-        if (result) {
-          updatePath("image", "", false);
-        }
-      },
-    });
-  };
+  const { handleDeleteImage, t } = usePlaceIdentity(place, updatePath);
 
   return (
     <section className="w-full flex flex-col items-center rounded gap-4">

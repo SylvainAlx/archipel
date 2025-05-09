@@ -4,7 +4,6 @@ Le code source est public et est visible [ici](https://github.com/SylvainAlx/arc
 
 ## Développements à venir
 
-- Créer ou rejoindre une organisation
 - Créer des items et les proposer à l'acquisition aux citoyens
 - Créer une gazette des nations en se basant sur les communiqués
 - Étendre les fonctionnalités pour les utilisateurs mobile
@@ -12,6 +11,23 @@ Le code source est public et est visible [ici](https://github.com/SylvainAlx/arc
 - Améliorer des traductions
 
 ## Version actuelle
+
+### v1.2.0
+
+#### Ajouts
+
+_- Possibilité de créer ou rejoindre une organisation_
+
+#### Suppressions
+
+Aucune
+
+#### Modifications & Corrections
+
+- Optimisation du code source
+- Mise à jour des dépendances
+
+## Versions précédentes
 
 ### v1.1.1
 
@@ -29,8 +45,6 @@ Aucune
 - Mise à jour des dépendances
 - Correction de l'UI
 - Correction du bug de création de lieu
-
-## Versions précédentes
 
 ### v1.1.0
 
