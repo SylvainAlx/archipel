@@ -22,6 +22,7 @@ import { RelationListModel } from "../models/lists/relationListModel";
 import { RelationModel } from "../models/relationModel";
 import { emptyDiplomaticRelationship } from "../types/typRelation";
 import { Param } from "../types/typeParam";
+import { StructureListModel } from "../models/lists/structureListModel";
 
 export const myStore = createStore();
 
@@ -40,6 +41,9 @@ export const sessionAtom = atom<Session>(emptySession);
 //---- Lists ----
 export const comListAtomV2 = atom<ComListModel>(new ComListModel());
 export const placeListAtomV2 = atom<PlaceListModel>(new PlaceListModel());
+export const structureListAtomV2 = atom<StructureListModel>(
+  new StructureListModel(),
+);
 export const nationListAtomV2 = atom<NationListModel>(new NationListModel());
 export const userListAtomV2 = atom<UserListModel>(new UserListModel());
 export const tileListAtomV2 = atom<TileListModel>(new TileListModel());

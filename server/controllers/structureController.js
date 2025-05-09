@@ -4,8 +4,9 @@ import { createOfficialId, handleError } from "../utils/functions.js";
 
 export const createStructure = async (req, res) => {
   try {
-    const { name, owner, description, link } = req.body;
+    const { name, description, link } = req.body;
     const officialId = createOfficialId("s");
+    const owner = req.userId;
     const structure = new Structure({
       officialId,
       name,
@@ -66,11 +67,22 @@ export const getStructures = async (req, res) => {
 
 export const updateStructure = async (req, res) => {
   try {
-    const { name, owner, description, image, members, establishments, link } =
-      req.body;
-    const structure = await Structure.findOne({ owner: req.userId });
+    const {
+      officialId,
+      name,
+      owner,
+      description,
+      image,
+      members,
+      establishments,
+      link,
+    } = req.body;
+    const structure = await Structure.findOne({ officialId });
     if (!structure) {
       return res.status(404).json({ infoType: "404" });
+    }
+    if (structure.owner != req.userId) {
+      return res.status(403).json({ infoType: "403" });
     }
     structure.name = name;
     structure.owner = owner;
@@ -88,9 +100,13 @@ export const updateStructure = async (req, res) => {
 
 export const deleteStructure = async (req, res) => {
   try {
-    const structure = await Structure.findOne({ owner: req.userId });
+    const id = req.params.id;
+    const structure = await Structure.findOne({ officialId: id });
     if (!structure) {
       return res.status(404).json({ infoType: "404" });
+    }
+    if (structure.owner != req.userId) {
+      return res.status(403).json({ infoType: "403" });
     }
     if (structure.image != "") {
       const uuid = structure.image.replace("https://ucarecdn.com/", "");

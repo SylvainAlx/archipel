@@ -10,10 +10,10 @@ import {
 
 const structureRouter = express.Router();
 
+structureRouter.get("/getall", getStructures);
 structureRouter.get("/:id", getStructure);
-structureRouter.get("/", getStructures);
 structureRouter.post("/create", [verifyJwt], createStructure);
 structureRouter.post("/update", [verifyJwt], updateStructure);
-structureRouter.delete("/", [verifyJwt], deleteStructure);
+structureRouter.delete("/:id", [verifyJwt], deleteStructure);
 
 export default structureRouter;
