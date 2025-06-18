@@ -126,3 +126,30 @@ export const NATION_SORTING: IdLabelDictionary = {
     label: i18n.t("components.searchBars.nationsList.sortNations.descPoints"),
   },
 };
+
+export const STRUCTURE_SORTIING: IdLabelDictionary = {
+  ascAlpha: {
+    id: 0,
+    label: i18n.t(
+      "components.searchBars.structuresList.sortStructures.ascAlpha",
+    ),
+  },
+  descAlpha: {
+    id: 1,
+    label: i18n.t(
+      "components.searchBars.structuresList.sortStructures.descAlpha",
+    ),
+  },
+  ascDate: {
+    id: 8,
+    label: i18n.t(
+      "components.searchBars.structuresList.sortStructures.ascDate",
+    ),
+  },
+  descDate: {
+    id: 9,
+    label: i18n.t(
+      "components.searchBars.structuresList.sortStructures.descDate",
+    ),
+  },
+};

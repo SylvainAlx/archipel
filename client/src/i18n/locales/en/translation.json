@@ -59,6 +59,9 @@
       "nationsList": {
         "title": "nations"
       },
+      "structureList": {
+        "title": "structures"
+      },
       "citizensList": {
         "title": "citizens"
       },
@@ -441,6 +444,15 @@
           "descDate": "creation date descending",
           "ascPoints": "ascending number of points",
           "descPoints": "descending number of points"
+        }
+      },
+      "structuresList": {
+        "name": "structure name",
+        "sortStructures": {
+          "ascAlpha": "ascending alphabetical",
+          "descAlpha": "descending alphabetical",
+          "ascDate": "creation date ascending",
+          "descDate": "creation date descending"
         }
       },
       "citizensList": {

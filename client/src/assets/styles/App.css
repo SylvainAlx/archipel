@@ -138,7 +138,9 @@ audio::-webkit-media-controls-enclosure {
   background-color: var(--color-info);
 }
 
-audio::-webkit-media-controls-current-time-display, audio::-webkit-media-controls-time-remaining-display, audio::-webkit-media-controls-play-button {
+audio::-webkit-media-controls-current-time-display,
+audio::-webkit-media-controls-time-remaining-display,
+audio::-webkit-media-controls-play-button {
   color: #ffffff !important;
   text-shadow: none;
 }
@@ -147,20 +149,19 @@ audio > #thumb {
   box-shadow: none !important;
 }
 
-
 @layer utilities {
   ::-webkit-scrollbar {
     width: 8px;
   }
   ::-webkit-scrollbar-track {
-    background: theme('colors.slate.100');
+    background: theme("colors.slate.100");
     border-radius: 10px;
   }
   ::-webkit-scrollbar-thumb {
-    background: theme('colors.slate.400');
+    background: theme("colors.slate.400");
     border-radius: 10px;
   }
   ::-webkit-scrollbar-thumb:hover {
-    background: theme('colors.slate.600');
+    background: theme("colors.slate.600");
   }
 }

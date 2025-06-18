@@ -52,6 +52,7 @@ export interface StandardOption {
 
 export interface Counts {
   nations: number;
+  structures: number;
   citizens: number;
   places: number;
   tags: number;

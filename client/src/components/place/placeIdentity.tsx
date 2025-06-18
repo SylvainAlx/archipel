@@ -69,7 +69,7 @@ export default function PlaceIdentity({
         {place.officialId && <IdTag label={place.officialId} />}
         <PlaceTag label={place.getPlaceTypeLabel()} />
         {place.type === PLACE_TYPE.city.id && (
-          <PopulationTag label={place.population} />
+          <PopulationTag count={place.population} />
         )}
       </div>
       <div className="w-full max-w-3xl flex items-center gap-2 justify-center">

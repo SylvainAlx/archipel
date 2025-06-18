@@ -1,11 +1,16 @@
 import { getStructureFetch } from "../services/structureService";
 import { loadingAtom, myStore, structureListAtomV2 } from "../settings/store";
-import { emptyStructure, Structure } from "../types/typStructure";
+import {
+  emptyStructure,
+  Structure,
+  StructureType,
+} from "../types/typStructure";
 import { errorCatching } from "../utils/displayInfos";
 import { CommonModel } from "./commonModel";
 
 export class StructureModel extends CommonModel implements Structure {
   name!: string;
+  type!: StructureType;
   owner!: string;
   description!: string;
   image!: string;

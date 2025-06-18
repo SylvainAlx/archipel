@@ -59,6 +59,9 @@
       "nationsList": {
         "title": "nations"
       },
+      "structureList": {
+        "title": "organisations"
+      },
       "citizensList": {
         "title": "citoyens"
       },
@@ -441,6 +444,15 @@
           "descDate": "date de creation décroissante",
           "ascPoints": "nombre de points croissant",
           "descPoints": "nombre de points décroissant"
+        }
+      },
+      "structureList": {
+        "name": "nom de l'organisation",
+        "sortStructures": {
+          "ascAlpha": "alphabetique croissant",
+          "descAlpha": "alphabetique décroissant",
+          "ascDate": "date de creation croissante",
+          "descDate": "date de creation décroissante"
         }
       },
       "citizensList": {

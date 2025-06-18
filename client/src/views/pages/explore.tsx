@@ -10,6 +10,7 @@ export default function Explore() {
 
   const Stats = lazy(() => import("../exploreTabs/stats"));
   const NationList = lazy(() => import("../exploreTabs/nationList"));
+  const StructureList = lazy(() => import("../exploreTabs/structureList"));
   const CitizenList = lazy(() => import("../exploreTabs/citizenList"));
   const PlaceList = lazy(() => import("../exploreTabs/placeList"));
   const ComList = lazy(() => import("../exploreTabs/comList"));
@@ -38,15 +39,20 @@ export default function Explore() {
       )}
       {tab.id === 3 && (
         <Suspense fallback={<ParamSkeleton />}>
-          <CitizenList text={tab.label} />
+          <StructureList text={tab.label} />
         </Suspense>
       )}
       {tab.id === 4 && (
         <Suspense fallback={<ParamSkeleton />}>
-          <PlaceList text={tab.label} />
+          <CitizenList text={tab.label} />
         </Suspense>
       )}
       {tab.id === 5 && (
+        <Suspense fallback={<ParamSkeleton />}>
+          <PlaceList text={tab.label} />
+        </Suspense>
+      )}
+      {tab.id === 6 && (
         <Suspense fallback={<ParamSkeleton />}>
           <ComList text={tab.label} />
         </Suspense>

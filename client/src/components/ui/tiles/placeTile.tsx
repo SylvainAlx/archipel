@@ -76,7 +76,7 @@ export default function PlaceTile({ place, nation }: PlaceTileProp) {
       <div className="max-w-[90%] flex flex-wrap items-center self-end justify-end gap-1">
         <PlaceTag label={place.getPlaceTypeLabel()} />
         {place.type === PLACE_TYPE.city.id && (
-          <PopulationTag label={place.population} />
+          <PopulationTag count={place.population} />
         )}
         {emplacement.pathname === `/explore/4` ? (
           <NationTag label={place.nation} />

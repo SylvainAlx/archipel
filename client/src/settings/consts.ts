@@ -53,6 +53,7 @@ export const MAX_LENGTH = {
 
 export const ELEMENTS_DISPLAYED_LIMIT = {
   nations: 30,
+  structures: 30,
   citizens: 30,
   places: 30,
   coms: 30,

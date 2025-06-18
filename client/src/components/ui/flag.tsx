@@ -1,15 +1,15 @@
 import { GiBlackFlag } from "react-icons/gi";
 import { lazy, Suspense } from "react";
 import { useTranslation } from "react-i18next";
-import { Nation } from "../../types/typNation";
 import ImageSkeleton from "./loading/skeletons/imageSkeleton";
 
 interface FlagProps {
-  nation: Nation;
+  url: string;
+  name: string;
   isHeader?: boolean;
 }
 
-export default function Flag({ nation, isHeader }: FlagProps) {
+export default function Flag({ url, name, isHeader }: FlagProps) {
   const { t } = useTranslation();
   const LazyImage = lazy(() => import("./lazy/lazyImage"));
   return (
@@ -20,11 +20,11 @@ export default function Flag({ nation, isHeader }: FlagProps) {
           : "w-[50px] h-[50px] bg-complementary rounded-full flex items-center justify-center overflow-hidden"
       }
     >
-      {nation.data.url.flag != "" ? (
+      {url != "" ? (
         <Suspense fallback={<ImageSkeleton />}>
           <LazyImage
-            src={nation.data.url.flag}
-            alt={`flag of ${nation.name}`}
+            src={url}
+            alt={`flag of ${name}`}
             className={`object-cover w-full h-full rounded ${!isHeader && "cursor-zoom-in"}`}
             hover={t("components.hoverInfos.flag")}
             isHeader={isHeader}

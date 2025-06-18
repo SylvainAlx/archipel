@@ -37,5 +37,8 @@ export const handleError = (AError, ARes) => {
   } else {
     statusCode = AError.name === "ValidationError" ? 400 : 500;
   }
-  ARes.status(statusCode).json({ infoType: statusCode.toString() });
+  ARes.status(statusCode).json({
+    infoType: statusCode.toString(),
+    message: AError.message,
+  });
 };

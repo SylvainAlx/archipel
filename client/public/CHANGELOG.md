@@ -26,6 +26,7 @@ Aucune
 
 - Optimisation du code source
 - Mise à jour des dépendances
+- Amélioration des icons pour la PWA
 
 ## Versions précédentes
 

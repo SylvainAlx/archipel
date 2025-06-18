@@ -12,6 +12,11 @@ const structureSchema = mongoose.Schema(
       required: true,
       unique: true,
     },
+    type: {
+      type: String,
+      required: true,
+      enum: ["association", "company", "NGO", "politicalParty"],
+    },
     owner: {
       type: String,
       default: "",

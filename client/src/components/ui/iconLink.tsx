@@ -98,7 +98,7 @@ export default function IconLink({
                 )}
               />
             )}
-          <Flag nation={nation} isHeader={true} />
+          <Flag url={nation.data.url.flag} name={nation.name} isHeader={true} />
         </div>
       )}
       {destination === "admin" && (

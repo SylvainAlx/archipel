@@ -30,7 +30,7 @@ export default function NationTile({ nation }: NationTileProps) {
       className="bg-complementary hover:bg-complementary2 flex flex-col items-center p-2 gap-3 rounded transition-all cursor-pointer"
     >
       <div className="self-start flex items-center cursor-default">
-        <Flag nation={nation} />
+        <Flag url={nation.data.url.flag} name={nation.name} />
         <h3
           onClick={handleClick}
           className="flex items-center gap-1 text-light text-xl pl-4 pr-6 cursor-pointer"
@@ -45,7 +45,7 @@ export default function NationTile({ nation }: NationTileProps) {
         <NationPointsTag label={nation.getNationPoints()} />
         <TreasuryTag label={nation.data.roleplay.treasury} />
         <RegimeTag selectedNation={nation} />
-        <PopulationTag label={nation.data.roleplay.citizens} />
+        <PopulationTag count={nation.data.roleplay.citizens} />
         <PlaceTag label={nation.data.roleplay.places} />
         <DateTag date={nation.createdAt} />
         <TagList nation={nation} isTile={true} />

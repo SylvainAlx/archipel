@@ -1,24 +1,34 @@
 import { FaUserGroup } from "react-icons/fa6";
 import Tag from "./tag";
-import { customTagProps } from "../../../types/typProp";
 import { useTranslation } from "react-i18next";
 import { useEffect, useState } from "react";
 
-export default function PopulationTag({ label }: customTagProps) {
+interface PopulationTagProps {
+  count: number;
+  label?: string;
+}
+
+export default function PopulationTag({ count, label }: PopulationTagProps) {
   const { t } = useTranslation();
   const [updatedLabel, setUpdatedLabel] = useState(
     t("components.hoverInfos.tags.population"),
   );
 
   useEffect(() => {
-    if (typeof label === "number" && label < 2) {
-      setUpdatedLabel(t("components.hoverInfos.tags.population").slice(0, -1));
+    const finalLabel = label
+      ? label
+      : t("components.hoverInfos.tags.population");
+    if (count < 2) {
+      setUpdatedLabel(finalLabel.slice(0, -1));
+    } else {
+      setUpdatedLabel(finalLabel);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [label]);
+  }, [count]);
+
   return (
     <Tag
-      text={label.toString() + " " + updatedLabel}
+      text={count.toString() + " " + updatedLabel}
       hover={t("components.hoverInfos.tags.population")}
       bgColor="bg-info"
     >

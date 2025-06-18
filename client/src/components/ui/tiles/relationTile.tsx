@@ -38,7 +38,7 @@ export default function RelationTile({ relation }: RelationTileProps) {
     >
       <div className="w-full flex flex-wrap items-center justify-center gap-1">
         {nationList.getItems().map((nation, i) => {
-          return <Flag key={i} nation={nation} />;
+          return <Flag key={i} url={nation.data.url.flag} name={nation.name} />;
         })}
       </div>
       <div className="w-full flex flex-wrap items-center justify-center gap-1">

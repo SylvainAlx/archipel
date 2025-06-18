@@ -8,9 +8,10 @@ export function useExplore() {
   const nationTabs: StandardOption[] = [
     { id: 1, label: t("pages.explore.stats.title") },
     { id: 2, label: t("pages.explore.nationsList.title") },
-    { id: 3, label: t("pages.explore.citizensList.title") },
-    { id: 4, label: t("pages.explore.placesList.title") },
-    { id: 5, label: t("pages.explore.comsList.title") },
+    { id: 3, label: t("pages.explore.structureList.title") },
+    { id: 4, label: t("pages.explore.citizensList.title") },
+    { id: 5, label: t("pages.explore.placesList.title") },
+    { id: 6, label: t("pages.explore.comsList.title") },
   ];
   const [tab, setTab] = useState(nationTabs[0]);
   const param = useParams();

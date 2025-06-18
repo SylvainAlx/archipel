@@ -19,7 +19,7 @@ export default function usePlaceSearchBar(
   });
 
   useEffect(() => {
-    if (stats.counts.citizens === 0) {
+    if (stats.counts.places === 0) {
       getCounts();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

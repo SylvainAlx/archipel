@@ -18,7 +18,7 @@ export default function useNationSearchBar(
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (stats.counts.citizens === 0) {
+    if (stats.counts.nations === 0) {
       getCounts();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

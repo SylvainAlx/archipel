@@ -139,7 +139,7 @@ export default function NationIdentity({
                     />
                   )}
                 </div>
-                <PopulationTag label={selectedNation.data.roleplay.citizens} />
+                <PopulationTag count={selectedNation.data.roleplay.citizens} />
                 <PlaceTag label={selectedNation.data.roleplay.places} />
                 <div className="flex items-center gap-2">
                   {selectedNation.data.general.nationalDay != undefined && (

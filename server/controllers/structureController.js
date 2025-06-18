@@ -4,12 +4,13 @@ import { createOfficialId, handleError } from "../utils/functions.js";
 
 export const createStructure = async (req, res) => {
   try {
-    const { name, description, link } = req.body;
+    const { name, type, description, link } = req.body;
     const officialId = createOfficialId("s");
     const owner = req.userId;
     const structure = new Structure({
       officialId,
       name,
+      type,
       description,
       owner,
       members: [owner],
@@ -70,6 +71,7 @@ export const updateStructure = async (req, res) => {
     const {
       officialId,
       name,
+      type,
       owner,
       description,
       image,
@@ -85,6 +87,7 @@ export const updateStructure = async (req, res) => {
       return res.status(403).json({ infoType: "403" });
     }
     structure.name = name;
+    structure.type = type;
     structure.owner = owner;
     structure.description = description;
     structure.image = image;
